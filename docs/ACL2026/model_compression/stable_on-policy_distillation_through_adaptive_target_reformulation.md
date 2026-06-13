@@ -15,7 +15,7 @@ tags:
 
 # Stable On-Policy Distillation through Adaptive Target Reformulation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.07155](https://arxiv.org/abs/2601.07155)  
 **代码**: 无  
 **领域**: 模型压缩  

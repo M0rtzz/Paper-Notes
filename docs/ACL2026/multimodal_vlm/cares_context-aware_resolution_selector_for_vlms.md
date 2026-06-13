@@ -15,7 +15,7 @@ tags:
 
 # CARES: Context-Aware Resolution Selector for VLMs
 
-**会议**: ACL2026  
+**会议**: ACL2026 Oral  
 **arXiv**: [2510.19496](https://arxiv.org/abs/2510.19496)  
 **代码**: https://mkimhi.github.io/CARES/  
 **领域**: 多模态VLM / 推理效率 / 自适应分辨率  

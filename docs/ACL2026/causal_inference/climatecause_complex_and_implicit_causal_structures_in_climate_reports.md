@@ -15,7 +15,7 @@ tags:
 
 # ClimateCause: Complex and Implicit Causal Structures in Climate Reports
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.14856](https://arxiv.org/abs/2604.14856)  
 **代码**: [GitHub](https://github.com/laallein/ClimateCause)  
 **领域**: 因果推理 / 数据集  

@@ -14,7 +14,7 @@ tags:
 
 # Copyright Infringement Detection in Text-to-Image Diffusion Models via Differential Privacy
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2509.23022](https://arxiv.org/abs/2509.23022)  
 **代码**: [项目页面](https://leo-xfm.github.io/pubs/dpm)  
 **领域**: 图像生成  

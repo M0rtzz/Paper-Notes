@@ -15,7 +15,7 @@ tags:
 
 # Fact2Fiction: Targeted Poisoning Attack to Agentic Fact-checking System
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.06059](https://arxiv.org/abs/2508.06059)  
 **代码**: [https://trustworthycomp.github.io/Fact2Fiction/](https://trustworthycomp.github.io/Fact2Fiction/)  
 **领域**: AI安全 / LLM Agent / 事实核查攻击  

@@ -15,7 +15,7 @@ tags:
 
 # TrajGuard: Streaming Hidden-state Trajectory Detection for Decoding-time Jailbreak Defense
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.07727](https://arxiv.org/abs/2604.07727)  
 **代码**: 无  
 **领域**: LLM对齐 / AI安全  

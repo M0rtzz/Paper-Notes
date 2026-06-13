@@ -15,7 +15,7 @@ tags:
 
 # LLM-Based Human-Agent Collaboration and Interaction Systems: A Survey
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2505.00753](https://arxiv.org/abs/2505.00753)  
 **代码**: https://github.com/HenryPengZou/Awesome-Human-Agent-Collaboration-Interaction-Systems  
 **领域**: 人机协作 / LLM Agent / 综述  

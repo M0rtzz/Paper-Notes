@@ -15,7 +15,7 @@ tags:
 
 # SpatialScore: Towards Comprehensive Evaluation for Spatial Intelligence
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2505.17012](https://arxiv.org/abs/2505.17012)  
 **代码**: [https://github.com/haoningwu3639/SpatialScore/](https://github.com/haoningwu3639/SpatialScore/)  
 **领域**: 多模态VLM  

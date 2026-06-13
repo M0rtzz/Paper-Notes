@@ -15,7 +15,7 @@ tags:
 
 # Revisit What You See: Revealing Visual Semantics in Vision Tokens to Guide LVLM Decoding
 
-**会议**: ACL2026  
+**会议**: ACL2026 Oral  
 **arXiv**: [2506.09522](https://arxiv.org/abs/2506.09522)  
 **代码**: https://github.com/bscho333/ReVisiT  
 **领域**: 多模态VLM  

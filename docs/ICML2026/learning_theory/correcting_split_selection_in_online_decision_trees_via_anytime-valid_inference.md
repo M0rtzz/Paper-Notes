@@ -14,7 +14,7 @@ tags:
 
 # Correcting Split Selection in Online Decision Trees via Anytime-Valid Inference
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.31239](https://arxiv.org/abs/2605.31239)  
 **代码**: 无  
 **领域**: 数据流学习 / 决策树 / 序贯推断  

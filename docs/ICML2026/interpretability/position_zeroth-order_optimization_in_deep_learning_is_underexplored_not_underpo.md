@@ -15,7 +15,7 @@ tags:
 
 # Position: Zeroth-Order Optimization in Deep Learning Is Underexplored, Not Underpowered
 
-**会议**: ICML2026  
+**会议**: ICML2026 Spotlight  
 **arXiv**: [2605.15622](https://arxiv.org/abs/2605.15622)  
 **代码**: 待确认  
 **领域**: optimization  

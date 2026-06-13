@@ -15,7 +15,7 @@ tags:
 
 # TIME: Temporally Intelligent Meta-Reasoning Engine for Context-Triggered Explicit Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.05300](https://arxiv.org/abs/2601.05300)  
 **代码**: https://github.com/The-Coherence-Initiative/TIME / https://github.com/The-Coherence-Initiative/TIMEBench  
 **领域**: LLM 推理 / 时间推理 / 行为对齐  

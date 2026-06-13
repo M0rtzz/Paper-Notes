@@ -15,7 +15,7 @@ tags:
 
 # FaithLens: Detecting and Explaining Faithfulness Hallucination
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2512.20182](https://arxiv.org/abs/2512.20182)  
 **代码**: [https://github.com/S1s-Z/FaithLens](https://github.com/S1s-Z/FaithLens)  
 **领域**: 幻觉检测  

@@ -15,7 +15,7 @@ tags:
 
 # Transfer Learning for Benign Overfitting in High-Dimensional Linear Regression
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.15337](https://arxiv.org/abs/2510.15337)  
 **作者**: Yeichan Kim (Yonsei University), Ilmun Kim (KAIST), Seyoung Park (Yonsei University)  
 **代码**: 未公开  

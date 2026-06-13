@@ -15,7 +15,7 @@ tags:
 
 # FineCog-Nav: Integrating Fine-grained Cognitive Modules for Zero-shot Multimodal UAV Navigation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.16298](https://arxiv.org/abs/2604.16298)  
 **代码**: [项目主页](https://smartdianlab.github.io/projects-FineCogNav)  
 **领域**: 机器人  

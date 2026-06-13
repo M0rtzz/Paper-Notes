@@ -15,7 +15,7 @@ tags:
 
 # UMoE: Unifying Attention and FFN with Shared Experts
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.07260](https://arxiv.org/abs/2505.07260)  
 **代码**: [github.com/ysngki/UMoE](https://github.com/ysngki/UMoE)  
 **领域**: LLM效率  

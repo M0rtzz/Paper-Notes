@@ -15,7 +15,7 @@ tags:
 
 # Learning Multi-Modal Prototypes for Cross-Domain Few-Shot Object Detection
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2602.18811](https://arxiv.org/abs/2602.18811)  
 **代码**: 无  
 **领域**: 目标检测  

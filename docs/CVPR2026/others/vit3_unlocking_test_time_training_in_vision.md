@@ -14,7 +14,7 @@ tags:
 
 # ViT3: Unlocking Test-Time Training in Vision
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Oral  
 **arXiv**: [2512.01643](https://arxiv.org/abs/2512.01643)  
 **代码**: [GitHub](https://github.com/LeapLabTHU/ViTTT)  
 **领域**: 高效架构 / 视觉序列建模  

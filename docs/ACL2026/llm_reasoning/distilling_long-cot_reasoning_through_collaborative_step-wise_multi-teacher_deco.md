@@ -15,7 +15,7 @@ tags:
 
 # Distilling Long-CoT Reasoning through Collaborative Step-wise Multi-Teacher Decoding (CoRD)
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.02290](https://arxiv.org/abs/2605.02290)  
 **代码**: 待确认 (论文未直接给出)  
 **领域**: 模型压缩 / 蒸馏 / Long-CoT 推理  

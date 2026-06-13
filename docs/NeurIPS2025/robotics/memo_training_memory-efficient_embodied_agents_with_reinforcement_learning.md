@@ -15,7 +15,7 @@ tags:
 
 # Memo: Training Memory-Efficient Embodied Agents with Reinforcement Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.19732](https://arxiv.org/abs/2510.19732)  
 **代码**: [GitHub](https://github.com/gunshi/memo)  
 **领域**: 强化学习  

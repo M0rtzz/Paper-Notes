@@ -15,7 +15,7 @@ tags:
 
 # Content Fuzzing for Escaping Information Cocoons on Social Media
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05461](https://arxiv.org/abs/2604.05461)  
 **代码**: 无  
 **领域**: 社交计算 / 对抗学习  

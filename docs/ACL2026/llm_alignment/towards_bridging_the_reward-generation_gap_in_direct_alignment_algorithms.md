@@ -15,7 +15,7 @@ tags:
 
 # Towards Bridging the Reward-Generation Gap in Direct Alignment Algorithms
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2506.09457](https://arxiv.org/abs/2506.09457)  
 **代码**: [GitHub](https://github.com/sustech-nlp/POET)  
 **领域**: LLM 对齐 / 偏好优化  

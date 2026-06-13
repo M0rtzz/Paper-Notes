@@ -15,7 +15,7 @@ tags:
 
 # SegMASt3R: Geometry Grounded Segment Matching
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.05051](https://arxiv.org/abs/2510.05051)  
 **代码**: 待确认  
 **领域**: 机器人  

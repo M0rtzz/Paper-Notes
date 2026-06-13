@@ -15,7 +15,7 @@ tags:
 
 # VITA-1.5: Towards GPT-4o Level Real-Time Vision and Speech Interaction
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2501.01957](https://arxiv.org/abs/2501.01957)  
 **代码**: [https://github.com/VITA-MLLM/VITA](https://github.com/VITA-MLLM/VITA)  
 **领域**: 多模态LLM / 语音交互  

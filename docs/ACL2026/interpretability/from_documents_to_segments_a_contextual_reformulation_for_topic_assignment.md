@@ -15,7 +15,7 @@ tags:
 
 # From Documents to Segments: A Contextual Reformulation for Topic Assignment
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.17714](https://arxiv.org/abs/2605.17714)  
 **代码**: 数据集 https://huggingface.co/datasets/LG-AI-Research/SemEval-STM；代码仓库缓存未提供  
 **领域**: 主题建模 / 可解释文本分析 / NLP理解  

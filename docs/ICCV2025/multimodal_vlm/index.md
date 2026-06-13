@@ -83,7 +83,7 @@ item_total: 143
 
 **📹 ICCV2025** · **143** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (209)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (99)](../../ICML2026/multimodal_vlm/index.md) · [💬 ACL2026 (94)](../../ACL2026/multimodal_vlm/index.md) · [📷 CVPR2026 (210)](../../CVPR2026/multimodal_vlm/index.md) · [🔬 ICLR2026 (85)](../../ICLR2026/multimodal_vlm/index.md) · [🤖 AAAI2026 (84)](../../AAAI2026/multimodal_vlm/index.md) · [🧠 NeurIPS2025 (139)](../../NeurIPS2025/multimodal_vlm/index.md)
 
 🔥 **高频主题：** 多模态 ×75 · LLM ×16 · 推理 ×14 · 少样本学习 ×5 · 压缩/编码 ×3
 
@@ -293,7 +293,7 @@ item_total: 143
 
 **[FinMMR: Make Financial Numerical Reasoning More Multimodal, Comprehensive, and Challenging](finmmr_make_financial_numerical_reasoning_more_multimodal_comprehensive_and_chal.md)**
 
-:   提出 FinMMR，一个双语（中英文）多模态金融数值推理基准，包含 4,300 道题目、8,700+ 张金融图表、14 个金融子领域，系统评估了 15 个 MLLM 在专业领域复杂推理中的瓶颈，并提出视觉过滤、知识增强和模型协作三种改进策略。
+:   提出 FinMMR，一个双语（中英文）多模态金融数值推理基准，包含 4300 道题目和 8700 张图像，覆盖 14 个金融子领域，要求模型进行多步精确数值计算；评测了 15 个 SOTA MLLM，最好模型在 Hard 子集仅达 53% 准确率，揭示了当前 MLLM 在专业领域多模态推理中的核心瓶颈。
 
 **[FOLDER: Accelerating Multi-modal Large Language Models with Enhanced Performance](folder_accelerating_multi-modal_large_language_models_with_enhanced_performance.md)**
 
@@ -401,7 +401,7 @@ item_total: 143
 
 **[LLaVA-KD: A Framework of Distilling Multimodal Large Language Models](llava-kd_a_framework_of_distilling_multimodal_large_language_models.md)**
 
-:   提出 LLaVA-KD 框架，通过多模态蒸馏(MDist)和关系蒸馏(RDist)策略配合三阶段训练方案(DPT-SFT-DFT)，将大规模 MLLM 的知识迁移到小规模 MLLM，在不修改模型架构的前提下显著提升小模型性能。
+:   提出 LLaVA-KD 框架，通过多模态蒸馏（MDist）和关系蒸馏（RDist）两种策略，结合三阶段训练方案（DPT-SFT-DFT），将大规模 MLLM 的知识高效迁移至小规模 MLLM，在不修改模型架构的前提下显著提升小模型性能。
 
 **[LLaVA-PruMerge: Adaptive Token Reduction for Efficient Large Multimodal Models](llava-prumerge_adaptive_token_reduction_for_efficient_large_multimodal_models.md)**
 
@@ -425,7 +425,7 @@ item_total: 143
 
 **[MetaMorph: Multimodal Understanding and Generation via Instruction Tuning](metamorph_multimodal_understanding_and_generation_via_instruction_tuning.md)**
 
-:   提出 Visual-Predictive Instruction Tuning（VPiT），仅通过轻量级指令微调即可将预训练 LLM 扩展为同时理解和生成视觉 token 的统一模型 MetaMorph，发现视觉生成能力是视觉理解的自然副产物且两者互利不对称。
+:   提出 Visual-Predictive Instruction Tuning（VPiT），通过简洁的指令微调扩展使预训练 LLM 同时输出文本 token 和连续视觉 token，发现视觉生成能力作为理解能力的自然副产物涌现，并训练了统一模型 MetaMorph 在理解和生成基准上均达到竞争水平。
 
 **[METEOR: Multi-Encoder Collaborative Token Pruning for Efficient Vision Language Models](meteor_multi-encoder_collaborative_token_pruning_for_efficient_vision_language_m.md)**
 

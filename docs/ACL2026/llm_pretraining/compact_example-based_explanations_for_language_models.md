@@ -15,7 +15,7 @@ tags:
 
 # Compact Example-Based Explanations for Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.03786](https://arxiv.org/abs/2601.03786)  
 **代码**: 无  
 **领域**: LLM预训练  

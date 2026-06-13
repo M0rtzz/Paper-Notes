@@ -15,7 +15,7 @@ tags:
 
 # Protein Design with Dynamic Protein Vocabulary
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.18966](https://arxiv.org/abs/2505.18966)  
 **代码**: [GitHub](https://github.com/sornkL/ProDVa)  
 **领域**: 计算生物

@@ -15,7 +15,7 @@ tags:
 
 # SceneSmith: Agentic Generation of Simulation-Ready Indoor Scenes
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.09153](https://arxiv.org/abs/2602.09153)  
 **代码**: https://scenesmith.github.io/ (项目主页)  
 **领域**: 3D视觉 / 室内场景生成 / Agentic AI / 机器人仿真  

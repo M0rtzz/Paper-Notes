@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Preference Estimation via Opponent Modeling in Multi-Agent Negotiation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.15687](https://arxiv.org/abs/2604.15687)  
 **代码**: 无  
 **领域**: 视频理解  

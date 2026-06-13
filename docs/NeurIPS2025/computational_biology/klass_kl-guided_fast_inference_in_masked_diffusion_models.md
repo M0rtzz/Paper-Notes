@@ -15,7 +15,7 @@ tags:
 
 # KLASS: KL-Guided Fast Inference in Masked Diffusion Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.05664](https://arxiv.org/abs/2511.05664)  
 **代码**: [GitHub](https://github.com/shkim0116/KLASS)  
 **领域**: 计算生物

@@ -14,7 +14,7 @@ tags:
 
 # PragWorld: A Benchmark Evaluating LLMs' Local World Model under Minimal Linguistic Alterations and Conversational Dynamics
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13021](https://arxiv.org/abs/2511.13021)  
 **代码**: [https://github.com/SachinVashisth/PRAGWORLD](https://github.com/SachinVashisth/PRAGWORLD)  
 **领域**: 视频理解  

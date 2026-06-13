@@ -15,7 +15,7 @@ tags:
 
 # CoordAR: One-Reference 6D Pose Estimation of Novel Objects via Autoregressive Coordinate Map Generation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.12919](https://arxiv.org/abs/2511.12919)  
 **代码**: [项目页面](https://sjtu-visys-team.github.io/CoordAR)  
 **领域**: 人体理解  

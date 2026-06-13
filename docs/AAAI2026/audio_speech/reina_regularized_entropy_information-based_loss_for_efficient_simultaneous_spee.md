@@ -15,7 +15,7 @@ tags:
 
 # REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.04946](https://arxiv.org/abs/2508.04946)  
 **代码**: 无  
 **领域**: 音频语音  

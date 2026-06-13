@@ -15,7 +15,7 @@ tags:
 
 # OpenHOI: Open-World Hand-Object Interaction Synthesis with Multimodal Large Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2505.18947](https://arxiv.org/abs/2505.18947)  
 **代码**: 有  
 **领域**: 多模态VLM / 手物交互  

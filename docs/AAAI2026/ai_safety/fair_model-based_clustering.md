@@ -15,7 +15,7 @@ tags:
 
 # Fair Model-Based Clustering
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2602.21509](https://arxiv.org/abs/2602.21509)  
 **代码**: 无  
 **领域**: AI安全/公平性  

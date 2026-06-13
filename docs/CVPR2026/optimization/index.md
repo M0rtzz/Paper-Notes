@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 优化/理论论文汇总 · 16篇论文解读
+  CVPR2026 优化/理论论文汇总 · 17篇论文解读
 description: >-
-  16篇CVPR2026的优化/理论方向论文解读，涵盖联邦学习、对抗鲁棒、自监督学习、压缩/编码、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  17篇CVPR2026的优化/理论方向论文解读，涵盖联邦学习、对抗鲁棒、自监督学习、压缩/编码、模型压缩等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "优化/理论"
@@ -46,13 +46,15 @@ item_list:
     t: "The Power of Decaying Steps: Enhancing Attack Stability and Transferability for Sign-based Optimizers"
   - u: "unifusion_a_unified_image_fusion_framework_with_robust_representation_and_source/"
     t: "UniFusion: A Unified Image Fusion Framework with Robust Representation and Source-Aware Preservation"
-item_total: 16
+  - u: "zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training/"
+    t: "ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training"
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📐 优化/理论
 
-**📷 CVPR2026** · **16** 篇论文解读
+**📷 CVPR2026** · **17** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (64)](../../ICML2026/optimization/index.md) · [🔬 ICLR2026 (47)](../../ICLR2026/optimization/index.md) · [🤖 AAAI2026 (21)](../../AAAI2026/optimization/index.md) · [🧠 NeurIPS2025 (126)](../../NeurIPS2025/optimization/index.md) · [📹 ICCV2025 (7)](../../ICCV2025/optimization/index.md) · [🧪 ICML2025 (61)](../../ICML2025/optimization/index.md)
 
@@ -121,3 +123,7 @@ item_total: 16
 **[UniFusion: A Unified Image Fusion Framework with Robust Representation and Source-Aware Preservation](unifusion_a_unified_image_fusion_framework_with_robust_representation_and_source.md)**
 
 :   提出 UniFusion 统一图像融合框架，利用 DINOv3 自监督语义先验构建跨模态共享特征空间，通过重建对齐机制保留源图信息，并以双层优化策略解耦重建与融合目标，在红外-可见光、多曝光、多焦点、医学图像等多任务上均达到 SOTA。
+
+**[ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)**
+
+:   提出 ZO-SAM，在 SAM 的扰动步骤中用零阶梯度估计替代反向传播，将 SAM 的计算开销从 2 次反传减少为 1 次，首次让 SAM 在稀疏训练中变得实用，在 CIFAR-10/100 和 ImageNet-1K 上一致提升所有主流稀疏训练方法 0.38%-2.54%。

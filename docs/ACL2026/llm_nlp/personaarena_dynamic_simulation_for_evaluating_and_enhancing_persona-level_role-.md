@@ -15,7 +15,7 @@ tags:
 
 # PersonaArena: Dynamic Simulation for Evaluating and Enhancing Persona-Level Role-Playing in Large Language Models
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.17044](https://arxiv.org/abs/2605.17044)  
 **代码**: https://aka.ms/personaarena  
 **领域**: LLM 角色扮演评估 / Persona-level Simulation  

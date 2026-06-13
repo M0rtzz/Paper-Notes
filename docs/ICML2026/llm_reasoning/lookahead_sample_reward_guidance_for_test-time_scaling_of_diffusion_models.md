@@ -15,7 +15,7 @@ tags:
 
 # Lookahead Sample Reward Guidance for Test-Time Scaling of Diffusion Models
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.03211](https://arxiv.org/abs/2602.03211)  
 **代码**: https://github.com/aailab-kaist/Diffusion-LiDAR-Sampling  
 **领域**: 扩散模型 / 测试时扩展 / 奖励引导  

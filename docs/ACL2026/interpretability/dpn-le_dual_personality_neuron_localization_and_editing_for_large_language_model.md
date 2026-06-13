@@ -15,7 +15,7 @@ tags:
 
 # DPN-LE: Dual Personality Neuron Localization and Editing for Large Language Models
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.27929](https://arxiv.org/abs/2604.27929)  
 **代码**: https://github.com/Z1ivan/DPN-LE  
 **领域**: LLM可解释性 / 模型编辑  

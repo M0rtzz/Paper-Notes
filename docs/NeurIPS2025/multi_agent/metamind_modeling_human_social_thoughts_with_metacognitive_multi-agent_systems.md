@@ -15,7 +15,7 @@ tags:
 
 # MetaMind: Modeling Human Social Thoughts with Metacognitive Multi-Agent Systems
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.18943](https://arxiv.org/abs/2505.18943)  
 **代码**: [GitHub](https://github.com/XMZhangAI/MetaMind)  
 **领域**: 对话系统  

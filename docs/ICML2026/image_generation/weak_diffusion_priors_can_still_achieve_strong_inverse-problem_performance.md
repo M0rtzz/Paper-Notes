@@ -15,7 +15,7 @@ tags:
 
 # Weak Diffusion Priors Can Still Achieve Strong Inverse-Problem Performance
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2601.22443](https://arxiv.org/abs/2601.22443)  
 **代码**: 待确认  
 **领域**: 图像生成 / 扩散模型 / 逆问题求解  

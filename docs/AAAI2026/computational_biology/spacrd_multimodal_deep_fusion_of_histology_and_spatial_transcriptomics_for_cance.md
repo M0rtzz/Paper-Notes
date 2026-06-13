@@ -17,7 +17,7 @@ tags:
 
 # SpaCRD: Multimodal Deep Fusion of Histology and Spatial Transcriptomics for Cancer Region Detection
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2603.06186](https://arxiv.org/abs/2603.06186)  
 **代码**: [github.com/wenwenmin/SpaCRD](https://github.com/wenwenmin/SpaCRD)  
 **领域**: 计算生物

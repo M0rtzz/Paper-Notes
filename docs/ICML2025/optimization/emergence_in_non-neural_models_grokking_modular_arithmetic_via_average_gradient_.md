@@ -17,7 +17,7 @@ tags:
 
 # Emergence in Non-Neural Models: Grokking Modular Arithmetic via Average Gradient Outer Product
 
-**会议**: ICML2025  
+**会议**: ICML2025 Oral Spotlight  
 **arXiv**: [2407.20199](https://arxiv.org/abs/2407.20199)  
 **代码**: [nmallinar/rfm-grokking](https://github.com/nmallinar/rfm-grokking)  
 **领域**: 优化 / Grokking / 特征学习  

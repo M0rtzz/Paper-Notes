@@ -15,7 +15,7 @@ tags:
 
 # Mean-Field Sampling for Cooperative Multi-Agent Reinforcement Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Best Paper Spotlight  
 **arXiv**: [2412.00661](https://arxiv.org/abs/2412.00661)  
 **代码**: [emiletimothy/Mean-Field-Subsample-Q-Learning](https://github.com/emiletimothy/Mean-Field-Subsample-Q-Learning)  
 **领域**: 多智能体强化学习  

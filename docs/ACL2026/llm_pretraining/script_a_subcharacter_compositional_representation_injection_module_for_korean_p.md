@@ -15,7 +15,7 @@ tags:
 
 # SCRIPT: A Subcharacter Compositional Representation Injection Module for Korean Pre-Trained Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.12377](https://arxiv.org/abs/2604.12377)  
 **代码**: [GitHub](https://github.com/SungHo3268/SCRIPT)  
 **领域**: LLM 预训练 / 韩语NLP  

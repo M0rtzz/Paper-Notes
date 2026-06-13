@@ -15,7 +15,7 @@ tags:
 
 # How Do Answer Tokens Read Reasoning Traces? Self-Reading Patterns in Thinking LLMs
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19149](https://arxiv.org/abs/2604.19149)  
 **代码**: 无  
 **领域**: LLM/NLP  

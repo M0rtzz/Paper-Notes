@@ -15,7 +15,7 @@ tags:
 
 # 3DrawAgent: Teaching LLM to Draw in 3D with Early Contrastive Experience
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2604.08042](https://arxiv.org/abs/2604.08042)  
 **代码**: 无（基于LLM API）  
 **领域**: 3D视觉 / 生成式AI  

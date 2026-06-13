@@ -15,7 +15,7 @@ tags:
 
 # Self-Correcting Text-to-Video Generation with Misalignment Detection and Localized Refinement
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2411.15115](https://arxiv.org/abs/2411.15115)  
 **代码**: [video-repair](https://video-repair.github.io/)  
 **领域**: 视频生成  

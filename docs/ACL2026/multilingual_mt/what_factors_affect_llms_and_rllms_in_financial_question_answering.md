@@ -15,7 +15,7 @@ tags:
 
 # What Factors Affect LLMs and RLLMs in Financial Question Answering?
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2507.08339](https://arxiv.org/abs/2507.08339)  
 **代码**: [https://github.com/WPENGxs/LLM_RLLM_financial_analysis](https://github.com/WPENGxs/LLM_RLLM_financial_analysis)  
 **领域**: 多语言/金融NLP  

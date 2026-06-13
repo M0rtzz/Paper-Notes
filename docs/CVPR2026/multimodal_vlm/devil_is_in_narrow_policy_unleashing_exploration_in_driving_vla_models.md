@@ -15,7 +15,7 @@ tags:
 
 # Devil is in Narrow Policy: Unleashing Exploration in Driving VLA Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.06049](https://arxiv.org/abs/2603.06049)  
 **代码**: [GitHub](https://github.com/Mashiroln/curious_vla.git)  
 **领域**: 多模态VLM  

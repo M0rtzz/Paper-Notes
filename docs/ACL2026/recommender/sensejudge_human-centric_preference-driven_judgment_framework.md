@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # SenseJudge: Human-Centric Preference-Driven Judgment Framework
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2606.03189](https://arxiv.org/abs/2606.03189)  
 **代码**: [GitHub](https://github.com/qiongrenpiqida/SenseJudge)  
 **领域**: recommender  

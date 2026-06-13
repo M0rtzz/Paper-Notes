@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Rerank Before You Reason: Analyzing Reranking Tradeoffs through Effective Token Cost in Deep Search Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.14224](https://arxiv.org/abs/2601.14224)  
 **代码**: [https://github.com/sahel-sh/DeepHone](https://github.com/sahel-sh/DeepHone)  
 **领域**: information_retrieval  

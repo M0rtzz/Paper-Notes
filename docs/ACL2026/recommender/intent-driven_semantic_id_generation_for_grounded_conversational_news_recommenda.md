@@ -15,7 +15,7 @@ tags:
 
 # Intent-Driven Semantic ID Generation for Grounded Conversational News Recommendation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2605.07613](https://arxiv.org/abs/2605.07613)  
 **代码**: 待确认  
 **领域**: 推荐 / 对话 / 生成式推荐 / 语义 ID  

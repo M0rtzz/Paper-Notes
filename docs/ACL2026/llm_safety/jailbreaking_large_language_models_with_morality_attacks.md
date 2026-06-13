@@ -15,7 +15,7 @@ tags:
 
 # Jailbreaking Large Language Models with Morality Attacks
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17053](https://arxiv.org/abs/2604.17053)  
 **代码**: [GitHub](https://github.com/MMLC-lab/Jailbreaking-LLM-Morality)  
 **领域**: AI安全 / 道德鲁棒性  

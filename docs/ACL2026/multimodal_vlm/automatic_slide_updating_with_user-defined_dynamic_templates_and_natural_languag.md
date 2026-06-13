@@ -15,7 +15,7 @@ tags:
 
 # Automatic Slide Updating with User-Defined Dynamic Templates and Natural Language Instructions
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17894](https://arxiv.org/abs/2604.17894)  
 **代码**: [github](https://github.com/XiaoZhou2024/SlideAgent)  
 **领域**: Multimodal/VLM  

@@ -15,7 +15,7 @@ tags:
 
 # Counteractive RL: Rethinking Core Principles for Efficient and Scalable Deep Reinforcement Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2603.15871](https://arxiv.org/abs/2603.15871)  
 **代码**: 待确认  
 **领域**: 强化学习 / 样本效率  

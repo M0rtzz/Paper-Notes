@@ -15,7 +15,7 @@ tags:
 
 # Chebyshev Policies and the Mountain Car Problem: Reinforcement Learning for Low-Dimensional Control Tasks
 
-**会议**: ICML2026  
+**会议**: ICML2026 Oral  
 **arXiv**: [2605.22305](https://arxiv.org/abs/2605.22305)  
 **代码**: [GitHub](https://github.com/2oo1/chebyshev-policies) (有)  
 **领域**: 强化学习  

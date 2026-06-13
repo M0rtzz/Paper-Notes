@@ -15,7 +15,7 @@ tags:
 
 # Mind-the-Glitch: Visual Correspondence for Detecting Inconsistencies in Subject-Driven Generation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.21989](https://arxiv.org/abs/2509.21989)  
 **代码**: [GitHub](https://github.com/abdo-eldesokey/mind-the-glitch)  
 **领域**: 图像生成 / 视觉对应  

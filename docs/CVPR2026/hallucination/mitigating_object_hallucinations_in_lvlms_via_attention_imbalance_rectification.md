@@ -15,7 +15,7 @@ tags:
 
 # Mitigating Object Hallucination in LVLMs via Attention Imbalance Rectification
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.24058](https://arxiv.org/abs/2603.24058)  
 **代码**: 无  
 **领域**: 幻觉检测  

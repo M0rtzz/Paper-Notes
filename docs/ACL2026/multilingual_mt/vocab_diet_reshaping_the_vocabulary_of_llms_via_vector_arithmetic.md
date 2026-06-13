@@ -15,7 +15,7 @@ tags:
 
 # Vocab Diet: Reshaping the Vocabulary of LLMs via Vector Arithmetic
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.17001](https://arxiv.org/abs/2510.17001)  
 **代码**: [GitHub](https://vocabdiet.github.io)  
 **领域**: 多语言翻译  

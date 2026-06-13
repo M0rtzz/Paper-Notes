@@ -15,7 +15,7 @@ tags:
 
 # OnlineSplatter: Pose-Free Online 3D Reconstruction for Free-Moving Objects
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.20605](https://arxiv.org/abs/2510.20605)  
 **代码**: [https://markhh.com/OnlineSplatter](https://markhh.com/OnlineSplatter)  
 **领域**: 3D视觉  

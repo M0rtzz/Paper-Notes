@@ -15,7 +15,7 @@ tags:
 
 # Lost in the Prompt Order: Revealing the Limitations of Causal Attention in Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.14152](https://arxiv.org/abs/2601.14152)  
 **代码**: 无  
 **领域**: NLP Understanding / Prompt Sensitivity  

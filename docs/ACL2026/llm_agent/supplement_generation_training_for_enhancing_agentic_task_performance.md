@@ -15,7 +15,7 @@ tags:
 
 # Supplement Generation Training for Enhancing Agentic Task Performance
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.20727](https://arxiv.org/abs/2604.20727)  
 **代码**: 无  
 **领域**: 模型压缩  

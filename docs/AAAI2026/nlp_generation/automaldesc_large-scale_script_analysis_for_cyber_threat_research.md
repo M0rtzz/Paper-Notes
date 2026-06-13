@@ -15,7 +15,7 @@ tags:
 
 # AutoMalDesc: Large-Scale Script Analysis for Cyber Threat Research
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13333](https://arxiv.org/abs/2511.13333)  
 **代码**: [https://github.com/CrowdStrike/automaldesc](https://github.com/CrowdStrike/automaldesc)  
 **领域**: 文本生成  

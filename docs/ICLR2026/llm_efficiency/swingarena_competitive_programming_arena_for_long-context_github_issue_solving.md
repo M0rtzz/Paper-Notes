@@ -15,7 +15,7 @@ tags:
 
 # SwingArena: Adversarial Programming Arena for Long-context GitHub Issue Solving
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2505.23932](https://arxiv.org/abs/2505.23932)  
 **代码**: [GitHub](https://github.com/) / [HuggingFace Dataset](https://huggingface.co/)  
 **领域**: LLM效率  

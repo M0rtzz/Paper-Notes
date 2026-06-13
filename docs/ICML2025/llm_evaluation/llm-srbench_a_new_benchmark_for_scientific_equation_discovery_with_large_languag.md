@@ -15,7 +15,7 @@ tags:
 
 # LLM-SRBench: A New Benchmark for Scientific Equation Discovery with LLMs
 
-**会议**: ICML2025  
+**会议**: ICML2025 Oral  
 **arXiv**: [2504.10415](https://arxiv.org/abs/2504.10415)  
 **代码**: [GitHub - LLM-SRBench](https://github.com/deep-symbolic-mathematics/llm-srbench)  
 **领域**: LLM评测  

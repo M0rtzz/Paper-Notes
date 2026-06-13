@@ -15,7 +15,7 @@ tags:
 
 # Not All Animals Are Equal: Metaphorical Framing through Source Domains and Semantic Frames
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.20454](https://arxiv.org/abs/2604.20454)  
 **代码**: [https://github.com/julia-nixie/ConceptFrameMet](https://github.com/julia-nixie/ConceptFrameMet)  
 **领域**: LLM/NLP  

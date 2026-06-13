@@ -15,7 +15,7 @@ tags:
 
 # Wavelet Canonical Coherence for Nonstationary Signals
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.14253](https://arxiv.org/abs/2505.14253)  
 **代码**: [有](https://github.com/mhaibo/WaveCanCoh)  
 **领域**: 时间序列分析 / 信号处理  

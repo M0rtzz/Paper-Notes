@@ -15,7 +15,7 @@ tags:
 
 # Overcoming Multi-step Complexity in Multimodal Theory-of-Mind Reasoning: A Scalable Bayesian Planner
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2506.01301](https://arxiv.org/abs/2506.01301)  
 **作者**: Chunhui Zhang, Zhongyu Ouyang, Kwonjoon Lee, Nakul Agarwal, Sean Dae Houlihan, Soroush Vosoughi, Shao-Yuan Lo
 **代码**: 待确认  

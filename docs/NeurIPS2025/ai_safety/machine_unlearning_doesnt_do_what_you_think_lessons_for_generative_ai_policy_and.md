@@ -15,7 +15,7 @@ tags:
 
 # Machine Unlearning Doesn't Do What You Think: Lessons for Generative AI Policy and Research
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2412.06966](https://arxiv.org/abs/2412.06966)  
 **代码**: 无  
 **领域**: AI安全 / 政策分析  

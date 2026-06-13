@@ -15,7 +15,7 @@ tags:
 
 # Similarity-Distance-Magnitude Activations
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2509.12760](https://arxiv.org/abs/2509.12760)  
 **代码**: 无  
 **领域**: 可解释性 / 不确定性估计  

@@ -14,7 +14,7 @@ tags:
 
 # Understanding Self-Supervised Learning via Latent Distribution Matching
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.03517](https://arxiv.org/abs/2605.03517)  
 **代码**: 无  
 **领域**: 自监督表示学习 / ICA 与可识别性 / 表示学习理论  

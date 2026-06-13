@@ -82,7 +82,7 @@ item_total: 45
 
 **🤖 AAAI2026** · **45** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (41)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (26)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (24)](../../ICCV2025/ai_safety/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (41)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [📷 CVPR2026 (27)](../../CVPR2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (24)](../../ICCV2025/ai_safety/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×17 · 水印/隐写 ×5 · 联邦学习 ×3 · 语音 ×2 · 推荐系统 ×2
 
@@ -260,7 +260,7 @@ item_total: 45
 
 **[Truth, Justice, and Secrecy: Cake Cutting Under Privacy Constraints](truth_justice_and_secrecy_cake_cutting_under_privacy_constraints.md)**
 
-:   本文提出首个隐私保护的蛋糕切割协议 PP_CC_puv，将 Chen 等人的策略防操纵公平分配算法改造为基于秘密共享和安全多方计算（MPC）的隐私保护版本，在保持无嫉妒性、Pareto 最优和策略防操纵性的同时，确保参与者的偏好信息不被泄露。
+:   提出首个隐私保护的蛋糕切割协议 PP_CC_puv，基于秘密共享和安全多方计算（MPC）技术改造 Chen et al. 的策略防操纵算法，在保持无嫉妒、Pareto 最优和策略防操纵性质的同时防止任何参与方获知他人偏好信息。
 
 **[Yours or Mine? Overwriting Attacks Against Neural Audio Watermarking](yours_or_mine_overwriting_attacks_against_neural_audio_watermarking.md)**
 

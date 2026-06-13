@@ -15,7 +15,7 @@ tags:
 
 # Syntax as a Rosetta Stone: Universal Dependencies for In-Context Coptic Translation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18758](https://arxiv.org/abs/2604.18758)  
 **代码**: [GitHub](https://github.com/gucorpling/in-context-coptic-translation)  
 **领域**: 低资源机器翻译 / 多语言NLP  

@@ -15,7 +15,7 @@ tags:
 
 # PathMind: A Retrieve-Prioritize-Reason Framework for Knowledge Graph Reasoning with Large Language Models
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.14256](https://arxiv.org/abs/2511.14256)  
 **代码**: [github.com/liuyudiy/PathMind](https://github.com/liuyudiy/PathMind)  
 **领域**: 图学习  

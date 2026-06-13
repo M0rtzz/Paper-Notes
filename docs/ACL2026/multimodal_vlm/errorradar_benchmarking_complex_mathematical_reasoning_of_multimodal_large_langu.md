@@ -15,7 +15,7 @@ tags:
 
 # ErrorRadar: Benchmarking Complex Mathematical Reasoning of Multimodal Large Language Models Via Error Detection
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2410.04509](https://arxiv.org/abs/2410.04509)  
 **代码**: 无  
 **领域**: 多模态VLM / 数学推理评估  

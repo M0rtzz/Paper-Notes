@@ -15,7 +15,7 @@ tags:
 
 # CaDyT: Causal Structure Learning for Dynamical Systems with Theoretical Score Analysis
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2512.14361](https://arxiv.org/abs/2512.14361)  
 **代码**: 附录提供  
 **领域**: 因果推理 / 动力系统  

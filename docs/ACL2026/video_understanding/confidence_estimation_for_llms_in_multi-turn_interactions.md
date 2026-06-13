@@ -15,7 +15,7 @@ tags:
 
 # Confidence Estimation for LLMs in Multi-turn Interactions
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.02179](https://arxiv.org/abs/2601.02179)  
 **代码**: 论文提及 GitHub（有，链接见原文）  
 **领域**: LLM 校准 / 对话 / 置信度估计  

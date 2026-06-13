@@ -15,7 +15,7 @@ tags:
 
 # InfoNCE Induces Gaussian Distribution
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2602.24012](https://arxiv.org/abs/2602.24012)  
 **代码**: 无  
 **领域**: 自监督学习 / 对比学习 / 理论分析  

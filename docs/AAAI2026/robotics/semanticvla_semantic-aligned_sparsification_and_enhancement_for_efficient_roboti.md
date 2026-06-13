@@ -15,7 +15,7 @@ tags:
 
 # SemanticVLA: Semantic-Aligned Sparsification and Enhancement for Efficient Robotic Manipulation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.10518](https://arxiv.org/abs/2511.10518)  
 **代码**: 无  
 **领域**: 机器人  

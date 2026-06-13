@@ -15,7 +15,7 @@ tags:
 
 # Privacy on the Fly: A Predictive Adversarial Transformation Network for Mobile Sensor Data
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.07242](https://arxiv.org/abs/2511.07242)  
 **代码**: [https://github.com/skysky4/PATN](https://github.com/skysky4/PATN)  
 **领域**: AI安全  

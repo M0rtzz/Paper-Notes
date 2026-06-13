@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 3D视觉论文汇总 · 264篇论文解读
+  ICCV2025 3D视觉论文汇总 · 267篇论文解读
 description: >-
-  264篇ICCV2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、点云、动态场景、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  267篇ICCV2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、点云、动态场景、对抗鲁棒、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "3D 视觉"
@@ -75,17 +75,17 @@ item_list:
     t: "ATLAS: Decoupling Skeletal and Shape Parameters for Expressive Parametric Human Modeling"
   - u: "auto-regressively_generating_multi-view_consistent_images/"
     t: "Auto-Regressively Generating Multi-View Consistent Images"
-item_total: 264
+item_total: 267
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**📹 ICCV2025** · **264** 篇论文解读
+**📹 ICCV2025** · **267** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (239)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×48 · 扩散模型 ×26 · 点云 ×16 · 动态场景 ×15 · 对抗鲁棒 ×12
+🔥 **高频主题：** 3D 高斯渲染 ×48 · 扩散模型 ×26 · 点云 ×16 · 动态场景 ×15 · 对抗鲁棒 ×13
 
 **[TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update](2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)**
 
@@ -575,13 +575,21 @@ item_total: 264
 
 :   本文提出 HairCUP，一种将头部建模分解为面部和头发两个独立潜空间的组合式通用先验模型，通过合成无发数据创建管线实现有效解耦，支持灵活的面部/发型交换和少样本单目适配。
 
+**[Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)**
+
+:   提出 Hi3DGen 框架，以法线图作为中间表示桥接 2D 图像到 3D 几何的映射，通过噪声注入回归式法线估计器（NiRNE）和法线正则化潜在扩散（NoRLD）两大核心组件，显著提升生成 3D 模型的几何细节保真度。
+
 **[Hierarchical Material Recognition from Local Appearance](hierarchical_material_recognition_from_local_appearance.md)**
 
 :   提出面向视觉应用的层级式材质分类学体系(taxonomy)与野外数据集 Matador（含深度图的 ~7200 张材质图像，57类），并基于图注意力网络(GAT)利用分类学的层级亲缘关系进行材质识别，在多个基准数据集上达到 SOTA，同时支持新材质的小样本学习和场景中任意点的材质探测。
 
+**[HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity](hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu.md)**
+
+:   提出 HiNeuS，一个统一的神经表面重建框架，通过 SDF 引导的可见性验证、平面共形正则化和渲染优先的 Eikonal 松弛三项创新，同时解决反射歧义、低纹理退化和细节保留三大核心挑战。
+
 **[HIS-GPT: Towards 3D Human-In-Scene Multimodal Understanding](his-gpt_towards_3d_human-in-scene_multimodal_understanding.md)**
 
-:   提出 HIS-GPT，首个面向3D人-场景联合理解的多模态大语言模型，通过辅助交互模块(AInt)和布局-轨迹位置编码(LTP)捕获人场交互线索，并构建首个系统性基准 HIS-Bench，在HIS-QA任务上大幅超越GPT-4o等基线。
+:   提出 HIS-QA 任务和 HIS-Bench 基准以及首个 3D 人体-场景联合理解基础模型 HIS-GPT，通过辅助交互模块（AInt）和布局-轨迹位置编码（LTP）捕获人与3D场景的精细交互，在16项子任务上大幅超越 GPT-4o 等基线。
 
 **[HORT: Monocular Hand-held Objects Reconstruction with Transformers](hort_monocular_hand-held_objects_reconstruction_with_transformers.md)**
 
@@ -767,6 +775,10 @@ item_total: 264
 
 :   提出遮挡感知的场景划分策略和基于区域的渲染技术,通过相机共可见性图聚类实现与场景布局对齐的分区,显著提升大场景3DGS重建质量和渲染速度。
 
+**[Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration](omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration.md)**
+
+:   提出 OMNI-DC，通过多分辨率深度积分器（Multi-res DDI）、Laplacian 损失和尺度归一化技术，构建了一个能够零样本泛化到不同数据集和稀疏深度模式的高鲁棒深度补全模型。
+
 **[One Look is Enough: Seamless Patchwise Refinement for Zero-Shot Monocular Depth Estimation on High-Resolution Images](one_look_is_enough_seamless_patchwise_refinement_for_zero-shot_monocular_depth_e.md)**
 
 :   提出 PRO（Patch Refine Once），通过分组块一致性训练（GPCT）和无偏遮罩（BFM）策略，在高分辨率图像上实现无缝的逐块深度精炼，仅需每块单次精炼即可消除边界伪影，推理速度比 PatchRefiner 快12倍。
@@ -877,7 +889,7 @@ item_total: 264
 
 **[RoboTron-Mani: All-in-One Multimodal Large Model for Robotic Manipulation](robotron-mani_all-in-one_multimodal_large_model_for_robotic_manipulation.md)**
 
-:   提出多模态机器人操作模型 RoboTron-Mani 和综合数据集 RoboData，通过相机参数与占用监督增强3D感知、Modality-Isolation-Mask 实现灵活多模态融合，首次作为通才策略在多个数据集上同时超越专家模型。
+:   提出多模态机器人操作大模型 RoboTron-Mani 和综合数据集 RoboData，通过 3D 感知增强（UVFormer + 占据监督）与模态隔离掩码（MIM）实现多数据集联合训练，首次作为通才策略在多个数据集上同时超越专家模型。
 
 **[Robust and Efficient 3D Gaussian Splatting for Urban Scene Reconstruction](robust_and_efficient_3d_gaussian_splatting_for_urban_scene_reconstruction.md)**
 

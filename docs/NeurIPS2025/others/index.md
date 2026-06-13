@@ -1,21 +1,19 @@
 ---
 title: >-
-  NeurIPS2025 其他论文汇总 · 130篇论文解读
+  NeurIPS2025 其他论文汇总 · 121篇论文解读
 description: >-
-  130篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、布局/合成、对齐/RLHF、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  121篇NeurIPS2025的其他方向论文解读，涵盖对抗鲁棒、对齐/RLHF、布局/合成、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "其他"
   - "论文解读"
   - "论文笔记"
   - "对抗鲁棒"
-  - "布局/合成"
   - "对齐/RLHF"
+  - "布局/合成"
   - "扩散模型"
   - "推理"
 item_list:
-  - u: "3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization/"
-    t: "3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization"
   - u: "a_differentiable_model_of_supply-chain_shocks/"
     t: "A Differentiable Model of Supply-Chain Shocks"
   - u: "a_sustainable_ai_economy_needs_data_deals_that_work_for_gene/"
@@ -36,8 +34,6 @@ item_list:
     t: "Aggregation Hides OOD Generalization Failures from Spurious Correlations"
   - u: "alias-free_vit_fractional_shift_invariance_via_linear_attention/"
     t: "Alias-Free ViT: Fractional Shift Invariance via Linear Attention"
-  - u: "are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi/"
-    t: "Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?"
   - u: "asymmetric_duos_sidekicks_improve_uncertainty/"
     t: "Asymmetric Duos: Sidekicks Improve Uncertainty"
   - u: "bispectral_ot_dataset_comparison_using_symmetry-aware_optimal_transport/"
@@ -74,21 +70,21 @@ item_list:
     t: "egoEMOTION: Egocentric Vision and Physiological Signals for Emotion and Personality Recognition in Real-World Tasks"
   - u: "emergency_response_measures_for_catastrophic_ai_risk/"
     t: "Emergency Response Measures for Catastrophic AI Risk"
-item_total: 130
+  - u: "equivariance_by_contrast_identifiable_equivariant_embeddings_from_unlabeled_fini/"
+    t: "Equivariance by Contrast: Identifiable Equivariant Embeddings from Unlabeled Finite Group Actions"
+  - u: "estimation_of_stochastic_optimal_transport_maps/"
+    t: "Estimation of Stochastic Optimal Transport Maps"
+item_total: 121
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧠 NeurIPS2025** · **130** 篇论文解读
+**🧠 NeurIPS2025** · **121** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [📹 ICCV2025 (33)](../../ICCV2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×5 · 布局/合成 ×3 · 对齐/RLHF ×3 · 扩散模型 ×2 · 推理 ×2
-
-**[3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)**
-
-:   提出 3DID 框架，通过学习物理-几何统一的三平面隐空间表示 + 目标梯度引导扩散采样 + 拓扑保持精炼的两阶段策略，从随机噪声开始直接在完整 3D 空间中进行逆向设计，在车辆气动外形优化上，模拟阻力（Sim-Drag）相比最优基线降低 13.6%。
+🔥 **高频主题：** 对抗鲁棒 ×5 · 对齐/RLHF ×3 · 布局/合成 ×2 · 扩散模型 ×2 · 推理 ×2
 
 **[A Differentiable Model of Supply-Chain Shocks](a_differentiable_model_of_supply-chain_shocks.md)**
 
@@ -129,10 +125,6 @@ item_total: 130
 **[Alias-Free ViT: Fractional Shift Invariance via Linear Attention](alias-free_vit_fractional_shift_invariance_via_linear_attention.md)**
 
 :   提出Alias-Free Vision Transformer（AFT），结合抗混叠信号处理技术和shift-equivariant线性交叉协方差注意力，首次使ViT在分数像素（亚像素）平移下保持接近完美的一致性（~99%），同时在ImageNet分类准确率上几乎无损。
-
-**[Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)**
-
-:   揭示 PSNR/SSIM 等像素级指标无法反映稀疏视图 CT 重建中解剖结构完整性（相关性仅 0.16-0.30），提出基于自动分割的解剖感知指标（NSD/clDice）和 CARE 框架——在扩散模型训练中加入分割引导损失，大器官结构完整性提升 32%、血管提升 36%。
 
 **[Asymmetric Duos: Sidekicks Improve Uncertainty](asymmetric_duos_sidekicks_improve_uncertainty.md)**
 
@@ -218,10 +210,6 @@ item_total: 130
 
 :   Google DeepMind训练了三种生成式神经网络（自回归Transformer、离散扩散、MaskGit）学习国际象棋谜题分布，通过强化学习优化谜题的唯一性和反直觉性，生成约400万个棋局位置，经奖励函数筛选和美学主题检测后，邀请三位世界级国际象棋专家评审，得到积极但带有建设性批评的反馈。
 
-**[EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks](evobrain_dynamic_multi-channel_eeg_graph_modeling_for_time-evolving_brain_networ.md)**
-
-:   提出 EvoBrain——首次从理论上证明 **显式动态图建模** 优于隐式静态图、**time-then-graph** 架构表达力严格优于其他两种动态 GNN 范式(graph-then-time / time-and-graph)，并据此设计双流 Mamba + Laplacian PE 增强的 GCN 模型，在 TUSZ 和 CHB-MIT 数据集的癫痫检测与早期预测任务上取得 AUROC 提升 23%、F1 提升 30% 的显著效果，同时训练速度比 SOTA 快 17 倍。
-
 **[Evolutionary Learning in Spatial Agent-Based Models for Physical Climate Risk Assessment](evolutionary_learning_in_spatial_agent-based_models_for_physical_climate_risk_as.md)**
 
 :   提出一种整合地理空间气候灾害数据与进化学习机制的Agent-Based Model（ABM），在包含商品-制造-零售三级供应链的简化经济网络上，通过RCP8.5洪水投影模拟2025-2100年的经济响应，证明了进化自适应机制使企业在气候压力下维持显著更高的生产、资本、流动性和就业水平，同时揭示了传统资产级评估无法捕捉的供应链系统性风险。
@@ -272,15 +260,11 @@ item_total: 130
 
 **[Graph Alignment via Birkhoff Relaxation](graph_alignment_via_birkhoff_relaxation.md)**
 
-:   本文首次为图对齐问题的 Birkhoff 松弛（将排列矩阵约束松弛为双随机矩阵约束）提供了理论保证，在高斯 Wigner 模型下证明了最优解的相变行为：当噪声 $\sigma = o(n^{-1})$ 时松弛解接近真实排列，当 $\sigma = \Omega(n^{-0.5})$ 时松弛解远离真实排列。
+:   首次为 Birkhoff 松弛（QAP 的紧凸松弛）在高斯 Wigner 模型下建立理论保证：当噪声 $\sigma = o(n^{-1})$ 时松弛解近似真实排列，$\sigma = \Omega(n^{-0.5})$ 时松弛解远离真实排列，揭示了相变现象。
 
 **[Hessian-guided Perturbed Wasserstein Gradient Flows for Escaping Saddle Points](hessian-guided_perturbed_wasserstein_gradient_flows_for_escaping_saddle_points.md)**
 
 :   提出扰动Wasserstein梯度流(PWGF)算法，通过基于Hessian构造的高斯过程注入噪声扰动，使概率测度优化能够高效逃离鞍点并达到二阶最优性。
-
-**[HouseLayout3D: A Benchmark and Training-Free Baseline for 3D Layout Estimation in the Wild](houselayout3d_a_benchmark_and_training-free_baseline_for_3d_layout_estimation_in.md)**
-
-:   提出 HouseLayout3D——首个面向大规模多层建筑的真实世界 3D layout 估计基准，以及 MultiFloor3D——一个无需训练的基线方法，通过组合现代 3D 重建和分割模型在多层建筑 layout 估计上超越现有深度学习方法。
 
 **[Hybrid-Balance GFlowNet for Solving Vehicle Routing Problems](hybrid-balance_gflownet_for_solving_vehicle_routing_problems.md)**
 
@@ -322,10 +306,6 @@ item_total: 130
 
 :   提出ACE（Adaptive Constrained Equivariance）框架，将等变神经网络训练建模为约束优化问题，通过对偶方法自动从灵活的非等变模型渐进过渡到等变模型，无需手动调参即可适应完全和部分对称数据。
 
-**[Learning Dense Hand Contact Estimation from Imbalanced Data](learning_dense_hand_contact_estimation_from_imbalanced_data.md)**
-
-:   提出 HACO 框架，通过平衡接触采样（BCS）解决类别不平衡和顶点级类别平衡损失（VCB Loss）解决空间不平衡，首次在 14 个数据集（65.5 万图像）上训练稠密手部接触估计模型，在多种交互场景下达到 SOTA。
-
 **[Learning Dynamics of RNNs in Closed-Loop Environments](learning_dynamics_of_rnns_in_closed-loop_environments.md)**
 
 :   从数学理论上揭示了 RNN 在闭环（agent-环境交互）与开环（监督学习）训练下呈现根本不同的学习动力学，闭环学习遵循三阶段过程，由短期策略改进与长期稳定性之间的竞争驱动。
@@ -350,10 +330,6 @@ item_total: 130
 
 :   通过解析 Label Smoothing (LS) 的损失函数，发现其包含一个在错误分类时放大错误的"误差放大项"，导致类内特征坍缩；提出 Max Suppression (MaxSup) 方法，将惩罚目标从 ground-truth logit 转移至 top-1 logit，消除误差放大效应同时保留有益正则化。
 
-**[MEGState: Phoneme Decoding from Magnetoencephalography Signals](megstate_phoneme_decoding_from_magnetoencephalography_signals.md)**
-
-:   提出 MEGState，一种融合多分辨率卷积和传感器级 SSM 的架构，用于从脑磁图(MEG)信号中解码音素，在 LibriBrain 数据集上显著超越基线方法。
-
 **[Merlin L48 Spectrogram Dataset](merlin_l48_spectrogram_dataset.md)**
 
 :   本文提出了 L48 数据集——一个基于真实鸟类录音的细粒度频谱图多标签分类基准，天然具备单正标签多标签 (SPML) 设置，揭示了现有 SPML 方法在真实场景下的严重不足，并提出了基于录音内一致性的正则化方案来提升性能。
@@ -365,10 +341,6 @@ item_total: 130
 **[MetaFind: Scene-Aware 3D Asset Retrieval for Coherent Metaverse Scene Generation](metafind_scene-aware_3d_asset_retrieval_for_coherent_metaverse_scene_generation.md)**
 
 :   MetaFind 是一个场景感知的三模态（文本+图像+点云）3D 资产检索框架，通过引入 SE(3) 等变的空间-语义图神经网络 (ESSGNN) 编码场景布局信息，实现了在元宇宙场景生成中风格一致、空间合理的迭代式资产检索。
-
-**[MiCADangelo: Fine-Grained Reconstruction of Constrained CAD Models from 3D Scans](micadangelo_fine-grained_reconstruction_of_constrained_cad_models_from_3d_scans.md)**
-
-:   MiCADangelo 模拟人类 CAD 设计师的逆向工程流程，通过多平面截面分析提取 2D 模式，预测带约束的参数化草图并优化拉伸参数，首次在 3D CAD 逆向工程中实现了包含草图约束的完整参数化模型重建。
 
 **[Military AI Needs Technically-Informed Regulation to Safeguard AI Research and its Applications](military_ai_needs_technically-informed_regulation_to_safeguard_ai_research_and_i.md)**
 
@@ -393,10 +365,6 @@ item_total: 130
 **[Neural Collapse in Cumulative Link Models for Ordinal Regression: An Analysis with Unconstrained Feature Model](neural_collapse_in_cumulative_link_models_for_ordinal_regression_an_analysis_wit.md)**
 
 :   将Neural Collapse (NC)理论扩展到基于累积链接模型(CLM)的序数回归(OR)任务中，在无约束特征模型(UFM)框架下证明了Ordinal Neural Collapse (ONC)的三个标志性质：类内均值坍缩(ONC1)、特征坍缩到一维子空间(ONC2)、以及潜变量按类别顺序排列(ONC3)，并在零正则极限下揭示了潜变量与阈值之间的简洁几何关系。
-
-**[Neural Network for Simulating Radio Emission from Extensive Air Showers](neural_network_for_simulating_radio_emission_from_extensive_air_showers.md)**
-
-:   用简单全连接神经网络替代计算昂贵的 CoREAS 蒙特卡洛模拟，快速预测广延大气簇射（EAS）的射电脉冲，并在 $X_{\text{max}}$ 重建任务中达到与传统模拟可比的分辨率。
 
 **[Normalization in Attention Dynamics](normalization_in_attention_dynamics.md)**
 
@@ -473,10 +441,6 @@ item_total: 130
 **[ResNets Are Deeper Than You Think](resnets_are_deeper_than_you_think.md)**
 
 :   证明残差网络与前馈网络居于不同的函数空间（非简单重参数化），并通过后训练部分线性化实验表明变深度架构（类ResNet）即使在排除可训练性差异后仍优于固定深度架构，暗示残差连接提供了超越优化的归纳偏好。
-
-**[Rethinking Evaluation of Infrared Small Target Detection](rethinking_evaluation_of_infrared_small_target_detection.md)**
-
-:   系统性地揭示了红外小目标检测（IRSTD）现有评估协议的三大局限，提出包含混合层级指标hIoU、系统化错误分析方法和跨数据集评估设置的层次化分析框架。
 
 **[Rethinking Losses for Diffusion Bridge Samplers](rethinking_losses_for_diffusion_bridge_samplers.md)**
 

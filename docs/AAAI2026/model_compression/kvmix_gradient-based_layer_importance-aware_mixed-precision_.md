@@ -16,7 +16,7 @@ tags:
 
 # KVmix: Gradient-Based Layer Importance-Aware Mixed-Precision Quantization for KV Cache
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2506.08018](https://arxiv.org/abs/2506.08018)  
 **代码**: [LfLab-AI/KVmix](https://github.com/LfLab-AI/KVmix)  
 **领域**: 模型压缩  

@@ -15,7 +15,7 @@ tags:
 
 # Decoupling Skeleton and Flesh: Efficient Multimodal Table Reasoning with Disentangled Alignment and Structure-aware Guidance
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.03491](https://arxiv.org/abs/2602.03491)  
 **代码**: https://github.com/AAAndy-Zhu/TableVLM  
 **领域**: 多模态VLM / 表格推理 / 表征解耦 / 训练-free 推理  

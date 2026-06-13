@@ -15,7 +15,7 @@ tags:
 
 # FAMA: Failure-Aware Meta-Agentic Framework for Open-Source LLMs in Interactive Tool Use Environments
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.25135](https://arxiv.org/abs/2604.25135)  
 **代码**: 无（论文未明确公开）  
 **领域**: LLM Agent / 工具使用 / 多智能体编排  

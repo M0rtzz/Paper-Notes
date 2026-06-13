@@ -15,7 +15,7 @@ tags:
 
 # A Call to Lagrangian Action: Learning Population Mechanics from Temporal Snapshots
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.08550](https://arxiv.org/abs/2605.08550)  
 **代码**: https://github.com/guanton/WLM  
 **领域**: 扩散模型 / 动力学学习  

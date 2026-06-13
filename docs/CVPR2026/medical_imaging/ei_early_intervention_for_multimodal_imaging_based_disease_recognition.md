@@ -16,7 +16,7 @@ tags:
 
 # EI: Early Intervention for Multimodal Imaging based Disease Recognition
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.17514](https://arxiv.org/abs/2603.17514)  
 **代码**: [github.com/ruc-aimc-lab/EI](https://github.com/ruc-aimc-lab/EI)  
 **领域**: 医学图像 / 多模态融合  

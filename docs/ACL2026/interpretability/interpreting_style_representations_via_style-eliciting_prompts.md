@@ -15,7 +15,7 @@ tags:
 
 # Interpreting Style Representations via Style-Eliciting Prompts
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2606.05716](https://arxiv.org/abs/2606.05716)  
 **代码**: https://github.com/junghwanjkim/style-decoding  
 **领域**: 可解释性 / 风格控制  

@@ -15,7 +15,7 @@ tags:
 
 # CoPS: Conditional Prompt Synthesis for Zero-Shot Anomaly Detection
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2508.03447](https://arxiv.org/abs/2508.03447)  
 **代码**: [https://github.com/cqylunlun/CoPS](https://github.com/cqylunlun/CoPS)  
 **领域**: 目标检测  

@@ -15,7 +15,7 @@ tags:
 
 # When Trackers Date Fish: A Benchmark and Framework for Underwater Multiple Fish Tracking
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2507.06400](https://arxiv.org/abs/2507.06400)  
 **代码**: [https://vranlee.github.io/SU-T/](https://vranlee.github.io/SU-T/)  
 **领域**: 目标检测  

@@ -15,7 +15,7 @@ tags:
 
 # UniTalking: A Unified Audio-Video Framework for Talking Portrait Generation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.01418](https://arxiv.org/abs/2603.01418)  
 **代码**: 无  
 **领域**: 视频生成  

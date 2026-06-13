@@ -83,7 +83,7 @@ item_total: 305
 
 **📷 CVPR2025** · **305** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×116 · 文生图 ×27 · 个性化生成 ×18 · 对齐/RLHF ×13 · 对抗鲁棒 ×13
 
@@ -557,7 +557,7 @@ item_total: 305
 
 **[Generative Modeling of Class Probability for Multi-Modal Representation Learning](generative_modeling_of_class_probability_for_multi_modal_representation_learning.md)**
 
-:   CALM（Class-anchor-ALigned generative Modeling）提出用独立类别标签作为锚点，生成各模态与锚点的概率分布并通过跨模态概率 VAE 对齐，有效缓解视频文本之间的信息不平衡和模态差异问题，在四个benchmark上显著超越SOTA，尤其在跨域泛化性上表现突出。
+:   CALM 提出了一种基于类锚点对齐的生成式多模态表示学习方法，通过引入独立数据集的类标签作为锚点来弥合视频和文本之间的模态鸠沟，利用跨模态概率变分自编码器建模不确定性，在四个 benchmark 上特别是在域外评估中显著超越现有方法。
 
 **[Generative Multimodal Pretraining with Discrete Diffusion Timestep Tokens](generative_multimodal_pretraining_with_discrete_diffusion_timestep_tokens.md)**
 
@@ -605,7 +605,7 @@ item_total: 305
 
 **[Hierarchical Flow Diffusion for Efficient Frame Interpolation](hierarchical_flow_diffusion_for_efficient_frame_interpolation.md)**
 
-:   HFD 提出在多尺度上用扩散模型显式去噪双向光流（而非在潜空间直接去噪），结合光流引导的编解码器图像合成器端到端联合训练，在精度上全面超越所有基线，同时推理速度比其他扩散方法快 10+ 倍。
+:   本文提出在视频插帧中用层级扩散模型从粗到细显式去噪双向光流（而非直接去噪潜空间），再用流引导图像合成器生成最终帧，实现比其他扩散方法快 10+ 倍且精度 SOTA。
 
 **[HMAR: Efficient Hierarchical Masked Auto-Regressive Image Generation](hmar_efficient_hierarchical_masked_auto-regressive_image_generation.md)**
 
@@ -829,7 +829,7 @@ item_total: 305
 
 **[Multi-party Collaborative Attention Control for Image Customization](multi-party_collaborative_attention_control_for_image_customization.md)**
 
-:   提出 MCA-Ctrl，一种无需微调的图像定制方法，通过三个并行扩散过程的自注意力协同控制，实现文本和图像条件下的高质量主体驱动编辑与生成，同时引入主体定位模块解决复杂视觉场景中的特征泄漏和混淆问题。
+:   提出 MCA-Ctrl，一种无需微调的图像定制方法，通过三路并行扩散过程中的自注意力协同控制（SAGI + SALQ），实现文本/图像条件下的高质量 subject 编辑与生成，并用 Subject Localization Module 解决复杂场景中的主体泄漏和混淆问题。
 
 **[Multitwine: Multi-Object Compositing with Text and Layout Control](multitwine_multi-object_compositing_with_text_and_layout_control.md)**
 

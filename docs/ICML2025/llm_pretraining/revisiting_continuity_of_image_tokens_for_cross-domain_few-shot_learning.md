@@ -15,7 +15,7 @@ tags:
 
 # Revisiting Continuity of Image Tokens for Cross-Domain Few-Shot Learning
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2506.03110](https://arxiv.org/abs/2506.03110)  
 **代码**: [github.com/shuaiyi308/ReCIT](https://github.com/shuaiyi308/ReCIT)  
 **领域**: LLM预训练  

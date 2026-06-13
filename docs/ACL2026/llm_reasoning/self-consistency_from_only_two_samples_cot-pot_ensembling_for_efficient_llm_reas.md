@@ -15,7 +15,7 @@ tags:
 
 # Self-Consistency from Only Two Samples: CoT-PoT Ensembling for Efficient LLM Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17433](https://arxiv.org/abs/2604.17433)  
 **代码**: 无  
 **领域**: LLM推理效率  

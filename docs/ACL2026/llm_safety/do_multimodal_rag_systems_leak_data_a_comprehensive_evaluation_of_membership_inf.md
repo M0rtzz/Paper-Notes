@@ -15,7 +15,7 @@ tags:
 
 # Do Multimodal RAG Systems Leak Data? A Comprehensive Evaluation of Membership Inference and Image Caption Retrieval Attacks
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.17644](https://arxiv.org/abs/2601.17644)  
 **代码**: https://github.com/aliwister/mrag-attack-eval  
 **领域**: LLM 安全 / 隐私 / 多模态 RAG  

@@ -1,7 +1,7 @@
 <!-- 由 src/gen_todo.py 自动生成 -->
 # ICML2025 论文笔记 TODO
 
-总计: 1225 篇 | 已完成: 1124 | 待更新: 101
+总计: 1225 篇 | 已完成: 1125 | 待更新: 100
 
 ---
 
@@ -565,7 +565,7 @@
 - [ ] llavaguard an open vlm-based framework for safeguarding vision datasets and mode | arXiv: 2406.05113
 - [x] [llm data selection and utilization via dynamic bi-level optimization](llm_pretraining/llm_data_selection_and_utilization_via_dynamic_bi-level_optimization.md) | arXiv: 2507.16178
 - [x] [llm enhancers for gnns an analysis from the perspective of causal mechanism iden](graph_learning/llm_enhancers_for_gnns_an_analysis_from_the_perspective_of_causal_mechanism_iden.md) | arXiv: 2505.08265
-- [ ] llm social simulations are a promising research method | arXiv: 2504.02234
+- [x] [llm social simulations are a promising research method](llm_nlp/llm_social_simulations_are_a_promising_research_method.md) | arXiv: 2504.02234
 - [ ] llm-srbench a new benchmark for scientific equation discovery with large languag | arXiv: 2504.10415
 - [x] [local manifold approximation and projection for manifold-aware diffusion plannin](image_generation/local_manifold_approximation_and_projection_for_manifold-aware_diffusion_plannin.md) | arXiv: 2506.00867
 - [x] [localizing and mitigating memorization in image autoregressive models](image_generation/localizing_and_mitigating_memorization_in_image_autoregressive_models.md) | arXiv: 2509.00488

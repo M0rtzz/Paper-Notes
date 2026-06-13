@@ -17,7 +17,7 @@ tags:
 
 # Elucidating the Design Space of Multimodal Protein Language Models
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2504.11454](https://arxiv.org/abs/2504.11454)  
 **作者**: Cheng-Yen Hsieh, Xinyou Wang, Daiheng Zhang, Dongyu Xue, Fei Ye, Shujian Huang, Zaixiang Zheng, Quanquan Gu (ByteDance Research & UCLA & NJU)
 **代码**: [bytedance.github.io/dplm/dplm-2.1](https://bytedance.github.io/dplm/dplm-2.1)  

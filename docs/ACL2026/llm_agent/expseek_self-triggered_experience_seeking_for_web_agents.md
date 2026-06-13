@@ -15,7 +15,7 @@ tags:
 
 # ExpSeek: Self-Triggered Experience Seeking for Web Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.08605](https://arxiv.org/abs/2601.08605)  
 **代码**: [https://github.com/WYRipple/ExpSeek](https://github.com/WYRipple/ExpSeek)  
 **领域**: LLM Agent  

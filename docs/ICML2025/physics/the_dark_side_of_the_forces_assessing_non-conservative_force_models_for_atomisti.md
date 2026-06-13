@@ -15,7 +15,7 @@ tags:
 
 # The Dark Side of the Forces: Assessing Non-Conservative Force Models for Atomistic Machine Learning
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2412.11569](https://arxiv.org/abs/2412.11569)  
 **代码**: [Zenodo](https://zenodo.org/records/14778891)  
 **领域**: 分子模拟 / 机器学习势函数  

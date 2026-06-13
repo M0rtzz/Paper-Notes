@@ -15,7 +15,7 @@ tags:
 
 # Difficult Examples Hurt Unsupervised Contrastive Learning: A Theoretical Perspective
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2501.01317](https://arxiv.org/abs/2501.01317)  
 **代码**: 未公开  
 **领域**: 自监督学习 / 对比学习 / 理论分析  

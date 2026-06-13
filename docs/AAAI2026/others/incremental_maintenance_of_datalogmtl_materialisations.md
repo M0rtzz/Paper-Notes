@@ -15,7 +15,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Incremental Maintenance of DatalogMTL Materialisations
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.12169](https://arxiv.org/abs/2511.12169)  
 **代码**: [GitHub](https://github.com/Horizon12275/DREDmtl-for-DatalogMTL)  
 **领域**: 音频语音  

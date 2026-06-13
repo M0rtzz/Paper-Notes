@@ -16,7 +16,7 @@ tags:
 
 # LANTERN: Modeling User Behavior from Adaptive Surveys with Supplemental Context
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Best Paper  
 **arXiv**: [2507.20919](https://arxiv.org/abs/2507.20919)  
 **代码**: 无  
 **领域**: 用户行为建模 / 推荐系统  

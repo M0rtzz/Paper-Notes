@@ -81,7 +81,7 @@ item_total: 41
 
 **📷 CVPR2025** · **41** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (30)](../../ICCV2025/image_restoration/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/image_restoration/index.md)
 
 🔥 **高频主题：** 图像恢复 ×15 · 超分辨率 ×6 · 扩散模型 ×6 · 对抗鲁棒 ×3 · 自监督学习 ×2
 
@@ -141,7 +141,7 @@ item_total: 41
 
 **[Efficient Visual State Space Model for Image Deblurring](efficient_visual_state_space_model_for_image_deblurring.md)**
 
-:   本文提出一种高效视觉状态空间模型 EVSSM，通过几何变换替代多方向扫描策略捕获非局部信息，并设计高效频域前馈网络增强局部细节，在图像去模糊任务上以仅四分之一的计算代价超越现有 SSM 方法，达到 SOTA 效果。
+:   本文提出 EVSSM，通过在单方向 SSM 扫描前施加交替的几何变换（转置/翻转）来高效捕获非局部信息，并设计高效判别性频域 FFN (EDFFN) 增强局部细节，在图像去模糊任务上以仅 1/4 的计算量超越了现有 SSM 方法并达到 SOTA。
 
 **[FiRe: Fixed-points of Restoration Priors for Solving Inverse Problems](fire_fixed-points_of_restoration_priors_for_solving_inverse_problems.md)**
 

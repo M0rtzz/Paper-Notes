@@ -15,7 +15,7 @@ tags:
 
 # On the Exponential Convergence for Offline RLHF with Pairwise Comparisons
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2406.12205](https://arxiv.org/abs/2406.12205)  
 **代码**: 无  
 **领域**: LLM Alignment / 强化学习理论  

@@ -15,7 +15,7 @@ tags:
 
 # 4D-RGPT: Toward Region-level 4D Understanding via Perceptual Distillation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2512.17012](https://arxiv.org/abs/2512.17012)  
 **代码**: [GitHub](https://github.com/NVIDIA/4D-RGPT)  
 **领域**: 模型压缩  

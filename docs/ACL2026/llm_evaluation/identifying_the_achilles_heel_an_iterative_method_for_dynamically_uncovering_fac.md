@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Identifying the Achilles' Heel: An Iterative Method for Dynamically Uncovering Factual Errors in Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2401.00761](https://arxiv.org/abs/2401.00761)  
 **代码**: <https://github.com/Mysterchan/HalluHunter>  
 **领域**: LLM 评测 / 事实性 / 自动测试  

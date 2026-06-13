@@ -15,7 +15,7 @@ tags:
 
 # SpatialActor: Exploring Disentangled Spatial Representations for Robust Robotic Manipulation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.09555](https://arxiv.org/abs/2511.09555)  
 **作者**: Hao Shi, Bin Xie, Yingfei Liu, Yang Yue, Tiancai Wang, Haoqiang Fan, Xiangyu Zhang, Gao Huang  
 **代码**: [GitHub](https://github.com/shihao1895/SpatialActor)  

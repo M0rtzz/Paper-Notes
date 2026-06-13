@@ -15,7 +15,7 @@ tags:
 
 # Adaptive Neighborhood-Constrained Q Learning for Offline Reinforcement Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.02567](https://arxiv.org/abs/2511.02567)  
 **代码**: [https://github.com/thu-rllab/ANQ](https://github.com/thu-rllab/ANQ)  
 **领域**: 强化学习 / 离线RL  

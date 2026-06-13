@@ -15,7 +15,7 @@ tags:
 
 # Meta-Tool: Efficient Few-Shot Tool Adaptation for Small Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.20148](https://arxiv.org/abs/2604.20148)  
 **代码**: [GitHub](https://github.com/techsachinkr/Meta-Tool)  
 **领域**: 模型压缩  

@@ -15,7 +15,7 @@ tags:
 
 # DELTA: Dynamic Layer-Aware Token Attention for Efficient Long-Context Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.09883](https://arxiv.org/abs/2510.09883)  
 **代码**: https://github.com/hoenza/DELTA (有)  
 **领域**: LLM 推理 / 长上下文 / 高效推断  

@@ -2,7 +2,7 @@
 title: >-
   ACL2026 论文汇总 · 1363篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1363篇ACL2026论文解读，涵盖 LLM 安全(115篇)、多模态 VLM(94篇)、LLM 评测(91篇)、LLM 推理(80篇)、LLM Agent(78篇)、信息检索/RAG(73篇)、音频/语音(68篇)、多语言/翻译(62篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1363篇ACL2026论文解读，涵盖 LLM 安全(115篇)、多模态 VLM(94篇)、LLM 评测(92篇)、LLM 推理(81篇)、LLM Agent(78篇)、信息检索/RAG(73篇)、音频/语音(68篇)、多语言/翻译(62篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "ACL2026论文汇总"
@@ -85,7 +85,7 @@ item_total: 1363
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 ACL2026 论文汇总
 
-1363篇ACL2026论文解读，涵盖 LLM 安全(115篇)、多模态 VLM(94篇)、LLM 评测(91篇)、LLM 推理(80篇)、LLM Agent(78篇)、信息检索/RAG(73篇)、音频/语音(68篇)、多语言/翻译(62篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1363篇ACL2026论文解读，涵盖 LLM 安全(115篇)、多模态 VLM(94篇)、LLM 评测(92篇)、LLM 推理(81篇)、LLM Agent(78篇)、信息检索/RAG(73篇)、音频/语音(68篇)、多语言/翻译(62篇)等 40个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -137,7 +137,7 @@ item_total: 1363
 
 ---
 
-## 📊 LLM 评测 (91) { #llm_evaluation }
+## 📊 LLM 评测 (92) { #llm_evaluation }
 
 **[AgentEval: DAG-Structured Step-Level Evaluation for Agentic Workflows with Error Propagation Tracking](llm_evaluation/agenteval_dag-structured_step-level_evaluation_for_agentic_workflows_with_error_.md)**
 
@@ -179,11 +179,11 @@ item_total: 1363
 
 :   本文提出了一种超越边际分布的 LLM 代表性评估框架，通过同时考察边际响应分布和跨问题相关结构来评估人口统计对齐模型，发现虽然微调和 persona prompting 能改善边际分布的近似度，但两者都无法忠实再现人类价值观调查中的多变量相关模式。
 
-[查看全部91篇「LLM 评测」论文 →](llm_evaluation/)
+[查看全部92篇「LLM 评测」论文 →](llm_evaluation/)
 
 ---
 
-## 💡 LLM 推理 (80) { #llm_reasoning }
+## 💡 LLM 推理 (81) { #llm_reasoning }
 
 **[Accurate Legal Reasoning at Scale: Neuro-Symbolic Offloading and Structural Auditability for Robust Legal Adjudication](llm_reasoning/accurate_legal_reasoning_at_scale_neuro-symbolic_offloading_and_structural_audit.md)**
 
@@ -225,7 +225,7 @@ item_total: 1363
 
 :   CoAct 在偏好对齐中用自一致性把无标注样本切成"高一致 / 低一致"两堆，再用 k-NN 距离从高一致样本里挑出"自洽但可能错"的隐患样本送给 Oracle 标注，剩下的高一致样本直接当 AI 自标数据，最后用 oracle-verified 样本做 in-context demo 生成新指令，把人和 AI 的监督在一个 DPO 循环里捏成一团，在 GSM8K/MATH/WebInstruct 上比最强基线再涨 4–8 个点。
 
-[查看全部80篇「LLM 推理」论文 →](llm_reasoning/)
+[查看全部81篇「LLM 推理」论文 →](llm_reasoning/)
 
 ---
 
@@ -272,52 +272,6 @@ item_total: 1363
 :   提出 CVA（Context-Value-Action）架构，基于 S-O-R 心理学模型和 Schwartz 价值理论，通过训练在真实人类数据上的 Value Verifier 解耦行为生成与认知推理，有效缓解 LLM 智能体的行为极化问题，在超过 110 万真实交互轨迹的 CVABench 上显著优于基线。
 
 [查看全部78篇「LLM Agent」论文 →](llm_agent/)
-
----
-
-## 💬 LLM / NLP (58) { #llm_nlp }
-
-**[A Study of LLMs' Preferences for Libraries and Programming Languages](llm_nlp/a_study_of_llms39_preferences_for_libraries_and_programming_languages.md)**
-
-:   首次系统研究8个LLM在代码生成中对库和编程语言的偏好行为，发现LLM严重偏好NumPy等流行库（45%的使用不必要）和Python语言（58%的高性能任务仍选Python），且自然语言推荐与实际代码选择不一致。
-
-**[Adam's Law: Textual Frequency Law on Large Language Models](llm_nlp/adam39s_law_textual_frequency_law_on_large_language_models.md)**
-
-:   本文提出"文本频率定律"（TFL），发现当语义相同时，使用更高频率的文本表达来提示或微调LLM能获得更好效果，并设计了频率蒸馏和课程训练策略来进一步利用该规律。
-
-**[AlphaContext: An Evolutionary Tree-based Psychometric Context Generator for Creativity Assessment](llm_nlp/alphacontext_an_evolutionary_tree-based_psychometric_context_generator_for_creat.md)**
-
-:   提出 AlphaContext，一个基于进化树的心理测量情境生成器，通过 HyperTree 大纲规划、MCTS 逐句生成、MAP-Elites 多样性优化和评估引导迭代精炼四个模块，自动生成用于创造力评估的高质量长文本情境，在 7 个评估维度上平均超越竞争方法 8%。
-
-**[An Existence Proof for Neural Language Models That Can Explain Garden-Path Effects via Surprisal](llm_nlp/an_existence_proof_for_neural_language_models_that_can_explain_garden-path_effec.md)**
-
-:   通过在花园路径句上微调神经语言模型，证明了存在一个神经 LM 能够通过惊奇度（surprisal）同时解释花园路径效应和自然阅读时间，为惊奇度理论提供了存在性证明。
-
-**[Automatic Combination of Sample Selection Strategies for Few-Shot Learning](llm_nlp/automatic_combination_of_sample_selection_strategies_for_few-shot_learning.md)**
-
-:   本文提出 ACSESS 方法，通过前向选择、后向选择和 Datamodels 三种机制自动识别互补的样本选择策略并加权组合，在 23 种策略、5 个 ICL 模型和 3 种梯度少样本学习方法、6 个文本和 8 个图像数据集上验证了组合策略一致优于单一策略和 ICL 专用基线。
-
-**[Big AI is Accelerating the Metacrisis: What Can We Do?](llm_nlp/big_ai_is_accelerating_the_metacrisis_what_can_we_do.md)**
-
-:   Steven Bird 在这篇 ACL 2026 立场论文里论证："Big AI"（少数巨头驱动的工业化 LLM 工程）正在同时加速 3 大相互纠缠的危机——**生态危机 / 意义危机 / 语言危机**——而 ACL 作为最大 LLM 研究发表方，必须从"个人合规"转向"职业共同体集体行动"，并提出 7 项面向 ACL 的具体改革建议（重申公共利益优先、抵御 corporate capture、保护批判性 NLP、设立 NLP policy track 等）。
-
-**[C-World: A Computer Use Agent Environment Creator](llm_nlp/c-world_a_computer_use_agent_environment_creator.md)**
-
-:   作者将"agent 环境"形式化为 Action / Task / Transition / Reward 四元组并实现为 C-World：用 5,571 个真实 MCP 工具 + 自动任务合成 + state controller 扰动 + 双信号 reward 提供高保真评测，又用一个"World Engine"在无 live API 下模拟工具响应实现可规模化训练；评测 9 个前沿 LLM 发现"规划普遍强、执行普遍弱"，仅用 1,170 条 C-World 轨迹微调即可超过用 119k 样本训练的 baseline。
-
-**[Can AI Be a Good Peer Reviewer? A Survey of Peer Review Process, Evaluation, and the Future](llm_nlp/can_ai_be_a_good_peer_reviewer_a_survey_of_peer_review_process_evaluation_and_th.md)**
-
-:   作者系统综述了 LLM 时代 AI 辅助 peer review 全流程的方法：把"review 生成"分为 fine-tuning / agent / RL / 生成增强 四大范式，把"after-review"分为 rebuttal / meta-review / paper revision 三类，再给出"human / reference-based / LLM-based / aspect-oriented"四象限评测分类法，最后从 novelty、自动评测、跨域、多模态、伦理 6 个方向讨论未来。
-
-**[CAST: Achieving Stable LLM-based Text Analysis for Data Analytics](llm_nlp/cast_achieving_stable_llm-based_text_analysis_for_data_analytics.md)**
-
-:   提出CAST框架，通过算法提示（Algorithmic Prompting）和先思考后输出（Thinking-before-Speaking）两种机制约束LLM的潜在推理路径，显著提升文本摘要和标注任务的运行间稳定性，同时不损失输出质量。
-
-**[Characterizing the Expressivity of Local Attention in Transformers](llm_nlp/characterizing_the_expressivity_of_local_attention_in_transformers.md)**
-
-:   作者用线性时序逻辑（LTL）作为统一刻画工具，严格证明 global-only Transformer ↔ $\mathrm{LTL}[\mathrm{P}]$、$k$-local-only ↔ $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$、global+local 混合 ↔ $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$，并由此证明 **local 与 global 表达力互不包含**、混合严格更强、**1-local 是 local 家族里表达力最强**，最后在合成正则语言和 WikiText-2 上经验验证理论预测。
-
-[查看全部58篇「LLM / NLP」论文 →](llm_nlp/)
 
 ---
 
@@ -588,6 +542,52 @@ item_total: 1363
 **[The Model Agreed, But Didn't Learn: Diagnosing Surface Compliance in Large Language Models](knowledge_editing/the_model_agreed_but_didn39t_learn_diagnosing_surface_compliance_in_large_langua.md)**
 
 :   提出 SA-MCQ 诊断框架揭示知识编辑中的"表面合规"现象——编辑器在标准基准上达到高分但并未真正覆写内部信念，模型在判别式自评中会回退到原始参数记忆，递归编辑还会累积表征残留导致认知不稳定。
+
+---
+
+## 💬 LLM 其他 (56) { #llm_nlp }
+
+**[A Study of LLMs' Preferences for Libraries and Programming Languages](llm_nlp/a_study_of_llms39_preferences_for_libraries_and_programming_languages.md)**
+
+:   首次系统研究8个LLM在代码生成中对库和编程语言的偏好行为，发现LLM严重偏好NumPy等流行库（45%的使用不必要）和Python语言（58%的高性能任务仍选Python），且自然语言推荐与实际代码选择不一致。
+
+**[Adam's Law: Textual Frequency Law on Large Language Models](llm_nlp/adam39s_law_textual_frequency_law_on_large_language_models.md)**
+
+:   本文提出"文本频率定律"（TFL），发现当语义相同时，使用更高频率的文本表达来提示或微调LLM能获得更好效果，并设计了频率蒸馏和课程训练策略来进一步利用该规律。
+
+**[AlphaContext: An Evolutionary Tree-based Psychometric Context Generator for Creativity Assessment](llm_nlp/alphacontext_an_evolutionary_tree-based_psychometric_context_generator_for_creat.md)**
+
+:   提出 AlphaContext，一个基于进化树的心理测量情境生成器，通过 HyperTree 大纲规划、MCTS 逐句生成、MAP-Elites 多样性优化和评估引导迭代精炼四个模块，自动生成用于创造力评估的高质量长文本情境，在 7 个评估维度上平均超越竞争方法 8%。
+
+**[An Existence Proof for Neural Language Models That Can Explain Garden-Path Effects via Surprisal](llm_nlp/an_existence_proof_for_neural_language_models_that_can_explain_garden-path_effec.md)**
+
+:   通过在花园路径句上微调神经语言模型，证明了存在一个神经 LM 能够通过惊奇度（surprisal）同时解释花园路径效应和自然阅读时间，为惊奇度理论提供了存在性证明。
+
+**[Automatic Combination of Sample Selection Strategies for Few-Shot Learning](llm_nlp/automatic_combination_of_sample_selection_strategies_for_few-shot_learning.md)**
+
+:   本文提出 ACSESS 方法，通过前向选择、后向选择和 Datamodels 三种机制自动识别互补的样本选择策略并加权组合，在 23 种策略、5 个 ICL 模型和 3 种梯度少样本学习方法、6 个文本和 8 个图像数据集上验证了组合策略一致优于单一策略和 ICL 专用基线。
+
+**[Big AI is Accelerating the Metacrisis: What Can We Do?](llm_nlp/big_ai_is_accelerating_the_metacrisis_what_can_we_do.md)**
+
+:   Steven Bird 在这篇 ACL 2026 立场论文里论证："Big AI"（少数巨头驱动的工业化 LLM 工程）正在同时加速 3 大相互纠缠的危机——**生态危机 / 意义危机 / 语言危机**——而 ACL 作为最大 LLM 研究发表方，必须从"个人合规"转向"职业共同体集体行动"，并提出 7 项面向 ACL 的具体改革建议（重申公共利益优先、抵御 corporate capture、保护批判性 NLP、设立 NLP policy track 等）。
+
+**[C-World: A Computer Use Agent Environment Creator](llm_nlp/c-world_a_computer_use_agent_environment_creator.md)**
+
+:   作者将"agent 环境"形式化为 Action / Task / Transition / Reward 四元组并实现为 C-World：用 5,571 个真实 MCP 工具 + 自动任务合成 + state controller 扰动 + 双信号 reward 提供高保真评测，又用一个"World Engine"在无 live API 下模拟工具响应实现可规模化训练；评测 9 个前沿 LLM 发现"规划普遍强、执行普遍弱"，仅用 1,170 条 C-World 轨迹微调即可超过用 119k 样本训练的 baseline。
+
+**[Can AI Be a Good Peer Reviewer? A Survey of Peer Review Process, Evaluation, and the Future](llm_nlp/can_ai_be_a_good_peer_reviewer_a_survey_of_peer_review_process_evaluation_and_th.md)**
+
+:   作者系统综述了 LLM 时代 AI 辅助 peer review 全流程的方法：把"review 生成"分为 fine-tuning / agent / RL / 生成增强 四大范式，把"after-review"分为 rebuttal / meta-review / paper revision 三类，再给出"human / reference-based / LLM-based / aspect-oriented"四象限评测分类法，最后从 novelty、自动评测、跨域、多模态、伦理 6 个方向讨论未来。
+
+**[CAST: Achieving Stable LLM-based Text Analysis for Data Analytics](llm_nlp/cast_achieving_stable_llm-based_text_analysis_for_data_analytics.md)**
+
+:   提出CAST框架，通过算法提示（Algorithmic Prompting）和先思考后输出（Thinking-before-Speaking）两种机制约束LLM的潜在推理路径，显著提升文本摘要和标注任务的运行间稳定性，同时不损失输出质量。
+
+**[Characterizing the Expressivity of Local Attention in Transformers](llm_nlp/characterizing_the_expressivity_of_local_attention_in_transformers.md)**
+
+:   作者用线性时序逻辑（LTL）作为统一刻画工具，严格证明 global-only Transformer ↔ $\mathrm{LTL}[\mathrm{P}]$、$k$-local-only ↔ $\mathrm{LTL}[\mathrm{Y}^{\leq k}]$、global+local 混合 ↔ $\mathrm{LTL}[\mathrm{P}, \mathrm{Y}^{\leq k}]$，并由此证明 **local 与 global 表达力互不包含**、混合严格更强、**1-local 是 local 家族里表达力最强**，最后在合成正则语言和 WikiText-2 上经验验证理论预测。
+
+[查看全部56篇「LLM 其他」论文 →](llm_nlp/)
 
 ---
 

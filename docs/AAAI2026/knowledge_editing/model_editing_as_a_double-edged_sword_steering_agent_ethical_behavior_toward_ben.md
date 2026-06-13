@@ -15,7 +15,7 @@ tags:
 
 # Model Editing as a Double-Edged Sword: Steering Agent Ethical Behavior
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2506.20606](https://arxiv.org/abs/2506.20606)  
 **代码**: [GitHub](https://github.com/baixianghuang/behavior-edit)  
 **领域**: 知识编辑  

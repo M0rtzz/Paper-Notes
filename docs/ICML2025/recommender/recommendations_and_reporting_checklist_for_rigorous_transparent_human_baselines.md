@@ -15,7 +15,7 @@ tags:
 
 # Recommendations and Reporting Checklist for Rigorous & Transparent Human Baselines in Model Evaluations
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2506.13776](https://arxiv.org/abs/2506.13776)  
 **代码**: [https://github.com/kevinlwei/human-baselines](https://github.com/kevinlwei/human-baselines)  
 **领域**: 推荐系统  

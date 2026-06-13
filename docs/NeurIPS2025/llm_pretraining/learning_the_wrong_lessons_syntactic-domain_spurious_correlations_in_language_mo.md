@@ -16,7 +16,7 @@ tags:
 
 # Learning the Wrong Lessons: Syntactic-Domain Spurious Correlations in Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.21155](https://arxiv.org/abs/2509.21155)  
 **代码**: 待确认  
 **领域**: LLM预训练  

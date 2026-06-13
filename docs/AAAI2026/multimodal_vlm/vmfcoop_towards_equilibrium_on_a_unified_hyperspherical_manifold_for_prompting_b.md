@@ -15,7 +15,7 @@ tags:
 
 # vMFCoOp: Towards Equilibrium on a Unified Hyperspherical Manifold for Prompting Biomedical VLMs
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.09540](https://arxiv.org/abs/2511.09540)  
 **代码**: [GitHub](https://github.com/VinyehShaw/UniEqui)  
 **领域**: 医学影像 / 视觉-语言模型 (Medical Imaging / VLM)  

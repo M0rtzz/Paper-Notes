@@ -14,7 +14,7 @@ tags:
 
 # On Universality Classes of Equivariant Networks
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.02293](https://arxiv.org/abs/2506.02293)  
 **代码**: 暂无  
 **领域**: 深度学习理论 / 等变神经网络  

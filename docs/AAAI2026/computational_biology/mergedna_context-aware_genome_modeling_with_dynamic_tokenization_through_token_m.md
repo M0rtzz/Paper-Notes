@@ -15,7 +15,7 @@ tags:
 
 # MergeDNA: Context-aware Genome Modeling with Dynamic Tokenization through Token Merging
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2511.14806](https://arxiv.org/abs/2511.14806)  
 **代码**: 无  
 **领域**: 计算生物

@@ -14,7 +14,7 @@ tags:
 
 # Learning (Approximately) Equivariant Networks via Constrained Optimization
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2505.13631](https://arxiv.org/abs/2505.13631)  
 **代码**: 无  
 **领域**: 机器学习理论 / 等变神经网络  

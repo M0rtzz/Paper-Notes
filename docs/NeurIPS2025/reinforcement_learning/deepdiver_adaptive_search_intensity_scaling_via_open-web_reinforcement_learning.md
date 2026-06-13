@@ -14,7 +14,7 @@ tags:
 
 # DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.24332](https://arxiv.org/abs/2505.24332)  
 **代码**: 无  
 **领域**: 强化学习  

@@ -15,7 +15,7 @@ tags:
 
 # Cognitive-Uncertainty Guided Knowledge Distillation for Accurate Classification of Student Misconceptions
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.14752](https://arxiv.org/abs/2605.14752)  
 **代码**: https://github.com/RoschildRui/acl2026_map (有)  
 **领域**: 模型压缩 / 知识蒸馏 / 教育 AI  

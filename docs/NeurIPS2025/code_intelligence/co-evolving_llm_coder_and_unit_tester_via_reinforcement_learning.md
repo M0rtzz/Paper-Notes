@@ -16,7 +16,7 @@ tags:
 
 # Co-Evolving LLM Coder and Unit Tester via Reinforcement Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.03136](https://arxiv.org/abs/2506.03136)  
 **代码**: [GitHub](https://github.com/Gen-Verse/CURE)  
 **领域**: 代码智能 / LLM推理  

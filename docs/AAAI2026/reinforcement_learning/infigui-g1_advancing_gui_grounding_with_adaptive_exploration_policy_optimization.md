@@ -15,7 +15,7 @@ tags:
 
 # InfiGUI-G1: Advancing GUI Grounding with Adaptive Exploration Policy Optimization
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.05731](https://arxiv.org/abs/2508.05731)  
 **代码**: [github.com/InfiXAI/InfiGUI-G1](https://github.com/InfiXAI/InfiGUI-G1)  
 **领域**: 强化学习  

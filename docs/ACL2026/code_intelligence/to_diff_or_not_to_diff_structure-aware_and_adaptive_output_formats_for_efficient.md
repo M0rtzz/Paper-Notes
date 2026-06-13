@@ -15,7 +15,7 @@ tags:
 
 # To Diff or Not to Diff? Structure-Aware and Adaptive Output Formats for Efficient LLM-based Code Editing
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.27296](https://arxiv.org/abs/2604.27296)  
 **代码**: https://github.com/nju-websoft/AdaEdit  
 **领域**: 代码智能 / LLM代码编辑 / 编辑格式学习  

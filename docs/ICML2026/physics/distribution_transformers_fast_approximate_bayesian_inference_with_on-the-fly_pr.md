@@ -15,7 +15,7 @@ tags:
 
 # Distribution Transformers: Fast Approximate Bayesian Inference With On-The-Fly Prior Adaptation
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2502.02463](https://arxiv.org/abs/2502.02463)  
 **代码**: https://github.com/GWhittle110/distribution-transformers  
 **领域**: 科学计算 / 贝叶斯推断 / Transformer 摊销推断  

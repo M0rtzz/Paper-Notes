@@ -15,7 +15,7 @@ tags:
 
 # Rare Event Analysis of Large Language Models
 
-**会议**: ICML2026  
+**会议**: ICML2026 Oral Spotlight  
 **arXiv**: [2602.06791](https://arxiv.org/abs/2602.06791)  
 **代码**: 有（论文附录给出最小实现）  
 **领域**: LLM 分析 / 稀有事件采样 / 统计物理方法  

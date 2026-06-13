@@ -16,7 +16,7 @@ tags:
 
 # Long-Tailed Recognition via Information-Preservable Two-Stage Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.08836](https://arxiv.org/abs/2510.08836)  
 **代码**: [github.com/fudong03/BNS_IPDPP](https://github.com/fudong03/BNS_IPDPP)  
 **作者**: Fudong Lin, Xu Yuan (University of Delaware)

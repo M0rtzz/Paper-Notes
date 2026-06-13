@@ -15,7 +15,7 @@ tags:
 
 # ChemAmp: Amplified Chemistry Tools via Composable Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2505.21569](https://arxiv.org/abs/2505.21569)  
 **代码**: [GitHub](https://github.com/Chang-pw/ChemAmp)  
 **领域**: 科学AI/化学  

@@ -15,7 +15,7 @@ tags:
 
 # Probing Multimodal Large Language Models on Cognitive Biases in Chinese Short-Video Misinformation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.06600](https://arxiv.org/abs/2601.06600)  
 **代码**: [GitHub](https://github.com/penguinnnnn/Fine-VDK)  
 **领域**: 多模态 VLM / 视频谣言检测 / 模型认知偏差评测  

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 LLMAgent论文汇总 · 40篇论文解读
+  ICLR2026 LLMAgent论文汇总 · 42篇论文解读
 description: >-
-  40篇ICLR2026的 LLM Agent 方向论文解读，涵盖 LLM、Agent、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  42篇ICLR2026的 LLM Agent 方向论文解读，涵盖 LLM、Agent、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "LLM Agent"
@@ -49,6 +49,8 @@ item_list:
     t: "MC-Search: Evaluating and Enhancing Multimodal Agentic Search with Structured Long Reasoning Chains"
   - u: "membership_privacy_risks_of_sharpness_aware_minimization/"
     t: "FeatureBench: Benchmarking Agentic Coding for Complex Feature Development"
+  - u: "meta-rl_induces_exploration_in_language_agents/"
+    t: "Meta-RL Induces Exploration in Language Agents"
   - u: "newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents/"
     t: "NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents"
   - u: "openagentsafety_a_comprehensive_framework_for_evaluating_real-world_ai_agent_saf/"
@@ -71,15 +73,13 @@ item_list:
     t: "SR-Scientist: Scientific Equation Discovery With Agentic AI"
   - u: "st-webagentbench_a_benchmark_for_evaluating_safety_and_trustworthiness_in_web_ag/"
     t: "ST-WebAgentBench: A Benchmark for Evaluating Safety and Trustworthiness in Web Agents"
-  - u: "the_controllability_trap_a_governance_framework_for_military_ai_systems/"
-    t: "The Controllability Trap: A Governance Framework for Military AI Agents"
-item_total: 40
+item_total: 42
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🦾 LLM Agent
 
-**🔬 ICLR2026** · **40** 篇论文解读
+**🔬 ICLR2026** · **42** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (42)](../../ICML2026/llm_agent/index.md) · [💬 ACL2026 (78)](../../ACL2026/llm_agent/index.md) · [📷 CVPR2026 (15)](../../CVPR2026/llm_agent/index.md) · [🤖 AAAI2026 (33)](../../AAAI2026/llm_agent/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/llm_agent/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/llm_agent/index.md)
 
@@ -156,6 +156,10 @@ item_total: 40
 **[FeatureBench: Benchmarking Agentic Coding for Complex Feature Development](membership_privacy_risks_of_sharpness_aware_minimization.md)**
 
 :   提出 FeatureBench——面向特征级软件开发的代码智能体评测基准，通过测试驱动的自动化流水线从开源仓库中提取可验证的 feature 实现任务，最强 Claude Opus 4.5 仅解决 11.0%，揭示当前 Agent 在复杂特征开发上的巨大差距。
+
+**[Meta-RL Induces Exploration in Language Agents](meta-rl_induces_exploration_in_language_agents.md)**
+
+:   提出 LaMer 框架，将元强化学习（Meta-RL）引入 LLM agent 训练，通过跨 episode 的奖励优化和基于反思的上下文策略适应，使语言智能体学会主动探索环境，在 Sokoban/MineSweeper/Webshop 上分别获得 11%/14%/19% 的绝对性能提升。
 
 **[NewtonBench: Benchmarking Generalizable Scientific Law Discovery in LLM Agents](newtonbench_benchmarking_generalizable_scientific_law_discovery_in_llm_agents.md)**
 
@@ -236,6 +240,10 @@ item_total: 40
 **[WebArbiter: A Principle-Guided Reasoning Process Reward Model for Web Agents](webarbiter_a_principle-guided_reasoning_process_reward_model_for_web_agents.md)**
 
 :   WebArbiter 提出一种推理优先、原则引导的过程奖励模型 (WebPRM)，将奖励建模形式化为文本生成任务，通过推理蒸馏+强化学习的两阶段训练，在 WebPRMBench 上以 7B 模型超越 GPT-5 达 9.1 个百分点。
+
+**[WebOperator: Action-Aware Tree Search for Autonomous Agents in Web Environment](weboperator_action-aware_tree_search_for_autonomous_agents_in_web_environment.md)**
+
+:   提出 WebOperator，一个动作感知的树搜索框架，通过投机性回溯、破坏性动作检测、动作验证与合并等机制，使 Web 自主代理能在部分可观测、不可逆的真实网页环境中安全高效地探索，在 WebArena 上以 gpt-4o 达到 54.6% SOTA 成功率。
 
 **[Your Agent May Misevolve: Emergent Risks in Self-evolving LLM Agents](your_agent_may_misevolve_emergent_risks_in_self-evolving_llm_agents.md)**
 

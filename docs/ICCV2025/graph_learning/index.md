@@ -23,4 +23,4 @@ item_total: 1
 
 **[PASTA: Part-Aware Sketch-to-3D Shape Generation with Text-Aligned Prior](pasta_part-aware_sketch-to-3d_shape_generation_with_text-aligned_prior.md)**
 
-:   提出PASTA框架，通过VLM文本先验补充草图缺失的语义信息，并用ISG-Net（IndivGCN+PartGCN）建模部件间关系，实现了草图到3D形状生成的SOTA性能，支持部件级编辑。
+:   提出PASTA框架，通过集成VLM文本先验补偿草图的语义缺失，并设计ISG-Net（IndivGCN+PartGCN双图卷积）建模零件间结构关系，实现SOTA的草图到3D形状生成和零件级编辑。

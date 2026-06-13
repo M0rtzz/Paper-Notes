@@ -15,7 +15,7 @@ tags:
 
 # LeakDojo: Decoding the Leakage Threats of RAG Systems
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.05818](https://arxiv.org/abs/2605.05818)  
 **代码**: 已开源（GitHub 链接在论文中）  
 **领域**: RAG / 信息检索 / LLM 安全  

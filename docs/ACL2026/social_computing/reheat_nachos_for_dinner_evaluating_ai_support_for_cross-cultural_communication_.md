@@ -15,7 +15,7 @@ tags:
 
 # Reheat Nachos for Dinner? Evaluating AI Support for Cross-Cultural Communication of Neologisms
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.23842](https://arxiv.org/abs/2604.23842)  
 **代码**: https://github.com/dayeonki/crosscultural_communication  
 **领域**: audio_speech  

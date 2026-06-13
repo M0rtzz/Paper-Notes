@@ -16,7 +16,7 @@ tags:
 
 # High-order Equivariant Flow Matching for Density Functional Theory Hamiltonian Prediction
 
-**会议**: NEURIPS2025  
+**会议**: NEURIPS2025 Spotlight  
 **arXiv**: [2505.18817](https://arxiv.org/abs/2505.18817)  
 **代码**: [seongsukim-ml/QHFlow](https://github.com/seongsukim-ml/QHFlow)  
 **领域**: 图像生成  

@@ -16,7 +16,7 @@ tags:
 
 # LearnAlign: Data Selection for LLM Reinforcement Learning with Improved Gradient Alignment
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2506.11480](https://arxiv.org/abs/2506.11480)  
 **代码**: 待确认  
 **领域**: 强化学习 / 数据选择 / LLM 推理  

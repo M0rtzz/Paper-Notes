@@ -15,7 +15,7 @@ tags:
 
 # CRAFTQA: A Code-Driven Adaptive Framework for Complex Structured Data Reasoning
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2606.02170](https://arxiv.org/abs/2606.02170)  
 **代码**: 未说明  
 **领域**: 结构化数据推理 / 知识图谱问答  

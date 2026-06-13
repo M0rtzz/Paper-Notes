@@ -16,7 +16,7 @@ tags:
 
 # Generalizing Fair Clustering to Multiple Groups: Algorithms and Applications
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.11539](https://arxiv.org/abs/2511.11539)  
 **代码**: 待确认  
 **领域**: AI安全/公平性  

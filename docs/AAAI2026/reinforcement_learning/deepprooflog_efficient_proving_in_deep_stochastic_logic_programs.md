@@ -15,7 +15,7 @@ tags:
 
 # DeepProofLog: Efficient Proving in Deep Stochastic Logic Programs
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.08581](https://arxiv.org/abs/2511.08581)  
 **代码**: [DeepProofLog/DPrL-AAAI](https://github.com/DeepProofLog/DPrL-AAAI)  
 **领域**: 强化学习  

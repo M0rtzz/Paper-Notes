@@ -15,7 +15,7 @@ tags:
 
 # Generalizable Insights for Graph Transformers in Theory and Practice
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.08028](https://arxiv.org/abs/2511.08028)  
 **代码**: 有  
 **领域**: 图学习

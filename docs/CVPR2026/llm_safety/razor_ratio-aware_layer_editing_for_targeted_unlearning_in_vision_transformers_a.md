@@ -16,7 +16,7 @@ tags:
 
 # RAZOR: Ratio-Aware Layer Editing for Targeted Unlearning in Vision Transformers and Diffusion Models
 
-**会议**: CVPR2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.14819](https://arxiv.org/abs/2603.14819)  
 **代码**: [raviranjan-ai/RAZOR-cvpr2026](https://github.com/raviranjan-ai/RAZOR-cvpr2026)  
 **领域**: 图像生成  

@@ -15,7 +15,7 @@ tags:
 
 # Effective Model Pruning: Measure the Redundancy of Model Components
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2509.25606](https://arxiv.org/abs/2509.25606)  
 **代码**: https://github.com/noMushroomw/Effective-model-pruning  
 **领域**: 模型压缩  

@@ -15,7 +15,7 @@ tags:
 
 # OMAC: A Holistic Optimization Framework for LLM-Based Multi-Agent Collaboration
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2505.11765](https://arxiv.org/abs/2505.11765)  
 **代码**: https://github.com/xiwenchao/OMAC  
 **领域**: LLM Agent / 多智能体系统 / 代码生成  

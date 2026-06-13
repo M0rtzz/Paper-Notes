@@ -15,7 +15,7 @@ tags:
 
 # SimuHome: A Temporal- and Environment-Aware Benchmark for Smart Home Agents
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2509.24282](https://arxiv.org/abs/2509.24282)  
 **代码**: [holi-lab/SimuHome](https://github.com/holi-lab/SimuHome)  
 **领域**: LLM评测  

@@ -83,7 +83,7 @@ item_total: 184
 
 **💬 ACL2025** · **184** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md)
 
 🔥 **高频主题：** 对话系统 ×9 · 推理 ×8 · 对齐/RLHF ×7 · 少样本学习 ×4 · Agent ×4
 
@@ -97,7 +97,7 @@ item_total: 184
 
 **[A Measure of the System Dependence of Automated Metrics](a_measure_of_the_system_dependence_of_automated_metrics.md)**
 
-:   揭示 MT 自动评估指标 "尺子因被测物不同而改变长度" 的系统依赖性问题，提出 SysDep 度量来量化不同翻译系统被指标高估/低估的程度。
+:   指出机器翻译自动评估指标存在被忽视的"系统依赖性"问题：同一指标分数对不同翻译系统对应不同的人类评分，提出 SysDep 度量来量化这一效应，揭示即使是 WMT23 最佳指标 XCOMET 也存在严重的系统依赖性导致错误排名。
 
 **[A Multi-Persona Framework for Argument Quality Assessment](a_multi-persona_framework_for_argument_quality_assessment.md)**
 
@@ -113,7 +113,7 @@ item_total: 184
 
 **[A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior](a_spatio-temporal_point_process_for_fine-grained_modeling_of_reading_behavior.md)**
 
-:   本文提出基于时空标记点过程（marked spatio-temporal point process）的阅读行为概率模型，联合建模注视何时发生、落在哪里、持续多久，发现 Hawkes 过程配合读者特定效应和方向偏移能显著提升扫视预测，但 surprisal 等语言学预测因子仅带来微弱改善——这对现有 surprisal 理论提出了质疑。
+:   本文提出基于标记时空点过程（marked spatio-temporal point process）的阅读行为统一概率模型，同时建模注视何时发生、落在哪里、持续多久，避免传统聚合测量的信息损失，发现 surprisal 对细粒度眼动的预测贡献极其有限。
 
 **[ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)**
 
@@ -679,11 +679,11 @@ item_total: 184
 
 **[Subword Models Struggle with Word Learning, but Surprisal Hides It](subword_models_struggle_with_word_learning_but_surprisal_hides_it.md)**
 
-:   本文通过心理语言学的词汇判断任务（lexical decision task）揭示了使用子词（BPE）分词的语言模型在单词学习方面存在严重缺陷，而基于字符级分词的模型能轻松完成该任务；当使用 surprisal（在语境中的出乎意料程度）来评估时，这一差距被掩盖了。
+:   本文通过心理语言学中的词汇决策任务（lexical decision），揭示了子词（BPE）语言模型在孤立词汇识别上远不如字符级模型，而常用的 surprisal 指标因引入句法上下文掩盖了这一缺陷。
 
 **[TabXEval: Why this is a Bad Table? An eXhaustive Rubric for Table Evaluation](tabxeval_why_this_is_a_bad_table_an_exhaustive_rubric_for_table_evaluation.md)**
 
-:   TabXEval 提出了一种基于结构化评分规则（rubric）的两阶段表格评估框架——先通过 TabAlign 对齐参考表和生成表的结构，再通过 TabCompare 进行语义和语法层面的细粒度比较，同时构建了多领域基准 TabXBench。
+:   TabXEval 提出了一个基于 rubric（评分细则）的两阶段表格评估框架——先通过 TabAlign 进行结构对齐，再通过 TabCompare 进行语义和语法细粒度比较，并配套发布了多领域基准 TabXBench。
 
 **[TACLR: A Scalable and Efficient Retrieval-Based Method for Industrial Product Attribute Value Identification](taclr_a_scalable_and_efficient_retrieval-based_method_for_industrial_product_att.md)**
 
@@ -775,7 +775,7 @@ item_total: 184
 
 **[Using Source-Side Confidence Estimation for Reliable Translation into Unfamiliar Languages](using_source-side_confidence_estimation_for_reliable_translation_into_unfamiliar.md)**
 
-:   提出一种基于梯度归因的源端置信度估计方法，通过测量输出序列对源端嵌入的敏感度来识别可能误译的源端词汇，无需词对齐，在误译检测任务上显著优于传统对齐方法。
+:   提出基于梯度的源端置信度估计方法，通过测量输出序列概率对源端嵌入的敏感度来直接检测潜在误译词，无需词对齐即可超越传统方法，并构建了面向源语言熟练用户的交互式翻译 Web 应用。
 
 **[Value Residual Learning](value_residual_learning.md)**
 

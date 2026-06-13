@@ -15,7 +15,7 @@ tags:
 
 # Concept-RuleNet: Grounded Multi-Agent Neurosymbolic Reasoning in Vision Language Models
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.11751](https://arxiv.org/abs/2511.11751)  
 **代码**: [https://github.com/sanchit97/Concept-RuleNet](https://github.com/sanchit97/Concept-RuleNet)  
 **领域**: 多模态VLM / Agent / 神经符号推理  

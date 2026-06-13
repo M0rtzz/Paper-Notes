@@ -15,7 +15,7 @@ tags:
 
 # Efficient and Effective Internal Memory Retrieval for LLM-Based Healthcare Prediction
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.07659](https://arxiv.org/abs/2604.07659)  
 **代码**: [https://anonymous.4open.science/r/K2K-2390/](https://anonymous.4open.science/r/K2K-2390/)  
 **领域**: 医疗NLP

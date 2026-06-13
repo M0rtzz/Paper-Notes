@@ -17,7 +17,7 @@ tags:
 
 # MAGIC: Few-Shot Mask-Guided Anomaly Inpainting with Prompt Perturbation, Spatially Adaptive Guidance, and Context Awareness
 
-**会议**: CVPR2026 Findings  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2507.02314](https://arxiv.org/abs/2507.02314)  
 **代码**: [GitHub](https://github.com/Jaeihk/MAGIC-Anomaly-generation)  
 **领域**: 图像生成 / 异常检测  

@@ -15,7 +15,7 @@ tags:
 
 # When Personalization Tricks Detectors: The Feature-Inversion Trap in Machine-Generated Text Detection
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2510.12476](https://arxiv.org/abs/2510.12476)  
 **代码**: GitHub  
 **领域**: AIGC检测  

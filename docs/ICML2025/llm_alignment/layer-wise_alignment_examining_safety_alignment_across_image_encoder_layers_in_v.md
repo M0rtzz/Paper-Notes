@@ -15,7 +15,7 @@ tags:
 
 # Layer-wise Alignment: Examining Safety Alignment Across Image Encoder Layers in Vision Language Models
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2411.04291](https://arxiv.org/abs/2411.04291)  
 **代码**: 无  
 **领域**: LLM对齐/RLHF  

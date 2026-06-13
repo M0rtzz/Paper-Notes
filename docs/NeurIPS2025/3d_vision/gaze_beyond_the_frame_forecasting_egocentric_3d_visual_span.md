@@ -15,7 +15,7 @@ tags:
 
 # Gaze Beyond the Frame: Forecasting Egocentric 3D Visual Span
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.18470](https://arxiv.org/abs/2511.18470)  
 **代码**: [有](https://hs-yn.github.io/GazeBeyondFrame/)  
 **领域**: 3D视觉  

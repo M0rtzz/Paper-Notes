@@ -15,7 +15,7 @@ tags:
 
 # Interpretable Reward Model via Sparse Autoencoder
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.08746](https://arxiv.org/abs/2508.08746)  
 **代码**: [https://github.com/schrieffer-z/sarm](https://github.com/schrieffer-z/sarm)  
 **领域**: 推荐系统 / LLM对齐  

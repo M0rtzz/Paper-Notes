@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM评测论文汇总 · 91篇论文解读
+  ACL2026 LLM评测论文汇总 · 92篇论文解读
 description: >-
-  91篇ACL2026的 LLM 评测方向论文解读，涵盖 LLM、推理、多模态、个性化生成、对话系统、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  92篇ACL2026的 LLM 评测方向论文解读，涵盖 LLM、推理、多模态、个性化生成、对话系统、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ACL2026"
   - "LLM 评测"
@@ -75,15 +75,15 @@ item_list:
     t: "Enhancing Linguistic Competence of Language Models through Pre-training with Language Learning Tasks"
   - u: "evaluating_legal_reasoning_traces_with_legal_issue_tree_rubrics/"
     t: "Evaluating Legal Reasoning Traces with Legal Issue Tree Rubrics"
-item_total: 91
+item_total: 92
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**💬 ACL2026** · **91** 篇论文解读
+**💬 ACL2026** · **92** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (38)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (25)](../../ICML2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (38)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
 
 🔥 **高频主题：** LLM ×32 · 推理 ×13 · 多模态 ×4 · 个性化生成 ×3 · 对话系统 ×3
 
@@ -282,6 +282,10 @@ item_total: 91
 **[LLMs as annotators of credibility assessment in Danish asylum decisions: evaluating classification performance and errors beyond aggregated metrics](llms_as_annotators_of_credibility_assessment_in_danish_asylum_decisions_evaluati.md)**
 
 :   在丹麦难民上诉委员会 (RAB) 的 273 份庇护决定文书上构建了 RAB-Cred 这个三类 ("Absent / Positive / Negative") 可信度评估专家标注数据集，系统跑了 21 个开源 LLM × 30 种 system×user prompt 组合，发现 prompt 设计比模型选择更重要、phi-4 (14B) 在零样本下能拿 94.7% F1 但单模型一致会犯"不可接受"的错，于是建议用"15 个最优模型-prompt 组合多数投票"的 ensemble，正确率能再涨 1.5 pp 到 96%。
+
+**[LoCar: Localization-Aware Evaluation of In-Vehicle Assistants through Fine-Grained Sociolinguistic Control](locar_localization-aware_evaluation_of_in-vehicle_assistants_through_fine-graine.md)**
+
+:   LoCar 面向韩语车载助手提出 13 个部署级 KPI，并用人工校准的 LLM-as-a-Judge 与敬语形态验证来评测 11 个模型，发现通用理解能力接近饱和，但细粒度敬语控制和多轮策略性引导仍明显不稳定。
 
 **[MARCH: Evaluating the Intersection of Ambiguity Interpretation and Multi-hop Inference](march_evaluating_the_intersection_of_ambiguity_interpretation_and_multi-hop_infe.md)**
 

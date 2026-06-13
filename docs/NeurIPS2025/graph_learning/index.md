@@ -169,7 +169,7 @@ item_total: 54
 
 **[Heterogeneous Swarms: Jointly Optimizing Model Roles and Weights for Multi-LLM Systems](heterogeneous_swarms_jointly_optimizing_model_roles_and_weights_for_multi-llm_sy.md)**
 
-:   提出Heterogeneous Swarms算法，将多LLM系统建模为有向无环图（DAG），通过粒子群优化（PSO）联合优化模型角色（图结构）和模型权重，在12个任务上平均超越17个基线18.5%。
+:   提出 Heterogeneous Swarms 算法，将多 LLM 系统建模为有向无环图（DAG），通过粒子群优化（PSO）交替执行 role-step（优化 LLM 之间的拓扑连接结构）和 weight-step（通过 JFK-score 量化个体贡献后优化模型权重），在 12 个任务上平均超过 17 种基线方法 18.5%。
 
 **[Interaction-Centric Knowledge Infusion and Transfer for Open-Vocabulary Scene Graph Generation](interaction-centric_knowledge_infusion_and_transfer_for_open-vocabulary_scene_gr.md)**
 

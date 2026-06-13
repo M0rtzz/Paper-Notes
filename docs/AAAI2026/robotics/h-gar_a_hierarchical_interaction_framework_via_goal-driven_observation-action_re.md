@@ -15,7 +15,7 @@ tags:
 
 # H-GAR: A Hierarchical Interaction Framework via Goal-Driven Observation-Action Refinement for Robotic Manipulation
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2511.17079](https://arxiv.org/abs/2511.17079)  
 **代码**: 待确认  
 **领域**: 机器人  

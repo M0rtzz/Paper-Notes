@@ -15,7 +15,7 @@ tags:
 
 # Style over Story: Measuring LLM Narrative Preferences via Structured Selection
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.02025](https://arxiv.org/abs/2510.02025)  
 **代码**: 无  
 **领域**: 可解释性 / 文本生成  

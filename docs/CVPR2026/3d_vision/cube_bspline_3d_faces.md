@@ -15,7 +15,7 @@ tags:
 
 # CUBE: Representing 3D Faces with Learnable B-Spline Volumes
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2604.12894](https://arxiv.org/abs/2604.12894)  
 **代码**: 无  
 **领域**: 3D视觉 / 人脸重建  

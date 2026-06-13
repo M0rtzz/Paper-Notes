@@ -15,7 +15,7 @@ tags:
 
 # CURE-Med: Curriculum-Informed Reinforcement Learning for Multilingual Medical Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2601.13262](https://arxiv.org/abs/2601.13262)  
 **代码**: cure_med（论文链接，仓库地址未在缓存中明示）  
 **领域**: 医学 NLP / 多语言 LLM / 强化学习  

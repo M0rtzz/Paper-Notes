@@ -15,7 +15,7 @@ tags:
 
 # Learning Cell-Aware Hierarchical Multi-Modal Representations for Robust Molecular Modeling
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.21120](https://arxiv.org/abs/2511.21120)  
 **代码**: [https://github.com/limengran98/CHMR](https://github.com/limengran98/CHMR)  
 **领域**: 计算生物

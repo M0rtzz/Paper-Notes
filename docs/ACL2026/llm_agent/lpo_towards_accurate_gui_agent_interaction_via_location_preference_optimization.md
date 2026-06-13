@@ -15,7 +15,7 @@ tags:
 
 # LPO: Towards Accurate GUI Agent Interaction via Location Preference Optimization
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2506.09373](https://arxiv.org/abs/2506.09373)  
 **代码**: [GitHub](https://github.com/jqtangust/LPO)  
 **领域**: GUI智能体  

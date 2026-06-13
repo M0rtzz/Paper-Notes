@@ -15,7 +15,7 @@ tags:
 
 # How Many Different Outputs Can a Transformer Generate?
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.22223](https://arxiv.org/abs/2605.22223)  
 **代码**: https://github.com/mario-michelessa/transformers_accessibility (有)  
 **领域**: LLM / NLP 理论分析  

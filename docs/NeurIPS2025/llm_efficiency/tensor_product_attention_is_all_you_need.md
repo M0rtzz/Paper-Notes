@@ -15,7 +15,7 @@ tags:
 
 # Tensor Product Attention Is All You Need
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2501.06425](https://arxiv.org/abs/2501.06425)  
 **代码**: [GitHub](https://github.com/tensorgi/TPA)  
 **领域**: LLM效率 / 注意力机制 / KV缓存压缩  

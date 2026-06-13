@@ -15,7 +15,7 @@ tags:
 
 # Inner Speech as Behavior Guides: Steerable Imitation of Diverse Behaviors for Human-AI Coordination
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2602.20517](https://arxiv.org/abs/2602.20517)  
 **代码**: [项目主页](https://mimic-research.github.io)  
 **领域**: 强化学习 / 模仿学习  

@@ -16,7 +16,7 @@ tags:
 
 # Dual-Path Knowledge-Augmented Contrastive Alignment Network for Spatially Resolved Transcriptomics
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.17685](https://arxiv.org/abs/2511.17685)  
 **代码**: [coffeeNtv/DKAN](https://github.com/coffeeNtv/DKAN)  
 **领域**: 医学图像 / 空间转录组学  

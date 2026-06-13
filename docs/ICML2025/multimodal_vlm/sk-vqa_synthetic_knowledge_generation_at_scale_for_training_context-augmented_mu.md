@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # SK-VQA: Synthetic Knowledge Generation at Scale for Training Context-Augmented Multimodal LLMs
 
-**会议**: ICML2025  
+**会议**: ICML2025 Oral Spotlight  
 **arXiv**: [2406.19593](https://arxiv.org/abs/2406.19593)  
 **代码**: [GitHub](https://github.com/UKPLab/SK-VQA) / [HuggingFace](https://huggingface.co/datasets/skvqa/SK-VQA)  
 **领域**: 多模态VLM  

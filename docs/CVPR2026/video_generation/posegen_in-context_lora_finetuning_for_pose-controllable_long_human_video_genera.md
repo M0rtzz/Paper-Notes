@@ -15,7 +15,7 @@ tags:
 
 # PoseGen: In-Context LoRA Finetuning for Pose-Controllable Long Human Video Generation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2508.05091](https://arxiv.org/abs/2508.05091)  
 **代码**: [https://github.com/Jessie459/PoseGen](https://github.com/Jessie459/PoseGen)  
 **领域**: 视频生成  

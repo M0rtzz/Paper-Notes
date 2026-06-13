@@ -15,7 +15,7 @@ tags:
 
 # Mitigating Hallucinations in Large Vision-Language Models without Performance Degradation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2604.20366](https://arxiv.org/abs/2604.20366)  
 **代码**: 无  
 **领域**: 幻觉检测  

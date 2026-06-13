@@ -15,7 +15,7 @@ tags:
 
 # ATAAT: Adaptive Threat-Aware Adversarial Tuning Framework against Backdoor Attacks on Vision-Language-Action Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.08612](https://arxiv.org/abs/2605.08612)  
 **代码**: 无  
 **领域**: AI 安全 / 具身智能 / 后门攻击  

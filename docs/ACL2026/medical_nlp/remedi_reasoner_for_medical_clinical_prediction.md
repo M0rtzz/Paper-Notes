@@ -15,7 +15,7 @@ tags:
 
 # ReMedi: Reasoner for Medical Clinical Prediction
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.01474](https://arxiv.org/abs/2605.01474)  
 **代码**: 未见公开代码  
 **领域**: 医学临床预测 / EHR 建模 / 医学大语言模型  

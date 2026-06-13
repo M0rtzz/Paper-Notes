@@ -15,7 +15,7 @@ tags:
 
 # A Unified Convergence Analysis for Semi-Decentralized Learning: Sampled-to-Sampled vs. Sampled-to-All Communication
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.11560](https://arxiv.org/abs/2511.11560)  
 **代码**: [https://github.com/arodio/SemiDec](https://github.com/arodio/SemiDec)  
 **领域**: 分布式优化 / 联邦学习  

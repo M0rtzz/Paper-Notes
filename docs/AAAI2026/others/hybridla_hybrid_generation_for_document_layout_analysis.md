@@ -14,7 +14,7 @@ tags:
 
 # HybriDLA: Hybrid Generation for Document Layout Analysis
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.19919](https://arxiv.org/abs/2511.19919)  
 **代码**: [GitHub](https://yufanchen96.github.io/projects/HybriDLA)  
 **领域**: 文档分析 / 目标检测  

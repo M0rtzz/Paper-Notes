@@ -1,19 +1,19 @@
 ---
 title: >-
-  ACL2026 LLM/NLP论文汇总 · 58篇论文解读
+  ACL2026 LLM其他论文汇总 · 56篇论文解读
 description: >-
-  58篇ACL2026的 LLM / NLP 方向论文解读，涵盖 LLM、扩散模型、推理、少样本学习、Agent、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  56篇ACL2026的 LLM 其他方向论文解读，涵盖 LLM、扩散模型、少样本学习、Agent、个性化生成、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "论文解读"
   - "论文笔记"
   - "LLM"
   - "扩散模型"
-  - "推理"
   - "少样本学习"
   - "Agent"
   - "个性化生成"
+  - "推理"
 item_list:
   - u: "a_study_of_llms39_preferences_for_libraries_and_programming_languages/"
     t: "A Study of LLMs' Preferences for Libraries and Programming Languages"
@@ -51,8 +51,6 @@ item_list:
     t: "Expect the Unexpected? Testing the Surprisal of Salient Entities"
   - u: "fastdiss_few-step_match_many-step_diffusion_language_model_on_sequence-to-sequen/"
     t: "FastDiSS: Few-step Match Many-step Diffusion Language Model on Sequence-to-Sequence Generation"
-  - u: "foresight_optimization_for_strategic_reasoning_in_large_language_models/"
-    t: "Foresight Optimization for Strategic Reasoning in Large Language Models"
   - u: "from_fallback_to_frontline_when_can_llms_be_superior_annotators_of_human_perspec/"
     t: "From Fallback to Frontline: When Can LLMs be Superior Annotators of Human Perspectives?"
   - u: "from_static_inference_to_dynamic_interaction_a_survey_of_streaming_large_languag/"
@@ -75,17 +73,19 @@ item_list:
     t: "Iterative Formalization and Planning in Partially Observable Environments"
   - u: "leveraging_pretrained_language_models_as_energy_functions_for_glauber_dynamics_t/"
     t: "Leveraging Pretrained Language Models as Energy Functions for Glauber Dynamics Text Diffusion"
-item_total: 58
+  - u: "masked_by_consensus_disentangling_privileged_knowledge_in_llm_correctness/"
+    t: "Masked by Consensus: Disentangling Privileged Knowledge in LLM Correctness"
+item_total: 56
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 💬 LLM / NLP
+# 💬 LLM 其他
 
-**💬 ACL2026** · **58** 篇论文解读
+**💬 ACL2026** · **56** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (33)](../../ICML2026/llm_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
-🔥 **高频主题：** LLM ×19 · 扩散模型 ×3 · 推理 ×3 · 少样本学习 ×2 · Agent ×2
+🔥 **高频主题：** LLM ×18 · 扩散模型 ×3 · 少样本学习 ×2 · Agent ×2 · 个性化生成 ×2
 
 **[A Study of LLMs' Preferences for Libraries and Programming Languages](a_study_of_llms39_preferences_for_libraries_and_programming_languages.md)**
 
@@ -159,10 +159,6 @@ item_total: 58
 
 :   本文分析了连续扩散语言模型在少步采样时自条件化信号的不匹配和训练饱和两个瓶颈，提出FastDiSS框架通过自条件化扰动（SCP）和模型感知噪声缩放（MANS）来改善鲁棒性，在6个基准上实现4×-400×加速同时保持质量。
 
-**[Foresight Optimization for Strategic Reasoning in Large Language Models](foresight_optimization_for_strategic_reasoning_in_large_language_models.md)**
-
-:   本文提出 Foresight Policy Optimization（FoPO），通过在策略优化中引入对手建模的前瞻修正项，使 LLM 能够显式预见对手行为并据此调整自身策略，在合作（Cooperative RSA）和竞争（Competitive Taboo）两类博弈任务上显著提升策略推理能力，并在跨域 γ-Bench 上取得一致性提升。
-
 **[From Fallback to Frontline: When Can LLMs be Superior Annotators of Human Perspectives?](from_fallback_to_frontline_when_can_llms_be_superior_annotators_of_human_perspec.md)**
 
 :   本文把"perspective-taking (PT)"这个长期被视为人类专属的主观标注任务重新形式化为「对潜在群体均值 $f^*(x,g)$ 的统计估计问题」，用偏差-方差-相关性三项分解证明 LLM 在低预算 / 群体宽泛 / out-group 场景下不只是廉价替代品，而是**比 in-group 人类标注者更优**的估计器，并发现"打开 reasoning 反而变差"的 reasoning paradox。
@@ -206,10 +202,6 @@ item_total: 58
 **[Leveraging Pretrained Language Models as Energy Functions for Glauber Dynamics Text Diffusion](leveraging_pretrained_language_models_as_energy_functions_for_glauber_dynamics_t.md)**
 
 :   本文用统计物理中的 Glauber 动力学构造离散文本扩散：把预训练 UL2 模型当成"能量函数 / 噪声分布"，每一步把 mask infilling 当 Markov 转移核，训出的 Glauber-UL2 在生成 perplexity 上**首次匹配 GPT-2-M/L 同尺寸 AR 模型**，并在 Sudoku/Zebra 等搜索规划任务上击败 MDLM，同 compute 下 best-of-N 也优于 AR。
-
-**[LoCar: Localization-Aware Evaluation of In-Vehicle Assistants through Fine-Grained Sociolinguistic Control](locar_localization-aware_evaluation_of_in-vehicle_assistants_through_fine-graine.md)**
-
-:   LoCar 面向韩语车载助手提出 13 个部署级 KPI，并用人工校准的 LLM-as-a-Judge 与敬语形态验证来评测 11 个模型，发现通用理解能力接近饱和，但细粒度敬语控制和多轮策略性引导仍明显不稳定。
 
 **[Masked by Consensus: Disentangling Privileged Knowledge in LLM Correctness](masked_by_consensus_disentangling_privileged_knowledge_in_llm_correctness.md)**
 

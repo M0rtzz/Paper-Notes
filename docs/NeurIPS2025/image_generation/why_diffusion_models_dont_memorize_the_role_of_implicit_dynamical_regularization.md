@@ -17,7 +17,7 @@ tags:
 
 # Why Diffusion Models Don't Memorize: The Role of Implicit Dynamical Regularization in Training
 
-**会议**: NeurIPS2025  
+**会议**: NeurIPS2025 Oral  
 **arXiv**: [2505.17638](https://arxiv.org/abs/2505.17638)  
 **作者**: Tony Bonnaire, Raphaël Urfin, Giulio Biroli, Marc Mézard (LPENS/PSL Paris, Bocconi University)
 **代码**: 未公开  

@@ -15,7 +15,7 @@ tags:
 
 # [b] = [d] − [t] + [p]: Self-supervised Speech Models Discover Phonological Vector Arithmetic
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2602.18899](https://arxiv.org/abs/2602.18899)  
 **领域**: Audio & Speech / 语音表示学习  
 **关键词**: 自监督语音模型, 音韵向量算术, 语音表示结构, 声学可控合成, 跨语言泛化

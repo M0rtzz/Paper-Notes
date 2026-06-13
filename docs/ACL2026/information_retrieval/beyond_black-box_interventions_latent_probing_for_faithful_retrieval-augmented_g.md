@@ -15,7 +15,7 @@ tags:
 
 # Beyond Black-Box Interventions: Latent Probing for Faithful Retrieval-Augmented Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.12460](https://arxiv.org/abs/2510.12460)  
 **代码**: [GitHub](https://github.com/XMUDeepLIT/ProbeRAG)  
 **领域**: Information Retrieval / RAG  

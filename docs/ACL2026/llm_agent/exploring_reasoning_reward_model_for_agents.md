@@ -15,7 +15,7 @@ tags:
 
 # Exploring Reasoning Reward Model for Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.22154](https://arxiv.org/abs/2601.22154)  
 **代码**: https://github.com/kxfan2002/Reagent  
 **领域**: LLM 对齐 / 奖励模型 / Agentic RL  

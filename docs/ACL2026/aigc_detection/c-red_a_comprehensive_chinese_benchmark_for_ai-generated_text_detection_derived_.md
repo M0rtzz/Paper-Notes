@@ -15,7 +15,7 @@ tags:
 
 # C-ReD: A Comprehensive Chinese Benchmark for AI-Generated Text Detection Derived from Real-World Prompts
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.11796](https://arxiv.org/abs/2604.11796)  
 **代码**: https://github.com/HeraldofLight/C-ReD  
 **领域**: AIGC 检测 / 中文文本检测  

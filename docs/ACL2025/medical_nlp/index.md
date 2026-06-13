@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2025 医疗NLP论文汇总 · 30篇论文解读
+  ACL2025 医疗NLP论文汇总 · 31篇论文解读
 description: >-
-  30篇ACL2025的医疗 NLP 方向论文解读，涵盖医学影像、LLM、对话系统、问答、RAG、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  31篇ACL2025的医疗 NLP 方向论文解读，涵盖医学影像、LLM、对话系统、问答、RAG、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "医疗 NLP"
@@ -19,6 +19,8 @@ item_list:
     t: "A Modular Approach for Clinical SLMs Driven by Synthetic Data with Pre-Instruction Tuning, Model Merging, and Clinical-Tasks Alignment"
   - u: "a_retrieval-based_approach_to_medical_procedure_matching_in_romanian/"
     t: "A Retrieval-Based Approach to Medical Procedure Matching in Romanian"
+  - u: "a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_/"
+    t: "A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions"
   - u: "adaptive-vp_a_framework_for_llm-based_virtual_patients_that_adapts_to_trainees_d/"
     t: "Adaptive-VP: A Framework for LLM-Based Virtual Patients that Adapts to Trainees' Dialogue to Facilitate Nurse Communication Training"
   - u: "afrimed_qa_pan_african/"
@@ -73,19 +75,17 @@ item_list:
     t: "SECRET: Semi-supervised Clinical Trial Document Similarity Search"
   - u: "urca_biomedical_evidence_extraction/"
     t: "Query-driven Document-level Scientific Evidence Extraction from Biomedical Studies"
-  - u: "vital_pluralistic_alignment_healthcare/"
-    t: "VITAL: A New Dataset for Benchmarking Pluralistic Alignment in Healthcare"
-item_total: 30
+item_total: 31
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🩺 医疗 NLP
 
-**💬 ACL2025** · **30** 篇论文解读
+**💬 ACL2025** · **31** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (15)](../../NeurIPS2025/medical_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (12)](../../AAAI2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/medical_nlp/index.md)
 
-🔥 **高频主题：** 医学影像 ×24 · LLM ×5 · 对话系统 ×4 · 问答 ×4 · RAG ×4
+🔥 **高频主题：** 医学影像 ×24 · LLM ×6 · 对话系统 ×4 · 问答 ×4 · RAG ×4
 
 **[A Modular Approach for Clinical SLMs Driven by Synthetic Data with Pre-Instruction Tuning, Model Merging, and Clinical-Tasks Alignment](a_modular_approach_for_clinical_slms_driven_by_synthetic_data_with_pre-instructi.md)**
 
@@ -94,6 +94,10 @@ item_total: 30
 **[A Retrieval-Based Approach to Medical Procedure Matching in Romanian](a_retrieval-based_approach_to_medical_procedure_matching_in_romanian.md)**
 
 :   将罗马尼亚语医疗程序名称匹配建模为检索问题而非分类问题，在 39,097 个标准条目（50% 仅有单样本）的极端长尾场景下，对比 BM25 稀疏检索与 mE5/RoBERT/BioClinicalBERT 三种密集嵌入，通过度量学习微调后 mE5 达到 85.2% Acc@1，真实部署中医生验证 94.7% 准确率且比人工快 1200 倍。
+
+**[A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)**
+
+:   首篇以 APA 三阶段（评估→诊断→治疗）概念分类法系统梳理 LLM 心理治疗研究的综述，覆盖 60+ 篇工作，从症状检测到虚拟治疗师四层面全面分析，揭示障碍覆盖、语言偏差、方法碎片化和理论整合的四重失衡。
 
 **[Adaptive-VP: A Framework for LLM-Based Virtual Patients that Adapts to Trainees' Dialogue to Facilitate Nurse Communication Training](adaptive-vp_a_framework_for_llm-based_virtual_patients_that_adapts_to_trainees_d.md)**
 

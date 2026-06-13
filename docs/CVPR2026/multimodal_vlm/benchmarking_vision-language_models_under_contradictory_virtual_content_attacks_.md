@@ -15,7 +15,7 @@ tags:
 
 # Benchmarking Vision-Language Models under Contradictory Virtual Content Attacks in Augmented Reality
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.05510](https://arxiv.org/abs/2604.05510)  
 **代码**: [GitHub](https://github.com/YM-Xiu/ContrAR-Dataset)  
 **领域**: 多模态 / AR 安全  

@@ -15,7 +15,7 @@ tags:
 
 # AnchorMem: Anchored Facts with Associative Contexts for Building Memory in Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17377](https://arxiv.org/abs/2604.17377)  
 **代码**: [https://github.com/RayNeo-AI-2025/AnchorMem](https://github.com/RayNeo-AI-2025/AnchorMem)  
 **领域**: LLM评测  

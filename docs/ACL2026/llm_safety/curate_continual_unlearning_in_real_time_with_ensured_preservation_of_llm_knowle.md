@@ -15,7 +15,7 @@ tags:
 
 # CURaTE: Continual Unlearning in Real Time with Ensured Preservation of LLM Knowledge
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.14644](https://arxiv.org/abs/2604.14644)  
 **代码**: [GitHub](https://github.com/bsu1313/CURaTE)  
 **领域**: 信息检索  

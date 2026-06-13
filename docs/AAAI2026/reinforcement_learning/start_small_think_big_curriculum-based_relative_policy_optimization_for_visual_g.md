@@ -15,7 +15,7 @@ tags:
 
 # Start Small, Think Big: Curriculum-based Relative Policy Optimization for Visual Grounding
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13924](https://arxiv.org/abs/2511.13924)  
 **代码**: [github.com/qyoung-yan/CuRPO](https://github.com/qyoung-yan/CuRPO)  
 **领域**: 强化学习  

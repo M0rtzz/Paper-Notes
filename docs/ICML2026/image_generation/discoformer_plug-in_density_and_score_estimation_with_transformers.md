@@ -15,7 +15,7 @@ tags:
 
 # DiScoFormer: Plug-In Density and Score Estimation with Transformers
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2511.05924](https://arxiv.org/abs/2511.05924)  
 **代码**: 待确认  
 **领域**: 科学计算 / 非参数统计 / 密度与 score 估计  

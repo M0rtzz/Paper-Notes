@@ -15,7 +15,7 @@ tags:
 
 # UniTok: A Unified Tokenizer for Visual Generation and Understanding
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.20321](https://arxiv.org/abs/2502.20321)  
 **代码**: [GitHub](https://github.com/FoundationVision/UniTok)  
 **领域**: 多模态VLM  

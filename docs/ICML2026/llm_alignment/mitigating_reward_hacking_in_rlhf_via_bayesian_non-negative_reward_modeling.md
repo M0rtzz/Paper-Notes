@@ -15,7 +15,7 @@ tags:
 
 # Mitigating Reward Hacking in RLHF via Bayesian Non-negative Reward Modeling
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2602.10623](https://arxiv.org/abs/2602.10623)  
 **代码**: https://github.com/GuoweiRong/Bayesian-Non-negative-Reward-Model (有)  
 **领域**: 对齐RLHF  

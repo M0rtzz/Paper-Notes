@@ -15,7 +15,7 @@ tags:
 
 # JudgeMeNot: Personalizing Large Language Models to Emulate Judicial Reasoning in Hebrew
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18041](https://arxiv.org/abs/2604.18041)  
 **代码**: [GitHub](https://github.com/Socially-Embedded-Lab/JudgeMeNot)  
 **领域**: 模型压缩  

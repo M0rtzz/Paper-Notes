@@ -15,7 +15,7 @@ tags:
 
 # TIMING: Temporality-Aware Integrated Gradients for Time Series Explanation
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2506.05035](https://arxiv.org/abs/2506.05035)  
 **代码**: [drumpt/TIMING](https://github.com/drumpt/TIMING)  
 **领域**: 时序可解释性 (Time Series XAI)  

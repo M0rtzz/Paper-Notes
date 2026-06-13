@@ -15,7 +15,7 @@ tags:
 
 # From Abstraction to Instantiation: Learning Behavioral Representation for Vision-Language-Action Model
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2605.22671](https://arxiv.org/abs/2605.22671)  
 **代码**: [BehaviorVLA.github.io](https://BehaviorVLA.github.io)  
 **领域**: 机器人 / 具身智能 / VLA  

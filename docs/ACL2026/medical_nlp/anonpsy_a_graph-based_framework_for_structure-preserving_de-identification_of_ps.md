@@ -15,7 +15,7 @@ tags:
 
 # Anonpsy: A Graph-Based Framework for Structure-Preserving De-identification of Psychiatric Narratives
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.13503](https://arxiv.org/abs/2601.13503)  
 **代码**: 无  
 **领域**: 医学NLP

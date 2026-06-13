@@ -15,7 +15,7 @@ tags:
 
 # Optimal and Scalable MAPF via Multi-Marginal Optimal Transport and Schrödinger Bridges
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.10917](https://arxiv.org/abs/2605.10917)  
 **代码**: 未公开  
 **领域**: 机器人 / 多智能体路径规划 / 最优传输  

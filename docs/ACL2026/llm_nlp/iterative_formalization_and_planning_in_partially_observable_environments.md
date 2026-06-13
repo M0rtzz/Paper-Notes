@@ -15,7 +15,7 @@ tags:
 
 # Iterative Formalization and Planning in Partially Observable Environments
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2505.13126](https://arxiv.org/abs/2505.13126)  
 **代码**: [GitHub](https://github.com/zharry29/pddlego-plus)  
 **领域**: LLM NLP / AI Planning  

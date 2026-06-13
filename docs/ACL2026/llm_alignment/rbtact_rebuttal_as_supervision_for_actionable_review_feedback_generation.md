@@ -15,7 +15,7 @@ tags:
 
 # RbtAct: Rebuttal as Supervision for Actionable Review Feedback Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2603.09723](https://arxiv.org/abs/2603.09723)  
 **代码**: arXiv 页面标注 RbtAct，缓存中未解析出公开仓库 URL  
 **领域**: LLM对齐 / 学术同行评审 / 反馈生成  

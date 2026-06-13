@@ -15,7 +15,7 @@ tags:
 
 # Beyond Loss Values: Robust Dynamic Pruning via Loss Trajectory Alignment
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.07306](https://arxiv.org/abs/2604.07306)  
 **代码**: [GitHub](https://github.com/leonqin430/AlignPrune)  
 **领域**: 模型压缩/数据剪枝  

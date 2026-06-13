@@ -15,7 +15,7 @@ tags:
 
 # Unlocking ImageNet's Multi-Object Nature: Automated Large-Scale Multilabel Annotation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.05729](https://arxiv.org/abs/2603.05729)  
 **代码**: [有](https://github.com/jchen175/MultiLabel-ImageNet)  
 **领域**: 模型压缩  

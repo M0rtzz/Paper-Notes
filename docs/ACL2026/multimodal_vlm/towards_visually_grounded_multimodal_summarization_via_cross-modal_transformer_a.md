@@ -15,7 +15,7 @@ tags:
 
 # Towards Visually Grounded Multimodal Summarization via Cross-Modal Transformer and Gated Attention
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.11753](https://arxiv.org/abs/2605.11753)  
 **代码**: https://github.com/abidmeeraj/SPeCTrA-Sum  
 **领域**: 多模态VLM / 多模态摘要  

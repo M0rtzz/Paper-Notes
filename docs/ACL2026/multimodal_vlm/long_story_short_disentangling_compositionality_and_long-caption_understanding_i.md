@@ -16,7 +16,7 @@ tags:
 
 # Long Story Short: Disentangling Compositionality and Long-Caption Understanding in Contrastive VLMs
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2509.19207](https://arxiv.org/abs/2509.19207)  
 **代码**: 待确认  
 **领域**: 多模态 VLM / 评测  

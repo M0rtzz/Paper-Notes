@@ -15,7 +15,7 @@ tags:
 
 # GoViG: Goal-Conditioned Visual Navigation Instruction Generation via Multimodal Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2508.09547](https://arxiv.org/abs/2508.09547)  
 **代码**: https://github.com/F1y1113/GoViG (有)  
 **领域**: 机器人 / 视觉语言导航 (VLN)  

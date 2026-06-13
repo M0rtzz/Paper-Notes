@@ -15,7 +15,7 @@ tags:
 
 # Revisiting the Uniform Information Density Hypothesis in LLM Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.06953](https://arxiv.org/abs/2510.06953)  
 **代码**: [GitHub](https://github.com/talzoomanzoo/uid-reasoning)  
 **领域**: LLM评测  

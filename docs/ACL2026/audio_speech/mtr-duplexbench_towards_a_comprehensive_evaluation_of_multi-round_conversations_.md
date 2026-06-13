@@ -15,7 +15,7 @@ tags:
 
 # MTR-DuplexBench: Towards a Comprehensive Evaluation of Multi-Round Conversations for Full-Duplex Speech Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2511.10262](https://arxiv.org/abs/2511.10262)  
 **代码**: [https://github.com/ZhangHe0918/MTR-DuplexBench](https://github.com/ZhangHe0918/MTR-DuplexBench)  
 **领域**: 语音语言模型 / 评测基准  

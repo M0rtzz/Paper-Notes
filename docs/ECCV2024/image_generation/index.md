@@ -83,7 +83,7 @@ item_total: 117
 
 **🎞️ ECCV2024** · **117** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×54 · 文生图 ×13 · 超分辨率 ×7 · 图像编辑 ×7 · 个性化生成 ×7
 
@@ -325,7 +325,7 @@ item_total: 117
 
 **[Learning Trimodal Relation for Audio-Visual Question Answering with Missing Modality](learning_trimodal_relation_for_audio-visual_question_answering_with_missing_moda.md)**
 
-:   提出基于三模态关系的缺失模态AVQA框架，通过关系感知缺失模态生成器（RMM）和音视觉关系感知扩散模型（AVR），在推理时缺少音频或视觉模态的情况下依然能准确回答问题。
+:   提出基于三模态关系的缺失模态 AVQA 框架，通过 RMM 生成器召回缺失模态特征并用 AVR 扩散模型跨模态增强，即使音频或视觉缺失也能准确回答问题。
 
 **[LEGO: Learning EGOcentric Action Frame Generation via Visual Instruction Tuning](lego_learning_egocentric_action_frame_generation_via_vi.md)**
 
@@ -501,7 +501,7 @@ item_total: 117
 
 **[TextDiffuser-2: Unleashing the Power of Language Models for Text Rendering](textdiffuser-2_unleashing_the_power_of_language_models_for_text_rendering.md)**
 
-:   利用两个语言模型分别进行布局规划和布局编码，实现更灵活、更多样化的视觉文本渲染，在文本准确性和风格多样性之间取得更好的平衡。
+:   TextDiffuser-2 利用两个语言模型分别进行布局规划和布局编码，实现了更灵活、更自动化、更多样化的视觉文本渲染，在保持文本准确性的同时大幅提升了字体风格多样性。
 
 **[Textual-Visual Logic Challenge: Understanding and Reasoning in Text-to-Image Generation](textual-visual_logic_challenge_understanding_and_reasoning_in_text-to-image_gene.md)**
 
@@ -525,7 +525,7 @@ item_total: 117
 
 **[Unveiling Advanced Frequency Disentanglement Paradigm for Low-Light Image Enhancement](unveiling_advanced_frequency_disentanglement_paradigm_for_low-light_image_enhanc.md)**
 
-:   提出一种通用的频率解耦学习范式，通过轻量级 ACCA 模块进行粗调低频恢复，再通过 LDRM 模块结合低频一致性约束实现高频细化，仅增加 88K 参数即可为六种 SOTA 低光增强模型带来最高 7.68dB 的 PSNR 提升。
+:   提出了一种通用的频率解耦学习范式，通过拉普拉斯分解和低频一致性约束，将低频（光照恢复）和高频（去噪）增强解耦为两个独立子任务，仅需88K额外参数即可为6种SOTA低光增强模型带来最高7.68dB的PSNR提升。
 
 **[WebRPG: Automatic Web Rendering Parameters Generation for Visual Presentation](webrpg_automatic_web_rendering_parameters_generation_for_visual_presentation.md)**
 

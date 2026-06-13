@@ -15,7 +15,7 @@ tags:
 
 # Structured and Abstractive Reasoning on Multi-modal Relational Knowledge Images
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2510.21828](https://arxiv.org/abs/2510.21828)  
 **代码**: https://github.com/zjukg/STAR  
 **领域**: 多模态VLM / 知识图谱 / 结构化推理  

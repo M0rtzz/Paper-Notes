@@ -15,7 +15,7 @@ tags:
 
 # Comparing Human and Large Language Model Interpretation of Implicit Information
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17085](https://arxiv.org/abs/2604.17085)  
 **代码**: 有（论文中提供链接）  
 **领域**: 知识图谱 / 隐含信息理解  

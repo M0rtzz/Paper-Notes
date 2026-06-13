@@ -14,7 +14,7 @@ tags:
 
 # Matroid Algorithms Under Size-Sensitive Independence Oracles
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.00201](https://arxiv.org/abs/2605.00201)  
 **代码**: 无（理论论文）  
 **领域**: 算法理论 / 组合优化  

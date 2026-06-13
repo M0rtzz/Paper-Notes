@@ -15,7 +15,7 @@ tags:
 
 # CLaRE-ty Amid Chaos: Quantifying Representational Entanglement to Predict Ripple Effects in LLM Editing
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2603.19297](https://arxiv.org/abs/2603.19297)  
 **代码**: [https://github.com/manitbaser/CLaRE](https://github.com/manitbaser/CLaRE)  
 **领域**: 模型编辑/知识编辑  

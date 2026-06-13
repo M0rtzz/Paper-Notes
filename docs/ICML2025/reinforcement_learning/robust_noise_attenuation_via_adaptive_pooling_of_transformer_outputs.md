@@ -15,7 +15,7 @@ tags:
 
 # Robust Noise Attenuation via Adaptive Pooling of Transformer Outputs
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2506.09215](https://arxiv.org/abs/2506.09215)  
 **代码**: [agbrothers/pooling](https://github.com/agbrothers/pooling)  
 **领域**: Transformer鲁棒性 / 向量池化  

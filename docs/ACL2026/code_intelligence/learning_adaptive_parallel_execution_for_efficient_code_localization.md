@@ -15,7 +15,7 @@ tags:
 
 # Learning Adaptive Parallel Execution for Efficient Code Localization
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2601.19568](https://arxiv.org/abs/2601.19568)  
 **代码**: 未在缓存中看到公开代码链接  
 **领域**: 代码智能 / LLM Agent  

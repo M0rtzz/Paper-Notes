@@ -15,7 +15,7 @@ tags:
 
 # Training-Free Test-Time Contrastive Learning for Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.13552](https://arxiv.org/abs/2604.13552)  
 **代码**: [https://github.com/KevinSCUTer/TF-TTCL](https://github.com/KevinSCUTer/TF-TTCL)  
 **领域**: 模型压缩/测试时适应  

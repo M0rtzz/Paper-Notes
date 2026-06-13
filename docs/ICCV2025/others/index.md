@@ -1,15 +1,15 @@
 ---
 title: >-
-  ICCV2025 其他论文汇总 · 39篇论文解读
+  ICCV2025 其他论文汇总 · 33篇论文解读
 description: >-
-  39篇ICCV2025的其他方向论文解读，涵盖对抗鲁棒、动态场景、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  33篇ICCV2025的其他方向论文解读，涵盖动态场景、对抗鲁棒、少样本学习、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "其他"
   - "论文解读"
   - "论文笔记"
-  - "对抗鲁棒"
   - "动态场景"
+  - "对抗鲁棒"
   - "少样本学习"
   - "扩散模型"
 item_list:
@@ -21,8 +21,6 @@ item_list:
     t: "AdaptiveAE: An Adaptive Exposure Strategy for HDR Capturing in Dynamic Scenes"
   - u: "adversarial_data_augmentation_for_single_domain_generalization_via_lyapunov_expo/"
     t: "Adversarial Data Augmentation for Single Domain Generalization via Lyapunov Exponents"
-  - u: "afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons/"
-    t: "AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm"
   - u: "autoregressively_generating_multiview_consistent_images/"
     t: "Auto-Regressively Generating Multi-View Consistent Images (MV-AR)"
   - u: "c4d_4d_made_from_3d_through_dual_correspondences/"
@@ -33,12 +31,6 @@ item_list:
     t: "EDFFDNet: Towards Accurate and Efficient Unsupervised Multi-Grid Image Registration"
   - u: "fixtalk_taming_identity_leakage_for_high-quality_talking_head_generation_in_extr/"
     t: "FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases"
-  - u: "from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe/"
-    t: "From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision"
-  - u: "hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging/"
-    t: "Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging"
-  - u: "hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu/"
-    t: "HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity"
   - u: "hytip_hybrid_temporal_information_propagation_for_masked_conditional_residual_vi/"
     t: "HyTIP: Hybrid Temporal Information Propagation for Masked Conditional Residual Video Coding"
   - u: "i_am_big_you_are_little_i_am_right_you_are_wrong/"
@@ -65,25 +57,33 @@ item_list:
     t: "Magic Insert: Style-Aware Drag-and-Drop"
   - u: "nappure_adversarial_purification_for_robust_image_classification_under_non-addit/"
     t: "NAPPure: Adversarial Purification for Robust Image Classification under Non-Additive Perturbations"
-  - u: "omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration/"
-    t: "Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration"
   - u: "on_the_complexity-faithfulness_trade-off_of_gradient-based_explanations/"
     t: "On the Complexity-Faithfulness Trade-off of Gradient-Based Explanations"
   - u: "ph-gan_physics-inspired_gan_for_generating_sar_images_under_limited_data/"
     t: "Φ-GAN: Physics-Inspired GAN for Generating SAR Images Under Limited Data"
   - u: "processing_and_acquisition_traces_in_visual_encoders_what_does_clip_know_about_y/"
     t: "Processing and Acquisition Traces in Visual Encoders: What Does CLIP Know About Your Camera?"
-item_total: 39
+  - u: "recover_biological_structure_from_sparse-view_diffraction_images_with_neural_vol/"
+    t: "Recover Biological Structure from Sparse-View Diffraction Images with Neural Volumetric Prior"
+  - u: "recovering_parametric_scenes_from_very_few_time-of-flight_pixels/"
+    t: "Recovering Parametric Scenes from Very Few Time-of-Flight Pixels"
+  - u: "revisiting_image_fusion_for_multi-illuminant_white-balance_correction/"
+    t: "Revisiting Image Fusion for Multi-Illuminant White-Balance Correction"
+  - u: "stroke2sketch_harnessing_stroke_attributes_for_training-free_sketch_generation/"
+    t: "Stroke2Sketch: Harnessing Stroke Attributes for Training-Free Sketch Generation"
+  - u: "switch-a-view_view_selection_learned_from_unlabeled_in-the-wild_videos/"
+    t: "Switch-a-View: View Selection Learned from Unlabeled In-the-wild Videos"
+item_total: 33
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📹 ICCV2025** · **39** 篇论文解读
+**📹 ICCV2025** · **33** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×3 · 动态场景 ×2 · 少样本学习 ×2 · 扩散模型 ×2
+🔥 **高频主题：** 动态场景 ×2 · 对抗鲁棒 ×2 · 少样本学习 ×2 · 扩散模型 ×2
 
 **[A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)**
 
@@ -99,11 +99,7 @@ item_total: 39
 
 **[Adversarial Data Augmentation for Single Domain Generalization via Lyapunov Exponents](adversarial_data_augmentation_for_single_domain_generalization_via_lyapunov_expo.md)**
 
-:   提出 LEAwareSGD 优化器，利用 Lyapunov 指数（LE）动态调节学习率，引导模型训练在混沌边缘附近，在对抗数据增强框架下实现更广泛的参数空间探索，显著提升单域泛化（SDG）性能。
-
-**[AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm](afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons.md)**
-
-:   将多曝光HDR重建从MAP估计视角建模，通过空间对应先验将问题分解为对齐和融合两个交替子问题，再展开为端到端可训练的AFUNet（含SAM空间对齐+CFM通道融合+DCM数据一致性模块），在三个HDR基准上取得SOTA，PSNR-μ达44.91dB（Kalantari数据集）。
+:   提出 LEAwareSGD 优化器，利用 Lyapunov 指数（LE）动态调节学习率，将模型训练引导至"混沌边缘"附近，从而在单源域泛化任务中实现更广泛的参数空间探索和更强的跨域泛化能力。
 
 **[Auto-Regressively Generating Multi-View Consistent Images (MV-AR)](autoregressively_generating_multiview_consistent_images.md)**
 
@@ -124,18 +120,6 @@ item_total: 39
 **[FixTalk: Taming Identity Leakage for High-Quality Talking Head Generation in Extreme Cases](fixtalk_taming_identity_leakage_for_high-quality_talking_head_generation_in_extr.md)**
 
 :   提出FixTalk框架，通过增强运动指示器（EMI）和增强细节指示器（EDI）两个轻量级即插即用模块，将GAN模型中的身份泄漏问题"化害为利"——EMI消除运动特征中的身份信息以解决身份泄漏，EDI利用泄漏的身份信息在极端姿态下补充缺失细节以消除渲染伪影。
-
-**[From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)**
-
-:   提出渐进式主动学习（PAL）框架，通过"模型预启动→模型增强→模型精炼"三阶段训练策略，驱动红外小目标检测网络从易到难地主动识别和学习困难样本，在单点监督条件下显著缩小了与全监督方法之间的性能差距（IoU 提升 8.53%–29.1%）。
-
-**[Hi3DGen: High-fidelity 3D Geometry Generation from Images via Normal Bridging](hi3dgen_high-fidelity_3d_geometry_generation_from_images_via_normal_bridging.md)**
-
-:   提出 Hi3DGen 框架，以法线图作为中间表示桥接 2D 图像到 3D 几何的映射，通过噪声注入回归式法线估计器（NiRNE）和法线正则化潜在扩散（NoRLD）两大核心组件，显著提升生成 3D 模型的几何细节保真度。
-
-**[HiNeuS: High-fidelity Neural Surface Mitigating Low-texture and Reflective Ambiguity](hineus_high-fidelity_neural_surface_mitigating_low-texture_and_reflective_ambigu.md)**
-
-:   提出 HiNeuS，一个统一的神经表面重建框架，通过 SDF 引导的可见性验证、平面共形正则化和渲染优先的 Eikonal 松弛三项创新，同时解决反射歧义、低纹理退化和细节保留三大核心挑战。
 
 **[HyTIP: Hybrid Temporal Information Propagation for Masked Conditional Residual Video Coding](hytip_hybrid_temporal_information_propagation_for_masked_conditional_residual_vi.md)**
 
@@ -189,10 +173,6 @@ item_total: 39
 
 :   提出 NAPPure 框架，通过联合优化底层干净图像和扰动参数（基于似然最大化），将对抗纯化从仅处理加性扰动扩展到模糊、遮挡、几何扭曲等非加性扰动，在GTSRB上实现73.93%的平均鲁棒准确率（传统方法仅43.2%）。
 
-**[Omni-DC: Highly Robust Depth Completion with Multiresolution Depth Integration](omni-dc_highly_robust_depth_completion_with_multiresolution_depth_integration.md)**
-
-:   提出 OMNI-DC，通过多分辨率深度积分器（Multi-res DDI）、Laplacian 损失和尺度归一化技术，构建了一个能够零样本泛化到不同数据集和稀疏深度模式的高鲁棒深度补全模型。
-
 **[On the Complexity-Faithfulness Trade-off of Gradient-Based Explanations](on_the_complexity-faithfulness_trade-off_of_gradient-based_explanations.md)**
 
 :   提出统一的频谱框架来系统性分析和量化梯度解释的平滑性（复杂度）与忠实度之间的权衡，引入期望频率（EF）度量网络对高频信息的依赖程度，并通过将 ReLU 与高斯函数卷积来控制解释复杂度，同时定义"解释间隙"来量化替代模型导致的忠实度损失。
@@ -216,10 +196,6 @@ item_total: 39
 **[Revisiting Image Fusion for Multi-Illuminant White-Balance Correction](revisiting_image_fusion_for_multi-illuminant_white-balance_correction.md)**
 
 :   针对多光源场景白平衡校正问题，提出一种基于 Transformer 的高效融合模型来替代传统线性融合，并构建了包含 16,000+ 张图像的大规模多光源白平衡数据集，在新数据集上实现比现有方法提升 100% 的校正质量。
-
-**[SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)**
-
-:   > SemTalk 将共语动作分解为节奏相关的基础动作和语义感知的稀疏动作，通过学得的语义分数自适应融合两者，实现帧级语义强调的高质量全身共语动作生成。
 
 **[Stroke2Sketch: Harnessing Stroke Attributes for Training-Free Sketch Generation](stroke2sketch_harnessing_stroke_attributes_for_training-free_sketch_generation.md)**
 

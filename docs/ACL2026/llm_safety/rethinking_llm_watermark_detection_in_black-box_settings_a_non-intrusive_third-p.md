@@ -15,7 +15,7 @@ tags:
 
 # Rethinking LLM Watermark Detection in Black-Box Settings: A Non-Intrusive Third-Party Framework
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2603.14968](https://arxiv.org/abs/2603.14968)  
 **代码**: 无  
 **领域**: AI安全 / 水印检测  

@@ -14,7 +14,7 @@ tags:
 
 # TDSNNs: Competitive Topographic Deep Spiking Neural Networks for Visual Cortex Modeling
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.04270](https://arxiv.org/abs/2508.04270)  
 **代码**: 无  
 **领域**: 脉冲神经网络 / 计算神经科学  

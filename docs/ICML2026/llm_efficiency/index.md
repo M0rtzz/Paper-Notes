@@ -1,24 +1,23 @@
 ---
 title: >-
-  ICML2026 LLM效率论文汇总 · 30篇论文解读
+  ICML2026 LLM效率论文汇总 · 32篇论文解读
 description: >-
-  30篇ICML2026的 LLM 效率方向论文解读，涵盖 LLM、压缩/编码、Agent、模型压缩、推理、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  32篇ICML2026的 LLM 效率方向论文解读，涵盖 LLM、扩散模型、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "LLM 效率"
   - "论文解读"
   - "论文笔记"
   - "LLM"
-  - "压缩/编码"
-  - "Agent"
-  - "模型压缩"
-  - "推理"
   - "扩散模型"
+  - "压缩/编码"
 item_list:
   - u: "beyond_sunk_costs_boosting_llm_pre-training_efficiency_via_orthogonal_growth_of_/"
     t: "Beyond Sunk Costs: Boosting LLM Pre-training Efficiency via Orthogonal Growth of Mixture-of-Experts"
   - u: "criticalkv_optimizing_kv_cache_eviction_from_an_output_perturbation_perspective/"
     t: "CriticalKV: Optimizing KV Cache Eviction from an Output Perturbation Perspective"
+  - u: "dllm-cache_accelerating_diffusion_large_language_models_with_adaptive_caching/"
+    t: "dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching"
   - u: "do_transformers_need_three_projections_systematic_study_of_qkv_variants/"
     t: "Do Transformers Need Three Projections？三选一/二的 QKV 共享系统研究"
   - u: "dot-moe_differentiable_optimal_transport_for_moefication/"
@@ -27,6 +26,8 @@ item_list:
     t: "Efficient Training-Free Multi-Token Prediction via Embedding-Space Probing"
   - u: "ekka_automated_diagnosis_of_silent_errors_in_llm_inference/"
     t: "Ekka: Automated Diagnosis of Silent Errors in LLM Inference"
+  - u: "fast-dllm_fréchet_profile_decoding_for_faster_diffusion_llm_inference/"
+    t: "Fast-dLLM++: Fréchet Profile Decoding for Faster Diffusion LLM Inference"
   - u: "graphflow_a_graph-based_workflow_management_for_efficient_llm-agent_serving/"
     t: "GraphFlow: A Graph-Based Workflow Management for Efficient LLM-Agent Serving"
   - u: "hyperparameter_transfer_with_mixture-of-expert_layers/"
@@ -71,21 +72,17 @@ item_list:
     t: "Theoretically Optimal Attention/FFN Ratios in Disaggregated LLM Serving"
   - u: "training-inference_consistent_segmented_execution_for_long-context_llms/"
     t: "Training-Inference Consistent Segmented Execution for Long-Context LLMs"
-  - u: "variational_routing_a_scalable_bayesian_framework_for_calibrated_mixture-of-expe/"
-    t: "Variational Routing: 校准 MoE Transformer 的可扩展贝叶斯框架"
-  - u: "warmserve_enabling_one-for-many_gpu_prewarming_for_multi-llm_serving/"
-    t: "WarmServe：一次加载多模型的 GPU 预热机制"
-item_total: 30
+item_total: 32
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚡ LLM 效率
 
-**🧪 ICML2026** · **30** 篇论文解读
+**🧪 ICML2026** · **32** 篇论文解读
 
 📌 **同领域跨会议浏览：** [💬 ACL2026 (22)](../../ACL2026/llm_efficiency/index.md) · [🔬 ICLR2026 (20)](../../ICLR2026/llm_efficiency/index.md) · [🤖 AAAI2026 (9)](../../AAAI2026/llm_efficiency/index.md) · [🧠 NeurIPS2025 (34)](../../NeurIPS2025/llm_efficiency/index.md) · [📹 ICCV2025 (1)](../../ICCV2025/llm_efficiency/index.md) · [🧪 ICML2025 (12)](../../ICML2025/llm_efficiency/index.md)
 
-🔥 **高频主题：** LLM ×10 · 压缩/编码 ×2
+🔥 **高频主题：** LLM ×12 · 扩散模型 ×3 · 压缩/编码 ×2
 
 **[Beyond Sunk Costs: Boosting LLM Pre-training Efficiency via Orthogonal Growth of Mixture-of-Experts](beyond_sunk_costs_boosting_llm_pre-training_efficiency_via_orthogonal_growth_of_.md)**
 
@@ -94,6 +91,10 @@ item_total: 30
 **[CriticalKV: Optimizing KV Cache Eviction from an Output Perturbation Perspective](criticalkv_optimizing_kv_cache_eviction_from_an_output_perturbation_perspective.md)**
 
 :   作者把"哪些 KV 缓存条目算关键"这个一直靠经验拍脑袋的问题，重新写成"最小化注意力输出扰动"的优化问题，推导出扰动的可解析上界（同时涉及注意力权重和经 $W^O$ 投影后的 value 范数），并由此设计了一个即插即用的两阶段贪心选择算法，把 SnapKV/AdaKV/HeadKV 三种 SOTA 驱逐方法在 29 个长上下文数据集上的压缩损失平均砍掉一半以上。
+
+**[dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching](dllm-cache_accelerating_diffusion_large_language_models_with_adaptive_caching.md)**
+
+:   针对扩散式大语言模型 (dLLM) 因双向注意力无法复用 KV cache 而推理极慢的问题，本文提出训练无关的 dLLM-Cache，对静态 prompt 用长间隔缓存、对动态 response 用短间隔刷新+按 Value 余弦相似度选 25% 最"变化"的 token 做局部重算，在 LLaDA 8B / Dream 7B 上获得最高 9.1× FLOPs 加速且分数基本不掉。
 
 **[Do Transformers Need Three Projections？三选一/二的 QKV 共享系统研究](do_transformers_need_three_projections_systematic_study_of_qkv_variants.md)**
 
@@ -110,6 +111,10 @@ item_total: 30
 **[Ekka: Automated Diagnosis of Silent Errors in LLM Inference](ekka_automated_diagnosis_of_silent_errors_in_llm_inference.md)**
 
 :   Ekka 把 LLM 服务框架里"输出悄悄变烂、却没有报错"的静默错误诊断问题，建模为以 HuggingFace 这类参考实现为 oracle 的差分调试任务，用一套"组件映射 → 激活对齐 → 变点分析"的 agentic 流水线自动定位到出问题的具体模块，在 17 个真实 vLLM/SGLang issue 上取得 80% pass@1 / 88% pass@5 的诊断准确率，并新发现 4 个被开发者确认的隐藏 bug。
+
+**[Fast-dLLM++: Fréchet Profile Decoding for Faster Diffusion LLM Inference](fast-dllm_fréchet_profile_decoding_for_faster_diffusion_llm_inference.md)**
+
+:   针对扩散语言模型（dLLM）的并行解码瓶颈，本文提出训练无关的 Fréchet 画像解码：用整条排序后的置信度画像而不是"最弱被选 token"那一项来决定本步并行 commit 多少 token，把 Fast-dLLM 的 factor 规则严格推广到异质置信度场景，在 LLaDA-8B 上四个基准平均吞吐 1.36×、NFE 降 29%，精度几乎不变。
 
 **[GraphFlow: A Graph-Based Workflow Management for Efficient LLM-Agent Serving](graphflow_a_graph-based_workflow_management_for_efficient_llm-agent_serving.md)**
 

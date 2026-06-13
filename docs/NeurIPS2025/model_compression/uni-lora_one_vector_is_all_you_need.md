@@ -15,7 +15,7 @@ tags:
 
 # Uni-LoRA: One Vector is All You Need
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.00799](https://arxiv.org/abs/2506.00799)  
 **代码**: [GitHub](https://github.com/KaiyangLi1992/Uni-LoRA)  
 **领域**: 模型压缩  

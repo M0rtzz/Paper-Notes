@@ -15,7 +15,7 @@ tags:
 
 # End-to-End Compression for Tabular Foundation Models
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.05649](https://arxiv.org/abs/2602.05649)  
 **代码**: https://github.com/machinelearningnuremberg/TACO (有)  
 **领域**: 模型压缩 / 表格基础模型 / In-context Learning  

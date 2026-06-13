@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 其他论文汇总 · 91篇论文解读
+  ICML2025 其他论文汇总 · 90篇论文解读
 description: >-
-  91篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、域适应、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  90篇ICML2025的其他方向论文解读，涵盖对抗鲁棒、域适应、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "其他"
@@ -72,17 +72,17 @@ item_list:
     t: "Function Encoders: A Principled Approach to Transfer Learning in Hilbert Spaces"
   - u: "general_agents_contain_world_models/"
     t: "General Agents Contain World Models"
-item_total: 91
+item_total: 90
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🧪 ICML2025** · **91** 篇论文解读
+**🧪 ICML2025** · **90** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×6 · 域适应 ×3 · 少样本学习 ×2
+🔥 **高频主题：** 对抗鲁棒 ×5 · 域适应 ×3 · 少样本学习 ×2
 
 **[Access Controls Will Solve the Dual-Use Dilemma](access_controls_will_solve_the_dual-use_dilemma.md)**
 
@@ -411,10 +411,6 @@ item_total: 91
 **[Symmetry-Aware GFlowNets](symmetry-aware_gflownets.md)**
 
 :   揭示 GFlowNets 在图生成中因等价动作（不同动作产出同构图）导致的系统性采样偏差——节点生成偏向低对称图、片段生成偏向高对称组件，提出通过终态自同构群大小缩放奖励的简单修正方法 SA-GFN，仅需一次自同构群计算即可实现无偏采样。
-
-**[Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)**
-
-:   提出一种对旋转对称性鲁棒的两阶段3D朝向估计流水线：第一阶段通过商回归（quotient regression）将朝向恢复到八面体对称群的等价类内，第二阶段通过分类器预测24个八面体翻转之一以完成精确复原，在ShapeNet上取得SOTA。
 
 **[SynDaCaTE: A Synthetic Dataset for Evaluating Part-Whole Hierarchical Inference](syndacate_a_synthetic_dataset_for_evaluating_part-whole_hierarchical_inference.md)**
 

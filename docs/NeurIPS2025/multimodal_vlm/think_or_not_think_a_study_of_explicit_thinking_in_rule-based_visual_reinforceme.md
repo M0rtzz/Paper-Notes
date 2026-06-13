@@ -15,7 +15,7 @@ tags:
 
 # To Think or Not To Think: A Study of Explicit Thinking in Rule-Based Visual Reinforcement Fine-Tuning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2503.16188](https://arxiv.org/abs/2503.16188)  
 **代码**: [https://github.com/minglllli/CLS-RL](https://github.com/minglllli/CLS-RL)  
 **领域**: 多模态VLM  

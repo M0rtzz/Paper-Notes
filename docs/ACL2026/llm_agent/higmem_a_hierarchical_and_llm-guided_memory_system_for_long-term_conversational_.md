@@ -15,7 +15,7 @@ tags:
 
 # HiGMem: A Hierarchical and LLM-Guided Memory System for Long-Term Conversational Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18349](https://arxiv.org/abs/2604.18349)  
 **代码**: [https://github.com/ZeroLoss-Lab/HiGMem](https://github.com/ZeroLoss-Lab/HiGMem)  
 **领域**: LLM评测  

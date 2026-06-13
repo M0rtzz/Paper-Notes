@@ -15,7 +15,7 @@ tags:
 
 # Wide-Horizon Thinking and Simulation-Based Evaluation for Real-World LLM Planning with Multifaceted Constraints
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.12421](https://arxiv.org/abs/2506.12421)  
 **代码**: 无  
 **领域**: 推荐系统  

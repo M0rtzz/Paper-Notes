@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 人体理解论文汇总 · 40篇论文解读
+  ICCV2025 人体理解论文汇总 · 41篇论文解读
 description: >-
-  40篇ICCV2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、重识别、扩散模型、语音、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  41篇ICCV2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、语音、重识别、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "人体理解"
@@ -10,9 +10,9 @@ tags:
   - "论文笔记"
   - "人脸/视线"
   - "人体姿态"
+  - "语音"
   - "重识别"
   - "扩散模型"
-  - "语音"
   - "对抗鲁棒"
 item_list:
   - u: "ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea/"
@@ -75,17 +75,17 @@ item_list:
     t: "NGD: Neural Gradient Based Deformation for Monocular Garment Reconstruction"
   - u: "one-shot_knowledge_transfer_for_scalable_person_re-identification/"
     t: "One-Shot Knowledge Transfer for Scalable Person Re-Identification"
-item_total: 40
+item_total: 41
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📹 ICCV2025** · **40** 篇论文解读
+**📹 ICCV2025** · **41** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (63)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人脸/视线 ×9 · 人体姿态 ×7 · 重识别 ×4 · 扩散模型 ×3 · 语音 ×3
+🔥 **高频主题：** 人脸/视线 ×9 · 人体姿态 ×7 · 语音 ×4 · 重识别 ×4 · 扩散模型 ×3
 
 **[AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)**
 
@@ -222,6 +222,10 @@ item_total: 40
 **[SemGes: Semantics-aware Co-Speech Gesture Generation using Semantic Coherence and Relevance Learning](semges_semantics-aware_co-speech_gesture_generation_using_semantic_coherence_and.md)**
 
 :   > SemGes 提出两阶段框架，通过语义一致性和语义相关性学习在全局和细粒度层面整合语义信息，生成与语音语义对齐的共语手势，在 BEAT 和 TED-Expressive 两个基准上超越现有方法。
+
+**[SemTalk: Holistic Co-speech Motion Generation with Frame-level Semantic Emphasis](semtalk_holistic_co-speech_motion_generation_with_frame-level_semantic_emphasis.md)**
+
+:   > SemTalk 将共语动作分解为节奏相关的基础动作和语义感知的稀疏动作，通过学得的语义分数自适应融合两者，实现帧级语义强调的高质量全身共语动作生成。
 
 **[Sequential Keypoint Density Estimator: An Overlooked Baseline of Skeleton-Based Video Anomaly Detection](sequential_keypoint_density_estimator_an_overlooked_baseline_of_skeleton-based_v.md)**
 

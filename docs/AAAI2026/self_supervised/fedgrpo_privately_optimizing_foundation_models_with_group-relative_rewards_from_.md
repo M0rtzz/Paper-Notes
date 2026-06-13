@@ -15,7 +15,7 @@ tags:
 
 # FedGRPO: Privately Optimizing Foundation Models with Group-Relative Rewards from Domain Clients
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2602.12014](https://arxiv.org/abs/2602.12014)  
 **代码**: [https://github.com/Liar-Mask/FedGRPO](https://github.com/Liar-Mask/FedGRPO)  
 **领域**: 自监督  

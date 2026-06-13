@@ -15,7 +15,7 @@ tags:
 
 # EmoVid: A Multimodal Emotion Video Dataset for Emotion-Centric Video Understanding and Generation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.11002](https://arxiv.org/abs/2511.11002)  
 **代码**: [https://zane-zyqiu.github.io/EmoVid](https://zane-zyqiu.github.io/EmoVid) (Project Page)  
 **领域**: Video Understanding  

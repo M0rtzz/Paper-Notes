@@ -15,7 +15,7 @@ tags:
 
 # Frame of Reference: Addressing the Challenges of Common Ground Representation in Dialogue
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.09365](https://arxiv.org/abs/2601.09365)  
 **代码**: [GitHub](https://github.com/biswesh/IndiRef)  
 **领域**: 强化学习  

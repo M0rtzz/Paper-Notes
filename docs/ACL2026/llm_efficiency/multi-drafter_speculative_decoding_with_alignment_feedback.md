@@ -15,7 +15,7 @@ tags:
 
 # Multi-Drafter Speculative Decoding with Alignment Feedback
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05417](https://arxiv.org/abs/2604.05417)  
 **代码**: 有  
 **领域**: LLM效率  

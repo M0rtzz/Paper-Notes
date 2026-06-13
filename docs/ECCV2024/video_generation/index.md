@@ -85,7 +85,7 @@ item_total: 14
 
 **[MOFA-Video: Controllable Image Animation via Generative Motion Field Adaptions in Frozen Image-to-Video Diffusion Model](mofa-video_controllable_image_animation_via_generative_motion_field_adaptions_in.md)**
 
-:   提出 MOFA-Video，通过设计多个领域感知的运动场适配器（MOFA-Adapter），在冻结的 Stable Video Diffusion 上实现多域可控图像动画，支持手绘轨迹、人脸关键点等多种控制信号及其零样本组合。
+:   提出 MOFA-Video，通过设计多个领域感知运动场适配器（MOFA-Adapter）为冻结的视频扩散模型（SVD）添加可控运动能力，支持手绘轨迹、人脸关键点等多种控制信号及其组合，实现开放域可控图像动画。
 
 **[PhysDreamer: Physics-Based Interaction with 3D Objects via Video Generation](physdreamer_physics-based_interaction_with_3d_objects_via_video_generation.md)**
 

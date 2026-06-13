@@ -15,7 +15,7 @@ tags:
 
 # Object-Centric Latent Action Learning
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2502.09680](https://arxiv.org/abs/2502.09680)  
 **代码**: [https://github.com/dunnolab/object-centric-lapo](https://github.com/dunnolab/object-centric-lapo)  
 **领域**: 强化学习  

@@ -15,7 +15,7 @@ tags:
 
 # SpecBound: Adaptive Bounded Self-Speculation with Layer-wise Confidence Calibration
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.12247](https://arxiv.org/abs/2604.12247)  
 **代码**: [GitHub](https://github.com/ictnlp/SpecBound)  
 **领域**: LLM效率  

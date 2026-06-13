@@ -15,7 +15,7 @@ tags:
 
 # DualFact: A Multimodal Fact Verification Framework for Procedural Video Understanding
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.25584](https://arxiv.org/abs/2604.25584)  
 **代码**: https://github.com/OguzCennet/DualFact （有）  
 **领域**: 视频理解 / 事实核查 / 评测  

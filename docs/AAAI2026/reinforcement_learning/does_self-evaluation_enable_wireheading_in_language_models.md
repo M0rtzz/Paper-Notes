@@ -15,7 +15,7 @@ tags:
 
 # Does Self-Evaluation Enable Wireheading in Language Models?
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.23092](https://arxiv.org/abs/2511.23092)  
 **代码**: [https://github.com/DavidDemitriAfrica/llm-wireheading-experiment](https://github.com/DavidDemitriAfrica/llm-wireheading-experiment)  
 **领域**: Reinforcement Learning / AI Safety  

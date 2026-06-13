@@ -15,7 +15,7 @@ tags:
 
 # Data-Juicer Sandbox: A Feedback-Driven Suite for Multimodal Data-Model Co-development
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2407.11784](https://arxiv.org/abs/2407.11784)  
 **代码**: [modelscope/data-juicer](https://modelscope.github.io/data-juicer/en/main/docs/Sandbox.html)  
 **领域**: 视频生成  

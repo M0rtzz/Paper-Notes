@@ -15,7 +15,7 @@ tags:
 
 # Re-ranking Reasoning Context with Tree Search Makes Large Vision-Language Models Stronger
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2506.07785](https://arxiv.org/abs/2506.07785)  
 **代码**: [https://github.com/yannqi/RCTS-RAG](https://github.com/yannqi/RCTS-RAG)  
 **领域**: 多模态VLM  

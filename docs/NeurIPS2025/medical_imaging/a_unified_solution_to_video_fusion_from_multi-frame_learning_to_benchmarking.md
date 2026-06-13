@@ -15,7 +15,7 @@ tags:
 
 # A Unified Solution to Video Fusion: From Multi-Frame Learning to Benchmarking
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.19858](https://arxiv.org/abs/2505.19858)  
 **代码**: [vfbench.github.io](https://vfbench.github.io)  
 **领域**: 医学图像  

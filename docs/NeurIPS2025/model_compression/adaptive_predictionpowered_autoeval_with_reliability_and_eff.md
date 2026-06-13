@@ -15,7 +15,7 @@ tags:
 
 # Adaptive Prediction-Powered AutoEval with Reliability and Efficiency Guarantees
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.18659](https://arxiv.org/abs/2505.18659)  
 **代码**: [https://github.com/kclip/R_AutoEval_plus](https://github.com/kclip/R_AutoEval_plus)  
 **领域**: 模型压缩  

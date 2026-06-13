@@ -14,7 +14,7 @@ tags:
 
 # MaxSup: Overcoming Representation Collapse in Label Smoothing
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2502.15798](https://arxiv.org/abs/2502.15798)  
 **代码**: [GitHub](https://github.com/ZhouYuxuanYX/Maximum-Suppression-Regularization)  
 **领域**: 深度学习正则化 / 图像分类  

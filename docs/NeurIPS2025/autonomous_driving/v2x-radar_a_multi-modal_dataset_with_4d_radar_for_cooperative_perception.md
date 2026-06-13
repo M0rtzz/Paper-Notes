@@ -15,7 +15,7 @@ tags:
 
 # V2X-Radar: A Multi-Modal Dataset with 4D Radar for Cooperative Perception
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2411.10962](https://arxiv.org/abs/2411.10962)  
 **代码**: [GitHub](https://github.com/yanglei18/V2X-Radar)  
 **领域**: Autonomous Driving  

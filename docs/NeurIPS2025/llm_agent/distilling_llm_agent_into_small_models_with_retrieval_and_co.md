@@ -15,7 +15,7 @@ tags:
 
 # Distilling LLM Agent into Small Models with Retrieval and Code Tools
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.17612](https://arxiv.org/abs/2505.17612)  
 **代码**: [https://github.com/Nardien/agent-distillation](https://github.com/Nardien/agent-distillation)  
 **领域**: LLM Agent / 知识蒸馏  

@@ -14,7 +14,7 @@ tags:
 
 # LiDARCrafter: Dynamic 4D World Modeling from LiDAR Sequences
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.03692](https://arxiv.org/abs/2508.03692)  
 **代码**: [https://github.com/worldbench/lidarcrafter](https://github.com/worldbench/lidarcrafter)  
 **领域**: Autonomous Driving  

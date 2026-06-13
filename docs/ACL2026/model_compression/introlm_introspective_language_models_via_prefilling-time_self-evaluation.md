@@ -15,7 +15,7 @@ tags:
 
 # IntroLM: Introspective Language Models via Prefilling-Time Self-Evaluation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.03511](https://arxiv.org/abs/2601.03511)  
 **代码**: https://github.com/hhosseini1377/LLM_routing (有)  
 **领域**: LLM 推理 / 模型路由 / 内省自评  

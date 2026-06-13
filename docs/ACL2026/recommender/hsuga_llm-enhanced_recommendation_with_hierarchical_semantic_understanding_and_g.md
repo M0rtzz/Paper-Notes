@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # HSUGA: LLM-Enhanced Recommendation with Hierarchical Semantic Understanding and Group-Aware Alignment
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.11662](https://arxiv.org/abs/2605.11662)  
 **代码**: HSUGA (GitHub, 名称已给但链接未在原文 PDF 中给出)  
 **领域**: 推荐系统 / LLM 增强序列推荐 / 长尾用户  

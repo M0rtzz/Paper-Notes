@@ -15,7 +15,7 @@ tags:
 
 # Decide less, communicate more: On the construct validity of end-to-end fact-checking in medicine
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2506.20876](https://arxiv.org/abs/2506.20876)  
 **代码**: https://github.com/SebaJoe/decide-less-communicate-more （有）  
 **领域**: 事实核查 / 医学 NLP / 立场论文 / 人机交互  

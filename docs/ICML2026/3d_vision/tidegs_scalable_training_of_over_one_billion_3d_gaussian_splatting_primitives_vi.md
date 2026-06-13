@@ -15,7 +15,7 @@ tags:
 
 # TideGS: Scalable Training of Over One Billion 3D Gaussian Splatting Primitives via Out-of-Core Optimization
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.20150](https://arxiv.org/abs/2605.20150)  
 **代码**: 待确认  
 **领域**: 3D视觉 / 3D Gaussian Splatting / 系统优化  

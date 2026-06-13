@@ -2,7 +2,7 @@
 title: >-
   ACL2025 论文汇总 · 1855篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1855篇ACL2025论文解读，涵盖 LLM / NLP(443篇)、多模态 VLM(129篇)、信息检索/RAG(89篇)、LLM 评测(89篇)、多语言/翻译(89篇)、对齐 / RLHF(82篇)、模型压缩(78篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1855篇ACL2025论文解读，涵盖 LLM 其他(442篇)、多模态 VLM(129篇)、信息检索/RAG(89篇)、LLM 评测(89篇)、多语言/翻译(89篇)、对齐 / RLHF(82篇)、模型压缩(78篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
   - "ACL2025论文汇总"
@@ -10,7 +10,7 @@ tags:
   - "AI顶会"
   - "论文解读"
   - "论文笔记"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "多模态 VLM"
   - "信息检索/RAG"
   - "LLM 评测"
@@ -31,8 +31,6 @@ item_list:
     t: "SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification"
   - u: "llm_nlp/a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas/"
     t: "A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm"
-  - u: "llm_nlp/a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_/"
-    t: "A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions"
   - u: "llm_nlp/a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax/"
     t: "A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?"
   - u: "llm_nlp/a_survey_on_efficient_large_language/"
@@ -79,61 +77,17 @@ item_list:
     t: "Revisiting Common Assumptions about Arabic Dialects in NLP"
   - u: "llm_nlp/are_optimal_algorithms_still_optimal_rethinking_sorting_in_llm-based_pairwise_ra/"
     t: "Are Optimal Algorithms Still Optimal? Rethinking Sorting in LLM-Based Pairwise Ranking with Batching and Caching"
+  - u: "llm_nlp/are_your_llms_capable_of_stable_reasoning/"
+    t: "Are Your LLMs Capable of Stable Reasoning?"
 item_total: 1855
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💬 ACL2025 论文汇总
 
-1855篇ACL2025论文解读，涵盖 LLM / NLP(443篇)、多模态 VLM(129篇)、信息检索/RAG(89篇)、LLM 评测(89篇)、多语言/翻译(89篇)、对齐 / RLHF(82篇)、模型压缩(78篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1855篇ACL2025论文解读，涵盖 LLM 其他(442篇)、多模态 VLM(129篇)、信息检索/RAG(89篇)、LLM 评测(89篇)、多语言/翻译(89篇)、对齐 / RLHF(82篇)、模型压缩(78篇)、LLM Agent(56篇)等 45个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
-
----
-
-## 💬 LLM / NLP (443) { #llm_nlp }
-
-**[Towards Robust ESG Analysis Against Greenwashing Risks: A3CG](llm_nlp/a3cg_esg_greenwashing.md)**
-
-:   提出 A3CG 数据集和方面-行动分析任务（从可持续性声明中提取方面及其行动类型：已实施/计划中/不确定），通过跨类别泛化设置评估 NLP 方法抵御漂绿风险的鲁棒性，发现监督学习（GRACE F1=47.51）优于 LLM（Claude 3.5 F1=42.03）但泛化效率更差。
-
-**[A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](llm_nlp/a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)**
-
-:   在韩国KAIST一门477人研究生AI编程课中部署基于RAG的LLM虚拟助教(VTA)，通过三轮问卷(472人)和3869条交互日志的纵向分析，发现VTA显著降低了学生提问心理门槛，高频用户的满意度随使用持续提升，但信任度仍低于人类助教。
-
-**[A Modular Dataset to Demonstrate LLM Abstraction Capability](llm_nlp/a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)**
-
-:   提出ArrangementPuzzle拼图数据集并训练LLM激活值分类器，发现分类器以>80%准确率识别推理正确性，揭示LLM在中间-后层Transformer层编码了区分逻辑等价与语义等价的抽象推理概念。
-
-**[A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](llm_nlp/a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)**
-
-:   通过分析LLM推理过程中潜在表征的转移轨迹（transition traces）计算各层语义偏差，结合推导的缩放律公式估计各层对降低损失的贡献，从而确定"在哪些层微调"，实现与PEFT正交的高效微调方法。
-
-**[SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](llm_nlp/a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)**
-
-:   提出电商查询分类统一框架 SSUF，通过三个可插拔模块——标签增强（BERT 语义编码标签）、知识增强（LLM 世界知识 + 后验点击 + 半监督标签生成）、结构增强（共现/语义/层级三图融合 GCN）——解决短查询信息不足和"马太效应"恶性循环问题，在 JD.COM 意图分类和品类分类任务上 Macro F1 分别达到 49.46 和 41.22（均超 SMGCN 等 SOTA），已上线服务带来显著商业价值。
-
-**[A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](llm_nlp/a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)**
-
-:   系统综述 80+ 种基于启发式搜索算法的自动 Prompt 优化方法，提出五维分类体系（Where/What/What criteria/Which operators/Which algorithms）将碎片化研究统一到一个完整的分析框架下。
-
-**[A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](llm_nlp/a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)**
-
-:   首篇以 APA 三阶段（评估→诊断→治疗）概念分类法系统梳理 LLM 心理治疗研究的综述，覆盖 60+ 篇工作，从症状检测到虚拟治疗师四层面全面分析，揭示障碍覆盖、语言偏差、方法碎片化和理论整合的四重失衡。
-
-**[A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](llm_nlp/a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)**
-
-:   系统综述 LLM-based Agent 在医学中的四层架构（Profile/临床规划/医学推理/外部能力增强）、四大应用场景和评估框架，覆盖 2022-2024 年 60 篇研究，提出四种 Agent 运作范式并识别幻觉管理、多模态整合和伦理等关键挑战。
-
-**[A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](llm_nlp/a_survey_on_efficient_large_language.md)**
-
-:   本文提出首个系统性的"数据高效 LLM 后训练"综述框架，将方法分为数据选择、数据质量增强、合成数据生成、数据蒸馏与压缩、自演化数据生态五大类，构建了完整的"数据价值飞轮"体系。
-
-**[A Systematic Study of Compositional Syntactic Transformer Language Models](llm_nlp/a_systematic_study_of_compositional_syntactic_transformer_language_models.md)**
-
-:   本文提出了一个统一框架，系统性地研究组合句法Transformer语言模型（SLM）的四个关键设计维度（树的形式、线性化策略、组合函数、子成分遮掩），涵盖了已有模型和13个新变体，并通过语言建模、句法泛化、摘要、对话和推理效率五个维度的全方位实验，得出了SLM设计的多条推荐建议。
-
-[查看全部443篇「LLM / NLP」论文 →](llm_nlp/)
 
 ---
 
@@ -584,6 +538,52 @@ item_total: 1855
 **[Voting or Consensus? Decision-Making in Multi-Agent Debate](multi_agent/voting_or_consensus_decision-making_in_multi-agent_debate.md)**
 
 :   系统性对比了多智能体辩论中 7 种决策协议（投票 vs 共识），发现共识协议在知识任务上提升 2.8%、投票协议在推理任务上提升 13.2%，并提出 AAD 和 CI 两种增强答案多样性的新方法，分别带来 3.3% 和 7.4% 的性能提升。
+
+---
+
+## 💬 LLM 其他 (442) { #llm_nlp }
+
+**[Towards Robust ESG Analysis Against Greenwashing Risks: A3CG](llm_nlp/a3cg_esg_greenwashing.md)**
+
+:   提出 A3CG 数据集和方面-行动分析任务（从可持续性声明中提取方面及其行动类型：已实施/计划中/不确定），通过跨类别泛化设置评估 NLP 方法抵御漂绿风险的鲁棒性，发现监督学习（GRACE F1=47.51）优于 LLM（Claude 3.5 F1=42.03）但泛化效率更差。
+
+**[A Large-Scale Real-World Evaluation of an LLM-Based Virtual Teaching Assistant](llm_nlp/a_large-scale_real-world_evaluation_of_llm-based_virtual_teaching_assistant.md)**
+
+:   在韩国KAIST一门477人研究生AI编程课中部署基于RAG的LLM虚拟助教(VTA)，通过三轮问卷(472人)和3869条交互日志的纵向分析，发现VTA显著降低了学生提问心理门槛，高频用户的满意度随使用持续提升，但信任度仍低于人类助教。
+
+**[A Modular Dataset to Demonstrate LLM Abstraction Capability](llm_nlp/a_modular_dataset_to_demonstrate_llm_abstraction_capability.md)**
+
+:   提出ArrangementPuzzle拼图数据集并训练LLM激活值分类器，发现分类器以>80%准确率识别推理正确性，揭示LLM在中间-后层Transformer层编码了区分逻辑等价与语义等价的抽象推理概念。
+
+**[A Semantic-Aware Layer-Freezing Approach to Computation-Efficient Fine-Tuning of Language Models](llm_nlp/a_semantic-aware_layer-freezing_approach_to_computation-efficient_fine-tuning_of.md)**
+
+:   通过分析LLM推理过程中潜在表征的转移轨迹（transition traces）计算各层语义偏差，结合推导的缩放律公式估计各层对降低损失的贡献，从而确定"在哪些层微调"，实现与PEFT正交的高效微调方法。
+
+**[SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification](llm_nlp/a_semi-supervised_scalable_unified_framework_for_e-commerce_query_classification.md)**
+
+:   提出电商查询分类统一框架 SSUF，通过三个可插拔模块——标签增强（BERT 语义编码标签）、知识增强（LLM 世界知识 + 后验点击 + 半监督标签生成）、结构增强（共现/语义/层级三图融合 GCN）——解决短查询信息不足和"马太效应"恶性循环问题，在 JD.COM 意图分类和品类分类任务上 Macro F1 分别达到 49.46 和 41.22（均超 SMGCN 等 SOTA），已上线服务带来显著商业价值。
+
+**[A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](llm_nlp/a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)**
+
+:   系统综述 80+ 种基于启发式搜索算法的自动 Prompt 优化方法，提出五维分类体系（Where/What/What criteria/Which operators/Which algorithms）将碎片化研究统一到一个完整的分析框架下。
+
+**[A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](llm_nlp/a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)**
+
+:   系统综述 LLM-based Agent 在医学中的四层架构（Profile/临床规划/医学推理/外部能力增强）、四大应用场景和评估框架，覆盖 2022-2024 年 60 篇研究，提出四种 Agent 运作范式并识别幻觉管理、多模态整合和伦理等关键挑战。
+
+**[A Survey on Efficient Large Language Model Training: From Data-centric Perspectives](llm_nlp/a_survey_on_efficient_large_language.md)**
+
+:   本文提出首个系统性的"数据高效 LLM 后训练"综述框架，将方法分为数据选择、数据质量增强、合成数据生成、数据蒸馏与压缩、自演化数据生态五大类，构建了完整的"数据价值飞轮"体系。
+
+**[A Systematic Study of Compositional Syntactic Transformer Language Models](llm_nlp/a_systematic_study_of_compositional_syntactic_transformer_language_models.md)**
+
+:   本文提出了一个统一框架，系统性地研究组合句法Transformer语言模型（SLM）的四个关键设计维度（树的形式、线性化策略、组合函数、子成分遮掩），涵盖了已有模型和13个新变体，并通过语言建模、句法泛化、摘要、对话和推理效率五个维度的全方位实验，得出了SLM设计的多条推荐建议。
+
+**[A Training-free LLM-based Approach to General Chinese Character Error Correction](llm_nlp/a_training-free_llm-based_approach_to_general_chinese_character_error_correction.md)**
+
+:   提出通用中文字符纠错任务C2EC（覆盖替换、缺失、冗余三种错误类型），通过扩展训练无关的CSC方法并结合Levenshtein距离和prompt-based LLM，使14B参数模型在不微调的条件下达到近50倍大模型的纠错性能。
+
+[查看全部442篇「LLM 其他」论文 →](llm_nlp/)
 
 ---
 
@@ -1527,7 +1527,7 @@ item_total: 1855
 
 ---
 
-## 🩺 医疗 NLP (30) { #medical_nlp }
+## 🩺 医疗 NLP (31) { #medical_nlp }
 
 **[A Modular Approach for Clinical SLMs Driven by Synthetic Data with Pre-Instruction Tuning, Model Merging, and Clinical-Tasks Alignment](medical_nlp/a_modular_approach_for_clinical_slms_driven_by_synthetic_data_with_pre-instructi.md)**
 
@@ -1536,6 +1536,10 @@ item_total: 1855
 **[A Retrieval-Based Approach to Medical Procedure Matching in Romanian](medical_nlp/a_retrieval-based_approach_to_medical_procedure_matching_in_romanian.md)**
 
 :   将罗马尼亚语医疗程序名称匹配建模为检索问题而非分类问题，在 39,097 个标准条目（50% 仅有单样本）的极端长尾场景下，对比 BM25 稀疏检索与 mE5/RoBERT/BioClinicalBERT 三种密集嵌入，通过度量学习微调后 mE5 达到 85.2% Acc@1，真实部署中医生验证 94.7% 准确率且比人工快 1200 倍。
+
+**[A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](medical_nlp/a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)**
+
+:   首篇以 APA 三阶段（评估→诊断→治疗）概念分类法系统梳理 LLM 心理治疗研究的综述，覆盖 60+ 篇工作，从症状检测到虚拟治疗师四层面全面分析，揭示障碍覆盖、语言偏差、方法碎片化和理论整合的四重失衡。
 
 **[Adaptive-VP: A Framework for LLM-Based Virtual Patients that Adapts to Trainees' Dialogue to Facilitate Nurse Communication Training](medical_nlp/adaptive-vp_a_framework_for_llm-based_virtual_patients_that_adapts_to_trainees_d.md)**
 
@@ -1565,11 +1569,7 @@ item_total: 1855
 
 :   本文首次系统研究了 LLM-as-Judge 在生物医学关系抽取评估中的表现，发现其准确率通常低于 50%，并提出结构化输出格式（JSON）和域适应技术来提升约 15% 的评估准确率。
 
-**[CheXalign: Preference Fine-tuning in Chest X-ray Interpretation Models without Human Feedback](medical_nlp/chexalign_preference_finetuning.md)**
-
-:   CheXalign 提出了一种无需放射科医生反馈的自动化偏好数据生成管线，利用公开数据集中的参考报告和基于参考的评估指标（如 GREEN、BERTScore）构造偏好对，通过 DPO 等直接对齐算法对胸部X光报告生成模型进行偏好微调，在 MIMIC-CXR 上取得 SOTA CheXbert 分数。
-
-[查看全部30篇「医疗 NLP」论文 →](medical_nlp/)
+[查看全部31篇「医疗 NLP」论文 →](medical_nlp/)
 
 ---
 
@@ -1683,9 +1683,9 @@ item_total: 1855
 
 :   提出KPO框架，通过构建蛋白质安全知识图谱(PSKG)并结合加权图剪枝策略识别"相似但安全"的蛋白质对，用DPO微调蛋白质语言模型使其远离有害序列空间，同时保持功能性。
 
-**[LADDER: Language-Driven Slice Discovery and Error Rectification in Vision Classifiers](computational_biology/ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)**
+**[LADDER: Language Driven Slice Discovery and Error Rectification in Vision Classifiers](computational_biology/ladder_language-driven_slice_discovery_and_error_rectification_in_vision_classif.md)**
 
-:   提出 LADDER 框架，利用 LLM 的推理能力和潜在领域知识，通过分析文本（图像描述/医学报告/元数据）自动发现视觉分类器中的系统性偏差切片（error slices），并通过伪标签生成和属性重平衡实现无需标注的多偏差缓解。
+:   LADDER 把预训练视觉分类器的内部激活"翻译"成自然语言、检索出与错误相关的句子，再让 LLM 据此推理出"模型在缺少哪个属性时会犯错"的可检验假设，从而无需任何属性标注就能发现并缓解任意现成分类器的多重偏见；在 6 个自然/医学数据集、200+ 分类器上一致超过 Domino/Facts/DFR 等基线。
 
 **[Retrieve to Explain: Evidence-driven Predictions for Explainable Drug Target Identification](computational_biology/retrieve_to_explain_drug_target_identification.md)**
 
@@ -1713,7 +1713,7 @@ item_total: 1855
 
 **[A Measure of the System Dependence of Automated Metrics](others/a_measure_of_the_system_dependence_of_automated_metrics.md)**
 
-:   揭示 MT 自动评估指标 "尺子因被测物不同而改变长度" 的系统依赖性问题，提出 SysDep 度量来量化不同翻译系统被指标高估/低估的程度。
+:   指出机器翻译自动评估指标存在被忽视的"系统依赖性"问题：同一指标分数对不同翻译系统对应不同的人类评分，提出 SysDep 度量来量化这一效应，揭示即使是 WMT23 最佳指标 XCOMET 也存在严重的系统依赖性导致错误排名。
 
 **[A Multi-Persona Framework for Argument Quality Assessment](others/a_multi-persona_framework_for_argument_quality_assessment.md)**
 
@@ -1729,7 +1729,7 @@ item_total: 1855
 
 **[A Spatio-Temporal Point Process for Fine-Grained Modeling of Reading Behavior](others/a_spatio-temporal_point_process_for_fine-grained_modeling_of_reading_behavior.md)**
 
-:   本文提出基于时空标记点过程（marked spatio-temporal point process）的阅读行为概率模型，联合建模注视何时发生、落在哪里、持续多久，发现 Hawkes 过程配合读者特定效应和方向偏移能显著提升扫视预测，但 surprisal 等语言学预测因子仅带来微弱改善——这对现有 surprisal 理论提出了质疑。
+:   本文提出基于标记时空点过程（marked spatio-temporal point process）的阅读行为统一概率模型，同时建模注视何时发生、落在哪里、持续多久，避免传统聚合测量的信息损失，发现 surprisal 对细粒度眼动的预测贡献极其有限。
 
 **[ACORD: An Expert-Annotated Retrieval Dataset for Legal Contract Clause Retrieval](others/acord_an_expert-annotated_retrieval_dataset_for_legal_contract_drafting.md)**
 

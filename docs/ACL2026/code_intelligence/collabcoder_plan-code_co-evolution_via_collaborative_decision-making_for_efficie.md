@@ -15,7 +15,7 @@ tags:
 
 # CollabCoder: Plan-Code Co-Evolution via Collaborative Decision-Making for Efficient Code Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.13946](https://arxiv.org/abs/2604.13946)  
 **代码**: [https://github.com/ihbkaiser/CollabCoder](https://github.com/ihbkaiser/CollabCoder)  
 **领域**: 代码生成 / 多智能体系统  

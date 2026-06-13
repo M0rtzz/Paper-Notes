@@ -15,7 +15,7 @@ tags:
 
 # ReCast: Reliability-aware Codebook Assisted Lightweight Time Series Forecasting
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.11991](https://arxiv.org/abs/2511.11991)  
 **代码**: 无  
 **领域**: 时间序列  

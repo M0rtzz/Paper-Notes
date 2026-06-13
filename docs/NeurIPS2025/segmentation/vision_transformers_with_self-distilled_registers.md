@@ -15,7 +15,7 @@ tags:
 
 # Vision Transformers with Self-Distilled Registers
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.21501](https://arxiv.org/abs/2505.21501)  
 **代码**: [GitHub](https://github.com/yinjiechen/PH-Reg)  
 **领域**: 图像分割  

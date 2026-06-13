@@ -17,7 +17,7 @@ tags:
 
 # Position: We Need An Algorithmic Understanding of Generative AI
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2507.07544](https://arxiv.org/abs/2507.07544)  
 **代码**: 无（立场论文）  
 **领域**: 可解释性  

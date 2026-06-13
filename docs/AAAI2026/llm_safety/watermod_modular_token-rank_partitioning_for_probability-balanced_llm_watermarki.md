@@ -15,7 +15,7 @@ tags:
 
 # WaterMod: Modular Token-Rank Partitioning for Probability-Balanced LLM Watermarking
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.07863](https://arxiv.org/abs/2511.07863)  
 **代码**: [github](https://github.com/Shinwoo-Park/WaterMod)  
 **领域**: AI安全  

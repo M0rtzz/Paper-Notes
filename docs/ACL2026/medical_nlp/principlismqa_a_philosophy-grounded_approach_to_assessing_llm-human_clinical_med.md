@@ -15,7 +15,7 @@ tags:
 
 # PrinciplismQA: A Philosophy-Grounded Approach to Assessing LLM-Human Clinical Medical Ethics Alignment
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2508.05132](https://arxiv.org/abs/2508.05132)  
 **代码**: 无  
 **领域**: 医学NLP

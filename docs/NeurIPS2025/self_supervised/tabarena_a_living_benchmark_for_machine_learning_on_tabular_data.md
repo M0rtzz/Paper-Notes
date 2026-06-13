@@ -15,7 +15,7 @@ tags:
 
 # TabArena: A Living Benchmark for Machine Learning on Tabular Data
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.16791](https://arxiv.org/abs/2506.16791)  
 **代码**: [有 (tabarena.ai)](https://tabarena.ai)  
 **领域**: 表格数据 / 基准测试 / AutoML  

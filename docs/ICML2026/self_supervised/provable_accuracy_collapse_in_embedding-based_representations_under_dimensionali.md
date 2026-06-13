@@ -15,7 +15,7 @@ tags:
 
 # Provable Accuracy Collapse in Embedding-Based Representations under Dimensionality Mismatch
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.03346](https://arxiv.org/abs/2605.03346)  
 **代码**: 无  
 **领域**: 表征学习理论 / 对比学习 / 嵌入维度  

@@ -15,7 +15,7 @@ tags:
 
 # CBRS: Cognitive Blood Request System with Bilingual Dataset and Dual-Layer Filtering
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.16665](https://arxiv.org/abs/2604.16665)  
 **代码**: [GitHub](https://github.com/aaniksahaa/CBRS)  
 **领域**: 模型压缩  

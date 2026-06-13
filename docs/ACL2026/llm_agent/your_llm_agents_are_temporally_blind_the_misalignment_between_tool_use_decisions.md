@@ -15,7 +15,7 @@ tags:
 
 # Your LLM Agents are Temporally Blind: The Misalignment Between Tool Use Decisions and Human Time Perception
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.23853](https://arxiv.org/abs/2510.23853)  
 **代码**: [GitHub](https://github.com/chengez/TicToc)  
 **领域**: LLM Agent / Tool Use  

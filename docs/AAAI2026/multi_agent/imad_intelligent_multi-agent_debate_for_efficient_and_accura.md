@@ -15,7 +15,7 @@ tags:
 
 # iMAD: Intelligent Multi-Agent Debate for Efficient and Accurate LLM Inference
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.11306](https://arxiv.org/abs/2511.11306)  
 **代码**: [https://github.com/Fanwei100/iMAD](https://github.com/Fanwei100/iMAD)  
 **领域**: 可解释性  

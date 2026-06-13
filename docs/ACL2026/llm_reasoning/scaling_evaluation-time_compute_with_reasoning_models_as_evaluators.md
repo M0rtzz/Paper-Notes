@@ -15,7 +15,7 @@ tags:
 
 # Scaling Evaluation-Time Compute with Reasoning Models as Evaluators
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2503.19877](https://arxiv.org/abs/2503.19877)  
 **代码**: 无（cache 未提供）  
 **领域**: LLM推理 / LLM评估 / Test-time Scaling  

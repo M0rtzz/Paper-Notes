@@ -15,7 +15,7 @@ tags:
 
 # Interpretability from the Ground Up
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2511.17069](https://arxiv.org/abs/2511.17069)  
 **代码**: [GitHub](https://github.com/yunsungkim0908/analyticscore)  
 **领域**: 可解释性 / 教育评估  

@@ -15,7 +15,7 @@ tags:
 
 # MOSPA: Human Motion Generation Driven by Spatial Audio
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2507.11949](https://arxiv.org/abs/2507.11949)  
 **代码**: 有（项目页公开）  
 **领域**: 人体运动生成 / 空间音频  

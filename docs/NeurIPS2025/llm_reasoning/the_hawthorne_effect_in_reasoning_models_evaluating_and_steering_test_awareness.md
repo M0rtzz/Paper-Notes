@@ -15,7 +15,7 @@ tags:
 
 # The Hawthorne Effect in Reasoning Models: Evaluating and Steering Test Awareness
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.14617](https://arxiv.org/abs/2505.14617)  
 **代码**: [microsoft/Test_Awareness_Steering](https://github.com/microsoft/Test_Awareness_Steering)  
 **领域**: LLM推理  

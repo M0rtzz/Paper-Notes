@@ -15,7 +15,7 @@ tags:
 
 # Understanding New-Knowledge-Induced Factual Hallucinations in LLMs: Analysis and Interpretation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2511.02626](https://arxiv.org/abs/2511.02626)  
 **代码**: 无  
 **领域**: 幻觉检测  

@@ -15,7 +15,7 @@ tags:
 
 # Gen-n-Val: Agentic Image Data Generation and Validation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2506.04676](https://arxiv.org/abs/2506.04676)  
 **代码**: [GitHub](https://github.com/aiiu-lab/Gen-n-Val)  
 **领域**: LLM Agent  

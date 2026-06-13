@@ -15,7 +15,7 @@ tags:
 
 # Temporally Consistent Long-Term Memory for 3D Single Object Tracking
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.13789](https://arxiv.org/abs/2604.13789)  
 **代码**: [github.com/ujaejoon/ChronoTrack](https://github.com/ujaejoon/ChronoTrack)  
 **领域**: 视频理解  

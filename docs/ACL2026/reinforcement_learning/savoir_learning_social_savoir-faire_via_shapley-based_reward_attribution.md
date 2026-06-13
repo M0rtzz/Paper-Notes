@@ -15,7 +15,7 @@ tags:
 
 # Savoir: Learning Social Savoir-Faire via Shapley-based Reward Attribution
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18982](https://arxiv.org/abs/2604.18982)  
 **代码**: 无  
 **领域**: 社交智能 / 强化学习  

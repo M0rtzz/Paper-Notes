@@ -16,7 +16,7 @@ tags:
 
 # Near-Optimal Decision Trees in a SPLIT Second
 
-**会议**: ICML2025  
+**会议**: ICML2025 Oral  
 **arXiv**: [2502.15988](https://arxiv.org/abs/2502.15988)  
 **代码**: 待确认  
 **领域**: 决策树 / 可解释机器学习  

@@ -15,7 +15,7 @@ tags:
 
 # ChunQiuTR: Time-Keyed Temporal Retrieval in Classical Chinese Annals
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.06997](https://arxiv.org/abs/2604.06997)  
 **代码**: [https://github.com/xbdxwyh/ChunQiuTR](https://github.com/xbdxwyh/ChunQiuTR)  
 **领域**: 信息检索 / 时序检索  

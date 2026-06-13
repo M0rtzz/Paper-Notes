@@ -15,7 +15,7 @@ tags:
 
 # Comprehensiveness Metrics for Automatic Evaluation of Factual Recall in Text Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.07926](https://arxiv.org/abs/2510.07926)  
 **代码**: 论文未提供（无）  
 **领域**: LLM 评测 / 事实性 / 信息覆盖度  

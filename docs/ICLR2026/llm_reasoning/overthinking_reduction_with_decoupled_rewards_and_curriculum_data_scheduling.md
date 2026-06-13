@@ -15,7 +15,7 @@ tags:
 
 # Overthinking Reduction with Decoupled Rewards and Curriculum Data Scheduling
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2509.25827](https://arxiv.org/abs/2509.25827)  
 **代码**: [github.com/pixas/DECS](https://github.com/pixas/DECS)  
 **领域**: LLM推理  

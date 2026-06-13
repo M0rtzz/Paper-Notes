@@ -15,7 +15,7 @@ tags:
 
 # RGB-Only Supervised Camera Parameter Optimization in Dynamic Scenes
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.15123](https://arxiv.org/abs/2509.15123)  
 **代码**: 无  
 **领域**: 3D视觉  

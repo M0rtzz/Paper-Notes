@@ -15,7 +15,7 @@ tags:
 
 # Scripts Through Time: A Survey of the Evolving Role of Transliteration in NLP
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18722](https://arxiv.org/abs/2604.18722)  
 **代码**: 无  
 **领域**: 推荐系统  

@@ -15,7 +15,7 @@ tags:
 
 # MDiff4STR: Mask Diffusion Model for Scene Text Recognition
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2512.01422](https://arxiv.org/abs/2512.01422)  
 **代码**: [https://github.com/Topdu/OpenOCR](https://github.com/Topdu/OpenOCR)  
 **领域**: 图像生成  

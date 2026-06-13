@@ -15,7 +15,7 @@ tags:
 
 # Learning by Neighbor-Aware Semantics, Deciding by Open-form Flows: Towards Robust Zero-Shot Skeleton Action Recognition
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2511.09388](https://arxiv.org/abs/2511.09388)  
 **代码**: [https://github.com/cseeyangchen/Flora](https://github.com/cseeyangchen/Flora)  
 **领域**: 图像生成  

@@ -15,7 +15,7 @@ tags:
 
 # Incremental Sequence Classification with Temporal Consistency
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.16548](https://arxiv.org/abs/2505.16548)  
 **代码**: 无  
 **领域**: Reinforcement Learning / NLP  

@@ -15,7 +15,7 @@ tags:
 
 # ABKD: Pursuing a Proper Allocation of the Probability Mass in Knowledge Distillation via α-β-Divergence
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2505.04560](https://arxiv.org/abs/2505.04560)  
 **代码**: [ghwang-s/abkd](https://github.com/ghwang-s/abkd)  
 **领域**: 模型压缩  

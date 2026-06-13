@@ -15,7 +15,7 @@ tags:
 
 # Initialization is Half the Battle: Generating Diverse Images from a Guidance Potential Posterior
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2606.02453](https://arxiv.org/abs/2606.02453)  
 **代码**: https://github.com/South7X/divin (有)  
 **领域**: 扩散模型 / 图像生成  

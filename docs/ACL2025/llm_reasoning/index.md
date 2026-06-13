@@ -81,7 +81,7 @@ item_total: 54
 
 **💬 ACL2025** · **54** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (80)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (82)](../../NeurIPS2025/llm_reasoning/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [💬 ACL2026 (81)](../../ACL2026/llm_reasoning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (82)](../../NeurIPS2025/llm_reasoning/index.md)
 
 🔥 **高频主题：** 推理 ×42 · LLM ×9 · 问答 ×2 · 多模态 ×2
 
@@ -223,7 +223,7 @@ item_total: 54
 
 **[PCoT: Persuasion-Augmented Chain of Thought for Detecting Fake News and Social Media Disinformation](pcot_persuasion-augmented_chain_of_thought_for_detecting_fake_news_and_social_me.md)**
 
-:   将心理学中"学会识别说服技巧可提升真伪判断力"的发现迁移到 LLM，提出两阶段零样本 PCoT 方法：第一阶段识别并分析六类说服策略，第二阶段将分析上下文融入虚假信息检测，在 5 个 LLM × 5 数据集上 F1 平均提升 15%。
+:   提出 PCoT（Persuasion-Augmented Chain of Thought），一种两阶段零样本方法：第一阶段用融入说服知识的提示引导 LLM 识别文本中的六类说服策略，第二阶段将说服分析作为上下文融入虚假信息检测推理，在 5 个 LLM × 5 个数据集上平均 F1 提升 15%，包括 2 个全新的后截止日期数据集。
 
 **[ProcessBench: Identifying Process Errors in Mathematical Reasoning](processbench_identifying_process_errors_in_mathematical_reasoning.md)**
 

@@ -15,7 +15,7 @@ tags:
 
 # UniSonate: A Unified Model for Speech, Music, and Sound Effect Generation with Text Instructions
 
-**会议**: ACL2026  
+**会议**: ACL2026 Oral  
 **arXiv**: [2604.22209](https://arxiv.org/abs/2604.22209)  
 **代码**: 无公开代码；Demo: https://qiangchunyu.github.io/UniSonate/  
 **领域**: 音频语音  

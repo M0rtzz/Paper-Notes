@@ -15,7 +15,7 @@ tags:
 <!-- SM3Det 论文笔记 -->
 # SM3Det: A Unified Model for Multi-Modal Remote Sensing Object Detection
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2412.20665](https://arxiv.org/abs/2412.20665)  
 **代码**: [github.com/zcablii/SM3Det](https://github.com/zcablii/SM3Det)  
 **领域**: 目标检测  

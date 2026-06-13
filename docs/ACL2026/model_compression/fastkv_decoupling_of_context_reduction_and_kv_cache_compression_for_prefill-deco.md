@@ -15,7 +15,7 @@ tags:
 
 # FastKV: Decoupling of Context Reduction and KV Cache Compression for Prefill-Decoding Acceleration
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2502.01068](https://arxiv.org/abs/2502.01068)  
 **代码**: [GitHub](https://github.com/dongwonjo/FastKV)  
 **领域**: 模型压缩 / 推理加速  

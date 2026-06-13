@@ -16,7 +16,7 @@ tags:
 
 # Anticipatory Planning for Multimodal AI Agents
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.16777](https://arxiv.org/abs/2603.16777)  
 **代码**: 未开源  
 **领域**: 强化学习  

@@ -15,7 +15,7 @@ tags:
 
 # From Heads to Neurons: Causal Attribution and Steering in Multi-Task Vision-Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17941](https://arxiv.org/abs/2604.17941)  
 **代码**: [github](https://github.com/petergit1/HONES)  
 **领域**: 多模态VLM  

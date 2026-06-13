@@ -72,7 +72,7 @@ item_total: 20
 
 **[Are We Measuring Oversmoothing in Graph Neural Networks Correctly?](are_we_measuring_oversmoothing_in_graph_neural_networks_correctly.md)**
 
-:   指出广泛使用的Dirichlet energy指标无法在实际场景中正确捕获GNN过平滑现象，提出以特征表征的数值秩/有效秩（effective rank）作为替代度量，实验表明Erank与准确率的平均相关性达0.91（vs Dirichlet energy的0.72），在OGB-Arxiv上Dirichlet energy甚至呈现错误的相关方向，并从理论上证明对广泛的GNN架构族其数值秩收敛到1（秩坍塌），重新定义过平滑为秩坍塌而非特征向量对齐。
+:   指出广泛使用的Dirichlet energy指标无法在实际场景中正确捕获GNN过平滑现象，提出以特征表征的数值秩/有效秩（effective rank）作为替代度量。在深度2–24、各深度独立训练的设定下，Erank与准确率的平均相关性达0.91（且方向一致为正），而Dirichlet energy平均仅−0.72、相关方向在数据集间反复横跳（在大规模OGB-Arxiv等场景下尤其失效）；并从理论上证明对线性及非负权重的非线性GNN族其特征矩阵数值秩收敛到1（秩坍塌），从而把过平滑重新定义为秩坍塌而非特征向量对齐。
 
 **[Beyond Simple Graphs: Neural Multi-Objective Routing on Multigraphs](beyond_simple_graphs_neural_multi-objective_routing_on_multigraphs.md)**
 

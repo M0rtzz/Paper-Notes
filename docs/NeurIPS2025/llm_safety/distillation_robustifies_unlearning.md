@@ -16,7 +16,7 @@ tags:
 
 # Distillation Robustifies Unlearning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.06278](https://arxiv.org/abs/2506.06278)  
 **代码**: 公开（GitHub）  
 **领域**: AI安全 / 模型遗忘 / 知识蒸馏  

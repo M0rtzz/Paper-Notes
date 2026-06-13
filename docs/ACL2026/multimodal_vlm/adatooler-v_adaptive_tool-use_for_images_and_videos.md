@@ -15,7 +15,7 @@ tags:
 
 # AdaTooler-V: Adaptive Tool-Use for Images and Videos
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2512.16918](https://arxiv.org/abs/2512.16918)  
 **代码**: https://github.com/CYWang735/AdaTooler-V  
 **领域**: 多模态 VLM / 工具调用 / 强化学习  

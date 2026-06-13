@@ -15,7 +15,7 @@ tags:
 
 # LWGANet: Addressing Spatial and Channel Redundancy in Remote Sensing Visual Tasks with Light-Weight Grouped Attention
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2501.10040](https://arxiv.org/abs/2501.10040)  
 **代码**: [GitHub](https://github.com/AeroVILab-AHU/LWGANet)  
 **领域**: 图像分割  

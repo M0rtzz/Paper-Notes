@@ -15,7 +15,7 @@ tags:
 
 # Reason Only When Needed: Efficient Generative Reward Modeling via Model-Internal Uncertainty
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.10072](https://arxiv.org/abs/2604.10072)  
 **代码**: 无  
 **领域**: 模型压缩/LLM效率  

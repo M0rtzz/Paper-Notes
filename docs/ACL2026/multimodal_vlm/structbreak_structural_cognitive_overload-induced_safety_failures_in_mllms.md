@@ -17,7 +17,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # StructBreak: Structural Cognitive Overload-Induced Safety Failures in MLLMs
 
-**会议**: ACL2026
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.25534](https://arxiv.org/abs/2605.25534)
 **代码**: 待确认
 **领域**: multimodal_vlm

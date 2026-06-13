@@ -15,7 +15,7 @@ tags:
 
 # TD3B: Transition-Directed Discrete Diffusion for Allosteric Binder Generation
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.09810](https://arxiv.org/abs/2605.09810)  
 **代码**: https://huggingface.co/ChatterjeeLab/TD3B (有)  
 **领域**: 医学与药物 / 离散扩散 / 蛋白质生成  

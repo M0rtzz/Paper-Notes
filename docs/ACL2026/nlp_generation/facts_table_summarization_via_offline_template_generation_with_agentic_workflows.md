@@ -15,7 +15,7 @@ tags:
 
 # FACTS: Table Summarization via Offline Template Generation with Agentic Workflows
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.13920](https://arxiv.org/abs/2510.13920)  
 **代码**: [GitHub](https://github.com/BorealisAI/FACTS)  
 **领域**: 数据分析 / 表格理解  

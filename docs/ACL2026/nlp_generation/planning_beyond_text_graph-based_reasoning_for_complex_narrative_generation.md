@@ -15,7 +15,7 @@ tags:
 
 # Planning Beyond Text: Graph-based Reasoning for Complex Narrative Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.21253](https://arxiv.org/abs/2604.21253)  
 **代码**: 无  
 **领域**: LLM效率  

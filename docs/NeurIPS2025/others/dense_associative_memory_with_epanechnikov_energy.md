@@ -15,7 +15,7 @@ tags:
 
 # Dense Associative Memory with Epanechnikov Energy
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.10801](https://arxiv.org/abs/2506.10801)  
 **代码**: 无  
 **领域**: 其他  

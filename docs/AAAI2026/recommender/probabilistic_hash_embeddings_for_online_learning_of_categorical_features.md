@@ -15,7 +15,7 @@ tags:
 
 # Probabilistic Hash Embeddings for Online Learning of Categorical Features
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.20893](https://arxiv.org/abs/2511.20893)  
 **代码**: [github](https://github.com/aodongli/probabilistic-hash-embeddings)  
 **领域**: Recommender System / Online Learning  

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 LLM安全论文汇总 · 45篇论文解读
+  ICML2026 LLM安全论文汇总 · 46篇论文解读
 description: >-
-  45篇ICML2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、多模态、联邦学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  46篇ICML2026的 LLM 安全方向论文解读，涵盖 LLM、对抗鲁棒、水印/隐写、多模态、联邦学习、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "LLM 安全"
@@ -53,6 +53,8 @@ item_list:
     t: "FoeGlass: Simple In-Context Learning Is Enough for Red Teaming Audio Deepfake Detectors"
   - u: "forget_to_know_remember_to_use_context-aware_unlearning_for_large_language_model/"
     t: "Forget to Know, Remember to Use: Context-Aware Unlearning for Large Language Models"
+  - u: "from_parameter_dynamics_to_risk_scoring_quantifying_sample-level_safety_degradat/"
+    t: "From Parameter Dynamics to Risk Scoring: Quantifying Sample-Level Safety Degradation in LLM Fine-tuning"
   - u: "from_volume_to_value_preference-aligned_memory_construction_for_on-device_rag/"
     t: "From Volume to Value: Preference-Aligned Memory Construction for On-Device RAG"
   - u: "from_weak_cues_to_real_identities_evaluating_inference-driven_de-anonymization_i/"
@@ -73,19 +75,17 @@ item_list:
     t: "Multilingual Unlearning in LLMs: 转移、动力学与可逆性"
   - u: "old_habits_die_hard_how_conversational_history_geometrically_traps_llms/"
     t: "Old Habits Die Hard: How Conversational History Geometrically Traps LLMs"
-  - u: "optimizing_token_choice_for_code_watermarking_an_rl_approach/"
-    t: "Optimizing Token Choice for Code Watermarking: An RL Approach"
-item_total: 45
+item_total: 46
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔒 LLM 安全
 
-**🧪 ICML2026** · **45** 篇论文解读
+**🧪 ICML2026** · **46** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (83)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (115)](../../ACL2026/llm_safety/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/llm_safety/index.md) · [🔬 ICLR2026 (52)](../../ICLR2026/llm_safety/index.md) · [🤖 AAAI2026 (41)](../../AAAI2026/llm_safety/index.md) · [🧠 NeurIPS2025 (81)](../../NeurIPS2025/llm_safety/index.md) · [📹 ICCV2025 (10)](../../ICCV2025/llm_safety/index.md)
 
-🔥 **高频主题：** LLM ×9 · 对抗鲁棒 ×5 · 水印/隐写 ×4 · 多模态 ×3 · 联邦学习 ×3
+🔥 **高频主题：** LLM ×10 · 对抗鲁棒 ×5 · 水印/隐写 ×4 · 多模态 ×3 · 联邦学习 ×3
 
 **[ACTG-ARL: Differentially Private Conditional Text Generation with RL-Boosted Control](actg-arl_differentially_private_conditional_text_generation_with_rl-boosted_cont.md)**
 
@@ -162,6 +162,10 @@ item_total: 45
 **[Forget to Know, Remember to Use: Context-Aware Unlearning for Large Language Models](forget_to_know_remember_to_use_context-aware_unlearning_for_large_language_model.md)**
 
 :   本文指出现有 LLM unlearning 方法在"把知识从参数里抹掉"的同时，会把"用户在 prompt 里重新提供该知识时模型能正确利用"的能力（contextual utility）一起抹掉，作者提出在已有 unlearning loss 上加一项 KL 正则——让 unlearn 后的模型在"问题+上下文"输入上的分布对齐原始模型——即可在几乎不损失遗忘效果和保留集效用的前提下，把 Contextual QA 的 LLM-Judge 分数从 0.00–0.84 拉回到 0.95+。
+
+**[From Parameter Dynamics to Risk Scoring: Quantifying Sample-Level Safety Degradation in LLM Fine-tuning](from_parameter_dynamics_to_risk_scoring_quantifying_sample-level_safety_degradat.md)**
+
+:   作者通过追踪 LoRA 微调过程中参数沿"危险/安全方向"的累积漂移，发现善意数据破坏对齐的根本机制是参数在 fine-tuning 中向危险方向单调漂移；进而提出 SQSD——用单步梯度沿两方向的投影差对每个样本打连续风险分，在 3 个模型 × 2 数据集上保持单调 ASR 排名，且能跨架构、跨规模、跨 LoRA→Full 迁移。
 
 **[From Volume to Value: Preference-Aligned Memory Construction for On-Device RAG](from_volume_to_value_preference-aligned_memory_construction_for_on-device_rag.md)**
 

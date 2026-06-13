@@ -15,7 +15,7 @@ tags:
 
 # iReasoner: Trajectory-Aware Intrinsic Reasoning Supervision for Self-Evolving Large Multimodal Models
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2601.05877](https://arxiv.org/abs/2601.05877)  
 **代码**: 缓存文本仅写“Our code is available here”，未给出明确URL  
 **领域**: 多模态VLM / 自监督推理训练  

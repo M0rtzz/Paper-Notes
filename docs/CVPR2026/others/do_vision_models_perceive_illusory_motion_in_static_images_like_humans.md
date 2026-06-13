@@ -14,7 +14,7 @@ tags:
 
 # Do Vision Models Perceive Illusory Motion in Static Images Like Humans?
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.09853](https://arxiv.org/abs/2604.09853)  
 **代码**: 有  
 **领域**: 视觉感知/计算神经科学  

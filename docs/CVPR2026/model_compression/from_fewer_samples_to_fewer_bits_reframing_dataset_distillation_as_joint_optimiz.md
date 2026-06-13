@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # From Fewer Samples to Fewer Bits: Reframing Dataset Distillation as Joint Optimization of Precision and Compactness
 
-**会议**: CVPR2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.02411](https://arxiv.org/abs/2603.02411)  
 **代码**: 未开源  
 **领域**: 模型压缩 / 数据蒸馏  

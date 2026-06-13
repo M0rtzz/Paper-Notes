@@ -15,7 +15,7 @@ tags:
 
 # Tracing Relational Knowledge Recall in Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19934](https://arxiv.org/abs/2604.19934)  
 **代码**: [nicpopovic.com/publications/tracing](https://nicpopovic.com/publications/tracing)  
 **领域**: 可解释性 / 知识表示  

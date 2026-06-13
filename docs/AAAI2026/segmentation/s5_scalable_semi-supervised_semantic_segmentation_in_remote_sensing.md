@@ -15,7 +15,7 @@ tags:
 
 # S5: Scalable Semi-Supervised Semantic Segmentation in Remote Sensing
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.12409](https://arxiv.org/abs/2508.12409)  
 **代码**: [S5](https://github.com/lianglyu/S5)  
 **领域**: 遥感图像分割  

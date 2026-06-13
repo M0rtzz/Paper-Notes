@@ -15,7 +15,7 @@ tags:
 
 # HyperMVP: Hyperbolic Multiview Pretraining for Robotic Manipulation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.04848](https://arxiv.org/abs/2603.04848)  
 **代码**: 待确认  
 **领域**: 3D视觉  

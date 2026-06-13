@@ -15,7 +15,7 @@ tags:
 
 # Affectron: Emotional Speech Synthesis with Affective and Contextually Aligned Nonverbal Vocalizations
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2603.14432](https://arxiv.org/abs/2603.14432)  
 **代码**: [https://github.com/choddeok/Affectron](https://github.com/choddeok/Affectron)  
 **领域**: 音频语音 / 语音合成  

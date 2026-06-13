@@ -15,7 +15,7 @@ tags:
 
 # Hybrid-Vector Retrieval for Visually Rich Documents: Combining Single-Vector Efficiency and Multi-Vector Accuracy
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.22215](https://arxiv.org/abs/2510.22215)  
 **代码**: [https://github.com/juyeonnn/HEAVEN](https://github.com/juyeonnn/HEAVEN)  
 **领域**: 信息检索  

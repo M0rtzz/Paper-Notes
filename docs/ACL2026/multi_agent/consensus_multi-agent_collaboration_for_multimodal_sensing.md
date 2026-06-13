@@ -15,7 +15,7 @@ tags:
 
 # ConSensus: Multi-Agent Collaboration for Multimodal Sensing
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2601.06453](https://arxiv.org/abs/2601.06453)  
 **代码**: https://github.com/nokia/multi-agent-collaboration-for-multimodal-sensing  
 **领域**: 多模态传感 / LLM Agent  

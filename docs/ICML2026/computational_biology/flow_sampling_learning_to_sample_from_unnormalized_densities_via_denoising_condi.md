@@ -15,7 +15,7 @@ tags:
 
 # Flow Sampling: Learning to Sample from Unnormalized Densities via Denoising Conditional Processes
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.03984](https://arxiv.org/abs/2605.03984)  
 **代码**: 未公开  
 **领域**: 扩散模型 / 采样 / 分子构象生成  

@@ -14,7 +14,7 @@ tags:
 
 # Fixed-Point RNNs: Interpolating from Diagonal to Dense
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2503.10799](https://arxiv.org/abs/2503.10799)  
 **代码**: 无（暂未公开）  
 **领域**: 序列建模 / 状态空间模型  

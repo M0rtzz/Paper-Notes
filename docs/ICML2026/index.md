@@ -2,7 +2,7 @@
 title: >-
   ICML2026 论文汇总 · 1463篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1463篇ICML2026论文解读，涵盖图像生成(125篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、优化/理论(64篇)、LLM 推理(63篇)、LLM 安全(45篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1463篇ICML2026论文解读，涵盖图像生成(125篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、优化/理论(64篇)、LLM 推理(63篇)、LLM 安全(46篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2026"
   - "ICML2026论文汇总"
@@ -85,7 +85,7 @@ item_total: 1463
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧪 ICML2026 论文汇总
 
-1463篇ICML2026论文解读，涵盖图像生成(125篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、优化/理论(64篇)、LLM 推理(63篇)、LLM 安全(45篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1463篇ICML2026论文解读，涵盖图像生成(125篇)、模型压缩(100篇)、多模态 VLM(99篇)、强化学习(95篇)、可解释性(71篇)、优化/理论(64篇)、LLM 推理(63篇)、LLM 安全(46篇)等 50个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -137,7 +137,7 @@ item_total: 1463
 
 ---
 
-## 🔒 LLM 安全 (45) { #llm_safety }
+## 🔒 LLM 安全 (46) { #llm_safety }
 
 **[ACTG-ARL: Differentially Private Conditional Text Generation with RL-Boosted Control](llm_safety/actg-arl_differentially_private_conditional_text_generation_with_rl-boosted_cont.md)**
 
@@ -179,7 +179,7 @@ item_total: 1463
 
 :   本文指出 Transformer / Mamba 在死记硬背图的边时并不会真的退化成查找表（联想记忆），而是会自发把节点嵌入排成一种编码了多跳全局结构的"几何记忆"，并通过 path-star 实验证明这种几何让隐式推理变得反常地容易，但其出现既不能归因于监督、容量也不能归因于优化压力，留下一个新的"记忆之谜"。
 
-[查看全部45篇「LLM 安全」论文 →](llm_safety/)
+[查看全部46篇「LLM 安全」论文 →](llm_safety/)
 
 ---
 
@@ -229,53 +229,7 @@ item_total: 1463
 
 ---
 
-## 💬 LLM / NLP (37) { #llm_nlp }
-
-**[A Geometric Relation of the Error Introduced by Sampling a Language Model's Output Distribution to its Internal State](llm_nlp/a_geometric_relation_of_the_error_introduced_by_sampling_a_language_models_outpu.md)**
-
-:   本文从微分几何视角刻画 GPT 风格 LLM 在高熵分布上采样所引入的信息丧失，构造 $\mathfrak{so}(n)$ 值 1-形式与平行输运算子，并在国际象棋探针实验中证明这种几何旋转与模型学到的世界向量高度同向。
-
-**[ANCHOR: Abductive Network Construction with Hierarchical Orchestration for Reliable Probability Inference in Large Language Models](llm_nlp/anchor_abductive_network_construction_with_hierarchical_orchestration_for_reliab.md)**
-
-:   ANCHOR 用"自底向上溯因 + 层级聚类" 构造稠密因子空间，对下游条件做粗到细检索得到稀疏相关因子集，再联合 Naïve Bayes 与一个 LLM 现场构造的潜变量因果贝叶斯网络做后验聚合，在 LLM 高风险决策场景中显著减少 "unknown" 预测并提升概率校准。
-
-**[Automated Formal Proofs of Combinatorial Identities via Wilf–Zeilberger Guidance and LLMs](llm_nlp/automated_formal_proofs_of_combinatorial_identities_via_wilf-zeilberger_guidance.md)**
-
-:   WZ-LLM 把经典的 Wilf–Zeilberger 符号证明流程编译成 Lean 4 中可执行的证明骨架（递推 + 边界条件 + 侧条件），交给专门用 SFT + expert-iteration + DAPO 训练出的 WZ-Prover 逐项 discharge，在 100 个经典组合恒等式上把 pass@32 从 Goedel-Prover-V2 的 9% 提升到 34%。
-
-**[Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision](llm_nlp/compute_as_teacher_turning_inference_compute_into_reference-free_supervision.md)**
-
-:   本文提出 Compute as Teacher（CaT）：把 GRPO 已经在采样的 G 条 rollouts 通过冻结锚模型"合成"出一个伪参考答案，再在非可验证领域用模型自己从该伪参考衍生的二元 rubric 给每条 rollout 打分作为 RL 奖励，从而在没有任何人工标注的情况下把推理算力直接变成监督信号，在 HealthBench 上相对基线最高提升 30%，并以 9× 更低的测试时算力匹配甚至超过 inference-time aggregation。
-
-**[Deep Networks Learn to Parse Uniform-Depth Context-Free Languages from Local Statistics](llm_nlp/deep_networks_learn_to_parse_uniform-depth_context-free_languages_from_local_sta.md)**
-
-:   作者提出一个可控歧义的"变树 RHM"概率上下文无关文法，并证明只用 root-to-pair / root-to-triple 这两个低阶矩 + 逐层聚类，就能恢复语法规则、进行 CYK 式解析，对应样本复杂度 $P^\star \asymp v\, m_3\, m_2^{L-1} (p_2^2/2)^{1-L}$，CNN 与 Transformer 实验完全符合该幂律。
-
-**[Differential Syntactic and Semantic Encoding in LLMs](llm_nlp/differential_syntactic_and_semantic_encoding_in_llms.md)**
-
-:   通过对共享句法结构或共享含义的句子做隐层表示平均得到"句法质心"和"语义质心"，作者证明 DeepSeek-V3 等大模型的句子向量中相当一部分句法/语义信息是被**线性叠加**编码的，并且这两类信息在层间分布和正交消融上都呈现明显的可分离性——支持"句法相对自治"的语言学假说。
-
-**[dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching](llm_nlp/dllm-cache_accelerating_diffusion_large_language_models_with_adaptive_caching.md)**
-
-:   针对扩散式大语言模型 (dLLM) 因双向注意力无法复用 KV cache 而推理极慢的问题，本文提出训练无关的 dLLM-Cache，对静态 prompt 用长间隔缓存、对动态 response 用短间隔刷新+按 Value 余弦相似度选 25% 最"变化"的 token 做局部重算，在 LLaDA 8B / Dream 7B 上获得最高 9.1× FLOPs 加速且分数基本不掉。
-
-**[Express Your Doubts: Probabilistic World Modeling Should Not Be Based on Token logprobs](llm_nlp/express_your_doubts_--_probabilistic_world_modeling_should_not_be_based_on_token.md)**
-
-:   这是一篇 position paper，主张：**用 LLM 的 token softmax 概率（logprob）当成"世界事件概率"是理论上错的**——因为 distribution estimation、response prediction 和 target distribution estimation 是三个不同任务，对应不同 ideal 输出分布；获取世界概率的正确做法是**二阶预测**——让 LLM 在输出里**显式写出**它对事件的概率（数值或语言修饰词），而不是去算"它说 X 的概率"。
-
-**[Fast-dLLM++: Fréchet Profile Decoding for Faster Diffusion LLM Inference](llm_nlp/fast-dllm_fréchet_profile_decoding_for_faster_diffusion_llm_inference.md)**
-
-:   针对扩散语言模型（dLLM）的并行解码瓶颈，本文提出训练无关的 Fréchet 画像解码：用整条排序后的置信度画像而不是"最弱被选 token"那一项来决定本步并行 commit 多少 token，把 Fast-dLLM 的 factor 规则严格推广到异质置信度场景，在 LLaDA-8B 上四个基准平均吞吐 1.36×、NFE 降 29%，精度几乎不变。
-
-**[From Parameter Dynamics to Risk Scoring: Quantifying Sample-Level Safety Degradation in LLM Fine-tuning](llm_nlp/from_parameter_dynamics_to_risk_scoring_quantifying_sample-level_safety_degradat.md)**
-
-:   作者通过追踪 LoRA 微调过程中参数沿"危险/安全方向"的累积漂移，发现善意数据破坏对齐的根本机制是参数在 fine-tuning 中向危险方向单调漂移；进而提出 SQSD——用单步梯度沿两方向的投影差对每个样本打连续风险分，在 3 个模型 × 2 数据集上保持单调 ASR 排名，且能跨架构、跨规模、跨 LoRA→Full 迁移。
-
-[查看全部37篇「LLM / NLP」论文 →](llm_nlp/)
-
----
-
-## ⚡ LLM 效率 (30) { #llm_efficiency }
+## ⚡ LLM 效率 (32) { #llm_efficiency }
 
 **[Beyond Sunk Costs: Boosting LLM Pre-training Efficiency via Orthogonal Growth of Mixture-of-Experts](llm_efficiency/beyond_sunk_costs_boosting_llm_pre-training_efficiency_via_orthogonal_growth_of_.md)**
 
@@ -284,6 +238,10 @@ item_total: 1463
 **[CriticalKV: Optimizing KV Cache Eviction from an Output Perturbation Perspective](llm_efficiency/criticalkv_optimizing_kv_cache_eviction_from_an_output_perturbation_perspective.md)**
 
 :   作者把"哪些 KV 缓存条目算关键"这个一直靠经验拍脑袋的问题，重新写成"最小化注意力输出扰动"的优化问题，推导出扰动的可解析上界（同时涉及注意力权重和经 $W^O$ 投影后的 value 范数），并由此设计了一个即插即用的两阶段贪心选择算法，把 SnapKV/AdaKV/HeadKV 三种 SOTA 驱逐方法在 29 个长上下文数据集上的压缩损失平均砍掉一半以上。
+
+**[dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching](llm_efficiency/dllm-cache_accelerating_diffusion_large_language_models_with_adaptive_caching.md)**
+
+:   针对扩散式大语言模型 (dLLM) 因双向注意力无法复用 KV cache 而推理极慢的问题，本文提出训练无关的 dLLM-Cache，对静态 prompt 用长间隔缓存、对动态 response 用短间隔刷新+按 Value 余弦相似度选 25% 最"变化"的 token 做局部重算，在 LLaDA 8B / Dream 7B 上获得最高 9.1× FLOPs 加速且分数基本不掉。
 
 **[Do Transformers Need Three Projections？三选一/二的 QKV 共享系统研究](llm_efficiency/do_transformers_need_three_projections_systematic_study_of_qkv_variants.md)**
 
@@ -301,6 +259,10 @@ item_total: 1463
 
 :   Ekka 把 LLM 服务框架里"输出悄悄变烂、却没有报错"的静默错误诊断问题，建模为以 HuggingFace 这类参考实现为 oracle 的差分调试任务，用一套"组件映射 → 激活对齐 → 变点分析"的 agentic 流水线自动定位到出问题的具体模块，在 17 个真实 vLLM/SGLang issue 上取得 80% pass@1 / 88% pass@5 的诊断准确率，并新发现 4 个被开发者确认的隐藏 bug。
 
+**[Fast-dLLM++: Fréchet Profile Decoding for Faster Diffusion LLM Inference](llm_efficiency/fast-dllm_fréchet_profile_decoding_for_faster_diffusion_llm_inference.md)**
+
+:   针对扩散语言模型（dLLM）的并行解码瓶颈，本文提出训练无关的 Fréchet 画像解码：用整条排序后的置信度画像而不是"最弱被选 token"那一项来决定本步并行 commit 多少 token，把 Fast-dLLM 的 factor 规则严格推广到异质置信度场景，在 LLaDA-8B 上四个基准平均吞吐 1.36×、NFE 降 29%，精度几乎不变。
+
 **[GraphFlow: A Graph-Based Workflow Management for Efficient LLM-Agent Serving](llm_efficiency/graphflow_a_graph-based_workflow_management_for_efficient_llm-agent_serving.md)**
 
 :   GraphFlow 把多个 agent 工作流统一到一张全局操作 DAG（wGraph）上，用 GNN+MLP 按任务在线生成子图工作流，并通过"基底 KV + 稀疏前缀残差 + 路径剪枝"的差分缓存替代传统按工作流独立缓存，在 5 个推理/代码/QA benchmark 上平均提升 4.95pp 的同时把 KV 内存压到约 1/4。
@@ -309,15 +271,7 @@ item_total: 1463
 
 :   本文把 μP/CompleteP 的最大更新参数化思想扩展到稀疏 MoE Transformer，给出 router、expert 上/下投影、expert bias 在 width/depth/专家数/专家宽度同时放大时的初始化与学习率缩放规则，并用一套三层 mean-field 的 DMFT 理论证明该参数化在 $n_{\text{embd}},n_{\text{exp}},n_{\text{hid}},L\to\infty$（固定激活稀疏度 $\kappa$）下存在尺度不变极限，从 38M 激活基模迁移到 2B 总参的 MoE 上都能直接复用最优 LR / init，且零样本超参训出来的 MoE 在等激活参数下可与 dense GPT2 speedrun 持平甚至更优。
 
-**[KnapSpec: Self-Speculative Decoding via Adaptive Layer Selection as a Knapsack Problem](llm_efficiency/knapspec_self-speculative_decoding_via_adaptive_layer_selection_as_a_knapsack_pr.md)**
-
-:   KnapSpec 把自推测解码（SSD）的草稿层选择重新建模为 0/1 背包问题，把 Attention 与 MLP 解耦、用上下文长度依赖的硬件延迟作为"重量"、用 hidden state 余弦相似度（首次给出严格证明）作为"价值"，通过并行 DP 在每一步自适应找出最大化 Tokens-per-Time 的子网络，在 Qwen3 / Llama3 上长上下文场景拿到最高 1.47× 的真实墙钟加速且无需额外训练。
-
-**[L$^3$: Large Lookup Layers](llm_efficiency/l3_large_lookup_layers.md)**
-
-:   本文提出 L$^3$（Large Lookup Layer），把 tokenizer embedding table 推广为可插入到 decoder 中的"大查表层"——按 token ID 做**静态路由**取出一组学习好的 key/value embeddings，再让当前隐藏状态对其做 attention 聚合，从而在不引入 MoE 那套动态路由+辅助损失+难以 offload 的痛点下，把模型稀疏度再上一个量级；在 800M–2.6B 激活参数上击败同算力的 dense 模型与同稀疏率的 MoE。
-
-[查看全部30篇「LLM 效率」论文 →](llm_efficiency/)
+[查看全部32篇「LLM 效率」论文 →](llm_efficiency/)
 
 ---
 
@@ -367,7 +321,7 @@ item_total: 1463
 
 ---
 
-## 📊 LLM 评测 (24) { #llm_evaluation }
+## 📊 LLM 评测 (25) { #llm_evaluation }
 
 **[Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement Learning](llm_evaluation/agent_world_model_infinity_synthetic_environments_for_agentic_reinforcement_lear.md)**
 
@@ -409,7 +363,7 @@ item_total: 1463
 
 :   本文用 LLM 当人口外推器，把 18 个能力维度按"全世界人口正确率"对数刻度 $L=-\log_B p_W$ 校准，并发现 Volume / Attention 维度真实 base $B \gg 10$、Comprehension 维度 $B \approx 1$，揭示现行 AI 与人类的比较其实严重失调。
 
-[查看全部24篇「LLM 评测」论文 →](llm_evaluation/)
+[查看全部25篇「LLM 评测」论文 →](llm_evaluation/)
 
 ---
 
@@ -584,6 +538,52 @@ item_total: 1463
 **[The Labyrinth and the Thread: Rethinking Regularizations in Sequential Knowledge Editing for Large Language Models](knowledge_editing/the_labyrinth_and_the_thread_rethinking_regularizations_in_sequential_knowledge_.md)**
 
 :   本文从优化角度证明：序列编辑（SE）之所以稳定，本质是"累积更新等价于一次性编辑（OTE）的解"，而 AlphaEdit 的零空间投影、PRUNE/RECT 的后处理正则等花哨机制并非关键——只要保证 OTE-SE 对齐，去掉这些正则也能在 4 个主流 LLM 上稳定完成 2000 步序列编辑。
+
+---
+
+## 💬 LLM 其他 (33) { #llm_nlp }
+
+**[A Geometric Relation of the Error Introduced by Sampling a Language Model's Output Distribution to its Internal State](llm_nlp/a_geometric_relation_of_the_error_introduced_by_sampling_a_language_models_outpu.md)**
+
+:   本文从微分几何视角刻画 GPT 风格 LLM 在高熵分布上采样所引入的信息丧失，构造 $\mathfrak{so}(n)$ 值 1-形式与平行输运算子，并在国际象棋探针实验中证明这种几何旋转与模型学到的世界向量高度同向。
+
+**[ANCHOR: Abductive Network Construction with Hierarchical Orchestration for Reliable Probability Inference in Large Language Models](llm_nlp/anchor_abductive_network_construction_with_hierarchical_orchestration_for_reliab.md)**
+
+:   ANCHOR 用"自底向上溯因 + 层级聚类" 构造稠密因子空间，对下游条件做粗到细检索得到稀疏相关因子集，再联合 Naïve Bayes 与一个 LLM 现场构造的潜变量因果贝叶斯网络做后验聚合，在 LLM 高风险决策场景中显著减少 "unknown" 预测并提升概率校准。
+
+**[Automated Formal Proofs of Combinatorial Identities via Wilf–Zeilberger Guidance and LLMs](llm_nlp/automated_formal_proofs_of_combinatorial_identities_via_wilf-zeilberger_guidance.md)**
+
+:   WZ-LLM 把经典的 Wilf–Zeilberger 符号证明流程编译成 Lean 4 中可执行的证明骨架（递推 + 边界条件 + 侧条件），交给专门用 SFT + expert-iteration + DAPO 训练出的 WZ-Prover 逐项 discharge，在 100 个经典组合恒等式上把 pass@32 从 Goedel-Prover-V2 的 9% 提升到 34%。
+
+**[Compute as Teacher: Turning Inference Compute Into Reference-Free Supervision](llm_nlp/compute_as_teacher_turning_inference_compute_into_reference-free_supervision.md)**
+
+:   本文提出 Compute as Teacher（CaT）：把 GRPO 已经在采样的 G 条 rollouts 通过冻结锚模型"合成"出一个伪参考答案，再在非可验证领域用模型自己从该伪参考衍生的二元 rubric 给每条 rollout 打分作为 RL 奖励，从而在没有任何人工标注的情况下把推理算力直接变成监督信号，在 HealthBench 上相对基线最高提升 30%，并以 9× 更低的测试时算力匹配甚至超过 inference-time aggregation。
+
+**[Deep Networks Learn to Parse Uniform-Depth Context-Free Languages from Local Statistics](llm_nlp/deep_networks_learn_to_parse_uniform-depth_context-free_languages_from_local_sta.md)**
+
+:   作者提出一个可控歧义的"变树 RHM"概率上下文无关文法，并证明只用 root-to-pair / root-to-triple 这两个低阶矩 + 逐层聚类，就能恢复语法规则、进行 CYK 式解析，对应样本复杂度 $P^\star \asymp v\, m_3\, m_2^{L-1} (p_2^2/2)^{1-L}$，CNN 与 Transformer 实验完全符合该幂律。
+
+**[Differential Syntactic and Semantic Encoding in LLMs](llm_nlp/differential_syntactic_and_semantic_encoding_in_llms.md)**
+
+:   通过对共享句法结构或共享含义的句子做隐层表示平均得到"句法质心"和"语义质心"，作者证明 DeepSeek-V3 等大模型的句子向量中相当一部分句法/语义信息是被**线性叠加**编码的，并且这两类信息在层间分布和正交消融上都呈现明显的可分离性——支持"句法相对自治"的语言学假说。
+
+**[Express Your Doubts: Probabilistic World Modeling Should Not Be Based on Token logprobs](llm_nlp/express_your_doubts_--_probabilistic_world_modeling_should_not_be_based_on_token.md)**
+
+:   这是一篇 position paper，主张：**用 LLM 的 token softmax 概率（logprob）当成"世界事件概率"是理论上错的**——因为 distribution estimation、response prediction 和 target distribution estimation 是三个不同任务，对应不同 ideal 输出分布；获取世界概率的正确做法是**二阶预测**——让 LLM 在输出里**显式写出**它对事件的概率（数值或语言修饰词），而不是去算"它说 X 的概率"。
+
+**[How Many Different Outputs Can a Transformer Generate?](llm_nlp/how_many_different_outputs_can_a_transformer_generate.md)**
+
+:   本文从"有限精度 + 有界嵌入支撑"两个最基本的架构事实出发，证明任意 transformer 只能生成有限条"可达序列"，给出可达序列长度随 prompt 长度线性增长、超过阈值后比例以 $1/|V|^n$ 指数衰减的紧上界，并用 cramming 与 copying 实验在 Pythia/Qwen/Llama/Gemma 上验证理论斜率与实测仅差 5–10 倍。
+
+**["I've Seen How This Goes"：用渐进条件惊奇度刻画 LLM 与人类写作的多样性](llm_nlp/ive_seen_how_this_goes_characterizing_diversity_via_progressive_conditional_surp.md)**
+
+:   本文提出 $D_{Ca_n}=C\cdot a_n$ 这一无需 embedding、无需参考语料、无需人工标签的多样性度量：用一个基座模型 $\theta$ 在单次前向里读完所有响应，把"最后一条响应在已见过 $n-1$ 条之后还剩多少 per-byte 条件惊奇"乘上"响应整体的可读性"，在 McDiv 人评基准上逼近 SentBERT，并在 OLMo-2-7B 的 base→SFT→DPO→RLVR 上单调下降，准确捕捉后训练带来的模式坍缩。
+
+**[Mitigating Staleness in Asynchronous Pipeline Parallelism via Basis Rotation](llm_nlp/mitigating_staleness_in_asynchronous_pipeline_parallelism_via_basis_rotation.md)**
+
+:   作者把异步流水线并行训练 LLM 时延迟梯度导致收敛崩塌的"罪魁祸首"归结为 Adam 的基底失配（Hessian 特征基与坐标轴不对齐），并提出在 Hessian 特征基下做基底旋转再走 Adam 更新，3B 模型上比最强异步基线少 81.7% 迭代就能达到同样 loss。
+
+[查看全部33篇「LLM 其他」论文 →](llm_nlp/)
 
 ---
 

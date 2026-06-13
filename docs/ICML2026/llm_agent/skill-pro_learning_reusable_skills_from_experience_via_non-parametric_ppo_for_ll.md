@@ -15,7 +15,7 @@ tags:
 
 # Skill-Pro: Learning Reusable Skills from Experience via Non-Parametric PPO for LLM Agents
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.01869](https://arxiv.org/abs/2602.01869)  
 **代码**: https://github.com/Miracle1207/Skill-Pro (有)  
 **领域**: LLM Agent / 程序性记忆 / 非参数优化  

@@ -15,7 +15,7 @@ tags:
 
 # TraveLLaMA: A Multimodal Travel Assistant with Large-Scale Dataset and Structured Reasoning
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2504.16505](https://arxiv.org/abs/2504.16505)  
 **代码**: [https://travellama-best.github.io/](https://travellama-best.github.io/)  
 **领域**: 推荐系统  

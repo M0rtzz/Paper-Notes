@@ -15,7 +15,7 @@ tags:
 
 # Dr. Assistant: Enhancing Clinical Diagnostic Inquiry via Structured Diagnostic Reasoning Data and Reinforcement Learning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.13690](https://arxiv.org/abs/2601.13690)  
 **代码**: [GitHub](https://github.com/YGswu/Dr.-Assistant)  
 **领域**: 医学NLP

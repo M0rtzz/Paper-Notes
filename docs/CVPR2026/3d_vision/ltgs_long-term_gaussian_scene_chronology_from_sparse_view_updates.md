@@ -15,7 +15,7 @@ tags:
 
 # LTGS: Long-Term Gaussian Scene Chronology From Sparse View Updates
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2510.09881](https://arxiv.org/abs/2510.09881)  
 **代码**: 无  
 **领域**: 3D视觉  

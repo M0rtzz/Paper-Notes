@@ -15,7 +15,7 @@ tags:
 
 # Lightweight Optimal-Transport Harmonization on Edge Devices
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.12785](https://arxiv.org/abs/2511.12785)  
 **代码**: [github](https://github.com/maria-larchenko/mkl-harmonizer)  
 **领域**: 模型压缩  

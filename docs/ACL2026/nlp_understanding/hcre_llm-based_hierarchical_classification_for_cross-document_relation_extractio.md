@@ -15,7 +15,7 @@ tags:
 
 # HCRE: LLM-based Hierarchical Classification for Cross-Document Relation Extraction
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.07937](https://arxiv.org/abs/2604.07937)  
 **代码**: [https://github.com/XMUDeepLIT/HCRE](https://github.com/XMUDeepLIT/HCRE)  
 **领域**: NLP理解  

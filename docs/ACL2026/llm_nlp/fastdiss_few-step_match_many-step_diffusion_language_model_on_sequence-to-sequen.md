@@ -15,7 +15,7 @@ tags:
 
 # FastDiSS: Few-step Match Many-step Diffusion Language Model on Sequence-to-Sequence Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05551](https://arxiv.org/abs/2604.05551)  
 **代码**: 无  
 **领域**: LLM/NLP  

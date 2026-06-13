@@ -15,7 +15,7 @@ tags:
 
 # Deep Compositional Phase Diffusion for Long Motion Sequence Generation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2510.14427](https://arxiv.org/abs/2510.14427)  
 **代码**: [GitHub](https://github.com/asdryau/TransPhase)  
 **领域**: LLM预训练  

@@ -15,7 +15,7 @@ tags:
 
 # AgenticEval: Toward Agentic and Self-Evolving Safety Evaluation of Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2509.26100](https://arxiv.org/abs/2509.26100)  
 **代码**: 无  
 **领域**: LLM Agent / 安全评测 / 法规对齐  

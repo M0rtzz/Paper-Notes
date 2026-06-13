@@ -15,7 +15,7 @@ tags:
 
 # Justice in Judgment: Unveiling (Hidden) Bias in LLM-assisted Peer Reviews
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2509.13400](https://arxiv.org/abs/2509.13400)  
 **代码**: LLMReviewBias (开源仓库见文中链接)  
 **领域**: LLM 评测 / 公平性 / 同行评议  

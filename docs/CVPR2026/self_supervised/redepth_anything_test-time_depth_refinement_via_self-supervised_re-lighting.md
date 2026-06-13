@@ -15,7 +15,7 @@ tags:
 
 # Re-Depth Anything: Test-Time Depth Refinement via Self-Supervised Re-lighting
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2512.17908](https://arxiv.org/abs/2512.17908)  
 **作者**: Ananta R. Bhattarai, Helge Rhodin (Bielefeld University)  
 **代码**: [GitHub](https://github.com/anantarb/Re-Depth-Anything)  

@@ -15,7 +15,7 @@ tags:
 
 # Agentic Conversational Search with Contextualized Reasoning via Reinforcement Learning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.13115](https://arxiv.org/abs/2601.13115)  
 **代码**: 无  
 **领域**: Conversational Search / LLM Agent  

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 3D视觉论文汇总 · 363篇论文解读
+  CVPR2025 3D视觉论文汇总 · 364篇论文解读
 description: >-
-  363篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、对抗鲁棒、语义分割、点云等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  364篇CVPR2025的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、三维重建、对抗鲁棒、语义分割、点云等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2025"
   - "3D 视觉"
@@ -39,6 +39,8 @@ item_list:
     t: "3DEnhancer: Consistent Multi-View Diffusion for 3D Enhancement"
   - u: "3dgut_enabling_distorted_cameras_and_secondary_rays_in_gaussian_splatting/"
     t: "3DGUT: Enabling Distorted Cameras and Secondary Rays in Gaussian Splatting"
+  - u: "4deform_neural_surface_deformation_for_robust_shape_interpolation/"
+    t: "4Deform: Neural Surface Deformation for Robust Shape Interpolation"
   - u: "4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m/"
     t: "4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video"
   - u: "4dgc_rate-aware_4d_gaussian_compression_for_efficient_streamable_free-viewpoint_/"
@@ -73,19 +75,17 @@ item_list:
     t: "CADCrafter: Generating Computer-Aided Design Models from Unconstrained Images"
   - u: "caddreamer_cad_object_generation_from_single-view_images/"
     t: "CADDreamer: CAD Object Generation from Single-view Images"
-  - u: "category-agnostic_neural_object_rigging/"
-    t: "Category-Agnostic Neural Object Rigging"
-item_total: 363
+item_total: 364
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**📷 CVPR2025** · **363** 篇论文解读
+**📷 CVPR2025** · **364** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (239)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md)
 
-🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×26 · 三维重建 ×18 · 对抗鲁棒 ×15 · 语义分割 ×15
+🔥 **高频主题：** 3D 高斯渲染 ×61 · 扩散模型 ×26 · 三维重建 ×18 · 对抗鲁棒 ×16 · 语义分割 ×15
 
 **[3D-GSW: 3D Gaussian Splatting for Robust Watermarking](3d-gsw_3d_gaussian_splatting_for_robust_watermarking.md)**
 
@@ -132,6 +132,10 @@ item_total: 363
 :   提出一个基于多视图潜在扩散模型的3D增强框架，通过姿态感知编码器、多视图行注意力和近视图极线聚合模块，在保持跨视图一致性的前提下显著提升低质量3D生成结果的纹理质量。
 
 **[3DGUT: Enabling Distorted Cameras and Secondary Rays in Gaussian Splatting](3dgut_enabling_distorted_cameras_and_secondary_rays_in_gaussian_splatting.md)**
+
+**[4Deform: Neural Surface Deformation for Robust Shape Interpolation](4deform_neural_surface_deformation_for_robust_shape_interpolation.md)**
+
+:   提出 4Deform 框架，基于神经隐式表示和连续速度场学习实现鲁棒形状插值，通过修改的 level-set 方程链接隐式场与速度场，首次在噪声、部分、拓扑变化和非等距变形场景中均取得 SOTA，并支持真实世界 Kinect 点云序列的时间超分辨率。
 
 **[4DEquine: Disentangling Motion and Appearance for 4D Equine Reconstruction from Monocular Video](4dequine_disentangling_motion_and_appearance_for_4d_equine_reconstruction_from_m.md)**
 
@@ -317,7 +321,7 @@ item_total: 363
 
 **[Digital Twin Catalog: A Large-Scale Photorealistic 3D Object Digital Twin Dataset](digital_twin_catalog_a_large-scale_photorealistic_3d_object_digital_twin_dataset.md)**
 
-:   提出 DTC 数据集，包含 2000 个毫米级几何精度和光真实 PBR 材质的 3D 物体数字孪生模型，配合 DSLR 和自中心 AR 眼镜的多视角评估数据，建立了首个面向数字孪生创建任务的综合真实世界评测基准。
+:   Meta Reality Labs 提出 DTC 数据集，包含 2000 个毫米级几何精度和逼真 PBR 材质的3D物体数字孪生模型，配合 DSLR 和自中心 AR 眼镜拍摄的评估数据，为3D重建和逆渲染提供首个全面的真实世界基准。
 
 **[Disco4D: Disentangled 4D Human Generation and Animation from a Single Image](disco4d_disentangled_4d_human_generation_and_animation_from_a_single_image.md)**
 

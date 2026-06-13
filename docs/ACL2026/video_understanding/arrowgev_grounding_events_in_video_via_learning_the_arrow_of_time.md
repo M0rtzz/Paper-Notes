@@ -15,7 +15,7 @@ tags:
 
 # ArrowGEV: Grounding Events in Video via Learning the Arrow of Time
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.06559](https://arxiv.org/abs/2601.06559)  
 **代码**: [有](https://arxiv.org/abs/2601.06559)（Code / Model / Data 均公开）  
 **领域**: Video Understanding  

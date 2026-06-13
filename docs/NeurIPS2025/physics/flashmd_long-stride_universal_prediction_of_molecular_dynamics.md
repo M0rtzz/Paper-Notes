@@ -16,7 +16,7 @@ tags:
 
 # FlashMD: Long-Stride, Universal Prediction of Molecular Dynamics
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.19350](https://arxiv.org/abs/2505.19350)  
 **作者**: Filippo Bigi*, Sanggyu Chong* (EPFL), Agustinus Kristiadi (Western/Vector), Michele Ceriotti (EPFL)
 **代码**: [flashmd (PyPI)](https://flashmd.org) | [HuggingFace](https://huggingface.co/) | [Materials Cloud](https://www.materialscloud.org/)  

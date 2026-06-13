@@ -17,7 +17,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Strategy-Induct: Task-Level Strategy Induction for Instruction Generation
 
-**会议**: ACL2026
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.20924](https://arxiv.org/abs/2605.20924)
 **代码**: 待确认
 **领域**: llm_reasoning

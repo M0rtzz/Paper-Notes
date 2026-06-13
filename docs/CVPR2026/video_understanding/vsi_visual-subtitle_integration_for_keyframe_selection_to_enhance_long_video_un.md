@@ -15,7 +15,7 @@ tags:
 
 # VSI: Visual-Subtitle Integration for Keyframe Selection to Enhance Long Video Understanding
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2508.06869](https://arxiv.org/abs/2508.06869)  
 **代码**: [https://github.com/Jacksonha7/Visual-Subtitle-Integration.git](https://github.com/Jacksonha7/Visual-Subtitle-Integration.git)  
 **领域**: 视频理解  

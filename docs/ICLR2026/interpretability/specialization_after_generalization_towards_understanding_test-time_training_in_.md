@@ -15,7 +15,7 @@ tags:
 
 # Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2509.24510](https://arxiv.org/abs/2509.24510)  
 **代码**: 无  
 **领域**: 模型压缩 / 测试时训练  

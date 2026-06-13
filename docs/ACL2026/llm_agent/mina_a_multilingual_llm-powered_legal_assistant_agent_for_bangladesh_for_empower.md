@@ -15,7 +15,7 @@ tags:
 
 # Mina: A Multilingual LLM-Powered Legal Assistant Agent for Bangladesh
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2511.08605](https://arxiv.org/abs/2511.08605)  
 **代码**: [GitHub](https://github.com/)  
 **领域**: LLM Agent / 法律NLP  

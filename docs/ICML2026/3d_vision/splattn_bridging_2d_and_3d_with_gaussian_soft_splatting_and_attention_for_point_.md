@@ -15,7 +15,7 @@ tags:
 
 # SplAttN: Bridging 2D and 3D with Gaussian Soft Splatting and Attention for Point Cloud Completion
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.01466](https://arxiv.org/abs/2605.01466)  
 **代码**: https://github.com/zay002/SplAttN (有)  
 **领域**: 3D 视觉 / 点云补全 / 多模态融合  

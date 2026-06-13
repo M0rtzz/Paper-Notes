@@ -15,7 +15,7 @@ tags:
 
 # ARECHO: Autoregressive Evaluation via Chain-Based Hypothesis Optimization for Speech Multi-Metric Estimation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.24518](https://arxiv.org/abs/2505.24518)  
 **代码**: [https://github.com/ftshijt/espnet/tree/universa_plus](https://github.com/ftshijt/espnet/tree/universa_plus)  
 **领域**: 可解释性  

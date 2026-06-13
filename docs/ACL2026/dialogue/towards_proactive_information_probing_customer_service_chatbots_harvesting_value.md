@@ -15,7 +15,7 @@ tags:
 
 # Towards Proactive Information Probing: Customer Service Chatbots Harvesting Value from Conversation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.11077](https://arxiv.org/abs/2604.11077)  
 **代码**: [https://github.com/SCUNLP/PROCHATIP](https://github.com/SCUNLP/PROCHATIP)  
 **领域**: 对话系统  

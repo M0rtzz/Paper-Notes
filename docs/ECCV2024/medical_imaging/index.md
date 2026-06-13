@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 医学图像论文汇总 · 27篇论文解读
+  ECCV2024 医学图像论文汇总 · 28篇论文解读
 description: >-
-  27篇ECCV2024的医学图像方向论文解读，涵盖医学影像、语义分割、扩散模型、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  28篇ECCV2024的医学图像方向论文解读，涵盖医学影像、语义分割、扩散模型、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "医学图像"
@@ -25,6 +25,8 @@ item_list:
     t: "Architecture-Agnostic Untrained Network Priors for Image Reconstruction with Frequency Regularization"
   - u: "brain-id_learning_contrast-agnostic_anatomical_representations_for_brain_imaging/"
     t: "Brain-ID: Learning Contrast-agnostic Anatomical Representations for Brain Imaging"
+  - u: "brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals/"
+    t: "Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals"
   - u: "cardiacnet_learning_to_reconstruct_abnormalities_for_cardiac_disease_assessment_/"
     t: "CardiacNet: Learning to Reconstruct Abnormalities for Cardiac Disease Assessment from Echocardiogram Videos"
   - u: "chameleon_a_data-efficient_generalist_for_dense_visual_prediction_in_the_wild/"
@@ -67,15 +69,15 @@ item_list:
     t: "Unleashing the Power of Prompt-driven Nucleus Instance Segmentation"
   - u: "unsupervised_multi-modal_medical_image_registration_via_invertible_translation/"
     t: "Unsupervised Multi-modal Medical Image Registration via Invertible Translation"
-item_total: 27
+item_total: 28
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🎞️ ECCV2024** · **27** 篇论文解读
+**🎞️ ECCV2024** · **28** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (73)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (75)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (22)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (75)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (77)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md)
 
 🔥 **高频主题：** 医学影像 ×14 · 语义分割 ×4 · 扩散模型 ×2 · 多模态 ×2
 
@@ -102,6 +104,10 @@ item_total: 27
 **[Brain-ID: Learning Contrast-agnostic Anatomical Representations for Brain Imaging](brain-id_learning_contrast-agnostic_anatomical_representations_for_brain_imaging.md)**
 
 :   本文提出 Brain-ID，一种对比度无关的脑解剖表征学习模型，通过"轻度到重度"的受试者内图像合成策略，在全合成数据上训练获得对MRI对比度、分辨率、方向和伪影鲁棒的解剖特征，仅需一层适配即可在四种下游任务和六个公开数据集上达到 SOTA。
+
+**[Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)**
+
+:   本文提出了一种从功能磁共振成像（fMRI）信号重建视频的新方法，通过多数据集多被试训练和三阶段pipeline，利用预训练的文本到视频和视频到视频模型，实现了跨数据集和跨被试的SOTA视频重建能力。
 
 **[CardiacNet: Learning to Reconstruct Abnormalities for Cardiac Disease Assessment from Echocardiogram Videos](cardiacnet_learning_to_reconstruct_abnormalities_for_cardiac_disease_assessment_.md)**
 

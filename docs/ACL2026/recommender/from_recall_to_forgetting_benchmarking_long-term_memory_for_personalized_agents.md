@@ -17,7 +17,7 @@ tags:
 
 # From Recall to Forgetting: Benchmarking Long-Term Memory for Personalized Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.20006](https://arxiv.org/abs/2604.20006)  
 **代码**: [GitHub](https://github.com/geniesinc/Memora)  
 **领域**: 长期记忆 / 个性化智能体  

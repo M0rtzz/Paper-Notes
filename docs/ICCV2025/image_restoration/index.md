@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 图像恢复论文汇总 · 30篇论文解读
+  ICCV2025 图像恢复论文汇总 · 31篇论文解读
 description: >-
-  30篇ICCV2025的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇ICCV2025的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "图像恢复"
@@ -11,6 +11,8 @@ tags:
   - "超分辨率"
   - "扩散模型"
 item_list:
+  - u: "afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons/"
+    t: "AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm"
   - u: "benchmarking_burst_super-resolution_for_polarization_images_noise_dataset_and_an/"
     t: "Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis"
   - u: "blind2sound_self-supervised_image_denoising_without_residual_noise/"
@@ -69,19 +71,21 @@ item_list:
     t: "Towards a Universal Image Degradation Model via Content-Degradation Disentanglement"
   - u: "uniphys_unified_planner_and_controller_with_diffusion_for_flexible_physics-based/"
     t: "UniPhys: Unified Planner and Controller with Diffusion for Flexible Physics-Based Character Control"
-  - u: "unires_universal_image_restoration_for_complex_degradations/"
-    t: "UniRes: Universal Image Restoration for Complex Degradations"
-item_total: 30
+item_total: 31
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**📹 ICCV2025** · **30** 篇论文解读
+**📹 ICCV2025** · **31** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [🧪 ICML2025 (5)](../../ICML2025/image_restoration/index.md)
 
 🔥 **高频主题：** 图像恢复 ×15 · 超分辨率 ×4 · 扩散模型 ×3
+
+**[AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm](afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons.md)**
+
+:   将多曝光HDR重建从MAP估计视角建模，通过空间对应先验将问题分解为对齐和融合两个交替子问题，再展开为端到端可训练的AFUNet（含SAM空间对齐+CFM通道融合+DCM数据一致性模块），在三个HDR基准上取得SOTA，PSNR-μ达44.91dB（Kalantari数据集）。
 
 **[Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](benchmarking_burst_super-resolution_for_polarization_images_noise_dataset_and_an.md)**
 

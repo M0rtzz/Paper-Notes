@@ -15,7 +15,7 @@ tags:
 
 # WikiSeeker: Rethinking the Role of Vision-Language Models in Knowledge-Based Visual Question Answering
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05818](https://arxiv.org/abs/2604.05818)  
 **代码**: [https://github.com/zhuyjan/WikiSeeker](https://github.com/zhuyjan/WikiSeeker)  
 **领域**: 多模态VLM  

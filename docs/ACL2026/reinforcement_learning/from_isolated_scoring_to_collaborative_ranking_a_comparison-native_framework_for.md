@@ -15,7 +15,7 @@ tags:
 
 # From Isolated Scoring to Collaborative Ranking: A Comparison-Native Framework for LLM-Based Paper Evaluation
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2603.17588](https://arxiv.org/abs/2603.17588)  
 **代码**: 论文称已开源，但当前 cache 未给出具体 GitHub URL  
 **领域**: LLM评估 / 自动化同行评审 / 排序学习  

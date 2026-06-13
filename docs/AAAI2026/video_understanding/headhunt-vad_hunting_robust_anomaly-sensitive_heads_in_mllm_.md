@@ -15,7 +15,7 @@ tags:
 
 # HeadHunt-VAD: Hunting Robust Anomaly-Sensitive Heads in MLLM for Tuning-Free Video Anomaly Detection
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2512.17601](https://arxiv.org/abs/2512.17601)  
 **代码**: 无  
 **领域**: 多模态VLM / 视频理解  

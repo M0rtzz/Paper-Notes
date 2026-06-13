@@ -15,7 +15,7 @@ tags:
 
 # Commonsense Knowledge with Negation: A Resource to Enhance Negation Understanding
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19921](https://arxiv.org/abs/2604.19921)  
 **代码**: [https://github.com/wang-zijie/commonsense_with_negation](https://github.com/wang-zijie/commonsense_with_negation)  
 **领域**: LLM Pretraining  

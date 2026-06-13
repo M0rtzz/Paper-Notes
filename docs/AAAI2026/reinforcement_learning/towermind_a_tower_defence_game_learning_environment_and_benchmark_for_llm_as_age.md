@@ -15,7 +15,7 @@ tags:
 
 # TowerMind: A Tower Defence Game Learning Environment and Benchmark for LLM as Agents
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2601.05899](https://arxiv.org/abs/2601.05899)  
 **代码**: [https://github.com/tb6147877/TowerMind](https://github.com/tb6147877/TowerMind)  
 **领域**: 强化学习  

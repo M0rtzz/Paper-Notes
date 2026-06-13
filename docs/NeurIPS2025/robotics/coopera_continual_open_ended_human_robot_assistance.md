@@ -15,7 +15,7 @@ tags:
 
 # COOPERA: Continual Open-Ended Human-Robot Assistance
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.23495](https://arxiv.org/abs/2510.23495)  
 **代码**: 无  
 **领域**: 机器人  

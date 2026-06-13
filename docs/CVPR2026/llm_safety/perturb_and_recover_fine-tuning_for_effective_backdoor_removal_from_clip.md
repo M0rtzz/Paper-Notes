@@ -15,7 +15,7 @@ tags:
 
 # Perturb and Recover: Fine-tuning for Effective Backdoor Removal from CLIP
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2412.00727](https://arxiv.org/abs/2412.00727)  
 **代码**: [https://github.com/](https://github.com/) (有，论文声明代码已公开)  
 **领域**: AI安全  

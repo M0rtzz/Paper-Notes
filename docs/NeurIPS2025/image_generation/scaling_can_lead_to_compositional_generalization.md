@@ -15,7 +15,7 @@ tags:
 
 # Scaling Can Lead to Compositional Generalization
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2507.07207](https://arxiv.org/abs/2507.07207)  
 **代码**: [GitHub](https://github.com/smonsays/scale-compositionality)  
 **领域**: 理论机器学习 / 组合泛化  

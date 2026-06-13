@@ -14,7 +14,7 @@ tags:
 
 # Discount Model Search for Quality Diversity Optimization in High-Dimensional Measure Spaces
 
-**会议**: ICLR2026  
+**会议**: ICLR2026 Oral  
 **arXiv**: [2601.01082](https://arxiv.org/abs/2601.01082)  
 **代码**: [discount-models.github.io](https://discount-models.github.io)  
 **领域**: LLM评测  

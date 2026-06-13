@@ -16,7 +16,7 @@ tags:
 
 # NaiLIA: Multimodal Nail Design Retrieval Based on Dense Intent Descriptions and Palette Queries
 
-**会议**: CVPR2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.05446](https://arxiv.org/abs/2603.05446)  
 **代码**: [项目主页](https://nailia-94dpr.kinsta.page/)  
 **领域**: others (多模态检索 / 时尚AI)  

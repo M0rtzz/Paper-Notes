@@ -15,7 +15,7 @@ tags:
 
 # ToxiTrace: Gradient-Aligned Training for Explainable Chinese Toxicity Detection
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.12321](https://arxiv.org/abs/2604.12321)  
 **代码**: [https://huggingface.co/ArdLi/ToxiTrace](https://huggingface.co/ArdLi/ToxiTrace)  
 **领域**: 社会计算  

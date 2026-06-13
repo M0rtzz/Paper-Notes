@@ -15,7 +15,7 @@ tags:
 
 # Decentralized Attention Fails Centralized Signals: Rethinking Transformers for Medical Time Series
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2602.18473](https://arxiv.org/abs/2602.18473)  
 **代码**: [https://github.com/Levi-Ackman/TeCh](https://github.com/Levi-Ackman/TeCh)  
 **领域**: 时间序列  

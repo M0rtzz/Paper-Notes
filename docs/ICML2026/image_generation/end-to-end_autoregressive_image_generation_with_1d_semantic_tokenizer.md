@@ -15,7 +15,7 @@ tags:
 
 # End-to-End Autoregressive Image Generation with 1D Semantic Tokenizer
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.00503](https://arxiv.org/abs/2605.00503)  
 **代码**: 无  
 **领域**: 图像生成 / 自回归视觉 Tokenizer / 表示对齐  

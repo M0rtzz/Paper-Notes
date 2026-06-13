@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Learning to Extract Rational Evidence via Reinforcement Learning for Retrieval-Augmented Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2507.15586](https://arxiv.org/abs/2507.15586)  
 **代码**: [GitHub](https://github.com/HITsz-TMG/EviOmni)  
 **领域**: 图像复原  

@@ -15,7 +15,7 @@ tags:
 
 # Spotlight and Shadow: Attention-Guided Dual-Anchor Introspective Decoding for MLLM Hallucination Mitigation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.10071](https://arxiv.org/abs/2604.10071)  
 **代码**: 无  
 **领域**: 幻觉检测  

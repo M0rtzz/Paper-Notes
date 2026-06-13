@@ -15,7 +15,7 @@ tags:
 
 # Approximate Domain Unlearning for Vision-Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.08132](https://arxiv.org/abs/2510.08132)  
 **代码**: [https://kodaikawamura.github.io/Domain_Unlearning/](https://kodaikawamura.github.io/Domain_Unlearning/)  
 **领域**: 多模态VLM / 机器遗忘  

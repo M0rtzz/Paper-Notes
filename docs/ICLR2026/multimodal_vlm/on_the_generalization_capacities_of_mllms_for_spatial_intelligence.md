@@ -15,7 +15,7 @@ tags:
 
 # On the Generalization Capacities of MLLMs for Spatial Intelligence
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2603.06704](https://arxiv.org/abs/2603.06704)  
 **代码**: [github.com/Vegetebird/CA-MLLM](https://github.com/Vegetebird/CA-MLLM)  
 **领域**: 3D空间理解 / MLLM  

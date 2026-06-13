@@ -15,7 +15,7 @@ tags:
 
 # Bridging the Copyright Gap: Do Large Vision-Language Models Recognize and Respect Copyrighted Content?
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2512.21871](https://arxiv.org/abs/2512.21871)  
 **代码**: [https://github.com/bluedream02/CopyGuard](https://github.com/bluedream02/CopyGuard)  
 **领域**: 多模态VLM / AI安全 / 版权合规  

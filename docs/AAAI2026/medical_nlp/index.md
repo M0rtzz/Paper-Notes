@@ -1,14 +1,15 @@
 ---
 title: >-
-  AAAI2026 医疗NLP论文汇总 · 11篇论文解读
+  AAAI2026 医疗NLP论文汇总 · 12篇论文解读
 description: >-
-  11篇AAAI2026的医疗 NLP 方向论文解读，涵盖医学影像、RAG、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  12篇AAAI2026的医疗 NLP 方向论文解读，涵盖医学影像、LLM、RAG、生物分子等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "医疗 NLP"
   - "论文解读"
   - "论文笔记"
   - "医学影像"
+  - "LLM"
   - "RAG"
   - "生物分子"
 item_list:
@@ -16,6 +17,8 @@ item_list:
     t: "A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment"
   - u: "bica_effective_biomedical_dense_retrieval_with_citation-aware_hard_negatives/"
     t: "BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives"
+  - u: "clicare_grounding_large_language_models_in_clinical_guidelines_for_decision_supp/"
+    t: "CliCARE: Grounding Large Language Models in Clinical Guidelines for Decision Support over Longitudinal Cancer Electronic Health Records"
   - u: "expert-guided_prompting_and_retrieval-augmented_generation_for_emergency_medical/"
     t: "Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering"
   - u: "gem_generative_entropy-guided_preference_modeling_for_few-shot_alignment_of_llms/"
@@ -34,17 +37,17 @@ item_list:
     t: "ShortageSim: Simulating Drug Shortages under Information Asymmetry"
   - u: "voices_faces_and_feelings_multi-modal_emotion-cognition_captioning_for_mental_he/"
     t: "Voices, Faces, and Feelings: Multi-modal Emotion-Cognition Captioning for Mental Health Understanding"
-item_total: 11
+item_total: 12
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🩺 医疗 NLP
 
-**🤖 AAAI2026** · **11** 篇论文解读
+**🤖 AAAI2026** · **12** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (15)](../../NeurIPS2025/medical_nlp/index.md) · [🧪 ICML2025 (4)](../../ICML2025/medical_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🧠 NeurIPS2025 (17)](../../NeurIPS2025/medical_nlp/index.md) · [🧪 ICML2025 (4)](../../ICML2025/medical_nlp/index.md)
 
-🔥 **高频主题：** 医学影像 ×3 · RAG ×2 · 生物分子 ×2
+🔥 **高频主题：** 医学影像 ×4 · LLM ×2 · RAG ×2 · 生物分子 ×2
 
 **[A Principle-Driven Adaptive Policy for Group Cognitive Stimulation Dialogue for Elderly with Cognitive Impairment](a_principle-driven_adaptive_policy_for_group_cognitive_stimu.md)**
 
@@ -53,6 +56,10 @@ item_total: 11
 **[BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives](bica_effective_biomedical_dense_retrieval_with_citation-aware_hard_negatives.md)**
 
 :   提出利用 PubMed 引文链构建多跳语义图并进行随机游走的 hard negative 挖掘方法，仅用 20k 训练样本和极少微调步数，即让 33M/110M 小模型在 BEIR 和 LoTTE 上超越数十亿参数的检索基线。
+
+**[CliCARE: Grounding Large Language Models in Clinical Guidelines for Decision Support over Longitudinal Cancer Electronic Health Records](clicare_grounding_large_language_models_in_clinical_guidelines_for_decision_supp.md)**
+
+:   提出 CliCARE 框架，将非结构化的纵向癌症电子病历（EHR）转化为时序知识图谱（TKG），并与临床指南知识图谱对齐融合，为 LLM 提供循证依据的临床决策支持，同时设计了与专家评估高度相关的 LLM-as-a-Judge 评估协议。
 
 **[Expert-Guided Prompting and Retrieval-Augmented Generation for Emergency Medical Service Question Answering](expert-guided_prompting_and_retrieval-augmented_generation_for_emergency_medical.md)**
 

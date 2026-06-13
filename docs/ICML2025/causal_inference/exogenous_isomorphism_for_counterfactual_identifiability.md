@@ -15,7 +15,7 @@ tags:
 
 # Exogenous Isomorphism for Counterfactual Identifiability
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2505.02212](https://arxiv.org/abs/2505.02212)  
 **代码**: [cyisk/tmscm](https://github.com/cyisk/tmscm)  
 **领域**: 因果推断 (Causal Inference)  

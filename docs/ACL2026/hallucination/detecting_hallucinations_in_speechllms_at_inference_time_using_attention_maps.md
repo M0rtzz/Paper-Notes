@@ -14,7 +14,7 @@ tags:
 
 # Detecting Hallucinations in SpeechLLMs at Inference Time Using Attention Maps
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19565](https://arxiv.org/abs/2604.19565)  
 **代码**: 无  
 **领域**: 幻觉检测  

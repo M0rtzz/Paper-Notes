@@ -15,7 +15,7 @@ tags:
 
 # Efficient PRM Training Data Synthesis via Formal Verification
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2505.15960](https://arxiv.org/abs/2505.15960)  
 **代码**: [GitHub](https://github.com/psunlpgroup/FoVer)  
 **领域**: LLM推理  

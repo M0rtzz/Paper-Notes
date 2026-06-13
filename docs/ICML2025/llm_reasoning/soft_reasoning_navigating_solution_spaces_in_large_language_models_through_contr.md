@@ -15,7 +15,7 @@ tags:
 
 # Soft Reasoning: Navigating Solution Spaces in Large Language Models through Controlled Embedding Exploration
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2505.24688](https://arxiv.org/abs/2505.24688)  
 **代码**: [alickzhu/Soft-Reasoning](https://github.com/alickzhu/Soft-Reasoning)  
 **领域**: LLM推理  

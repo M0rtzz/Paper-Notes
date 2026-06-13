@@ -15,7 +15,7 @@ tags:
 
 # HDFlow: Hierarchical Diffusion-Flow Planning for Long-horizon Tasks
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.04525](https://arxiv.org/abs/2605.04525)  
 **代码**: https://hdflow-page.github.io/ (项目页)  
 **领域**: 机器人 / 长程规划 / 生成式规划  

@@ -13,7 +13,7 @@ tags:
 
 # MindVote: When AI Meets the Wild West of Social Media Opinion
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2505.14422](https://arxiv.org/abs/2505.14422)  
 **代码**: 有  
 **领域**: LLM评测  

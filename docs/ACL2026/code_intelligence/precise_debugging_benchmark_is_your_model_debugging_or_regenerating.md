@@ -15,7 +15,7 @@ tags:
 
 # Precise Debugging Benchmark: Is Your Model Debugging or Regenerating?
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17338](https://arxiv.org/abs/2604.17338)  
 **代码**: [GitHub](https://github.com)  
 **领域**: 代码智能 / 调试评估  

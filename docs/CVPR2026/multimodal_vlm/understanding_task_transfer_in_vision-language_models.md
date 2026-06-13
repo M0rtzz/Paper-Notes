@@ -15,7 +15,7 @@ tags:
 
 # Understanding Task Transfer in Vision-Language Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Oral  
 **arXiv**: [2511.18787](https://arxiv.org/abs/2511.18787)  
 **代码**: [https://aka.ms/task-transfer-vlms](https://aka.ms/task-transfer-vlms) (项目页)  
 **领域**: 多模态VLM  

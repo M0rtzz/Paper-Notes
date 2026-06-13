@@ -15,7 +15,7 @@ tags:
 
 # URaG: Unified Retrieval and Generation in Multimodal LLMs for Efficient Long Document Understanding
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.10552](https://arxiv.org/abs/2511.10552)  
 **代码**: [https://github.com/shi-yx/URaG](https://github.com/shi-yx/URaG)  
 **领域**: 多模态大模型 / 文档理解  

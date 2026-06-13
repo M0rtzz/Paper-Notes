@@ -211,7 +211,7 @@ item_total: 40
 
 **[Splintering Nonconcatenative Languages for Better Tokenization](splintering_nonconcatenative_languages_for_better_tokenization.md)**
 
-:   提出 Splinter，一种预分词步骤，通过迭代剪除模板字符将非拼接性语言（希伯来语、阿拉伯语、马来语）的词重排为线性形式，使标准 BPE/UnigramLM 能发现形态学上有意义的连续片段，在内在指标和希伯来语下游任务上均优于原始分词。
+:   本文提出 **Splinter**——一个加在 BPE/UnigramLM 之前的「预分词」步骤，通过迭代删字把希伯来语、阿拉伯语、马来语这类"词根藏在模板里"的词重排成线性可切的序列，让普通分词器也能把词根切成连续的 token，从而在内在指标与希伯来语下游任务上都拿到提升。
 
 **[Stealing Training Data from Large Language Models in Decentralized Training through Activation Inversion Attack](stealing_training_data_from_large_language_models_in_decentralized_training_thro.md)**
 

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2026 LLM评测论文汇总 · 24篇论文解读
+  ICML2026 LLM评测论文汇总 · 25篇论文解读
 description: >-
-  24篇ICML2026的 LLM 评测方向论文解读，涵盖 LLM、强化学习、Agent、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  25篇ICML2026的 LLM 评测方向论文解读，涵盖 LLM、强化学习、Agent、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
   - "LLM 评测"
@@ -39,6 +39,8 @@ item_list:
     t: "HiPER: Hierarchical Reinforcement Learning with Explicit Credit Assignment for Large Language Model Agents"
   - u: "investigating_advanced_reasoning_of_large_language_models_via_black-box_environm/"
     t: "Investigating Advanced Reasoning of Large Language Models via Black-Box Environment Interaction"
+  - u: "margin-adaptive_confidence_ranking_for_reliable_llm_judgement/"
+    t: "Margin-Adaptive Confidence Ranking for Reliable LLM Judgement"
   - u: "multi2_hierarchical_multi-agent_decision-making_with_llm-based_agents_in_interac/"
     t: "Multi$^2$: Hierarchical Multi-Agent Decision-Making with LLM-Based Agents in Interactive Environments"
   - u: "on_effectiveness_and_efficiency_of_agentic_tool-calling_and_rl_training/"
@@ -61,17 +63,17 @@ item_list:
     t: "Who can we trust? LLM-as-a-jury for Comparative Assessment"
   - u: "whose_alignment_comparing_llm_process_alignment_across_diverse_organizational_de/"
     t: "Whose Alignment? Comparing LLM Process Alignment Across Diverse Organizational Decision Contexts"
-item_total: 24
+item_total: 25
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📊 LLM 评测
 
-**🧪 ICML2026** · **24** 篇论文解读
+**🧪 ICML2026** · **25** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (91)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (38)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (92)](../../ACL2026/llm_evaluation/index.md) · [🔬 ICLR2026 (29)](../../ICLR2026/llm_evaluation/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/llm_evaluation/index.md) · [🧠 NeurIPS2025 (38)](../../NeurIPS2025/llm_evaluation/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/llm_evaluation/index.md) · [🧪 ICML2025 (22)](../../ICML2025/llm_evaluation/index.md)
 
-🔥 **高频主题：** LLM ×13 · 强化学习 ×3 · Agent ×2 · 推理 ×2
+🔥 **高频主题：** LLM ×14 · 强化学习 ×3 · Agent ×2 · 推理 ×2
 
 **[Agent World Model: Infinity Synthetic Environments for Agentic Reinforcement Learning](agent_world_model_infinity_synthetic_environments_for_agentic_reinforcement_lear.md)**
 
@@ -124,6 +126,10 @@ item_total: 24
 **[Investigating Advanced Reasoning of Large Language Models via Black-Box Environment Interaction](investigating_advanced_reasoning_of_large_language_models_via_black-box_environm.md)**
 
 :   本文提出「黑盒环境交互」作为评估 LLM 集成式推理（演绎+归纳+溯因）的新范式，构建含 6 类任务 96 个环境的 ORACLE 基准，benchmark 19 个 LLM 后发现：即便最强的 o3 也只能在简单环境拿 70% 准确率、难环境跌到 40%，且所有 LLM 都缺乏「根据反馈自适应优化探索策略」的高层规划能力。
+
+**[Margin-Adaptive Confidence Ranking for Reliable LLM Judgement](margin-adaptive_confidence_ranking_for_reliable_llm_judgement.md)**
+
+:   本文针对 LLM-as-a-judge 中"置信度高就一定靠谱"这一常被违反的单调性假设，提出用一个小 MLP 把多组 in-context 预测概率映射成置信度，并通过 margin-based ranking loss + PAC-Bayes 泛化界推导出一个 margin 自适应训练策略，使学到的置信度在四个数据集与六个 judge 模型上都获得更低的 ranking loss、更高的 AUROC，并显著提升 fixed-sequence 测试的目标一致性达成率。
 
 **[Multi$^2$: Hierarchical Multi-Agent Decision-Making with LLM-Based Agents in Interactive Environments](multi2_hierarchical_multi-agent_decision-making_with_llm-based_agents_in_interac.md)**
 

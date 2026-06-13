@@ -15,7 +15,7 @@ tags:
 
 # CAST: Achieving Stable LLM-based Text Analysis for Data Analytics
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2602.15861](https://arxiv.org/abs/2602.15861)  
 **代码**: [https://github.com/jxtse/CAST-text-analysis](https://github.com/jxtse/CAST-text-analysis)  
 **领域**: LLM评测  

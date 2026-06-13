@@ -15,7 +15,7 @@ tags:
 
 # Flattening Hierarchies with Policy Bootstrapping
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.14975](https://arxiv.org/abs/2505.14975)  
 **代码**: [https://johnlyzhou.github.io/saw/](https://johnlyzhou.github.io/saw/)  
 **领域**: 图像生成  

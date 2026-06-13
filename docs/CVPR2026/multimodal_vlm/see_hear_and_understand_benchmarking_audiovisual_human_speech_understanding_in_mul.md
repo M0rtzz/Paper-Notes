@@ -15,7 +15,7 @@ tags:
 
 # See, Hear, and Understand: Benchmarking Audiovisual Human Speech Understanding in Multimodal Large Language Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2512.02231](https://arxiv.org/abs/2512.02231)  
 **代码**: [https://plnguyen2908.github.io/AV-SpeakerBench-project-page/](https://plnguyen2908.github.io/AV-SpeakerBench-project-page/)  
 **领域**: 多模态VLM / 音视频理解  

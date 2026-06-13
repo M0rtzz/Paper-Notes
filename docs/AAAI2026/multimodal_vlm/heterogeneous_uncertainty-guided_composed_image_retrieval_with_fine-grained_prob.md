@@ -15,7 +15,7 @@ tags:
 
 # Heterogeneous Uncertainty-Guided Composed Image Retrieval with Fine-Grained Probabilistic Learning
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2601.11393](https://arxiv.org/abs/2601.11393)  
 **代码**: [https://github.com/tanghme0w/AAAI26-HUG](https://github.com/tanghme0w/AAAI26-HUG)  
 **领域**: 多模态VLM  

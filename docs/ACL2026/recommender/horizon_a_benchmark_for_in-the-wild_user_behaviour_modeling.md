@@ -15,7 +15,7 @@ tags:
 
 # HORIZON: A Benchmark for in-the-wild User Behaviour Modeling
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17259](https://arxiv.org/abs/2604.17259)  
 **代码**: [https://github.com/microsoft/horizon-benchmark](https://github.com/microsoft/horizon-benchmark)  
 **领域**: 推荐系统 / 用户行为建模  

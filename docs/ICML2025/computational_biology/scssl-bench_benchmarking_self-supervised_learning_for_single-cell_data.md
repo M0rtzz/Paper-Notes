@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # scSSL-Bench: Benchmarking Self-Supervised Learning for Single-Cell Data
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2506.10031](https://arxiv.org/abs/2506.10031)  
 **代码**: [BoevaLab/scSSL-Bench](https://github.com/BoevaLab/scSSL-Bench)  
 **领域**: 计算生物

@@ -56,7 +56,7 @@ item_total: 9
 
 **[Octopus: Alleviating Hallucination via Dynamic Contrastive Decoding](octopus_alleviating_hallucination_via_dynamic_contrastive_decoding.md)**
 
-:   本文揭示了多模态大模型幻觉的混合特性——不同样本甚至同一回答中的不同 token 面临不同类型的幻觉挑战（语言先验、视觉信息丢失、注意力偏差），据此提出 Octopus 框架，通过可学习的"眼睛"模块自适应识别幻觉类型，动态选择最适合的对比解码策略（"触手"），在四个基准上实现了 SOTA。
+:   本文通过大量实验揭示了 LVLM 幻觉成因的混合性——不同样本和不同生成步骤面临不同类型的幻觉挑战，据此提出 Octopus 框架，利用可学习的 decision token 和 transformer block 在每个生成步自适应选择最合适的对比解码（CD）策略，通过 DPO 优化，在四个基准上全面超越现有 CD 方法。
 
 **[ODE: Open-Set Evaluation of Hallucinations in Multimodal Large Language Models](ode_open-set_evaluation_of_hallucinations_in_multimodal_large_language_models.md)**
 

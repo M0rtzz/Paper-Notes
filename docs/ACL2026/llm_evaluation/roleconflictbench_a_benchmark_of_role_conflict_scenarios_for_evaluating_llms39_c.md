@@ -15,7 +15,7 @@ tags:
 
 # RoleConflictBench: A Benchmark of Role Conflict Scenarios for Evaluating LLMs' Contextual Sensitivity
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2509.25897](https://arxiv.org/abs/2509.25897)  
 **代码**: [https://github.com/ddindidu/RoleConflictBench](https://github.com/ddindidu/RoleConflictBench)  
 **领域**: LLM评测  

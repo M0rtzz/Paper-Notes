@@ -15,7 +15,7 @@ tags:
 
 # Personalized Benchmarking: Evaluating LLMs by Individual Preferences
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18943](https://arxiv.org/abs/2604.18943)  
 **代码**: 无  
 **领域**: LLM评估 / 个性化推荐  

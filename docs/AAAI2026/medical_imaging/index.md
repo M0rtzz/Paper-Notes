@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 医学图像论文汇总 · 73篇论文解读
+  AAAI2026 医学图像论文汇总 · 75篇论文解读
 description: >-
-  73篇AAAI2026的医学图像方向论文解读，涵盖医学影像、语义分割、多模态、对齐/RLHF、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  75篇AAAI2026的医学图像方向论文解读，涵盖医学影像、语义分割、对齐/RLHF、多模态、对抗鲁棒、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "医学图像"
@@ -10,8 +10,8 @@ tags:
   - "论文笔记"
   - "医学影像"
   - "语义分割"
-  - "多模态"
   - "对齐/RLHF"
+  - "多模态"
   - "对抗鲁棒"
   - "LLM"
 item_list:
@@ -27,6 +27,8 @@ item_list:
     t: "Bidirectional Channel-selective Semantic Interaction for Semi-Supervised Medical Segmentation"
   - u: "bridging_vision_and_language_for_robust_context-aware_surgical_point_tracking_th/"
     t: "Bridging Vision and Language for Robust Context-Aware Surgical Point Tracking: The VL-SurgPT Dataset and Benchmark"
+  - u: "cat-net_a_cross-attention_tone_network_for_cross-subject_eeg-emg_fusion_tone_dec/"
+    t: "CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding"
   - u: "cd-dpe_dual-prompt_expert_network_based_on_convolutional_dictionary_feature_deco/"
     t: "CD-DPE: Dual-Prompt Expert Network Based on Convolutional Dictionary Feature Decoupling for Multi-Contrast MRI Super-Resolution"
   - u: "coarse-to-fine_open-set_graph_node_classification_with_large_language_models/"
@@ -73,19 +75,17 @@ item_list:
     t: "Graph-Theoretic Consistency for Robust and Topology-Aware Semi-Supervised Histopathology Segmentation"
   - u: "grover_graph-guided_representation_of_omics_and_vision_with_expert_regulation_fo/"
     t: "GROVER: Graph-guided Representation of Omics and Vision with Expert Regulation for Cancer Survival Prediction"
-  - u: "guidegen_a_text-guided_framework_for_paired_full-torso_anatomy_and_ct_volume_gen/"
-    t: "GuideGen: A Text-Guided Framework for Paired Full-Torso Anatomy and CT Volume Generation"
-item_total: 73
+item_total: 75
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🤖 AAAI2026** · **73** 篇论文解读
+**🤖 AAAI2026** · **75** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (75)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (22)](../../ICML2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (22)](../../ICLR2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (77)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (21)](../../ICML2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×35 · 语义分割 ×11 · 多模态 ×6 · 对齐/RLHF ×6 · 对抗鲁棒 ×4
+🔥 **高频主题：** 医学影像 ×35 · 语义分割 ×11 · 对齐/RLHF ×7 · 多模态 ×6 · 对抗鲁棒 ×4
 
 **[A Disease-Aware Dual-Stage Framework for Chest X-ray Report Generation](a_disease-aware_dual-stage_framework_for_chest_x-ray_report_.md)**
 
@@ -110,6 +110,10 @@ item_total: 73
 **[Bridging Vision and Language for Robust Context-Aware Surgical Point Tracking: The VL-SurgPT Dataset and Benchmark](bridging_vision_and_language_for_robust_context-aware_surgical_point_tracking_th.md)**
 
 :   提出首个大规模多模态手术点追踪数据集 VL-SurgPT，结合视觉坐标与文本状态描述，并设计文本引导追踪方法 TG-SurgPT，通过语义信息显著提升复杂手术场景下的追踪精度和鲁棒性。
+
+**[CAT-Net: A Cross-Attention Tone Network for Cross-Subject EEG-EMG Fusion Tone Decoding](cat-net_a_cross-attention_tone_network_for_cross-subject_eeg-emg_fusion_tone_dec.md)**
+
+:   提出 CAT-Net（Cross-Attention Tone Network），通过空间-时间特征提取分支 + 交叉注意力融合机制 + 域对抗训练，仅用 20 个 EEG 通道和 5 个 EMG 通道实现中文四声调分类，在有声/无声语音条件下分别达到 87.83%/88.08% 准确率，跨被试评估下达到 83.27%/85.10%，全面超越 8 种基线方法。
 
 **[CD-DPE: Dual-Prompt Expert Network Based on Convolutional Dictionary Feature Decoupling for Multi-Contrast MRI Super-Resolution](cd-dpe_dual-prompt_expert_network_based_on_convolutional_dictionary_feature_deco.md)**
 
@@ -334,6 +338,10 @@ item_total: 73
 **[SEMC: Structure-Enhanced Mixture-of-Experts Contrastive Learning for Ultrasound Standard Plane Recognition](semc_structure-enhanced_mixture-of-experts_contrastive_learning_for_ultrasound_s.md)**
 
 :   提出 SEMC 框架，通过**语义-结构融合模块（SSFM）**对齐浅层结构线索与深层语义表征，结合**混合专家对比识别模块（MCRM）**在多层特征上进行分层对比学习，提升超声标准切面识别的细粒度判别能力，并构建了新的肝脏超声数据集 LP2025。
+
+**[Shrinking the Teacher: An Adaptive Teaching Paradigm for Asymmetric EEG-Vision Alignment](shrinking_the_teacher_an_adaptive_teaching_paradigm_for_asymmetric_eeg-vision_al.md)**
+
+:   提出自适应教学范式（Adaptive Teaching Paradigm），通过无残差连接的瓶颈结构 ShrinkAdapter 让视觉"教师"主动收缩和调整其知识结构以适配 EEG"学生"的学习能力，在零样本脑-图像检索任务上 Top-1 准确率达到 60.2%，超越前 SOTA 9.8 个百分点。
 
 **[Sim4Seg: Boosting Multimodal Multi-disease Medical Diagnosis Segmentation with Region-Aware Vision-Language Similarity Masks](sim4seg_boosting_multimodal_multi-disease_medical_diagnosis_segmentation_with_re.md)**
 

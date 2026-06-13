@@ -15,7 +15,7 @@ tags:
 
 # Task-free Adaptive Meta Black-box Optimization
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2601.21475](https://arxiv.org/abs/2601.21475)  
 **代码**: 无  
 **领域**: 遥感  

@@ -1,11 +1,11 @@
 ---
 title: >-
-  ECCV2024 LLM/NLP论文汇总 · 11篇论文解读
+  ECCV2024 LLM其他论文汇总 · 11篇论文解读
 description: >-
-  11篇ECCV2024的 LLM / NLP 方向论文解读，涵盖少样本学习、异常检测、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  11篇ECCV2024的 LLM 其他方向论文解读，涵盖少样本学习、异常检测、Agent等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "论文解读"
   - "论文笔记"
   - "少样本学习"
@@ -38,11 +38,11 @@ item_total: 11
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 💬 LLM / NLP
+# 💬 LLM 其他
 
 **🎞️ ECCV2024** · **11** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (33)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (56)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md)
 
 🔥 **高频主题：** 少样本学习 ×2
 

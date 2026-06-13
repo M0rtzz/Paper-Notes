@@ -15,7 +15,7 @@ tags:
 
 # The World Is Bigger! A Computationally-Embedded Perspective on the Big World Hypothesis
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2512.23419](https://arxiv.org/abs/2512.23419)  
 **代码**: [GitHub](https://github.com/AlexLewandowski/bigger-world-interactivity)  
 **领域**: 强化学习  

@@ -14,7 +14,7 @@ tags:
 
 # Simple Algorithms for Bad Triangle Transversals with Applications to Correlation Clustering
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.04463](https://arxiv.org/abs/2602.04463)  
 **代码**: 无  
 **领域**: 算法理论 / 近似算法 / 图聚类  

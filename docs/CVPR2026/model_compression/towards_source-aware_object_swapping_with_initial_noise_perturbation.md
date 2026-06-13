@@ -15,7 +15,7 @@ tags:
 
 # Towards Source-Aware Object Swapping with Initial Noise Perturbation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2602.23697](https://arxiv.org/abs/2602.23697)  
 **代码**: 无  
 **领域**: 模型压缩  

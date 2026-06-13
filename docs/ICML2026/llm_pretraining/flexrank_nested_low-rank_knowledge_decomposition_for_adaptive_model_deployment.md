@@ -15,7 +15,7 @@ tags:
 
 # FlexRank: Nested Low-Rank Knowledge Decomposition for Adaptive Model Deployment
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.02680](https://arxiv.org/abs/2602.02680)  
 **代码**: https://github.com/RickZack/FlexRank  
 **领域**: 模型压缩 / 弹性推理 / 低秩分解  

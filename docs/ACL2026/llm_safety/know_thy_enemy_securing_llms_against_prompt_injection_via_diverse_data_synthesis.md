@@ -15,7 +15,7 @@ tags:
 
 # Know Thy Enemy: Securing LLMs Against Prompt Injection via Diverse Data Synthesis and Instruction-Level Chain-of-Thought Learning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.04666](https://arxiv.org/abs/2601.04666)  
 **代码**: [GitHub](https://anonymous.4open.science/r/InstruCoT-LLM-045F)  
 **领域**: LLM推理  

@@ -628,7 +628,7 @@ item_total: 143
 
 **[VESSA: Video-based objEct-centric Self-Supervised Adaptation for Visual Foundation Models](vessa_video-based_object-centric_self-supervised_adaptation_for_visual_foundatio.md)**
 
-:   提出 VESSA，一种利用短物体中心视频进行无监督微调的方法，通过自蒸馏框架配合 LoRA 和不确定性加权损失，在不需要标注数据的情况下将视觉基础模型适配到目标域，在 33 个 VFM × 22 个数据集上持续提升下游分类性能。
+:   VESSA提出了一种利用短视频进行视觉基础模型无监督自适应的方法，通过自蒸馏框架结合LoRA参数高效微调和不确定性加权损失，在不需要任何标注数据的情况下显著提升基础模型在目标域的分类性能。
 
 **[Vision-centric Token Compression in Large Language Model](vision-centric_token_compression_in_large_language_model.md)**
 

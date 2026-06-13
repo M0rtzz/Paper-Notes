@@ -15,7 +15,7 @@ tags:
 
 # Better and Worse with Scale: How Contextual Entrainment Diverges with Model Size
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.13275](https://arxiv.org/abs/2604.13275)  
 **代码**: 无  
 **领域**: 因果推理  

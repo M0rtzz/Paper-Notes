@@ -15,7 +15,7 @@ tags:
 
 # Hierarchical Policy Optimization for Simultaneous Translation of Unbounded Speech
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2604.21045](https://arxiv.org/abs/2604.21045)  
 **代码**: [https://github.com/owaski/HPO](https://github.com/owaski/HPO)  
 **领域**: 图像分割  

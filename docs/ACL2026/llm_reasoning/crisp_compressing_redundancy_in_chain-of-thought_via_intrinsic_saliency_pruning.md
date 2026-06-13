@@ -15,7 +15,7 @@ tags:
 
 # CRISP: Compressing Redundancy in Chain-of-Thought via Intrinsic Saliency Pruning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17297](https://arxiv.org/abs/2604.17297)  
 **代码**: [GitHub](https://github.com/)  
 **领域**: LLM推理效率  

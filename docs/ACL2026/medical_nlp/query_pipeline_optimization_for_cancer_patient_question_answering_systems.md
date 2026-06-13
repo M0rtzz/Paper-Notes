@@ -15,7 +15,7 @@ tags:
 
 # Query Pipeline Optimization for Cancer Patient Question Answering Systems
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2412.14751](https://arxiv.org/abs/2412.14751)  
 **代码**: 无  
 **领域**: 医疗NLP

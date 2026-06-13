@@ -15,7 +15,7 @@ tags:
 
 # LIMSSR: LLM-Driven Sequence-to-Score Reasoning under Training-Time Incomplete Multimodal Observations
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.00434](https://arxiv.org/abs/2605.00434)  
 **代码**: https://github.com/XuHuangbiao/LIMSSR  
 **领域**: 多模态 VLM / 不完整多模态学习 / 动作质量评估  

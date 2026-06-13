@@ -15,7 +15,7 @@ tags:
 
 # Bridging Vision and Language for Robust Context-Aware Surgical Point Tracking: The VL-SurgPT Dataset and Benchmark
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.12026](https://arxiv.org/abs/2511.12026)  
 **代码**: [有](https://szupc.github.io/VL-SurgPT/)  
 **领域**: 医学图像  

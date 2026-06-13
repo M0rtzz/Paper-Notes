@@ -15,7 +15,7 @@ tags:
 
 # Angular Steering: Behavior Control via Rotation in Activation Space
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.26243](https://arxiv.org/abs/2510.26243)  
 **代码**: [https://github.com/lone17/angular-steering/](https://github.com/lone17/angular-steering/)  
 **领域**: 信号通信  

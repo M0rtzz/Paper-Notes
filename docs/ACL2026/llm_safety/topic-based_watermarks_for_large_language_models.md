@@ -15,7 +15,7 @@ tags:
 
 # Topic-Based Watermarks for Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2404.02138](https://arxiv.org/abs/2404.02138)  
 **代码**: [GitHub](https://github.com/ANCP2021/Topic-Based-Watermarks)  
 **领域**: AI安全 / 文本水印  

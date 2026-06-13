@@ -15,7 +15,7 @@ tags:
 
 # K-MetBench: A Multi-Dimensional Benchmark for Fine-Grained Evaluation of Expert Reasoning, Locality, and Multimodality in Meteorology
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.24645](https://arxiv.org/abs/2604.24645)  
 **代码**: https://github.com/kmetbench/kmetbench-release  
 **领域**: 气象 LLM 评测 / 多模态 benchmark / 文化本地化  

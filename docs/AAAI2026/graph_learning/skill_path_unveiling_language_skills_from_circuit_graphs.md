@@ -15,7 +15,7 @@ tags:
 
 # Skill Path: Unveiling Language Skills from Circuit Graphs
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2410.01334](https://arxiv.org/abs/2410.01334)  
 **代码**: [GitHub](https://github.com/Zodiark-ch/Language-Skill-of-LLMs)  
 **领域**: 因果推理  

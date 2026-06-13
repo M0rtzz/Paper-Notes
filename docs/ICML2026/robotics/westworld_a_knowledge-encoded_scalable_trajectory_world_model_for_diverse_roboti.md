@@ -15,7 +15,7 @@ tags:
 
 # WestWorld: 知识编码的可扩展轨迹世界模型
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2603.14392](https://arxiv.org/abs/2603.14392)  
 **代码**: https://github.com/511205787/WestWorld  
 **领域**: 机器人学 / 具身智能 / 世界模型  

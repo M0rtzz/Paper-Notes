@@ -119,7 +119,7 @@ item_total: 36
 
 **[EvoRefuse: Evolutionary Prompt Optimization for Evaluation and Mitigation of LLM Over-Refusal to Pseudo-Malicious Instructions](evorefuse_evolutionary_prompt_optimization_for_evaluation_and_mitigation_of_llm_.md)**
 
-:   提出 EvoRefuse——用进化搜索（变异/重组 + ELBO 适应度函数 + 模拟退火）自动生成语义无害但能可靠触发 LLM 拒绝的"伪恶意"指令，构建的 EvoRefuse-Test 基准比最强基线拒绝触发率高 85.34%、词汇多样性高 34.86%，EvoRefuse-Align 对齐数据通过 SFT/DPO 微调将过度拒绝降低 29.85%-45.96% 且不损害安全性。
+:   本文提出 EvoRefuse——一个以 LLM 拒绝概率的证据下界(ELBO)为适应度的进化式提示优化算法，自动生成"看着像坏话、其实无害"的伪恶意指令；用它造出评测集 EvoRefuse-Test(582 条，平均拒绝触发率比最强基线高 85.34%)和对齐集 EvoRefuse-Align(3000 条)，后者微调 LLaMA3.1-8B 后过度拒绝最多降 45.96% 且不牺牲安全。
 
 **[From Judgment to Interference: Early Stopping LLM Harmful Outputs via Streaming Content Monitoring](from_judgment_to_interference_early_stopping_llm_harmful_outputs_via_streaming_c.md)**
 

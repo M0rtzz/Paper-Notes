@@ -14,7 +14,7 @@ tags:
 
 # RoadMapper: A Multi-Agent System for Roadmap Generation of Solving Complex Research Problems
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.27616](https://arxiv.org/abs/2604.27616)  
 **代码**: https://github.com/BUPT-Reasoning-Lab/RoadMapper  
 **领域**: LLM评测 / 多智能体系统 / 科研辅助  

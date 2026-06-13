@@ -15,7 +15,7 @@ tags:
 
 # Polynomial Expansion Rank Adaptation: Enhancing Low-Rank Fine-Tuning with High-Order Interactions
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.11841](https://arxiv.org/abs/2604.11841)  
 **代码**: [https://github.com/zhangwenhao6/PERA](https://github.com/zhangwenhao6/PERA)  
 **领域**: 参数高效微调/模型压缩  

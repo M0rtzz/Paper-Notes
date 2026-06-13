@@ -15,7 +15,7 @@ tags:
 
 # CoVR-R: Reason-Aware Composed Video Retrieval
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.20190](https://arxiv.org/abs/2603.20190)  
 **代码**: [github.com/mbzuai-oryx/CoVR-R](https://github.com/mbzuai-oryx/CoVR-R)  
 **领域**: Multimodal / Video-Language Models  

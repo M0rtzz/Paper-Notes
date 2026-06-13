@@ -15,7 +15,7 @@ tags:
 
 # OS-Harm: A Benchmark for Measuring Safety of Computer Use Agents
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.14866](https://arxiv.org/abs/2506.14866)  
 **代码**: [GitHub](https://github.com/tml-epfl/os-harm)  
 **领域**: 社会计算  

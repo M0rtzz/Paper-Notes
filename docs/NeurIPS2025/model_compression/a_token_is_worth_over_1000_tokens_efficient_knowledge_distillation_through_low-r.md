@@ -15,7 +15,7 @@ tags:
 
 # A Token is Worth over 1,000 Tokens: Efficient Knowledge Distillation through Low-Rank Clone
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.12781](https://arxiv.org/abs/2505.12781)  
 **代码**: GitHub + HuggingFace (论文中提及)  
 **领域**: 模型压缩 / 知识蒸馏  

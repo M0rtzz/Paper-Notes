@@ -15,7 +15,7 @@ tags:
 
 # PlanRAG-Audio: Planning and Retrieval Augmented Generation for Long-form Audio Understanding
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.20414](https://arxiv.org/abs/2605.20414)  
 **代码**: 论文称数据和代码将在接收后公开  
 **领域**: 长音频理解 / Audio RAG  

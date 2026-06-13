@@ -14,7 +14,7 @@ tags:
 
 # Fishers for Free? Approximating the Fisher Information Matrix by Recycling the Squared Gradient Accumulator
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2507.18807](https://arxiv.org/abs/2507.18807)  
 **代码**: 有  
 **领域**: 其他  

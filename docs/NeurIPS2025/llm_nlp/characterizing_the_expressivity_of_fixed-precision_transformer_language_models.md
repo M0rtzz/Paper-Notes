@@ -15,7 +15,7 @@ tags:
 
 # Characterizing the Expressivity of Fixed-Precision Transformer Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.23623](https://arxiv.org/abs/2505.23623)  
 **代码**: [GitHub](https://github.com/jiaoda-li/LTL-P-Transformer)  
 **领域**: LLM理论  

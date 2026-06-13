@@ -15,7 +15,7 @@ tags:
 
 # SIGN: Schema-Induced Games for Naming
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2510.21855](https://arxiv.org/abs/2510.21855)  
 **代码**: [github.com/ryanzhangofficial/llm-naming-game-steering](https://github.com/ryanzhangofficial/llm-naming-game-steering)  
 **领域**: 模型压缩  

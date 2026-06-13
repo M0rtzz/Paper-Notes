@@ -18,7 +18,7 @@ tags:
 
 # On the Expressive Power of Mixture-of-Experts for Structured Complex Tasks
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.24205](https://arxiv.org/abs/2505.24205)  
 **代码**: 无  
 **领域**: LLM效率 / MoE理论 / 近似理论  

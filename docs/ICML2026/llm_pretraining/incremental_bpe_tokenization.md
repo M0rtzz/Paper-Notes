@@ -15,7 +15,7 @@ tags:
 
 # Incremental BPE Tokenization
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.30813](https://arxiv.org/abs/2605.30813)  
 **代码**: https://github.com/ModelTC/mtc-inc-bpe (有)  
 **领域**: NLP理解 / LLM效率（分词器、流式推理）  

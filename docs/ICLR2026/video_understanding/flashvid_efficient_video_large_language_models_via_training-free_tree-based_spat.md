@@ -15,7 +15,7 @@ tags:
 
 # FlashVID: Efficient Video Large Language Models via Training-free Tree-Based Spatiotemporal Token Merging
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2602.08024](https://arxiv.org/abs/2602.08024)  
 **代码**: [https://github.com/Fanziyang-v/FlashVID](https://github.com/Fanziyang-v/FlashVID)  
 **领域**: 视频理解 / LLM效率 / 多模态VLM  

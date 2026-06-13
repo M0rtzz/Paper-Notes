@@ -15,7 +15,7 @@ tags:
 
 # Inside-Out: Measuring Generalization in Vision Transformers Through Inner Workings
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2604.08192](https://arxiv.org/abs/2604.08192)  
 **代码**: [GitHub](https://github.com/deep-real/GenCircuit)  
 **领域**: 可解释性  

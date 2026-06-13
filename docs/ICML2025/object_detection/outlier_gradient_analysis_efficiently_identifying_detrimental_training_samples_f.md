@@ -15,7 +15,7 @@ tags:
 
 # Outlier Gradient Analysis: Efficiently Identifying Detrimental Training Samples for Deep Learning Models
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2405.03869](https://arxiv.org/abs/2405.03869)  
 **代码**: 无  
 **领域**: 目标检测  

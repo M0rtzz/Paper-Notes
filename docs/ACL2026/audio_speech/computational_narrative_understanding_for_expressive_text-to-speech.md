@@ -15,7 +15,7 @@ tags:
 
 # Computational Narrative Understanding for Expressive Text-to-Speech
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2509.04072](https://arxiv.org/abs/2509.04072)  
 **代码**: [GitHub](https://github.com/deezer/libriquote)  
 **领域**: 语音合成 / 表达性TTS  

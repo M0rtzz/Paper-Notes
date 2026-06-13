@@ -15,7 +15,7 @@ tags:
 
 # AutoMonitor-Bench: Evaluating the Reliability of LLM-Based Misbehavior Monitor
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.05752](https://arxiv.org/abs/2601.05752)  
 **代码**: https://github.com/shuyhere/automonitor-bench  
 **领域**: LLM 安全评测 / LLM-as-a-judge / 行为监控  

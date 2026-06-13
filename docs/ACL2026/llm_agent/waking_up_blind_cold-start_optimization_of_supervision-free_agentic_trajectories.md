@@ -15,7 +15,7 @@ tags:
 
 # Waking Up Blind: Cold-Start Optimization of Supervision-Free Agentic Trajectories
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17475](https://arxiv.org/abs/2604.17475)  
 **代码**: [GitHub](https://github.com/ab-iitd/spectra)  
 **领域**: 多模态Agent / 视觉推理  

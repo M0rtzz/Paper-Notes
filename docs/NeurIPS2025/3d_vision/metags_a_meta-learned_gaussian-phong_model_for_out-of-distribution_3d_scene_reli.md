@@ -15,7 +15,7 @@ tags:
 
 # MetaGS: A Meta-Learned Gaussian-Phong Model for Out-of-Distribution 3D Scene Relighting
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2405.20791](https://arxiv.org/abs/2405.20791)  
 **代码**: 暂无  
 **领域**: 3D视觉  

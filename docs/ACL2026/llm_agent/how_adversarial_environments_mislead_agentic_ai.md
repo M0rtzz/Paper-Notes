@@ -15,7 +15,7 @@ tags:
 
 # How Adversarial Environments Mislead Agentic AI
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18874](https://arxiv.org/abs/2604.18874)  
 **代码**: [GitHub](https://github.com/zhonghaozhan/Potemkin)  
 **领域**: AI安全 / Agent鲁棒性  

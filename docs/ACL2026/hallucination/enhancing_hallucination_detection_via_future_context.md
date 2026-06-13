@@ -14,7 +14,7 @@ tags:
 
 # Enhancing Hallucination Detection via Future Context
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2507.20546](https://arxiv.org/abs/2507.20546)  
 **代码**: 无  
 **领域**: 幻觉检测  

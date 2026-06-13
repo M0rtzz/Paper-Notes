@@ -137,7 +137,7 @@ item_total: 31
 
 **[Graph Attention is Not Always Beneficial: A Theoretical Analysis of Graph Attention Mechanisms via Contextual Stochastic Block Models](graph_attention_is_not_always_beneficial_a_theoretical_analysis_of_graph_attenti.md)**
 
-:   本文通过上下文随机块模型（CSBM）理论分析了图注意力机制的有效性边界：当结构噪声大于特征噪声时 GAT 有效，反之 GCN 更优；并提出了首个多层 GAT 完美节点分类条件，将 SNR 要求从 $\omega(\sqrt{\log n})$ 放宽到 $\omega(\sqrt{\log n}/\sqrt[3]{n})$。
+:   本文通过上下文随机块模型（CSBM）框架理论分析了图注意力机制的有效性条件，证明当结构噪声大于特征噪声时注意力有益、反之有害，并设计了多层 GAT 将完美节点分类的 SNR 要求从 $\omega(\sqrt{\log n})$ 放宽到 $\omega(\sqrt{\log n}/\sqrt[3]{n})$。
 
 **[GrokFormer: Graph Fourier Kolmogorov-Arnold Transformers](grokformer_graph_fourier_kolmogorov-arnold_transformers.md)**
 

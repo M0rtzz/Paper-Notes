@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 物理/科学计算论文汇总 · 55篇论文解读
+  NeurIPS2025 物理/科学计算论文汇总 · 57篇论文解读
 description: >-
-  55篇NeurIPS2025的物理/科学计算方向论文解读，涵盖域适应、扩散模型、自监督学习、LLM、生物分子、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  57篇NeurIPS2025的物理/科学计算方向论文解读，涵盖域适应、扩散模型、自监督学习、LLM、生物分子、医学影像等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "物理/科学计算"
@@ -15,6 +15,8 @@ tags:
   - "生物分子"
   - "医学影像"
 item_list:
+  - u: "3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization/"
+    t: "3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization"
   - u: "a_regularized_newton_method_for_nonconvex_optimization_with/"
     t: "A Regularized Newton Method for Nonconvex Optimization with Global and Local Complexity Guarantees"
   - u: "a_variational_manifold_embedding_framework_for_nonlinear_dimensionality_reductio/"
@@ -73,19 +75,21 @@ item_list:
     t: "Multi-Modal Masked Autoencoders for Learning Image-Spectrum Associations for Galaxy Evolution and Cosmology"
   - u: "multi-trajectory_physics-informed_neural_networks_for_hjb_equations_with_hard-ze/"
     t: "Multi-Trajectory Physics-Informed Neural Networks for HJB Equations with Hard-Zero Terminal Inventory: Optimal Execution on Synthetic & SPY Data"
-  - u: "neural_deprojection_of_galaxy_stellar_mass_profiles/"
-    t: "Neural Deprojection of Galaxy Stellar Mass Profiles"
-item_total: 55
+item_total: 57
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚛️ 物理/科学计算
 
-**🧠 NeurIPS2025** · **55** 篇论文解读
+**🧠 NeurIPS2025** · **57** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (14)](../../AAAI2026/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/physics/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
 
 🔥 **高频主题：** 域适应 ×3 · 扩散模型 ×2
+
+**[3DID: Direct 3D Inverse Design for Aerodynamics with Physics-Aware Optimization](3did_direct_3d_inverse_design_for_aerodynamics_with_physics-aware_optimization.md)**
+
+:   提出 3DID 框架，通过学习物理-几何统一的三平面隐空间表示 + 目标梯度引导扩散采样 + 拓扑保持精炼的两阶段策略，从随机噪声开始直接在完整 3D 空间中进行逆向设计，在车辆气动外形优化上，模拟阻力（Sim-Drag）相比最优基线降低 13.6%。
 
 **[A Regularized Newton Method for Nonconvex Optimization with Global and Local Complexity Guarantees](a_regularized_newton_method_for_nonconvex_optimization_with.md)**
 
@@ -214,6 +218,10 @@ item_total: 55
 **[Neural Green's Functions](neural_greens_functions.md)**
 
 :   提出 Neural Green's Function，一种基于特征分解的可学习线性 PDE 解算子：从域几何中提取逐点特征来预测 Green 函数的特征分解，一次训练即可对任意源函数和边界条件通过数值积分求解，在机械零件热分析上比 SOTA 神经算子误差降低 13.9% 且比数值求解器快 350 倍。
+
+**[Neural Network for Simulating Radio Emission from Extensive Air Showers](neural_network_for_simulating_radio_emission_from_extensive_air_showers.md)**
+
+:   用简单全连接神经网络替代计算昂贵的 CoREAS 蒙特卡洛模拟，快速预测广延大气簇射（EAS）的射电脉冲，并在 $X_{\text{max}}$ 重建任务中达到与传统模拟可比的分辨率。
 
 **[Neuro-Spectral Architectures for Causal Physics-Informed Networks](neuro-spectral_architectures_for_causal_physics-informed_networks.md)**
 

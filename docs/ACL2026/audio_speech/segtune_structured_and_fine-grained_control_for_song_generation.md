@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # SegTune: Structured and Fine-Grained Control for Song Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Best Paper Oral  
 **arXiv**: [2606.02638](https://arxiv.org/abs/2606.02638)  
 **代码**: 待确认  
 **领域**: audio_speech  

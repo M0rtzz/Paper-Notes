@@ -15,7 +15,7 @@ tags:
 
 # PhysicsCorrect: A Training-Free Approach for Stable Neural PDE Simulations
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2507.02227](https://arxiv.org/abs/2507.02227)  
 **代码**: [https://github.com/summerwine668/PhysicsCorrect](https://github.com/summerwine668/PhysicsCorrect)  
 **领域**: 科学计算 / PDE求解  

@@ -1,8 +1,8 @@
 ---
 title: >-
-  ACL2026 LLM推理论文汇总 · 80篇论文解读
+  ACL2026 LLM推理论文汇总 · 81篇论文解读
 description: >-
-  80篇ACL2026的 LLM 推理方向论文解读，涵盖推理、LLM、强化学习、对齐/RLHF、对抗鲁棒、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  81篇ACL2026的 LLM 推理方向论文解读，涵盖推理、LLM、强化学习、对齐/RLHF、对抗鲁棒、压缩/编码等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2026"
   - "LLM 推理"
@@ -71,21 +71,21 @@ item_list:
     t: "Failure Modes in Multi-Hop QA: The Weakest Link Effect and the Recognition Bottleneck"
   - u: "finreporting_an_agentic_workflow_for_localized_reporting_of_cross-jurisdiction_f/"
     t: "FinReporting: An Agentic Workflow for Localized Reporting of Cross-Jurisdiction Financial Disclosures"
+  - u: "foresight_optimization_for_strategic_reasoning_in_large_language_models/"
+    t: "Foresight Optimization for Strategic Reasoning in Large Language Models"
   - u: "fs-researcher_test-time_scaling_for_long-horizon_research_tasks_with_file-system/"
     t: "FS-Researcher: Test-Time Scaling for Long-Horizon Research Tasks with File-System-Based Agents"
-  - u: "ganitllm_difficulty-aware_bengali_mathematical_reasoning_through_curriculum-grpo/"
-    t: "GanitLLM: Difficulty-Aware Bengali Mathematical Reasoning through Curriculum-GRPO"
-item_total: 80
+item_total: 81
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 💡 LLM 推理
 
-**💬 ACL2026** · **80** 篇论文解读
+**💬 ACL2026** · **81** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/llm_reasoning/index.md) · [📷 CVPR2026 (8)](../../CVPR2026/llm_reasoning/index.md) · [🔬 ICLR2026 (82)](../../ICLR2026/llm_reasoning/index.md) · [🤖 AAAI2026 (37)](../../AAAI2026/llm_reasoning/index.md) · [🧠 NeurIPS2025 (82)](../../NeurIPS2025/llm_reasoning/index.md) · [📹 ICCV2025 (3)](../../ICCV2025/llm_reasoning/index.md)
 
-🔥 **高频主题：** 推理 ×56 · LLM ×19 · 强化学习 ×6 · 对齐/RLHF ×4 · 对抗鲁棒 ×3
+🔥 **高频主题：** 推理 ×57 · LLM ×20 · 强化学习 ×6 · 对齐/RLHF ×4 · 对抗鲁棒 ×3
 
 **[Accurate Legal Reasoning at Scale: Neuro-Symbolic Offloading and Structural Auditability for Robust Legal Adjudication](accurate_legal_reasoning_at_scale_neuro-symbolic_offloading_and_structural_audit.md)**
 
@@ -198,6 +198,10 @@ item_total: 80
 **[FinReporting: An Agentic Workflow for Localized Reporting of Cross-Jurisdiction Financial Disclosures](finreporting_an_agentic_workflow_for_localized_reporting_of_cross-jurisdiction_f.md)**
 
 :   FinReporting 把跨美国、日本、中国财报本地化拆成“规则抽取 + 本体映射 + 受限 LLM 校验/修复 + 人工复核”的可审计 agent workflow，用统一 IS/BS/CF schema 缓解不同司法辖区财务披露格式和会计语义不一致的问题。
+
+**[Foresight Optimization for Strategic Reasoning in Large Language Models](foresight_optimization_for_strategic_reasoning_in_large_language_models.md)**
+
+:   本文提出 Foresight Policy Optimization（FoPO），通过在策略优化中引入对手建模的前瞻修正项，使 LLM 能够显式预见对手行为并据此调整自身策略，在合作（Cooperative RSA）和竞争（Competitive Taboo）两类博弈任务上显著提升策略推理能力，并在跨域 γ-Bench 上取得一致性提升。
 
 **[FS-Researcher: Test-Time Scaling for Long-Horizon Research Tasks with File-System-Based Agents](fs-researcher_test-time_scaling_for_long-horizon_research_tasks_with_file-system.md)**
 

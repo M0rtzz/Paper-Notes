@@ -15,7 +15,7 @@ tags:
 
 # DMin: Scalable Training Data Influence Estimation for Diffusion Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2412.08637](https://arxiv.org/abs/2412.08637)  
 **代码**: 有（将开源 PyTorch 实现，含多进程支持）  
 **领域**: Image Generation / Model Interpretability  

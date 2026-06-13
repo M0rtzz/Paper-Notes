@@ -15,7 +15,7 @@ tags:
 
 # RACER: Retrieval-Augmented Contextual Rapid Speculative Decoding
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.14885](https://arxiv.org/abs/2604.14885)  
 **代码**: [https://github.com/hkr04/RACER](https://github.com/hkr04/RACER)  
 **领域**: 信息检索  

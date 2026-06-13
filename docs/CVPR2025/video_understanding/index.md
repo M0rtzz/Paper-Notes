@@ -157,7 +157,7 @@ item_total: 69
 
 **[ETAP: Event-based Tracking of Any Point](etap_event-based_tracking_of_any_point.md)**
 
-:   本文提出了首个纯事件相机的任意点追踪（TAP）方法 ETAP，通过新颖的对比式特征对齐损失学习运动不变的相关特征，结合新的合成数据集 EventKubric，在五个数据集上实现了跨数据集泛化，比基线在 AJ 指标上提升 136%，并在特征追踪基准上超越此前最佳的事件+帧融合方法 3.7%。
+:   本文提出首个纯事件相机的任意点跟踪（TAP）方法 ETAP，通过新颖的特征对齐对比损失解决事件数据运动依赖性问题，并基于新构建的合成数据集 EventKubric 训练，在多个数据集上大幅超越基线方法（AJ 指标提升 136%）。
 
 **[ExpertAF: Expert Actionable Feedback from Video](expertaf_expert_actionable_feedback_from_video.md)**
 

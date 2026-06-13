@@ -15,7 +15,7 @@ tags:
 
 # Doc-PP: Document Policy Preservation Benchmark for Large Vision-Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.03926](https://arxiv.org/abs/2601.03926)  
 **代码**: [项目页面](https://hwanchang00.github.io/docpp_project_page)  
 **领域**: 多模态VLM / 文档安全  

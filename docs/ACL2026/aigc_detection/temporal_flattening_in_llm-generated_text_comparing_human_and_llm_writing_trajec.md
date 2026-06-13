@@ -15,7 +15,7 @@ tags:
 
 # Temporal Flattening in LLM-Generated Text: Comparing Human and LLM Writing Trajectories
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.12097](https://arxiv.org/abs/2604.12097)  
 **代码**: [GitHub](https://github.com/yjkim717/Cognitive-Emotional-Trajectories)  
 **领域**: AIGC检测  

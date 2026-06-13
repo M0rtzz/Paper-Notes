@@ -15,7 +15,7 @@ tags:
 
 # Quiet Feature Learning in Algorithmic Tasks
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2505.03997](https://arxiv.org/abs/2505.03997)  
 **代码**: [https://github.com/prudhvirajn/quiet-feature-learning-in-algorithmic-tasks](https://github.com/prudhvirajn/quiet-feature-learning-in-algorithmic-tasks)  
 **领域**: 深度学习理论 / 涌现  

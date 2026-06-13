@@ -15,7 +15,7 @@ tags:
 
 # Recursive Think-Answer Process for LLMs and VLMs
 
-**会议**: CVPR 2026 (Findings)  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.02099](https://arxiv.org/abs/2603.02099)  
 **代码**: 待确认（论文提到 Project page）  
 **领域**: LLM推理 / 多模态VLM  

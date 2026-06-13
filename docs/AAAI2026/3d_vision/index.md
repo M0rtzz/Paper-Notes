@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 3D视觉论文汇总 · 78篇论文解读
+  AAAI2026 3D视觉论文汇总 · 79篇论文解读
 description: >-
-  78篇AAAI2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、点云、语义分割、形状补全、3D 目标检测、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  79篇AAAI2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、点云、语义分割、形状补全、3D 目标检测、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "3D 视觉"
@@ -75,15 +75,15 @@ item_list:
     t: "Generalized Geometry Encoding Volume for Real-time Stereo Matching"
   - u: "geometry_meets_light_leveraging_geometric_priors_for_universal_photometric_stere/"
     t: "Geometry Meets Light: Leveraging Geometric Priors for Universal Photometric Stereo under Limited Multi-Illumination Cues"
-item_total: 78
+item_total: 79
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🤖 AAAI2026** · **78** 篇论文解读
+**🤖 AAAI2026** · **79** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (264)](../../ICCV2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (239)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (267)](../../ICCV2025/3d_vision/index.md)
 
 🔥 **高频主题：** 3D 高斯渲染 ×19 · 点云 ×13 · 语义分割 ×7 · 形状补全 ×5 · 3D 目标检测 ×5
 
@@ -197,7 +197,7 @@ item_total: 78
 
 **[GaussianImage++: Boosted Image Representation and Compression with 2D Gaussian Splatting](gaussianimage_boosted_image_representation_and_compression_with_2d_gaussian_spla.md)**
 
-:   提出 GaussianImage++，通过失真驱动的密度化机制和内容感知高斯滤波器，用有限数量的 2D Gaussian 原语实现高质量图像表示和压缩，并结合属性分离的可学习标量量化器实现高效压缩。
+:   提出 GaussianImage++，通过失真驱动的密度化机制和内容感知高斯滤波器，在有限的2D高斯原语下实现高质量图像表示与压缩，同时保持实时解码速度。
 
 **[Generalized Geometry Encoding Volume for Real-time Stereo Matching](generalized_geometry_encoding_volume_for_real-time_stereo_matching.md)**
 
@@ -205,7 +205,7 @@ item_total: 78
 
 **[Geometry Meets Light: Leveraging Geometric Priors for Universal Photometric Stereo under Limited Multi-Illumination Cues](geometry_meets_light_leveraging_geometric_priors_for_universal_photometric_stere.md)**
 
-:   提出 GeoUniPS，将大规模3D重建模型（VGGT）中学到的几何先验注入光度立体管线，通过光-几何双分支编码器在多光照线索不可靠时（阴影、自遮挡、偏差光照）仍能恢复合理的表面法线。
+:   提出 GeoUniPS，首次将大规模3D重建模型（VGGT）的几何先验引入通用光度立体网络，通过光照-几何双分支编码器，在多光照线索不足时利用几何先验补偿，同时引入透视投影训练数据集 PS-Perp 弥合正交投影假设与真实场景的差距。
 
 **[Graph Smoothing for Enhanced Local Geometry Learning in Point Cloud Analysis](graph_smoothing_for_enhanced_local_geometry_learning_in_point_cloud_analysis.md)**
 
@@ -345,23 +345,23 @@ item_total: 78
 
 **[Sparse4DGS: 4D Gaussian Splatting for Sparse-Frame Dynamic Scene Reconstruction](sparse4dgs_4d_gaussian_splatting_for_sparse-frame_dynamic_scene_reconstruction.md)**
 
-:   首次提出稀疏帧动态场景重建方法Sparse4DGS，通过纹理感知变形正则化（TADR）和纹理感知规范优化（TACO）两个核心模块，从稀疏视频帧中实现高保真4D场景重建。
+:   提出 Sparse4DGS，首个面向稀疏帧输入的4D动态场景重建方法，通过纹理感知的变形正则化（TADR）和纹理感知的规范优化（TACO）两大核心模块，引导高斯分布聚焦纹理丰富区域，在仅5-30帧稀疏输入下实现高质量动态新视角合成。
 
 **[SparseSurf: Sparse-View 3D Gaussian Splatting for Surface Reconstruction](sparsesurf_sparse-view_3d_gaussian_splatting_for_surface_reconstruction.md)**
 
-:   提出SparseSurf方法，通过立体几何-纹理对齐（SGTA）和伪特征增强几何一致性（PFEGC），在稀疏视角下同时实现高精度表面重建和高质量新视角合成。
+:   提出 SparseSurf，通过立体几何-纹理对齐（Stereo Geometry-Texture Alignment）和伪特征增强几何一致性（Pseudo-Feature Enhanced Geometry Consistency），在稀疏视角下同时实现高精度表面重建和高质量新视角合成，在 DTU、BlendedMVS 和 Mip-NeRF360 数据集上达到 SOTA。
 
 **[Splat-SAP: Feed-Forward Gaussian Splatting for Human-Centered Scene with Scale-Aware Point Map Reconstruction](splat-sap_feed-forward_gaussian_splatting_for_human-centered_scene_with_scale-aw.md)**
 
-:   提出Splat-SAP，一种前馈式方法，从大间隔的双目相机输入中重建尺度感知的点图并通过高斯平面渲染人体中心场景的自由视角视频，无需逐场景优化且无需3D几何监督。
+:   提出 Splat-SAP，一种前馈式方法，从大稀疏度的双目相机输入中重建尺度感知的点图（Point Map），并通过高斯平面（Gaussian Plane）实现人体中心场景的高质量自由视点渲染，全程无需3D监督。
 
 **[Splats in Splats: Robust and Effective 3D Steganography towards Gaussian Splatting](splats_in_splats_robust_and_effective_3d_steganography_towards_gaussian_splattin.md)**
 
-:   提出"Splats in Splats"，首个在3DGS中嵌入3D隐藏内容而不修改任何vanilla 3DGS属性的隐写术框架，通过重要性分级的SH系数加密和自编码器辅助的不透明度映射实现安全、鲁棒且高效的版权保护。
+:   提出 Splats in Splats，首个在不修改任何 vanilla 3DGS 属性的前提下将3D内容嵌入3DGS资产中的隐写术框架，通过重要性分级的球谐系数加密和自编码器辅助的不透明度映射，实现5.31%更高的场景保真度和3倍的渲染速度。
 
 **[SplatSSC: Decoupled Depth-Guided Gaussian Splatting for Semantic Scene Completion](splatssc_decoupled_depth-guided_gaussian_splatting_for_semantic_scene_completion.md)**
 
-:   提出SplatSSC，一种基于深度引导初始化和解耦高斯聚合器（DGA）的单目3D语义场景补全框架，通过紧凑的高斯基元初始化和鲁棒的几何-语义解耦聚合，在Occ-ScanNet上以更少基元获得SOTA性能。
+:   提出 SplatSSC，通过深度引导的高斯基元初始化策略和解耦高斯聚合器（DGA），解决目标中心（object-centric）范式中随机初始化低效和离群基元产生浮点伪影的问题，在 Occ-ScanNet 上IoU提升6.3%、mIoU提升4.1%，同时延迟和内存成本降低超过9.3%。
 
 **[Split-Layer: Enhancing Implicit Neural Representation by Maximizing the Dimensionality of Feature Space](split-layer_enhancing_implicit_neural_representation_by_maximizing_the_dimension.md)**
 
@@ -386,6 +386,10 @@ item_total: 78
 **[TOSC: Task-Oriented Shape Completion for Open-World Dexterous Grasp Generation from Partial Point Clouds](tosc_task-oriented_shape_completion_for_open-world_dexterous_grasp_generation_fr.md)**
 
 :   提出任务导向形状补全（TOSC）这一新任务，仅补全与操控任务相关的接触区域（而非整个物体），利用预训练基础模型生成候选形状、3D 判别自编码器筛选最优形状、FlowGrasp 流匹配模型生成灵巧抓取，在抓取位移和 Chamfer 距离上分别提升 16.17% 和 55.26%。
+
+**[Towards Temporal Fusion Beyond the Field of View for Camera-based Semantic Scene Completion](towards_temporal_fusion_beyond_the_field_of_view_for_camera-based_semantic_scene.md)**
+
+:   提出 C3DFusion 模块，通过在 3D 空间中显式对齐历史帧和当前帧的点特征，首次系统解决相机基 SSC 中视野外（out-of-frame）区域的时序补全问题，在 SemanticKITTI 和 SSCBench-KITTI-360 上取得 SOTA。
 
 **[UniC-Lift: Unified 3D Instance Segmentation via Contrastive Learning](unic-lift_unified_3d_instance_segmentation_via_contrastive_learning.md)**
 

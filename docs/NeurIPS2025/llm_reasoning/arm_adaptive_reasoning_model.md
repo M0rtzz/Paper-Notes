@@ -15,7 +15,7 @@ tags:
 
 # ARM: Adaptive Reasoning Model
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.20258](https://arxiv.org/abs/2505.20258)  
 **代码**: [https://team-arm.github.io/arm](https://team-arm.github.io/arm)  
 **领域**: LLM推理效率 / 强化学习  

@@ -15,7 +15,7 @@ tags:
 
 # ReferSplat: Referring Segmentation in 3D Gaussian Splatting
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2508.08252](https://arxiv.org/abs/2508.08252)  
 **代码**: [https://github.com/heshuting555/ReferSplat](https://github.com/heshuting555/ReferSplat)  
 **领域**: 3D视觉  

@@ -15,7 +15,7 @@ tags:
 
 # How Value Induction Reshapes LLM Behaviour
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.07925](https://arxiv.org/abs/2605.07925)  
 **代码**: 待确认  
 **领域**: LLM 对齐 / 价值观 / 安全  

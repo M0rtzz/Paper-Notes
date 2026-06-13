@@ -15,7 +15,7 @@ tags:
 
 # AEDR: Training-Free AI-Generated Image Attribution via Autoencoder Double-Reconstruction
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2507.18988v2](https://arxiv.org/abs/2507.18988v2)  
 **代码**: [有](https://github.com/wangchao0708/AEDR)  
 **领域**: 图像生成  

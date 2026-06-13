@@ -14,7 +14,7 @@ tags:
 
 # Learning Interestingness in Automated Mathematical Theory Formation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.14778](https://arxiv.org/abs/2511.14778)  
 **代码**: [https://github.com/trishullab/Fermat](https://github.com/trishullab/Fermat)  
 **领域**: 强化学习 / 自动数学发现  

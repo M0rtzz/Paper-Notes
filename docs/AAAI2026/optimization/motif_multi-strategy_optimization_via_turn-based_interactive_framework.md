@@ -15,7 +15,7 @@ tags:
 
 # MOTIF: Multi-strategy Optimization via Turn-based Interactive Framework
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.03929](https://arxiv.org/abs/2508.03929)  
 **代码**: [https://github.com/HaiAu2501/MOTIF](https://github.com/HaiAu2501/MOTIF)  
 **领域**: 优化  

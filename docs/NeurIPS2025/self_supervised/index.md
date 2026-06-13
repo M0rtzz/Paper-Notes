@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 自监督/表示学习论文汇总 · 35篇论文解读
+  NeurIPS2025 自监督/表示学习论文汇总 · 34篇论文解读
 description: >-
-  35篇NeurIPS2025的自监督/表示学习方向论文解读，涵盖自监督学习、推理、对抗鲁棒、对齐/RLHF、持续学习、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  34篇NeurIPS2025的自监督/表示学习方向论文解读，涵盖自监督学习、推理、对抗鲁棒、对齐/RLHF、持续学习、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "自监督/表示学习"
@@ -39,8 +39,6 @@ item_list:
     t: "DataRater: Meta-Learned Dataset Curation"
   - u: "disentangling_hyperedges_through_the_lens_of_category_theory/"
     t: "Disentangling Hyperedges through the Lens of Category Theory"
-  - u: "foundation_models_for_scientific_discovery_from_paradigm_enhancement_to_paradigm/"
-    t: "Foundation Models for Scientific Discovery: From Paradigm Enhancement to Paradigm Transition"
   - u: "hybrid_autoencoders_for_tabular_data_leveraging_model-based_augmentation_in_low-/"
     t: "Hybrid Autoencoders for Tabular Data: Leveraging Model-Based Augmentation in Low-Label Settings"
   - u: "implicit_modeling_for_transferability_estimation_of_vision_foundation_models/"
@@ -75,13 +73,15 @@ item_list:
     t: "STaRFormer: Semi-Supervised Task-Informed Representation Learning via Dynamic Attention-Based Regional Masking"
   - u: "t-regs_minimum_spanning_tree_regularization_for_self-supervised_learning/"
     t: "T-REGS: Minimum Spanning Tree Regularization for Self-Supervised Learning"
-item_total: 35
+  - u: "tabarena_a_living_benchmark_for_machine_learning_on_tabular_data/"
+    t: "TabArena: A Living Benchmark for Machine Learning on Tabular Data"
+item_total: 34
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔄 自监督/表示学习
 
-**🧠 NeurIPS2025** · **35** 篇论文解读
+**🧠 NeurIPS2025** · **34** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/self_supervised/index.md) · [💬 ACL2026 (1)](../../ACL2026/self_supervised/index.md) · [📷 CVPR2026 (34)](../../CVPR2026/self_supervised/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/self_supervised/index.md) · [🤖 AAAI2026 (16)](../../AAAI2026/self_supervised/index.md) · [📹 ICCV2025 (13)](../../ICCV2025/self_supervised/index.md)
 
@@ -134,10 +134,6 @@ item_total: 35
 **[Disentangling Hyperedges through the Lens of Category Theory](disentangling_hyperedges_through_the_lens_of_category_theory.md)**
 
 :   首次从范畴论视角分析超边解耦，基于自然性条件导出"因子表示一致性"标准（聚合后解耦 vs 解耦后聚合应一致），提出 Natural-HNN 模型在6个癌症分型数据集上全面超越14个baseline（BRCA F1 从75.7%提升至80.4%），并能100%正确捕获基因通路的功能上下文。
-
-**[Foundation Models for Scientific Discovery: From Paradigm Enhancement to Paradigm Transition](foundation_models_for_scientific_discovery_from_paradigm_enhancement_to_paradigm.md)**
-
-:   提出三阶段框架（元科学整合→混合人机共创→自主科学发现）来描绘基础模型正推动科学范式从工具增强向范式转型演变的图景，并系统综述了 FM 在实验/理论/计算/数据四大科学范式中的整合应用。
 
 **[Hybrid Autoencoders for Tabular Data: Leveraging Model-Based Augmentation in Low-Label Settings](hybrid_autoencoders_for_tabular_data_leveraging_model-based_augmentation_in_low-.md)**
 

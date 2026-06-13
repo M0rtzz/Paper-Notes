@@ -564,7 +564,7 @@ item_total: 143
 
 **[Shift Before You Learn: Enabling Low-Rank Representations in Reinforcement Learning](shift_before_you_learn_enabling_low-rank_representations_in_reinforcement_learni.md)**
 
-:   揭示了强化学习中后继度量（successor measure）本身并非近似低秩的，但"位移后继度量"（shifted successor measure）自然具有低秩结构；通过引入新的 Type II Poincaré 不等式量化所需位移量，为目标导向 RL 提供了有限样本理论保证和实践改进。
+:   揭示了强化学习中 successor measure 本身并非近似低秩的，但通过"移位"（shift）操作——跳过前几步转移后——可以自然涌现低秩结构，并基于此提出了 Type II Poincaré 不等式来量化所需的移位量，在 goal-conditioned RL 中验证了改进效果。
 
 **[Simultaneous Swap Regret Minimization via KL-Calibration](simultaneous_swap_regret_minimization_via_kl-calibration.md)**
 

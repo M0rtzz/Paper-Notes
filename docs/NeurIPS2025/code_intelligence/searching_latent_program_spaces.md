@@ -15,7 +15,7 @@ tags:
 
 # Searching Latent Program Spaces
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2411.08706](https://arxiv.org/abs/2411.08706)  
 **代码**: 有（推测开源，基于 re-ARC 数据集训练）  
 **领域**: 程序合成 / 少样本学习 / 测试时自适应  

@@ -15,7 +15,7 @@ tags:
 
 # From Orbit to Ground: Generative City Photogrammetry from Extreme Off-Nadir Satellite Images
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2512.07527](https://arxiv.org/abs/2512.07527)  
 **代码**: [项目页面](https://pku-vcl-geometry.github.io/Orbit2Ground/)  
 **领域**: 3D Vision  

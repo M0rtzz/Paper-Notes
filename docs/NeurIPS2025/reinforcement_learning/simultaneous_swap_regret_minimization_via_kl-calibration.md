@@ -15,7 +15,7 @@ tags:
 
 # Simultaneous Swap Regret Minimization via KL-Calibration
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.16387](https://arxiv.org/abs/2502.16387)  
 **代码**: 无  
 **领域**: 在线学习 / 校准理论  

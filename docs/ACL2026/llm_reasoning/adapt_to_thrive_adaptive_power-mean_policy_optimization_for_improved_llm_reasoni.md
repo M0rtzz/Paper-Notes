@@ -15,7 +15,7 @@ tags:
 
 # Adapt to Thrive! Adaptive Power-Mean Policy Optimization for Improved LLM Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.04066](https://arxiv.org/abs/2605.04066)  
 **代码**: 暂无公开  
 **领域**: LLM 推理 / 强化学习  

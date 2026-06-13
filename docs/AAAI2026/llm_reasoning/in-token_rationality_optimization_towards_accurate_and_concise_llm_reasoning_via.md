@@ -15,7 +15,7 @@ tags:
 
 # In-Token Rationality Optimization: Towards Accurate and Concise LLM Reasoning via Self-Feedback
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.09865](https://arxiv.org/abs/2511.09865)  
 **代码**: 无  
 **领域**: 强化学习  

@@ -15,7 +15,7 @@ tags:
 
 # Region-R1: Reinforcing Query-Side Region Cropping for Multi-Modal Re-Ranking
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05268](https://arxiv.org/abs/2604.05268)  
 **代码**: 无  
 **领域**: 多模态VLM / 信息检索  

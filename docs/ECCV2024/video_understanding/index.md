@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 视频理解论文汇总 · 49篇论文解读
+  ECCV2024 视频理解论文汇总 · 51篇论文解读
 description: >-
-  49篇ECCV2024的视频理解方向论文解读，涵盖目标跟踪、人体姿态、自监督学习、推理、少样本学习、异常检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  51篇ECCV2024的视频理解方向论文解读，涵盖目标跟踪、人体姿态、自监督学习、推理、少样本学习、异常检测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "视频理解"
@@ -69,19 +69,19 @@ item_list:
     t: "On the Utility of 3D Hand Poses for Action Recognition"
   - u: "onetrack_demystifying_the_conflict_between_detection_and_tracking_in_end-to-end_/"
     t: "OneTrack: Demystifying the Conflict Between Detection and Tracking in End-to-End 3D Trackers"
+  - u: "online_temporal_action_localization_with_memory-augmented_transformer/"
+    t: "Online Temporal Action Localization with Memory-Augmented Transformer"
   - u: "optimizing_factorized_encoder_models_time_and_memory_reduction_for_scalable_and_/"
     t: "Optimizing Factorized Encoder Models: Time and Memory Reduction for Scalable and Efficient Action Recognition"
   - u: "pite_pixel-temporal_alignment_for_large_video-language_model/"
     t: "PiTe: Pixel-Temporal Alignment for Large Video-Language Model"
-  - u: "r2tuning_efficient_imagetovideo_transfer_learning_for_video/"
-    t: "R²-Tuning: Efficient Image-to-Video Transfer Learning for Video Temporal Grounding"
-item_total: 49
+item_total: 51
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 视频理解
 
-**🎞️ ECCV2024** · **49** 篇论文解读
+**🎞️ ECCV2024** · **51** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (17)](../../ICML2026/video_understanding/index.md) · [💬 ACL2026 (16)](../../ACL2026/video_understanding/index.md) · [📷 CVPR2026 (83)](../../CVPR2026/video_understanding/index.md) · [🔬 ICLR2026 (10)](../../ICLR2026/video_understanding/index.md) · [🤖 AAAI2026 (27)](../../AAAI2026/video_understanding/index.md) · [🧠 NeurIPS2025 (39)](../../NeurIPS2025/video_understanding/index.md)
 
@@ -165,7 +165,7 @@ item_total: 49
 
 **[Learning Anomalies with Normality Prior for Unsupervised Video Anomaly Detection](learning_anomalies_with_normality_prior_for_unsupervised_video_anomaly_detection.md)**
 
-:   本文提出了一种基于"正常性先验"的无监督视频异常检测方法（LANP），通过利用"视频首尾段大概率为正常事件"这一数据无关先验知识生成初始正常标签，再通过正常性传播将正常知识扩散到全部片段，最后配合损失重加权策略训练异常检测器，在 ShanghaiTech 和 UCF-Crime 上取得了优异性能。
+:   本文提出一种基于正常性先验（视频首尾片段通常为正常事件）的无监督视频异常检测方法 LANP，通过正常性传播估计未标注片段的正常程度，再结合损失重加权策略减轻错误传播标签的负面影响，在 ShanghaiTech 和 UCF-Crime 上超越现有方法。
 
 **[Leveraging Temporal Contextualization for Video Action Recognition](leveraging_temporal_contextualization_for_video_action_recognition.md)**
 
@@ -194,6 +194,10 @@ item_total: 49
 **[OneTrack: Demystifying the Conflict Between Detection and Tracking in End-to-End 3D Trackers](onetrack_demystifying_the_conflict_between_detection_and_tracking_in_end-to-end_.md)**
 
 :   本文深入分析了端到端3D跟踪器中检测与跟踪任务之间性能冲突的根本原因——二者在正样本分配上的微妙差异导致了分类梯度的矛盾，并提出OneTrack通过梯度协调、查询分组和注意力掩码等策略，首次实现了检测和跟踪在统一特征表示下的无冲突联合优化，在nuScenes上取得了SOTA性能。
+
+**[Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)**
+
+:   本文提出 MATR（Memory-Augmented Transformer），通过记忆队列选择性地保存历史片段特征来建模长期上下文，并采用双 Transformer 解码器分别定位动作的结束和起始时间，在 THUMOS14 和 MUSES 两个在线时序动作定位基准上刷新了 SOTA，甚至可与部分离线方法媲美。
 
 **[Optimizing Factorized Encoder Models: Time and Memory Reduction for Scalable and Efficient Action Recognition](optimizing_factorized_encoder_models_time_and_memory_reduction_for_scalable_and_.md)**
 
@@ -246,6 +250,10 @@ item_total: 49
 **[SPAMming Labels: Efficient Annotations for the Trackers of Tomorrow](spamming_labels_efficient_annotations_for_the_trackers_of_tomorrow.md)**
 
 :   提出 SPAM 视频标注引擎，将合成数据预训练、伪标签自训练和基于图层级的主动学习相结合，仅需 3-20% 的人工标注量即可产生接近 GT 质量的多目标跟踪标注。
+
+**[Spatio-Temporal Proximity-Aware Dual-Path Model for Panoramic Activity Recognition](spatio-temporal_proximity-aware_dual-path_model_for_panoramic_activity_recogniti.md)**
+
+:   提出 SPDP-Net，通过时空邻近性建模个体间社会关系，并利用双路径 Transformer (DPATr) 架构在个体-全局和个体-社交两条路径上协同识别多粒度活动，在 JRDB-PAR 数据集上以 46.5% overall F1 大幅刷新 SOTA。
 
 **[Spherical World-Locking for Audio-Visual Localization in Egocentric Videos](spherical_world-locking_for_audio-visual_localization_in_egocentric_videos.md)**
 

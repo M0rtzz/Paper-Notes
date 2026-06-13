@@ -15,7 +15,7 @@ tags:
 
 # Agree, Disagree, Explain: Decomposing Human Label Variation in NLI through the Lens of Explanations
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.16458](https://arxiv.org/abs/2510.16458)  
 **代码**: 无  
 **领域**: NLI / Annotation Analysis  

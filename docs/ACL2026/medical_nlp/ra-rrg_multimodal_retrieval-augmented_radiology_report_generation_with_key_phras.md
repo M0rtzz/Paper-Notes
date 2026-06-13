@@ -15,7 +15,7 @@ tags:
 
 # RA-RRG: Multimodal Retrieval-Augmented Radiology Report Generation with Key Phrase Extraction
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2504.07415](https://arxiv.org/abs/2504.07415)  
 **代码**: [GitHub](https://github.com/deepnoid-ai/RA-RRG)  
 **领域**: 医学NLP

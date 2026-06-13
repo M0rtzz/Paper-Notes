@@ -13,14 +13,9 @@
 
 ## 🌐 在线阅读
 
-
 **[https://papernotes.org/](https://papernotes.org/)**
 
 > 💡 **提示**：如果数学公式渲染异常，刷新页面通常可以解决。
-
-> ⚠️ **关于 ACL 2026**：本仓库收录的 ACL 2026 论文均来自 arXiv 上 Comments 标注为 "Accepted to ACL 2026" 的论文，并非官方 AC 结果，仅供参考。官方接收列表待公布 [ACL 2026 Accepted Papers](https://2026.aclweb.org/program/accepted_papers/)。
-
-> ⚠️ **关于 ICML 2026**：本仓库收录的 ICML 2026 论文均来自 arXiv 上 Comments 标注为 "Accepted to ICML 2026" 的论文，并非官方 AC 结果，仅供参考。官方接收列表待公布 [ICML 2026 Accepted Papers](https://icml.cc/Conferences/2026)。
 
 ## 💬 问题反馈
 
@@ -85,7 +80,7 @@ Paper Notes 交流群: `1094559400`
 | `llm_alignment/` | ⚖️ 对齐/RLHF | 240 |
 | `llm_efficiency/` | ⚡ LLM 效率 | 168 |
 | `llm_evaluation/` | 📊 LLM 评测 | 360 |
-| `llm_nlp/` | 💬 LLM/NLP (其他) | 645 |
+| `llm_nlp/` | 💬 LLM 其他 | 645 |
 | `llm_pretraining/` | 📚 预训练 | 217 |
 | `llm_reasoning/` | 💡 LLM 推理 | 430 |
 | `llm_safety/` | 🔒 LLM 安全 | 510 |

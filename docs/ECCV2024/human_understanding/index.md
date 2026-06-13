@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 人体理解论文汇总 · 52篇论文解读
+  ECCV2024 人体理解论文汇总 · 54篇论文解读
 description: >-
-  52篇ECCV2024的人体理解方向论文解读，涵盖人体姿态、人脸/视线、情感分析、虚拟人、重识别、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  54篇ECCV2024的人体理解方向论文解读，涵盖人体姿态、人脸/视线、情感分析、虚拟人、重识别、自监督学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "人体理解"
@@ -59,6 +59,10 @@ item_list:
     t: "FoundPose: Unseen Object Pose Estimation with Foundation Features"
   - u: "freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis/"
     t: "FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis"
+  - u: "gaze_target_detection_based_on_head-local-global_coordination/"
+    t: "Gaze Target Detection Based on Head-Local-Global Coordination"
+  - u: "gazexplain_learning_to_predict_natural_language_explanations_of_visual_scanpaths/"
+    t: "GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths"
   - u: "generalizable_facial_expression_recognition/"
     t: "Generalizable Facial Expression Recognition"
   - u: "gs-pose_category-level_object_pose_estimation_via_geometric_and_semantic_corresp/"
@@ -71,21 +75,17 @@ item_list:
     t: "Human Motion Forecasting in Dynamic Domain Shifts: A Homeostatic Continual Test-Time Adaptation Framework"
   - u: "humos_human_motion_model_conditioned_on_body_shape/"
     t: "HUMOS: Human Motion Model Conditioned on Body Shape"
-  - u: "lapose_laplacian_mixture_shape_modeling_for_rgb-based_category-level_object_pose/"
-    t: "LaPose: Laplacian Mixture Shape Modeling for RGB-Based Category-Level Object Pose Estimation"
-  - u: "large_motion_model_for_unified_multi-modal_motion_generation/"
-    t: "Large Motion Model for Unified Multi-Modal Motion Generation"
-item_total: 52
+item_total: 54
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**🎞️ ECCV2024** · **52** 篇论文解读
+**🎞️ ECCV2024** · **54** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (63)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人体姿态 ×15 · 人脸/视线 ×10 · 情感分析 ×3 · 虚拟人 ×2 · 重识别 ×2
+🔥 **高频主题：** 人体姿态 ×15 · 人脸/视线 ×12 · 情感分析 ×3 · 虚拟人 ×2 · 重识别 ×2
 
 **[3D Hand Pose Estimation in Everyday Egocentric Images](3d_hand_pose_estimation_in_everyday_egocentric_images.md)**
 
@@ -174,6 +174,14 @@ item_total: 52
 **[FreeMotion: A Unified Framework for Number-free Text-to-Motion Synthesis](freemotion_a_unified_framework_for_number-free_text-to-motion_synthesis.md)**
 
 :   提出FreeMotion框架，通过条件概率分解将多人运动联合分布递归拆解为单人条件运动生成，首次实现任意人数的文本驱动运动合成，并支持多人空间控制。
+
+**[Gaze Target Detection Based on Head-Local-Global Coordination](gaze_target_detection_based_on_head-local-global_coordination.md)**
+
+:   提出了一种基于头部-局部-全局三视图协调的注视目标检测方法，通过引入基于FOV（视野范围）的局部视图，并设计全局-局部位置与表示一致性机制，显著提升了注视目标预测的准确性。
+
+**[GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths](gazexplain_learning_to_predict_natural_language_explanations_of_visual_scanpaths.md)**
+
+:   提出GazeXplain，首次将视觉扫描路径预测与自然语言解释结合，通过注意力-语言解码器、语义对齐机制和跨数据集联合训练，实现对人类注视行为的可解释预测。
 
 **[Generalizable Facial Expression Recognition](generalizable_facial_expression_recognition.md)**
 

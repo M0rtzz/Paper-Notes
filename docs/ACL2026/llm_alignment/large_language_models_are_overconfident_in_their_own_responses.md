@@ -15,7 +15,7 @@ tags:
 
 # Large Language Models Are Overconfident in Their Own Responses
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2606.03437](https://arxiv.org/abs/2606.03437)  
 **代码**: 未在缓存中看到公开代码链接  
 **领域**: LLM 对齐 / 校准  

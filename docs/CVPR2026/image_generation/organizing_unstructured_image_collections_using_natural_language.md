@@ -15,7 +15,7 @@ tags:
 
 # Organizing Unstructured Image Collections using Natural Language
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2410.05217](https://arxiv.org/abs/2410.05217)  
 **代码**: [https://oatmealliu.github.io/xcluster.html](https://oatmealliu.github.io/xcluster.html)  
 **领域**: 图像生成  

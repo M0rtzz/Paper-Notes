@@ -15,7 +15,7 @@ tags:
 
 # A Survey on MLLM-based Visually Rich Document Understanding: Methods, Challenges, and Emerging Trends
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2507.09861](https://arxiv.org/abs/2507.09861)  
 **代码**: 无  
 **领域**: Document Understanding / Multimodal LLM  

@@ -16,7 +16,7 @@ tags:
 
 # Thought Communication in Multiagent Collaboration
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.20733](https://arxiv.org/abs/2510.20733)  
 **代码**: 未公开  
 **领域**: LLM评测  

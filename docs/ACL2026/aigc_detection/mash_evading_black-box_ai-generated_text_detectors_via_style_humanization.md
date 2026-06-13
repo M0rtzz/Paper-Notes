@@ -15,7 +15,7 @@ tags:
 
 # MASH: Evading Black-Box AI-Generated Text Detectors via Style Humanization
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.08564](https://arxiv.org/abs/2601.08564)  
 **代码**: [https://github.com/githigher/MASH](https://github.com/githigher/MASH)  
 **领域**: 图像生成/文本检测对抗  

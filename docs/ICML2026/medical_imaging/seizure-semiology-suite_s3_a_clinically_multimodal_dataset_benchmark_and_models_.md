@@ -15,7 +15,7 @@ tags:
 
 # Seizure-Semiology-Suite (S³): A Clinically Multimodal Dataset, Benchmark, and Models for Seizure Semiology Understanding
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.21852](https://arxiv.org/abs/2605.21852)  
 **代码**: 有（GitHub: SeizureSemiologySuite）  
 **领域**: 医学图像 / 多模态VLM / 视频理解  

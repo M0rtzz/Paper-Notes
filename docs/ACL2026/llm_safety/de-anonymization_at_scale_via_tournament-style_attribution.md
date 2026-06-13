@@ -15,7 +15,7 @@ tags:
 
 # De-Anonymization at Scale via Tournament-Style Attribution
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2601.12407](https://arxiv.org/abs/2601.12407)  
 **代码**: 无  
 **领域**: AI 安全 / 隐私  

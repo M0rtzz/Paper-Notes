@@ -16,7 +16,7 @@ tags:
 
 # How Do Transformers Learn Implicit Reasoning?
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.23653](https://arxiv.org/abs/2505.23653)  
 **代码**: [GitHub](https://github.com/Jiaran-Ye/ImplicitReasoning)  
 **领域**: 可解释性 / 多跳推理机制  

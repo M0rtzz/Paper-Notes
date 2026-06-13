@@ -15,7 +15,7 @@ tags:
 
 # Revela: Dense Retriever Learning via Language Modeling
 
-**会议**: ICLR2026  
+**会议**: ICLR2026 Oral  
 **arXiv**: [2506.16552](https://arxiv.org/abs/2506.16552)  
 **代码**: 待确认  
 **领域**: 信息检索  

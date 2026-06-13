@@ -15,7 +15,7 @@ tags:
 
 # CodePromptZip: Code-specific Prompt Compression for Retrieval-Augmented Generation in Coding Tasks with LMs
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2502.14925](https://arxiv.org/abs/2502.14925)  
 **代码**: 无  
 **领域**: 信息检索  

@@ -255,7 +255,7 @@ item_total: 52
 
 **[Soft Separation and Distillation: Toward Global Uniformity in Federated Unsupervised Learning](soft_separation_and_distillation_toward_global_uniformity_in_federated_unsupervi.md)**
 
-:   提出 Soft Separation and Distillation (SSD) 框架，通过维度缩放正则化 (DSR) 和投影器蒸馏 (PD) 两个模块，解决联邦无监督学习中客户端间 (inter-client) 表示均匀性不足的问题，在不增加通信开销的前提下显著提升全局表示质量。
+:   提出 SSD（Soft Separation and Distillation）框架，通过维度缩放正则化（DSR）和投影器蒸馏（PD）两个模块，改善联邦无监督学习中跨客户端的全局表征均匀性（inter-client uniformity），在不增加通信开销的前提下显著提升表征质量和下游任务性能。
 
 **[SSVQ: Unleashing the Potential of Vector Quantization with Sign-Splitting](ssvq_unleashing_the_potential_of_vector_quantization_with_sign-splitting.md)**
 

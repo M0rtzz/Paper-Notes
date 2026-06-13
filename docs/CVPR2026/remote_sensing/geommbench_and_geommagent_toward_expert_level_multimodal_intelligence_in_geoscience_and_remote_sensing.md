@@ -15,7 +15,7 @@ tags:
 
 # GeoMMBench and GeoMMAgent: Toward Expert-Level Multimodal Intelligence in Geoscience and Remote Sensing
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2604.08896](https://arxiv.org/abs/2604.08896)  
 **代码**: [https://geo-mm-agi.github.io](https://geo-mm-agi.github.io)  
 **领域**: 遥感 / 多模态基准  

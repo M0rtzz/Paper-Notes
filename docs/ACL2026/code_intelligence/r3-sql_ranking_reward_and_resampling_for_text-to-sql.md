@@ -15,7 +15,7 @@ tags:
 
 # R$^3$-SQL: Ranking Reward and Resampling for Text-to-SQL
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.25325](https://arxiv.org/abs/2604.25325)  
 **代码**: 未开源  
 **领域**: LLM Agent / Text-to-SQL  

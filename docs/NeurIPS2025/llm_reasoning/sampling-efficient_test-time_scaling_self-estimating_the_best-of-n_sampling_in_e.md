@@ -15,7 +15,7 @@ tags:
 
 # Sampling-Efficient Test-Time Scaling: Self-Estimating the Best-of-N Sampling in Early Decoding
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2503.01422](https://arxiv.org/abs/2503.01422)  
 **代码**: [https://github.com/Alsace08/ST-BoN](https://github.com/Alsace08/ST-BoN)  
 **领域**: LLM推理 / 测试时计算  

@@ -15,7 +15,7 @@ tags:
 
 # REX: A Family of Reversible Exponential Stochastic Runge-Kutta Solvers
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2502.08834](https://arxiv.org/abs/2502.08834)  
 **代码**: https://github.com/zblasingame/Rex-solver  
 **领域**: 科学计算 / 数值方法 / 扩散模型采样  

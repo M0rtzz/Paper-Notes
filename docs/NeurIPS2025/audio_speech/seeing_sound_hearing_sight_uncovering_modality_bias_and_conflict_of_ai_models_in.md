@@ -16,7 +16,7 @@ tags:
 
 # Seeing Sound, Hearing Sight: Uncovering Modality Bias and Conflict of AI Models in Sound Localization
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.11217](https://arxiv.org/abs/2505.11217)  
 **代码**: 论文声明公开（GitHub）  
 **领域**: 音频语音  

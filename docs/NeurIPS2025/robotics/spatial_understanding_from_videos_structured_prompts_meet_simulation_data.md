@@ -15,7 +15,7 @@ tags:
 
 # Spatial Understanding from Videos: Structured Prompts Meet Simulation Data
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.03642](https://arxiv.org/abs/2506.03642)  
 **代码**: [GitHub](https://github.com/Hyu-Zhang/SpatialMind)  
 **领域**: 机器人  

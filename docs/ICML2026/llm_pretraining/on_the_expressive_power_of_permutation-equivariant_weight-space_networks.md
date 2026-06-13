@@ -15,7 +15,7 @@ tags:
 
 # On the Expressive Power of Permutation-Equivariant Weight-Space Networks
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.01083](https://arxiv.org/abs/2602.01083)  
 **代码**: https://github.com/dayanadir/capacity_increase_inr_editing_experiment  
 **领域**: 权重空间学习 / 表达力理论 / 等变神经网络  

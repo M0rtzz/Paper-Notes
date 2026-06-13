@@ -15,7 +15,7 @@ tags:
 
 # When Every Millisecond Counts: Real-Time Anomaly Detection via the Multimodal Asynchronous Hybrid Network
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2506.17457](https://arxiv.org/abs/2506.17457)  
 **代码**: [有](https://github.com/PKU-XD/EventAD)  
 **领域**: 自动驾驶  

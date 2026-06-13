@@ -15,7 +15,7 @@ tags:
 
 # SplatSSC: Decoupled Depth-Guided Gaussian Splatting for Semantic Scene Completion
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.02261](https://arxiv.org/abs/2508.02261)  
 **代码**: [GitHub](https://github.com/Made-Gpt/SplatSSC)  
 **领域**: 3D视觉  

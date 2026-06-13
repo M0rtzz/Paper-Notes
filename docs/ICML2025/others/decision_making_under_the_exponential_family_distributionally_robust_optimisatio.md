@@ -14,7 +14,7 @@ tags:
 
 # DRO-BAS: Decision Making under the Exponential Family DRO with Bayesian Ambiguity Sets
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2411.16829](https://arxiv.org/abs/2411.16829)  
 **代码**: 无  
 **领域**: 其他  

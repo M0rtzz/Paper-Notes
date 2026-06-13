@@ -14,7 +14,7 @@ tags:
 
 # Continuous Thought Machines
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.05522](https://arxiv.org/abs/2505.05522)  
 **代码**: [github.com/SakanaAI/ContinuousThoughtMachines](https://github.com/SakanaAI/ContinuousThoughtMachines)  
 **领域**: 其他  

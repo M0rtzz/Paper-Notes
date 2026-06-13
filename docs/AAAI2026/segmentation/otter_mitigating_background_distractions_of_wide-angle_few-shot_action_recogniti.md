@@ -15,7 +15,7 @@ tags:
 
 # Otter: Mitigating Background Distractions of Wide-Angle Few-Shot Action Recognition with Enhanced RWKV
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.06741](https://arxiv.org/abs/2511.06741)  
 **代码**: [GitHub](https://github.com/wenbohuang1002/Otter)  
 **领域**: 图像分割  

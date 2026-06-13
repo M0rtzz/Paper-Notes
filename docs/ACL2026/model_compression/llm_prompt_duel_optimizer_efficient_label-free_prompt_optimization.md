@@ -15,7 +15,7 @@ tags:
 
 # LLM Prompt Duel Optimizer: Efficient Label-Free Prompt Optimization
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.13907](https://arxiv.org/abs/2510.13907)  
 **代码**: [GitHub](https://github.com/meta-llama/prompt-ops)  
 **领域**: 模型压缩  

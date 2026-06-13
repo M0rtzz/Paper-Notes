@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Speech-Hands: A Self-Reflection Voice Agentic Approach to Speech Recognition and Audio Reasoning with Omni Perception
 
-**会议**: ACL2026
+**会议**: ACL2026 Oral  
 **arXiv**: [2601.09413](https://arxiv.org/abs/2601.09413)
 **代码**: [GitHub](https://YukinoWan.github.io/Speech-Hands/)
 **领域**: audio_speech

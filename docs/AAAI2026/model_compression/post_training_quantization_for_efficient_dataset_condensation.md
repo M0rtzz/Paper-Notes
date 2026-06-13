@@ -15,7 +15,7 @@ tags:
 
 # Post Training Quantization for Efficient Dataset Condensation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2603.13346](https://arxiv.org/abs/2603.13346)  
 **代码**: 无  
 **领域**: 模型压缩  

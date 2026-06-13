@@ -15,7 +15,7 @@ tags:
 
 # SpecDiff: Accelerating Diffusion Model Inference with Self-Speculation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2509.13848](https://arxiv.org/abs/2509.13848)  
 **代码**: 无  
 **领域**: 图像生成  

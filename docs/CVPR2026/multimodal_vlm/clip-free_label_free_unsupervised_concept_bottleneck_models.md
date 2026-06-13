@@ -16,7 +16,7 @@ tags:
 
 # CLIP-Free, Label-Free, Unsupervised Concept Bottleneck Models
 
-**会议**: CVPR2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2503.10981](https://arxiv.org/abs/2503.10981)  
 **代码**: 待确认  
 **领域**: 多模态VLM  

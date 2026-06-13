@@ -15,7 +15,7 @@ tags:
 
 # MoESD: Unveil Speculative Decoding's Potential for Accelerating Sparse MoE
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.19645](https://arxiv.org/abs/2505.19645)  
 **代码**: 无  
 **领域**: LLM效率  

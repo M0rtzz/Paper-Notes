@@ -15,7 +15,7 @@ tags:
 
 # Which bird does not have wings: Negative-constrained KGQA with Schema-guided Semantic Matching and Self-directed Refinement
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.14749](https://arxiv.org/abs/2604.14749)  
 **代码**: [https://github.com/midannii/CUCKOO](https://github.com/midannii/CUCKOO)  
 **领域**: 图学习 / 知识图谱问答  

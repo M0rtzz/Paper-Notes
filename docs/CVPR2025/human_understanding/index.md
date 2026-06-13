@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2025 人体理解论文汇总 · 72篇论文解读
+  CVPR2025 人体理解论文汇总 · 73篇论文解读
 description: >-
-  72篇CVPR2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、虚拟人、语音、多模态、个性化生成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  73篇CVPR2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、虚拟人、个性化生成、语音、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2025"
   - "人体理解"
@@ -11,9 +11,9 @@ tags:
   - "人脸/视线"
   - "人体姿态"
   - "虚拟人"
+  - "个性化生成"
   - "语音"
   - "多模态"
-  - "个性化生成"
 item_list:
   - u: "3d_face_reconstruction_from_radar_images/"
     t: "3D Face Reconstruction From Radar Images"
@@ -49,6 +49,8 @@ item_list:
     t: "Exploring Timeline Control for Facial Motion Generation"
   - u: "fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video/"
     t: "FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video"
+  - u: "few-shot_personalized_scanpath_prediction/"
+    t: "Few-Shot Personalized Scanpath Prediction"
   - u: "freecloth_free-form_generation_enhances_challenging_clothed_human_modeling/"
     t: "FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling"
   - u: "freeuv_ground-truth-free_realistic_facial_uv_texture_recovery_via_cross-assembly/"
@@ -73,19 +75,17 @@ item_list:
     t: "HSEmotion Team at ABAW-10 Competition: Facial Expression Recognition, Valence-Arousal Estimation, Action Unit Detection and Fine-Grained Violence Classification"
   - u: "human_motion_instruction_tuning/"
     t: "Human Motion Instruction Tuning"
-  - u: "humanmm_global_human_motion_recovery_from_multi-shot_videos/"
-    t: "HumanMM: Global Human Motion Recovery from Multi-shot Videos"
-item_total: 72
+item_total: 73
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📷 CVPR2025** · **72** 篇论文解读
+**📷 CVPR2025** · **73** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (63)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人脸/视线 ×14 · 人体姿态 ×14 · 虚拟人 ×5 · 语音 ×3 · 多模态 ×3
+🔥 **高频主题：** 人脸/视线 ×14 · 人体姿态 ×14 · 虚拟人 ×5 · 个性化生成 ×3 · 语音 ×3
 
 **[3D Face Reconstruction From Radar Images](3d_face_reconstruction_from_radar_images.md)**
 
@@ -152,6 +152,10 @@ item_total: 72
 **[FATE: Full-head Gaussian Avatar with Textural Editing from Monocular Video](fate_full-head_gaussian_avatar_with_textural_editing_from_monocular_video.md)**
 
 :   提出 FATE，从单目视频重建可动画化的全头高斯化身，通过基于采样的密化策略（替代阈值分裂）、神经烘焙（将离散高斯转为连续UV纹理图以支持编辑）和通用补全框架（合成后脑外观），实现仅 49K 高斯即达到 28.37dB PSNR 的高效高质量重建。
+
+**[Few-Shot Personalized Scanpath Prediction](few-shot_personalized_scanpath_prediction.md)**
+
+:   提出少样本个性化扫视路径预测（FS-PSP）任务 和 Subject-Embedding Network（SE-Net），通过将主体嵌入学习与扫视路径预测解耦，仅需 1-10 张图像的注视数据即可适配新用户，在 OSIE、COCO-FreeView、COCO-Search18 三个数据集上 ScanMatch 指标超越第二名 5.9%-7.9%，且适配时间仅 3.6 秒、无需微调。
 
 **[FreeCloth: Free-Form Generation Enhances Challenging Clothed Human Modeling](freecloth_free-form_generation_enhances_challenging_clothed_human_modeling.md)**
 

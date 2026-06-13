@@ -15,7 +15,7 @@ tags:
 
 # XQ-MEval: A Dataset with Cross-lingual Parallel Quality for Benchmarking Translation Metrics
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.14934](https://arxiv.org/abs/2604.14934)  
 **代码**: [GitHub](https://github.com/zhiqu22/XQ-MEval)  
 **领域**: AI安全  

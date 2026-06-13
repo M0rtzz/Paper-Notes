@@ -15,7 +15,7 @@ tags:
 
 # SciImpact: A Multi-Dimensional, Multi-Field Benchmark for Scientific Impact Prediction
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17141](https://arxiv.org/abs/2604.17141)  
 **代码**: [项目主页](https://flypig23.github.io/sciimpact-homepage/)  
 **领域**: LLM评测  

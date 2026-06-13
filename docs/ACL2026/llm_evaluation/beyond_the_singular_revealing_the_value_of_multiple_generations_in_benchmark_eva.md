@@ -15,7 +15,7 @@ tags:
 
 # Beyond the Singular: Revealing the Value of Multiple Generations in Benchmark Evaluation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2502.08943](https://arxiv.org/abs/2502.08943)  
 **代码**: 待确认  
 **领域**: LLM 评测 / 统计推断 / Benchmark 方法学  

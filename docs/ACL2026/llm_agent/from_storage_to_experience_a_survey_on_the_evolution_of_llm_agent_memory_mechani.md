@@ -16,7 +16,7 @@ tags:
 
 # From Storage to Experience: A Survey on the Evolution of LLM Agent Memory Mechanisms
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.06716](https://arxiv.org/abs/2605.06716)  
 **代码**: https://github.com/FeishuLuo/Evolving-LLM-Agent-Memory-Survey  
 **领域**: LLM Agent / 记忆机制 / 综述 / Continual Learning  

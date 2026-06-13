@@ -15,7 +15,7 @@ tags:
 
 # Importance-Aware Data Selection for Efficient LLM Instruction Tuning
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.07074](https://arxiv.org/abs/2511.07074)  
 **代码**: 无  
 **领域**: 对齐RLHF / 数据选择  

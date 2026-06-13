@@ -15,7 +15,7 @@ tags:
 
 # EvoLM: In Search of Lost Language Model Training Dynamics
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2506.16029](https://arxiv.org/abs/2506.16029)  
 **代码**: 有（模型、数据、训练和评估 pipeline 全部开源）  
 **领域**: 强化学习  

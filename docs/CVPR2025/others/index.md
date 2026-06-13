@@ -1,22 +1,20 @@
 ---
 title: >-
-  CVPR2025 其他论文汇总 · 60篇论文解读
+  CVPR2025 其他论文汇总 · 58篇论文解读
 description: >-
-  60篇CVPR2025的其他方向论文解读，涵盖对抗鲁棒、少样本学习、人脸/视线、目标跟踪、个性化生成、动态场景等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  58篇CVPR2025的其他方向论文解读，涵盖对抗鲁棒、目标跟踪、动态场景、域适应、重识别、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2025"
   - "其他"
   - "论文解读"
   - "论文笔记"
   - "对抗鲁棒"
-  - "少样本学习"
-  - "人脸/视线"
   - "目标跟踪"
-  - "个性化生成"
   - "动态场景"
+  - "域适应"
+  - "重识别"
+  - "对齐/RLHF"
 item_list:
-  - u: "4deform_neural_surface_deformation_for_robust_shape_interpolation/"
-    t: "4Deform: Neural Surface Deformation for Robust Shape Interpolation"
   - u: "bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_/"
     t: "BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending"
   - u: "bounds_on_agreement_between_subjective_and_objective_measurements/"
@@ -41,8 +39,6 @@ item_list:
     t: "Exploring Contextual Attribute Density in Referring Expression Counting (CAD-GD)"
   - u: "feature_selection_for_latent_factor_models/"
     t: "Feature Selection for Latent Factor Models"
-  - u: "few-shot_personalized_scanpath_prediction/"
-    t: "Few-Shot Personalized Scanpath Prediction"
   - u: "fiction_4d_future_interaction_prediction_from_video/"
     t: "FIction: 4D Future Interaction Prediction from Video"
   - u: "focal_split_untethered_snapshot_depth_from_differential_defocus/"
@@ -75,21 +71,21 @@ item_list:
     t: "NeISF++: Neural Incident Stokes Field for Polarized Inverse Rendering of Conductors and Dielectrics"
   - u: "on_the_generalization_of_handwritten_text_recognition_models/"
     t: "On the Generalization of Handwritten Text Recognition Models"
-item_total: 60
+  - u: "open_set_label_shift_with_test_time_out-of-distribution_reference/"
+    t: "Open Set Label Shift with Test Time Out-of-Distribution Reference"
+  - u: "order-one_rolling_shutter_cameras/"
+    t: "Order-One Rolling Shutter Cameras"
+item_total: 58
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📷 CVPR2025** · **60** 篇论文解读
+**📷 CVPR2025** · **58** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×7 · 少样本学习 ×2
-
-**[4Deform: Neural Surface Deformation for Robust Shape Interpolation](4deform_neural_surface_deformation_for_robust_shape_interpolation.md)**
-
-:   提出 4Deform 框架，基于神经隐式表示和连续速度场学习实现鲁棒形状插值，通过修改的 level-set 方程链接隐式场与速度场，首次在噪声、部分、拓扑变化和非等距变形场景中均取得 SOTA，并支持真实世界 Kinect 点云序列的时间超分辨率。
+🔥 **高频主题：** 对抗鲁棒 ×6
 
 **[BenDFM: A taxonomy and synthetic CAD dataset for manufacturability assessment in sheet metal bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_manufacturability_assessment_in_.md)**
 
@@ -138,10 +134,6 @@ item_total: 60
 **[Feature Selection for Latent Factor Models](feature_selection_for_latent_factor_models.md)**
 
 :   提出基于信噪比（SNR）的类特异性特征选择方法用于低秩生成模型（PPCA/LFA/ELF），每新增一个类只需$O(1)$计算（不需重训旧类模型），避免了灾难性遗忘，并提出新的非参数潜因子模型ELF，在微阵列癌症分类和高维特征选择上验证了有效性。
-
-**[Few-Shot Personalized Scanpath Prediction](few-shot_personalized_scanpath_prediction.md)**
-
-:   提出少样本个性化扫视路径预测（FS-PSP）任务 和 Subject-Embedding Network（SE-Net），通过将主体嵌入学习与扫视路径预测解耦，仅需 1-10 张图像的注视数据即可适配新用户，在 OSIE、COCO-FreeView、COCO-Search18 三个数据集上 ScanMatch 指标超越第二名 5.9%-7.9%，且适配时间仅 3.6 秒、无需微调。
 
 **[FIction: 4D Future Interaction Prediction from Video](fiction_4d_future_interaction_prediction_from_video.md)**
 

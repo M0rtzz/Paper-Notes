@@ -15,7 +15,7 @@ tags:
 
 # ForgeDreamer: Industrial Text-to-3D Generation with Multi-Expert LoRA and Cross-View Hypergraph
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.09266](https://arxiv.org/abs/2603.09266)  
 **代码**: [GitHub](https://github.com/Junhaocai27/ForgeDreamer)  
 **领域**: 3D视觉  

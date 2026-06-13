@@ -15,7 +15,7 @@ tags:
 
 # Efficient Inference for Large Vision-Language Models: Bottlenecks, Techniques, and Prospects
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05546](https://arxiv.org/abs/2604.05546)  
 **代码**: [https://github.com/SuDIS-ZJU/Efficient-LVLMs-Inference](https://github.com/SuDIS-ZJU/Efficient-LVLMs-Inference)  
 **领域**: 多模态VLM / LLM效率  

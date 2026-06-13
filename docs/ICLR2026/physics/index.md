@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 物理/科学计算论文汇总 · 16篇论文解读
+  ICLR2026 物理/科学计算论文汇总 · 17篇论文解读
 description: >-
-  16篇ICLR2026的物理/科学计算方向论文解读，收录 Astral、Augmenting Representations wit、Contact Wasserstein Geodesics等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  17篇ICLR2026的物理/科学计算方向论文解读，收录 Astral、Augmenting Representations wit、Contact Wasserstein Geodesics等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "物理/科学计算"
@@ -31,6 +31,8 @@ item_list:
     t: "Initialization Schemes for Kolmogorov-Arnold Networks: An Empirical Study"
   - u: "learning-guided_kansa_collocation_for_forward_and_inverse_pde_problems/"
     t: "Learning-guided Kansa Collocation for Forward and Inverse PDE Problems"
+  - u: "mosiv_multi-object_system_identification_from_videos/"
+    t: "MOSIV: Multi-Object System Identification from Videos"
   - u: "one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd/"
     t: "One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers"
   - u: "policy_myopia_as_a_mechanism_of_gradual_disempowerment_in_post-agi_governance_ci/"
@@ -41,15 +43,15 @@ item_list:
     t: "Sublinear Time Quantum Algorithm for Attention Approximation"
   - u: "supervised_metric_regularization_through_alternating_optimization_for_multi-regi/"
     t: "Supervised Metric Regularization Through Alternating Optimization for Multi-Regime PINNs"
-item_total: 16
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚛️ 物理/科学计算
 
-**🔬 ICLR2026** · **16** 篇论文解读
+**🔬 ICLR2026** · **17** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/physics/index.md) · [🤖 AAAI2026 (14)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/physics/index.md) · [🤖 AAAI2026 (15)](../../AAAI2026/physics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
 
 **[Astral: Training Physics-Informed Neural Networks with Error Majorants](astral_training_physics-informed_neural_networks_with_error_majorants.md)**
 
@@ -94,6 +96,10 @@ item_total: 16
 **[Learning-guided Kansa Collocation for Forward and Inverse PDE Problems](learning-guided_kansa_collocation_for_forward_and_inverse_pde_problems.md)**
 
 :   将基于径向基函数(RBF)的无网格Kansa方法从单变量线性PDE扩展到耦合多变量和非线性PDE场景，结合自调参技术和多种时间步进方案，并系统对比了与PINN、FNO等神经PDE求解器在正问题和反问题上的表现。
+
+**[MOSIV: Multi-Object System Identification from Videos](mosiv_multi-object_system_identification_from_videos.md)**
+
+:   提出MOSIV——首个从多视角视频进行多物体系统辨识的完整框架：(1) 物体感知的4D动态高斯重建每个物体的几何与运动 → (2) 高斯到连续体提升构建MPM仿真粒子 → (3) 可微MPM模拟器前向滚动+几何对齐目标(3D Chamfer + 2D轮廓)反传优化每个物体的连续材料参数($E, \nu, \mu$) → 在包含弹性/塑性/流体/沙粒四种材料的接触丰富合成基准上，PSNR 达30.51 vs OmniPhysGS 25.93，Chamfer距离降低9.4倍，建立多物体长期物理仿真新基准。
 
 **[One Operator to Rule Them All? On Boundary-Indexed Operator Families in Neural PDE Solvers](one_operator_to_rule_them_all_on_boundary-indexed_operator_families_in_neural_pd.md)**
 

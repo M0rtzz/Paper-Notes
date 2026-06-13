@@ -15,7 +15,7 @@ tags:
 
 # Automatic Combination of Sample Selection Strategies for Few-Shot Learning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2402.03038](https://arxiv.org/abs/2402.03038)  
 **代码**: [https://github.com/kinit-sk/ACSESS](https://github.com/kinit-sk/ACSESS)  
 **领域**: LLM/NLP  

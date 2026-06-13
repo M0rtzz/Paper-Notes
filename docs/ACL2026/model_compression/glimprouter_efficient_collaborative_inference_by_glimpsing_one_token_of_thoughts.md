@@ -15,7 +15,7 @@ tags:
 
 # GlimpRouter: Efficient Collaborative Inference by Glimpsing One Token of Thoughts
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.05110](https://arxiv.org/abs/2601.05110)  
 **代码**: https://github.com/Zengwh02/GlimpRouter  
 **领域**: 模型协同推理 / 大模型加速 / 推理效率  

@@ -14,7 +14,7 @@ tags:
 
 # Virus Infection Attack on LLMs: Your Poisoning Can Spread "VIA" Synthetic Data
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.23041](https://arxiv.org/abs/2509.23041)  
 **代码**: [GitHub](https://github.com/liangzid/VirusInfectionAttack)  
 **领域**: AI安全  

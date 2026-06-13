@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICCV2025 目标检测论文汇总 · 27篇论文解读
+  ICCV2025 目标检测论文汇总 · 28篇论文解读
 description: >-
-  27篇ICCV2025的目标检测方向论文解读，涵盖目标检测、对抗鲁棒、扩散模型、多模态、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  28篇ICCV2025的目标检测方向论文解读，涵盖目标检测、对抗鲁棒、扩散模型、多模态、遥感等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICCV2025"
   - "目标检测"
@@ -29,6 +29,8 @@ item_list:
     t: "Dynamic-DINO: Fine-Grained Mixture of Experts Tuning for Real-time Open-Vocabulary Object Detection"
   - u: "evrt-detr_latent_space_adaptation_of_image_detectors_for_event-based_vision/"
     t: "EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision"
+  - u: "from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe/"
+    t: "From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision"
   - u: "intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net/"
     t: "Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding"
   - u: "kaputt_a_large-scale_dataset_for_visual_defect_detection/"
@@ -67,15 +69,15 @@ item_list:
     t: "YOLO-Count: Differentiable Object Counting for Text-to-Image Generation"
   - u: "yoloe_realtime_seeing_anything/"
     t: "YOLOE: Real-Time Seeing Anything"
-item_total: 27
+item_total: 28
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**📹 ICCV2025** · **27** 篇论文解读
+**📹 ICCV2025** · **28** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/object_detection/index.md) · [📷 CVPR2026 (55)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/object_detection/index.md) · [🧪 ICML2025 (12)](../../ICML2025/object_detection/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/object_detection/index.md) · [📷 CVPR2026 (55)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/object_detection/index.md) · [🧠 NeurIPS2025 (27)](../../NeurIPS2025/object_detection/index.md) · [🧪 ICML2025 (12)](../../ICML2025/object_detection/index.md)
 
 🔥 **高频主题：** 目标检测 ×10 · 对抗鲁棒 ×2 · 扩散模型 ×2 · 多模态 ×2 · 遥感 ×2
 
@@ -110,6 +112,10 @@ item_total: 27
 **[EvRT-DETR: Latent Space Adaptation of Image Detectors for Event-based Vision](evrt-detr_latent_space_adaptation_of_image_detectors_for_event-based_vision.md)**
 
 :   提出I2EvDet框架，通过在冻结的RT-DETR检测器的潜空间中插入轻量级RNN时序模块，以最小的架构修改将主流图像检测器适配为事件相机视频检测模型，在Gen1和1Mpx基准上分别取得+2.3和+1.4 mAP的SOTA。
+
+**[From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)**
+
+:   提出渐进式主动学习（PAL）框架，通过"模型预启动→模型增强→模型精炼"三阶段训练策略，驱动红外小目标检测网络从易到难地主动识别和学习困难样本，在单点监督条件下显著缩小了与全监督方法之间的性能差距（IoU 提升 8.53%–29.1%）。
 
 **[Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding](intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net.md)**
 

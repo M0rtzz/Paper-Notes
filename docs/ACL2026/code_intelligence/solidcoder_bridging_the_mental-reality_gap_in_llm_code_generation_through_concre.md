@@ -15,7 +15,7 @@ tags:
 
 # SolidCoder: Bridging the Mental-Reality Gap in LLM Code Generation through Concrete Execution
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19825](https://arxiv.org/abs/2604.19825)  
 **代码**: [https://github.com/10kH/SolidCoder](https://github.com/10kH/SolidCoder)  
 **领域**: 代码生成 / LLM Agent  

@@ -15,7 +15,7 @@ tags:
 
 # The Primacy of Magnitude in Low-Rank Adaptation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2507.06558](https://arxiv.org/abs/2507.06558)  
 **代码**: [GitHub](https://github.com/zhangzicheng-jd/LoRAM)  
 **领域**: 科学计算  

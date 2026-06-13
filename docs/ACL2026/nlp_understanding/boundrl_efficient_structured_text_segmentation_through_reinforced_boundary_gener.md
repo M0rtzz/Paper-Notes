@@ -15,7 +15,7 @@ tags:
 
 # BoundRL: Efficient Structured Text Segmentation through Reinforced Boundary Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.20151](https://arxiv.org/abs/2510.20151)  
 **代码**: 无  
 **领域**: 文本分割/强化学习  

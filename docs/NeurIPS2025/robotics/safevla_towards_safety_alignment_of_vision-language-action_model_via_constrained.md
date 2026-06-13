@@ -15,7 +15,7 @@ tags:
 
 # SafeVLA: Towards Safety Alignment of Vision-Language-Action Model via Constrained Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2503.03480](https://arxiv.org/abs/2503.03480)  
 **代码**: [项目主页](https://pku-safevla.github.io)  
 **领域**: LLM对齐  

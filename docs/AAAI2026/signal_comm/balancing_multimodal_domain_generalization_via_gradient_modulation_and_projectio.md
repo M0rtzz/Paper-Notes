@@ -14,7 +14,7 @@ tags:
 
 # Balancing Multimodal Domain Generalization via Gradient Modulation and Projection
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2603.14175](https://arxiv.org/abs/2603.14175)  
 **代码**: 待确认  
 **领域**: 视频理解  

@@ -15,7 +15,7 @@ tags:
 
 # Extracting Events Like Code: A Multi-Agent Programming Framework for Zero-Shot Event Extraction
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13118](https://arxiv.org/abs/2511.13118)  
 **代码**: [https://github.com/UESTC-GQJ/Agent-Event-Coder](https://github.com/UESTC-GQJ/Agent-Event-Coder)  
 **领域**: 代码智能  

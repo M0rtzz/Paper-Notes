@@ -15,7 +15,7 @@ tags:
 
 # Empowering Semantic-Sensitive Underwater Image Enhancement with VLM
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2603.12773](https://arxiv.org/abs/2603.12773)  
 **代码**: 待确认  
 **领域**: 多模态VLM  

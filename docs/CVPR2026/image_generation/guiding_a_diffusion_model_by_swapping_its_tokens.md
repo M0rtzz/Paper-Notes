@@ -15,7 +15,7 @@ tags:
 
 # Guiding a Diffusion Model by Swapping Its Tokens
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Oral  
 **arXiv**: [2604.08048](https://arxiv.org/abs/2604.08048)  
 **代码**: [https://github.com/VISION-SJTU/SSG](https://github.com/VISION-SJTU/SSG)  
 **领域**: 扩散模型 / 图像生成  

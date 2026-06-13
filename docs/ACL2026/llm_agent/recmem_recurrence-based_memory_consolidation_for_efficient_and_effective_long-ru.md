@@ -15,7 +15,7 @@ tags:
 
 # RecMem: Recurrence-based Memory Consolidation for Efficient and Effective Long-Running LLM Agents
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.16045](https://arxiv.org/abs/2605.16045)  
 **代码**: https://github.com/CaiusDai/RecMem  
 **领域**: LLM Agent / 长期记忆 / Memory System  

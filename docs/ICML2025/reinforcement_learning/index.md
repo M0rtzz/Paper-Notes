@@ -331,7 +331,7 @@ item_total: 70
 
 **[T1: Advancing Language Model Reasoning through Reinforcement Learning and Inference Scaling](t1_advancing_language_model_reasoning_through_reinforcement_learning_and_inferen.md)**
 
-:   T1 通过合成包含 trial-and-error 和 self-verification 的 CoT 数据进行 SFT 初始化，再结合过采样、熵奖励和动态锚点正则化来扩展 RL 训练，使开源 LLM 在复杂数学推理上超越 QwQ-32B-Preview 等模型，并展现出推理时间缩放（inference scaling）行为。
+:   T1 通过合成 CoT 数据初始化 + RL 训练中的过采样和熵奖励策略来鼓励探索，使开源 LLM 展现出推理时缩放（inference scaling）行为，在 MATH500、AIME2024 等挑战性数学推理基准上超越了 QwQ-32B-Preview。
 
 **[Test-Time Adaptation with Binary Feedback](test-time_adaptation_with_binary_feedback.md)**
 

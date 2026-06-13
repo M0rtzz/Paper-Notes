@@ -15,7 +15,7 @@ tags:
 
 # When Worse is Better: Navigating the Compression-Generation Trade-off in Visual Tokenization
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2412.16326](https://arxiv.org/abs/2412.16326)  
 **代码**: 无  
 **领域**: 模型压缩 / 图像生成  

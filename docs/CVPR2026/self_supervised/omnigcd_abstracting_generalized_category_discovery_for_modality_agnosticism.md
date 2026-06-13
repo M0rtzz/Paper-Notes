@@ -15,7 +15,7 @@ tags:
 
 # OmniGCD: Abstracting Generalized Category Discovery for Modality Agnosticism
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.14762](https://arxiv.org/abs/2604.14762)  
 **代码**: [github.com/Jordan-HS/OmniGCD](https://github.com/Jordan-HS/OmniGCD)  
 **领域**: 自监督学习/表示学习  

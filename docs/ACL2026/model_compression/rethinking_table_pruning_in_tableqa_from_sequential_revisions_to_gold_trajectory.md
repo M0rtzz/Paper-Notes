@@ -15,7 +15,7 @@ tags:
 
 # Rethinking Table Pruning in TableQA: From Sequential Revisions to Gold Trajectory-Supervised Parallel Search
 
-**会议**: ACL2026  
+**会议**: ACL2026 Oral  
 **arXiv**: [2601.03851](https://arxiv.org/abs/2601.03851)  
 **代码**: 无  
 **领域**: 表格问答 / 表格剪枝 / LLM推理  

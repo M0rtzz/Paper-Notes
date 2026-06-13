@@ -278,7 +278,7 @@ item_total: 94
 
 **[MV-SSM: Multi-View State Space Modeling for 3D Human Pose Estimation](mv-ssm_multi-view_state_space_modeling_for_3d_human_pose_estimation.md)**
 
-:   MV-SSM 首次将状态空间模型（Mamba）引入多视图 3D 人体姿态估计，通过投影状态空间块 (PSS) 和网格 token 引导的双向扫描 (GTBS) 显式建模关节空间序列，在 CMU Panoptic 上达到 93.5 AP25 且在跨相机、跨场景泛化测试中大幅超越 SOTA。
+:   MV-SSM 首次将状态空间模型（Mamba）引入多视图 3D 人体姿态估计任务，通过 Projective State Space (PSS) 块在特征级和关键点级显式建模关节空间序列，结合 Grid Token-guided Bidirectional Scanning (GTBS)，在 CMU Panoptic 上达到 93.5 AP25，并在跨相机/跨场景泛化测试中大幅超越 SOTA。
 
 **[OverLoCK: An Overview-first-Look-Closely-next ConvNet with Context-Mixing Dynamic Kernels](overlock_an_overview-first-look-closely-next_convnet_with_context-mixing_dynamic.md)**
 

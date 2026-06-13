@@ -15,7 +15,7 @@ tags:
 
 # Language-Coupled Reinforcement Learning for Multilingual Retrieval-Augmented Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.14896](https://arxiv.org/abs/2601.14896)  
 **代码**: [GitHub](https://github.com/Cherry-qwq/LcRL-Open)  
 **领域**: 强化学习  

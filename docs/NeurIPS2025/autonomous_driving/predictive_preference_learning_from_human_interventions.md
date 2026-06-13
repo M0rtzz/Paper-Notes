@@ -15,7 +15,7 @@ tags:
 
 # Predictive Preference Learning from Human Interventions
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.01545](https://arxiv.org/abs/2510.01545)  
 **代码**: [https://metadriverse.github.io/ppl](https://metadriverse.github.io/ppl)  
 **领域**: 自动驾驶 / 模仿学习  

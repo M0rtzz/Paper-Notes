@@ -15,7 +15,7 @@ tags:
 
 # MA$^2$P: A Meta-Cognitive Autonomous Intelligent Agents Framework for Complex Persuasion
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.18572](https://arxiv.org/abs/2605.18572)  
 **代码**: 论文称将释放 prompt、代码与知识库，但缓存中未给出公开仓库链接  
 **领域**: 对话系统 / LLM Agent / 说服式对话  

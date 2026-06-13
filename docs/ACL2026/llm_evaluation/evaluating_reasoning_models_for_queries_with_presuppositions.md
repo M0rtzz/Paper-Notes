@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Evaluating Reasoning Models for Queries with Presuppositions
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.03050](https://arxiv.org/abs/2605.03050)  
 **代码**: https://github.com/weakit/equip  
 **领域**: LLM 推理 / 评测 / 事实性  

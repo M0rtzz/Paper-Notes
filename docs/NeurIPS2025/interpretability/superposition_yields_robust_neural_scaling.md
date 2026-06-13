@@ -15,7 +15,7 @@ tags:
 
 # Superposition Yields Robust Neural Scaling
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Best Paper  
 **arXiv**: [2505.10465](https://arxiv.org/abs/2505.10465)  
 **代码**: [GitHub](https://github.com/liuyz0/SuperpositionScaling)  
 **领域**: LLM预训练  

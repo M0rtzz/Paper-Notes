@@ -15,7 +15,7 @@ tags:
 
 # Automated Knowledge Component Generation and Interpretable Knowledge Tracing in Coding Problems
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2502.18632](https://arxiv.org/abs/2502.18632)  
 **代码**: https://github.com/umass-ml4ed/kcgen-kt  
 **领域**: 教育AI / 知识追踪  

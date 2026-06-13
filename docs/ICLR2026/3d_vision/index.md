@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 3D视觉论文汇总 · 61篇论文解读
+  ICLR2026 3D视觉论文汇总 · 62篇论文解读
 description: >-
-  61篇ICLR2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、动态场景、三维重建、机器人、新视角合成、NeRF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  62篇ICLR2026的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、动态场景、三维重建、机器人、新视角合成、NeRF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "3D 视觉"
@@ -19,6 +19,8 @@ item_list:
     t: "3DGEER: 3D Gaussian Rendering Made Exact and Efficient for Generic Cameras"
   - u: "a_step_to_decouple_optimization_in_3dgs/"
     t: "A Step to Decouple Optimization in 3DGS"
+  - u: "assetformer_modular_3d_assets_generation_with_autoregressive_transformer/"
+    t: "AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer"
   - u: "augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting/"
     t: "Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting"
   - u: "clods_visual-only_unsupervised_cloth_dynamics_learning_in_unknown_conditions/"
@@ -73,17 +75,15 @@ item_list:
     t: "LiTo: Surface Light Field Tokenization"
   - u: "megs2_memory-efficient_gaussian_splatting_via_spherical_gaussians_and_unified_pr/"
     t: "MEGS2: Memory-Efficient Gaussian Splatting via Spherical Gaussians and Unified Pruning"
-  - u: "moe-gs_mixture_of_experts_for_dynamic_gaussian_splatting/"
-    t: "MoE-GS: Mixture of Experts for Dynamic Gaussian Splatting"
-item_total: 61
+item_total: 62
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🔬 ICLR2026** · **61** 篇论文解读
+**🔬 ICLR2026** · **62** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (264)](../../ICCV2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (239)](../../CVPR2026/3d_vision/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md) · [📹 ICCV2025 (267)](../../ICCV2025/3d_vision/index.md)
 
 🔥 **高频主题：** 3D 高斯渲染 ×11 · 动态场景 ×4 · 三维重建 ×4 · 机器人 ×3 · 新视角合成 ×3
 
@@ -94,6 +94,10 @@ item_total: 61
 **[A Step to Decouple Optimization in 3DGS](a_step_to_decouple_optimization_in_3dgs.md)**
 
 :   深入分析 3DGS 优化中被忽视的更新步耦合（不可见视点下的隐式更新和动量重缩放）和梯度耦合（正则化与光度损失在 Adam 动量中的耦合），通过解耦和重组提出 AdamW-GS 优化器，在不引入额外剪枝操作的情况下同时提升重建质量和减少冗余原语。
+
+**[AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer](assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)**
+
+:   提出 AssetFormer，基于 Llama 架构的自回归 Transformer，将模块化 3D 资产（由 primitive 序列组成）建模为离散 token 序列，通过 DFS/BFS 图遍历重排序和联合词汇表解码实现从文本描述生成可直接用于游戏引擎的模块化 3D 资产。
 
 **[Augmented Radiance Field: A General Framework for Enhanced Gaussian Splatting](augmented_radiance_field_a_general_framework_for_enhanced_gaussian_splatting.md)**
 

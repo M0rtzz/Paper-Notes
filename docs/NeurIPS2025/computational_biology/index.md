@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 计算生物论文汇总 · 75篇论文解读
+  NeurIPS2025 计算生物论文汇总 · 76篇论文解读
 description: >-
-  75篇NeurIPS2025的计算生物方向论文解读，涵盖生物分子、扩散模型、LLM、推理、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  76篇NeurIPS2025的计算生物方向论文解读，涵盖生物分子、扩散模型、LLM、推理、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "计算生物"
@@ -75,17 +75,17 @@ item_list:
     t: "Generalizable Insights for Graph Transformers in Theory and Practice"
   - u: "generative_distribution_embeddings_lifting_autoencoders_to_the_space_of_distribu/"
     t: "Generative Distribution Embeddings: Lifting Autoencoders to the Space of Distributions for Multiscale Representation Learning"
-item_total: 75
+item_total: 76
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧬 计算生物
 
-**🧠 NeurIPS2025** · **75** 篇论文解读
+**🧠 NeurIPS2025** · **76** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (36)](../../ICML2026/computational_biology/index.md) · [💬 ACL2026 (5)](../../ACL2026/computational_biology/index.md) · [📷 CVPR2026 (11)](../../CVPR2026/computational_biology/index.md) · [🔬 ICLR2026 (38)](../../ICLR2026/computational_biology/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/computational_biology/index.md) · [📹 ICCV2025 (4)](../../ICCV2025/computational_biology/index.md)
 
-🔥 **高频主题：** 生物分子 ×22 · 扩散模型 ×14 · LLM ×3 · 推理 ×3 · 对齐/RLHF ×2
+🔥 **高频主题：** 生物分子 ×23 · 扩散模型 ×14 · LLM ×3 · 推理 ×3 · 对齐/RLHF ×2
 
 **[A Standardized Benchmark for Multilabel Antimicrobial Peptide Classification](a_standardized_benchmark_for_multilabel_antimicrobial_peptide_classification.md)**
 
@@ -210,6 +210,10 @@ item_total: 75
 **[Generative Modeling of Full-Atom Protein Conformations using Latent Diffusion on Graph Embeddings](generative_modeling_of_full-atom_protein_conformations_using_latent_diffusion_on.md)**
 
 :   提出 **LD-FPG** 框架，使用 Chebyshev 图神经网络将蛋白质全原子 MD 轨迹编码到低维潜在空间，再用 DDPM 在该空间中生成新的构象集合体（ensemble），首次实现了包含侧链所有重原子的蛋白质构象生成。
+
+**[GFlowNets for Learning Better Drug-Drug Interaction Representations](gflownets_for_learning_better_drug-drug_interaction_representations.md)**
+
+:   针对药物-药物相互作用（DDI）预测中严重的类别不平衡问题，本文提出将 GFlowNet 与变分图自编码器（VGAE）结合，通过奖励引导的生成采样为稀有交互类型生成合成样本，从而增强模型在罕见但临床关键的交互类型上的预测能力。
 
 **[Graph Diffusion that can Insert and Delete](graph_diffusion_that_can_insert_and_delete.md)**
 

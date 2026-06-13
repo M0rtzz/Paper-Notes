@@ -15,7 +15,7 @@ tags:
 
 # DUET: Dual Execution for Test Output Prediction with Generated Code and Pseudocode
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.11514](https://arxiv.org/abs/2604.11514)  
 **代码**: [GitHub](https://github.com/ldilab/DuET)  
 **领域**: LLM安全  

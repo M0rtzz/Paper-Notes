@@ -15,7 +15,7 @@ tags:
 
 # A Kinetic Energy Perspective of Flow Matching
 
-**会议**: ICML2026  
+**会议**: ICML2026 Spotlight  
 **arXiv**: [2602.07928](https://arxiv.org/abs/2602.07928)  
 **代码**: 论文未提供代码  
 **领域**: 图像生成 / Flow Matching / 生成模型诊断  

@@ -15,7 +15,7 @@ tags:
 
 # Latent Laplace Diffusion for Irregular Multivariate Time Series
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.19805](https://arxiv.org/abs/2605.19805)  
 **代码**: 待确认  
 **领域**: 时间序列 / 生成模型  

@@ -15,7 +15,7 @@ tags:
 
 # FourierPET: Deep Fourier-based Unrolled Network for Low-count PET Reconstruction
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2601.11680](https://arxiv.org/abs/2601.11680)  
 **代码**: 暂无  
 **领域**: 可解释性  

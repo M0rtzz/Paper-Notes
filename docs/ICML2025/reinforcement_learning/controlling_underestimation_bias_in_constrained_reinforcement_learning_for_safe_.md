@@ -15,7 +15,7 @@ tags:
 
 # Controlling Underestimation Bias in Constrained Reinforcement Learning for Safe Exploration
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2601.11953](https://arxiv.org/abs/2601.11953)  
 **代码**: [https://github.com/ShiqingGao/MICE](https://github.com/ShiqingGao/MICE)  
 **领域**: 强化学习  

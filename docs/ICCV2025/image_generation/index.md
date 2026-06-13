@@ -83,7 +83,7 @@ item_total: 213
 
 **📹 ICCV2025** · **213** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (137)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🔬 ICLR2026 (138)](../../ICLR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md)
 
 🔥 **高频主题：** 扩散模型 ×88 · 文生图 ×18 · 图像编辑 ×14 · 对抗鲁棒 ×12 · 少样本学习 ×8
 
@@ -609,7 +609,7 @@ item_total: 213
 
 **[MaskControl: Spatio-Temporal Control for Masked Motion Synthesis](maskcontrol_spatio-temporal_control_for_masked_motion_synthesis.md)**
 
-:   MaskControl 首次将空间可控性引入生成式掩码运动模型，通过 Logits Regularizer（训练时隐式对齐）和 Logits Optimization（推理时显式优化）两个核心组件操控 token 分类器的 logits，同时实现高质量运动生成（FID 降低 77%）和高精度关节控制（平均误差 0.91cm vs 1.08cm）。
+:   MaskControl 首次将空间关节可控性引入生成式掩码运动模型（Masked Motion Model），通过训练时的 Logits Regularizer 隐式对齐运动 token 分布与目标关节位置，以及推理时的 Logits Optimization 显式优化预测 logits 以最小化控制误差，在保持高生成质量（FID 降低77%）的同时实现高精度关节控制（平均误差0.91cm），并支持零样本目标函数控制。
 
 **[MatchDiffusion: Training-free Generation of Match-Cuts](matchdiffusion_training-free_generation_of_match-cuts.md)**
 
@@ -741,7 +741,7 @@ item_total: 213
 
 **[Rethink Sparse Signals for Pose-guided Text-to-Image Generation](rethink_sparse_signals_for_pose-guided_text-to-image_generation.md)**
 
-:   提出 SP-Ctrl（Spatial-Pose ControlNet），通过可学习空间姿态表示（SPR）替换 OpenPose 的固定 RGB 编码，并引入关键点概念学习（KCL）策略利用交叉注意力热力图约束增强关键点对齐，使稀疏姿态信号达到与密集信号（深度图/DensePose）相当的姿态控制精度，同时保持图像多样性和跨物种生成能力。
+:   提出 SP-Ctrl（Spatial-Pose ControlNet），通过可学习空间姿态表示（SPR）和关键点概念学习（KCL）两个核心策略，使稀疏信号（OpenPose）在姿态引导文生图任务中达到与稠密信号（深度图、DensePose）相当的姿态对齐精度，同时保留稀疏信号在多样性生成和跨物种泛化上的天然优势。
 
 **[Rethinking Cross-Modal Interaction in Multimodal Diffusion Transformers](rethinking_cross-modal_interaction_in_multimodal_diffusion_transformers.md)**
 
@@ -869,7 +869,7 @@ item_total: 213
 
 **[Towards Robust Defense against Customization via Protective Perturbation Resistant to Diffusion-based Purification](towards_robust_defense_against_customization_via_protective_perturbation_resista.md)**
 
-:   提出AntiPure——一种抗净化（anti-purification）保护性扰动方法，通过Patch-wise频域引导和错误时间步引导两种机制，使保护性扰动在被扩散净化后仍能有效干扰定制化生成（DreamBooth/LoRA），实现最小感知差异和最大输出失真的双重目标。
+:   提出 AntiPure，一种针对扩散模型净化（purification）过程的对抗扰动方法，通过 Patch-wise Frequency Guidance 和 Erroneous Timestep Guidance 两种引导机制，生成在净化后仍能持续干扰定制化微调的保护性扰动，在"净化-定制化"工作流中全面超越现有防护方法。
 
 **[Trade-offs in Image Generation: How Do Different Dimensions Interact?](trade-offs_in_image_generation_how_do_different_dimensions_interact.md)**
 

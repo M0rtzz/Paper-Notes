@@ -15,7 +15,7 @@ tags:
 
 # Dissecting Multimodal In-Context Learning: Modality Asymmetries and Circuit Dynamics in modern Transformers
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2601.20796](https://arxiv.org/abs/2601.20796)  
 **代码**: https://github.com/YiranHuangIrene/multimodal-icl (有)  
 **领域**: 可解释性 / 机制可解释性 / 多模态  

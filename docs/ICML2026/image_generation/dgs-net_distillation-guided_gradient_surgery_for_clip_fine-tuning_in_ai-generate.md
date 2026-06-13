@@ -15,7 +15,7 @@ tags:
 
 # DGS-Net: Distillation-Guided Gradient Surgery for CLIP Fine-Tuning in AI-Generated Image Detection
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2511.13108](https://arxiv.org/abs/2511.13108)  
 **代码**: https://horizontel.github.io/DGS-Net/  
 **领域**: AI 生成图像检测 / CLIP 微调 / 梯度操控  

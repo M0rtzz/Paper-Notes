@@ -15,7 +15,7 @@ tags:
 
 # Dual Hierarchical Dialogue Policy Learning for Legal Inquisitive Conversational Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.14057](https://arxiv.org/abs/2605.14057)  
 **代码**: 论文脚注提到 Git repository，未给出公开链接  
 **领域**: 对话 / 法律 / 强化学习  

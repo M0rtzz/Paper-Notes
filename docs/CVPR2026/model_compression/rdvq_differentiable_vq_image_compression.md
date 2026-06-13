@@ -15,7 +15,7 @@ tags:
 
 # RDVQ: Differentiable Vector Quantization for Rate-Distortion Optimization of Generative Image Compression
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Oral  
 **arXiv**: [2604.10546](https://arxiv.org/abs/2604.10546)  
 **代码**: [https://github.com/CVL-UESTC/RDVQ](https://github.com/CVL-UESTC/RDVQ)  
 **领域**: 图像压缩/恢复  

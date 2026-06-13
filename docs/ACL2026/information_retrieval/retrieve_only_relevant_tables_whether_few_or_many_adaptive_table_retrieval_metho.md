@@ -15,7 +15,7 @@ tags:
 
 # Retrieve Only Relevant Tables Whether Few or Many: Adaptive Table Retrieval Method
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.18766](https://arxiv.org/abs/2605.18766)  
 **代码**: 文中称提供代码和数据（cache 未含具体 URL）  
 **领域**: 信息检索 / 表格检索 / Text-to-SQL  

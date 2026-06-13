@@ -15,7 +15,7 @@ tags:
 
 # Multigranular Evaluation for Brain Visual Decoding
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2507.07993](https://arxiv.org/abs/2507.07993)  
 **代码**: [GitHub](https://github.com/weihaox/BASIC)  
 **领域**: 图像分割  

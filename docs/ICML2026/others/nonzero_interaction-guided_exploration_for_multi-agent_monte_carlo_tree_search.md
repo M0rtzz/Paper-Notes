@@ -14,7 +14,7 @@ tags:
 
 # NonZero: Interaction-Guided Exploration for Multi-Agent Monte Carlo Tree Search
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.00751](https://arxiv.org/abs/2605.00751)  
 **代码**: 无  
 **领域**: 多智能体强化学习 / 蒙特卡洛树搜索 / 非线性 bandit  

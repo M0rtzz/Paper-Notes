@@ -15,7 +15,7 @@ tags:
 
 # Enhancing Multilingual RAG Systems with Debiased Language Preference-Guided Query Fusion
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.02956](https://arxiv.org/abs/2601.02956)  
 **代码**: [GitHub](https://github.com/jeonghyunpark2002/DELTA)  
 **领域**: 信息检索 / 多语言RAG  

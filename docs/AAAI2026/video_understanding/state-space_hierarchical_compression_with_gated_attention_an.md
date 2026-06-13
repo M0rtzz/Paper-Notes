@@ -15,7 +15,7 @@ tags:
 
 # MambaMia: State-Space Hierarchical Compression for Hour-Long Video Understanding in Large Multimodal Models
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2506.13564](https://arxiv.org/abs/2506.13564)  
 **代码**: [https://github.com/naver-ai/mambamia](https://github.com/naver-ai/mambamia)  
 **领域**: 多模态大模型 / 视频理解  

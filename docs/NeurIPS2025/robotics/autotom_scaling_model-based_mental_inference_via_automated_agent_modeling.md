@@ -15,7 +15,7 @@ tags:
 
 # AutoToM: Scaling Model-based Mental Inference via Automated Agent Modeling
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.15676](https://arxiv.org/abs/2502.15676)  
 **代码**: 有  
 **领域**: 心智理论 / LLM Agent  

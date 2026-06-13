@@ -16,7 +16,7 @@ tags:
 
 # MASPOB: 用 GNN 代理 + LinUCB + 坐标上升做多智能体提示优化
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2603.02630](https://arxiv.org/abs/2603.02630)  
 **代码**: https://github.com/HZ1008/MASPOB  
 **领域**: 多 Agent / 提示优化 / 贝叶斯优化  

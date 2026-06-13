@@ -14,7 +14,7 @@ tags:
 
 # Intrinsic Barriers and Practical Pathways for Human-AI Alignment: An Agreement-Based Complexity Analysis
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2502.05934](https://arxiv.org/abs/2502.05934)  
 **代码**: 无  
 **领域**: 其他  

@@ -15,7 +15,7 @@ tags:
 
 # Rethinking Parameter Sharing for LLM Fine-Tuning with Multiple LoRAs
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2509.25414](https://arxiv.org/abs/2509.25414)  
 **代码**: https://github.com/OptMN-Lab/ALoRA  
 **领域**: 模型压缩 / 参数高效微调 / 联邦微调  

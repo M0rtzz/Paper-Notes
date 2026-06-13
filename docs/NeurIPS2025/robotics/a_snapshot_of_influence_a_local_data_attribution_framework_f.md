@@ -15,7 +15,7 @@ tags:
 
 # A Snapshot of Influence: A Local Data Attribution Framework for Online Reinforcement Learning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2505.19281](https://arxiv.org/abs/2505.19281)  
 **代码**: [https://github.com/LDAORL/LDA-ORL](https://github.com/LDAORL/LDA-ORL)  
 **领域**: 机器人  

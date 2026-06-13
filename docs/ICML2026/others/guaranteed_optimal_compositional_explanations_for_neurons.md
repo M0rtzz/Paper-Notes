@@ -14,7 +14,7 @@ tags:
 
 # Guaranteed Optimal Compositional Explanations for Neurons
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2511.20934](https://arxiv.org/abs/2511.20934)  
 **代码**: 论文中给出（"We release the code at the following repository"，具体链接见原文）  
 **领域**: 可解释性 / 神经元解释 / 组合解释  

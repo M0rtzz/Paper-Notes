@@ -272,7 +272,7 @@ item_total: 49
 
 **[VSRM: A Robust Mamba-Based Framework for Video Super-Resolution](vsrm_a_robust_mamba-based_framework_for_video_super-resolution.md)**
 
-:   首次将 Mamba 引入视频超分辨率（VSR），提出 VSRM 框架，通过双聚合Mamba块实现高效时空建模，结合可变形交叉Mamba对齐和频域损失，在多个基准上取得 SOTA。
+:   首次将 Mamba 引入视频超分辨率任务，提出双聚合 Mamba 模块（DAMB）捕获时空长程依赖、可变形交叉 Mamba 对齐模块（DCA）增强帧间对齐灵活性，以及频域 Charbonnier 损失（FCL）改善高频细节恢复，在 REDS4/Vid4/Vimeo-90K 上取得 SOTA。
 
 **[WorldScore: A Unified Evaluation Benchmark for World Generation](worldscore_a_unified_evaluation_benchmark_for_world_generation.md)**
 

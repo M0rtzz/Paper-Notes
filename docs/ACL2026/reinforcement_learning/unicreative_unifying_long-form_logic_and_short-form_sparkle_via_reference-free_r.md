@@ -15,7 +15,7 @@ tags:
 
 # UniCreative: Unifying Long-form Logic and Short-form Sparkle via Reference-Free Reinforcement Learning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05517](https://arxiv.org/abs/2604.05517)  
 **代码**: [https://github.com/weixiaolong94-hub/UniCreative](https://github.com/weixiaolong94-hub/UniCreative)  
 **领域**: 强化学习/创意写作  

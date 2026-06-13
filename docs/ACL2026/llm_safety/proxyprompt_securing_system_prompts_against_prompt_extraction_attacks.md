@@ -14,7 +14,7 @@ tags:
 
 # ProxyPrompt: Securing System Prompts against Prompt Extraction Attacks
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2505.11459](https://arxiv.org/abs/2505.11459)  
 **代码**: [GitHub](https://github.com/boschresearch/proxyprompt)  
 **领域**: LLM 安全 / Prompt 保护 / 系统提示词隐私  

@@ -15,7 +15,7 @@ tags:
 
 # The Structure of Relation Decoding Linear Operators in Large Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.26543](https://arxiv.org/abs/2510.26543)  
 **代码**: [GitHub](https://bit.ly/structure-of-relations)  
 **领域**: 模型压缩  

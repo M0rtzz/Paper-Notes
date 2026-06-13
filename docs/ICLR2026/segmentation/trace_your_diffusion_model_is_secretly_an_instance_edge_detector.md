@@ -15,7 +15,7 @@ tags:
 
 # TRACE: Your Diffusion Model is Secretly an Instance Edge Detector
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2503.07982](https://arxiv.org/abs/2503.07982)  
 **代码**: [项目页面](https://shjo-april.github.io/TRACE)  
 **领域**: 实例分割 / 全景分割  

@@ -15,7 +15,7 @@ tags:
 
 # Jamendo-MT-QA: A Benchmark for Multi-Track Comparative Music Question Answering
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.09721](https://arxiv.org/abs/2604.09721)  
 **代码**: 无  
 **领域**: 音频与语音 / 音乐理解  

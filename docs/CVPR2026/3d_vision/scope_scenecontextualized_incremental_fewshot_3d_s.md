@@ -15,7 +15,7 @@ tags:
 
 # SCOPE: Scene-Contextualized Incremental Few-Shot 3D Segmentation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.06572](https://arxiv.org/abs/2603.06572)  
 **代码**: [github.com/Surrey-UP-Lab/SCOPE](https://github.com/Surrey-UP-Lab/SCOPE)  
 **领域**: 3D点云分割 / 增量Few-Shot学习  

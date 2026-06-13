@@ -15,7 +15,7 @@ tags:
 
 # ImageNet-trained CNNs are not biased towards texture: Revisiting feature reliance through controlled suppression
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2509.20234](https://arxiv.org/abs/2509.20234)  
 **代码**: [GitHub](https://github.com/tomburgert/feature-reliance)  
 **领域**: Medical Imaging / Computer Vision  

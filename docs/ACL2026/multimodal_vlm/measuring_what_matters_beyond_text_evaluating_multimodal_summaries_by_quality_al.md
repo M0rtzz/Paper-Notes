@@ -15,7 +15,7 @@ tags:
 
 # Measuring What Matters Beyond Text: Evaluating Multimodal Summaries by Quality, Alignment, and Diversity (MM-Eval)
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.11693](https://arxiv.org/abs/2605.11693)  
 **代码**: https://github.com/abidmeeraj/MM-Eval  
 **领域**: 多模态评测 / 摘要 / 可解释评测  

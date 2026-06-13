@@ -15,7 +15,7 @@ tags:
 
 # A Generalization Result for Convergence in Learning-to-Optimize
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2410.07704](https://arxiv.org/abs/2410.07704)  
 **代码**: [GitHub](https://github.com/MichiSucker/COLA_2024)  
 **领域**: 优化  

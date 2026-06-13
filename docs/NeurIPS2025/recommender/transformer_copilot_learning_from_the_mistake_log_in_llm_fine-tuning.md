@@ -15,7 +15,7 @@ tags:
 
 # Transformer Copilot: Learning from The Mistake Log in LLM Fine-tuning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.16270](https://arxiv.org/abs/2505.16270)  
 **代码**: [GitHub](https://github.com/jiaruzouu/TransformerCopilot)  
 **领域**: 推荐系统  

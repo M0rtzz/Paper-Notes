@@ -15,7 +15,7 @@ tags:
 
 # Train in Vain: Functionality-Preserving Poisoning to Prevent Unauthorized Use of Code Datasets
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.22291](https://arxiv.org/abs/2604.22291)  
 **代码**: 待确认（论文称开源，但本地缓存未给出仓库 URL）  
 **领域**: 代码大模型 / 数据治理  

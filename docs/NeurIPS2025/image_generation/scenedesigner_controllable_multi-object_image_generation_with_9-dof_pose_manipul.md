@@ -15,7 +15,7 @@ tags:
 
 # SceneDesigner: Controllable Multi-Object Image Generation with 9-DoF Pose Manipulation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.16666](https://arxiv.org/abs/2511.16666)  
 **代码**: [https://henghuiding.com/SceneDesigner/](https://henghuiding.com/SceneDesigner/) (项目页面)  
 **领域**: 可控图像生成 / 3D 感知生成  

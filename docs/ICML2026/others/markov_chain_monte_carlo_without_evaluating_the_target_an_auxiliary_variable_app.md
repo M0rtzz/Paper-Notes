@@ -14,7 +14,7 @@ tags:
 
 # Markov Chain Monte Carlo without Evaluating the Target: An Auxiliary Variable Approach
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2406.05242](https://arxiv.org/abs/2406.05242)  
 **代码**: https://github.com/ywwes26/Auxiliary-MCMC  
 **领域**: 采样 / 贝叶斯推断 / MCMC  

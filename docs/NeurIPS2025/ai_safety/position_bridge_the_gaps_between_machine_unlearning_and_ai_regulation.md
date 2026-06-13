@@ -15,7 +15,7 @@ tags:
 
 # Position: Bridge the Gaps between Machine Unlearning and AI Regulation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2502.12430](https://arxiv.org/abs/2502.12430)  
 **代码**: 暂无  
 **领域**: AI安全  

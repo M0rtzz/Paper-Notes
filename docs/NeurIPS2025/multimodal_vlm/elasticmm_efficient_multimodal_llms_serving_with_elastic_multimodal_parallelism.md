@@ -15,7 +15,7 @@ tags:
 
 # ElasticMM: Efficient MLLM Serving with Elastic Multimodal Parallelism
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2507.10069](https://arxiv.org/abs/2507.10069)  
 **代码**: 无（即将开源）  
 **领域**: 多模态VLM  

@@ -15,7 +15,7 @@ tags:
 
 # Orient Anything V2: Unifying Orientation and Rotation Understanding
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2601.05573](https://arxiv.org/abs/2601.05573)  
 **代码**: 有 ([https://orient-anythingv2.github.io/](https://orient-anythingv2.github.io/))  
 **领域**: 计算机视觉 / 3D理解  

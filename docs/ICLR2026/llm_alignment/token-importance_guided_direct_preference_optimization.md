@@ -15,7 +15,7 @@ tags:
 
 # Token-Importance Guided Direct Preference Optimization (TI-DPO)
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2505.19653](https://arxiv.org/abs/2505.19653)  
 **代码**: [https://github.com/gracefulning/TIDPO](https://github.com/gracefulning/TIDPO)  
 **领域**: 对齐RLHF / DPO  

@@ -15,7 +15,7 @@ tags:
 
 # Language Model Developers Should Report Train-Test Overlap
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2410.08385](https://arxiv.org/abs/2410.08385)  
 **代码**: 无  
 **领域**: LLM预训练  

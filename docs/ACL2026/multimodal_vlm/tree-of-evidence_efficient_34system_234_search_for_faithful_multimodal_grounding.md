@@ -15,7 +15,7 @@ tags:
 
 # Tree-of-Evidence: Efficient "System 2" Search for Faithful Multimodal Grounding
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.07692](https://arxiv.org/abs/2604.07692)  
 **代码**: 无  
 **领域**: 多模态VLM  

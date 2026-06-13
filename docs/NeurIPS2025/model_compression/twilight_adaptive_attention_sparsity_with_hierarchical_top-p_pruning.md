@@ -15,7 +15,7 @@ tags:
 
 # Twilight: Adaptive Attention Sparsity with Hierarchical Top-p Pruning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.02770](https://arxiv.org/abs/2502.02770)  
 **代码**: [https://github.com/tsinghua-ideal/Twilight](https://github.com/tsinghua-ideal/Twilight)  
 **领域**: 模型压缩  

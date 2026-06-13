@@ -15,7 +15,7 @@ tags:
 
 # Conformal Prediction as Bayesian Quadrature
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2502.13228](https://arxiv.org/abs/2502.13228)  
 **代码**: 无  
 **领域**: 可解释性  

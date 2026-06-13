@@ -15,7 +15,7 @@ tags:
 
 # Learning in Structured Stackelberg Games
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2504.09006](https://arxiv.org/abs/2504.09006)  
 **代码**: 未公开  
 **领域**: 多智能体 / 博弈学习 / 学习理论  

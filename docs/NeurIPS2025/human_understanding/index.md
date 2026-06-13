@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 人体理解论文汇总 · 20篇论文解读
+  NeurIPS2025 人体理解论文汇总 · 21篇论文解读
 description: >-
-  20篇NeurIPS2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、推理、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  21篇NeurIPS2025的人体理解方向论文解读，涵盖人脸/视线、人体姿态、推理、语音等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "人体理解"
@@ -33,6 +33,8 @@ item_list:
     t: "K-DeCore: Facilitating Knowledge Transfer in Continual Structured Knowledge Reasoning"
   - u: "kungfubot_physics-based_humanoid_whole-body_control_for_learning_highly-dynamic_/"
     t: "KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills"
+  - u: "learning_dense_hand_contact_estimation_from_imbalanced_data/"
+    t: "Learning Dense Hand Contact Estimation from Imbalanced Data"
   - u: "mospa_human_motion_generation_driven_by_spatial_audio/"
     t: "MOSPA: Human Motion Generation Driven by Spatial Audio"
   - u: "omnigaze_reward-inspired_generalizable_gaze_estimation_in_the_wild/"
@@ -53,15 +55,15 @@ item_list:
     t: "VASA-3D: Lifelike Audio-Driven Gaussian Head Avatars from a Single Image"
   - u: "vimorag_video-based_retrieval-augmented_3d_motion_generation_for_motion_language/"
     t: "VimoRAG: Video-based Retrieval-augmented 3D Motion Generation for Motion Language Models"
-item_total: 20
+item_total: 21
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**🧠 NeurIPS2025** · **20** 篇论文解读
+**🧠 NeurIPS2025** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (60)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/human_understanding/index.md) · [📹 ICCV2025 (40)](../../ICCV2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [📷 CVPR2026 (63)](../../CVPR2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/human_understanding/index.md) · [📹 ICCV2025 (41)](../../ICCV2025/human_understanding/index.md)
 
 🔥 **高频主题：** 人脸/视线 ×4 · 人体姿态 ×3 · 推理 ×2 · 语音 ×2
 
@@ -104,6 +106,10 @@ item_total: 20
 **[KungfuBot: Physics-Based Humanoid Whole-Body Control for Learning Highly-Dynamic Skills](kungfubot_physics-based_humanoid_whole-body_control_for_learning_highly-dynamic_.md)**
 
 :   提出 PBHC 框架，通过物理感知运动处理流水线和自适应跟踪因子的双层优化，使人形机器人（Unitree G1）学会功夫、舞蹈等高动态全身动作，跟踪误差显著优于现有方法并成功实机部署。
+
+**[Learning Dense Hand Contact Estimation from Imbalanced Data](learning_dense_hand_contact_estimation_from_imbalanced_data.md)**
+
+:   提出 HACO 框架，通过平衡接触采样（BCS）解决类别不平衡和顶点级类别平衡损失（VCB Loss）解决空间不平衡，首次在 14 个数据集（65.5 万图像）上训练稠密手部接触估计模型，在多种交互场景下达到 SOTA。
 
 **[MOSPA: Human Motion Generation Driven by Spatial Audio](mospa_human_motion_generation_driven_by_spatial_audio.md)**
 

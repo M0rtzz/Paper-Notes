@@ -15,7 +15,7 @@ tags:
 
 # Position: Multimodal Large Language Models Can Significantly Advance Scientific Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2502.02871](https://arxiv.org/abs/2502.02871)  
 **代码**: 无  
 **领域**: 多模态 VLM / 科学推理  

@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 人体理解论文汇总 · 60篇论文解读
+  CVPR2026 人体理解论文汇总 · 63篇论文解读
 description: >-
-  60篇CVPR2026的人体理解方向论文解读，涵盖人脸/视线、人体姿态、多模态、虚拟人、对齐/RLHF、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  63篇CVPR2026的人体理解方向论文解读，涵盖人脸/视线、人体姿态、多模态、虚拟人、Agent、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "人体理解"
@@ -12,8 +12,8 @@ tags:
   - "人体姿态"
   - "多模态"
   - "虚拟人"
+  - "Agent"
   - "对齐/RLHF"
-  - "对抗鲁棒"
 item_list:
   - u: "a_two_stage_dual_modality_model_for_facial_expression_recognition/"
     t: "A Two-Stage Dual-Modality Model for Facial Expression Recognition"
@@ -21,6 +21,8 @@ item_list:
     t: "Active Inference for Micro-Gesture Recognition: EFE-Guided Temporal Sampling and Adaptive Learning"
   - u: "all_in_one_unifying_deepfake_detection_tampering_localization_and_source_tracing/"
     t: "All in One: Unifying Deepfake Detection, Tampering Localization, and Source Tracing with a Robust Landmark-Identity Watermark"
+  - u: "assistmimic_physics_grounded_humanoid_assistance/"
+    t: "AssistMimic: Physics-Grounded Humanoid Assistance via Multi-Agent RL"
   - u: "avatar_reinforcement_learning_to_see_hear_and_reason_over_video/"
     t: "AVATAR: Reinforcement Learning to See, Hear, and Reason Over Video"
   - u: "beyond_the_fold_quantifying_split-level_noise_and_the_case_for_leave-one-dataset/"
@@ -73,19 +75,17 @@ item_list:
     t: "LCA: Large-scale Codec Avatars - The Unreasonable Effectiveness of Large-scale Avatar Pretraining"
   - u: "matched_crisp_edge_detection_using_end-to-end_matching-based_supervision/"
     t: "MatchED: Crisp Edge Detection Using End-to-End, Matching-based Supervision"
-  - u: "miburi_towards_expressive_interactive_gesture_synthesis/"
-    t: "Miburi: Towards Expressive Interactive Gesture Synthesis"
-item_total: 60
+item_total: 63
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧑 人体理解
 
-**📷 CVPR2026** · **60** 篇论文解读
+**📷 CVPR2026** · **63** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (19)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/human_understanding/index.md) · [📹 ICCV2025 (40)](../../ICCV2025/human_understanding/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (4)](../../ICML2026/human_understanding/index.md) · [💬 ACL2026 (3)](../../ACL2026/human_understanding/index.md) · [🔬 ICLR2026 (8)](../../ICLR2026/human_understanding/index.md) · [🤖 AAAI2026 (20)](../../AAAI2026/human_understanding/index.md) · [🧠 NeurIPS2025 (21)](../../NeurIPS2025/human_understanding/index.md) · [📹 ICCV2025 (41)](../../ICCV2025/human_understanding/index.md)
 
-🔥 **高频主题：** 人脸/视线 ×8 · 人体姿态 ×6 · 多模态 ×5 · 虚拟人 ×4 · 对齐/RLHF ×3
+🔥 **高频主题：** 人脸/视线 ×8 · 人体姿态 ×6 · 多模态 ×5 · 虚拟人 ×4 · Agent ×3
 
 **[A Two-Stage Dual-Modality Model for Facial Expression Recognition](a_two_stage_dual_modality_model_for_facial_expression_recognition.md)**
 
@@ -98,6 +98,10 @@ item_total: 60
 **[All in One: Unifying Deepfake Detection, Tampering Localization, and Source Tracing with a Robust Landmark-Identity Watermark](all_in_one_unifying_deepfake_detection_tampering_localization_and_source_tracing.md)**
 
 :   提出 LIDMark，首个将 deepfake 检测、篡改区域定位和源追踪统一到单一主动取证框架中的方法——通过嵌入 152 维 Landmark-Identity 水印（136D 面部关键点 + 16D 源 ID），利用内在/外在一致性实现三合一取证，PSNR/SSIM 和检测精度均超越现有方法。
+
+**[AssistMimic: Physics-Grounded Humanoid Assistance via Multi-Agent RL](assistmimic_physics_grounded_humanoid_assistance.md)**
+
+:   首个在物理仿真中实现接触式人-人辅助行为模仿学习的多智能体RL框架，通过运动先验初始化、动态参考重定向和接触促进奖励使MARL在高接触设置中可行。
 
 **[AVATAR: Reinforcement Learning to See, Hear, and Reason Over Video](avatar_reinforcement_learning_to_see_hear_and_reason_over_video.md)**
 
@@ -271,6 +275,10 @@ item_total: 60
 
 :   本文首次系统性地将相机位姿轨迹（6DoF pose sequence）提升为一种独立的视频感知模态，通过对比学习框架训练轻量级 Transformer 编码器 CamFormer，将相机轨迹映射到与文本对齐的联合嵌入空间，在 5 个数据集的 10 个下游任务上证明相机轨迹是既轻量又鲁棒的视频内容信号——在物理活动上甚至可以超越计算量大数千倍的视频模型。
 
+**[Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)**
+
+:   提出 FECO 框架，通过鞋款风格–内容随机化（对抗训练）和地面感知学习（像素高度图 + 地面法线），从单张 RGB 图像实现鲁棒的密集足部接触估计，在多个基准上显著超越现有方法。
+
 **[Sign Language Recognition in the Age of LLMs](sign_language_recognition_llms.md)**
 
 :   首个系统评估现代 VLM 在零样本孤立手语识别（ISLR）上能力的研究，发现开源 VLM 远落后于专用分类器，但大型商用模型（GPT-5）展现出令人惊讶的潜力。
@@ -294,6 +302,10 @@ item_total: 60
 **[Team LEYA in 10th ABAW Competition: Multimodal Ambivalence/Hesitancy Recognition Approach](team_leya_in_10th_abaw_competition_multimodal_ambi.md)**
 
 :   提出四模态（场景 VideoMAE + 人脸 EfficientNetB0 + 音频 Wav2Vec2.0/Mamba + 文本 EmotionDistilRoBERTa）融合管线，通过原型增强 Transformer 融合模块将各模态嵌入投影到共享 128 维空间并以原型分类辅助损失正则化，在 BAH 语料的最终测试集上以 5 模型集成达到 **71.43% Macro F1**，显著超越所有单模态基线。
+
+**[TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)**
+
+:   提出 TeamHOI 框架，通过基于 Transformer 的去中心化策略网络和掩码对抗运动先验（Masked AMP），使单一策略能够泛化到任意数量智能体的协作搬运任务，2-8 个仿人智能体协作搬桌子成功率达 97%+。
 
 **[4DSurf: High-Fidelity Dynamic Scene Surface Reconstruction](textit4dsurf_high-fidelity_dynamic_scene_surface_reconstruction.md)**
 

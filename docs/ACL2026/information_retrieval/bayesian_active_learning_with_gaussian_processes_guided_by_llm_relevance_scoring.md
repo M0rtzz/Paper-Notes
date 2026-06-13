@@ -15,7 +15,7 @@ tags:
 
 # Bayesian Active Learning with Gaussian Processes Guided by LLM Relevance Scoring
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17906](https://arxiv.org/abs/2604.17906)  
 **代码**: [GitHub](https://github.com/junieberry/BAGEL)  
 **领域**: Information Retrieval  

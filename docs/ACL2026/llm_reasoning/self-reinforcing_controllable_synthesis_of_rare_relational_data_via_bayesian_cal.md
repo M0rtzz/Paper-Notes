@@ -15,7 +15,7 @@ tags:
 
 # Self-Reinforcing Controllable Synthesis of Rare Relational Data via Bayesian Calibration
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.16817](https://arxiv.org/abs/2604.16817)  
 **代码**: [GitHub](https://github.com/cszhangLMU/RDDG)  
 **领域**: LLM推理 / 表格数据生成  

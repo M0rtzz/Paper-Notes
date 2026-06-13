@@ -16,7 +16,7 @@ tags:
 
 # PARTONOMY: Large Multimodal Models with Part-Level Visual Understanding
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.20759](https://arxiv.org/abs/2505.20759)  
 **代码**: [GitHub](https://github.com/AnselBlume/partonomy)  
 **领域**: 分割 / 多模态  

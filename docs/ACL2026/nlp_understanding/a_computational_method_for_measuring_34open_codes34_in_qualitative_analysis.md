@@ -15,7 +15,7 @@ tags:
 
 # A Computational Method for Measuring "Open Codes" in Qualitative Analysis
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2411.12142](https://arxiv.org/abs/2411.12142)  
 **代码**: [GitHub](https://github.com/) (开源软件包)  
 **领域**: 模型压缩  

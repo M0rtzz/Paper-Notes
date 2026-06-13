@@ -1,19 +1,19 @@
 ---
 title: >-
-  ECCV2024 其他论文汇总 · 54篇论文解读
+  ECCV2024 其他论文汇总 · 42篇论文解读
 description: >-
-  54篇ECCV2024的其他方向论文解读，涵盖对抗鲁棒、人脸/视线、少样本学习、对齐/RLHF、Agent、GAN等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  42篇ECCV2024的其他方向论文解读，涵盖对抗鲁棒、少样本学习、对齐/RLHF、Agent、GAN、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "其他"
   - "论文解读"
   - "论文笔记"
   - "对抗鲁棒"
-  - "人脸/视线"
   - "少样本学习"
   - "对齐/RLHF"
   - "Agent"
   - "GAN"
+  - "扩散模型"
 item_list:
   - u: "a_framework_for_efficient_model_evaluation_through_stratific/"
     t: "A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation"
@@ -35,8 +35,6 @@ item_list:
     t: "Auto-GAS: Automated Proxy Discovery for Training-Free Generative Architecture Search"
   - u: "bidirectional_uncertainty-based_active_learning_for_open-set_annotation/"
     t: "Bidirectional Uncertainty-Based Active Learning for Open-Set Annotation"
-  - u: "brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals/"
-    t: "Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals"
   - u: "clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio/"
     t: "CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction"
   - u: "coin-matting_confounder_intervention_for_image_matting/"
@@ -55,8 +53,6 @@ item_list:
     t: "Enhancing Optimization Robustness in 1-bit Neural Networks through Stochastic Sign Descent"
   - u: "et_the_exceptional_trajectories_text-to-camera-trajectory_generation_with_charac/"
     t: "ET: The Exceptional Trajectories - Text-to-Camera-Trajectory Generation with Character Awareness"
-  - u: "event-based_mosaicing_bundle_adjustment/"
-    t: "Event-based Mosaicing Bundle Adjustment"
   - u: "exploring_guided_sampling_of_conditional_gans/"
     t: "Exploring Guided Sampling of Conditional GANs"
   - u: "fisherrf_active_view_selection_and_mapping_with_radiance_fields_using_fisher_inf/"
@@ -69,23 +65,27 @@ item_list:
     t: "FreeAugment: Data Augmentation Search Across All Degrees of Freedom"
   - u: "functional_transform-based_low-rank_tensor_factorization_for_multi-dimensional_d/"
     t: "Functional Transform-Based Low-Rank Tensor Factorization for Multi-Dimensional Data Recovery"
-  - u: "gaze_target_detection_based_on_head-local-global_coordination/"
-    t: "Gaze Target Detection Based on Head-Local-Global Coordination"
-  - u: "gazexplain_learning_to_predict_natural_language_explanations_of_visual_scanpaths/"
-    t: "GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths"
   - u: "hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu/"
     t: "HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images"
-item_total: 54
+  - u: "high-fidelity_3d_textured_shapes_generation_by_sparse_encoding_and_adversarial_d/"
+    t: "High-Fidelity 3D Textured Shapes Generation by Sparse Encoding and Adversarial Decoding"
+  - u: "hpff_hierarchical_locally_supervised_learning_with_patch_feature_fusion/"
+    t: "HPFF: Hierarchical Locally Supervised Learning with Patch Feature Fusion"
+  - u: "improving_point-based_crowd_counting_and_localization_based_on_auxiliary_point_g/"
+    t: "Improving Point-based Crowd Counting and Localization Based on Auxiliary Point Guidance"
+  - u: "mahalanobis_distance-based_multi-view_optimal_transport_for_multi-view_crowd_loc/"
+    t: "Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization"
+item_total: 42
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🎞️ ECCV2024** · **54** 篇论文解读
+**🎞️ ECCV2024** · **42** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×4 · 人脸/视线 ×3
+🔥 **高频主题：** 对抗鲁棒 ×4
 
 **[A Framework for Efficient Model Evaluation through Stratification, Sampling, and Estimation](a_framework_for_efficient_model_evaluation_through_stratific.md)**
 
@@ -127,10 +127,6 @@ item_total: 54
 
 :   提出 BUAL 框架，通过 Random Label Negative Learning 将未知类样本推向高置信区域、已知类样本推向低置信区域，结合双向不确定性采样策略，在开放集场景下有效选出高信息量的已知类样本。
 
-**[Brain Netflix: Scaling Data to Reconstruct Videos from Brain Signals](brain_netflix_scaling_data_to_reconstruct_videos_from_brain_signals.md)**
-
-:   本文提出了一种从功能磁共振成像（fMRI）信号重建视频的新方法，通过多数据集多被试训练和三阶段pipeline，利用预训练的文本到视频和视频到视频模型，实现了跨数据集和跨被试的SOTA视频重建能力。
-
 **[CLR-GAN: Improving GANs Stability and Quality via Consistent Latent Representation and Reconstruction](clr-gan_improving_gans_stability_and_quality_via_consistent_latent_representatio.md)**
 
 :   本文提出了CLR-GAN训练范式，通过让判别器恢复生成器的预定义隐码、让生成器重建真实输入，建立了G和D隐空间之间的一致性约束，使GAN训练更公平稳定，在CIFAR10上FID提升31.22%，在AFHQ-Cat上提升39.5%。
@@ -167,10 +163,6 @@ item_total: 54
 
 :   提出首个从真实电影中提取的**相机-角色轨迹数据集 E.T.**（115K 样本，11M 帧），以及基于扩散模型的 **Director** 方法，能根据文本描述和角色轨迹生成复杂的相机运动轨迹，同时设计了 **CLaTr** 对比嵌入用于轨迹生成质量评估。
 
-**[Event-based Mosaicing Bundle Adjustment](event-based_mosaicing_bundle_adjustment.md)**
-
-:   提出 EMBA，首个针对纯旋转事件相机的光度 Bundle Adjustment 方法，利用线性化事件生成模型将问题形式化为正则化非线性最小二乘优化，并利用法方程矩阵的块对角稀疏结构设计高效求解器，同时优化相机旋转轨迹和全景梯度图。
-
 **[Exploring Guided Sampling of Conditional GANs](exploring_guided_sampling_of_conditional_gans.md)**
 
 :   本文提出在条件GAN中引入类似扩散模型的引导采样（guided sampling）策略，通过隐空间向量运算估计数据-条件联合分布，无需预训练分类器或学习无条件模型，即可显著提升GAN生成质量，将ImageNet 64×64上的FID从8.87降至4.37。
@@ -195,14 +187,6 @@ item_total: 54
 
 :   提出了基于函数变换的低秩张量分解方法（FLRTF），利用隐式神经表示替代传统离散变换来捕获数据在第三维度上的连续平滑性，有效解决时间/光谱退化问题。
 
-**[Gaze Target Detection Based on Head-Local-Global Coordination](gaze_target_detection_based_on_head-local-global_coordination.md)**
-
-:   提出了一种基于头部-局部-全局三视图协调的注视目标检测方法，通过引入基于FOV（视野范围）的局部视图，并设计全局-局部位置与表示一致性机制，显著提升了注视目标预测的准确性。
-
-**[GazeXplain: Learning to Predict Natural Language Explanations of Visual Scanpaths](gazexplain_learning_to_predict_natural_language_explanations_of_visual_scanpaths.md)**
-
-:   提出GazeXplain，首次将视觉扫描路径预测与自然语言解释结合，通过注意力-语言解码器、语义对齐机制和跨数据集联合训练，实现对人类注视行为的可解释预测。
-
 **[HiEI: A Universal Framework for Generating High-quality Emerging Images from Natural Images](hiei_a_universal_framework_for_generating_high-quality_emerging_images_from_natu.md)**
 
 :   本文提出了一个通用框架 HiEI，通过人类中心的颜色量化模块（TTNet）、感知难度控制模块（PDC）和模板矢量化模块（TV），将自然图像转化为高质量的新兴图像（Emerging Images），在内容和风格质量上超越现有方法，同时可有效对抗深度视觉模型的攻击，适用于 CAPTCHA 机制。
@@ -215,17 +199,9 @@ item_total: 54
 
 :   提出 HPFF，通过层次化局部监督学习（HiLo，将网络划分为独立+级联两级局部模块）和 Patch 特征融合（PFF，将辅助网络的输入切块计算再平均）解决局部学习中的模块间信息缺失和 GPU 内存占用过高问题，在多个数据集上显著超越已有局部学习方法并接近甚至超越 BP。
 
-**[Image Demoiréing in RAW and sRGB Domains](image_demoiréing_in_raw_and_srgb_domains.md)**
-
-:   提出RRID框架联合利用RAW和sRGB双域数据进行图像去摩尔纹，设计了带GFM（门控反馈）和FSM（频域选择）的SCDM去摩尔纹模块，以及RGISP实现设备相关ISP学习辅助颜色恢复，在PSNR上超越SOTA 0.62dB。
-
 **[Improving Point-based Crowd Counting and Localization Based on Auxiliary Point Guidance](improving_point-based_crowd_counting_and_localization_based_on_auxiliary_point_g.md)**
 
 :   提出辅助点引导 (APG) 策略和隐式特征插值 (IFI) 模块，通过在真值点附近显式生成辅助正负样本来稳定 point-based 人群计数方法中 proposal-target 匹配过程的不稳定性，在多个数据集上取得 SOTA。
-
-**[Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)**
-
-:   > 提出基于内在图像分解（intrinsic decomposition）的 HDR 重建方法，将问题分解为明暗域（shading）的动态范围扩展和反照率域（albedo）的颜色恢复两个子任务，分别训练网络以提升重建质量。
 
 **[Mahalanobis Distance-Based Multi-View Optimal Transport for Multi-View Crowd Localization](mahalanobis_distance-based_multi-view_optimal_transport_for_multi-view_crowd_loc.md)**
 
@@ -247,25 +223,9 @@ item_total: 54
 
 :   本文提出一种对象感知的近红外(NIR)到可见光图像翻译框架，通过将可见光图像分解为与对象无关的光照分量和对象特定的反射分量分别处理，结合分割先验知识，在缺乏大规模配对数据的条件下实现了高质量的NIR彩色化，并构建了首个完全对齐的NIR-可见光大规模配对数据集。
 
-**[Online Temporal Action Localization with Memory-Augmented Transformer](online_temporal_action_localization_with_memory-augmented_transformer.md)**
-
-:   本文提出 MATR（Memory-Augmented Transformer），通过记忆队列选择性地保存历史片段特征来建模长期上下文，并采用双 Transformer 解码器分别定位动作的结束和起始时间，在 THUMOS14 和 MUSES 两个在线时序动作定位基准上刷新了 SOTA，甚至可与部分离线方法媲美。
-
 **[PartCraft: Crafting Creative Objects by Parts](partcraft_crafting_creative_objects_by_parts.md)**
 
 :   提出 PartCraft，首次实现了基于部件选择的文本到图像生成控制——用户可以从不同物体中"挑选"各部件（如鸟的头、翅膀、身体），模型将它们自然地组合为一个全新且结构合理的创意物体。
-
-**[PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)**
-
-:   提出PISR方法，利用偏振光的几何约束（偏振角与法线方位角的对应关系）直接正则化神经隐式表面形状，结合哈希网格加速和图像空间法线平滑，在无纹理和镜面物体上实现了0.5mm Chamfer距离和99.5% F-score的高精度重建，速度比此前偏振方法快4~30倍。
-
-**[Power Variable Projection for Initialization-Free Large-Scale Bundle Adjustment](power_variable_projection_for_initialization-free_large-scale_bundle_adjustment.md)**
-
-:   提出 Power Variable Projection (PoVar) 算法，将幂级数展开方法扩展到变量投影（VarPro）框架，并进一步推广到黎曼流形优化，首次实现了无初始化大规模光束法平差（BA）的高效求解。
-
-**[Raindrop Clarity: A Dual-Focused Dataset for Day and Night Raindrop Removal](raindrop_clarity_a_dual-focused_dataset_for_day_and_night_raindrop_removal.md)**
-
-:   提出了一个大规模真实世界雨滴去除数据集 Raindrop Clarity，包含15,186组高质量图像对/三元组，首次涵盖雨滴聚焦（清晰雨滴+模糊背景）和夜间雨滴两种现有数据集缺失的场景。
 
 **[Real-Data-Driven 2000 FPS Color Video from Mosaicked Chromatic Spikes](real-data-driven_2000_fps_color_video_from_mosaicked_chromatic_spikes.md)**
 
@@ -283,10 +243,6 @@ item_total: 54
 
 :   提出SpatialFormer架构，通过引入自适应空间token显式建模场景的全局空间关系，采用decoder-only架构与双边交叉注意力块实现上下文与空间信息的高效交互，在分类、分割和检测任务上展示了优异的泛化性和可迁移性。
 
-**[Spatio-Temporal Proximity-Aware Dual-Path Model for Panoramic Activity Recognition](spatio-temporal_proximity-aware_dual-path_model_for_panoramic_activity_recogniti.md)**
-
-:   提出 SPDP-Net，通过时空邻近性建模个体间社会关系，并利用双路径 Transformer (DPATr) 架构在个体-全局和个体-社交两条路径上协同识别多粒度活动，在 JRDB-PAR 数据集上以 46.5% overall F1 大幅刷新 SOTA。
-
 **[Superpixel-Informed Implicit Neural Representation for Multi-Dimensional Data](superpixel-informed_implicit_neural_representation_for_multi-dimensional_data.md)**
 
 :   提出超像素引导的隐式神经表示（S-INR），用广义超像素替代像素作为INR的基本单元，通过专属注意力MLP和共享字典矩阵两个模块，充分挖掘广义超像素内部和之间的语义信息，在图像重建/补全/去噪以及点数据恢复等任务上超越现有INR方法。
@@ -294,10 +250,6 @@ item_total: 54
 **[Synergy of Sight and Semantics: Visual Intention Understanding with CLIP](synergy_of_sight_and_semantics_visual_intention_understanding_with_clip.md)**
 
 :   提出了 IntCLIP 框架，通过双分支编码策略将 CLIP 中的"视觉感知"（Sight）知识迁移到"语义中心"（Semantic）的多标签意图理解任务中，结合层次化类别整合和视觉辅助聚合，在标准 MIU benchmark 和图像情感识别任务上显著超越 SOTA。
-
-**[Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept.md)**
-
-:   提出 T3-DiffWeather，一种基于 diffusion 的 all-in-one 恶劣天气恢复框架，通过 prompt pool 让网络自主组合 sub-prompts 构建实例级 weather-prompts 来建模多样化天气退化，同时利用 Depth-Anything 特征约束 general prompts 来建模场景信息，仅需 2 步采样即达到 SOTA，计算量仅为 WeatherDiffusion 的 1/52。
 
 **[Wavelength-Embedding-guided Filter-Array Transformer for Spectral Demosaicing](wavelength-embedding-guided_filter-array_transformer_for_spectral_demosaicing.md)**
 

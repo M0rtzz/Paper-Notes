@@ -15,7 +15,7 @@ tags:
 
 # Towards Practical Defect-Focused Automated Code Review
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2505.17928](https://arxiv.org/abs/2505.17928)  
 **代码**: 无  
 **领域**: 软件工程 / 自动化代码审查  

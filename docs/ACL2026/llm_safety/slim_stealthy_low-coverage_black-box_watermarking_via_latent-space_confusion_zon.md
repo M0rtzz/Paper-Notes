@@ -15,7 +15,7 @@ tags:
 
 # SLIM: Stealthy Low-Coverage Black-Box Watermarking via Latent-Space Confusion Zones
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2601.03242](https://arxiv.org/abs/2601.03242)  
 **代码**: https://github.com/Henry-WWHHYY/SLIM/  
 **领域**: LLM安全 / 数据水印 / 训练数据归属验证  

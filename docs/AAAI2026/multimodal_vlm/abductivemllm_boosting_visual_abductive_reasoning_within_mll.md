@@ -15,7 +15,7 @@ tags:
 
 # AbductiveMLLM: Boosting Visual Abductive Reasoning Within MLLMs
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2601.02771](https://arxiv.org/abs/2601.02771)  
 **代码**: [https://github.com/ChangPtR/AbdMLLM](https://github.com/ChangPtR/AbdMLLM)  
 **领域**: 多模态VLM  

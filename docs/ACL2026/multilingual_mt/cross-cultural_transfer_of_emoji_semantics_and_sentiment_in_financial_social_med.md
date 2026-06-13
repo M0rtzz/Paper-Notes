@@ -15,7 +15,7 @@ tags:
 
 # Cross-Cultural Transfer of Emoji Semantics and Sentiment in Financial Social Media
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.09414](https://arxiv.org/abs/2605.09414)  
 **代码**: 无  
 **领域**: NLP / 多语言 / 金融情感分析  

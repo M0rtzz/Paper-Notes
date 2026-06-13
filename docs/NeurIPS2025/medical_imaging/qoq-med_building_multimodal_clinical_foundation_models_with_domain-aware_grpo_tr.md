@@ -15,7 +15,7 @@ tags:
 
 # QoQ-Med: Building Multimodal Clinical Foundation Models with Domain-Aware GRPO Training
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2506.00711](https://arxiv.org/abs/2506.00711)  
 **代码**: 权重和训练管线已发布  
 **领域**: 医学图像  

@@ -15,7 +15,7 @@ tags:
 
 # Think Outside the Policy: In-Context Steered Policy Optimization
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.26519](https://arxiv.org/abs/2510.26519)  
 **代码**: [GitHub](https://github.com/Celine-hxy/ICPO)  
 **领域**: LLM Reasoning / Reinforcement Learning  

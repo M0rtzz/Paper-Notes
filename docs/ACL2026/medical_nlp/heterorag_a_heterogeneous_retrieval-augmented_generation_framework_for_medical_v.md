@@ -15,7 +15,7 @@ tags:
 
 # HeteroRAG: A Heterogeneous Retrieval-Augmented Generation Framework for Medical Vision Language Tasks
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2508.12778](https://arxiv.org/abs/2508.12778)  
 **代码**: https://github.com/Jack-ZC8/HeteroRAG-Med  
 **领域**: 医学NLP

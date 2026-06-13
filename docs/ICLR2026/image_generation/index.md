@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 图像生成论文汇总 · 137篇论文解读
+  ICLR2026 图像生成论文汇总 · 138篇论文解读
 description: >-
-  137篇ICLR2026的图像生成方向论文解读，涵盖扩散模型、文生图、布局/合成、对齐/RLHF、图像编辑、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  138篇ICLR2026的图像生成方向论文解读，涵盖扩散模型、文生图、布局/合成、对齐/RLHF、图像编辑、多模态等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "图像生成"
@@ -45,6 +45,8 @@ item_list:
     t: "Concept-TRAK: Understanding how diffusion models learn concepts through concept-level attribution"
   - u: "condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo/"
     t: "Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss"
+  - u: "condition_matters_in_full-head_3d_gans/"
+    t: "Condition Matters in Full-head 3D GANs"
   - u: "conditionally_whitened_generative_models_for_probabilistic_time_series_forecasti/"
     t: "Conditionally Whitened Generative Models for Probabilistic Time Series Forecasting"
   - u: "consistent_text-to-image_generation_via_scene_de-contextualization/"
@@ -73,15 +75,13 @@ item_list:
     t: "Direct Reward Fine-Tuning on Poses for Single Image to 3D Human in the Wild"
   - u: "directional_textual_inversion_for_personalized_text-to-image_generation/"
     t: "Directional Textual Inversion for Personalized Text-to-Image Generation"
-  - u: "discrete_adjoint_matching/"
-    t: "Discrete Adjoint Matching"
-item_total: 137
+item_total: 138
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎨 图像生成
 
-**🔬 ICLR2026** · **137** 篇论文解读
+**🔬 ICLR2026** · **138** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (125)](../../ICML2026/image_generation/index.md) · [💬 ACL2026 (5)](../../ACL2026/image_generation/index.md) · [📷 CVPR2026 (220)](../../CVPR2026/image_generation/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/image_generation/index.md) · [🧠 NeurIPS2025 (221)](../../NeurIPS2025/image_generation/index.md) · [📹 ICCV2025 (213)](../../ICCV2025/image_generation/index.md)
 
@@ -146,6 +146,10 @@ item_total: 137
 **[Condition Errors Refinement in Autoregressive Image Generation with Diffusion Loss](condition_errors_refinement_in_autoregressive_image_generation_with_diffusion_lo.md)**
 
 :   理论分析了自回归扩散损失模型相比条件扩散模型在条件误差修正上的优势（梯度范数指数衰减），并提出基于最优传输（Wasserstein Gradient Flow）的条件精炼方法来解决自回归过程中的"条件不一致性"问题，在 ImageNet 上达到 FID 1.31（基于 MAR）。
+
+**[Condition Matters in Full-head 3D GANs](condition_matters_in_full-head_3d_gans.md)**
+
+:   发现全头 3D GAN 中视角条件导致严重方向偏差（条件视角生成质量远优于其他视角），提出用视角不变的语义特征（正脸 CLIP 特征）替代视角作为条件，配合 Flux.1 Kontext 合成的 1120 万张 360° 平衡数据集，首次实现全视角一致的高保真多样全头生成。
 
 **[Conditionally Whitened Generative Models for Probabilistic Time Series Forecasting](conditionally_whitened_generative_models_for_probabilistic_time_series_forecasti.md)**
 

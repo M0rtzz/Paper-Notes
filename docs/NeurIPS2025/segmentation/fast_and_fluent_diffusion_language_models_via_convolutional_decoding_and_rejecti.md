@@ -15,7 +15,7 @@ tags:
 
 # Fast and Fluent Diffusion Language Models via Convolutional Decoding and Rejective Fine-tuning
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.15188](https://arxiv.org/abs/2509.15188)  
 **代码**: 未开源  
 **领域**: 图像分割  

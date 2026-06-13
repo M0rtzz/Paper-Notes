@@ -15,7 +15,7 @@ tags:
 
 # Cycle-Sync: Robust Global Camera Pose Estimation through Enhanced Cycle-Consistent Synchronization
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.02329](https://arxiv.org/abs/2511.02329)  
 **代码**: [GitHub](https://github.com/sli743/Cycle-Sync)  
 **领域**: 人体理解  

@@ -15,7 +15,7 @@ tags:
 
 # Rethinking LLM Ensembling from the Perspective of Mixture Models
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.00419](https://arxiv.org/abs/2605.00419)  
 **代码**: https://github.com/jialefu/Mixture-model-like-Ensemble (有)  
 **领域**: LLM 效率 / 解码与集成  

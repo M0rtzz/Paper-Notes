@@ -15,7 +15,7 @@ tags:
 
 # Manifolds and Modules: How Function Develops in a Neural Foundation Model
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Findings  
 **arXiv**: [2512.07869](https://arxiv.org/abs/2512.07869)  
 **代码**: [GitHub](https://github.com/cajal/fnn) (FNN模型) / [GitHub](https://github.com/dyballa/NeuralEncodingManifolds) (分析工具)  
 **领域**: 计算神经科学 / 自监督学习  

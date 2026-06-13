@@ -15,7 +15,7 @@ tags:
 
 # TimE: A Multi-level Benchmark for Temporal Reasoning of LLMs in Real-World Scenarios
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.12891](https://arxiv.org/abs/2505.12891)  
 **代码**: [GitHub](https://github.com/) / [HuggingFace Dataset](https://huggingface.co/)  
 **领域**: LLM推理 / 时间推理  

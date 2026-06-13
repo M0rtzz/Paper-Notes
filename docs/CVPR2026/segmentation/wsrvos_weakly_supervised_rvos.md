@@ -15,7 +15,7 @@ tags:
 
 # Weakly-Supervised Referring Video Object Segmentation through Text Supervision
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.17797](https://arxiv.org/abs/2604.17797)  
 **代码**: [https://github.com/viscom-tongji/WSRVOS](https://github.com/viscom-tongji/WSRVOS)  
 **领域**: 分割  

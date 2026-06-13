@@ -15,7 +15,7 @@ tags:
 
 # Realism Control One-step Diffusion for Real-World Image Super-Resolution
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2509.10122](https://arxiv.org/abs/2509.10122)  
 **代码**: [https://zongliang-wu.github.io/RCOD-SR](https://zongliang-wu.github.io/RCOD-SR)  
 **领域**: 图像生成  

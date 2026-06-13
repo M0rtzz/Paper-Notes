@@ -15,7 +15,7 @@ tags:
 
 # Just Use XML: Revisiting Joint Translation and Label Projection
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2603.12021](https://arxiv.org/abs/2603.12021)  
 **代码**: [https://github.com/thennal10/LabelPigeon](https://github.com/thennal10/LabelPigeon)  
 **领域**: 多语言翻译 / 跨语言迁移  

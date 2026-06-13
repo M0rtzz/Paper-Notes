@@ -15,7 +15,7 @@ tags:
 
 # Environment Inference for Learning Generalizable Dynamical System
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.19784](https://arxiv.org/abs/2510.19784)  
 **代码**: [GitHub](https://github.com/shixuanliu-andy/DynaInfer)  
 **领域**: AI Safety / 动态系统泛化  

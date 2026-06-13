@@ -15,7 +15,7 @@ tags:
 
 # Orochi: Versatile Biomedical Image Processor
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.22583](https://arxiv.org/abs/2509.22583)  
 **代码**: 暂无（论文承诺开源）  
 **领域**: 医学图像  

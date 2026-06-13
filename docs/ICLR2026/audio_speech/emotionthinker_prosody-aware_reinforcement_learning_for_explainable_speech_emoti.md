@@ -15,7 +15,7 @@ tags:
 
 # EmotionThinker: Prosody-Aware Reinforcement Learning for Explainable Speech Emotion Reasoning
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2601.15668](https://arxiv.org/abs/2601.15668)  
 **代码**: [有](https://github.com/dingdongwang/EmotionThinker)  
 **领域**: 音频语音  

@@ -14,7 +14,7 @@ tags:
 
 # EvoEdit: Evolving Null-space Alignment for Robust and Efficient Knowledge Editing
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.13851](https://arxiv.org/abs/2510.13851)  
 **代码**: [GitHub](https://github.com/) (论文中提及 code available)  
 **领域**: 知识编辑  

@@ -15,7 +15,7 @@ tags:
 
 # Inference-Time Reward Hacking in Large Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.19248](https://arxiv.org/abs/2506.19248)  
 **代码**: 无  
 **领域**: 推荐系统  

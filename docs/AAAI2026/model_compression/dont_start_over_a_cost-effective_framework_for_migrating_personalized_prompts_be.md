@@ -15,7 +15,7 @@ tags:
 
 # Don't Start Over: A Cost-Effective Framework for Migrating Personalized Prompts Between LLMs
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2601.12034](https://arxiv.org/abs/2601.12034)  
 **代码**: [github](https://github.com/Kimagure7/Dont-Start-Over)  
 **领域**: 模型压缩  

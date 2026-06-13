@@ -15,7 +15,7 @@ tags:
 
 # The More You Automate, the Less You See: Hidden Pitfalls of AI Scientist Systems
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.08713](https://arxiv.org/abs/2509.08713)  
 **代码**: [GitHub](https://github.com/niharshah/AIScientistPitfalls)  
 **领域**: 推荐系统  

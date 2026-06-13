@@ -15,7 +15,7 @@ tags:
 
 # VeriTaS: The First Dynamic Benchmark for Multimodal Automated Fact-Checking
 
-**会议**: ACL2026  
+**会议**: ACL2026 Oral  
 **arXiv**: [2601.08611](https://arxiv.org/abs/2601.08611)  
 **代码**: https://veritas.mai.informatik.tu-darmstadt.de  
 **领域**: audio_speech  

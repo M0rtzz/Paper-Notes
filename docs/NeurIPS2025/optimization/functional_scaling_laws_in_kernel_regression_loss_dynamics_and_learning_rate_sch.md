@@ -15,7 +15,7 @@ tags:
 
 # Functional Scaling Laws in Kernel Regression: Loss Dynamics and Learning Rate Schedules
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.19189](https://arxiv.org/abs/2509.19189)  
 **代码**: 无  
 **领域**: 优化  

@@ -15,7 +15,7 @@ tags:
 
 # Large Reasoning Models Are (Not Yet) Multilingual Latent Reasoners
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.02996](https://arxiv.org/abs/2601.02996)  
 **代码**: [https://github.com/cisnlp/multilingual-latent-reasoner](https://github.com/cisnlp/multilingual-latent-reasoner)  
 **领域**: LLM推理  

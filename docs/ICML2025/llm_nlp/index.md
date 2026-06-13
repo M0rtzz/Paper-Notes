@@ -1,11 +1,11 @@
 ---
 title: >-
-  ICML2025 LLM/NLP论文汇总 · 28篇论文解读
+  ICML2025 LLM其他论文汇总 · 28篇论文解读
 description: >-
-  28篇ICML2025的 LLM / NLP 方向论文解读，涵盖 LLM、少样本学习、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  28篇ICML2025的 LLM 其他方向论文解读，涵盖 LLM、少样本学习、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "论文解读"
   - "论文笔记"
   - "LLM"
@@ -39,7 +39,7 @@ item_list:
   - u: "laser_attention_with_exponential_transformation/"
     t: "LASER: Attention with Exponential Transformation"
   - u: "llm_social_simulations_are_a_promising_research_method/"
-    t: "Position: LLM Social Simulations Are a Promising Research Method"
+    t: "LLM Social Simulations Are a Promising Research Method"
   - u: "merit_maximum-normalized_element-wise_ratio_for_language_model_large-batch_train/"
     t: "MERIT: Maximum-normalized Element-wise Ratio for Language Model Large-batch Training"
   - u: "on_expressive_power_of_looped_transformers_theoretical_analysis_and_enhancement_/"
@@ -72,11 +72,11 @@ item_total: 28
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 💬 LLM / NLP
+# 💬 LLM 其他
 
 **🧪 ICML2025** · **28** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (33)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (56)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md)
 
 🔥 **高频主题：** LLM ×6 · 少样本学习 ×2 · 时序预测 ×2
 
@@ -132,9 +132,9 @@ item_total: 28
 
 :   通过分析注意力机制中 softmax 的梯度反向传播瓶颈，提出 LASER 注意力——在指数变换的 Value 空间中做注意力计算（即对 exp(V) 做 attention 再取 log），从而获得更大的 Jacobian 信号，改善参数学习效率。
 
-**[Position: LLM Social Simulations Are a Promising Research Method](llm_social_simulations_are_a_promising_research_method.md)**
+**[LLM Social Simulations Are a Promising Research Method](llm_social_simulations_are_a_promising_research_method.md)**
 
-:   这篇立场论文（position paper）主张 LLM 社会模拟是一种有前途的研究方法，通过综述实证比较和相关评论，识别了五个可解决的挑战，并提出方向性建议，认为 LLM 社会模拟已可用于试点和探索性研究。
+:   本文作为立场论文，通过综述 36 篇实证研究论证了 LLM 社会模拟（用 LLM 模拟人类研究受试者）是一种有前景的研究方法，识别了五大可解决挑战（多样性、偏见、奉承、异质性、泛化），并为每个挑战提出了有前景的方向。
 
 **[MERIT: Maximum-normalized Element-wise Ratio for Language Model Large-batch Training](merit_maximum-normalized_element-wise_ratio_for_language_model_large-batch_train.md)**
 

@@ -16,7 +16,7 @@ tags:
 
 # Taming Momentum: Rethinking Optimizer States Through Low-Rank Approximation
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2602.24283](https://arxiv.org/abs/2602.24283)  
 **代码**: [github.com/mrflogs/LoRA-Pre](https://github.com/mrflogs/LoRA-Pre)  
 **领域**: 模型压缩 / 高效优化器  

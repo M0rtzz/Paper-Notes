@@ -15,7 +15,7 @@ tags:
 
 # Verify Claimed Text-to-Image Models via Boundary-Aware Prompt Optimization
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.26328](https://arxiv.org/abs/2603.26328)  
 **代码**: 无  
 **领域**: 图像生成  

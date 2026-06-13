@@ -15,7 +15,7 @@ tags:
 
 # Dial HEALTHDIAL for Advice: A Multilingual and Multi-Parallel Spoken Dialogue Dataset for Knowledge-Grounded Information Seeking
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.30107](https://arxiv.org/abs/2605.30107)  
 **代码**: https://github.com/cambridgeltl/healthdial  
 **领域**: 语音对话 / 多语言RAG  

@@ -15,7 +15,7 @@ tags:
 
 # BAMAS: Structuring Budget-Aware Multi-Agent Systems
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.21572](https://arxiv.org/abs/2511.21572)  
 **代码**: [https://github.com/chunfenri/BAMAS](https://github.com/chunfenri/BAMAS)  
 **领域**: 强化学习  

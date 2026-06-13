@@ -164,7 +164,7 @@ item_total: 58
 
 **[Efficient Multiagent Planning via Shared Action Suggestions](efficient_multiagent_planning_via_shared_action_suggestions.md)**
 
-:   提出 MCAS 算法，通过在去中心化 POMDP 中仅共享"建议动作"来推断其他智能体的信念状态，在大幅降低通信开销和计算复杂度的同时实现接近集中式方法的协调性能。
+:   提出MCAS算法，通过在Dec-POMDP中仅通信建议的联合动作（而非共享观测），利用动作信息推断其他智能体的信念状态，实现接近集中式方法的协调性能，同时大幅降低计算复杂度。
 
 **[Enhancing Robustness of Offline RL Under Data Corruption via SAM](enhancing_robustness_of_offline_reinforcement_learning_under_data_corruption_via.md)**
 

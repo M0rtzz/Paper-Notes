@@ -15,7 +15,7 @@ tags:
 
 # From Interpretability to Performance: Optimizing Retrieval Heads for Long-Context Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.11020](https://arxiv.org/abs/2601.11020)  
 **代码**: https://github.com/YoumiMa/RetMask  
 **领域**: 长上下文 / 机制可解释性 / 检索头 / DPO  

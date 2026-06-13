@@ -15,7 +15,7 @@ tags:
 
 # Depth Adaptive Efficient Visual Autoregressive Modeling
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.17286](https://arxiv.org/abs/2604.17286)  
 **代码**: [https://github.com/STOVAGtz/DepthVAR](https://github.com/STOVAGtz/DepthVAR)  
 **领域**: 图像生成  

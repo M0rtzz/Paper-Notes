@@ -15,7 +15,7 @@ tags:
 
 # Head Pursuit: Probing Attention Specialization in Multimodal Transformers
 
-**会议**: NeurIPS2025  
+**会议**: NeurIPS2025 Spotlight  
 **arXiv**: [2510.21518](https://arxiv.org/abs/2510.21518)  
 **代码**: [GitHub](https://github.com/lorenzobasile/HeadPursuit)  
 **领域**: 图像生成  

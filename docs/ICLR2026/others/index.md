@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 其他论文汇总 · 74篇论文解读
+  ICLR2026 其他论文汇总 · 71篇论文解读
 description: >-
-  74篇ICLR2026的其他方向论文解读，涵盖对抗鲁棒、域适应、对齐/RLHF、扩散模型、联邦学习、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  71篇ICLR2026的其他方向论文解读，涵盖对抗鲁棒、域适应、对齐/RLHF、扩散模型、联邦学习、少样本学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICLR2026"
   - "其他"
@@ -49,8 +49,6 @@ item_list:
     t: "CHLU: The Causal Hamiltonian Learning Unit as a Symplectic Primitive for Deep Learning"
   - u: "compositional_diffusion_long_horizon_planning/"
     t: "Compositional Diffusion with Guided Search for Long-Horizon Planning"
-  - u: "condition_matters_in_full-head_3d_gans/"
-    t: "Condition Matters in Full-head 3D GANs"
   - u: "consistent_low-rank_approximation/"
     t: "Consistent Low-Rank Approximation"
   - u: "contractive_diffusion_policies_robust_action_diffusion_via_contractive_score-bas/"
@@ -75,15 +73,17 @@ item_list:
     t: "Evaluating GFlowNet from Partial Episodes for Stable and Flexible Policy-Based Training"
   - u: "exchangeability_gnn_representations/"
     t: "Exchangeability of GNN Representations with Applications to Graph Retrieval"
-item_total: 74
+  - u: "fast_and_stable_riemannian_metrics_on_spd_manifolds_via_cholesky_product_geometr/"
+    t: "Fast and Stable Riemannian Metrics on SPD Manifolds via Cholesky Product Geometry"
+item_total: 71
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**🔬 ICLR2026** · **74** 篇论文解读
+**🔬 ICLR2026** · **71** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (32)](../../CVPR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [📷 CVPR2026 (22)](../../CVPR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (33)](../../ICCV2025/others/index.md)
 
 🔥 **高频主题：** 对抗鲁棒 ×6 · 域适应 ×4 · 对齐/RLHF ×4 · 扩散模型 ×3 · 联邦学习 ×2
 
@@ -154,10 +154,6 @@ item_total: 74
 **[Compositional Diffusion with Guided Search for Long-Horizon Planning](compositional_diffusion_long_horizon_planning.md)**
 
 :   提出 CDGS（Compositional Diffusion with Guided Search），通过在扩散去噪过程中嵌入基于种群的搜索机制（迭代重采样 + 似然剪枝），解决组合式扩散模型在多模态局部分布合成时的模式平均问题，从短时域模型采样出全局一致的长时域规划。
-
-**[Condition Matters in Full-head 3D GANs](condition_matters_in_full-head_3d_gans.md)**
-
-:   发现全头 3D GAN 中视角条件导致严重方向偏差（条件视角生成质量远优于其他视角），提出用视角不变的语义特征（正脸 CLIP 特征）替代视角作为条件，配合 Flux.1 Kontext 合成的 1120 万张 360° 平衡数据集，首次实现全视角一致的高保真多样全头生成。
 
 **[Consistent Low-Rank Approximation](consistent_low-rank_approximation.md)**
 
@@ -231,10 +227,6 @@ item_total: 74
 
 :   将流形理论从图像扩展到表格数据扩散模型，证明任意可微推理时损失的梯度都位于数据流形切线空间中（不限于平方误差损失），据此提出Harpoon方法在推理时沿流形引导无条件样本满足多样化表格约束。
 
-**[HEEGNet: Hyperbolic Embeddings for EEG](heegnet_hyperbolic_embeddings_for_eeg.md)**
-
-:   首次系统验证EEG数据具有双曲性（层次结构），提出HEEGNet混合双曲网络架构，结合欧几里得编码器提取时空频谱特征和双曲编码器捕捉层次关系，配合创新的粗到细域适应策略(DSMDBN)，在视觉诱发电位、情感识别和颅内EEG多个跨域任务上达到SOTA。
-
 **[Hilbert-Guided Sparse Local Attention](hilbert-guided_sparse_local_attention.md)**
 
 :   利用Hilbert空间填充曲线将2D图像token重排为保持空间邻近性的1D序列，大幅提升局部注意力的块稀疏率（空块比例从87.5%到96.9%），结合FlexAttention实现窗口注意力4倍和滑动注意力18倍加速，精度损失极小。
@@ -286,10 +278,6 @@ item_total: 74
 **[Mitigating Spurious Correlation via Distributionally Robust Learning with Hierarchical Ambiguity Sets](mitigating_spurious_correlation_via_distributionally_robust_learning_with_hierar.md)**
 
 :   提出层次化DRO框架，同时捕获组间（group proportion shifts）和组内（intra-group distributional shifts）不确定性。使用W_∞距离在语义空间定义组内模糊集，在标准基准上达SOTA，且在新设计的少数群体分布偏移设置下——其他方法均失败时——仍保持强鲁棒性。
-
-**[MOSIV: Multi-Object System Identification from Videos](mosiv_multi-object_system_identification_from_videos.md)**
-
-:   提出MOSIV——首个从多视角视频进行多物体系统辨识的完整框架：(1) 物体感知的4D动态高斯重建每个物体的几何与运动 → (2) 高斯到连续体提升构建MPM仿真粒子 → (3) 可微MPM模拟器前向滚动+几何对齐目标(3D Chamfer + 2D轮廓)反传优化每个物体的连续材料参数($E, \nu, \mu$) → 在包含弹性/塑性/流体/沙粒四种材料的接触丰富合成基准上，PSNR 达30.51 vs OmniPhysGS 25.93，Chamfer距离降低9.4倍，建立多物体长期物理仿真新基准。
 
 **[Neural Force Field: Few-shot Learning of Generalized Physical Reasoning](neural_force_field_few-shot_learning_of_generalized_physical_reasoning.md)**
 

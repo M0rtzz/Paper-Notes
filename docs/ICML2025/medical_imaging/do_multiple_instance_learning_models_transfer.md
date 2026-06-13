@@ -15,7 +15,7 @@ tags:
 
 # Do Multiple Instance Learning Models Transfer?
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2506.09022](https://arxiv.org/abs/2506.09022)  
 **代码**: [mahmoodlab/MIL-Lab](https://github.com/mahmoodlab/MIL-Lab)  
 **领域**: 医学图像  

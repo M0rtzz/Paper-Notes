@@ -18,7 +18,7 @@ tags:
 
 # Constrained Hamiltonian Systems on Observation-Induced Fiber Bundles: Theory of Symmetry and Integrability
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2505.22824](https://arxiv.org/abs/2505.22824)  
 **代码**: 无  
 **领域**: 物理/几何（约束动力学、纤维丛理论、辛几何）  

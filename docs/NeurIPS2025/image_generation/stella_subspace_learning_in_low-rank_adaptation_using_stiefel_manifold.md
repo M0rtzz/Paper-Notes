@@ -15,7 +15,7 @@ tags:
 
 # StelLA: Subspace Learning in Low-rank Adaptation using Stiefel Manifold
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.01938](https://arxiv.org/abs/2510.01938)  
 **代码**: [GitHub](https://github.com/SonyResearch/stella)  
 **领域**: 参数高效微调 / 低秩适配  

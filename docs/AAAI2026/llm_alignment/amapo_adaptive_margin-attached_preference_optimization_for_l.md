@@ -14,7 +14,7 @@ tags:
 
 # AMaPO: Adaptive Margin-attached Preference Optimization for Language Model Alignment
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.09385v2](https://arxiv.org/abs/2511.09385v2)  
 **代码**: 无  
 **领域**: LLM对齐  

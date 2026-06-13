@@ -15,7 +15,7 @@ tags:
 
 # ShortageSim: Simulating Drug Shortages under Information Asymmetry
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2509.01813](https://arxiv.org/abs/2509.01813)  
 **代码**: [https://github.com/Lemutisme/ShortageSim](https://github.com/Lemutisme/ShortageSim)  
 **领域**: 其他  

@@ -15,7 +15,7 @@ tags:
 
 # Revisiting a Pain in the Neck: A Semantic Reasoning Benchmark for Language Models
 
-**会议**: ACL2026  
+**会议**: ACL2026 Oral  
 **arXiv**: [2604.16593](https://arxiv.org/abs/2604.16593)  
 **代码**: https://github.com/jacklanda/SemanticQA  
 **领域**: LLM评测 / 语义推理 / 短语语义  

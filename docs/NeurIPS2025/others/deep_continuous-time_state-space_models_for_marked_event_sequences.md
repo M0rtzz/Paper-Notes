@@ -14,7 +14,7 @@ tags:
 
 # Deep Continuous-Time State-Space Models for Marked Event Sequences
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2412.19634](https://arxiv.org/abs/2412.19634)  
 **代码**: 集成于 [EasyTPP](https://github.com/ant-research/EasyTPP)  
 **领域**: others (时序点过程 / 状态空间模型)  

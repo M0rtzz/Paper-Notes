@@ -15,7 +15,7 @@ tags:
 
 # Why These Documents? Explainable Generative Retrieval with Hierarchical Category Paths
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2411.05572](https://arxiv.org/abs/2411.05572)  
 **代码**: [GitHub](https://augustinlib.github.io/HyPE/)  
 **领域**: 信息检索  

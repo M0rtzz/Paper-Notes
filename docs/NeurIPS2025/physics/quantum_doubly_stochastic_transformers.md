@@ -15,7 +15,7 @@ tags:
 
 # Quantum Doubly Stochastic Transformers
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2504.16275](https://arxiv.org/abs/2504.16275)  
 **代码**: 无  
 **领域**: 量子计算 / Transformer  

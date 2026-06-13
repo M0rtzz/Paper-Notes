@@ -15,7 +15,7 @@ tags:
 
 # AJ-Bench: Benchmarking Agent-as-a-Judge for Environment-Aware Evaluation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18240](https://arxiv.org/abs/2604.18240)  
 **代码**: [https://aj-bench.github.io/](https://aj-bench.github.io/)  
 **领域**: 强化学习  

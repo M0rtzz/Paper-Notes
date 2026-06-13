@@ -15,7 +15,7 @@ tags:
 
 # Lying with Truths: Open-Channel Multi-Agent Collusion for Belief Manipulation via Generative Montage
 
-**会议**: ACL2026  
+**会议**: ACL2026 Oral  
 **arXiv**: [2601.01685](https://arxiv.org/abs/2601.01685)  
 **代码**: https://github.com/CharlesJW222/Lying_with_Truth/tree/main  
 **领域**: LLM 安全 / 多智能体安全 / 信息操纵评测  

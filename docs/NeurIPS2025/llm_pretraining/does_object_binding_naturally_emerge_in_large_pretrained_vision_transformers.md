@@ -15,7 +15,7 @@ tags:
 
 # Does Object Binding Naturally Emerge in Large Pretrained Vision Transformers?
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.24709](https://arxiv.org/abs/2510.24709)  
 **代码**: [GitHub](https://github.com/liyihao0302/vit-object-binding)  
 **领域**: LLM预训练  

@@ -15,7 +15,7 @@ tags:
 
 # Learning to Retrieve User History and Generate User Profiles for Personalized Persuasiveness Prediction
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.05654](https://arxiv.org/abs/2601.05654)  
 **代码**: [GitHub](https://github.com/holi-lab/ReCAP)  
 **领域**: 个性化推荐与用户建模  

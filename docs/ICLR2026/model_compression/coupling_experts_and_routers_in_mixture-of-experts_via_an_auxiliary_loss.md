@@ -15,7 +15,7 @@ tags:
 
 # Coupling Experts and Routers in Mixture-of-Experts via an Auxiliary Loss
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2512.23447](https://arxiv.org/abs/2512.23447)  
 **代码**: 无  
 **领域**: 模型架构 / MoE  

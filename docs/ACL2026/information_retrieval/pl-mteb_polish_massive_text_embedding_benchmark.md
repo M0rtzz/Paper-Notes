@@ -15,7 +15,7 @@ tags:
 
 # PL-MTEB: Polish Massive Text Embedding Benchmark
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2405.10138](https://arxiv.org/abs/2405.10138)  
 **代码**: https://github.com/rafalposwiata/pl-mteb  
 **领域**: 信息检索/RAG

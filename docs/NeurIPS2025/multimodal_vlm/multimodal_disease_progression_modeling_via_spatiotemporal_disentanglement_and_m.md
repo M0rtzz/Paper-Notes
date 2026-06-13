@@ -15,7 +15,7 @@ tags:
 
 # Multimodal Disease Progression Modeling via Spatiotemporal Disentanglement and Multiscale Alignment
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.11112](https://arxiv.org/abs/2510.11112)  
 **代码**: [GitHub](https://github.com/Chenliu-svg/DiPro)  
 **领域**: 医学图像  

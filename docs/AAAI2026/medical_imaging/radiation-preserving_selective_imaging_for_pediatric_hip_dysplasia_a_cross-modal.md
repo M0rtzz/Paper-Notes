@@ -15,7 +15,7 @@ tags:
 
 # Radiation-Preserving Selective Imaging for Pediatric Hip Dysplasia: A Cross-Modal Approach
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Best Paper Oral  
 **arXiv**: [2511.18457](https://arxiv.org/abs/2511.18457)  
 **代码**: 无  
 **领域**: 医学影像 / 跨模态学习 / 选择性成像  

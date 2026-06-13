@@ -15,7 +15,7 @@ tags:
 
 # VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.07991](https://arxiv.org/abs/2511.07991)  
 **代码**: [GitHub](https://github.com/Choi-Hyojun/VSPO)  
 **领域**: 本体工程 / 知识表示  

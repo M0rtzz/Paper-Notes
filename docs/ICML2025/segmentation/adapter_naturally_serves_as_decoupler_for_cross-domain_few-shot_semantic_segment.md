@@ -15,7 +15,7 @@ tags:
 
 # Adapter Naturally Serves as Decoupler for Cross-Domain Few-Shot Semantic Segmentation
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2506.07376](https://arxiv.org/abs/2506.07376)  
 **代码**: 待确认  
 **领域**: 图像分割  

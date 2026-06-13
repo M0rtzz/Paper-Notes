@@ -15,7 +15,7 @@ tags:
 
 # SANSA: Unleashing the Hidden Semantics in SAM2 for Few-Shot Segmentation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.21795](https://arxiv.org/abs/2505.21795)  
 **代码**: [GitHub](https://github.com/ClaudiaCuttano/SANSA)  
 **领域**: 图像分割  

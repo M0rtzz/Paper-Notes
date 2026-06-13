@@ -15,7 +15,7 @@ tags:
 
 # Out-of-Distribution Generalization with a SPARC: Racing 100 Unseen Vehicles with a Single Policy
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.09737](https://arxiv.org/abs/2511.09737)  
 **代码**: [https://github.com/bramgrooten/sparc](https://github.com/bramgrooten/sparc)  
 **领域**: 强化学习 / 策略泛化 / 自动驾驶  

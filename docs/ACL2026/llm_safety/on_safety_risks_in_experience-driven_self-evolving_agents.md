@@ -15,7 +15,7 @@ tags:
 
 # On Safety Risks in Experience-Driven Self-Evolving Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.16968](https://arxiv.org/abs/2604.16968)  
 **代码**: 无  
 **领域**: 机器人/Agent安全  

@@ -15,7 +15,7 @@ tags:
 
 # STAR: Learning Diverse Robot Skill Abstractions through Rotation-Augmented Vector Quantization
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2506.03863](https://arxiv.org/abs/2506.03863)  
 **代码**: [有](https://STAR.github.io)  
 **领域**: 机器人  

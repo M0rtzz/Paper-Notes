@@ -15,7 +15,7 @@ tags:
 
 # Position: Stop Chasing the C-index when Evaluating Survival Analysis Models
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2506.02075](https://arxiv.org/abs/2506.02075)  
 **代码**: https://github.com/thecml/position-cindex  
 **领域**: 医学图像 / 生存分析评估 / 临床预测  

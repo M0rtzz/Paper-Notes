@@ -1,19 +1,17 @@
 ---
 title: >-
-  ICLR2026 LLM/NLP论文汇总 · 36篇论文解读
+  ICLR2026 LLM其他论文汇总 · 33篇论文解读
 description: >-
-  36篇ICLR2026的 LLM / NLP 方向论文解读，涵盖 LLM、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  33篇ICLR2026的 LLM 其他方向论文解读，涵盖 LLM、扩散模型、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "论文解读"
   - "论文笔记"
   - "LLM"
   - "扩散模型"
   - "推理"
 item_list:
-  - u: "assetformer_modular_3d_assets_generation_with_autoregressive_transformer/"
-    t: "AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer"
   - u: "bots_a_unified_framework_for_bayesian_online_task_selection_in_llm_reinforcement/"
     t: "BOTS: A Unified Framework for Bayesian Online Task Selection in LLM Reinforcement Finetuning"
   - u: "breaking_the_correlation_plateau_on_the_optimization_and_capacity_limits_of_atte/"
@@ -46,8 +44,6 @@ item_list:
     t: "Is the Reversal Curse a Binding Problem? Uncovering Limitations of Transformers from a Basic Generalization Failure"
   - u: "llema_evolutionary_search_with_llms_for_multi-objective_material_design/"
     t: "LLEMA: Evolutionary Search with LLMs for Multi-Objective Materials Discovery"
-  - u: "meta-rl_induces_exploration_in_language_agents/"
-    t: "Meta-RL Induces Exploration in Language Agents"
   - u: "near-optimal_online_deployment_and_routing_for_streaming_llms/"
     t: "Near-Optimal Online Deployment and Routing for Streaming LLMs"
   - u: "neural_synchrony_between_socially_interacting_language_models/"
@@ -72,21 +68,21 @@ item_list:
     t: "The Lattice Representation Hypothesis of Large Language Models"
   - u: "toward_safer_diffusion_language_models_discovery_and_mitigation_of_priming_vulne/"
     t: "Toward Safer Diffusion Language Models: Discovery and Mitigation of Priming Vulnerabilities"
-item_total: 36
+  - u: "trapped_by_simplicity_when_transformers_fail_to_learn_from_noisy_features/"
+    t: "Trapped by simplicity: When Transformers fail to learn from noisy features"
+  - u: "unsupervised_evaluation_of_multi-turn_objective-driven_interactions/"
+    t: "Unsupervised Evaluation of Multi-Turn Objective-Driven Interactions"
+item_total: 33
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 💬 LLM / NLP
+# 💬 LLM 其他
 
-**🔬 ICLR2026** · **36** 篇论文解读
+**🔬 ICLR2026** · **33** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (33)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (56)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/llm_nlp/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
 🔥 **高频主题：** LLM ×7 · 扩散模型 ×4 · 推理 ×2
-
-**[AssetFormer: Modular 3D Assets Generation with Autoregressive Transformer](assetformer_modular_3d_assets_generation_with_autoregressive_transformer.md)**
-
-:   提出 AssetFormer，基于 Llama 架构的自回归 Transformer，将模块化 3D 资产（由 primitive 序列组成）建模为离散 token 序列，通过 DFS/BFS 图遍历重排序和联合词汇表解码实现从文本描述生成可直接用于游戏引擎的模块化 3D 资产。
 
 **[BOTS: A Unified Framework for Bayesian Online Task Selection in LLM Reinforcement Finetuning](bots_a_unified_framework_for_bayesian_online_task_selection_in_llm_reinforcement.md)**
 
@@ -152,10 +148,6 @@ item_total: 36
 
 :   提出 LLEMA 框架，将 LLM 的科学知识与化学规则引导的进化搜索和记忆驱动的迭代优化相结合，在 14 个多目标材料发现任务上实现了更高的命中率、稳定性和 Pareto 前沿质量。
 
-**[Meta-RL Induces Exploration in Language Agents](meta-rl_induces_exploration_in_language_agents.md)**
-
-:   提出 LaMer 框架，将元强化学习（Meta-RL）引入 LLM agent 训练，通过跨 episode 的奖励优化和基于反思的上下文策略适应，使语言智能体学会主动探索环境，在 Sokoban/MineSweeper/Webshop 上分别获得 11%/14%/19% 的绝对性能提升。
-
 **[Near-Optimal Online Deployment and Routing for Streaming LLMs](near-optimal_online_deployment_and_routing_for_streaming_llms.md)**
 
 :   首次形式化 LLM 流式在线部署+路由联合问题：新模型持续出现、旧模型可能过时，在并发部署上限 $M_{\max}$ 和成本预算约束下，提出 StageRoute 分层算法，证明 $\tilde{\mathcal{O}}(T^{2/3})$ 遗憾界并给出匹配下界，达到近最优。
@@ -215,10 +207,6 @@ item_total: 36
 **[WebDevJudge: Evaluating (M)LLMs as Critiques for Web Development Quality](webdevjudge_mllm_web_development.md)**
 
 :   构建 WebDevJudge 元评估基准，系统评估 LLM/MLLM 及智能体工作流在 Web 开发质量评估任务上作为裁判的能力，发现当前最强模型与人类专家之间仍存在约15%的一致率差距，并揭示了功能等价识别失败和可行性验证薄弱两大根本瓶颈。
-
-**[WebOperator: Action-Aware Tree Search for Autonomous Agents in Web Environment](weboperator_action-aware_tree_search_for_autonomous_agents_in_web_environment.md)**
-
-:   提出 WebOperator，一个动作感知的树搜索框架，通过投机性回溯、破坏性动作检测、动作验证与合并等机制，使 Web 自主代理能在部分可观测、不可逆的真实网页环境中安全高效地探索，在 WebArena 上以 gpt-4o 达到 54.6% SOTA 成功率。
 
 **[Weight Decay may matter more than μP for Learning Rate Transfer in Practice](weight_decay_may_matter_more_than_mup_for_learning_rate_transfer_in_practice.md)**
 

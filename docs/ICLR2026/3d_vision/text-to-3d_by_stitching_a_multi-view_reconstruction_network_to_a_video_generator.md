@@ -17,7 +17,7 @@ tags:
 
 # Text-to-3D by Stitching a Multi-view Reconstruction Network to a Video Generator
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2510.13454](https://arxiv.org/abs/2510.13454)  
 **代码**: [项目页面](https://gohyojun15.github.io/VIST3A/)  
 **领域**: 3D视觉/生成  

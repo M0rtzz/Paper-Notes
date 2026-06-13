@@ -15,7 +15,7 @@ tags:
 
 # Unleashing the Potential of Large Language Models for Text-to-Image Generation through Autoregressive Representation Alignment
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2503.07334](https://arxiv.org/abs/2503.07334)  
 **代码**: [https://github.com/HKU-HealthAI/ARRA](https://github.com/HKU-HealthAI/ARRA)  
 **领域**: 医学影像 / 图像生成  

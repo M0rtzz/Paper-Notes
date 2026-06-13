@@ -15,7 +15,7 @@ tags:
 
 # TagRAG: Tag-guided Hierarchical Knowledge Graph Retrieval-Augmented Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.05254](https://arxiv.org/abs/2601.05254)  
 **代码**: 无  
 **领域**: 图学习 / Graph RAG  

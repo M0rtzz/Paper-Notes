@@ -15,7 +15,7 @@ tags:
 
 # SuffixDecoding: Extreme Speculative Decoding for Emerging AI Applications
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2411.04975](https://arxiv.org/abs/2411.04975)  
 **代码**: [https://github.com/snowflakedb/ArcticInference](https://github.com/snowflakedb/ArcticInference)  
 **领域**: LLM Agent / 推理优化  

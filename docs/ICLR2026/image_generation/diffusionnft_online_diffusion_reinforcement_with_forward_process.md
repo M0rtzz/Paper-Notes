@@ -15,7 +15,7 @@ tags:
 
 # DiffusionNFT: Online Diffusion Reinforcement with Forward Process
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2509.16117](https://arxiv.org/abs/2509.16117)  
 **代码**: [https://research.nvidia.com/labs/dir/DiffusionNFT](https://research.nvidia.com/labs/dir/DiffusionNFT)  
 **领域**: 扩散模型 / 强化学习对齐  

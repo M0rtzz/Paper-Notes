@@ -15,7 +15,7 @@ tags:
 
 # BiCA: Effective Biomedical Dense Retrieval with Citation-Aware Hard Negatives
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.08029](https://arxiv.org/abs/2511.08029)  
 **代码**: [bisect-group/BiCA](https://github.com/bisect-group/BiCA)  
 **领域**: 医疗NLP

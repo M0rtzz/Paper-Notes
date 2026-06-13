@@ -16,7 +16,7 @@ tags:
 
 # Specialization after Generalization: Towards Understanding Test-Time Training in Foundation Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2509.24510](https://arxiv.org/abs/2509.24510)  
 **作者**: Jonas Hübotter, Patrik Wolf, Alexander Shevchenko, Dennis Jüni, Andreas Krause, Gil Kur (ETH Zürich, MPI)  
 **代码**: 未公开  

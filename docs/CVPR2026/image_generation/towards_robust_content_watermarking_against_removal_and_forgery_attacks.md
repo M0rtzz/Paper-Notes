@@ -15,7 +15,7 @@ tags:
 
 # Towards Robust Content Watermarking Against Removal and Forgery Attacks
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.06662](https://arxiv.org/abs/2604.06662)  
 **代码**: 无  
 **领域**: 图像生成 / 数字水印  

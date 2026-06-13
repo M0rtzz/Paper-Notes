@@ -15,7 +15,7 @@ tags:
 
 # DiFlowDubber: Discrete Flow Matching for Automated Video Dubbing via Cross-Modal Alignment and Synchronization
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.14267](https://arxiv.org/abs/2603.14267)  
 **代码**: [Demo](https://nngocson2002.github.io/projects/diflowdubber)  
 **领域**: Image Generation / 多模态语音生成  

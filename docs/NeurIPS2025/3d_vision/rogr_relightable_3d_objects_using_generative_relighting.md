@@ -15,7 +15,7 @@ tags:
 
 # ROGR: Relightable 3D Objects using Generative Relighting
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.03163](https://arxiv.org/abs/2510.03163)  
 **代码**: 有项目页面（Project Page）  
 **领域**: 3D视觉 / 重光照  

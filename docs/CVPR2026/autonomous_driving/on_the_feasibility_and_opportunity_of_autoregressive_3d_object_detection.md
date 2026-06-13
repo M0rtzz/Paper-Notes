@@ -16,7 +16,7 @@ tags:
 
 # On the Feasibility and Opportunity of Autoregressive 3D Object Detection
 
-**会议**: CVPR2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.07985](https://arxiv.org/abs/2603.07985)  
 **代码**: 待确认  
 **领域**: 自动驾驶 / 3D目标检测  

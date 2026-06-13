@@ -16,7 +16,7 @@ tags:
 
 # Reasoning Gym: Reasoning Environments for Reinforcement Learning with Verifiable Rewards
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.24760](https://arxiv.org/abs/2505.24760)  
 **代码**: [GitHub](https://github.com/open-thought/reasoning-gym/)  
 **领域**: LLM推理 / 强化学习  

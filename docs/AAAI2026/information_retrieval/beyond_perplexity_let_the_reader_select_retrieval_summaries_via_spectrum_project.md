@@ -15,7 +15,7 @@ tags:
 
 # Beyond Perplexity: Let the Reader Select Retrieval Summaries via Spectrum Projection Score
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.05909](https://arxiv.org/abs/2508.05909)  
 **代码**: [https://zhanghao-aaai2026-sps.github.io/AAAI2026-SPS/](https://zhanghao-aaai2026-sps.github.io/AAAI2026-SPS/)  
 **领域**: RAG / 信息检索  

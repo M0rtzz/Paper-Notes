@@ -15,7 +15,7 @@ tags:
 
 # On the Learning Dynamics of Two-Layer Linear Networks with Label Noise SGD
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2603.10397](https://arxiv.org/abs/2603.10397)  
 **代码**: [https://github.com/a-usually/Label-Noise-SGD](https://github.com/a-usually/Label-Noise-SGD)  
 **领域**: 对齐RLHF / 优化理论  

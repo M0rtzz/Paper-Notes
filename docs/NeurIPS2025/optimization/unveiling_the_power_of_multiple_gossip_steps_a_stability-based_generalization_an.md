@@ -15,7 +15,7 @@ tags:
 
 # Unveiling the Power of Multiple Gossip Steps: A Stability-Based Generalization Analysis in Decentralized Training
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.07980](https://arxiv.org/abs/2510.07980)  
 **代码**: 无  
 **领域**: 分布式优化 / 泛化理论  

@@ -15,7 +15,7 @@ tags:
 
 # From Fragments to Facts: A Curriculum-Driven DPO Approach for Generating Hindi News Veracity Explanations
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2507.05179](https://arxiv.org/abs/2507.05179)  
 **代码**: Project Page: From Fragments to Facts（缓存未提供 URL）  
 **领域**: 多语言NLP / 事实核查 / 解释生成  

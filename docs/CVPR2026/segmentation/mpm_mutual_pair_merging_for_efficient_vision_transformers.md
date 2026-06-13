@@ -14,7 +14,7 @@ tags:
 
 # MPM: Mutual Pair Merging for Efficient Vision Transformers
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.05718](https://arxiv.org/abs/2604.05718)  
 **代码**: 无  
 **领域**: 分割  

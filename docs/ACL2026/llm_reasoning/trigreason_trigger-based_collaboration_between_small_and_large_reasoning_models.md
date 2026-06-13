@@ -15,7 +15,7 @@ tags:
 
 # TrigReason: Trigger-Based Collaboration between Small and Large Reasoning Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.14847](https://arxiv.org/abs/2604.14847)  
 **代码**: [https://github.com/QQQ-yi/TrigReason](https://github.com/QQQ-yi/TrigReason)  
 **领域**: LLM推理  

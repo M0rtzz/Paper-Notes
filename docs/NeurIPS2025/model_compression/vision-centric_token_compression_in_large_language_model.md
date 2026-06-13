@@ -15,7 +15,7 @@ tags:
 
 # Vision-centric Token Compression in Large Language Model
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.00791](https://arxiv.org/abs/2502.00791)  
 **代码**: [https://github.com/CSU-JPG/VIST](https://github.com/CSU-JPG/VIST)  
 **领域**: 模型压缩 / Token压缩  

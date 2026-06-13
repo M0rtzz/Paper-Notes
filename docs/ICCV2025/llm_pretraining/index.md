@@ -74,4 +74,4 @@ item_total: 9
 
 **[SynCity: Training-Free Generation of 3D Worlds](syncity_training-free_generation_of_3d_worlds.md)**
 
-:   SynCity 提出了一种无需训练和优化的3D世界生成方法，通过精心设计的提示工程策略，组合预训练的语言模型、2D图像生成器（Flux）和3D生成器（TRELLIS），以tile-by-tile的方式自回归地生成大规模、高质量、可自由导航的3D场景。
+:   SynCity 提出了一种无需训练/优化的方法，通过精心设计的 prompt engineering 策略组合预训练的语言模型、2D图像生成器和3D生成器（TRELLIS），以 tile-by-tile 的方式自回归生成大规模、高质量、可自由导航的3D世界。

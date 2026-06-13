@@ -15,7 +15,7 @@ tags:
 
 # From Masks to Pixels and Meaning: A New Taxonomy, Benchmark, and Metrics for VLM Image Tampering
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.20193](https://arxiv.org/abs/2603.20193)  
 **代码**: [https://github.com/VILA-Lab/PIXAR](https://github.com/VILA-Lab/PIXAR)  
 **领域**: 多模态VLM  

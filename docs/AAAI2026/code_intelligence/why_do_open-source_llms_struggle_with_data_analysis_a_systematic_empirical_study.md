@@ -15,7 +15,7 @@ tags:
 
 # Why Do Open-Source LLMs Struggle with Data Analysis? A Systematic Empirical Study
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2506.19794](https://arxiv.org/abs/2506.19794)  
 **代码**: [github.com/zjunlp/DataMind](https://github.com/zjunlp/DataMind)  
 **领域**: 代码智能  

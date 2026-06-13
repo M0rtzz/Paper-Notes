@@ -15,7 +15,7 @@ tags:
 
 # EET: Experience-Driven Early Termination for Cost-Efficient Software Engineering Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.05777](https://arxiv.org/abs/2601.05777)  
 **代码**: [GitHub](https://github.com/IanWalls/EET)  
 **领域**: 代码智能  

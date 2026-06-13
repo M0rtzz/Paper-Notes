@@ -15,7 +15,7 @@ tags:
 
 # Towards Long-Horizon Interpretability: Efficient and Faithful Multi-Token Attribution for Reasoning LLMs
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2602.01914](https://arxiv.org/abs/2602.01914)  
 **代码**: https://github.com/wbopan/flashtrace  
 **领域**: 可解释性 / LLM 推理 / Token 归因  

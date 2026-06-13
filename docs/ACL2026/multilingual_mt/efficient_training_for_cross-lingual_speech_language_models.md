@@ -15,7 +15,7 @@ tags:
 
 # Efficient Training for Cross-lingual Speech Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.11096](https://arxiv.org/abs/2604.11096)  
 **代码**: [https://github.com/ictnlp/CSLM](https://github.com/ictnlp/CSLM)  
 **领域**: 多语言/翻译 / 音频语音  

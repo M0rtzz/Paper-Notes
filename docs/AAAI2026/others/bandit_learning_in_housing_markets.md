@@ -14,7 +14,7 @@ tags:
 
 # Bandit Learning in Housing Markets
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.12629](https://arxiv.org/abs/2511.12629)  
 **代码**: 无  
 **领域**: 其他  

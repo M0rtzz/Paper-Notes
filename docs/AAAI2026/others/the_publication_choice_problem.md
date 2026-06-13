@@ -14,7 +14,7 @@ tags:
 
 # The Publication Choice Problem
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13678](https://arxiv.org/abs/2511.13678)  
 **代码**: 无  
 **领域**: 其他  

@@ -17,7 +17,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Understanding and Mitigating Memorization in Generative Models via Sharpness of Probability Landscapes
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2412.04140](https://arxiv.org/abs/2412.04140)  
 **代码**: [GitHub](https://github.com/Dongjae0324/sharpness_memorization_diffusion)  
 **作者**: Dongjae Jeon, Dueun Kim, Albert No

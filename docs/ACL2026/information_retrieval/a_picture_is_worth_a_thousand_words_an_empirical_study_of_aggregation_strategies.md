@@ -15,7 +15,7 @@ tags:
 
 # A Picture is Worth a Thousand Words? An Empirical Study of Aggregation Strategies for Visual Financial Document Retrieval
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.14581](https://arxiv.org/abs/2605.14581)  
 **代码**: 论文未在 abstract 中给出公开链接  
 **领域**: 信息检索 / 视觉文档检索 / VLM 诊断  

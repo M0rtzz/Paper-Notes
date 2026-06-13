@@ -15,7 +15,7 @@ tags:
 
 # Lost in Benchmarks? Rethinking Large Language Model Benchmarking with Item Response Theory
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2505.15055](https://arxiv.org/abs/2505.15055)  
 **代码**: [https://github.com/Joe-Hall-Lee/PSN-IRT](https://github.com/Joe-Hall-Lee/PSN-IRT)  
 **领域**: LLM评测  

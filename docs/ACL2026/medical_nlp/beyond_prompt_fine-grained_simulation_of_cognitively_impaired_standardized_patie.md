@@ -15,7 +15,7 @@ tags:
 
 # Beyond Prompt: Fine-grained Simulation of Cognitively Impaired Standardized Patients via Stochastic Steering
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.12210](https://arxiv.org/abs/2604.12210)  
 **代码**: 无  
 **领域**: 医学NLP

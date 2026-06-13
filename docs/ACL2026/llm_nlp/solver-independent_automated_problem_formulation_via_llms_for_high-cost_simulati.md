@@ -15,7 +15,7 @@ tags:
 
 # Solver-Independent Automated Problem Formulation via LLMs for High-Cost Simulation-Driven Design
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2512.18682](https://arxiv.org/abs/2512.18682)  
 **代码**: 无  
 **领域**: 信号通信  

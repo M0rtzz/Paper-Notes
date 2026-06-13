@@ -14,7 +14,7 @@ tags:
 
 # W2S-AlignTree: Weak-to-Strong Inference-Time Alignment for Large Language Models via Monte Carlo Tree Search
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.11518](https://arxiv.org/abs/2511.11518)  
 **代码**: [有](https://github.com/alexzdy/W2S-AlignTree)  
 **领域**: LLM对齐  

@@ -15,7 +15,7 @@ tags:
 
 # Locality-aware Parallel Decoding for Efficient Autoregressive Image Generation
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2507.01957](https://arxiv.org/abs/2507.01957)  
 **代码**: [GitHub](https://github.com/mit-han-lab/lpd)  
 **领域**: 自回归图像生成  

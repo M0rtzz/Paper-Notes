@@ -16,7 +16,7 @@ tags:
 
 # Training Dynamics of In-Context Learning in Linear Attention
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2501.16265](https://arxiv.org/abs/2501.16265)  
 **代码**: [yedizhang/linattn-icl](https://github.com/yedizhang/linattn-icl)  
 **领域**: 优化  

@@ -16,7 +16,7 @@ tags:
 
 # Implicit Bias of Spectral Descent and Muon on Multiclass Separable Data
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.04664](https://arxiv.org/abs/2502.04664)  
 **代码**: 无  
 **领域**: 优化  

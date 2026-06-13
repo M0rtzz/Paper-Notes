@@ -15,7 +15,7 @@ tags:
 
 # Beyond Fixed Psychological Personas: State Beats Trait, but Language Models are State-Blind
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.15395](https://arxiv.org/abs/2601.15395)  
 **代码**: <https://huggingface.co/datasets/tonyeh/chameleon-dataset>（数据集）  
 **领域**: LLM 对齐 / 角色扮演 / RLHF / 心理学  

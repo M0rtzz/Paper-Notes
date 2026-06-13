@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Learning through Creation: A Hash-Free Framework for On-the-Fly Category Discovery
 
-**会议**: CVPR2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.13858](https://arxiv.org/abs/2603.13858)  
 **代码**: [brandinzhang/LTC](https://github.com/brandinzhang/LTC)  
 **领域**: 模型压缩  

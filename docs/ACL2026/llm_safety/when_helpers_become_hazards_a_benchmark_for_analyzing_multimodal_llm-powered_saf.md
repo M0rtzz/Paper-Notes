@@ -15,7 +15,7 @@ tags:
 
 # When Helpers Become Hazards: A Benchmark for Analyzing Multimodal LLM-Powered Safety in Daily Life
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.04043](https://arxiv.org/abs/2601.04043)  
 **代码**: [GitHub](https://github.com/xinyuelou/SaLAD)  
 **领域**: 多模态VLM  

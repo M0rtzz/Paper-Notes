@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 物理/科学计算论文汇总 · 14篇论文解读
+  AAAI2026 物理/科学计算论文汇总 · 15篇论文解读
 description: >-
-  14篇AAAI2026的物理/科学计算方向论文解读，收录 Adaptive Fidelity Estimation f、Catastrophic Forgetting in Kol、Data Verification is the Futur等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  15篇AAAI2026的物理/科学计算方向论文解读，收录 Adaptive Fidelity Estimation f、Catastrophic Forgetting in Kol、Data Verification is the Futur等。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "AAAI2026"
   - "物理/科学计算"
@@ -35,17 +35,19 @@ item_list:
     t: "SAOT: An Enhanced Locality-Aware Spectral Transformer for Solving PDEs"
   - u: "scientific_knowledge-guided_machine_learning_for_vessel_power_prediction_a_compa/"
     t: "Scientific Knowledge-Guided Machine Learning for Vessel Power Prediction: A Comparative Study"
+  - u: "svd-no_learning_pde_solution_operators_with_svd_integral_kernels/"
+    t: "SVD-NO: Learning PDE Solution Operators with SVD Integral Kernels"
   - u: "towards_a_foundation_model_for_partial_differential_equations_across_physics_dom/"
     t: "Towards a Foundation Model for Partial Differential Equations Across Physics Domains"
-item_total: 14
+item_total: 15
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # ⚛️ 物理/科学计算
 
-**🤖 AAAI2026** · **14** 篇论文解读
+**🤖 AAAI2026** · **15** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (5)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (16)](../../ICLR2026/physics/index.md) · [🧠 NeurIPS2025 (55)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (26)](../../ICML2026/physics/index.md) · [📷 CVPR2026 (7)](../../CVPR2026/physics/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/physics/index.md) · [🧠 NeurIPS2025 (57)](../../NeurIPS2025/physics/index.md) · [📹 ICCV2025 (2)](../../ICCV2025/physics/index.md) · [🧪 ICML2025 (20)](../../ICML2025/physics/index.md)
 
 **[Adaptive Fidelity Estimation for Quantum Programs with Graph-Guided Noise Awareness](adaptive_fidelity_estimation_for_quantum_programs_with_graph.md)**
 
@@ -98,6 +100,10 @@ item_total: 14
 **[Scientific Knowledge-Guided Machine Learning for Vessel Power Prediction: A Comparative Study](scientific_knowledge-guided_machine_learning_for_vessel_power_prediction_a_compa.md)**
 
 :   提出物理基线+数据驱动残差的混合建模框架，将海试功率曲线（螺旋桨定律 $P=cV^n$）作为基线，用 XGBoost/NN/PINN 学习残差修正，在稀疏数据区域显著提升外推稳定性和物理一致性。
+
+**[SVD-NO: Learning PDE Solution Operators with SVD Integral Kernels](svd-no_learning_pde_solution_operators_with_svd_integral_kernels.md)**
+
+:   提出 SVD-NO，通过显式参数化积分核的奇异值分解（SVD）来构建神经算子，在保持高表达力的同时实现 $O(ndL)$ 的线性计算复杂度，在 5 个 PDE 基准上达到新 SOTA。
 
 **[Towards a Foundation Model for Partial Differential Equations Across Physics Domains](towards_a_foundation_model_for_partial_differential_equations_across_physics_dom.md)**
 

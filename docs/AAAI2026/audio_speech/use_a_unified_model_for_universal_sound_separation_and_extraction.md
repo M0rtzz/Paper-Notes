@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # USE: A Unified Model for Universal Sound Separation and Extraction
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2512.21215](https://arxiv.org/abs/2512.21215)  
 **代码**: [https://hongyuwang414.github.io/USE-demo/](https://hongyuwang414.github.io/USE-demo/)  
 **领域**: 语音 / 声音分离  

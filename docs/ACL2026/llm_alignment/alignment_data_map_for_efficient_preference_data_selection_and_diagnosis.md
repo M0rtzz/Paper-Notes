@@ -15,7 +15,7 @@ tags:
 
 # Alignment Data Map for Efficient Preference Data Selection and Diagnosis
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2505.23114](https://arxiv.org/abs/2505.23114)  
 **代码**: [GitHub](https://github.com/01choco/Alignment-Data-Map)  
 **领域**: LLM Alignment / Data Selection  

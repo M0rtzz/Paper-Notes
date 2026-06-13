@@ -15,7 +15,7 @@ tags:
 
 # PV-SQL: Synergizing Database Probing and Rule-based Verification for Text-to-SQL Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17653](https://arxiv.org/abs/2604.17653)  
 **代码**: [GitHub](https://github.com/magic-YuanTian/PV-SQL)  
 **领域**: Text-to-SQL / Agent  

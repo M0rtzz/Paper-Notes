@@ -15,7 +15,7 @@ tags:
 
 # Generalized Linear Mode Connectivity for Transformers
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2506.22712](https://arxiv.org/abs/2506.22712)  
 **代码**: 有（论文中提供链接）  
 **领域**: 模型融合 / Transformer 理论  

@@ -15,7 +15,7 @@ tags:
 
 # If open source is to win, it must go public
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2507.09296](https://arxiv.org/abs/2507.09296)  
 **代码**: 无（立场论文）  
 **领域**: 其他 / AI 治理与开源生态  

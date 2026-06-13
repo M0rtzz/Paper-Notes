@@ -15,7 +15,7 @@ tags:
 
 # Bid Farewell to Seesaw: Towards Accurate Long-tail Session-based Recommendation via Dual Constraints of Hybrid Intents
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.08378](https://arxiv.org/abs/2511.08378)  
 **作者**: Xiao Wang, Ke Qin, Dongyang Zhang, Xiurui Xie, Shuang Liang  
 **代码**: 未公开  

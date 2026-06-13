@@ -15,7 +15,7 @@ tags:
 
 # Distorted or Fabricated? A Survey on Hallucination in Video LLMs
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.12944](https://arxiv.org/abs/2604.12944)  
 **代码**: [GitHub](https://github.com/hukcc/Awesome-Video-Hallucination)  
 **领域**: 幻觉检测  

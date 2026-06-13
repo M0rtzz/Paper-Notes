@@ -1,8 +1,8 @@
 ---
 title: >-
-  CVPR2026 AI安全论文汇总 · 26篇论文解读
+  CVPR2026 AI安全论文汇总 · 27篇论文解读
 description: >-
-  26篇CVPR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、多模态、水印/隐写、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇CVPR2026的 AI 安全方向论文解读，涵盖对抗鲁棒、联邦学习、多模态、水印/隐写、机器人等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "AI 安全"
@@ -40,6 +40,8 @@ item_list:
     t: "FedRE: A Representation Entanglement Framework for Model-Heterogeneous Federated Learning"
   - u: "generative_adversarial_perturbations_with_cross-paradigm_transferability_on_loca/"
     t: "Generative Adversarial Perturbations with Cross-paradigm Transferability on Localized Crowd Counting"
+  - u: "irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a/"
+    t: "IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness"
   - u: "logitdynamics_vit_error_detection/"
     t: "LogitDynamics: Reliable ViT Error Detection from Layerwise Logit Trajectories"
   - u: "mcsd_uncertainty_estimation/"
@@ -66,17 +68,17 @@ item_list:
     t: "Your Classifier Can Do More: Towards Balancing the Gaps in Classification, Robustness, and Generation"
   - u: "φ-dpo_fairness_direct_preference_optimization_approach_to_continual_learning_in_/"
     t: "$\\varphi$-DPO: Fairness Direct Preference Optimization Approach to Continual Learning in Large Multimodal Models"
-item_total: 26
+item_total: 27
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🛡️ AI 安全
 
-**📷 CVPR2026** · **26** 篇论文解读
+**📷 CVPR2026** · **27** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (41)](../../ICML2026/ai_safety/index.md) · [💬 ACL2026 (4)](../../ACL2026/ai_safety/index.md) · [🔬 ICLR2026 (27)](../../ICLR2026/ai_safety/index.md) · [🤖 AAAI2026 (45)](../../AAAI2026/ai_safety/index.md) · [🧠 NeurIPS2025 (73)](../../NeurIPS2025/ai_safety/index.md) · [📹 ICCV2025 (24)](../../ICCV2025/ai_safety/index.md)
 
-🔥 **高频主题：** 对抗鲁棒 ×12 · 联邦学习 ×9 · 多模态 ×5 · 水印/隐写 ×4 · 机器人 ×3
+🔥 **高频主题：** 对抗鲁棒 ×13 · 联邦学习 ×9 · 多模态 ×5 · 水印/隐写 ×4 · 机器人 ×3
 
 **[A Unified Perspective on Adversarial Membership Manipulation in Vision Models](a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)**
 
@@ -129,6 +131,10 @@ item_total: 26
 **[Generative Adversarial Perturbations with Cross-paradigm Transferability on Localized Crowd Counting](generative_adversarial_perturbations_with_cross-paradigm_transferability_on_loca.md)**
 
 :   提出首个跨范式（密度图 + 点回归）对抗攻击框架 CrowdGen，利用轻量级 UNet 生成器和多任务损失（logit 抑制 + 密度抑制 + GradCAM 引导 + 频域约束），在保持视觉隐蔽性（~19dB PSNR）的同时实现对七个 SOTA 人群计数模型的高迁移率（TR 最高 1.69），攻击 MAE 平均提升 7 倍。
+
+**[IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness](irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a.md)**
+
+:   提出IrisFP模型指纹框架，通过将指纹放置在多类决策边界交叉点处、构建复合样本指纹、以及基于统计可分性的指纹筛选三项创新，同时增强指纹的唯一性和鲁棒性，在5个数据集上AUC一致超过SOTA方法。
 
 **[LogitDynamics: Reliable ViT Error Detection from Layerwise Logit Trajectories](logitdynamics_vit_error_detection.md)**
 

@@ -15,7 +15,7 @@ tags:
 
 # DocSeeker: Structured Visual Reasoning with Evidence Grounding for Long Document Understanding
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2604.12812](https://arxiv.org/abs/2604.12812)  
 **代码**: [https://github.com/yh-hust/DocSeeker](https://github.com/yh-hust/DocSeeker)  
 **领域**: 多模态VLM / 文档理解  

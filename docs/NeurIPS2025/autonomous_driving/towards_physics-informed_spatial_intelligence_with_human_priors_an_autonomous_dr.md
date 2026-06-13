@@ -15,7 +15,7 @@ tags:
 
 # Towards Physics-Informed Spatial Intelligence with Human Priors: An Autonomous Driving Perspective
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.21160](https://arxiv.org/abs/2510.21160)  
 **代码**: [项目主页](https://guanlinwu123.github.io/sigbench)  
 **领域**: 自动驾驶 / 空间智能  

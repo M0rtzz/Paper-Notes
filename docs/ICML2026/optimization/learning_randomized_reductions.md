@@ -15,7 +15,7 @@ tags:
 
 # Learning Randomized Reductions
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2412.18134](https://arxiv.org/abs/2412.18134)  
 **代码**: https://github.com/ferhaterata/learning-randomized-reductions (有)  
 **领域**: 优化 / 神经符号学习 / 符号回归  

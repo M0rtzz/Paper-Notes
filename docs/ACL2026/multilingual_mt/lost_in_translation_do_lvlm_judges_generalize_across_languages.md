@@ -15,7 +15,7 @@ tags:
 
 # Lost in Translation: Do LVLM Judges Generalize Across Languages?
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19405](https://arxiv.org/abs/2604.19405)  
 **代码**: [https://github.com/tahmedge/mm-judgebench](https://github.com/tahmedge/mm-judgebench)  
 **领域**: 多语言 / 模型评估  

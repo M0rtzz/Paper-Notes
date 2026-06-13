@@ -1,19 +1,19 @@
 ---
 title: >-
-  ICML2025 医学图像论文汇总 · 22篇论文解读
+  ICML2025 医学图像论文汇总 · 21篇论文解读
 description: >-
-  22篇ICML2025的医学图像方向论文解读，涵盖医学影像、多模态、目标检测、域适应、推理、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  21篇ICML2025的医学图像方向论文解读，涵盖医学影像、语义分割、多模态、目标检测、域适应、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "医学图像"
   - "论文解读"
   - "论文笔记"
   - "医学影像"
+  - "语义分割"
   - "多模态"
   - "目标检测"
   - "域适应"
   - "推理"
-  - "对抗鲁棒"
 item_list:
   - u: "bayesian_inference_for_correlated_human_experts_and_classifiers/"
     t: "Bayesian Inference for Correlated Human Experts and Classifiers"
@@ -25,8 +25,6 @@ item_list:
     t: "Context Matters: Query-aware Dynamic Long Sequence Modeling of Gigapixel Images"
   - u: "do_multiple_instance_learning_models_transfer/"
     t: "Do Multiple Instance Learning Models Transfer?"
-  - u: "doubly_protected_estimation_for_survival_outcomes_utilizing_external_controls_fo/"
-    t: "Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials"
   - u: "eeg-language_pretraining_for_highly_label-efficient_clinical_phenotyping/"
     t: "EEG-Language Pretraining for Highly Label-Efficient Clinical Phenotyping"
   - u: "efficient_noise_calculation_in_deep_learning-based_mri_reconstructions/"
@@ -42,7 +40,7 @@ item_list:
   - u: "implementing_adaptations_for_vision_autoregressive_model/"
     t: "Implementing Adaptations for Vision AutoRegressive Model"
   - u: "langdaug_langevin_data_augmentation_for_multi-source_domain_generalization_in_me/"
-    t: "LangDAug: Langevin Data Augmentation for Multi-Source Domain Generalization in Medical Imaging"
+    t: "LangDAug: Langevin Data Augmentation for Multi-Source Domain Generalization in Medical Image Segmentation"
   - u: "mastering_multiple-expert_routing_realizable_h-consistency_and_strong_guarantees/"
     t: "Mastering Multiple-Expert Routing: Realizable H-Consistency and Strong Guarantees"
   - u: "medxpertqa_benchmarking_expert-level_medical_reasoning_and_understanding/"
@@ -59,17 +57,17 @@ item_list:
     t: "The Disparate Benefits of Deep Ensembles"
   - u: "the_four_color_theorem_for_cell_instance_segmentation/"
     t: "The Four Color Theorem for Cell Instance Segmentation"
-item_total: 22
+item_total: 21
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🧪 ICML2025** · **22** 篇论文解读
+**🧪 ICML2025** · **21** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (73)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (75)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (22)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (75)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (77)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md)
 
-🔥 **高频主题：** 医学影像 ×7
+🔥 **高频主题：** 医学影像 ×6 · 语义分割 ×2
 
 **[Bayesian Inference for Correlated Human Experts and Classifiers](bayesian_inference_for_correlated_human_experts_and_classifiers.md)**
 
@@ -90,10 +88,6 @@ item_total: 22
 **[Do Multiple Instance Learning Models Transfer?](do_multiple_instance_learning_models_transfer.md)**
 
 :   首次系统评估计算病理学中 MIL 模型的迁移学习能力，发现在 pancancer 数据集上预训练的 MIL 模型能够跨器官、跨任务泛化，以不到 10% 的预训练数据超越自监督 slide foundation model（CHIEF、GigaPath）。
-
-**[Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials](doubly_protected_estimation_for_survival_outcomes_utilizing_external_controls_fo.md)**
-
-:   提出一种双重保护（doubly protected）的生存结局估计框架，通过密度比加权校正协变量偏移、DR-Learner检测结局漂移并选择性借用可比外部对照，在保证一致性和效率提升的同时对外部数据异质性具有鲁棒性。
 
 **[EEG-Language Pretraining for Highly Label-Efficient Clinical Phenotyping](eeg-language_pretraining_for_highly_label-efficient_clinical_phenotyping.md)**
 
@@ -123,9 +117,9 @@ item_total: 22
 
 :   本文首次系统实现并评测了Vision AutoRegressive（VAR）模型的各种适配方法（FFT/LoRA/LNTuning）及差分隐私适配，发现VAR在非DP场景下显著超越扩散模型适配（DiffFit），收敛速度更快、计算效率更高，但DP适配性能仍然不佳，揭示了隐私保护图像生成领域的重要研究空白。
 
-**[LangDAug: Langevin Data Augmentation for Multi-Source Domain Generalization in Medical Imaging](langdaug_langevin_data_augmentation_for_multi-source_domain_generalization_in_me.md)**
+**[LangDAug: Langevin Data Augmentation for Multi-Source Domain Generalization in Medical Image Segmentation](langdaug_langevin_data_augmentation_for_multi-source_domain_generalization_in_me.md)**
 
-:   LangDAug 提出用基于能量模型(EBM)的 Langevin 动力学在多源域之间插值生成中间域增强样本，理论证明其诱导正则化效果并约束 Rademacher 复杂度，在眼底和前列腺 MRI 分割上超越 SOTA 域泛化方法。
+:   LangDAug 利用基于对比散度训练的能量模型(EBM)，通过 Langevin 动力学在源域之间遍历生成中间样本，实现医学图像分割的多源域泛化，理论证明其诱导正则化效果并上界 Rademacher 复杂度。
 
 **[Mastering Multiple-Expert Routing: Realizable H-Consistency and Strong Guarantees](mastering_multiple-expert_routing_realizable_h-consistency_and_strong_guarantees.md)**
 
@@ -153,7 +147,7 @@ item_total: 22
 
 **[The Disparate Benefits of Deep Ensembles](the_disparate_benefits_of_deep_ensembles.md)**
 
-:   本文系统研究了深度集成（Deep Ensembles）对算法公平性的影响，发现集成会不均匀地提升不同群体的性能（disparate benefits effect），导致公平性下降，并证明Hardt后处理方法能有效缓解该问题同时保留集成的性能增益。
+:   这篇论文通过对人脸分析与医学影像数据集的大规模实证研究，揭示了一个被忽视的现象——"差异化收益效应"（disparate benefits effect）：深度集成（Deep Ensembles）在提升整体性能的同时，会**不均衡地**惠及不同受保护群体（往往偏向本就占优势的群体），从而损害群体公平；作者进一步指出其根因是**群体间预测多样性的差异**，并证明经典的 Hardt 后处理（HPP）能在保住性能增益的前提下有效修复公平。
 
 **[The Four Color Theorem for Cell Instance Segmentation](the_four_color_theorem_for_cell_instance_segmentation.md)**
 

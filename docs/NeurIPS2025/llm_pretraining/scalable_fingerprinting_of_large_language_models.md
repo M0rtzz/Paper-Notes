@@ -15,7 +15,7 @@ tags:
 
 # Scalable Fingerprinting of Large Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.07760](https://arxiv.org/abs/2502.07760)  
 **代码**: [GitHub](https://github.com/SewoongLab/scalable-fingerprinting-of-llms)  
 **领域**: LLM预训练  

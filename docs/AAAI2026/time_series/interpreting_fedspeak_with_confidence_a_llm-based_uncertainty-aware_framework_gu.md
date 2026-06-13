@@ -15,7 +15,7 @@ tags:
 
 # Interpreting Fedspeak with Confidence: A LLM-Based Uncertainty-Aware Framework Guided by Monetary Policy Transmission Paths
 
-**会议**: AAAI2026  
+**会议**: AAAI2026 Oral  
 **arXiv**: [2508.08001](https://arxiv.org/abs/2508.08001)  
 **代码**: [yuuki20001/FOMC-sentiment-path](https://github.com/yuuki20001/FOMC-sentiment-path)  
 **领域**: 时间序列  

@@ -15,7 +15,7 @@ tags:
 
 # Pose-dIVE: Pose-Diversified Augmentation with Diffusion Model for Person Re-Identification
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2406.16042](https://arxiv.org/abs/2406.16042)  
 **代码**: [https://cvlab-kaist.github.io/Pose-dIVE](https://cvlab-kaist.github.io/Pose-dIVE)  
 **领域**: 扩散模型/图像生成  

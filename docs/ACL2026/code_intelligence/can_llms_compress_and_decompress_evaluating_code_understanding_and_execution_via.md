@@ -15,7 +15,7 @@ tags:
 
 # Can LLMs Compress (and Decompress)? Evaluating Code Understanding and Execution via Invertibility
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.13398](https://arxiv.org/abs/2601.13398)  
 **代码**: https://github.com/Nickil21/round-trip-code-compression  
 **领域**: 代码智能  

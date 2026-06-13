@@ -15,7 +15,7 @@ tags:
 
 # EvoLMM: Self-Evolving Large Multimodal Models with Continuous Rewards
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2511.16672](https://arxiv.org/abs/2511.16672)  
 **代码**: [https://github.com/mbzuai-oryx/EvoLMM](https://github.com/mbzuai-oryx/EvoLMM) (开源)  
 **领域**: 多模态VLM / 自进化学习  

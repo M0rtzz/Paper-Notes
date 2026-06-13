@@ -15,7 +15,7 @@ tags:
 
 # A Unified Framework for Modeling Heterogeneous Financial Data via Dual-Granularity Prompting
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2404.13004](https://arxiv.org/abs/2404.13004)  
 **代码**: [GitHub](https://github.com/didiglobal-fintech-credit-risk/FinLangNet)  
 **领域**: Time Series / Financial NLP  

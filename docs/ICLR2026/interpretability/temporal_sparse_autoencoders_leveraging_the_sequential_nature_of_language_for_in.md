@@ -14,7 +14,7 @@ tags:
 
 # Temporal Sparse Autoencoders: Leveraging the Sequential Nature of Language for Interpretability
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2511.05541](https://arxiv.org/abs/2511.05541)  
 **代码**: [github.com/AI4LIFE-GROUP/temporal-saes](https://github.com/AI4LIFE-GROUP/temporal-saes)  
 **领域**: 模型压缩 / 可解释性  

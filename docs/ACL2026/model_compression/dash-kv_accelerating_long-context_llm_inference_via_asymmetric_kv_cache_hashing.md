@@ -15,7 +15,7 @@ tags:
 
 # DASH-KV: Accelerating Long-Context LLM Inference via Asymmetric KV Cache Hashing
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19351](https://arxiv.org/abs/2604.19351)  
 **代码**: [https://github.com/Zhihan-Zh/DASH-KV](https://github.com/Zhihan-Zh/DASH-KV)  
 **领域**: 模型压缩  

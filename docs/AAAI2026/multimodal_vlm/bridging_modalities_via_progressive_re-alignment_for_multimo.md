@@ -15,7 +15,7 @@ tags:
 
 # Bridging Modalities via Progressive Re-alignment for Multimodal Test-Time Adaptation (BriMPR)
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.22862](https://arxiv.org/abs/2511.22862)  
 **代码**: [https://github.com/Luchicken/BriMPR](https://github.com/Luchicken/BriMPR)  
 **领域**: 多模态VLM  

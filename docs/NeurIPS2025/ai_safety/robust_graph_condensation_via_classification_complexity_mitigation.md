@@ -15,7 +15,7 @@ tags:
 
 # Robust Graph Condensation via Classification Complexity Mitigation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.26451](https://arxiv.org/abs/2510.26451)  
 **代码**: [GitHub](https://github.com/RingBDStack/MRGC)  
 **领域**: AI安全  

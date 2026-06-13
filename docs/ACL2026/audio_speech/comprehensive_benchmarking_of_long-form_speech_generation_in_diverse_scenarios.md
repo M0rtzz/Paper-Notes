@@ -15,7 +15,7 @@ tags:
 
 # Comprehensive Benchmarking of Long-Form Speech Generation in Diverse Scenarios
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.28618](https://arxiv.org/abs/2605.28618)  
 **代码**: https://swanaigc.github.io/#bench  
 **领域**: 音频语音 / 长文本语音生成评测  

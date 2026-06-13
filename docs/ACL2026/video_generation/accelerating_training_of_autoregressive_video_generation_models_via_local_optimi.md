@@ -15,7 +15,7 @@ tags:
 
 # Accelerating Training of Autoregressive Video Generation Models via Local Optimization with Representation Continuity
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.07402](https://arxiv.org/abs/2604.07402)  
 **代码**: 无  
 **领域**: 视频生成  

@@ -15,7 +15,7 @@ tags:
 
 # DexFlyWheel: A Scalable Self-Improving Data Generation Framework for Dexterous Manipulation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.23829](https://arxiv.org/abs/2509.23829)  
 **代码**: [项目页面](https://DexFlyWheel.github.io)  
 **领域**: 机器人  

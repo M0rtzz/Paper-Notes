@@ -15,7 +15,7 @@ tags:
 
 # Long-Form Speech Generation with Spoken Language Models
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2412.18603](https://arxiv.org/abs/2412.18603)  
 **代码**: [https://google.github.io/tacotron/publications/speechssm/](https://google.github.io/tacotron/publications/speechssm/)  
 **领域**: 图像生成  

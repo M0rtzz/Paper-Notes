@@ -15,7 +15,7 @@ tags:
 
 # Deep Value Benchmark: Measuring Whether Models Generalize Deep Values or Shallow Preferences
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.02109](https://arxiv.org/abs/2511.02109)  
 **代码**: [GitHub](https://github.com/josh-ashkinaze/deep-value-benchmark-neurips)  
 **领域**: 可解释性  

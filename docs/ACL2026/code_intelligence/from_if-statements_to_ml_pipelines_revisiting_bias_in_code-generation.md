@@ -15,7 +15,7 @@ tags:
 
 # From If-Statements to ML Pipelines: Revisiting Bias in Code-Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.21716](https://arxiv.org/abs/2604.21716)  
 **代码**: [https://github.com/MinhDucBui/Code-Bias-ML-Pipelines](https://github.com/MinhDucBui/Code-Bias-ML-Pipelines)  
 **领域**: 代码生成 / AI公平性  

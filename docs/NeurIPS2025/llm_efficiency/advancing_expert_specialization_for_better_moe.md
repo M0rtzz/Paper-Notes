@@ -15,7 +15,7 @@ tags:
 
 # Advancing Expert Specialization for Better MoE
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2505.22323](https://arxiv.org/abs/2505.22323)  
 **代码**: 无  
 **领域**: LLM效率  

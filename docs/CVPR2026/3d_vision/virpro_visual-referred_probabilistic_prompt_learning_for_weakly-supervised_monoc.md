@@ -15,7 +15,7 @@ tags:
 
 # VirPro: Visual-referred Probabilistic Prompt Learning for Weakly-Supervised Monocular 3D Detection
 
-**会议**: CVPR2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.17470](https://arxiv.org/abs/2603.17470)  
 **代码**: 待确认  
 **领域**: 3D视觉  

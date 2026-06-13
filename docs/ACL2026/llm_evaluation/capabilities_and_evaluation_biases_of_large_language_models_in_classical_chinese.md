@@ -15,7 +15,7 @@ tags:
 
 # Capabilities and Evaluation Biases of Large Language Models in Classical Chinese Poetry Generation: A Case Study on Tang Poetry
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.15313](https://arxiv.org/abs/2510.15313)  
 **代码**: [https://github.com/boleima/Tang-Poetry](https://github.com/boleima/Tang-Poetry)  
 **领域**: LLM评测  

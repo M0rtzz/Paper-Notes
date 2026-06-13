@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 医学图像论文汇总 · 75篇论文解读
+  NeurIPS2025 医学图像论文汇总 · 77篇论文解读
 description: >-
-  75篇NeurIPS2025的医学图像方向论文解读，涵盖医学影像、多模态、语义分割、自监督学习、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  77篇NeurIPS2025的医学图像方向论文解读，涵盖医学影像、多模态、语义分割、自监督学习、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "医学图像"
@@ -23,6 +23,8 @@ item_list:
     t: "A Unified Solution to Video Fusion: From Multi-Frame Learning to Benchmarking"
   - u: "active_target_discovery_under_uninformative_prior_the_power_of_permanent_and_tra/"
     t: "Active Target Discovery under Uninformative Prior: The Power of Permanent and Transient Memory"
+  - u: "are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi/"
+    t: "Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?"
   - u: "brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int/"
     t: "Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens"
   - u: "brainomni_a_brain_foundation_model_for_unified_eeg_and_meg_signals/"
@@ -57,6 +59,8 @@ item_list:
     t: "EEGReXferNet: A Lightweight Gen-AI Framework for EEG Subspace Reconstruction via Cross-Subject Transfer Learning and Channel-Aware Embedding"
   - u: "endobench_a_comprehensive_evaluation_of_multi-modal_large_language_models_for_en/"
     t: "EndoBench: A Comprehensive Evaluation of Multi-Modal Large Language Models for Endoscopy Analysis"
+  - u: "evobrain_dynamic_multi-channel_eeg_graph_modeling_for_time-evolving_brain_networ/"
+    t: "EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks"
   - u: "ewc-guided_diffusion_replay_for_exemplar-free_continual_learning_in_medical_imag/"
     t: "EWC-Guided Diffusion Replay for Exemplar-Free Continual Learning in Medical Imaging"
   - u: "exploring_and_leveraging_class_vectors_for_classifier_editing/"
@@ -71,19 +75,15 @@ item_list:
     t: "FireGNN: Neuro-Symbolic Graph Neural Networks with Trainable Fuzzy Rules for Interpretable Medical Image Classification"
   - u: "foxes_a_framework_for_operational_x-ray_emission_synthesis/"
     t: "FOXES: A Framework For Operational X-ray Emission Synthesis"
-  - u: "generalizable_real-time_neural_decoding_with_hybrid_state-space_models/"
-    t: "Generalizable, Real-Time Neural Decoding with Hybrid State-Space Models"
-  - u: "geodynamics_a_geometric_state-space_neural_network_for_understanding_brain_dynam/"
-    t: "GeoDynamics: A Geometric State-Space Neural Network for Understanding Brain Dynamics on Riemannian Manifolds"
-item_total: 75
+item_total: 77
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🧠 NeurIPS2025** · **75** 篇论文解读
+**🧠 NeurIPS2025** · **77** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (21)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (73)](../../AAAI2026/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (22)](../../ICML2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🔬 ICLR2026 (22)](../../ICLR2026/medical_imaging/index.md) · [🤖 AAAI2026 (75)](../../AAAI2026/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (21)](../../ICML2025/medical_imaging/index.md)
 
 🔥 **高频主题：** 医学影像 ×31 · 多模态 ×8 · 语义分割 ×8 · 自监督学习 ×4 · 扩散模型 ×4
 
@@ -102,6 +102,10 @@ item_total: 75
 **[Active Target Discovery under Uninformative Prior: The Power of Permanent and Transient Memory](active_target_discovery_under_uninformative_prior_the_power_of_permanent_and_tra.md)**
 
 :   提出 EM-PTDM 框架，受神经科学双记忆系统启发，利用预训练扩散模型作为"永久记忆"并结合基于 Doob's h-transform 的轻量"瞬时记忆"模块，在**无领域先验数据**的条件下实现高效的主动目标发现，理论保证先验单调改进。
+
+**[Are Pixel-Wise Metrics Reliable for Sparse-View Computed Tomography Reconstruction?](are_pixel-wise_metrics_reliable_for_sparse-view_computed_tomography_reconstructi.md)**
+
+:   揭示 PSNR/SSIM 等像素级指标无法反映稀疏视图 CT 重建中解剖结构完整性（相关性仅 0.16-0.30），提出基于自动分割的解剖感知指标（NSD/clDice）和 CARE 框架——在扩散模型训练中加入分割引导损失，大器官结构完整性提升 32%、血管提升 36%。
 
 **[Brain Harmony: A Multimodal Foundation Model Unifying Morphology and Function into 1D Tokens](brain_harmony_a_multimodal_foundation_model_unifying_morphology_and_function_int.md)**
 
@@ -171,6 +175,10 @@ item_total: 75
 
 :   提出 EndoBench，首个覆盖 4 种内窥镜场景、12 项临床任务、5 级视觉提示粒度的综合 MLLM 评估基准，包含 6,832 个经临床验证的 VQA 对，对 23 个 MLLM 的评估显示商用模型整体领先但仍落后人类专家。
 
+**[EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks](evobrain_dynamic_multi-channel_eeg_graph_modeling_for_time-evolving_brain_networ.md)**
+
+:   提出 EvoBrain——首次从理论上证明 **显式动态图建模** 优于隐式静态图、**time-then-graph** 架构表达力严格优于其他两种动态 GNN 范式(graph-then-time / time-and-graph)，并据此设计双流 Mamba + Laplacian PE 增强的 GCN 模型，在 TUSZ 和 CHB-MIT 数据集的癫痫检测与早期预测任务上取得 AUROC 提升 23%、F1 提升 30% 的显著效果，同时训练速度比 SOTA 快 17 倍。
+
 **[EWC-Guided Diffusion Replay for Exemplar-Free Continual Learning in Medical Imaging](ewc-guided_diffusion_replay_for_exemplar-free_continual_learning_in_medical_imag.md)**
 
 :   提出将类条件 DDPM 扩散重放与弹性权重巩固（EWC）相结合的无样本持续学习框架，在 MedMNIST v2（8 个 2D/3D 任务）和 CheXpert 上实现了 AUROC 0.851，相比 DER++ 遗忘率降低超 30%，接近联合训练上界（0.869），同时完全无需存储患者原始数据。
@@ -207,10 +215,6 @@ item_total: 75
 
 :   提出GeoDynamics，将经典状态空间模型(SSM)从欧几里得空间推广到对称正定(SPD)流形，通过加权Frechet均值聚合和正交群平移实现流形上的状态演化，在脑连接组（AD/PD/ASD早期诊断）和人体动作识别上均取得SOTA。
 
-**[GFlowNets for Learning Better Drug-Drug Interaction Representations](gflownets_for_learning_better_drug-drug_interaction_representations.md)**
-
-:   针对药物-药物相互作用（DDI）预测中严重的类别不平衡问题，本文提出将 GFlowNet 与变分图自编码器（VGAE）结合，通过奖励引导的生成采样为稀有交互类型生成合成样本，从而增强模型在罕见但临床关键的交互类型上的预测能力。
-
 **[ImageNet-trained CNNs are not biased towards texture: Revisiting feature reliance through controlled suppression](imagenet-trained_cnns_are_not_biased_towards_texture_revisiting_feature_reliance.md)**
 
 :   通过系统化的特征抑制框架（而非冲突选择实验）重新评估 CNN 的特征依赖性，发现 CNN 并非天然偏向纹理，而是主要依赖局部形状特征；且不同领域（CV/MI/RS）的特征依赖模式显著不同。
@@ -234,6 +238,10 @@ item_total: 75
 **[MATCH: Multi-faceted Adaptive Topo-Consistency for Semi-Supervised Histopathology Segmentation](match_multi-faceted_adaptive_topo-consistency_for_semi-supervised_histopathology.md)**
 
 :   提出MATCH框架，通过将拓扑推理与半监督学习的"扰动鲁棒性"原则紧密耦合，利用跨随机扰动和时间训练快照的双层拓扑一致性，自适应识别可靠拓扑结构而无需人工阈值，显著降低了组织病理学图像分割中的拓扑错误。
+
+**[MEGState: Phoneme Decoding from Magnetoencephalography Signals](megstate_phoneme_decoding_from_magnetoencephalography_signals.md)**
+
+:   提出 MEGState，一种融合多分辨率卷积和传感器级 SSM 的架构，用于从脑磁图(MEG)信号中解码音素，在 LibriBrain 数据集上显著超越基线方法。
 
 **[Meta-Learning an In-Context Transformer Model of Human Higher Visual Cortex](meta-learning_an_in-context_transformer_model_of_human_higher_visual_cortex.md)**
 

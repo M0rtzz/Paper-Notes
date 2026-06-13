@@ -15,7 +15,7 @@ tags:
 
 # Aligning What LLMs Do and Say: Towards Self-Consistent Explanations
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2506.07523](https://arxiv.org/abs/2506.07523)  
 **代码**: [GitHub](https://github.com/saharad1/ConstLLM)  
 **领域**: 可解释性  

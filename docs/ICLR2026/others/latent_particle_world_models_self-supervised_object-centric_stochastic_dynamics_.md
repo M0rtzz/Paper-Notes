@@ -15,7 +15,7 @@ tags:
 
 # LPWM: Latent Particle World Models for Object-Centric Stochastic Dynamics
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2603.04553](https://arxiv.org/abs/2603.04553)  
 **代码**: [项目页](https://taldatech.github.io/lpwm-web)  
 **领域**: 世界模型 / 物体中心表示 / 视频预测  

@@ -15,7 +15,7 @@ tags:
 
 # HumanOrbit: 3D Human Reconstruction as 360° Orbit Generation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2602.24148](https://arxiv.org/abs/2602.24148)  
 **代码**: 无  
 **领域**: 3D视觉  

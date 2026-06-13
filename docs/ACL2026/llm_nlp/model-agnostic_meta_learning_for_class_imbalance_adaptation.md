@@ -15,7 +15,7 @@ tags:
 
 # Model-Agnostic Meta Learning for Class Imbalance Adaptation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18759](https://arxiv.org/abs/2604.18759)  
 **代码**: [GitHub](https://github.com/trust-nlp/ImbalanceLearning)  
 **领域**: 医学图像  

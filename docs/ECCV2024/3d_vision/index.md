@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 3D视觉论文汇总 · 178篇论文解读
+  ECCV2024 3D视觉论文汇总 · 181篇论文解读
 description: >-
-  178篇ECCV2024的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、点云、NeRF、新视角合成、Text-to-3D等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  181篇ECCV2024的 3D 视觉方向论文解读，涵盖 3D 高斯渲染、扩散模型、点云、NeRF、新视角合成、Text-to-3D等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ECCV2024"
   - "3D 视觉"
@@ -75,15 +75,15 @@ item_list:
     t: "Compress3D: a Compressed Latent Space for 3D Generation from a Single Image"
   - u: "cor-gs_sparse-view_3d_gaussian_splatting_via_co-regularization/"
     t: "CoR-GS: Sparse-View 3D Gaussian Splatting via Co-Regularization"
-item_total: 178
+item_total: 181
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🎞️ ECCV2024** · **178** 篇论文解读
+**🎞️ ECCV2024** · **181** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (239)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md)
 
 🔥 **高频主题：** 3D 高斯渲染 ×33 · 扩散模型 ×21 · 点云 ×20 · NeRF ×16 · 新视角合成 ×10
 
@@ -283,6 +283,10 @@ item_total: 178
 
 :   提出基于SE(3)等变图神经网络的稀疏点云配准方法Equi-GSPR，通过等变消息传播、低秩特征变换（LRFT）和隐式特征空间相似度匹配，在室内外数据集上以低模型复杂度实现SOTA配准性能。
 
+**[Event-based Mosaicing Bundle Adjustment](event-based_mosaicing_bundle_adjustment.md)**
+
+:   提出 EMBA，首个针对纯旋转事件相机的光度 Bundle Adjustment 方法，利用线性化事件生成模型将问题形式化为正则化非线性最小二乘优化，并利用法方程矩阵的块对角稀疏结构设计高效求解器，同时优化相机旋转轨迹和全景梯度图。
+
 **[Explicitly Guided Information Interaction Network for Cross-modal Point Cloud Completion](explicitly_guided_information_interaction_network_for_cross-modal_point_cloud_co.md)**
 
 :   提出EGIInet框架，通过统一编码器实现模态对齐，并利用显式引导的信息交互策略（FT-Loss）让网络精准识别图像中的关键结构信息，在视图引导点云补全任务上以更少参数实现了超越XMFnet 16% CD的性能。
@@ -377,7 +381,7 @@ item_total: 178
 
 **[GPSFormer: A Global Perception and Local Structure Fitting-Based Transformer for Point Cloud Understanding](gpsformer_a_global_perception_and_local_structure_fitting-based_transformer_for_.md)**
 
-:   提出GPSFormer，通过全局感知模块(GPM)学习点云短程和长程依赖，结合Taylor级数启发的局部结构拟合卷积(LSFConv)精确捕获局部几何细节，在ScanObjectNN上以纯监督学习方式达到95.4%准确率，超越所有预训练方法。
+:   提出GPSFormer，通过全局感知模块(GPM)学习短程和长程依赖关系，并利用Taylor级数启发的局部结构拟合卷积(LSFConv)精确建模局部几何信息，在ScanObjectNN上以2.36M参数达到95.4%准确率，超越所有监督学习和预训练方法。
 
 **[GRM: Large Gaussian Reconstruction Model for Efficient 3D Reconstruction and Generation](grm_large_gaussian_reconstruction_model_for_efficient_3d_reconstruction_and_gene.md)**
 
@@ -575,6 +579,10 @@ item_total: 178
 
 :   提出基于逐高斯嵌入（Per-Gaussian Embedding）的形变表示方法，将形变定义为逐高斯潜在嵌入与时间嵌入的函数，辅以粗细形变分解和局部平滑正则化，在多个动态场景数据集上取得了质量、速度和模型容量的全面优势。
 
+**[PISR: Polarimetric Neural Implicit Surface Reconstruction for Textureless and Specular Objects](pisr_polarimetric_neural_implicit_surface_reconstruction_for_textureless_and_spe.md)**
+
+:   提出PISR方法，利用偏振光的几何约束（偏振角与法线方位角的对应关系）直接正则化神经隐式表面形状，结合哈希网格加速和图像空间法线平滑，在无纹理和镜面物体上实现了0.5mm Chamfer距离和99.5% F-score的高精度重建，速度比此前偏振方法快4~30倍。
+
 **[Pixel-GS: Density Control with Pixel-aware Gradient for 3D Gaussian Splatting](pixel-gs_density_control_with_pixel-aware_gradient_for_3d_gaussian_splatting.md)**
 
 :   Pixel-GS通过在3DGS的点云生长判定条件中引入像素覆盖数量作为梯度加权因子，解决了大高斯体在初始点云稀疏区域无法有效分裂的问题，同时通过距离感知的梯度缩放抑制相机附近浮点伪影的产生。
@@ -582,6 +590,10 @@ item_total: 178
 **[PointLLM: Empowering Large Language Models to Understand Point Clouds](pointllm_empowering_large_language_models_to_understand_point_clouds.md)**
 
 :   将点云编码器（Point-BERT）通过 MLP 投影层对接 LLaMA 大语言模型，构建 PointLLM；利用 730K 指令数据（660K 简述 + 70K 复杂指令）两阶段训练后，在 3D 物体分类上达到 53.4% 生成式准确率（超越 LLaVA-13B 的 44.2%），在物体描述任务上人类评估胜率 55%（超越人工标注）。
+
+**[Power Variable Projection for Initialization-Free Large-Scale Bundle Adjustment](power_variable_projection_for_initialization-free_large-scale_bundle_adjustment.md)**
+
+:   提出 Power Variable Projection (PoVar) 算法，将幂级数展开方法扩展到变量投影（VarPro）框架，并进一步推广到黎曼流形优化，首次实现了无初始化大规模光束法平差（BA）的高效求解。
 
 **[ProDepth: Boosting Self-Supervised Multi-Frame Monocular Depth with Probabilistic Fusion](prodepth_boosting_self-supervised_multi-frame_monocular_depth_with_probabilistic.md)**
 
@@ -741,7 +753,7 @@ item_total: 178
 
 **[TPA3D: Triplane Attention for Fast Text-to-3D Generation](tpa3d_triplane_attention_for_fast_text-to-3d_generation.md)**
 
-:   提出TPA3D，一个基于GAN的文本引导3D生成框架，通过三平面注意力（TPA）模块在句子级和词级特征上进行逐层细化，实现快速且细粒度的文本到3D纹理网格生成。
+:   提出TPA3D，一个基于GAN的文本引导3D生成框架，通过三平面注意力（TPA）模块对句子级和词级文本特征进行逐层细化，实现快速且细粒度的文本到3D纹理网格生成。
 
 **[Track Everything Everywhere Fast and Robustly](track_everything_everywhere_fast_and_robustly.md)**
 

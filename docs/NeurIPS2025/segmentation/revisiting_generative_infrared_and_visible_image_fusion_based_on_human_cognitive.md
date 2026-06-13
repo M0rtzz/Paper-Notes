@@ -15,7 +15,7 @@ tags:
 
 # HCLFuse: Revisiting Generative Infrared and Visible Image Fusion Based on Human Cognitive Laws
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.26268](https://arxiv.org/abs/2510.26268)  
 **代码**: [https://github.com/lxq-jnu/HCLFuse](https://github.com/lxq-jnu/HCLFuse)  
 **领域**: 图像融合 / 生成模型  

@@ -15,7 +15,7 @@ tags:
 
 # SCURank: Ranking Multiple Candidate Summaries with Summary Content Units for Enhanced Summarization
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.19185](https://arxiv.org/abs/2604.19185)  
 **代码**: [https://github.com/IKMLab/SCURank](https://github.com/IKMLab/SCURank)  
 **领域**: 文本摘要 / 模型蒸馏  

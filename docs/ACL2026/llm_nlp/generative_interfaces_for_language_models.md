@@ -15,7 +15,7 @@ tags:
 
 # Generative Interfaces for Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2508.19227](https://arxiv.org/abs/2508.19227)  
 **代码**: https://github.com/SALT-NLP/GenUI  
 **领域**: LLM 交互 / 人机交互 / UI 生成  

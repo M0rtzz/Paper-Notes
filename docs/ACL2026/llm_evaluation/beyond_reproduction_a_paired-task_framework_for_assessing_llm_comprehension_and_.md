@@ -15,7 +15,7 @@ tags:
 
 # Beyond Reproduction: A Paired-Task Framework for Assessing LLM Comprehension and Creativity in Literary Translation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18169](https://arxiv.org/abs/2604.18169)  
 **代码**: [github](https://github.com/NL2G/Beyond-Reproduction)  
 **领域**: LLM Evaluation  

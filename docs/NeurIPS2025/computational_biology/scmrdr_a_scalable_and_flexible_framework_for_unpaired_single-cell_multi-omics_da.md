@@ -15,7 +15,7 @@ tags:
 
 # scMRDR: A Scalable and Flexible Framework for Unpaired Single-Cell Multi-Omics Data Integration
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.24987](https://arxiv.org/abs/2510.24987)  
 **代码**: [有](https://github.com/sjl-sjtu/scMRDR)  
 **领域**: 生物信息学 / 多组学整合  

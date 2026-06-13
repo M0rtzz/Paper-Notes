@@ -16,7 +16,7 @@ tags:
 
 # Visual Planning: Let's Think Only with Images
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2505.11409](https://arxiv.org/abs/2505.11409)  
 **代码**: [GitHub](https://github.com/yix8/VisualPlanning)  
 **领域**: 机器人  

@@ -1,11 +1,11 @@
 ---
 title: >-
-  ACL2025 LLM/NLP论文汇总 · 443篇论文解读
+  ACL2025 LLM其他论文汇总 · 442篇论文解读
 description: >-
-  443篇ACL2025的 LLM / NLP 方向论文解读，涵盖 LLM、推理、对齐/RLHF、Agent、对抗鲁棒、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  442篇ACL2025的 LLM 其他方向论文解读，涵盖 LLM、推理、对齐/RLHF、Agent、对抗鲁棒、对话系统等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ACL2025"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "论文解读"
   - "论文笔记"
   - "LLM"
@@ -27,8 +27,6 @@ item_list:
     t: "SSUF: A Semi-supervised Scalable Unified Framework for E-commerce Query Classification"
   - u: "a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas/"
     t: "A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm"
-  - u: "a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_/"
-    t: "A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions"
   - u: "a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax/"
     t: "A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?"
   - u: "a_survey_on_efficient_large_language/"
@@ -75,17 +73,19 @@ item_list:
     t: "Revisiting Common Assumptions about Arabic Dialects in NLP"
   - u: "are_optimal_algorithms_still_optimal_rethinking_sorting_in_llm-based_pairwise_ra/"
     t: "Are Optimal Algorithms Still Optimal? Rethinking Sorting in LLM-Based Pairwise Ranking with Batching and Caching"
-item_total: 443
+  - u: "are_your_llms_capable_of_stable_reasoning/"
+    t: "Are Your LLMs Capable of Stable Reasoning?"
+item_total: 442
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 💬 LLM / NLP
+# 💬 LLM 其他
 
-**💬 ACL2025** · **443** 篇论文解读
+**💬 ACL2025** · **442** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (33)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (56)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md)
 
-🔥 **高频主题：** LLM ×175 · 推理 ×34 · 对齐/RLHF ×18 · Agent ×16 · 对抗鲁棒 ×14
+🔥 **高频主题：** LLM ×174 · 推理 ×34 · 对齐/RLHF ×18 · Agent ×16 · 对抗鲁棒 ×14
 
 **[Towards Robust ESG Analysis Against Greenwashing Risks: A3CG](a3cg_esg_greenwashing.md)**
 
@@ -110,10 +110,6 @@ item_total: 443
 **[A Survey of Automatic Prompt Optimization with Instruction-focused Heuristic-based Search Algorithm](a_survey_of_automatic_prompt_optimization_with_instruction-focused_heuristic-bas.md)**
 
 :   系统综述 80+ 种基于启发式搜索算法的自动 Prompt 优化方法，提出五维分类体系（Where/What/What criteria/Which operators/Which algorithms）将碎片化研究统一到一个完整的分析框架下。
-
-**[A Survey of Large Language Models in Psychotherapy: Current Landscape and Future Directions](a_survey_of_large_language_models_in_psychotherapy_current_landscape_and_future_.md)**
-
-:   首篇以 APA 三阶段（评估→诊断→治疗）概念分类法系统梳理 LLM 心理治疗研究的综述，覆盖 60+ 篇工作，从症状检测到虚拟治疗师四层面全面分析，揭示障碍覆盖、语言偏差、方法碎片化和理论整合的四重失衡。
 
 **[A Survey of LLM-based Agents in Medicine: How Far Are We from Baymax?](a_survey_of_llm-based_agents_in_medicine_how_far_are_we_from_baymax.md)**
 
@@ -413,8 +409,6 @@ item_total: 443
 
 **[Can LLMs Understand Unvoiced Speech? Exploring EMG-to-Text Conversion with LLMs](can_llms_understand_unvoiced_speech_exploring_emg-to-text_conversion_with_llms.md)**
 
-:   本文提出了一种基于可训练 EMG 适配器模块的方法，将无声肌电图（EMG）信号映射到大语言模型（LLM）的输入嵌入空间，在闭合词汇无声 EMG 转文本任务中实现了 0.49 的词错误率（WER），仅需 6 分钟训练数据即比专用模型提升约 20%。
-
 **[Can Third-parties Read Our Emotions?](can_third_parties_read_our_emotions.md)**
 
 :   本文通过人类被试实验，系统比较了第三方标注者（人类标注者和LLM）与第一方（作者自标注）在情感识别任务中的对齐程度，发现第三方标注与作者真实情感之间存在显著差距，LLM虽优于人类标注者，但仍表现不佳；人口统计学相似性可提升标注质量。
@@ -521,7 +515,7 @@ item_total: 443
 
 **[ConceptCarve: Dynamic Realization of Evidence](conceptcarve_dynamic_realization_of_evidence.md)**
 
-:   提出 ConceptCarve 框架，通过 LLM 与传统检索器的交互式协作，动态构建概念树来表征证据在特定社区中的实现形式，解决了证据检索中的推理鸿沟和领域敏感性两大挑战。
+:   提出 ConceptCarve 框架，利用 LLM 动态构建概念树来表征证据在不同社区中的具体实现方式，在处理推理鸿沟和领域敏感性方面显著优于传统检索系统。
 
 **[How Humans and LLMs Organize Conceptual Knowledge: Exploring Subordinate Categories in Italian](conceptual_knowledge_org.md)**
 

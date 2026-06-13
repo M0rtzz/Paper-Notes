@@ -15,7 +15,7 @@ tags:
 
 # From Scoring to Explanations: Evaluating SHAP and LLM Rationales for Rubric-based Teaching Quality Assessment
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2606.05180](https://arxiv.org/abs/2606.05180)  
 **代码**: 未在 cache 中给出  
 **领域**: 教育NLP / 可解释性 / Rubric自动评分  

@@ -15,7 +15,7 @@ tags:
 
 # Benchmarking LLMs for Political Science: A United Nations Perspective
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2502.14122](https://arxiv.org/abs/2502.14122)  
 **代码**: [GitHub](https://github.com/yueqingliang1/UNBench)  
 **领域**: LLM评测/政治科学  

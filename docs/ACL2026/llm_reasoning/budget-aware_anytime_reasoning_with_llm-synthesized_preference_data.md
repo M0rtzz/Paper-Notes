@@ -15,7 +15,7 @@ tags:
 
 # Budget-Aware Anytime Reasoning with LLM-Synthesized Preference Data
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.11038](https://arxiv.org/abs/2601.11038)  
 **代码**: 无  
 **领域**: LLM推理  

@@ -14,7 +14,7 @@ tags:
 
 # The Model Agreed, But Didn't Learn: Diagnosing Surface Compliance in Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05995](https://arxiv.org/abs/2604.05995)  
 **代码**: [XiaojieGu/SA-MCQ](https://github.com/XiaojieGu/SA-MCQ)  
 **领域**: LLM可信度 / 知识编辑  

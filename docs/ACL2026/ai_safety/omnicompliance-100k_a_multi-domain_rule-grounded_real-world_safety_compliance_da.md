@@ -15,7 +15,7 @@ tags:
 
 # OmniCompliance-100K: A Multi-Domain Rule-Grounded Real-World Safety Compliance Dataset
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2603.13933](https://arxiv.org/abs/2603.13933)  
 **代码**: [GitHub](https://github.com/HKUST-KnowComp/OmniCompliance-100K)  
 **领域**: 医学图像  

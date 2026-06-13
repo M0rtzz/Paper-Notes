@@ -16,7 +16,7 @@ tags:
 
 # Reconstruction and Secrecy under Approximate Distance Queries
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.06461](https://arxiv.org/abs/2511.06461)  
 **作者**: Shay Moran (Technion & Google Research), Elizaveta Nesterova (Technion)  
 **代码**: 未公开  

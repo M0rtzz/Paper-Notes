@@ -15,7 +15,7 @@ tags:
 
 # Lost in Diffusion: Uncovering Hallucination Patterns and Failure Modes in Diffusion Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.10556](https://arxiv.org/abs/2604.10556)  
 **代码**: [github.com/ZeroLoss-Lab/Lost-in-Diffusion](https://github.com/ZeroLoss-Lab/Lost-in-Diffusion)  
 **领域**: 幻觉检测  

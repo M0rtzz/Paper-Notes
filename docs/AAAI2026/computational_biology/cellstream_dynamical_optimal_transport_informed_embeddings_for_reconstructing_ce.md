@@ -15,7 +15,7 @@ tags:
 
 # CellStream: Dynamical Optimal Transport Informed Embeddings for Reconstructing Cellular Trajectories from Snapshots Data
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13786](https://arxiv.org/abs/2511.13786)  
 **代码**: [github.com/PQ-Zhang/CellStream](https://github.com/PQ-Zhang/CellStream)  
 **领域**: 计算生物

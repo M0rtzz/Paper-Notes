@@ -15,7 +15,7 @@ tags:
 
 # ToC: Tree-of-Claims Search with Multi-Agent Language Models
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.16972](https://arxiv.org/abs/2511.16972)  
 **代码**: [ysy2003/ToC](https://github.com/ysy2003/ToC)  
 **领域**: 可解释性  

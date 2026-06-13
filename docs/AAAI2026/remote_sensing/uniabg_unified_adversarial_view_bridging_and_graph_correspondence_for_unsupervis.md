@@ -16,7 +16,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # UniABG: Unified Adversarial View Bridging and Graph Correspondence for Unsupervised Cross-View Geo-Localization
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.12054](https://arxiv.org/abs/2511.12054)  
 **代码**: [GitHub](https://github.com/chenqi142/UniABG)  
 **领域**: 遥感  

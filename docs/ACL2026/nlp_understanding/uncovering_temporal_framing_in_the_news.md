@@ -15,7 +15,7 @@ tags:
 
 # 新闻文本中的时间框架揭示
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Oral  
 **arXiv**: [2606.00294](https://arxiv.org/abs/2606.00294)  
 **代码**: https://mbzuai-nlp.github.io/temporal-framing/  
 **领域**: NLP 理解 / 话语分析  

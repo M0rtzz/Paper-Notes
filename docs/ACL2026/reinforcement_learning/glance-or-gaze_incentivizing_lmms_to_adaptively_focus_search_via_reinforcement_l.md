@@ -15,7 +15,7 @@ tags:
 
 # Glance-or-Gaze: Incentivizing LMMs to Adaptively Focus Search via Reinforcement Learning
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2601.13942](https://arxiv.org/abs/2601.13942)  
 **代码**: https://github.com/TOM-ZHOUch/Glance-or-Gaze  
 **领域**: 强化学习 / 多模态检索增强 / 视觉问答  

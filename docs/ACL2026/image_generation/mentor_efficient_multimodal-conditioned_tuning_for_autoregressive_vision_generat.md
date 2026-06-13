@@ -15,7 +15,7 @@ tags:
 
 # MENTOR: Efficient Autoregressive Image Generation with Balanced Multimodal Control
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2507.09574](https://arxiv.org/abs/2507.09574)  
 **代码**: 项目页 https://haozhezhao.github.io/MENTOR.page（cache 未给出 GitHub 链接）  
 **领域**: 多模态条件图像生成 / 自回归生成  

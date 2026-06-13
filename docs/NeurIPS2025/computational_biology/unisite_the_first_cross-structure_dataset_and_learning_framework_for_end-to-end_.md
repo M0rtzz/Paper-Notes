@@ -15,7 +15,7 @@ tags:
 
 # UniSite: The First Cross-Structure Dataset and Learning Framework for End-to-End Ligand Binding Site Detection
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.03237](https://arxiv.org/abs/2506.03237)  
 **代码**: [GitHub](https://github.com/quanlin-wu/unisite)  
 **领域**: 医学图像 / 结构生物学  

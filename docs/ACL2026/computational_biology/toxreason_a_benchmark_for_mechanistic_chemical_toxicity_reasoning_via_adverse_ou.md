@@ -15,7 +15,7 @@ tags:
 
 # ToxReason: A Benchmark for Mechanistic Chemical Toxicity Reasoning via Adverse Outcome Pathway
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.06264](https://arxiv.org/abs/2604.06264)  
 **代码**: 无  
 **领域**: 计算生物

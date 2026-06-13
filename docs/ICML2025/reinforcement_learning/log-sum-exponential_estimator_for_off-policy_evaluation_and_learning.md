@@ -17,7 +17,7 @@ tags:
 <!-- 由 src/gen_stubs.py 自动生成 -->
 # Log-Sum-Exponential Estimator for Off-Policy Evaluation and Learning
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2506.06873](https://arxiv.org/abs/2506.06873)  
 **代码**: [GitHub](https://github.com/armin-behnamnia/lse-offpolicy-learning)  
 **领域**: 强化学习  

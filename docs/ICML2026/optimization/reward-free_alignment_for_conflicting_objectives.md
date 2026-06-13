@@ -15,7 +15,7 @@ tags:
 
 # RACO: Reward-free Alignment for Conflicting Objectives
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2602.02495](https://arxiv.org/abs/2602.02495)  
 **代码**: 待确认  
 **领域**: 优化 / LLM 对齐 / 多目标优化  

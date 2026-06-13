@@ -15,7 +15,7 @@ tags:
 
 # Hard to Read, Easy to Jailbreak: How Visual Degradation Bypasses MLLM Safety Alignment
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.07250](https://arxiv.org/abs/2605.07250)  
 **代码**: https://github.com/Westlake-AGI-Lab/ACZ-Jailbreak  
 **领域**: 多模态 VLM / 安全对齐 / 越狱攻防  

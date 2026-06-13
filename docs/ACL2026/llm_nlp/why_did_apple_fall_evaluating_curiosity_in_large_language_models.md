@@ -15,7 +15,7 @@ tags:
 
 # Why Did Apple Fall: Evaluating Curiosity in Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.20635](https://arxiv.org/abs/2510.20635)  
 **代码**: [https://github.com/Yukijudaii1352/CuriosityEval](https://github.com/Yukijudaii1352/CuriosityEval)  
 **领域**: LLM 评估 / 认知科学  

@@ -15,7 +15,7 @@ tags:
 
 # EgoBridge: Domain Adaptation for Generalizable Imitation from Egocentric Human Data
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2509.19626](https://arxiv.org/abs/2509.19626)  
 **代码**: [ego-bridge.github.io](https://ego-bridge.github.io/)  
 **领域**: 强化学习  

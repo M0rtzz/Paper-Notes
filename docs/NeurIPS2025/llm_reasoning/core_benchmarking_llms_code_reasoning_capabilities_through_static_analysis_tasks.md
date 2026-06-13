@@ -16,7 +16,7 @@ tags:
 
 # CoRe: Benchmarking LLMs' Code Reasoning Capabilities through Static Analysis Tasks
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2507.05269](https://arxiv.org/abs/2507.05269)  
 **代码**: [corebench.github.io](https://corebench.github.io/) (Apache-2.0)  
 **领域**: 代码智能  

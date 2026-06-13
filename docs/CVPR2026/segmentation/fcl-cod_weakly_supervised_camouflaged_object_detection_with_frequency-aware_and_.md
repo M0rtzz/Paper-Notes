@@ -15,7 +15,7 @@ tags:
 
 # FCL-COD: Weakly Supervised Camouflaged Object Detection with Frequency-aware and Contrastive Learning
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.22969](https://arxiv.org/abs/2603.22969)  
 **代码**: 无  
 **领域**: 图像分割  

@@ -15,7 +15,7 @@ tags:
 
 # AROMA: Augmented Reasoning Over a Multimodal Architecture for Virtual Cell Genetic Perturbation Modeling
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.20263](https://arxiv.org/abs/2604.20263)  
 **代码**: [github](https://github.com/blazerye/AROMA)  
 **领域**: Medical Imaging / 生物信息学  

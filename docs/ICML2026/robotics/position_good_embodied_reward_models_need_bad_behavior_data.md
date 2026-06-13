@@ -15,7 +15,7 @@ tags:
 
 # Position: Good Embodied Reward Models Need Bad Behavior Data
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2606.01036](https://arxiv.org/abs/2606.01036)  
 **代码**: 无  
 **领域**: 具身智能 / 机器人 / 奖励建模  

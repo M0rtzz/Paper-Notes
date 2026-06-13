@@ -14,7 +14,7 @@ tags:
 
 # HELIX: Hybrid Encoding with Learnable Identity and Cross-dimensional Synthesis for Time Series Imputation
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.02278](https://arxiv.org/abs/2605.02278)  
 **代码**: https://github.com/milaogou/HELIX (已集成进 PyPOTS)  
 **领域**: 时间序列 / 缺失值插补 / Transformer  

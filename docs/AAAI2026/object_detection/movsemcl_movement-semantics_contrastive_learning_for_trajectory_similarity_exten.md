@@ -15,7 +15,7 @@ tags:
 
 # MovSemCL: Movement-Semantics Contrastive Learning for Trajectory Similarity (Extension)
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.12061](https://arxiv.org/abs/2511.12061)  
 **代码**: [https://github.com/ryanlaics/MovSemCL](https://github.com/ryanlaics/MovSemCL)  
 **领域**: 自监督 / 轨迹分析  

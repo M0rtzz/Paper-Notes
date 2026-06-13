@@ -15,7 +15,7 @@ tags:
 
 # Vision-Only Gaussian Splatting for Collaborative Semantic Occupancy Prediction
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.10936](https://arxiv.org/abs/2508.10936)  
 **代码**: [GitHub](https://github.com/ChengChen2020/VOGS-CP)  
 **领域**: 自动驾驶 / 协同感知  

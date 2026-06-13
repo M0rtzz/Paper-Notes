@@ -15,7 +15,7 @@ tags:
 
 # Vision-Language Models Encode Clinical Guidelines for Concept-Based Medical Reasoning
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.08921](https://arxiv.org/abs/2603.08921)  
 **代码**: 无  
 **领域**: 多模态VLM  

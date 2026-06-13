@@ -15,7 +15,7 @@ tags:
 
 # One Mask to Rule Them All: On Hidden Facts after Editing and How to Find Them
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.28839](https://arxiv.org/abs/2605.28839)  
 **代码**: https://github.com/holmov1/one-mask-ke  
 **领域**: 知识编辑 / 机制解释  

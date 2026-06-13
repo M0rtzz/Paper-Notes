@@ -183,52 +183,6 @@ item_total: 1061
 
 ---
 
-## 💬 LLM / NLP (28) { #llm_nlp }
-
-**[B-score: Detecting biases in large language models using response history](llm_nlp/b-score_detecting_biases_in_large_language_models_using_response_history.md)**
-
-:   提出B-score指标，通过比较LLM在单轮(single-turn)与多轮(multi-turn)对话中的回答概率差异来检测偏见，发现LLM在多轮对话中能"自我去偏"，并利用B-score提升答案验证准确率。
-
-**[BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)**
-
-:   提出 BEST-Route（Best-of-n Enhanced Sampling and Test-time Route Optimization），在传统查询路由的基础上引入 best-of-n 采样策略，使路由器不仅选择模型，还自适应决定采样数量 n，通过小模型多次采样+选优替代大模型单次调用，在不到 1% 性能损失下降低高达 60% 的推理成本。
-
-**[Beyond Induction Heads: In-Context Meta Learning Induces Multi-Phase Circuit Emergence](llm_nlp/beyond_induction_heads_in-context_meta_learning_induces_multi-phase_circuit_emer.md)**
-
-:   本文通过设计 In-Context Meta-Learning (ICML) 实验环境，揭示了 Transformer 在获得上下文元学习能力的训练过程中，内部电路经历了三个截然不同的阶段性涌现（Bigram → Label Attention → Chunk Example），而非 induction head 研究中观察到的单阶段跃变，从而为理解 ICL 的深层机制提供了新视角。
-
-**[Binary Hypothesis Testing for Softmax Models and Leverage Score Models](llm_nlp/binary_hypothesis_testing_for_softmax_models_and_leverage_score_models.md)**
-
-:   从理论角度研究Softmax模型和Leverage Score模型的二元假设检验问题，建立了在能量约束下区分两个参数化模型所需的查询次数的紧界，与理解LLM不同能力域的区分性问题相关。
-
-**[Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting](llm_nlp/breaking_silos_adaptive_model_fusion_unlocks_better_time_series_forecasting.md)**
-
-:   提出 TimeFuse——一个样本级自适应模型融合框架，通过元特征描述输入时间序列特征并训练可学习融合器预测最优模型组合权重，在多个预测基准上对 SOTA 模型实现近乎普遍的改进（95.1% 样本优于最佳单模型）。
-
-**[Build Agent Advocates, Not Platform Agents](llm_nlp/build_agent_advocates_not_platform_agents.md)**
-
-:   Position paper，指出LMA（语言模型代理）若被平台公司控制将成为加剧监控、锁定和注意力操控的"platform agents"，提出应发展用户控制的"agent advocates"来保护个人自主权，并给出三大干预措施：开放模型/算力、互操作性标准、市场监管。
-
-**[Defending LVLMs Against Vision Attacks through Partial-Perception Supervision](llm_nlp/defending_lvlms_against_vision_attacks_through_partial-perception_supervision.md)**
-
-:   提出 DPS（Defense through Partial-Perception Supervision），利用裁剪图像的响应作为"弱监督"来引导全图模型在推理时自我修正，实现无需训练的黑盒 LVLM 视觉攻击防御，平均攻击成功率降低 76.3%。
-
-**[Expert Evaluation of LLM World Models: A High-Tc Superconductivity Case Study](llm_nlp/expert_evaluation_of_llm_world_models_a_high-t_c_superconductivity_case_study.md)**
-
-:   以高温超导（HTS）领域为案例，构建了专家级数据集（1,726篇论文 + 67道专家问题），系统评估6种LLM系统的科学文献理解能力，发现基于精选文献的RAG系统在事实完整性和证据支持方面显著优于通用闭源模型。
-
-**[Generalized Interpolating Discrete Diffusion](llm_nlp/generalized_interpolating_discrete_diffusion.md)**
-
-:   提出广义插值离散扩散框架 GIDD，将掩码扩散 (MDM) 推广为支持任意时变混合分布的扩散族，通过结合掩码与均匀噪声赋予模型自纠错能力，在扩散语言建模中取得 compute-matched SOTA。
-
-**[Generative Social Choice: The Next Generation](llm_nlp/generative_social_choice_the_next_generation.md)**
-
-:   将生成式社会选择框架扩展至带成本/预算约束和近似查询的场景，提出 DemocraticProcess 算法并给出近乎最优的近似比例代表性理论保证，实现了实用系统 PROSE（基于 GPT-4o）在药物评论和城市治理数据集上验证有效性。
-
-[查看全部28篇「LLM / NLP」论文 →](llm_nlp/)
-
----
-
 ## 📊 LLM 评测 (22) { #llm_evaluation }
 
 **[AAAR-1.0: Assessing AI's Potential to Assist Research](llm_evaluation/aaar-10_assessing_ais_potential_to_assist_research.md)**
@@ -519,11 +473,57 @@ item_total: 1061
 
 ---
 
+## 💬 LLM 其他 (28) { #llm_nlp }
+
+**[B-score: Detecting biases in large language models using response history](llm_nlp/b-score_detecting_biases_in_large_language_models_using_response_history.md)**
+
+:   提出B-score指标，通过比较LLM在单轮(single-turn)与多轮(multi-turn)对话中的回答概率差异来检测偏见，发现LLM在多轮对话中能"自我去偏"，并利用B-score提升答案验证准确率。
+
+**[BEST-Route: Adaptive LLM Routing with Test-Time Optimal Compute](llm_nlp/best-route_adaptive_llm_routing_with_test-time_optimal_compute.md)**
+
+:   提出 BEST-Route（Best-of-n Enhanced Sampling and Test-time Route Optimization），在传统查询路由的基础上引入 best-of-n 采样策略，使路由器不仅选择模型，还自适应决定采样数量 n，通过小模型多次采样+选优替代大模型单次调用，在不到 1% 性能损失下降低高达 60% 的推理成本。
+
+**[Beyond Induction Heads: In-Context Meta Learning Induces Multi-Phase Circuit Emergence](llm_nlp/beyond_induction_heads_in-context_meta_learning_induces_multi-phase_circuit_emer.md)**
+
+:   本文通过设计 In-Context Meta-Learning (ICML) 实验环境，揭示了 Transformer 在获得上下文元学习能力的训练过程中，内部电路经历了三个截然不同的阶段性涌现（Bigram → Label Attention → Chunk Example），而非 induction head 研究中观察到的单阶段跃变，从而为理解 ICL 的深层机制提供了新视角。
+
+**[Binary Hypothesis Testing for Softmax Models and Leverage Score Models](llm_nlp/binary_hypothesis_testing_for_softmax_models_and_leverage_score_models.md)**
+
+:   从理论角度研究Softmax模型和Leverage Score模型的二元假设检验问题，建立了在能量约束下区分两个参数化模型所需的查询次数的紧界，与理解LLM不同能力域的区分性问题相关。
+
+**[Breaking Silos: Adaptive Model Fusion Unlocks Better Time Series Forecasting](llm_nlp/breaking_silos_adaptive_model_fusion_unlocks_better_time_series_forecasting.md)**
+
+:   提出 TimeFuse——一个样本级自适应模型融合框架，通过元特征描述输入时间序列特征并训练可学习融合器预测最优模型组合权重，在多个预测基准上对 SOTA 模型实现近乎普遍的改进（95.1% 样本优于最佳单模型）。
+
+**[Build Agent Advocates, Not Platform Agents](llm_nlp/build_agent_advocates_not_platform_agents.md)**
+
+:   Position paper，指出LMA（语言模型代理）若被平台公司控制将成为加剧监控、锁定和注意力操控的"platform agents"，提出应发展用户控制的"agent advocates"来保护个人自主权，并给出三大干预措施：开放模型/算力、互操作性标准、市场监管。
+
+**[Defending LVLMs Against Vision Attacks through Partial-Perception Supervision](llm_nlp/defending_lvlms_against_vision_attacks_through_partial-perception_supervision.md)**
+
+:   提出 DPS（Defense through Partial-Perception Supervision），利用裁剪图像的响应作为"弱监督"来引导全图模型在推理时自我修正，实现无需训练的黑盒 LVLM 视觉攻击防御，平均攻击成功率降低 76.3%。
+
+**[Expert Evaluation of LLM World Models: A High-Tc Superconductivity Case Study](llm_nlp/expert_evaluation_of_llm_world_models_a_high-t_c_superconductivity_case_study.md)**
+
+:   以高温超导（HTS）领域为案例，构建了专家级数据集（1,726篇论文 + 67道专家问题），系统评估6种LLM系统的科学文献理解能力，发现基于精选文献的RAG系统在事实完整性和证据支持方面显著优于通用闭源模型。
+
+**[Generalized Interpolating Discrete Diffusion](llm_nlp/generalized_interpolating_discrete_diffusion.md)**
+
+:   提出广义插值离散扩散框架 GIDD，将掩码扩散 (MDM) 推广为支持任意时变混合分布的扩散族，通过结合掩码与均匀噪声赋予模型自纠错能力，在扩散语言建模中取得 compute-matched SOTA。
+
+**[Generative Social Choice: The Next Generation](llm_nlp/generative_social_choice_the_next_generation.md)**
+
+:   将生成式社会选择框架扩展至带成本/预算约束和近似查询的场景，提出 DemocraticProcess 算法并给出近乎最优的近似比例代表性理论保证，实现了实用系统 PROSE（基于 GPT-4o）在药物评论和城市治理数据集上验证有效性。
+
+[查看全部28篇「LLM 其他」论文 →](llm_nlp/)
+
+---
+
 ## 💻 代码智能 (9) { #code_intelligence }
 
 **[AdaptiveStep: Automatically Dividing Reasoning Step through Model Confidence](code_intelligence/adaptivestep_automatically_dividing_reasoning_step_through_model_confidence.md)**
 
-:   提出 AdaptiveStep，基于模型预测下一个 token 的置信度自动划分推理步骤，替代传统基于规则（如换行符）的粗粒度划分方式，训练出的 PRM (ASPRM) 在数学推理和代码生成任务上达到 SOTA 的 Best-of-N 性能，且数据构建成本降低超 30%。
+:   提出基于模型预测置信度自动划分推理步骤的方法 AdaptiveStep，用于训练更精确的 Process Reward Model（ASPRM），在数学推理和代码生成任务上以不到 70% 的数据构建成本超越现有开源 PRM，并能通过 Token 级引导解码进一步提升推理性能。
 
 **[EffiCoder: Enhancing Code Generation in Large Language Models through Efficiency-Aware Fine-tuning](code_intelligence/efficoder_enhancing_code_generation_in_large_language_models_through_efficiency-.md)**
 
@@ -839,7 +839,7 @@ item_total: 1061
 
 ---
 
-## 🧊 3D 视觉 (16) { #3d_vision }
+## 🧊 3D 视觉 (17) { #3d_vision }
 
 **[ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](3d_vision/adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)**
 
@@ -881,7 +881,7 @@ item_total: 1061
 
 :   NPISeg3D提出了首个基于层次化神经过程（Hierarchical Neural Processes）的概率交互式3D分割框架，通过场景级和物体级双层潜变量结构以及概率原型调制器，在少量点击下实现了优于AGILE3D的分割精度，同时提供可靠的不确定性估计。
 
-[查看全部16篇「3D 视觉」论文 →](3d_vision/)
+[查看全部17篇「3D 视觉」论文 →](3d_vision/)
 
 ---
 
@@ -1481,7 +1481,7 @@ item_total: 1061
 
 ---
 
-## 🔗 因果推理 (16) { #causal_inference }
+## 🔗 因果推理 (17) { #causal_inference }
 
 **[Causal Abstraction Inference under Lossy Representations](causal_inference/causal_abstraction_inference_under_lossy_representations.md)**
 
@@ -1498,6 +1498,10 @@ item_total: 1061
 **[Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes](causal_inference/classifier_reconstruction_through_counterfactual-aware_wasserstein_prototypes.md)**
 
 :   提出利用 Wasserstein 重心将原始样本与反事实样本融合为类别原型，从而在有限查询预算下高保真地重建目标二分类器，有效缓解了朴素使用反事实样本导致的决策边界偏移问题。
+
+**[Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials](causal_inference/doubly_protected_estimation_for_survival_outcomes_utilizing_external_controls_fo.md)**
+
+:   提出一种双重保护（doubly protected）的生存结局估计框架，通过密度比加权校正协变量偏移、DR-Learner检测结局漂移并选择性借用可比外部对照，在保证一致性和效率提升的同时对外部数据异质性具有鲁棒性。
 
 **[E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](causal_inference/e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)**
 
@@ -1519,11 +1523,7 @@ item_total: 1061
 
 :   提出"孤立因果效应"（Isolated Causal Effect）的形式化估计框架，通过双重稳健估计器和遗漏变量偏差（OVB）敏感性分析，将焦点语言属性的因果效应从相关的非焦点语言中隔离出来。
 
-**[Latent Variable Causal Discovery under Selection Bias](causal_inference/latent_variable_causal_discovery_under_selection_bias.md)**
-
-:   首次将秩约束推广到选择偏差场景，证明在线性选择机制下有偏协方差矩阵的秩仍保留因果结构和选择机制的信息，提出广义 t-separation 图准则，并在单因子模型上证明了可识别性，在合成和真实数据（World Value Survey、Big Five 人格）上验证了有效性。
-
-[查看全部16篇「因果推理」论文 →](causal_inference/)
+[查看全部17篇「因果推理」论文 →](causal_inference/)
 
 ---
 
@@ -1665,7 +1665,7 @@ item_total: 1061
 
 ---
 
-## 🏥 医学图像 (22) { #medical_imaging }
+## 🏥 医学图像 (21) { #medical_imaging }
 
 **[Bayesian Inference for Correlated Human Experts and Classifiers](medical_imaging/bayesian_inference_for_correlated_human_experts_and_classifiers.md)**
 
@@ -1687,10 +1687,6 @@ item_total: 1061
 
 :   首次系统评估计算病理学中 MIL 模型的迁移学习能力，发现在 pancancer 数据集上预训练的 MIL 模型能够跨器官、跨任务泛化，以不到 10% 的预训练数据超越自监督 slide foundation model（CHIEF、GigaPath）。
 
-**[Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials](medical_imaging/doubly_protected_estimation_for_survival_outcomes_utilizing_external_controls_fo.md)**
-
-:   提出一种双重保护（doubly protected）的生存结局估计框架，通过密度比加权校正协变量偏移、DR-Learner检测结局漂移并选择性借用可比外部对照，在保证一致性和效率提升的同时对外部数据异质性具有鲁棒性。
-
 **[EEG-Language Pretraining for Highly Label-Efficient Clinical Phenotyping](medical_imaging/eeg-language_pretraining_for_highly_label-efficient_clinical_phenotyping.md)**
 
 :   本文首创 EEG-语言模型（ELM），在15000份EEG记录和临床报告上训练，结合时间序列裁剪、文本分割和多实例学习策略，首次实现了EEG的零样本分类和跨模态检索，在低标注场景下病理检测性能显著优于纯EEG自监督方法。
@@ -1707,7 +1703,11 @@ item_total: 1061
 
 :   MELP 提出了一种多尺度 ECG-语言预训练模型，通过 Token/Beat/Rhythm 三个层次的跨模态监督信号，结合心脏学专业语言模型预训练，在零样本分类、线性探测和迁移学习中全面超越现有 ECG 自监督和多模态方法。
 
-[查看全部22篇「医学图像」论文 →](medical_imaging/)
+**[I2MoE: Interpretable Multimodal Interaction-aware Mixture-of-Experts](medical_imaging/i2moe_interpretable_multimodal_interaction-aware_mixture-of-experts.md)**
+
+:   I2MoE 提出了一种可解释的多模态交互感知混合专家框架，通过四种交互专家（唯一性×2 + 协同 + 冗余）结合弱监督交互损失显式建模模态间的异质交互，并通过重加权模型提供样本级和数据集级的可解释性，在 ADNI 数据集上提升准确率 5.5%。
+
+[查看全部21篇「医学图像」论文 →](medical_imaging/)
 
 ---
 
@@ -1821,7 +1821,7 @@ item_total: 1061
 
 ---
 
-## 📂 其他 (91) { #others }
+## 📂 其他 (90) { #others }
 
 **[Access Controls Will Solve the Dual-Use Dilemma](others/access_controls_will_solve_the_dual-use_dilemma.md)**
 
@@ -1863,6 +1863,6 @@ item_total: 1061
 
 :   提出 CEMS（Curvature-Enhanced Manifold Sampling），利用数据流形的二阶近似（曲率信息）生成合成样本，用于回归任务的数据增强，在分布内和分布外场景均取得 SOTA 或接近 SOTA 的性能。
 
-[查看全部91篇「其他」论文 →](others/)
+[查看全部90篇「其他」论文 →](others/)
 
 </div>

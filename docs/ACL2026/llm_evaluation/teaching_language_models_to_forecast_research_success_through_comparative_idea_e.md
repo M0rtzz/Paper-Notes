@@ -14,7 +14,7 @@ tags:
 
 # Teaching Language Models to Forecast Research Success Through Comparative Idea Evaluation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.21491](https://arxiv.org/abs/2605.21491)  
 **代码**: 待发布  
 **领域**: LLM 评估 / LLM 推理  

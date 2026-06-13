@@ -15,7 +15,7 @@ tags:
 
 # Investigating Non-Transitivity in LLM-as-a-Judge
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2502.14074](https://arxiv.org/abs/2502.14074)  
 **代码**: [yix8/llm-nontransitivity](https://github.com/yix8/llm-nontransitivity)  
 **领域**: 对话系统  

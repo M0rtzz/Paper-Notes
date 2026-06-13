@@ -15,7 +15,7 @@ tags:
 
 # C2T: LLM-Aligned Common-Sense Reward Learning for Traffic-Vehicle Coordination
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.13098](https://arxiv.org/abs/2604.13098)  
 **代码**: 无  
 **领域**: 自动驾驶 / 交通控制  

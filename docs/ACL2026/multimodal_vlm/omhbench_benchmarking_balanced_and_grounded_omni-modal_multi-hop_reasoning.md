@@ -15,7 +15,7 @@ tags:
 
 # OMHBench: Benchmarking Balanced and Grounded Omni-Modal Multi-Hop Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2508.16198](https://arxiv.org/abs/2508.16198)  
 **代码**: 无公开代码（数据集: https://huggingface.co/datasets/HYU-NLP/OMHBench）  
 **领域**: 多模态VLM  

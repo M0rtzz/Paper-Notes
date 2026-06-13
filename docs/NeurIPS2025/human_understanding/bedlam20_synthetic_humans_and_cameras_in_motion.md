@@ -16,7 +16,7 @@ tags:
 
 # BEDLAM2.0: Synthetic Humans and Cameras in Motion
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2511.14394](https://arxiv.org/abs/2511.14394)  
 **代码/数据**: [bedlam2.is.tuebingen.mpg.de](https://bedlam2.is.tuebingen.mpg.de/)  
 **领域**: 人体姿态估计 / 合成数据  

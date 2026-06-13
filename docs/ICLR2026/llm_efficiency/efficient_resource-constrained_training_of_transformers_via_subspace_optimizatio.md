@@ -15,7 +15,7 @@ tags:
 
 # Efficient Resource-Constrained Training of Transformers via Subspace Optimization
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2510.09160](https://arxiv.org/abs/2510.09160)  
 **代码**: [https://github.com/Le-TrungNguyen/ICLR2026-WASI.git](https://github.com/Le-TrungNguyen/ICLR2026-WASI.git)  
 **领域**: AI安全  

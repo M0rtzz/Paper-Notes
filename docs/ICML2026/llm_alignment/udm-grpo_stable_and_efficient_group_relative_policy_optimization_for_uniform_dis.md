@@ -14,7 +14,7 @@ tags:
 
 # UDM-GRPO: 统一离散扩散模型的稳定高效 GRPO
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2604.18518](https://arxiv.org/abs/2604.18518)  
 **代码**: https://github.com/Yovecent/UDM-GRPO  
 **领域**: 扩散模型 / 文本图像生成 / 强化学习对齐  

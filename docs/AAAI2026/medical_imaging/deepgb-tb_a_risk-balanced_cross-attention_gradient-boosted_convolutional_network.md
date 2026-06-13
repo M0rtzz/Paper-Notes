@@ -15,7 +15,7 @@ tags:
 
 # DeepGB-TB: A Risk-Balanced Cross-Attention Gradient-Boosted Convolutional Network for Rapid, Interpretable Tuberculosis Screening
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2508.02741](https://arxiv.org/abs/2508.02741)  
 **代码**: 无  
 **领域**: 医学图像  

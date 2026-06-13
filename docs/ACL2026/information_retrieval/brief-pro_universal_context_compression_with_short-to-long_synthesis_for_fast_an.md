@@ -15,7 +15,7 @@ tags:
 
 # BRIEF-Pro: Universal Context Compression with Short-to-Long Synthesis for Fast and Accurate Multi-Hop Reasoning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.13799](https://arxiv.org/abs/2510.13799)  
 **代码**: https://github.com/JasonForJoy/BRIEF (有)  
 **领域**: 信息检索 / RAG / 上下文压缩  

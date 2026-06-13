@@ -15,7 +15,7 @@ tags:
 
 # ShredBench: Evaluating the Semantic Reasoning Capabilities of Multimodal LLMs in Document Reconstruction
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.23813](https://arxiv.org/abs/2604.23813)  
 **代码**: https://github.com/ythere-y/ShredBench  
 **领域**: 多模态VLM / 文档理解 / 多模态推理  

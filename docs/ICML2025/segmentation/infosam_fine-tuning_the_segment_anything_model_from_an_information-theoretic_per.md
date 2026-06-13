@@ -16,7 +16,7 @@ tags:
 
 # InfoSAM: Fine-Tuning the Segment Anything Model from An Information-Theoretic Perspective
 
-**会议**: ICML2025  
+**会议**: ICML2025 Spotlight  
 **arXiv**: [2505.21920](https://arxiv.org/abs/2505.21920)  
 **代码**: [InfoSAM project page](https://github.com/zhangyuanhong/InfoSAM)  
 **领域**: 图像分割  

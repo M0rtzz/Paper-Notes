@@ -15,7 +15,7 @@ tags:
 
 # Web-Shepherd: Advancing PRMs for Reinforcing Web Agents
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.15277](https://arxiv.org/abs/2505.15277)  
 **代码**: 有  
 **领域**: Agent  

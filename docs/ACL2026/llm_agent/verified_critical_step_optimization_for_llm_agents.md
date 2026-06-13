@@ -14,7 +14,7 @@ tags:
 
 # Verified Critical Step Optimization for LLM Agents
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2602.03412](https://arxiv.org/abs/2602.03412)  
 **代码**: https://github.com/kiaia/CSO；https://github.com/Tencent/CognitiveKernel-Pro  
 **领域**: llm_agent  

@@ -18,7 +18,7 @@ tags:
 
 # Hard to Be Heard: Phoneme-Level ASR Analysis of Phonologically Complex, Low-Resource Endangered Languages
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18204](https://arxiv.org/abs/2604.18204)  
 **代码**: [GitHub](https://github.com/mahesh-ak/north_caucasian_asr) | [数据](https://huggingface.co/datasets/mahesh27/archi_rutul_asr)  
 **领域**: 语音识别 / 低资源濒危语言  

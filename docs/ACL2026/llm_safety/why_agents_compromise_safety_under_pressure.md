@@ -15,7 +15,7 @@ tags:
 
 # Why Agents Compromise Safety Under Pressure
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2603.14975](https://arxiv.org/abs/2603.14975)  
 **代码**: 待确认 (无)  
 **领域**: LLM Agent / AI安全  

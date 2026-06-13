@@ -15,7 +15,7 @@ tags:
 
 # SEPT: Semantically Expanded Prompt Tuning for Audio-Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.20867](https://arxiv.org/abs/2601.20867)  
 **代码**: 无  
 **领域**: 音频语音  

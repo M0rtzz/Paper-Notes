@@ -14,7 +14,7 @@ tags:
 
 # Bits Leaked per Query: Information-Theoretic Bounds on Adversarial Attacks Against LLMs
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.17000](https://arxiv.org/abs/2510.17000)  
 **代码**: 待确认  
 **领域**: AI安全 / 信息论  

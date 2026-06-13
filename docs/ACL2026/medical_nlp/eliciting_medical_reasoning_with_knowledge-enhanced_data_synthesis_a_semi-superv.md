@@ -15,7 +15,7 @@ tags:
 
 # Eliciting Medical Reasoning with Knowledge-enhanced Data Synthesis: A Semi-Supervised Reinforcement Learning Approach
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.11547](https://arxiv.org/abs/2604.11547)  
 **代码**: [https://github.com/tdlhl/MedSSR](https://github.com/tdlhl/MedSSR)  
 **领域**: 医学NLP

@@ -15,7 +15,7 @@ tags:
 
 # Mem^p: Exploring Agent Procedural Memory
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2508.06433](https://arxiv.org/abs/2508.06433)  
 **代码**: [GitHub](https://github.com/zjunlp/MemP)  
 **领域**: 模型压缩  

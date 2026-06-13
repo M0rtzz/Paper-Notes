@@ -15,7 +15,7 @@ tags:
 
 # DeltaFlow: An Efficient Multi-frame Scene Flow Estimation Method
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2508.17054](https://arxiv.org/abs/2508.17054)  
 **代码**: [https://github.com/Kin-Zhang/DeltaFlow](https://github.com/Kin-Zhang/DeltaFlow)  
 **领域**: 模型压缩  

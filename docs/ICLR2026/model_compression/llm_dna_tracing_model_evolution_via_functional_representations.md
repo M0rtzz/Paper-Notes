@@ -15,7 +15,7 @@ tags:
 
 # LLM DNA: Tracing Model Evolution via Functional Representations
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2509.24496](https://arxiv.org/abs/2509.24496)  
 **代码**: [GitHub](https://github.com/Xtra-Computing/LLM-DNA)  
 **领域**: 模型压缩  

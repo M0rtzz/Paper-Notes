@@ -1,23 +1,16 @@
 ---
 title: >-
-  CVPR2026 其他论文汇总 · 32篇论文解读
+  CVPR2026 其他论文汇总 · 22篇论文解读
 description: >-
-  32篇CVPR2026的其他方向论文解读，涵盖 Agent、少样本学习、联邦学习、对抗鲁棒、布局/合成等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇CVPR2026的其他方向论文解读，涵盖少样本学习、联邦学习等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "CVPR2026"
   - "其他"
   - "论文解读"
   - "论文笔记"
-  - "Agent"
   - "少样本学习"
   - "联邦学习"
-  - "对抗鲁棒"
-  - "布局/合成"
 item_list:
-  - u: "adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet/"
-    t: "AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments"
-  - u: "assistmimic_physics_grounded_humanoid_assistance/"
-    t: "AssistMimic: Physics-Grounded Humanoid Assistance via Multi-Agent RL"
   - u: "bendfm_a_taxonomy_and_synthetic_cad_dataset_for_ma/"
     t: "BenDFM: A Taxonomy and Synthetic CAD Dataset for Manufacturability Assessment in Sheet Metal Bending"
   - u: "bounds_on_agreement_between_subjective_and_objecti/"
@@ -42,8 +35,6 @@ item_list:
     t: "GardenDesigner: Encoding Aesthetic Principles into Jiangnan Garden Construction via a Chain of Agents"
   - u: "hypevpr_exploring_hyperbolic_space_for_perspective_to_equirectangular_visual_pla/"
     t: "HypeVPR: Exploring Hyperbolic Space for Perspective to Equirectangular Visual Place Recognition"
-  - u: "irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a/"
-    t: "IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness"
   - u: "lovif_2026_semantic_quality_assessment_challenge/"
     t: "LoViF 2026 Challenge on Human-oriented Semantic Image Quality Assessment"
   - u: "mitigating_instance_entanglement_in_instance-dependent_partial_label_learning/"
@@ -54,43 +45,25 @@ item_list:
     t: "Neural Collapse in Test-Time Adaptation"
   - u: "omnifood8k_nutrition_estimation/"
     t: "OmniFood8K: Single-Image Nutrition Estimation via Hierarchical Frequency-Aligned Fusion"
-  - u: "order_matters_3d_shape_generation_from_sequential_vr_sketches/"
-    t: "Order Matters: 3D Shape Generation from Sequential VR Sketches"
-  - u: "polishing_the_sky_widefield_and_highdynamic_range/"
-    t: "POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction"
   - u: "rethinking_snn_online_training_and_deployment_grad/"
     t: "Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model"
-  - u: "rooftop_wind_field_reconstruction_using_sparse_sen/"
-    t: "Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods"
-  - u: "shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation/"
-    t: "Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation"
-  - u: "simrecon_simready_compositional_scene_reconstruction_from_real_videos/"
-    t: "SimRecon: SimReady Compositional Scene Reconstruction from Real Videos"
-  - u: "teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with/"
-    t: "TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size"
   - u: "v_nutri_nutrition_estimation_cooking_videos/"
     t: "V-Nutri: Dish-Level Nutrition Estimation from Egocentric Cooking Videos"
   - u: "vit3_unlocking_test_time_training_in_vision/"
     t: "ViT3: Unlocking Test-Time Training in Vision"
   - u: "what_is_the_optimal_ranking_score_between_precision_and_recall_we_can_always_fin/"
     t: "What Is the Optimal Ranking Score Between Precision and Recall? We Can Always Find It and It Is Rarely F₁"
-item_total: 32
+  - u: "what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_/"
+    t: "What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution"
+item_total: 22
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📂 其他
 
-**📷 CVPR2026** · **32** 篇论文解读
+**📷 CVPR2026** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [🔬 ICLR2026 (74)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (124)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (130)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (39)](../../ICCV2025/others/index.md)
-
-**[AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments](adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet.md)**
-
-:   提出AdaSFormer，一种针对室内单目语义场景补全(MSSC)的序列化Transformer框架，通过自适应序列化注意力(可学习偏移量)、中心相对位置编码和卷积调制层归一化三个核心设计，在NYUv2和Occ-ScanNet上达到SOTA。
-
-**[AssistMimic: Physics-Grounded Humanoid Assistance via Multi-Agent RL](assistmimic_physics_grounded_humanoid_assistance.md)**
-
-:   首个在物理仿真中实现接触式人-人辅助行为模仿学习的多智能体RL框架，通过运动先验初始化、动态参考重定向和接触促进奖励使MARL在高接触设置中可行。
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (63)](../../ICML2026/others/index.md) · [💬 ACL2026 (1)](../../ACL2026/others/index.md) · [🔬 ICLR2026 (71)](../../ICLR2026/others/index.md) · [🤖 AAAI2026 (117)](../../AAAI2026/others/index.md) · [🧠 NeurIPS2025 (121)](../../NeurIPS2025/others/index.md) · [📹 ICCV2025 (33)](../../ICCV2025/others/index.md)
 
 **[BenDFM: A Taxonomy and Synthetic CAD Dataset for Manufacturability Assessment in Sheet Metal Bending](bendfm_a_taxonomy_and_synthetic_cad_dataset_for_ma.md)**
 
@@ -140,10 +113,6 @@ item_total: 32
 
 :   本文提出 HypeVPR，一个基于双曲空间层次化嵌入的视觉位置识别框架，专门解决透视图像（查询）与全景图像（数据库）之间的跨视场匹配问题，通过在 Poincaré 球中从局部到全局构建多级描述子，实现精度-效率-存储的灵活平衡，检索速度比滑窗基线快数倍且精度相当。
 
-**[IrisFP: Adversarial-Example-based Model Fingerprinting with Enhanced Uniqueness and Robustness](irisfp_adversarial-example-based_model_fingerprinting_with_enhanced_uniqueness_a.md)**
-
-:   提出IrisFP模型指纹框架，通过将指纹放置在多类决策边界交叉点处、构建复合样本指纹、以及基于统计可分性的指纹筛选三项创新，同时增强指纹的唯一性和鲁棒性，在5个数据集上AUC一致超过SOTA方法。
-
 **[LoViF 2026 Challenge on Human-oriented Semantic Image Quality Assessment](lovif_2026_semantic_quality_assessment_challenge.md)**
 
 :   LoViF 2026首届人类导向语义图像质量评估挑战赛：提出SeIQA基准数据集（510/80/160训练/验证/测试对），衡量图像退化是否改变了人类关注的语义信息而非传统感知保真度；冠军RedpanQA Alliance基于Qwen3-VL多模态大模型+LoRA微调+PLCC损失达到0.8724最终得分。
@@ -164,33 +133,9 @@ item_total: 32
 
 :   构建了涵盖 8036 个样本的中式食物多模态营养数据集 OmniFood8K 和 115K 合成数据集 NutritionSynth-115K，并提出端到端框架通过 Scale-Shift 深度适配器、频域对齐融合和掩码预测头从单张 RGB 图像预测营养信息。
 
-**[Order Matters: 3D Shape Generation from Sequential VR Sketches](order_matters_3d_shape_generation_from_sequential_vr_sketches.md)**
-
-:   提出 VRSketch2Shape 框架，首次建模 VR 草图的笔画时序信息，通过序列感知的 BERT 编码器与基于扩散的 3D 生成器（SDFusion），从有序 VR 草图生成高保真 3D 形状，同时贡献了包含 20k 合成 + 900 真实草图的多类别数据集。
-
-**[POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](polishing_the_sky_widefield_and_highdynamic_range.md)**
-
-:   POLISH++在POLISH框架基础上引入分块训练+拼接策略和arcsinh非线性变换，解决了射电干涉成像中宽视场（万级像素）和高动态范围（$10^4$-$10^6$）两大实际部署难题，在T-RECS仿真数据上大幅超越CLEAN方法的源探测精度，且能超分辨恢复PSF尺度附近的强引力透镜系统，有望将DSA巡天的透镜发现数量提升约10倍。
-
 **[Rethinking SNN Online Training and Deployment: Gradient-Coherent Learning via Hybrid-Driven LIF Model](rethinking_snn_online_training_and_deployment_grad.md)**
 
 :   提出 HD-LIF（混合驱动 LIF）脉冲神经元模型族，通过在阈值上下区域采用不同脉冲计算机制，理论证明梯度可分离性和对齐性，解决 SNN 在线训练的前后向传播不一致问题，同时实现学习精度、内存复杂度和功耗的全阶段优化——以 10× 参数压缩、11× 功耗降低和 30% NOPs 节省达到 CIFAR-100 上 78.61% 精度。
-
-**[Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](rooftop_wind_field_reconstruction_using_sparse_sen.md)**
-
-:   建立基于PIV风洞实验数据的学习-观测框架，系统比较Kriging插值与三种深度学习模型（UNet/ViTAE/CWGAN）在5–30个稀疏传感器下的屋顶风场重建能力，揭示混合风向训练（MDT）下深度学习一致优于Kriging（SSIM提升18–34%），并通过QR分解优化传感器布局提升系统鲁棒性达27.8%。
-
-**[Shoe Style-Invariant and Ground-Aware Learning for Dense Foot Contact Estimation](shoe_style-invariant_and_ground-aware_learning_for_dense_foot_contact_estimation.md)**
-
-:   提出 FECO 框架，通过鞋款风格–内容随机化（对抗训练）和地面感知学习（像素高度图 + 地面法线），从单张 RGB 图像实现鲁棒的密集足部接触估计，在多个基准上显著超越现有方法。
-
-**[SimRecon: SimReady Compositional Scene Reconstruction from Real Videos](simrecon_simready_compositional_scene_reconstruction_from_real_videos.md)**
-
-:   提出 SimRecon 框架，通过"感知→生成→仿真"三阶段流水线，从真实视频自动构建仿真就绪的组合式 3D 场景，核心创新在于主动视角优化（AVO）为单物体生成寻找最优投影视角和场景图合成器（SGS）引导物理可信的层级化组装。
-
-**[TeamHOI: Learning a Unified Policy for Cooperative Human-Object Interactions with Any Team Size](teamhoi_learning_a_unified_policy_for_cooperative_human-object_interactions_with.md)**
-
-:   提出 TeamHOI 框架，通过基于 Transformer 的去中心化策略网络和掩码对抗运动先验（Masked AMP），使单一策略能够泛化到任意数量智能体的协作搬运任务，2-8 个仿人智能体协作搬桌子成功率达 97%+。
 
 **[V-Nutri: Dish-Level Nutrition Estimation from Egocentric Cooking Videos](v_nutri_nutrition_estimation_cooking_videos.md)**
 
@@ -207,7 +152,3 @@ item_total: 32
 **[What Is Wrong with Synthetic Data for Scene Text Recognition? A Strong Synthetic Engine with Diverse Simulations and Self-Evolution](what_is_wrong_with_synthetic_data_for_scene_text_recognition_a_strong_synthetic_.md)**
 
 :   系统分析了现有渲染合成数据在语料、字体、布局多样性上的不足，提出 UnionST 合成引擎和自演化学习框架（SEL），仅用合成数据即大幅超越传统合成集，结合 SEL 仅需 9% 真实标注即可逼近全监督性能。
-
-**[ZO-SAM: Zero-Order Sharpness-Aware Minimization for Efficient Sparse Training](zo-sam_zero-order_sharpness-aware_minimization_for_efficient_sparse_training.md)**
-
-:   提出 ZO-SAM，在 SAM 的扰动步骤中用零阶梯度估计替代反向传播，将 SAM 的计算开销从 2 次反传减少为 1 次，首次让 SAM 在稀疏训练中变得实用，在 CIFAR-10/100 和 ImageNet-1K 上一致提升所有主流稀疏训练方法 0.38%-2.54%。

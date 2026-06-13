@@ -15,7 +15,7 @@ tags:
 
 # MHSafeEval: Role-Aware Interaction-Level Evaluation of Mental Health Safety in Large Language Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17730](https://arxiv.org/abs/2604.17730)  
 **代码**: [GitHub](https://github.com/suhyun565/MHSafeEval)  
 **领域**: 医疗NLP

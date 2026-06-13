@@ -15,7 +15,7 @@ tags:
 
 # Learning Safety Constraints for Large Language Models
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2505.24445](https://arxiv.org/abs/2505.24445)  
 **代码**: [https://github.com/lasgroup/SafetyPolytope](https://github.com/lasgroup/SafetyPolytope)  
 **领域**: ai_safety（LLM 安全控制 / 推理时对齐）  

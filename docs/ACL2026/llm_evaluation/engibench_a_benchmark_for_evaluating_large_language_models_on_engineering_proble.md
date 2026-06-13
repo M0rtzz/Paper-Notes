@@ -15,7 +15,7 @@ tags:
 
 # EngiBench: A Benchmark for Evaluating Large Language Models on Engineering Problem Solving
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2509.17677](https://arxiv.org/abs/2509.17677)  
 **代码**: https://github.com/AI4Engi/EngiBench  
 **领域**: LLM 评测 / 工程问题 / 推理基准  

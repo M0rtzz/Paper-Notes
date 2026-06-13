@@ -15,7 +15,7 @@ tags:
 
 # GanitLLM: Difficulty-Aware Bengali Mathematical Reasoning through Curriculum-GRPO
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.06767](https://arxiv.org/abs/2601.06767)  
 **代码**: [网站](https://dipta007.github.io/GanitLLM/)  
 **领域**: 低资源语言推理 / 数学推理  

@@ -15,7 +15,7 @@ tags:
 
 # AVA-VLA: Improving Vision-Language-Action models with Active Visual Attention
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2511.18960](https://arxiv.org/abs/2511.18960)  
 **代码**: [项目页面](https://liauto-dsr.github.io/AVA-VLA-Page)  
 **领域**:机器人

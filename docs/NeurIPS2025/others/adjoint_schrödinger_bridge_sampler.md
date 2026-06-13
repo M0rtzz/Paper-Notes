@@ -14,7 +14,7 @@ tags:
 
 # Adjoint Schrödinger Bridge Sampler
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2506.22565](https://arxiv.org/abs/2506.22565)  
 **代码**: [https://github.com/facebookresearch/adjoint_samplers](https://github.com/facebookresearch/adjoint_samplers)  
 **领域**: 扩散模型 / 采样方法 / 分子模拟  

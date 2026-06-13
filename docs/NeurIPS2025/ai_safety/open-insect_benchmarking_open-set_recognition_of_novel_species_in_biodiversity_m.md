@@ -15,7 +15,7 @@ tags:
 
 # Open-Insect: Benchmarking Open-Set Recognition of Novel Species in Biodiversity Monitoring
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2503.01691](https://arxiv.org/abs/2503.01691)  
 **代码**: [GitHub](https://github.com/RolnickLab/Open-Insect)  
 **领域**: 开放集识别 · 生物多样性  

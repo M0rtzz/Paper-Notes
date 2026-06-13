@@ -15,7 +15,7 @@ tags:
 
 # Revisiting Entropy in Reinforcement Learning for Large Reasoning Models
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2511.05993](https://arxiv.org/abs/2511.05993)  
 **代码**: [GitHub](https://github.com/cordercorder/EntropyRL)  
 **领域**: LLM推理  

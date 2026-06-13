@@ -15,7 +15,7 @@ tags:
 
 # Memory Mosaics at Scale
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Oral  
 **arXiv**: [2507.03285](https://arxiv.org/abs/2507.03285)  
 **代码**: [https://github.com/facebookresearch/MemoryMosaics](https://github.com/facebookresearch/MemoryMosaics)  
 **作者**: Jianyu Zhang, Léon Bottou (NYU & FAIR, Meta)

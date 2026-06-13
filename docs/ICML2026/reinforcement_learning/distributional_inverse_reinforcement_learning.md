@@ -15,7 +15,7 @@ tags:
 
 # Distributional Inverse Reinforcement Learning
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2510.03013](https://arxiv.org/abs/2510.03013)  
 **代码**: 未公开  
 **领域**: 强化学习 / 逆强化学习 / 分布式 RL / 风险敏感模仿  

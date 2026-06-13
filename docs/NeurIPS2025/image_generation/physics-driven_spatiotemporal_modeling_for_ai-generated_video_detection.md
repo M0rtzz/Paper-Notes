@@ -15,7 +15,7 @@ tags:
 
 # Physics-Driven Spatiotemporal Modeling for AI-Generated Video Detection
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.08073](https://arxiv.org/abs/2510.08073)  
 **作者**: Shuhai Zhang, Zihao Lian, Jiahao Yang, Daiyuan Li (SCUT), Guoxuan Pang (USTC), Feng Liu (U Melbourne), Bo Han (HKBU), Shutao Li (HNU), Mingkui Tan (SCUT)  
 **代码**: [ZSHsh98/NSG-VD](https://github.com/ZSHsh98/NSG-VD)  

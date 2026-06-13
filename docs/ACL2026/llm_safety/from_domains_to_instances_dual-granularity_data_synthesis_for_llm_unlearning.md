@@ -15,7 +15,7 @@ tags:
 
 # From Domains to Instances: Dual-Granularity Data Synthesis for LLM Unlearning
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.04278](https://arxiv.org/abs/2601.04278)  
 **代码**: [GitHub](https://github.com/XiaoyuXU1/Biforget)  
 **领域**: LLM评测  

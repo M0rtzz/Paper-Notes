@@ -1,16 +1,16 @@
 ---
 title: >-
-  ICML2026 LLM/NLP论文汇总 · 37篇论文解读
+  ICML2026 LLM其他论文汇总 · 33篇论文解读
 description: >-
-  37篇ICML2026的 LLM / NLP 方向论文解读，涵盖 LLM、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  33篇ICML2026的 LLM 其他方向论文解读，涵盖 LLM、对抗鲁棒、扩散模型等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2026"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "论文解读"
   - "论文笔记"
   - "LLM"
-  - "扩散模型"
   - "对抗鲁棒"
+  - "扩散模型"
 item_list:
   - u: "a_geometric_relation_of_the_error_introduced_by_sampling_a_language_models_outpu/"
     t: "A Geometric Relation of the Error Introduced by Sampling a Language Model's Output Distribution to its Internal State"
@@ -24,20 +24,12 @@ item_list:
     t: "Deep Networks Learn to Parse Uniform-Depth Context-Free Languages from Local Statistics"
   - u: "differential_syntactic_and_semantic_encoding_in_llms/"
     t: "Differential Syntactic and Semantic Encoding in LLMs"
-  - u: "dllm-cache_accelerating_diffusion_large_language_models_with_adaptive_caching/"
-    t: "dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching"
   - u: "express_your_doubts_--_probabilistic_world_modeling_should_not_be_based_on_token/"
     t: "Express Your Doubts: Probabilistic World Modeling Should Not Be Based on Token logprobs"
-  - u: "fast-dllm_fréchet_profile_decoding_for_faster_diffusion_llm_inference/"
-    t: "Fast-dLLM++: Fréchet Profile Decoding for Faster Diffusion LLM Inference"
-  - u: "from_parameter_dynamics_to_risk_scoring_quantifying_sample-level_safety_degradat/"
-    t: "From Parameter Dynamics to Risk Scoring: Quantifying Sample-Level Safety Degradation in LLM Fine-tuning"
   - u: "how_many_different_outputs_can_a_transformer_generate/"
     t: "How Many Different Outputs Can a Transformer Generate?"
   - u: "ive_seen_how_this_goes_characterizing_diversity_via_progressive_conditional_surp/"
     t: "\"I've Seen How This Goes\"：用渐进条件惊奇度刻画 LLM 与人类写作的多样性"
-  - u: "margin-adaptive_confidence_ranking_for_reliable_llm_judgement/"
-    t: "Margin-Adaptive Confidence Ranking for Reliable LLM Judgement"
   - u: "mitigating_staleness_in_asynchronous_pipeline_parallelism_via_basis_rotation/"
     t: "Mitigating Staleness in Asynchronous Pipeline Parallelism via Basis Rotation"
   - u: "model-preserving_adaptive_rounding/"
@@ -72,17 +64,25 @@ item_list:
     t: "SphericalDreamer: Generating Navigable Immersive 3D Worlds with Panorama Fusion"
   - u: "stop_automating_peer_review_without_rigorous_evaluation/"
     t: "Stop Automating Peer Review Without Rigorous Evaluation"
-item_total: 37
+  - u: "t2po_uncertainty-guided_exploration_control_for_stable_multi-turn_agentic_reinfo/"
+    t: "T$^2$PO: Uncertainty-Guided Exploration Control for Stable Multi-Turn Agentic Reinforcement Learning"
+  - u: "the_cylindrical_representation_hypothesis_for_language_model_steering/"
+    t: "The Cylindrical Representation Hypothesis for Language Model Steering"
+  - u: "token-efficient_change_detection_in_llm_apis/"
+    t: "Token-Efficient Change Detection in LLM APIs"
+  - u: "trading_complexity_for_expressivity_through_structured_generalized_linear_token_/"
+    t: "结构化广义线性 token mixing：用 SND + Kronecker 在复杂度与表达力之间换挡"
+item_total: 33
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 💬 LLM / NLP
+# 💬 LLM 其他
 
-**🧪 ICML2026** · **37** 篇论文解读
+**🧪 ICML2026** · **33** 篇论文解读
 
-📌 **同领域跨会议浏览：** [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (30)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [💬 ACL2026 (56)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/llm_nlp/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
-🔥 **高频主题：** LLM ×15 · 扩散模型 ×4 · 对抗鲁棒 ×2
+🔥 **高频主题：** LLM ×11 · 对抗鲁棒 ×2 · 扩散模型 ×2
 
 **[A Geometric Relation of the Error Introduced by Sampling a Language Model's Output Distribution to its Internal State](a_geometric_relation_of_the_error_introduced_by_sampling_a_language_models_outpu.md)**
 
@@ -108,21 +108,9 @@ item_total: 37
 
 :   通过对共享句法结构或共享含义的句子做隐层表示平均得到"句法质心"和"语义质心"，作者证明 DeepSeek-V3 等大模型的句子向量中相当一部分句法/语义信息是被**线性叠加**编码的，并且这两类信息在层间分布和正交消融上都呈现明显的可分离性——支持"句法相对自治"的语言学假说。
 
-**[dLLM-Cache: Accelerating Diffusion Large Language Models with Adaptive Caching](dllm-cache_accelerating_diffusion_large_language_models_with_adaptive_caching.md)**
-
-:   针对扩散式大语言模型 (dLLM) 因双向注意力无法复用 KV cache 而推理极慢的问题，本文提出训练无关的 dLLM-Cache，对静态 prompt 用长间隔缓存、对动态 response 用短间隔刷新+按 Value 余弦相似度选 25% 最"变化"的 token 做局部重算，在 LLaDA 8B / Dream 7B 上获得最高 9.1× FLOPs 加速且分数基本不掉。
-
 **[Express Your Doubts: Probabilistic World Modeling Should Not Be Based on Token logprobs](express_your_doubts_--_probabilistic_world_modeling_should_not_be_based_on_token.md)**
 
 :   这是一篇 position paper，主张：**用 LLM 的 token softmax 概率（logprob）当成"世界事件概率"是理论上错的**——因为 distribution estimation、response prediction 和 target distribution estimation 是三个不同任务，对应不同 ideal 输出分布；获取世界概率的正确做法是**二阶预测**——让 LLM 在输出里**显式写出**它对事件的概率（数值或语言修饰词），而不是去算"它说 X 的概率"。
-
-**[Fast-dLLM++: Fréchet Profile Decoding for Faster Diffusion LLM Inference](fast-dllm_fréchet_profile_decoding_for_faster_diffusion_llm_inference.md)**
-
-:   针对扩散语言模型（dLLM）的并行解码瓶颈，本文提出训练无关的 Fréchet 画像解码：用整条排序后的置信度画像而不是"最弱被选 token"那一项来决定本步并行 commit 多少 token，把 Fast-dLLM 的 factor 规则严格推广到异质置信度场景，在 LLaDA-8B 上四个基准平均吞吐 1.36×、NFE 降 29%，精度几乎不变。
-
-**[From Parameter Dynamics to Risk Scoring: Quantifying Sample-Level Safety Degradation in LLM Fine-tuning](from_parameter_dynamics_to_risk_scoring_quantifying_sample-level_safety_degradat.md)**
-
-:   作者通过追踪 LoRA 微调过程中参数沿"危险/安全方向"的累积漂移，发现善意数据破坏对齐的根本机制是参数在 fine-tuning 中向危险方向单调漂移；进而提出 SQSD——用单步梯度沿两方向的投影差对每个样本打连续风险分，在 3 个模型 × 2 数据集上保持单调 ASR 排名，且能跨架构、跨规模、跨 LoRA→Full 迁移。
 
 **[How Many Different Outputs Can a Transformer Generate?](how_many_different_outputs_can_a_transformer_generate.md)**
 
@@ -131,10 +119,6 @@ item_total: 37
 **["I've Seen How This Goes"：用渐进条件惊奇度刻画 LLM 与人类写作的多样性](ive_seen_how_this_goes_characterizing_diversity_via_progressive_conditional_surp.md)**
 
 :   本文提出 $D_{Ca_n}=C\cdot a_n$ 这一无需 embedding、无需参考语料、无需人工标签的多样性度量：用一个基座模型 $\theta$ 在单次前向里读完所有响应，把"最后一条响应在已见过 $n-1$ 条之后还剩多少 per-byte 条件惊奇"乘上"响应整体的可读性"，在 McDiv 人评基准上逼近 SentBERT，并在 OLMo-2-7B 的 base→SFT→DPO→RLVR 上单调下降，准确捕捉后训练带来的模式坍缩。
-
-**[Margin-Adaptive Confidence Ranking for Reliable LLM Judgement](margin-adaptive_confidence_ranking_for_reliable_llm_judgement.md)**
-
-:   本文针对 LLM-as-a-judge 中"置信度高就一定靠谱"这一常被违反的单调性假设，提出用一个小 MLP 把多组 in-context 预测概率映射成置信度，并通过 margin-based ranking loss + PAC-Bayes 泛化界推导出一个 margin 自适应训练策略，使学到的置信度在四个数据集与六个 judge 模型上都获得更低的 ranking loss、更高的 AUROC，并显著提升 fixed-sequence 测试的目标一致性达成率。
 
 **[Mitigating Staleness in Asynchronous Pipeline Parallelism via Basis Rotation](mitigating_staleness_in_asynchronous_pipeline_parallelism_via_basis_rotation.md)**
 

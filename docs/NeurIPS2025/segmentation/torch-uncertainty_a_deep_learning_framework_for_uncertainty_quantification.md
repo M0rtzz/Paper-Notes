@@ -14,7 +14,7 @@ tags:
 
 # Torch-Uncertainty: A Deep Learning Framework for Uncertainty Quantification
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.10282](https://arxiv.org/abs/2511.10282)  
 **代码**: [GitHub](https://github.com/ENSTA-U2IS-AI/Torch-Uncertainty)  
 **领域**: 图像分割  

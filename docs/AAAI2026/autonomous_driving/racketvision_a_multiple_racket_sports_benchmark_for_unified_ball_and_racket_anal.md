@@ -15,7 +15,7 @@ tags:
 
 # RacketVision: A Multiple Racket Sports Benchmark for Unified Ball and Racket Analysis
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.17045](https://arxiv.org/abs/2511.17045)  
 **代码**: 无  
 **领域**: 体育分析 / 计算机视觉  

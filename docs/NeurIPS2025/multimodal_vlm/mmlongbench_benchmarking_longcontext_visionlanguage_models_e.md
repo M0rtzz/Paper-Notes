@@ -15,7 +15,7 @@ tags:
 
 # MMLongBench: Benchmarking Long-Context Vision-Language Models Effectively and Thoroughly
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2505.10610](https://arxiv.org/abs/2505.10610)  
 **代码**: [GitHub](https://github.com/EdinburghNLP/MMLongBench)  
 **领域**: 多模态VLM / 长上下文评估  

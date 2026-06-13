@@ -15,7 +15,7 @@ tags:
 
 # CodeBind: Decoupled Representation Learning for Multimodal Alignment with Unified Compositional Codebook
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.18257](https://arxiv.org/abs/2605.18257)  
 **代码**: https://visual-ai.github.io/codebind  
 **领域**: 多模态对齐 / 3D视觉  

@@ -15,7 +15,7 @@ tags:
 
 # Self Forcing: Bridging the Train-Test Gap in Autoregressive Video Diffusion
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.08009](https://arxiv.org/abs/2506.08009)  
 **代码**: [https://github.com/self-forcing](https://github.com/self-forcing) (项目页面: [https://self-forcing.github.io/](https://self-forcing.github.io/))  
 **领域**: 视频生成 / 自回归扩散模型  

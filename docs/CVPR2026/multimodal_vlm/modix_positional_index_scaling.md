@@ -15,7 +15,7 @@ tags:
 
 # MODIX: Training-Free Multimodal Information-Driven Positional Index Scaling for VLMs
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2604.12537](https://arxiv.org/abs/2604.12537)  
 **代码**: 无  
 **领域**: 多模态VLM  

@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 医疗NLP论文汇总 · 15篇论文解读
+  NeurIPS2025 医疗NLP论文汇总 · 17篇论文解读
 description: >-
-  15篇NeurIPS2025的医疗 NLP 方向论文解读，涵盖医学影像、LLM、推理、RAG、文本摘要、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  17篇NeurIPS2025的医疗 NLP 方向论文解读，涵盖医学影像、LLM、推理、RAG、文本摘要、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "NeurIPS2025"
   - "医疗 NLP"
@@ -29,12 +29,16 @@ item_list:
     t: "Faithful Summarization of Consumer Health Queries: A Cross-Lingual Framework with LLMs"
   - u: "h-ddx_a_hierarchical_evaluation_framework_for_differential_diagnosis/"
     t: "H-DDx: A Hierarchical Evaluation Framework for Differential Diagnosis"
+  - u: "healthslm-bench_benchmarking_small_language_models_for_mobile_and_wearable_healt/"
+    t: "HealthSLM-Bench: Benchmarking Small Language Models for Mobile and Wearable Healthcare Monitoring"
   - u: "large_language_models_as_medical_codes_selectors_a_benchmark_using_the_internati/"
     t: "Large Language Models as Medical Codes Selectors: A Benchmark Using the International Classification of Primary Care"
   - u: "llm-assisted_emergency_triage_benchmark_bridging_hospital-rich_and_mci-like_fiel/"
     t: "LLM-Assisted Emergency Triage Benchmark: Bridging Hospital-Rich and MCI-Like Field Simulation"
   - u: "mind_the_gap_aligning_knowledge_bases_with_user_needs_to_enhance_mental_health_r/"
     t: "Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval"
+  - u: "patientsim_a_persona-driven_simulator_for_realistic_doctor-patient_interactions/"
+    t: "PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions"
   - u: "position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu/"
     t: "Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models"
   - u: "raxss_retrieval-augmented_sparse_sampling_for_explainable_variable-length_medica/"
@@ -45,15 +49,15 @@ item_list:
     t: "The Physical Basis of Prediction: World Model Formation in Neural Organoids via an LLM-Generated Curriculum"
   - u: "time-imm_a_dataset_and_benchmark_for_irregular_multimodal_multivariate_time_seri/"
     t: "Time-IMM: A Dataset and Benchmark for Irregular Multimodal Multivariate Time Series"
-item_total: 15
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🩺 医疗 NLP
 
-**🧠 NeurIPS2025** · **15** 篇论文解读
+**🧠 NeurIPS2025** · **17** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (11)](../../AAAI2026/medical_nlp/index.md) · [🧪 ICML2025 (4)](../../ICML2025/medical_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (2)](../../ICML2026/medical_nlp/index.md) · [💬 ACL2026 (47)](../../ACL2026/medical_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/medical_nlp/index.md) · [🔬 ICLR2026 (13)](../../ICLR2026/medical_nlp/index.md) · [🤖 AAAI2026 (12)](../../AAAI2026/medical_nlp/index.md) · [🧪 ICML2025 (4)](../../ICML2025/medical_nlp/index.md)
 
 🔥 **高频主题：** 医学影像 ×6 · LLM ×4 · 推理 ×2 · RAG ×2 · 文本摘要 ×2
 
@@ -85,6 +89,10 @@ item_total: 15
 
 :   H-DDx 提出基于 ICD-10 分类层级的鉴别诊断评估框架——将预测和真实诊断扩展到祖先节点后计算层级 F1（HDF1），奖励"临床相关的近似正确"而非仅精确匹配，评估 22 个 LLM 后发现领域特化模型（MediPhi）在 HDF1 上从第 20 名升至第 2 名（Top-5 指标完全遮蔽其优势）。
 
+**[HealthSLM-Bench: Benchmarking Small Language Models for Mobile and Wearable Healthcare Monitoring](healthslm-bench_benchmarking_small_language_models_for_mobile_and_wearable_healt.md)**
+
+:   首个系统评估小语言模型 (SLMs, 1-4B参数) 在移动与可穿戴健康监测任务上表现的基准，覆盖zero-shot/few-shot/指令微调三种范式，并在iPhone上验证了端侧部署的可行性。
+
 **[Large Language Models as Medical Codes Selectors: A Benchmark Using the International Classification of Primary Care](large_language_models_as_medical_codes_selectors_a_benchmark_using_the_internati.md)**
 
 :   构建了一个 extract-retrieve-select 框架的医学编码基准，在 33 个 LLM 上评估 ICPC-2 编码选择能力，发现 28 个模型 F1>0.8，证明 LLM 无需微调即可有效自动化初级保健编码。
@@ -96,6 +104,10 @@ item_total: 15
 **[Mind the Gap: Aligning Knowledge Bases with User Needs to Enhance Mental Health Retrieval](mind_the_gap_aligning_knowledge_bases_with_user_needs_to_enhance_mental_health_r.md)**
 
 :   提出一种基于"需求差距"分析的知识库增强框架，通过叠加真实用户数据（论坛帖子）与现有心理健康资源库来识别内容空白，并用定向增强策略以最少的文档增量达到接近完整语料库的 RAG 检索质量。
+
+**[PatientSim: A Persona-Driven Simulator for Realistic Doctor-Patient Interactions](patientsim_a_persona-driven_simulator_for_realistic_doctor-patient_interactions.md)**
+
+:   提出PatientSim——基于真实MIMIC临床数据和四维人格轴（性格、语言能力、病史记忆水平、认知混乱程度）的LLM患者模拟器，生成37种独特人格组合，在8个LLM上评估事实准确性和人格一致性，由4名临床专家验证平均质量得分3.89/4。
 
 **[Position: Thematic Analysis of Unstructured Clinical Transcripts with Large Language Models](position_thematic_analysis_of_unstructured_clinical_transcripts_with_large_langu.md)**
 

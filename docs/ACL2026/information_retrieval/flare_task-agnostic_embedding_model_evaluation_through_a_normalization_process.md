@@ -15,7 +15,7 @@ tags:
 
 # FLARE: Task-Agnostic Embedding Model Evaluation via Normalizing Flows
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17344](https://arxiv.org/abs/2604.17344)  
 **代码**: 无  
 **领域**: 信息检索  

@@ -15,7 +15,7 @@ tags:
 
 # L2V-CoT: Cross-Modal Transfer of Chain-of-Thought Reasoning via Latent Intervention
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.17910](https://arxiv.org/abs/2511.17910)  
 **代码**: 无  
 **领域**: 多模态VLM / 推理增强  

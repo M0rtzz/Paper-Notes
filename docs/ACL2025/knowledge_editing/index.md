@@ -137,4 +137,4 @@ item_total: 19
 
 **[Towards a Principled Evaluation of Knowledge Editors](towards_a_principled_evaluation_of_knowledge_editors.md)**
 
-:   本文系统性地揭示了知识编辑评估中评估方法、评估指标和编辑批量大小的选择会显著影响编辑器排名，并通过与LM Evaluation Harness集成来评估编辑对模型整体能力的副作用。
+:   本文系统性地揭示了知识编辑评估中不同评分方法（argmax、多选、生成匹配）和不同编辑批量大小会导致知识编辑器排名发生逆转的问题，并通过人工评估发现基于字符串匹配的评估方法存在假阳性倾向。

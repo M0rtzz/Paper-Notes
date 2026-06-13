@@ -15,7 +15,7 @@ tags:
 
 # Stop Automating Peer Review Without Rigorous Evaluation
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.03202](https://arxiv.org/abs/2605.03202)  
 **代码**: 无  
 **领域**: LLM / NLP / AI 治理 / 同行评审  

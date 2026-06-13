@@ -15,7 +15,7 @@ tags:
 
 # Stress-Testing Emotional Support Models: Moving from Homogeneous to Diverse Help Seekers
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2601.07698](https://arxiv.org/abs/2601.07698)  
 **代码**: 无  
 **领域**: 情感支持对话 / 对话评测 / 用户模拟  

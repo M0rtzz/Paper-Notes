@@ -15,7 +15,7 @@ tags:
 
 # Reasoning-Based Refinement of Unsupervised Text Clusters with LLMs
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.07562](https://arxiv.org/abs/2604.07562)  
 **代码**: [GitHub](https://github.com/tunazislam/reasoning-based-refinement-llms-vegan)  
 **领域**: 文本聚类 / 无监督学习  

@@ -2,7 +2,7 @@
 title: >-
   ICCV2025 论文汇总 · 1315篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1315篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(143篇)、自动驾驶(91篇)、语义分割(73篇)、视频理解(56篇)、模型压缩(52篇)、视频生成(49篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1315篇ICCV2025论文解读，涵盖 3D 视觉(267篇)、图像生成(213篇)、多模态 VLM(143篇)、自动驾驶(91篇)、语义分割(73篇)、视频理解(56篇)、模型压缩(52篇)、视频生成(49篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICCV2025"
   - "ICCV2025论文汇总"
@@ -85,7 +85,7 @@ item_total: 1315
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📹 ICCV2025 论文汇总
 
-1315篇ICCV2025论文解读，涵盖 3D 视觉(264篇)、图像生成(213篇)、多模态 VLM(143篇)、自动驾驶(91篇)、语义分割(73篇)、视频理解(56篇)、模型压缩(52篇)、视频生成(49篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1315篇ICCV2025论文解读，涵盖 3D 视觉(267篇)、图像生成(213篇)、多模态 VLM(143篇)、自动驾驶(91篇)、语义分割(73篇)、视频理解(56篇)、模型压缩(52篇)、视频生成(49篇)等 42个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -217,35 +217,7 @@ item_total: 1315
 
 **[SynCity: Training-Free Generation of 3D Worlds](llm_pretraining/syncity_training-free_generation_of_3d_worlds.md)**
 
-:   SynCity 提出了一种无需训练和优化的3D世界生成方法，通过精心设计的提示工程策略，组合预训练的语言模型、2D图像生成器（Flux）和3D生成器（TRELLIS），以tile-by-tile的方式自回归地生成大规模、高质量、可自由导航的3D场景。
-
----
-
-## 💬 LLM / NLP (6) { #llm_nlp }
-
-**[Any-SSR: How Recursive Least Squares Works in Continual Learning of Large Language Models](llm_nlp/any-ssr_how_recursive_least_squares_works_in_continual_learning_of_large_languag.md)**
-
-:   提出Analytic Subspace Routing（Any-SSR）框架，通过为每个任务分配独立的LoRA子空间消除任务间干扰，并利用递归最小二乘（RLS）闭式解训练一个零遗忘的解析路由器，实现LLM的无回放持续学习。
-
-**[Any-SSR: How Recursive Least Squares Works in Continual Learning of Large Language Models](llm_nlp/any_ssr_how_recursive_least_squares_works_in_continual_learning_of_large_language_models.md)**
-
-:   提出Analytic Subspace Routing (Any-SSR)，为每个新任务分配独立的LoRA子空间以消除知识干扰，同时使用基于递归最小二乘(RLS)闭式解的分析路由器动态选择子空间，在理论上保证不遗忘先前任务知识，实现LLM的无重放持续学习。
-
-**[FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](llm_nlp/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)**
-
-:   将模型合并形式化为约束优化问题，引入Frank-Wolfe优化启发的FW-Merging方法，通过迭代选择最相关模型并局部合并，实现在大规模黑盒模型池中的可扩展、鲁棒合并，合并20个ViT模型时超越数据感知方法Adamerging 8.39%。
-
-**[ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer](llm_nlp/shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md)**
-
-:   提出ShadowHack框架，将阴影去除分解为亮度恢复和颜色修复两个子任务，通过带有纠偏外展注意力的LRNet恢复亮度和纹理，再用跨注意力驱动的CRNet重建准确颜色，在ISTD+和SRD数据集上取得SOTA。
-
-**[VA-GPT: Aligning Effective Tokens with Video Anomaly in Large Language Models](llm_nlp/va_gpt_aligning_effective_tokens_video_anomaly.md)**
-
-:   提出 VA-GPT，一个面向视频异常事件理解的多模态大模型，通过空间有效token选择(SETS)和时间有效token生成(TETG)两个模块，让MLLM在空间和时间维度上精准对齐异常相关信息，在域内和跨域异常检测基准上均达到SOTA。
-
-**[VIM: Versatile Interactive Motion-Language Model](llm_nlp/vim_versatile_interactive_motion_language_model.md)**
-
-:   提出 VIM，首个能在统一框架内同时理解和生成双人交互运动与文本的多模态大模型，配合82.7K多轮交互运动指令数据集 Inter-MT²，支持文本到运动、运动到文本、反应生成、运动编辑和运动推理等多种任务。
+:   SynCity 提出了一种无需训练/优化的方法，通过精心设计的 prompt engineering 策略组合预训练的语言模型、2D图像生成器和3D生成器（TRELLIS），以 tile-by-tile 的方式自回归生成大规模、高质量、可自由导航的3D世界。
 
 ---
 
@@ -326,6 +298,34 @@ item_total: 1315
 **[MixANT: Observation-dependent Memory Propagation for Stochastic Dense Action Anticipation](llm_efficiency/mixant_observation-dependent_memory_propagation_for_stochastic_dense_action_anti.md)**
 
 :   提出 MixANT，通过混合专家方法为 Mamba 的遗忘门（A 矩阵）引入输入依赖性，动态选择上下文相关的 A 矩阵控制时序记忆传播，在 50Salads、Breakfast 和 Assembly101 三个密集动作预测数据集上全面超越 SOTA。
+
+---
+
+## 💬 LLM 其他 (6) { #llm_nlp }
+
+**[Any-SSR: How Recursive Least Squares Works in Continual Learning of Large Language Models](llm_nlp/any-ssr_how_recursive_least_squares_works_in_continual_learning_of_large_languag.md)**
+
+:   提出Analytic Subspace Routing（Any-SSR）框架，通过为每个任务分配独立的LoRA子空间消除任务间干扰，并利用递归最小二乘（RLS）闭式解训练一个零遗忘的解析路由器，实现LLM的无回放持续学习。
+
+**[Any-SSR: How Recursive Least Squares Works in Continual Learning of Large Language Models](llm_nlp/any_ssr_how_recursive_least_squares_works_in_continual_learning_of_large_language_models.md)**
+
+:   提出Analytic Subspace Routing (Any-SSR)，为每个新任务分配独立的LoRA子空间以消除知识干扰，同时使用基于递归最小二乘(RLS)闭式解的分析路由器动态选择子空间，在理论上保证不遗忘先前任务知识，实现LLM的无重放持续学习。
+
+**[FW-Merging: Scaling Model Merging with Frank-Wolfe Optimization](llm_nlp/fw-merging_scaling_model_merging_with_frank-wolfe_optimization.md)**
+
+:   将模型合并形式化为约束优化问题，引入Frank-Wolfe优化启发的FW-Merging方法，通过迭代选择最相关模型并局部合并，实现在大规模黑盒模型池中的可扩展、鲁棒合并，合并20个ViT模型时超越数据感知方法Adamerging 8.39%。
+
+**[ShadowHack: Hacking Shadows via Luminance-Color Divide and Conquer](llm_nlp/shadowhack_hacking_shadows_via_luminance-color_divide_and_conquer.md)**
+
+:   提出ShadowHack框架，将阴影去除分解为亮度恢复和颜色修复两个子任务，通过带有纠偏外展注意力的LRNet恢复亮度和纹理，再用跨注意力驱动的CRNet重建准确颜色，在ISTD+和SRD数据集上取得SOTA。
+
+**[VA-GPT: Aligning Effective Tokens with Video Anomaly in Large Language Models](llm_nlp/va_gpt_aligning_effective_tokens_video_anomaly.md)**
+
+:   提出 VA-GPT，一个面向视频异常事件理解的多模态大模型，通过空间有效token选择(SETS)和时间有效token生成(TETG)两个模块，让MLLM在空间和时间维度上精准对齐异常相关信息，在域内和跨域异常检测基准上均达到SOTA。
+
+**[VIM: Versatile Interactive Motion-Language Model](llm_nlp/vim_versatile_interactive_motion_language_model.md)**
+
+:   提出 VIM，首个能在统一框架内同时理解和生成双人交互运动与文本的多模态大模型，配合82.7K多轮交互运动指令数据集 Inter-MT²，支持文本到运动、运动到文本、反应生成、运动编辑和运动推理等多种任务。
 
 ---
 
@@ -577,7 +577,7 @@ item_total: 1315
 
 ---
 
-## 🧊 3D 视觉 (264) { #3d_vision }
+## 🧊 3D 视觉 (267) { #3d_vision }
 
 **[TRAN-D: 2D Gaussian Splatting-based Sparse-view Transparent Object Depth Reconstruction via Physics Simulation for Scene Update](3d_vision/2d_gaussian_splattingbased_sparseview_transparent_object_dep.md)**
 
@@ -619,7 +619,7 @@ item_total: 1315
 
 :   将3DGS扩展到7维（空间3D+时间1D+方向3D），通过条件切片机制将7D高斯投影为与3DGS管线兼容的3D高斯，在具有视角依赖效果的动态场景上PSNR提升最高7.36dB，同时维持401 FPS实时渲染。
 
-[查看全部264篇「3D 视觉」论文 →](3d_vision/)
+[查看全部267篇「3D 视觉」论文 →](3d_vision/)
 
 ---
 
@@ -715,7 +715,7 @@ item_total: 1315
 
 ---
 
-## 🧑 人体理解 (40) { #human_understanding }
+## 🧑 人体理解 (41) { #human_understanding }
 
 **[AR-VRM: Imitating Human Motions for Visual Robot Manipulation with Analogical Reasoning](human_understanding/ar-vrm_imitating_human_motions_for_visual_robot_manipulation_with_analogical_rea.md)**
 
@@ -757,11 +757,15 @@ item_total: 1315
 
 :   提出 ViTaM-D，一个视觉-触觉融合框架，通过新提出的分布式力感知接触表示（DF-Field）和两阶段流程（视觉动态跟踪+力感知优化），实现刚性和可变形物体的手物交互动态重建，并引入 HOT 数据集填补可变形物体手物交互的评测空白。
 
-[查看全部40篇「人体理解」论文 →](human_understanding/)
+[查看全部41篇「人体理解」论文 →](human_understanding/)
 
 ---
 
-## 🖼️ 图像恢复 (30) { #image_restoration }
+## 🖼️ 图像恢复 (31) { #image_restoration }
+
+**[AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm](image_restoration/afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons.md)**
+
+:   将多曝光HDR重建从MAP估计视角建模，通过空间对应先验将问题分解为对齐和融合两个交替子问题，再展开为端到端可训练的AFUNet（含SAM空间对齐+CFM通道融合+DCM数据一致性模块），在三个HDR基准上取得SOTA，PSNR-μ达44.91dB（Kalantari数据集）。
 
 **[Benchmarking Burst Super-Resolution for Polarization Images: Noise Dataset and Analysis](image_restoration/benchmarking_burst_super-resolution_for_polarization_images_noise_dataset_and_an.md)**
 
@@ -799,15 +803,11 @@ item_total: 1315
 
 :   本文提出EAMamba框架，通过多头选择性扫描模块（MHSSM）和全方位扫描策略（all-around scanning），在不增加计算复杂度和参数量的情况下实现多方向扫描，解决了Vision Mamba在图像恢复中的计算开销和局部像素遗忘问题，在超分辨率、去噪、去模糊、去雾等任务上取得了31-89%的FLOPs降低同时保持优异性能。
 
-**[Efficient Concertormer for Image Deblurring and Beyond](image_restoration/efficient_concertormer_for_image_deblurring_and_beyond.md)**
-
-:   提出 Concertormer，通过将自注意力分解为全局 Concertino 和局部 Ripieno 两个分量，同时引入跨维度通信模块和门控深度卷积 MLP，实现了线性复杂度下的全局-局部特征建模，在去模糊及其他图像复原任务上取得 SOTA 性能。
-
-[查看全部30篇「图像恢复」论文 →](image_restoration/)
+[查看全部31篇「图像恢复」论文 →](image_restoration/)
 
 ---
 
-## 🎯 目标检测 (27) { #object_detection }
+## 🎯 目标检测 (28) { #object_detection }
 
 **[3D-MOOD: Lifting 2D to 3D for Monocular Open-Set Object Detection](object_detection/3dmood_lifting_2d_to_3d_for_monocular_openset_object_detecti.md)**
 
@@ -841,15 +841,15 @@ item_total: 1315
 
 :   提出I2EvDet框架，通过在冻结的RT-DETR检测器的潜空间中插入轻量级RNN时序模块，以最小的架构修改将主流图像检测器适配为事件相机视频检测模型，在Gen1和1Mpx基准上分别取得+2.3和+1.4 mAP的SOTA。
 
+**[From Easy to Hard: Progressive Active Learning Framework for Infrared Small Target Detection with Single Point Supervision](object_detection/from_easy_to_hard_progressive_active_learning_framework_for_infrared_small_targe.md)**
+
+:   提出渐进式主动学习（PAL）框架，通过"模型预启动→模型增强→模型精炼"三阶段训练策略，驱动红外小目标检测网络从易到难地主动识别和学习困难样本，在单点监督条件下显著缩小了与全监督方法之间的性能差距（IoU 提升 8.53%–29.1%）。
+
 **[Intervening in Black Box: Concept Bottleneck Model for Enhancing Human-Neural Network Mutual Understanding](object_detection/intervening_in_black_box_concept_bottleneck_model_for_enhancing_human_neural_net.md)**
 
 :   提出 CBM-HNMU 框架，通过概念瓶颈模型（CBM）逼近黑盒模型的推理过程，自动识别并修正有害概念，再将修正后的知识蒸馏回黑盒模型，实现超越样本级别的系统性模型干预与准确率提升。
 
-**[Kaputt: A Large-Scale Dataset for Visual Defect Detection](object_detection/kaputt_a_large-scale_dataset_for_visual_defect_detection.md)**
-
-:   Kaputt 发布了一个包含 23 万+ 图像、4.8 万+ 独立商品的大规模零售物流缺陷检测数据集，规模是 MVTec-AD 的 40 倍，首次引入显著的姿态和外观变化，使得 SOTA 异常检测方法的 AUROC 不超过 56.96%，揭示了现有方法在真实零售场景中的严重不足。
-
-[查看全部27篇「目标检测」论文 →](object_detection/)
+[查看全部28篇「目标检测」论文 →](object_detection/)
 
 ---
 
@@ -1227,7 +1227,7 @@ item_total: 1315
 
 **[PASTA: Part-Aware Sketch-to-3D Shape Generation with Text-Aligned Prior](graph_learning/pasta_part-aware_sketch-to-3d_shape_generation_with_text-aligned_prior.md)**
 
-:   提出PASTA框架，通过VLM文本先验补充草图缺失的语义信息，并用ISG-Net（IndivGCN+PartGCN）建模部件间关系，实现了草图到3D形状生成的SOTA性能，支持部件级编辑。
+:   提出PASTA框架，通过集成VLM文本先验补偿草图的语义缺失，并设计ISG-Net（IndivGCN+PartGCN双图卷积）建模零件间结构关系，实现SOTA的草图到3D形状生成和零件级编辑。
 
 ---
 
@@ -1391,7 +1391,7 @@ item_total: 1315
 
 ---
 
-## 📂 其他 (39) { #others }
+## 📂 其他 (33) { #others }
 
 **[A Hyperdimensional One Place Signature to Represent Them All: Stackable Descriptors For Visual Place Recognition](others/a_hyperdimensional_one_place_signature_to_represent_them_all_stackable_descripto.md)**
 
@@ -1407,11 +1407,7 @@ item_total: 1315
 
 **[Adversarial Data Augmentation for Single Domain Generalization via Lyapunov Exponents](others/adversarial_data_augmentation_for_single_domain_generalization_via_lyapunov_expo.md)**
 
-:   提出 LEAwareSGD 优化器，利用 Lyapunov 指数（LE）动态调节学习率，引导模型训练在混沌边缘附近，在对抗数据增强框架下实现更广泛的参数空间探索，显著提升单域泛化（SDG）性能。
-
-**[AFUNet: Cross-Iterative Alignment-Fusion Synergy for HDR Reconstruction via Deep Unfolding Paradigm](others/afunet_crossiterative_alignmentfusion_synergy_for_hdr_recons.md)**
-
-:   将多曝光HDR重建从MAP估计视角建模，通过空间对应先验将问题分解为对齐和融合两个交替子问题，再展开为端到端可训练的AFUNet（含SAM空间对齐+CFM通道融合+DCM数据一致性模块），在三个HDR基准上取得SOTA，PSNR-μ达44.91dB（Kalantari数据集）。
+:   提出 LEAwareSGD 优化器，利用 Lyapunov 指数（LE）动态调节学习率，将模型训练引导至"混沌边缘"附近，从而在单源域泛化任务中实现更广泛的参数空间探索和更强的跨域泛化能力。
 
 **[Auto-Regressively Generating Multi-View Consistent Images (MV-AR)](others/autoregressively_generating_multiview_consistent_images.md)**
 
@@ -1433,6 +1429,10 @@ item_total: 1315
 
 :   提出FixTalk框架，通过增强运动指示器（EMI）和增强细节指示器（EDI）两个轻量级即插即用模块，将GAN模型中的身份泄漏问题"化害为利"——EMI消除运动特征中的身份信息以解决身份泄漏，EDI利用泄漏的身份信息在极端姿态下补充缺失细节以消除渲染伪影。
 
-[查看全部39篇「其他」论文 →](others/)
+**[HyTIP: Hybrid Temporal Information Propagation for Masked Conditional Residual Video Coding](others/hytip_hybrid_temporal_information_propagation_for_masked_conditional_residual_vi.md)**
+
+:   提出 HyTIP 框架，将输出回归（显式缓冲解码帧）和隐状态传播（隐式缓冲潜在特征）两种时序信息传播机制统一到同一学习式视频编码框架中，仅用 SOTA 方法 14% 的缓冲区大小即可达到可比的编码性能。
+
+[查看全部33篇「其他」论文 →](others/)
 
 </div>

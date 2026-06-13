@@ -15,7 +15,7 @@ tags:
 
 # E2E-GMNER: End-to-End Generative Grounded Multimodal Named Entity Recognition
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.17319](https://arxiv.org/abs/2604.17319)  
 **代码**: [https://github.com/Finch-coder/E2E-GMNER](https://github.com/Finch-coder/E2E-GMNER)  
 **领域**: 目标检测  

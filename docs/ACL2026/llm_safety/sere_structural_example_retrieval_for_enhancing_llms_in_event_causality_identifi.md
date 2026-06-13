@@ -15,7 +15,7 @@ tags:
 
 # SERE: Structural Example Retrieval for Enhancing LLMs in Event Causality Identification
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.03701](https://arxiv.org/abs/2605.03701)  
 **代码**: https://github.com/DMIRLAB-Group/SERE  
 **领域**: LLM安全 / 因果关系识别  

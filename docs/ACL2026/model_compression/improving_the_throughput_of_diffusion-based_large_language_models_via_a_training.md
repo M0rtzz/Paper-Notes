@@ -15,7 +15,7 @@ tags:
 
 # CadLLM: Improving the Throughput of Diffusion-based LLMs via Training-Free Confidence-Aware Calibration
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2512.07173](https://arxiv.org/abs/2512.07173)  
 **代码**: 有  
 **领域**: 模型压缩  

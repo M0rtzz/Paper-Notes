@@ -15,7 +15,7 @@ tags:
 
 # It's Time to Get It Right: Improving Analog Clock Reading and Clock-Hand Spatial Reasoning in Vision-Language Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.08011](https://arxiv.org/abs/2603.08011)  
 **代码**: [https://it-s-time-to-get-it-right.github.io/](https://it-s-time-to-get-it-right.github.io/)  
 **领域**: 多模态VLM  

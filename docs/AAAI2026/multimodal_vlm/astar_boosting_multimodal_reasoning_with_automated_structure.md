@@ -15,7 +15,7 @@ tags:
 
 # AStar: Boosting Multimodal Reasoning with Automated Structured Thinking
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2502.02339](https://arxiv.org/abs/2502.02339)  
 **代码**: 未公开  
 **领域**: 多模态VLM  

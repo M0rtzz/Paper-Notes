@@ -15,7 +15,7 @@ tags:
 
 # CTFS: Collaborative Teacher Framework for Forward-Looking Sonar Image Semantic Segmentation with Extremely Limited Labels
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.21071](https://arxiv.org/abs/2603.21071)  
 **代码**: 有  
 **领域**: 分割 / 水下成像  

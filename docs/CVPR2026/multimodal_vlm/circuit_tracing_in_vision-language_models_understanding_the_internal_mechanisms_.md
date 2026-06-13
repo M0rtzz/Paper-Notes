@@ -15,7 +15,7 @@ tags:
 
 # Circuit Tracing in Vision-Language Models: Understanding the Internal Mechanisms of Multimodal Thinking
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2602.20330](https://arxiv.org/abs/2602.20330)  
 **代码**: [github.com/UIUC-MONET/vlm-circuit-tracing](https://github.com/UIUC-MONET/vlm-circuit-tracing)  
 **领域**: 多模态VLM  

@@ -15,7 +15,7 @@ tags:
 
 # RadioGS: Radiometrically Consistent Gaussian Surfels for Inverse Rendering
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2603.01491](https://arxiv.org/abs/2603.01491)  
 **代码**: [https://qbhan.github.io/radiogs-page/](https://qbhan.github.io/radiogs-page/)  
 **领域**: 3D视觉  

@@ -15,7 +15,7 @@ tags:
 
 # Ninja Codes: Neurally Generated Fiducial Markers for Stealthy 6-DoF Tracking
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2510.18976](https://arxiv.org/abs/2510.18976)  
 **代码**: [https://sento.net/research/ninjacodes](https://sento.net/research/ninjacodes)  
 **领域**: 视频理解  

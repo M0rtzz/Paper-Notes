@@ -15,7 +15,7 @@ tags:
 
 # SITE: Soft Head Selection for Injecting ICL-Derived Task Embeddings
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2507.20906](https://arxiv.org/abs/2507.20906)  
 **代码**: [https://github.com/SNU-DRL/Soft_Injection](https://github.com/SNU-DRL/Soft_Injection)  
 **领域**: 可解释性 / 参数高效适配  

@@ -15,7 +15,7 @@ tags:
 
 # From Adaptation to Generalization: Adaptive Visual Prompting for Medical Image Segmentation
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.17455](https://arxiv.org/abs/2604.17455)  
 **代码**: [https://github.com/cetinkayaevren/apex/](https://github.com/cetinkayaevren/apex/)  
 **领域**: 医学图像  

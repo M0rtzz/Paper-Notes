@@ -14,7 +14,7 @@ tags:
 
 # Aggregation Hides OOD Generalization Failures from Spurious Correlations
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.24884](https://arxiv.org/abs/2510.24884)  
 **代码**: [https://github.com/olawalesalaudeen/OODSELECT](https://github.com/olawalesalaudeen/OODSELECT)  
 **领域**: OOD 泛化 / 鲁棒性  

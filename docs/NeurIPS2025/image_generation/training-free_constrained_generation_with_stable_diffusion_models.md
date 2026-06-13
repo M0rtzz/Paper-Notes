@@ -15,7 +15,7 @@ tags:
 
 # Training-Free Constrained Generation with Stable Diffusion Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.05625](https://arxiv.org/abs/2502.05625)  
 **代码**: [GitHub](https://github.com/RAISELab-atUVA/Constrained-Stable-Diffusion)  
 **领域**: 图像生成  

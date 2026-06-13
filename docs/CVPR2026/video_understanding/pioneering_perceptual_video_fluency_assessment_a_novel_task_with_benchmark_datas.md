@@ -15,7 +15,7 @@ tags:
 
 # Pioneering Perceptual Video Fluency Assessment: A Novel Task with Benchmark Dataset and Baseline
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.26055](https://arxiv.org/abs/2603.26055)  
 **代码**: [https://github.com/KeiChiTse/VFA](https://github.com/KeiChiTse/VFA)  
 **领域**: 视频理解  

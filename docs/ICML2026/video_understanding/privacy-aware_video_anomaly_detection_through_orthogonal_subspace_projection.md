@@ -15,7 +15,7 @@ tags:
 
 # Privacy-Aware Video Anomaly Detection through Orthogonal Subspace Projection
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.08651](https://arxiv.org/abs/2605.08651)  
 **代码**: 论文未明确公开  
 **领域**: 人体理解 / 视频异常检测 / 隐私保护表示学习  

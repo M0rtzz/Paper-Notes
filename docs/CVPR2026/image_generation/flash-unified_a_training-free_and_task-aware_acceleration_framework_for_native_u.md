@@ -15,7 +15,7 @@ tags:
 
 # Flash-Unified: Training-Free and Task-Aware Acceleration for Native Unified Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.15271](https://arxiv.org/abs/2603.15271)  
 **代码**: [有](https://github.com/Rirayh/FlashU)  
 **领域**: 图像生成  

@@ -15,7 +15,7 @@ tags:
 
 # Tandem: Riding Together with Large and Small Language Models for Efficient Reasoning
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.23623](https://arxiv.org/abs/2604.23623)  
 **代码**: https://github.com/Applied-Machine-Learning-Lab/ACL2026_Tandem  
 **领域**: LLM推理 / 模型协作 / 推理效率  

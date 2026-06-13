@@ -15,7 +15,7 @@ tags:
 
 # Orthogonal Concept Erasure for Diffusion Models
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2605.28902](https://arxiv.org/abs/2605.28902)  
 **代码**: https://github.com/HansSunY/OCE  
 **领域**: AI安全 / 概念擦除 / 扩散模型  

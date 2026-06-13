@@ -1,8 +1,8 @@
 ---
 title: >-
-  ECCV2024 图像恢复论文汇总 · 28篇论文解读
+  ECCV2024 图像恢复论文汇总 · 32篇论文解读
 description: >-
-  28篇ECCV2024的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  32篇ECCV2024的图像恢复方向论文解读，涵盖图像恢复、超分辨率、扩散模型、对抗鲁棒等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ECCV2024"
   - "图像恢复"
@@ -38,6 +38,10 @@ item_list:
     t: "Efficient Diffusion Transformer with Step-wise Dynamic Attention Mediators"
   - u: "exploiting_dual-correlation_for_multi-frame_time-of-flight_denoising/"
     t: "Exploiting Dual-Correlation for Multi-frame Time-of-Flight Denoising"
+  - u: "image_demoiréing_in_raw_and_srgb_domains/"
+    t: "Image Demoiréing in RAW and sRGB Domains"
+  - u: "intrinsic_single-image_hdr_reconstruction/"
+    t: "Intrinsic Single-Image HDR Reconstruction"
   - u: "joint_rgb-spectral_decomposition_model_guided_image_enhancement_in_mobile_photog/"
     t: "Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography"
   - u: "learning_exhaustive_correlation_for_spectral_super-resolution_where_spatial-spec/"
@@ -54,6 +58,8 @@ item_list:
     t: "Overcoming Distribution Mismatch in Quantizing Image Super-Resolution Networks"
   - u: "pairwise_distance_distillation_for_unsupervised_real-world_image_super-resolutio/"
     t: "Pairwise Distance Distillation for Unsupervised Real-World Image Super-Resolution"
+  - u: "raindrop_clarity_a_dual-focused_dataset_for_day_and_night_raindrop_removal/"
+    t: "Raindrop Clarity: A Dual-Focused Dataset for Day and Night Raindrop Removal"
   - u: "restoring_images_in_adverse_weather_conditions_via_histogram_transformer/"
     t: "Restoring Images in Adverse Weather Conditions via Histogram Transformer"
   - u: "rethinking_image_super-resolution_from_training_data_perspectives/"
@@ -62,21 +68,19 @@ item_list:
     t: "Seeing the Unseen: A Frequency Prompt Guided Transformer for Image Restoration"
   - u: "spatially-variant_degradation_model_for_dataset-free_super-resolution/"
     t: "Spatially-Variant Degradation Model for Dataset-free Super-resolution"
+  - u: "teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept/"
+    t: "Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint"
   - u: "towards_real-world_event-guided_low-light_video_enhancement_and_deblurring/"
     t: "Towards Real-world Event-guided Low-light Video Enhancement and Deblurring"
-  - u: "ttt-mim_test-time_training_with_masked_image_modeling_for_denoising_distribution/"
-    t: "TTT-MIM: Test-Time Training with Masked Image Modeling for Denoising Distribution Shifts"
-  - u: "unrolled_decomposed_unpaired_learning_for_controllable_low-light_video_enhanceme/"
-    t: "Unrolled Decomposed Unpaired Learning for Controllable Low-Light Video Enhancement"
-item_total: 28
+item_total: 32
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🖼️ 图像恢复
 
-**🎞️ ECCV2024** · **28** 篇论文解读
+**🎞️ ECCV2024** · **32** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (30)](../../ICCV2025/image_restoration/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (16)](../../ICML2026/image_restoration/index.md) · [📷 CVPR2026 (41)](../../CVPR2026/image_restoration/index.md) · [🔬 ICLR2026 (15)](../../ICLR2026/image_restoration/index.md) · [🤖 AAAI2026 (10)](../../AAAI2026/image_restoration/index.md) · [🧠 NeurIPS2025 (26)](../../NeurIPS2025/image_restoration/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/image_restoration/index.md)
 
 🔥 **高频主题：** 图像恢复 ×12 · 超分辨率 ×8 · 扩散模型 ×3 · 对抗鲁棒 ×2
 
@@ -132,6 +136,14 @@ item_total: 28
 
 :   提出首个基于学习的多帧ToF深度去噪框架，通过双相关性估计模块（利用帧内和帧间相关性）和置信度引导的残差回归模块，有效利用多帧ToF数据之间的关联来指导噪声去除，在强噪声区域显著优于现有单帧方法。
 
+**[Image Demoiréing in RAW and sRGB Domains](image_demoiréing_in_raw_and_srgb_domains.md)**
+
+:   提出RRID框架联合利用RAW和sRGB双域数据进行图像去摩尔纹，设计了带GFM（门控反馈）和FSM（频域选择）的SCDM去摩尔纹模块，以及RGISP实现设备相关ISP学习辅助颜色恢复，在PSNR上超越SOTA 0.62dB。
+
+**[Intrinsic Single-Image HDR Reconstruction](intrinsic_single-image_hdr_reconstruction.md)**
+
+:   > 提出基于内在图像分解（intrinsic decomposition）的 HDR 重建方法，将问题分解为明暗域（shading）的动态范围扩展和反照率域（albedo）的颜色恢复两个子任务，分别训练网络以提升重建质量。
+
 **[Joint RGB-Spectral Decomposition Model Guided Image Enhancement in Mobile Photography](joint_rgb-spectral_decomposition_model_guided_image_enhancement_in_mobile_photog.md)**
 
 :   提出 JDM-HDRNet，通过联合 RGB-光谱分解模型从低分辨率多光谱图像（Lr-MSI）中提取 shading、reflectance 和材质语义三种先验，将它们分别融入 HDRNet 以增强动态范围、色彩映射和语义网格专家学习，并构建了首个 RGB-高光谱配对的 Mobile-Spec 数据集。
@@ -164,6 +176,10 @@ item_total: 28
 
 :   提出成对距离蒸馏框架，通过蒸馏专用模型和通用模型之间的内部和模型间距离关系，实现无监督真实世界图像超分辨率的退化自适应。
 
+**[Raindrop Clarity: A Dual-Focused Dataset for Day and Night Raindrop Removal](raindrop_clarity_a_dual-focused_dataset_for_day_and_night_raindrop_removal.md)**
+
+:   提出了一个大规模真实世界雨滴去除数据集 Raindrop Clarity，包含15,186组高质量图像对/三元组，首次涵盖雨滴聚焦（清晰雨滴+模糊背景）和夜间雨滴两种现有数据集缺失的场景。
+
 **[Restoring Images in Adverse Weather Conditions via Histogram Transformer](restoring_images_in_adverse_weather_conditions_via_histogram_transformer.md)**
 
 :   提出 Histoformer，一种基于直方图自注意力机制的高效 Transformer，通过将空间特征按像素强度排序分箱（bin），在箱内和箱间执行自注意力，实现动态范围的空间注意力以高效处理天气退化像素，配合动态范围卷积和 Pearson 相关性损失，在去雪/去雨雾/去雨滴三大任务上统一建模并达到 SOTA。
@@ -179,6 +195,10 @@ item_total: 28
 **[Spatially-Variant Degradation Model for Dataset-free Super-resolution](spatially-variant_degradation_model_for_dataset-free_super-resolution.md)**
 
 :   提出首个无需数据集训练的空间变化退化模型 SVDSR，每个像素的退化核由可学习的原子核字典的线性组合表示，系数矩阵通过模糊集的隶属函数从图像纹理信息推导，在 MAP 框架下用 Monte Carlo EM 算法推断，$2\times$ 超分平均提升 1 dB。
+
+**[Teaching Tailored to Talent: Adverse Weather Restoration via Prompt Pool and Depth-Anything Constraint](teaching_tailored_to_talent_adverse_weather_restoration_via_prompt_pool_and_dept.md)**
+
+:   提出 T3-DiffWeather，一种基于 diffusion 的 all-in-one 恶劣天气恢复框架，通过 prompt pool 让网络自主组合 sub-prompts 构建实例级 weather-prompts 来建模多样化天气退化，同时利用 Depth-Anything 特征约束 general prompts 来建模场景信息，仅需 2 步采样即达到 SOTA，计算量仅为 WeatherDiffusion 的 1/52。
 
 **[Towards Real-world Event-guided Low-light Video Enhancement and Deblurring](towards_real-world_event-guided_low-light_video_enhancement_and_deblurring.md)**
 

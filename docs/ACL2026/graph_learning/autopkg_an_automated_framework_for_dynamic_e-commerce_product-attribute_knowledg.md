@@ -15,7 +15,7 @@ tags:
 
 # AutoPKG: An Automated Framework for Dynamic E-commerce Product-Attribute Knowledge Graph Construction
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.16950](https://arxiv.org/abs/2604.16950)  
 **代码**: [GitHub](https://github.com/Product-Understanding-Lazada-Alibaba/AutoPKG)  
 **领域**: 知识图谱  

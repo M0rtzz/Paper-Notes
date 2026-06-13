@@ -16,7 +16,7 @@ tags:
 
 # EvoBrain: Dynamic Multi-Channel EEG Graph Modeling for Time-Evolving Brain Networks
 
-**会议**: NeurIPS2025  
+**会议**: NeurIPS2025 Spotlight  
 **arXiv**: [2509.15857](https://arxiv.org/abs/2509.15857)  
 **代码**: [GitHub](https://github.com/Kotoge/EvoBrain)  
 **领域**: 脑电信号分析 / 动态图神经网络  

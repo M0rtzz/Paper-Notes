@@ -15,7 +15,7 @@ tags:
 
 # Melodia: Training-Free Music Editing Guided by Attention Probing in Diffusion Models
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.08252](https://arxiv.org/abs/2511.08252)  
 **代码**: 无  
 **领域**: 图像生成 / 音乐编辑  

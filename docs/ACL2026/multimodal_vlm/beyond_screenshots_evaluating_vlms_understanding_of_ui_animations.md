@@ -15,7 +15,7 @@ tags:
 
 # Beyond Screenshots: Evaluating VLMs' Understanding of UI Animations
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.26148](https://arxiv.org/abs/2604.26148)  
 **代码**: <https://github.com/publicationacc/AniMINT>  
 **领域**: 多模态 VLM / UI 理解 / 评测  

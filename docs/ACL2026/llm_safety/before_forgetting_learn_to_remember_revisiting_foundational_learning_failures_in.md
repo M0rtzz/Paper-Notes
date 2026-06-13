@@ -15,7 +15,7 @@ tags:
 
 # Before Forgetting, Learn to Remember: Revisiting Foundational Learning Failures in LVLM Unlearning Benchmarks
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2605.03759](https://arxiv.org/abs/2605.03759)  
 **代码**: https://huggingface.co/datasets/herbwood27/Remem  
 **领域**: LLM 安全 / 隐私 / 多模态 unlearning  

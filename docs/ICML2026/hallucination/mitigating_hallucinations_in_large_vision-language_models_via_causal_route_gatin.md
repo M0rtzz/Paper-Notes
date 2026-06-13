@@ -15,7 +15,7 @@ tags:
 
 # Mitigating Hallucinations in Large Vision-Language Models via Causal Route Gating
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.24024](https://arxiv.org/abs/2605.24024)  
 **代码**: 无  
 **领域**: 幻觉检测  

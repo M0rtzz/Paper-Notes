@@ -15,7 +15,7 @@ tags:
 
 # VecCISC: Improving Confidence-Informed Self-Consistency with Reasoning Trace Clustering and Candidate Answer Selection
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.08070](https://arxiv.org/abs/2605.08070)  
 **代码**: 无  
 **领域**: model_compression  

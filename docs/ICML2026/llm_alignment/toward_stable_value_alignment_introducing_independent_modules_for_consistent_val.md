@@ -15,7 +15,7 @@ tags:
 
 # Toward Stable Value Alignment: Introducing Independent Modules for Consistent Value Guidance
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.11712](https://arxiv.org/abs/2605.11712)  
 **代码**: https://github.com/Clervils/SVGT.git (有)  
 **领域**: LLM对齐 / RLHF替代 / 推理时引导  

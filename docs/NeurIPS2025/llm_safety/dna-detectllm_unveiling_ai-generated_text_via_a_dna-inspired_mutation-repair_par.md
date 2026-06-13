@@ -15,7 +15,7 @@ tags:
 
 # DNA-DetectLLM: Unveiling AI-Generated Text via a DNA-Inspired Mutation-Repair Paradigm
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.15550](https://arxiv.org/abs/2509.15550)  
 **代码**: [github.com/Xiaoweizhu57/DNA-DetectLLM](https://github.com/Xiaoweizhu57/DNA-DetectLLM)  
 **领域**: AI安全 / AI文本检测  

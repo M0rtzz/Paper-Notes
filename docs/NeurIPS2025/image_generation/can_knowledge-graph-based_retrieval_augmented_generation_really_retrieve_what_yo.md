@@ -15,7 +15,7 @@ tags:
 
 # Can Knowledge-Graph-based Retrieval Augmented Generation Really Retrieve What You Need?
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.16582](https://arxiv.org/abs/2510.16582)  
 **代码**: [GitHub](https://github.com/Samyu0304/GraphFlow)  
 **领域**: 图像生成  

@@ -14,7 +14,7 @@ tags:
 
 # MetaphorVU: Towards Metaphorical Video Understanding
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2605.25461](https://arxiv.org/abs/2605.25461)  
 **代码**: 待确认  
 **领域**: 视频理解 / 高阶认知  

@@ -17,7 +17,7 @@ tags:
 
 # Spend Wisely: Maximizing Post-Training Gains in Iterative Synthetic Data Bootstrapping
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2501.18962](https://arxiv.org/abs/2501.18962)  
 **作者**: Pu Yang (Peking University), Yunzhen Feng (NYU), Ziyuan Chen (Peking University), Yuhang Wu (UC Berkeley), Zhuoyuan Li (NUS)  
 **代码**: 未公开  

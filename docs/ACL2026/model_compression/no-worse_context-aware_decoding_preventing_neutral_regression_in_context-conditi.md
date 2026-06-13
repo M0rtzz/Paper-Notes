@@ -15,7 +15,7 @@ tags:
 
 # No-Worse Context-Aware Decoding: Preventing Neutral Regression in Context-Conditioned Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.16686](https://arxiv.org/abs/2604.16686)  
 **代码**: [GitHub](https://github.com/CastGryff/NWCAD)  
 **领域**: 模型压缩/解码策略  

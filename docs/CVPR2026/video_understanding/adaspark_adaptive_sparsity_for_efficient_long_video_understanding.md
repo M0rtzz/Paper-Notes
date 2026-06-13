@@ -15,7 +15,7 @@ tags:
 
 # AdaSpark: Adaptive Sparsity for Efficient Long-Video Understanding
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Highlight  
 **arXiv**: [2604.08077](https://arxiv.org/abs/2604.08077)  
 **代码**: 无  
 **领域**: 视频理解 / 高效推理  

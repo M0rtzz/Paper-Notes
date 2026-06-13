@@ -10,7 +10,7 @@ tags:
 
 # Structured Sparse Transition Matrices to Enable State Tracking in State-Space Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.22284](https://arxiv.org/abs/2509.22284)  
 **代码**: [https://github.com/IBM/expressive-sparse-state-space-model](https://github.com/IBM/expressive-sparse-state-space-model)  
 **领域**: 视频理解  

@@ -15,7 +15,7 @@ tags:
 
 # AceSearcher: Bootstrapping Reasoning and Search for LLMs via Reinforced Self-Play
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.24193](https://arxiv.org/abs/2509.24193)  
 **代码**: [GitHub](https://github.com/ritaranx/AceSearcher/) / [HuggingFace](https://huggingface.co/AceSearcher)  
 **领域**: LLM/NLP  

@@ -15,7 +15,7 @@ tags:
 
 # SVL: Spike-based Vision-Language Pretraining for Efficient 3D Open-World Understanding
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2505.17674](https://arxiv.org/abs/2505.17674)  
 **代码**: 有（论文中标注 "Code is available at SVL"）  
 **领域**: 3D视觉 / 多模态VLM / 脉冲神经网络  

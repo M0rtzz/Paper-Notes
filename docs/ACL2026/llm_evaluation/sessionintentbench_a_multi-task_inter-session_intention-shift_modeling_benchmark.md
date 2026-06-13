@@ -15,7 +15,7 @@ tags:
 
 # SessionIntentBench: A Multi-Task Inter-Session Intention-Shift Modeling Benchmark
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2507.20185](https://arxiv.org/abs/2507.20185)  
 **代码**: 无  
 **领域**: LLM评测  

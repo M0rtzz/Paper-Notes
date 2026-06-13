@@ -15,7 +15,7 @@ tags:
 
 # DraDDP: A Multimodal Multi-Party Dialogue Discourse Parsing Dataset
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2606.00012](https://arxiv.org/abs/2606.00012)  
 **代码**: https://github.com/DraDDP  
 **领域**: 多模态对话理解 / 话语解析  

@@ -15,7 +15,7 @@ tags:
 
 # Protein Autoregressive Modeling via Multiscale Structure Generation
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Spotlight  
 **arXiv**: [2602.04883](https://arxiv.org/abs/2602.04883)  
 **代码**: https://par-protein.github.io (项目主页)  
 **领域**: 科学计算 / 蛋白质结构生成 / 自回归生成模型  

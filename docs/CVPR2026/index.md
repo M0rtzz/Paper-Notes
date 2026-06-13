@@ -2,7 +2,7 @@
 title: >-
   CVPR2026 论文汇总 · 1643篇论文解读，每篇5分钟读懂核心思想
 description: >-
-  1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(209篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+  1643篇CVPR2026论文解读，涵盖 3D 视觉(239篇)、图像生成(220篇)、多模态 VLM(210篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "CVPR2026"
   - "CVPR2026论文汇总"
@@ -47,6 +47,8 @@ item_list:
     t: "Ada3Drift: Adaptive Training-Time Drifting for One-Step 3D Visuomotor Robotic Manipulation"
   - u: "3d_vision/adapting_point_cloud_analysis_via_multimodal_bayesian_distribution_learning/"
     t: "Adapting Point Cloud Analysis via Multimodal Bayesian Distribution Learning"
+  - u: "3d_vision/adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet/"
+    t: "AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments"
   - u: "3d_vision/aerodgs_physically_consistent_dynamic_gaussian_splatting_for_single-sequence_aer/"
     t: "AeroDGS: Physically Consistent Dynamic Gaussian Splatting for Single-Sequence Aerial 4D Reconstruction"
   - u: "3d_vision/affordgrasp_cross-modal_diffusion_for_affordance-aware_grasp_synthesis/"
@@ -77,15 +79,13 @@ item_list:
     t: "Bi-CMPStereo: Bidirectional Cross-Modal Prompting for Event-Frame Asymmetric Stereo"
   - u: "3d_vision/brepgaussian_cad_reconstruction_from_multi-view_images_with_gaussian_splatting/"
     t: "BRepGaussian: CAD Reconstruction from Multi-View Images with Gaussian Splatting"
-  - u: "3d_vision/bulletgen_improving_4d_reconstruction_with_bullet-time_generation/"
-    t: "BulletGen: Improving 4D Reconstruction with Bullet-Time Generation"
 item_total: 1643
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 📷 CVPR2026 论文汇总
 
-1643篇CVPR2026论文解读，涵盖 3D 视觉(236篇)、图像生成(220篇)、多模态 VLM(209篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
+1643篇CVPR2026论文解读，涵盖 3D 视觉(239篇)、图像生成(220篇)、多模态 VLM(210篇)、医学图像(100篇)、自动驾驶(90篇)、语义分割(83篇)、视频理解(83篇)、视频生成(65篇)等 43个方向。每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 
 <div class="conf-index" markdown>
 
@@ -305,15 +305,11 @@ item_total: 1643
 
 ---
 
-## 💬 LLM / NLP (2) { #llm_nlp }
+## 💬 LLM 其他 (1) { #llm_nlp }
 
 **[GUIDE: Guided Updates for In-context Decision Evolution in LLM-Driven Spacecraft Operations](llm_nlp/guide_guided_updates_for_in-context_decision_evolution_in_llm-driven_spacecraft_.md)**
 
 :   提出GUIDE框架，利用LLM的in-context学习能力为航天器自主操作提供引导式决策进化，通过结构化的上下文信息和反馈机制让LLM在无需微调的情况下逐步改善航天任务规划和故障诊断决策的质量。
-
-**[Perception Programs: Unlocking Visual Tool Reasoning in Language Models](llm_nlp/perception_programs_visual_tool_reasoning.md)**
-
-:   提出 Perception Programs (P2)，一种训练免费、模型无关的方法，将视觉工具（深度、光流、对应等）的原始输出转换为紧凑的语言原生结构化摘要，使 MLLM 能直接"阅读"视觉模态而非从密集像素推断，在 BLINK 6 个任务上平均提升 19.66%。
 
 ---
 
@@ -435,7 +431,7 @@ item_total: 1643
 
 ---
 
-## 🧩 多模态 VLM (209) { #multimodal_vlm }
+## 🧩 多模态 VLM (210) { #multimodal_vlm }
 
 **[A3: Towards Advertising Aesthetic Assessment](multimodal_vlm/a3_towards_advertising_aesthetic_assessment.md)**
 
@@ -477,7 +473,7 @@ item_total: 1643
 
 :   BALM 提出一个模型无关的即插即用框架来解决**不均衡缺失率（IMR）**下的多模态学习问题，通过特征校准模块（FCM）对齐不同缺失模式下的表征、以及梯度再平衡模块（GRM）从分布和空间两个维度平衡各模态的优化动态，在多个多模态情感识别基准上持续提升各类骨干网络的鲁棒性。
 
-[查看全部209篇「多模态 VLM」论文 →](multimodal_vlm/)
+[查看全部210篇「多模态 VLM」论文 →](multimodal_vlm/)
 
 ---
 
@@ -581,7 +577,7 @@ item_total: 1643
 
 ---
 
-## 🧊 3D 视觉 (236) { #3d_vision }
+## 🧊 3D 视觉 (239) { #3d_vision }
 
 **[3D-Fixer: Coarse-to-Fine In-place Completion for 3D Scenes from a Single Image](3d_vision/3d-fixer_coarse-to-fine_in-place_completion_for_3d_scenes_from_a_single_image.md)**
 
@@ -623,7 +619,7 @@ item_total: 1643
 
 :   提出 SynthFun3D，首个从动作描述自动生成3D功能性分割训练数据的方法，通过元数据驱动的3D物体检索和场景布局，无需人工标注即可生成精确的部件级交互掩码，合成+真实数据训练在 SceneFun3D 基准上提升 +2.2 mAP / +6.3 mAR / +5.7 mIoU。
 
-[查看全部236篇「3D 视觉」论文 →](3d_vision/)
+[查看全部239篇「3D 视觉」论文 →](3d_vision/)
 
 ---
 
@@ -719,7 +715,7 @@ item_total: 1643
 
 ---
 
-## 🧑 人体理解 (60) { #human_understanding }
+## 🧑 人体理解 (63) { #human_understanding }
 
 **[A Two-Stage Dual-Modality Model for Facial Expression Recognition](human_understanding/a_two_stage_dual_modality_model_for_facial_expression_recognition.md)**
 
@@ -732,6 +728,10 @@ item_total: 1643
 **[All in One: Unifying Deepfake Detection, Tampering Localization, and Source Tracing with a Robust Landmark-Identity Watermark](human_understanding/all_in_one_unifying_deepfake_detection_tampering_localization_and_source_tracing.md)**
 
 :   提出 LIDMark，首个将 deepfake 检测、篡改区域定位和源追踪统一到单一主动取证框架中的方法——通过嵌入 152 维 Landmark-Identity 水印（136D 面部关键点 + 16D 源 ID），利用内在/外在一致性实现三合一取证，PSNR/SSIM 和检测精度均超越现有方法。
+
+**[AssistMimic: Physics-Grounded Humanoid Assistance via Multi-Agent RL](human_understanding/assistmimic_physics_grounded_humanoid_assistance.md)**
+
+:   首个在物理仿真中实现接触式人-人辅助行为模仿学习的多智能体RL框架，通过运动先验初始化、动态参考重定向和接触促进奖励使MARL在高接触设置中可行。
 
 **[AVATAR: Reinforcement Learning to See, Hear, and Reason Over Video](human_understanding/avatar_reinforcement_learning_to_see_hear_and_reason_over_video.md)**
 
@@ -757,11 +757,7 @@ item_total: 1643
 
 :   提出 E-3DPSM，一种基于事件相机的自我中心 3D 人体姿态状态机，将姿态估计建模为连续时间状态演化过程，通过双向 SSM 时序建模和可学习的卡尔曼式融合模块融合直接预测与增量预测，实现 80Hz 实时推理，MPJPE 降低 19%、时序稳定性提升 2.7 倍。
 
-**[Editing Physiological Signals in Videos Using Latent Representations](human_understanding/editing_physiological_signals_in_videos_using_latent_representations.md)**
-
-:   提出PhysioLatent框架，将输入面部视频编码到3D VAE潜空间，与目标心率CLIP文本嵌入融合，通过AdaLN增强的时空融合层捕捉rPPG时间相干性，结合FiLM调制解码器和微调输出层实现精确心率修改，在保持PSNR 38.96dB/SSIM 0.98的视觉质量下达到10 bpm MAE的心率调制精度。
-
-[查看全部60篇「人体理解」论文 →](human_understanding/)
+[查看全部63篇「人体理解」论文 →](human_understanding/)
 
 ---
 
@@ -1179,7 +1175,7 @@ item_total: 1643
 
 ---
 
-## 📐 优化/理论 (16) { #optimization }
+## 📐 优化/理论 (17) { #optimization }
 
 **[ACE-Merging: Data-Free Model Merging with Adaptive Covariance Estimation](optimization/ace-merging_data-free_model_merging_with_adaptive_covariance_estimation.md)**
 
@@ -1221,7 +1217,7 @@ item_total: 1643
 
 :   观察到LoRA微调过程中下投影矩阵A的零空间比率随训练下降且与性能强相关，据此提出NSC Merging，一种无标签、任务无关的LoRA合并方法，在20个异构视觉任务、6个NLI任务和VLM评估上达到SOTA。
 
-[查看全部16篇「优化/理论」论文 →](optimization/)
+[查看全部17篇「优化/理论」论文 →](optimization/)
 
 ---
 
@@ -1347,7 +1343,7 @@ item_total: 1643
 
 ---
 
-## 🛡️ AI 安全 (26) { #ai_safety }
+## 🛡️ AI 安全 (27) { #ai_safety }
 
 **[A Unified Perspective on Adversarial Membership Manipulation in Vision Models](ai_safety/a_unified_perspective_on_adversarial_membership_manipulation_in_vision_models.md)**
 
@@ -1389,7 +1385,7 @@ item_total: 1643
 
 :   提出域感知原型联邦学习框架 FedDAP，通过构建域特定全局原型和双重原型对齐策略（域内对齐 + 跨域对比），解决联邦学习中客户端数据域偏移导致的全局模型性能退化问题。
 
-[查看全部26篇「AI 安全」论文 →](ai_safety/)
+[查看全部27篇「AI 安全」论文 →](ai_safety/)
 
 ---
 
@@ -1439,7 +1435,7 @@ item_total: 1643
 
 ---
 
-## ⚛️ 物理/科学计算 (5) { #physics }
+## ⚛️ 物理/科学计算 (7) { #physics }
 
 **[Continuous Exposure-Time Modeling for Realistic Atmospheric Turbulence Synthesis](physics/continuous_exposure-time_modeling_for_realistic_atmospheric_turbulence_synthesis.md)**
 
@@ -1457,9 +1453,17 @@ item_total: 1643
 
 :   提出 PhysSkin，一个泛化的物理信息框架——通过神经蒙皮场自编码器从静态 3D 几何体直接学习连续蒙皮权重场，配合物理信息自监督学习策略（能量最小化+平滑性+正交性约束），实现跨形状、跨离散化的实时物理动画，无需任何标注数据或仿真轨迹。
 
+**[POLISH'ing the Sky: Wide-Field and High-Dynamic Range Interferometric Image Reconstruction](physics/polishing_the_sky_widefield_and_highdynamic_range.md)**
+
+:   POLISH++在POLISH框架基础上引入分块训练+拼接策略和arcsinh非线性变换，解决了射电干涉成像中宽视场（万级像素）和高动态范围（$10^4$-$10^6$）两大实际部署难题，在T-RECS仿真数据上大幅超越CLEAN方法的源探测精度，且能超分辨恢复PSF尺度附近的强引力透镜系统，有望将DSA巡天的透镜发现数量提升约10倍。
+
 **[QKD: Quantum-Gated Task-interaction Knowledge Distillation for Class-Incremental Learning](physics/qkd_quantum_gated_incremental_learning.md)**
 
 :   QKD 将量子门控引入类增量学习，通过参数化量子电路在高维 Hilbert 空间中建模样本-任务相关性，引导跨任务知识蒸馏和推理时适配器融合，在 5 个基准上达到 SOTA。
+
+**[Rooftop Wind Field Reconstruction Using Sparse Sensors: From Deterministic to Generative Learning Methods](physics/rooftop_wind_field_reconstruction_using_sparse_sen.md)**
+
+:   建立基于PIV风洞实验数据的学习-观测框架，系统比较Kriging插值与三种深度学习模型（UNet/ViTAE/CWGAN）在5–30个稀疏传感器下的屋顶风场重建能力，揭示混合风向训练（MDT）下深度学习一致优于Kriging（SSIM提升18–34%），并通过QR分解优化传感器布局提升系统鲁棒性达27.8%。
 
 ---
 
@@ -1527,15 +1531,7 @@ item_total: 1643
 
 ---
 
-## 📂 其他 (32) { #others }
-
-**[AdaSFormer: Adaptive Serialized Transformers for Monocular Semantic Scene Completion from Indoor Environments](others/adasformer_adaptive_serialized_transformers_for_monocular_semantic_scene_complet.md)**
-
-:   提出AdaSFormer，一种针对室内单目语义场景补全(MSSC)的序列化Transformer框架，通过自适应序列化注意力(可学习偏移量)、中心相对位置编码和卷积调制层归一化三个核心设计，在NYUv2和Occ-ScanNet上达到SOTA。
-
-**[AssistMimic: Physics-Grounded Humanoid Assistance via Multi-Agent RL](others/assistmimic_physics_grounded_humanoid_assistance.md)**
-
-:   首个在物理仿真中实现接触式人-人辅助行为模仿学习的多智能体RL框架，通过运动先验初始化、动态参考重定向和接触促进奖励使MARL在高接触设置中可行。
+## 📂 其他 (22) { #others }
 
 **[BenDFM: A Taxonomy and Synthetic CAD Dataset for Manufacturability Assessment in Sheet Metal Bending](others/bendfm_a_taxonomy_and_synthetic_cad_dataset_for_ma.md)**
 
@@ -1569,6 +1565,14 @@ item_total: 1643
 
 :   本文系统评估了多种光流模型在旋转蛇等静态图像运动错觉上的表现，发现仅人类启发的Dual-Channel模型在模拟眼跳条件下能再现人类感知的旋转运动。
 
-[查看全部32篇「其他」论文 →](others/)
+**[Dual-Band Thermal Videography: Separating Time-Varying Reflection and Emission Near Ambient Conditions](others/dual_band_thermal_videography_separating_time-varying_reflection_and_emission_ne.md)**
+
+:   提出一种双波段长波红外视频分析框架，利用光谱线索（双波段发射率比恒定）和时间线索（物体辐射平滑变化、背景辐射突变）联合约束，首次实现近环境温度条件下动态场景中反射与发射分量的逐像素分离，并恢复物体发射率和温度场。
+
+**[FEAT: Federated Geometry-Aware Correction for Exemplar Replay under Continual Dynamic Heterogeneity](others/feat_federated_geometry_aware_correction_for_exemplar_replay_under_continual_dynamic_heterogeneity.md)**
+
+:   提出 FEAT 方法解决联邦持续学习中回放样本利用不足的问题，通过几何结构对齐（基于 ETF 原型的角度蒸馏）和能量基几何校正（推理时去偏）缓解跨客户端异构和任务级数据不平衡。
+
+[查看全部22篇「其他」论文 →](others/)
 
 </div>

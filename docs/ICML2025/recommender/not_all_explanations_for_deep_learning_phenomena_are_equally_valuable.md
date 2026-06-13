@@ -15,7 +15,7 @@ tags:
 
 # Not All Explanations for Deep Learning Phenomena Are Equally Valuable
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2506.23286](https://arxiv.org/abs/2506.23286)  
 **代码**: 无  
 **领域**: 推荐系统  

@@ -1,11 +1,11 @@
 ---
 title: >-
-  AAAI2026 LLM/NLP论文汇总 · 30篇论文解读
+  AAAI2026 LLM其他论文汇总 · 29篇论文解读
 description: >-
-  30篇AAAI2026的 LLM / NLP 方向论文解读，涵盖 LLM、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  29篇AAAI2026的 LLM 其他方向论文解读，涵盖 LLM、推理、对齐/RLHF等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
-  - "LLM / NLP"
+  - "LLM 其他"
   - "论文解读"
   - "论文笔记"
   - "LLM"
@@ -18,8 +18,6 @@ item_list:
     t: "An Invariant Latent Space Perspective on Language Model Inversion"
   - u: "blue_teaming_function-calling_agents/"
     t: "Blue Teaming Function-Calling Agents"
-  - u: "clicare_grounding_large_language_models_in_clinical_guidelines_for_decision_supp/"
-    t: "CliCARE: Grounding Large Language Models in Clinical Guidelines for Decision Support over Longitudinal Cancer Electronic Health Records"
   - u: "coevo_continual_evolution_of_symbolic_solutions_using_large_language_models/"
     t: "CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models"
   - u: "collaborative_llm_numerical_reasoning_with_local_data_protection/"
@@ -72,17 +70,17 @@ item_list:
     t: "VSPO: Validating Semantic Pitfalls in Ontology via LLM-Based CQ Generation"
   - u: "whispering_agents_an_event-driven_covert_communication_protocol_for_the_internet/"
     t: "Whispering Agents: An Event-Driven Covert Communication Protocol for the Internet of Agents"
-item_total: 30
+item_total: 29
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
-# 💬 LLM / NLP
+# 💬 LLM 其他
 
-**🤖 AAAI2026** · **30** 篇论文解读
+**🤖 AAAI2026** · **29** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (37)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (58)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (36)](../../ICLR2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (33)](../../ICML2026/llm_nlp/index.md) · [💬 ACL2026 (56)](../../ACL2026/llm_nlp/index.md) · [📷 CVPR2026 (1)](../../CVPR2026/llm_nlp/index.md) · [🔬 ICLR2026 (33)](../../ICLR2026/llm_nlp/index.md) · [🧠 NeurIPS2025 (54)](../../NeurIPS2025/llm_nlp/index.md) · [📹 ICCV2025 (6)](../../ICCV2025/llm_nlp/index.md)
 
-🔥 **高频主题：** LLM ×15 · 推理 ×2 · 对齐/RLHF ×2
+🔥 **高频主题：** LLM ×14 · 推理 ×2 · 对齐/RLHF ×2
 
 **[A Content-Preserving Secure Linguistic Steganography](a_content-preserving_secure_linguistic_steganography.md)**
 
@@ -95,10 +93,6 @@ item_total: 30
 **[Blue Teaming Function-Calling Agents](blue_teaming_function-calling_agents.md)**
 
 :   系统评估了四个开源function-calling LLM在三种攻击下的鲁棒性，并测试了八种防御方案的效果，揭示了当前模型默认不安全、防御方案在实际场景中仍难以部署的现状。
-
-**[CliCARE: Grounding Large Language Models in Clinical Guidelines for Decision Support over Longitudinal Cancer Electronic Health Records](clicare_grounding_large_language_models_in_clinical_guidelines_for_decision_supp.md)**
-
-:   提出 CliCARE 框架，将非结构化的纵向癌症电子病历（EHR）转化为时序知识图谱（TKG），并与临床指南知识图谱对齐融合，为 LLM 提供循证依据的临床决策支持，同时设计了与专家评估高度相关的 LLM-as-a-Judge 评估协议。
 
 **[CoEvo: Continual Evolution of Symbolic Solutions Using Large Language Models](coevo_continual_evolution_of_symbolic_solutions_using_large_language_models.md)**
 

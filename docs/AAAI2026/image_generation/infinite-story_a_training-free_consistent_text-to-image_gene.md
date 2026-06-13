@@ -15,7 +15,7 @@ tags:
 
 # Infinite-Story: A Training-Free Consistent Text-to-Image Generation
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13002](https://arxiv.org/abs/2511.13002)  
 **代码**: 无  
 **领域**: 图像生成 / 一致性生成  

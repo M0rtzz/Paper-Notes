@@ -15,7 +15,7 @@ tags:
 
 # Tiny Inference-Time Scaling with Latent Verifiers
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.22492](https://arxiv.org/abs/2603.22492)  
 **代码**: [https://aimagelab.github.io/VHS](https://aimagelab.github.io/VHS)  
 **领域**: 扩散模型 / 图像生成 / LLM效率  

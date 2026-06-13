@@ -15,7 +15,7 @@ tags:
 
 # Phantasia: Context-Adaptive Backdoors in Vision Language Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2604.08395](https://arxiv.org/abs/2604.08395)  
 **代码**: [https://github.com/nduongw/Phantasia](https://github.com/nduongw/Phantasia)  
 **领域**: 多模态VLM / AI安全  

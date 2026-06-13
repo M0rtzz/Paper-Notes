@@ -14,7 +14,7 @@ tags:
 
 # VGEnt: Graph-Based Retrieval-Reasoning-Augmented Generation for Long Video Understanding
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2510.14032](https://arxiv.org/abs/2510.14032)  
 **代码**: [GitHub](https://xiaoqian-shen.github.io/Vgent)  
 **领域**: Video Understanding  

@@ -15,7 +15,7 @@ tags:
 
 # Taming Knowledge Conflicts in Language Models
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2503.10996](https://arxiv.org/abs/2503.10996)  
 **代码**: [GaotangLi/JUICE](https://github.com/GaotangLi/JUICE)  
 **领域**: LLM/NLP  

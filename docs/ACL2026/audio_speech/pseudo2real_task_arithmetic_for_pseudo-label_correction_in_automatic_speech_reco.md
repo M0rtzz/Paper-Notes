@@ -15,7 +15,7 @@ tags:
 
 # Pseudo2Real: Task Arithmetic for Pseudo-Label Correction in Automatic Speech Recognition
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2510.08047](https://arxiv.org/abs/2510.08047)  
 **代码**: 无  
 **领域**: 语音处理 / 域适应  

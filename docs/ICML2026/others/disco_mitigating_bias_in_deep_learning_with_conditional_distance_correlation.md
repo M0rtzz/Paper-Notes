@@ -14,7 +14,7 @@ tags:
 
 # DISCO: Mitigating Bias in Deep Learning with Conditional Distance Correlation
 
-**会议**: ICML2026  
+**会议**: ICML2026 Oral  
 **arXiv**: [2506.11653](https://arxiv.org/abs/2506.11653)  
 **代码**: https://github.com/yakamoz5/DISCO  
 **领域**: AI 安全 / 公平性与偏差缓解 / 因果表示学习  

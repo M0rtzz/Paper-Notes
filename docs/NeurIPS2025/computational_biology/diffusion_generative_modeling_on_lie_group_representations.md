@@ -15,7 +15,7 @@ tags:
 
 # Diffusion Generative Modeling on Lie Group Representations
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2502.02513](https://arxiv.org/abs/2502.02513)  
 **代码**: 无  
 **领域**: 计算生物

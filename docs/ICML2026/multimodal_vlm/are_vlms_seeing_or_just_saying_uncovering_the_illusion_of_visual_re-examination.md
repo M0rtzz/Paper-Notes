@@ -15,7 +15,7 @@ tags:
 
 # Are VLMs Seeing or Just Saying? Uncovering the Illusion of Visual Re-examination
 
-**会议**: ICML2026  
+**会议**: ICML2026 Oral  
 **arXiv**: [2605.15864](https://arxiv.org/abs/2605.15864)  
 **代码**: https://visualswap.github.io/  
 **领域**: 多模态VLM  

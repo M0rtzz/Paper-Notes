@@ -15,7 +15,7 @@ tags:
 
 # Working Memory Constraints Scaffold Learning in Transformers under Data Scarcity
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.20789](https://arxiv.org/abs/2604.20789)  
 **代码**: 无  
 **领域**: 认知建模 / 语言模型预训练  

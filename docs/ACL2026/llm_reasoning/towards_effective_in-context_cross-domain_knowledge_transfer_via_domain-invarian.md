@@ -15,7 +15,7 @@ tags:
 
 # Towards Effective In-context Cross-domain Knowledge Transfer via Domain-invariant-neurons-based Retrieval
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.05383](https://arxiv.org/abs/2604.05383)  
 **代码**: [GitHub](https://github.com/Leon221220/DIN-Retrieval)  
 **领域**: LLM推理  

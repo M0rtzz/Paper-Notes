@@ -15,7 +15,7 @@ tags:
 
 # Alligat0R: Pre-Training through Covisibility Segmentation for Relative Camera Pose Regression
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2503.07561](https://arxiv.org/abs/2503.07561)  
 **代码**: [https://github.com/thibautloiseau/alligat0r](https://github.com/thibautloiseau/alligat0r)  
 **领域**: 图像分割  

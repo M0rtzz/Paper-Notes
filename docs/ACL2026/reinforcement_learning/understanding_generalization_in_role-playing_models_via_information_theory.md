@@ -14,7 +14,7 @@ tags:
 
 # Understanding Generalization in Role-Playing Models via Information Theory
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2512.17270](https://arxiv.org/abs/2512.17270)  
 **代码**: [GitHub](https://github.com/AlibabaResearch/DAMO-ConvAI/tree/main/RPM-Generalization)  
 **领域**: 强化学习 / 角色扮演模型  

@@ -15,7 +15,7 @@ tags:
 
 # Pareto-Conditioned Diffusion Models for Offline Multi-Objective Optimization
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2602.00737](https://arxiv.org/abs/2602.00737)  
 **代码**: [GitHub](https://github.com/jatan12/PCD)  
 **领域**: 图像生成  

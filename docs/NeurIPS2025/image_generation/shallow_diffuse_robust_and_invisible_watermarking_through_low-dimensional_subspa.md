@@ -15,7 +15,7 @@ tags:
 
 # Shallow Diffuse: Robust and Invisible Watermarking through Low-Dimensional Subspaces in Diffusion Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2410.21088](https://arxiv.org/abs/2410.21088)  
 **代码**: 暂无  
 **领域**: 扩散模型 / 水印 / AI生成内容检测  

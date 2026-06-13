@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICML2025 3D视觉论文汇总 · 16篇论文解读
+  ICML2025 3D视觉论文汇总 · 17篇论文解读
 description: >-
-  16篇ICML2025的 3D 视觉方向论文解读，涵盖扩散模型、3D 高斯渲染、对齐/RLHF、语义分割等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  17篇ICML2025的 3D 视觉方向论文解读，涵盖扩散模型、3D 高斯渲染、对齐/RLHF、对抗鲁棒、语义分割等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想。
 tags:
   - "ICML2025"
   - "3D 视觉"
@@ -11,6 +11,7 @@ tags:
   - "扩散模型"
   - "3D 高斯渲染"
   - "对齐/RLHF"
+  - "对抗鲁棒"
   - "语义分割"
 item_list:
   - u: "adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz/"
@@ -37,6 +38,8 @@ item_list:
     t: "ReferSplat: Referring Segmentation in 3D Gaussian Splatting"
   - u: "se3-equivariant_diffusion_policy_in_spherical_fourier_space/"
     t: "SE(3)-Equivariant Diffusion Policy in Spherical Fourier Space"
+  - u: "symmetry-robust_3d_orientation_estimation/"
+    t: "Symmetry-Robust 3D Orientation Estimation"
   - u: "tackling_view-dependent_semantics_in_3d_language_gaussian_splatting/"
     t: "LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting"
   - u: "the_sharpness_disparity_principle_in_transformers_for_accelerating_language_mode/"
@@ -45,17 +48,17 @@ item_list:
     t: "Thickness-aware E(3)-Equivariant 3D Mesh Neural Networks"
   - u: "vtgaussian-slam_rgbd_slam_for_large_scale_scenes_with_splatting_view-tied_3d_gau/"
     t: "VTGaussian-SLAM: RGBD SLAM for Large Scale Scenes with Splatting View-Tied 3D Gaussians"
-item_total: 16
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🧊 3D 视觉
 
-**🧪 ICML2025** · **16** 篇论文解读
+**🧪 ICML2025** · **17** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (236)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (61)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (78)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (114)](../../NeurIPS2025/3d_vision/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/3d_vision/index.md) · [💬 ACL2026 (1)](../../ACL2026/3d_vision/index.md) · [📷 CVPR2026 (239)](../../CVPR2026/3d_vision/index.md) · [🔬 ICLR2026 (62)](../../ICLR2026/3d_vision/index.md) · [🤖 AAAI2026 (79)](../../AAAI2026/3d_vision/index.md) · [🧠 NeurIPS2025 (116)](../../NeurIPS2025/3d_vision/index.md)
 
-🔥 **高频主题：** 扩散模型 ×3 · 3D 高斯渲染 ×3 · 对齐/RLHF ×2 · 语义分割 ×2
+🔥 **高频主题：** 扩散模型 ×3 · 3D 高斯渲染 ×3 · 对齐/RLHF ×2 · 对抗鲁棒 ×2 · 语义分割 ×2
 
 **[ADHMR: Aligning Diffusion-based Human Mesh Recovery via Direct Preference Optimization](adhmr_aligning_diffusion-based_human_mesh_recovery_via_direct_preference_optimiz.md)**
 
@@ -104,6 +107,10 @@ item_total: 16
 **[SE(3)-Equivariant Diffusion Policy in Spherical Fourier Space](se3-equivariant_diffusion_policy_in_spherical_fourier_space.md)**
 
 :   提出在球面 Fourier 空间中构建 SE(3) 等变扩散策略，利用球谐函数的等变性质使策略对输入场景的刚体变换保持等变，在机器人操作任务上实现更好的空间泛化。
+
+**[Symmetry-Robust 3D Orientation Estimation](symmetry-robust_3d_orientation_estimation.md)**
+
+:   提出一种对旋转对称性鲁棒的两阶段3D朝向估计流水线：第一阶段通过商回归（quotient regression）将朝向恢复到八面体对称群的等价类内，第二阶段通过分类器预测24个八面体翻转之一以完成精确复原，在ShapeNet上取得SOTA。
 
 **[LaGa: Tackling View-Dependent Semantics in 3D Language Gaussian Splatting](tackling_view-dependent_semantics_in_3d_language_gaussian_splatting.md)**
 

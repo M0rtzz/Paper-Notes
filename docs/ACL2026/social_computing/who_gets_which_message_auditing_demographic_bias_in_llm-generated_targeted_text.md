@@ -15,7 +15,7 @@ tags:
 
 # Who Gets Which Message? Auditing Demographic Bias in LLM-Generated Targeted Text
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.17172](https://arxiv.org/abs/2601.17172)  
 **代码**: [GitHub](https://github.com/tunazislam/llms-bias-audit-microtarget-climate)  
 **领域**: 人类理解 / 偏见审计  

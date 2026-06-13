@@ -16,7 +16,7 @@ tags:
 
 # SPA: Achieving Consensus in LLM Alignment via Self-Priority Optimization
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.06222](https://arxiv.org/abs/2511.06222)  
 **代码**: 无  
 **领域**: 医学图像  

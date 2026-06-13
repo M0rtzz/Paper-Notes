@@ -15,7 +15,7 @@ tags:
 
 # Empathy Applicability Modeling for General Health Queries
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2601.09696](https://arxiv.org/abs/2601.09696)  
 **代码**: https://github.com/shanmrandhawa/Empathy-Applicability-Framework  
 **领域**: 医疗NLP / 临床同理心建模  

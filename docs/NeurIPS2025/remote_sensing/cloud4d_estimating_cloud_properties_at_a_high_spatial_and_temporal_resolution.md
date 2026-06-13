@@ -15,7 +15,7 @@ tags:
 
 # Cloud4D: Estimating Cloud Properties at a High Spatial and Temporal Resolution
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2511.19431](https://arxiv.org/abs/2511.19431)  
 **代码**: [项目页面](https://cloud4d.jacob-lin.com/)  
 **领域**: 视频理解  

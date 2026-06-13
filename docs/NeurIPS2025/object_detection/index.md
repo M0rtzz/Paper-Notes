@@ -1,8 +1,8 @@
 ---
 title: >-
-  NeurIPS2025 目标检测论文汇总 · 26篇论文解读
+  NeurIPS2025 目标检测论文汇总 · 27篇论文解读
 description: >-
-  26篇NeurIPS2025的目标检测方向论文解读，涵盖异常检测、目标检测、对抗鲁棒、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  27篇NeurIPS2025的目标检测方向论文解读，涵盖异常检测、目标检测、对抗鲁棒、时序预测等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "NeurIPS2025"
   - "目标检测"
@@ -48,6 +48,8 @@ item_list:
     t: "ReCon-GS: Continuum-Preserved Gaussian Streaming for Fast and Compact Reconstruction"
   - u: "recon_region-controllable_data_augmentation_with_rectification_and_alignment_for/"
     t: "ReCon: Region-Controllable Data Augmentation with Rectification and Alignment for Object Detection"
+  - u: "rethinking_evaluation_of_infrared_small_target_detection/"
+    t: "Rethinking Evaluation of Infrared Small Target Detection"
   - u: "scalable_explainable_and_provably_robust_anomaly_detection_with_one-step_flow_ma/"
     t: "Scalable, Explainable and Provably Robust Anomaly Detection with One-Step Flow Matching"
   - u: "scatterad_temporal-topological_scattering_mechanism_for_time_series_anomaly_dete/"
@@ -64,15 +66,15 @@ item_list:
     t: "Test-Time Adaptive Object Detection with Foundation Model"
   - u: "video-rag_visually-aligned_retrieval-augmented_long_video_comprehension/"
     t: "Video-RAG: Visually-aligned Retrieval-Augmented Long Video Comprehension"
-item_total: 26
+item_total: 27
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎯 目标检测
 
-**🧠 NeurIPS2025** · **26** 篇论文解读
+**🧠 NeurIPS2025** · **27** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/object_detection/index.md) · [📷 CVPR2026 (55)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/object_detection/index.md) · [📹 ICCV2025 (27)](../../ICCV2025/object_detection/index.md) · [🧪 ICML2025 (12)](../../ICML2025/object_detection/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (6)](../../ICML2026/object_detection/index.md) · [📷 CVPR2026 (55)](../../CVPR2026/object_detection/index.md) · [🔬 ICLR2026 (14)](../../ICLR2026/object_detection/index.md) · [🤖 AAAI2026 (29)](../../AAAI2026/object_detection/index.md) · [📹 ICCV2025 (28)](../../ICCV2025/object_detection/index.md) · [🧪 ICML2025 (12)](../../ICML2025/object_detection/index.md)
 
 🔥 **高频主题：** 异常检测 ×9 · 目标检测 ×6 · 对抗鲁棒 ×3 · 时序预测 ×2
 
@@ -147,6 +149,10 @@ item_total: 26
 **[ReCon: Region-Controllable Data Augmentation with Rectification and Alignment for Object Detection](recon_region-controllable_data_augmentation_with_rectification_and_alignment_for.md)**
 
 :   ReCon 提出无需额外训练的区域可控数据增强框架，通过区域引导校正（RGR）和区域对齐交叉注意力（RACA）增强现有结构可控生成模型的目标检测数据质量，在 COCO 上实现 35.5 mAP（超过需 fine-tune 的 GeoDiffusion）。
+
+**[Rethinking Evaluation of Infrared Small Target Detection](rethinking_evaluation_of_infrared_small_target_detection.md)**
+
+:   系统性地揭示了红外小目标检测（IRSTD）现有评估协议的三大局限，提出包含混合层级指标hIoU、系统化错误分析方法和跨数据集评估设置的层次化分析框架。
 
 **[Scalable, Explainable and Provably Robust Anomaly Detection with One-Step Flow Matching](scalable_explainable_and_provably_robust_anomaly_detection_with_one-step_flow_ma.md)**
 

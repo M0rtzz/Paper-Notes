@@ -15,7 +15,7 @@ tags:
 
 # A Controllable Examination for Long-Context Language Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.02921](https://arxiv.org/abs/2506.02921)  
 **代码**: 无公开代码  
 **领域**: 音频语音  

@@ -15,7 +15,7 @@ tags:
 
 # Collaborative Multi-Agent Scripts Generation for Enhancing Imperfect-Information Reasoning in Murder Mystery Games
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.11741](https://arxiv.org/abs/2604.11741)  
 **代码**: 无  
 **领域**: 多模态VLM  

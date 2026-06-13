@@ -15,7 +15,7 @@ tags:
 
 # LASER: Learning Active Sensing for Continuum Field Reconstruction
 
-**会议**: ICML 2026  
+**会议**: ICML 2026 Oral  
 **arXiv**: [2604.19355](https://arxiv.org/abs/2604.19355)  
 **代码**: 待确认  
 **领域**: 强化学习 / 世界模型 / 主动感知  

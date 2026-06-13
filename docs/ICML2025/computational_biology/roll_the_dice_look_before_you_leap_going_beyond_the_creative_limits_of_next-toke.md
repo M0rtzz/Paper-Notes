@@ -17,7 +17,7 @@ tags:
 
 # Roll the Dice & Look Before You Leap: Going Beyond the Creative Limits of Next-Token Prediction
 
-**会议**: ICML2025  
+**会议**: ICML2025 Oral  
 **arXiv**: [2504.15266](https://arxiv.org/abs/2504.15266)  
 **代码**: [chenwu98/algorithmic-creativity](https://github.com/chenwu98/algorithmic-creativity)  
 **领域**: LLM/NLP

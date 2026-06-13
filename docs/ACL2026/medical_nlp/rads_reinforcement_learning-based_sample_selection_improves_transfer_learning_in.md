@@ -15,7 +15,7 @@ tags:
 
 # RADS: Reinforcement Learning-Based Sample Selection Improves Transfer Learning in Low-resource and Imbalanced Clinical Settings
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.20256](https://arxiv.org/abs/2604.20256)  
 **代码**: [https://github.com/Wei-0808/RADS](https://github.com/Wei-0808/RADS)  
 **领域**: 医学NLP

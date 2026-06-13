@@ -15,7 +15,7 @@ tags:
 
 # GigaCheck: Detecting LLM-generated Content via Object-Centric Span Localization
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2410.23728](https://arxiv.org/abs/2410.23728)  
 **代码**: [GitHub](https://github.com/ai-forever/gigacheck)  
 **领域**: 目标检测  

@@ -15,7 +15,7 @@ tags:
 
 # RepoShapley: Shapley-Enhanced Context Filtering for Repository-Level Code Completion
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2601.03378](https://arxiv.org/abs/2601.03378)  
 **代码**: [github](https://github.com/yuhuo03/RepoShapley)  
 **领域**: 信息检索 / 代码补全  

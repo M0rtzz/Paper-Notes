@@ -14,7 +14,7 @@ tags:
 
 # SQS: Enhancing Sparse Perception Models via Query-based Splatting in Autonomous Driving
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.16588](https://arxiv.org/abs/2509.16588)  
 **代码**: 无  
 **领域**: 自动驾驶  

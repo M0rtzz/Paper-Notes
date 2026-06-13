@@ -15,7 +15,7 @@ tags:
 
 # Reinforcement Learning with Semantic Rewards Enables Low-Resource Language Expansion without Alignment Tax
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2605.14366](https://arxiv.org/abs/2605.14366)  
 **代码**: 未公开  
 **领域**: multilingual_mt  

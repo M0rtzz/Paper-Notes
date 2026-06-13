@@ -15,7 +15,7 @@ tags:
 
 # PhysX-3D: Physical-Grounded 3D Asset Generation
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2507.12465](https://arxiv.org/abs/2507.12465)  
 **代码**: [项目主页](https://physx-3d.github.io/)  
 **领域**: 3D视觉  

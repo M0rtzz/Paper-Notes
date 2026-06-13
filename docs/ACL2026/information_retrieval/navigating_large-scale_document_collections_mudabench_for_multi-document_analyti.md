@@ -15,7 +15,7 @@ tags:
 
 # Navigating Large-Scale Document Collections: MuDABench for Multi-Document Analytical QA
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.22239](https://arxiv.org/abs/2604.22239)  
 **代码**: https://github.com/Zhanli-Li/MuDABench  
 **领域**: 信息检索 / 多文档问答 / 文档智能  

@@ -15,7 +15,7 @@ tags:
 
 # DualGuard: Dual-stream Large Language Model Watermarking Defense against Paraphrase and Spoofing Attack
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2512.16182](https://arxiv.org/abs/2512.16182)  
 **代码**: https://github.com/hlee-top/DualGuard  
 **领域**: LLM 安全 / 水印  

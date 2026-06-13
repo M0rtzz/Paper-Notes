@@ -15,7 +15,7 @@ tags:
 
 # MAESTRO: Adaptive Sparse Attention and Robust Learning for Multimodal Dynamic Time Series
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2509.25278](https://arxiv.org/abs/2509.25278)  
 **代码**: [GitHub](https://github.com/payalmohapatra/MAESTRO)  
 **领域**: 时间序列  

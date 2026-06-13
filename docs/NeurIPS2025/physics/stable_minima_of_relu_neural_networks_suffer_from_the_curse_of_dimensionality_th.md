@@ -15,7 +15,7 @@ tags:
 
 # Stable Minima of ReLU Neural Networks Suffer from the Curse of Dimensionality: The Neural Shattering Phenomenon
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.20779](https://arxiv.org/abs/2506.20779)  
 **代码**: 无  
 **领域**: 科学计算  

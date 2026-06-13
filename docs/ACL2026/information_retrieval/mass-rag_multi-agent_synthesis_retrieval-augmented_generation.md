@@ -15,7 +15,7 @@ tags:
 
 # MASS-RAG: Multi-Agent Synthesis Retrieval-Augmented Generation
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.18509](https://arxiv.org/abs/2604.18509)  
 **代码**: 无  
 **领域**: 信息检索 / RAG  

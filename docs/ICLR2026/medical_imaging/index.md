@@ -1,8 +1,8 @@
 ---
 title: >-
-  ICLR2026 医学图像论文汇总 · 21篇论文解读
+  ICLR2026 医学图像论文汇总 · 22篇论文解读
 description: >-
-  21篇ICLR2026的医学图像方向论文解读，涵盖医学影像、扩散模型、语义分割等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  22篇ICLR2026的医学图像方向论文解读，涵盖医学影像、扩散模型、语义分割等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICLR2026"
   - "医学图像"
@@ -36,6 +36,8 @@ item_list:
     t: "DM4CT: Benchmarking Diffusion Models for Computed Tomography Reconstruction"
   - u: "glance_and_focus_reinforcement_for_pan-cancer_screening/"
     t: "Glance and Focus Reinforcement for Pan-cancer Screening"
+  - u: "heegnet_hyperbolic_embeddings_for_eeg/"
+    t: "HEEGNet: Hyperbolic Embeddings for EEG"
   - u: "improving_2d_diffusion_models_for_3d_medical_imaging_with_inter-slice_consistent/"
     t: "Improving 2D Diffusion Models for 3D Medical Imaging with Inter-Slice Consistent Stochasticity"
   - u: "inference-time_dynamic_modality_selection_for_incomplete_multimodal_classificati/"
@@ -54,15 +56,15 @@ item_list:
     t: "SEED: Towards More Accurate Semantic Evaluation for Visual Brain Decoding"
   - u: "towards_interpretable_visual_decoding_with_attention_to_brain_representations/"
     t: "Towards Interpretable Visual Decoding with Attention to Brain Representations"
-item_total: 21
+item_total: 22
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🏥 医学图像
 
-**🔬 ICLR2026** · **21** 篇论文解读
+**🔬 ICLR2026** · **22** 篇论文解读
 
-📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🤖 AAAI2026 (73)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (75)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (22)](../../ICML2025/medical_imaging/index.md)
+📌 **同领域跨会议浏览：** [🧪 ICML2026 (24)](../../ICML2026/medical_imaging/index.md) · [📷 CVPR2026 (100)](../../CVPR2026/medical_imaging/index.md) · [🤖 AAAI2026 (75)](../../AAAI2026/medical_imaging/index.md) · [🧠 NeurIPS2025 (77)](../../NeurIPS2025/medical_imaging/index.md) · [📹 ICCV2025 (31)](../../ICCV2025/medical_imaging/index.md) · [🧪 ICML2025 (21)](../../ICML2025/medical_imaging/index.md)
 
 🔥 **高频主题：** 医学影像 ×5 · 扩散模型 ×3 · 语义分割 ×2
 
@@ -113,6 +115,10 @@ item_total: 21
 **[Glance and Focus Reinforcement for Pan-cancer Screening](glance_and_focus_reinforcement_for_pan-cancer_screening.md)**
 
 :   提出 GF-Screen 两阶段框架——轻量 Glance 模型用强化学习快速定位含病灶的 CT 子体积，Focus 模型只对选中区域做精细分割；通过将 GRPO 的"组内相对比较"思想从 NLP 迁移到视觉子体积组，首次在纯视觉任务中实现无价值网络的 RL 优化，在 FLARE25 泛癌挑战中以 +25.6% DSC 大幅领先冠军方案且推理快 5.7 倍。
+
+**[HEEGNet: Hyperbolic Embeddings for EEG](heegnet_hyperbolic_embeddings_for_eeg.md)**
+
+:   首次系统验证EEG数据具有双曲性（层次结构），提出HEEGNet混合双曲网络架构，结合欧几里得编码器提取时空频谱特征和双曲编码器捕捉层次关系，配合创新的粗到细域适应策略(DSMDBN)，在视觉诱发电位、情感识别和颅内EEG多个跨域任务上达到SOTA。
 
 **[Improving 2D Diffusion Models for 3D Medical Imaging with Inter-Slice Consistent Stochasticity](improving_2d_diffusion_models_for_3d_medical_imaging_with_inter-slice_consistent.md)**
 

@@ -15,7 +15,7 @@ tags:
 
 # Yes FLoReNce, I Will Do Better Next Time! Agentic Feedback Reasoning for Humorous Meme Detection
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2601.07232](https://arxiv.org/abs/2601.07232)  
 **代码**: 无  
 **领域**: 多模态VLM  

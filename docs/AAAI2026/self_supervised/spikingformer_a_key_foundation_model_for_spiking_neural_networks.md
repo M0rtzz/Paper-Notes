@@ -15,7 +15,7 @@ tags:
 
 # Spikingformer: A Key Foundation Model for Spiking Neural Networks
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2304.11954](https://arxiv.org/abs/2304.11954)  
 **代码**: [GitHub](https://github.com/TheBrainLab/Spikingformer)  
 **领域**: 自监督  

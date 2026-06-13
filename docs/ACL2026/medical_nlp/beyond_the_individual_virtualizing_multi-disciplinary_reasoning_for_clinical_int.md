@@ -15,7 +15,7 @@ tags:
 
 # Beyond the Individual: Virtualizing Multi-Disciplinary Reasoning for Clinical Intake via Collaborative Agents
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.08927](https://arxiv.org/abs/2604.08927)  
 **代码**: [GitHub](https://github.com/HovChen/Aegle)  
 **领域**: 医疗NLP

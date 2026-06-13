@@ -15,7 +15,7 @@ tags:
 
 # BlitzRank: Principled Zero-shot Ranking Agents with Tournament Graphs
 
-**会议**: ICML2026  
+**会议**: ICML2026 Spotlight  
 **arXiv**: [2602.05448](https://arxiv.org/abs/2602.05448)  
 **代码**: https://github.com/ContextualAI/BlitzRank  
 **领域**: 信息检索  

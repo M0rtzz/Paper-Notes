@@ -15,7 +15,7 @@ tags:
 
 # Learning to Translate Noise for Robust Image Denoising
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2412.04727](https://arxiv.org/abs/2412.04727)  
 **代码**: [https://hij1112.github.io/learning-to-translate-noise/](https://hij1112.github.io/learning-to-translate-noise/)  
 **领域**: Image Restoration / 图像恢复  

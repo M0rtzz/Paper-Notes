@@ -15,7 +15,7 @@ tags:
 
 # Controlling Thinking Speed in Reasoning Models
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2507.03704](https://arxiv.org/abs/2507.03704)  
 **代码**: 基于 vLLM 实现  
 **领域**: LLM推理效率 / 表示工程  

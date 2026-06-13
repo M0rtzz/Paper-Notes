@@ -15,7 +15,7 @@ tags:
 
 # ConTextTab: A Semantics-Aware Tabular In-Context Learner
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.10707](https://arxiv.org/abs/2506.10707)  
 **代码**: [SAP-samples/sap-rpt-1-oss](https://github.com/SAP-samples/sap-rpt-1-oss)  
 **领域**: 表格学习/上下文学习  

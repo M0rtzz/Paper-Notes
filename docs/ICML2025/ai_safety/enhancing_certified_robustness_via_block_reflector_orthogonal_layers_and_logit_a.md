@@ -13,7 +13,7 @@ tags:
 
 # Enhancing Certified Robustness via Block Reflector Orthogonal Layers and Logit Annealing Loss
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2505.15174](https://arxiv.org/abs/2505.15174)  
 **代码**: [https://github.com/](https://github.com/)  
 **领域**: 其他  

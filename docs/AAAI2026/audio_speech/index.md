@@ -1,8 +1,8 @@
 ---
 title: >-
-  AAAI2026 音频/语音论文汇总 · 29篇论文解读
+  AAAI2026 音频/语音论文汇总 · 31篇论文解读
 description: >-
-  29篇AAAI2026的音频/语音方向论文解读，涵盖语音、情感分析、多模态、对话系统、扩散模型、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  31篇AAAI2026的音频/语音方向论文解读，涵盖语音、情感分析、多模态、对话系统、扩散模型、LLM等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "AAAI2026"
   - "音频/语音"
@@ -57,6 +57,8 @@ item_list:
     t: "Let the Model Learn to Feel: Mode-Guided Tonality Injection for Symbolic Music Emotion Recognition"
   - u: "listening_between_the_frames_bridging_temporal_gaps_in_large_audio-language_mode/"
     t: "Listening Between the Frames: Bridging Temporal Gaps in Large Audio-Language Models"
+  - u: "mf-speech_achieving_fine-grained_and_compositional_control_in_speech_generation_/"
+    t: "MF-Speech: Achieving Fine-Grained and Compositional Control in Speech Generation via Factor Disentanglement"
   - u: "multi-granularity_interactive_attention_framework_for_residual_hierarchical_pron/"
     t: "Multi-granularity Interactive Attention Framework for Residual Hierarchical Pronunciation Assessment"
   - u: "pase_prototype-aligned_calibration_and_shapley-based_equilibrium_for_multimodal_/"
@@ -67,23 +69,23 @@ item_list:
     t: "REINA: Regularized Entropy Information-Based Loss for Efficient Simultaneous Speech Translation"
   - u: "say_more_with_less_variable-frame-rate_speech_tokenization_via_adaptive_clusteri/"
     t: "Say More with Less: Variable-Frame-Rate Speech Tokenization via Adaptive Clustering and Implicit Duration Coding"
+  - u: "spikcommander_a_high-performance_spiking_transformer_with_multi-view_learning_fo/"
+    t: "SpikCommander: A High-Performance Spiking Transformer with Multi-View Learning for Efficient Speech Command Recognition"
   - u: "text-routed_sparse_mixture-of-experts_model_with_explanation_and_temporal_alignm/"
     t: "A Text-Routed Sparse Mixture-of-Experts Model with Explanation and Temporal Alignment for Multi-Modal Sentiment Analysis"
   - u: "towards_authentic_movie_dubbing_with_retrieve-augmented_director-actor_interacti/"
     t: "Towards Authentic Movie Dubbing with Retrieve-Augmented Director-Actor Interaction Learning"
-  - u: "use_a_unified_model_for_universal_sound_separation_and_extraction/"
-    t: "USE: A Unified Model for Universal Sound Separation and Extraction"
-item_total: 29
+item_total: 31
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🎵 音频/语音
 
-**🤖 AAAI2026** · **29** 篇论文解读
+**🤖 AAAI2026** · **31** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (30)](../../ICML2026/audio_speech/index.md) · [💬 ACL2026 (68)](../../ACL2026/audio_speech/index.md) · [📷 CVPR2026 (14)](../../CVPR2026/audio_speech/index.md) · [🔬 ICLR2026 (34)](../../ICLR2026/audio_speech/index.md) · [🧠 NeurIPS2025 (47)](../../NeurIPS2025/audio_speech/index.md) · [📹 ICCV2025 (11)](../../ICCV2025/audio_speech/index.md)
 
-🔥 **高频主题：** 语音 ×11 · 情感分析 ×7 · 多模态 ×4 · 对话系统 ×2 · 扩散模型 ×2
+🔥 **高频主题：** 语音 ×13 · 情感分析 ×7 · 多模态 ×4 · 对话系统 ×2 · 扩散模型 ×2
 
 **[A Mind Cannot Be Smeared Across Time](a_mind_cannot_be_smeared_across_time.md)**
 
@@ -169,6 +171,10 @@ item_total: 29
 
 :   提出 TimeAudio，通过时间标记（Temporal Markers）、绝对时间编码（Absolute Time-aware Encoding）和段级 Token 合并（Segment-level Token Merging）三个关键模块，赋予大型音频语言模型（LALM）精确的时间定位能力和端到端长音频理解能力，并构建了 FTAR 数据集用于细粒度时间推理的指令微调。
 
+**[MF-Speech: Achieving Fine-Grained and Compositional Control in Speech Generation via Factor Disentanglement](mf-speech_achieving_fine-grained_and_compositional_control_in_speech_generation_.md)**
+
+:   提出MF-Speech框架，通过多目标优化将语音信号解耦为高纯度的内容、音色和情绪三个独立因子表示，再利用动态融合和层级风格自适应归一化（HSAN）实现细粒度的组合式语音生成控制，在多因子组合语音生成任务上显著超越现有方法（WER=4.67%, SECS=0.5685）。
+
 **[Multi-granularity Interactive Attention Framework for Residual Hierarchical Pronunciation Assessment](multi-granularity_interactive_attention_framework_for_residual_hierarchical_pron.md)**
 
 :   提出HIA框架，通过交互注意力模块（Interactive Attention Module）实现音素、词、句三粒度间的双向信息交互，结合残差层级结构缓解特征遗忘问题，在speechocean762数据集上所有粒度和方面指标均达到SOTA。
@@ -188,6 +194,10 @@ item_total: 29
 **[Say More with Less: Variable-Frame-Rate Speech Tokenization via Adaptive Clustering and Implicit Duration Coding](say_more_with_less_variable-frame-rate_speech_tokenization_via_adaptive_clusteri.md)**
 
 :   提出 VARSTok，首个全动态可变帧率语音 tokenizer，通过时序感知密度峰聚类和隐式时长编码，实现自适应 token 分配，在使用更少 token 的同时超越固定帧率基线。
+
+**[SpikCommander: A High-Performance Spiking Transformer with Multi-View Learning for Efficient Speech Command Recognition](spikcommander_a_high-performance_spiking_transformer_with_multi-view_learning_fo.md)**
+
+:   提出 SpikCommander，一种全脉冲驱动的 Transformer 架构，通过**多视图脉冲时序感知自注意力（MSTASA）**和**脉冲上下文精炼 MLP（SCR-MLP）**联合增强时序与通道特征建模，在 SHD/SSC/GSC 三个基准上以更少参数超越 SOTA SNN 方法。
 
 **[A Text-Routed Sparse Mixture-of-Experts Model with Explanation and Temporal Alignment for Multi-Modal Sentiment Analysis](text-routed_sparse_mixture-of-experts_model_with_explanation_and_temporal_alignm.md)**
 

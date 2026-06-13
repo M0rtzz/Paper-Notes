@@ -15,7 +15,7 @@ tags:
 
 # ActionPiece: Contextually Tokenizing Action Sequences for Generative Recommendation
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2502.13581](https://arxiv.org/abs/2502.13581)  
 **代码**: [https://github.com/google-deepmind/action_piece](https://github.com/google-deepmind/action_piece)  
 **领域**: 图像分割  

@@ -15,7 +15,7 @@ tags:
 
 # FedGUI: Benchmarking Federated GUI Agents across Heterogeneous Platforms, Devices, and Operating Systems
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2604.14956](https://arxiv.org/abs/2604.14956)  
 **代码**: [GitHub](https://github.com/wwh0411/FedGUI)  
 **领域**: Agent / GUI交互  

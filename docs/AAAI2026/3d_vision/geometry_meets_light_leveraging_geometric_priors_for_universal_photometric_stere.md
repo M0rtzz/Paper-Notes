@@ -15,7 +15,7 @@ tags:
 
 # Geometry Meets Light: Leveraging Geometric Priors for Universal Photometric Stereo under Limited Multi-Illumination Cues
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13015](https://arxiv.org/abs/2511.13015)  
 **代码**: [https://github.com/marcotam2002/geounips](https://github.com/marcotam2002/geounips)  
 **领域**: 3D视觉 / 光度立体  

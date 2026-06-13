@@ -15,7 +15,7 @@ tags:
 
 # Parallel In-context Learning for Large Vision Language Models
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Findings  
 **arXiv**: [2603.16092](https://arxiv.org/abs/2603.16092)  
 **代码**: 无  
 **领域**: 多模态VLM  

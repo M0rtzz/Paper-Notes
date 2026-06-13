@@ -1,13 +1,14 @@
 ---
 title: >-
-  ICML2025 因果推理论文汇总 · 16篇论文解读
+  ICML2025 因果推理论文汇总 · 17篇论文解读
 description: >-
-  16篇ICML2025的因果推理方向论文解读，涵盖对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
+  17篇ICML2025的因果推理方向论文解读，涵盖医学影像、对抗鲁棒、推理等方向。覆盖该方向前沿研究进展与技术创新，每篇含一句话总结、核心思想、方法详解、实验结果与局限性分析，5分钟读懂一篇论文核心思想，助你快速跟进AI领域最新研究动态、学术前沿趋势与核心技术突破。
 tags:
   - "ICML2025"
   - "因果推理"
   - "论文解读"
   - "论文笔记"
+  - "医学影像"
   - "对抗鲁棒"
   - "推理"
 item_list:
@@ -19,6 +20,8 @@ item_list:
     t: "Causal Evidence for the Primordiality of Colors in Trans-Neptunian Objects"
   - u: "classifier_reconstruction_through_counterfactual-aware_wasserstein_prototypes/"
     t: "Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes"
+  - u: "doubly_protected_estimation_for_survival_outcomes_utilizing_external_controls_fo/"
+    t: "Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials"
   - u: "e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi/"
     t: "E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time"
   - u: "estimating_causal_effects_in_gaussian_linear_scms_with_finite_data/"
@@ -43,13 +46,13 @@ item_list:
     t: "RE-IMAGINE: Symbolic Benchmark Synthesis for Reasoning Evaluation"
   - u: "transformer-based_spatial-temporal_counterfactual_outcomes_estimation/"
     t: "Transformer-Based Spatial-Temporal Counterfactual Outcomes Estimation"
-item_total: 16
+item_total: 17
 ---
 
 <!-- 由 src/gen_blog_index.py 自动生成 -->
 # 🔗 因果推理
 
-**🧪 ICML2025** · **16** 篇论文解读
+**🧪 ICML2025** · **17** 篇论文解读
 
 📌 **同领域跨会议浏览：** [🧪 ICML2026 (15)](../../ICML2026/causal_inference/index.md) · [💬 ACL2026 (7)](../../ACL2026/causal_inference/index.md) · [📷 CVPR2026 (2)](../../CVPR2026/causal_inference/index.md) · [🔬 ICLR2026 (17)](../../ICLR2026/causal_inference/index.md) · [🤖 AAAI2026 (7)](../../AAAI2026/causal_inference/index.md) · [🧠 NeurIPS2025 (20)](../../NeurIPS2025/causal_inference/index.md)
 
@@ -68,6 +71,10 @@ item_total: 16
 **[Classifier Reconstruction Through Counterfactual-Aware Wasserstein Prototypes](classifier_reconstruction_through_counterfactual-aware_wasserstein_prototypes.md)**
 
 :   提出利用 Wasserstein 重心将原始样本与反事实样本融合为类别原型，从而在有限查询预算下高保真地重建目标二分类器，有效缓解了朴素使用反事实样本导致的决策边界偏移问题。
+
+**[Doubly Protected Estimation for Survival Outcomes Utilizing External Controls for Randomized Clinical Trials](doubly_protected_estimation_for_survival_outcomes_utilizing_external_controls_fo.md)**
+
+:   提出一种双重保护（doubly protected）的生存结局估计框架，通过密度比加权校正协变量偏移、DR-Learner检测结局漂移并选择性借用可比外部对照，在保证一致性和效率提升的同时对外部数据异质性具有鲁棒性。
 
 **[E-LDA: Toward Interpretable LDA Topic Models with Strong Guarantees in Logarithmic Parallel Time](e-lda_toward_interpretable_lda_topic_models_with_strong_guarantees_in_logarithmi.md)**
 

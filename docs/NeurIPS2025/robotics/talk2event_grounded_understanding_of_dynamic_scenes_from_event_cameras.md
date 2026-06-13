@@ -16,7 +16,7 @@ tags:
 
 # Talk2Event: Grounded Understanding of Dynamic Scenes from Event Cameras
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2507.17664](https://arxiv.org/abs/2507.17664)  
 **代码**: 无  
 **领域**: 机器人  

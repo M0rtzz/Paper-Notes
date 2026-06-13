@@ -15,7 +15,7 @@ tags:
 
 # Through the Lens of Contrast: Self-Improving Visual Reasoning in VLMs
 
-**会议**: ICLR 2026  
+**会议**: ICLR 2026 Oral  
 **arXiv**: [2603.02556](https://arxiv.org/abs/2603.02556)  
 **代码**: [https://github.com/zhiyupan42/VC-STaR](https://github.com/zhiyupan42/VC-STaR)  
 **领域**: 多模态VLM / 视觉推理  

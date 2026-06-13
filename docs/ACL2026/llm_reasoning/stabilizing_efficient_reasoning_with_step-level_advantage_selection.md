@@ -15,7 +15,7 @@ tags:
 
 # Stabilizing Efficient Reasoning with Step-Level Advantage Selection
 
-**会议**: ACL2026  
+**会议**: ACL2026 Findings  
 **arXiv**: [2604.24003](https://arxiv.org/abs/2604.24003)  
 **代码**: https://github.com/HanNight/SAS  
 **领域**: 模型压缩 / LLM高效推理  

@@ -14,7 +14,7 @@ tags:
 
 # Hierarchical Refinement: Optimal Transport to Infinity and Beyond
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Oral  
 **arXiv**: [2503.03025](https://arxiv.org/abs/2503.03025)  
 **代码**: 无  
 **领域**: 最优传输 / 算法优化  

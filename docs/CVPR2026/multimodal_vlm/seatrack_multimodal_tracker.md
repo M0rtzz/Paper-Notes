@@ -15,7 +15,7 @@ tags:
 
 # SEATrack: Simple, Efficient, and Adaptive Multimodal Tracker
 
-**会议**: CVPR 2026  
+**会议**: CVPR 2026 Oral  
 **arXiv**: [2604.12502](https://arxiv.org/abs/2604.12502)  
 **代码**: 有  
 **领域**: 目标跟踪 / 多模态  

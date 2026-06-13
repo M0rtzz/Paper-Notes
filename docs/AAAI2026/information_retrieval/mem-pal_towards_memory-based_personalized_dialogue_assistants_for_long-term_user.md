@@ -15,7 +15,7 @@ tags:
 
 # Mem-PAL: Towards Memory-based Personalized Dialogue Assistants for Long-term User-Agent Interaction
 
-**会议**: AAAI 2026  
+**会议**: AAAI 2026 Oral  
 **arXiv**: [2511.13410](https://arxiv.org/abs/2511.13410)  
 **代码**: [GitHub](https://github.com/hzp3517/Mem-PAL)  
 **领域**: 信息检索  

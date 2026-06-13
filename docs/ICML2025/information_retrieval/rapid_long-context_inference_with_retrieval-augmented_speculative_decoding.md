@@ -15,7 +15,7 @@ tags:
 
 # RAPID: Long-Context Inference with Retrieval-Augmented Speculative Decoding
 
-**会议**: ICML 2025  
+**会议**: ICML 2025 Spotlight  
 **arXiv**: [2502.20330](https://arxiv.org/abs/2502.20330)  
 **代码**: [https://github.com/NUS-TRAIL/RAPID](https://github.com/NUS-TRAIL/RAPID)  
 **领域**: 信息检索  

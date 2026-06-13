@@ -15,7 +15,7 @@ tags:
 
 # Broken Tokens: Your Language Model Can Secretly Handle Non-Canonical Tokenization
 
-**会议**: NeurIPS 2025  
+**会议**: NeurIPS 2025 Spotlight  
 **arXiv**: [2506.19004](https://arxiv.org/abs/2506.19004)  
 **代码**: 有  
 **领域**: LLM预训练  

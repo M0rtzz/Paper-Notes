@@ -15,7 +15,7 @@ tags:
 
 # ExaGPT: Example-Based Machine-Generated Text Detection for Human Interpretability
 
-**会议**: ACL 2026  
+**会议**: ACL 2026 Findings  
 **arXiv**: [2502.11336](https://arxiv.org/abs/2502.11336)  
 **代码**: https://github.com/ryuryukke/ExaGPT  
 **领域**: AIGC 检测 / 可解释机器学习 / 检索增强  
