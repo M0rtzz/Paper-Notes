@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-ICYM2I 要解决的是：当训练数据里某些模态非随机地缺失时，怎样仍然得到对模态价值的无偏判断。它把这个问题拆成两条平行的纠正线，共用同一个逆概率加权（IPW）思想。一条是 **ICYM2I-learn**，在有缺失的观测数据上训练和评估多模态/单模态模型，但通过加权让结果反映真实分布而非被缺失污染的观测分布；另一条是 **ICYM2I-PID**，把同样的加权注入 Partial Information Decomposition 的估计，从而无偏地把模态信息拆成唯一/共享/互补三部分。整个框架建立在两条前提上：MAR（Missing At Random，缺失只依赖观测到的协变量）和 Positivity（任意协变量组合下完整观测的概率都大于 0），后者保证逆概率权重不会出现分母为零。
+ICYM2I 要解决的是：当训练数据里某些模态非随机地缺失时，怎样仍然得到对模态价值的无偏判断。它的起点是一个被污染的现实——真实分布 $\Omega$ 含缺失，数据采集时把不完整样本丢掉，剩下的完整子集 $\Omega_{obs}$ 是被"挑选"过的有偏样本。ICYM2I 先用一个倾向模型（用观测协变量 $C$ 训练的 logistic regression）估出每个样本被完整观测到的概率，转成逆概率加权（IPW）权重，再用这同一套权重去喂两条平行的纠正线。一条是 **ICYM2I-learn**，在有缺失的观测数据上训练和评估多模态/单模态模型，但通过加权让训练和评估都反映真实分布而非被缺失污染的观测分布；另一条是 **ICYM2I-PID**，把同样的加权注入偏信息分解（Partial Information Decomposition, PID）的估计，从而无偏地把模态信息拆成唯一/共享/互补三部分。整个框架建立在两条前提上：MAR（Missing At Random，缺失只依赖观测到的协变量）和 Positivity（任意协变量组合下完整观测的概率都大于 0），后者保证逆概率权重不会出现分母为零。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["真实分布 Ω<br/>(含模态缺失)"] -->|"采集丢弃<br/>不完整样本"| B["观测分布 Ω_obs<br/>(有偏完整子集)"]
+    B --> C["倾向模型 p(m∣C)<br/>logistic regression<br/>估每样本缺失概率"]
+    C --> D["IPW 权重<br/>w = 1 / (1 − p)"]
+    subgraph LEARN["ICYM2I-learn"]
+        direction TB
+        E["IPW 加权训练<br/>重写损失对齐真实分布"]
+        F["IPW 纠正评估<br/>加权测试集指标"]
+    end
+    D --> E
+    D --> F
+    D --> G["ICYM2I-PID<br/>IPW + 修正<br/>Sinkhorn-Knopp"]
+    E --> H["无偏预测效用<br/>(加某模态的真实提升)"]
+    F --> H
+    G --> I["无偏信息分解<br/>唯一 / 共享 / 互补"]
+```
 
 ### 关键设计
 

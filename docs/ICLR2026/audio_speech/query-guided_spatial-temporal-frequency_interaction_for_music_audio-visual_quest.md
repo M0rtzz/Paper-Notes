@@ -43,6 +43,30 @@ tags:
 
 QSTar 的核心想法是让问题语义从头到尾参与音频-视觉特征的塑造，而不是像以往那样只在推理末端做一次简单融合。它把这条主线拆成三个串联模块：先用 QGMC 在早期就把问题语义打进音频和视觉特征里，再用空间-时序-频域三维交互（STI + TFI）从「哪里发声、何时发声、是什么音色」三个角度互相对齐，最后用 QCR 注入任务属性 prompt 完成精确推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    V["视觉流<br/>CLIP-ViT-L/14"]
+    A["音频流<br/>VGGish + AST"]
+    Q["文本问题"]
+    QGMC["Query-Guided Multimodal Correlation<br/>问题语义早期注入<br/>self-enhance→capture→propagate"]
+    V --> QGMC
+    A --> QGMC
+    Q --> QGMC
+    subgraph STFI["空间-时序-频域交互"]
+        direction TB
+        STI["Spatial-Temporal Interaction<br/>哪里发声 / 何时发声"]
+        TFI["Temporal-Frequency Interaction<br/>AST 频谱区分音色"]
+    end
+    QGMC --> STI
+    QGMC --> TFI
+    QCR["Query Context Reasoning<br/>属性 prompt 精炼推理"]
+    STI --> QCR
+    TFI --> QCR
+    Q -->|"属性关键词 prompt"| QCR
+    QCR --> ANS["答案预测"]
+```
+
 ### 关键设计
 
 **1. Query-Guided Multimodal Correlation：让问题在源头就介入，而非末端补刀**

@@ -41,6 +41,28 @@ tags:
 
 DVLA-RL 把少样本对齐拆成"准备语义"和"自适应融合"两步：先用双层语义构建（DSC）为每个类别造出互补的低层属性和高层描述，再让 RL 门控注意力（RLA）在网络的每一层动态决定交叉注意力与自注意力各占多少权重，从而把浅层的局部细节和深层的全局语义都对齐到视觉表征上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["类名 + 支持样本"] --> DSC
+    subgraph DSC["双层语义构建（DSC）"]
+        direction TB
+        A1["MLLM 查询<br/>提取候选属性 A"] --> A2["渐进式 Top-k<br/>选区分性属性 (CLIP)"]
+        A2 --> A3["LLM 综合<br/>生成高层描述 D"]
+    end
+    DSC --> SEM["双层语义<br/>低层属性 + 高层描述"]
+    IMG["视觉特征"] --> RLA
+    SEM --> RLA
+    subgraph RLA["RL 门控注意力（RLA）·逐层"]
+        direction TB
+        C1["交叉注意力<br/>图像引导→局部细节"] --> G["门控融合<br/>H=α·cross+(1-α)·self"]
+        C2["自注意力<br/>文本引导→全局语义"] --> G
+        P["策略网络 π<br/>采样 α~Beta"] --> G
+        G -->|"奖励=对齐+分类增益"| P
+    end
+    RLA --> OUT["对齐特征<br/>→ 原型分类"]
+```
+
 ### 关键设计
 
 **1. 双层语义构建（DSC）：让一个类同时拥有细粒度属性和整体描述**

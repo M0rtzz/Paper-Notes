@@ -43,7 +43,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-M²-Miner 以 MCTS 为骨架，输入为初始意图 $I_0$ 和起始 GUI 状态 $s_0$，输出为包含有效交互轨迹 $\tau=(s_0,a_0,s_1,\ldots)$ 的意图-轨迹树 $\mathcal{T}=(\mathcal{V},\mathcal{A},\mathcal{P},\mathcal{I})$。树中每个节点包含截图、动作描述、Q值、访问次数和任务完成状态。MCTS 的四个阶段（选择→扩展→模拟→回溯）循环执行直到挖掘到匹配意图的轨迹。
+M²-Miner 以 MCTS 为骨架，输入为初始意图 $I_0$ 和起始 GUI 状态 $s_0$，输出为包含有效交互轨迹 $\tau=(s_0,a_0,s_1,\ldots)$ 的意图-轨迹树 $\mathcal{T}=(\mathcal{V},\mathcal{A},\mathcal{P},\mathcal{I})$。树中每个节点包含截图、动作描述、Q 值、访问次数和任务完成状态。整个挖掘流程是：MCTS 的四个阶段（选择→扩展→模拟→回溯）循环执行，其中扩展靠 InferAgent 引导生成、OrchestraAgent 排序，模拟靠 JudgeAgent 过程评分；一棵树搜完后用 intent recycling 把非主路径回收成额外数据，挖出的数据再经 progressive model-in-the-loop 回灌微调 InferAgent 与 JudgeAgent，使后续挖掘越来越强。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["初始意图 I0 + 起始 GUI 状态 s0"] --> SEL
+    subgraph MCTS["MCTS 单轮迭代（选择→扩展→模拟→回溯）"]
+        direction TB
+        SEL["选择：沿 UCT 最优分支下探"] --> INFER["InferAgent<br/>多 MLLM 意图引导生成 K 个候选动作"]
+        INFER --> ORCH["OrchestraAgent<br/>合并等价动作并排序，赋递减 UCT 值"]
+        ORCH --> JUDGE["JudgeAgent<br/>看截图就地打分，过程奖励替 rollout"]
+        JUDGE --> BP["回溯：增量更新 Q 值与访问次数"]
+    end
+    BP -->|未命中意图| SEL
+    BP -->|命中意图| TREE["意图-轨迹树 T"]
+    TREE --> RECYCLE["Intent Recycling<br/>非主路径反推新意图并校验，回收成额外数据"]
+    RECYCLE --> DATA["意图-轨迹数据集"]
+    DATA --> PROG["Progressive Model-in-the-loop<br/>三阶段数据回灌微调 InferAgent / JudgeAgent"]
+    PROG -.强化.-> INFER
+    PROG -.强化.-> JUDGE
+```
 
 ### 关键设计
 

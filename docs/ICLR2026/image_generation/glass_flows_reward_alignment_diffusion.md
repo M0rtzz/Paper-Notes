@@ -42,7 +42,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定预训练流匹配模型的速度场 $u_t(x)$ 和去噪器 $D_t(x)$。GLASS Flows 将两步转移 $x_t \to x_{t'}$ 视为一个条件生成问题：引入辅助变量 $\bar{X}_s$（$s \in [0,1]$），构建内部流 ODE $\frac{d\bar{x}_s}{ds} = \bar{u}_s(\bar{x}_s | x_t, t)$，其中 $\bar{x}_0 \sim \mathcal{N}(\bar{\gamma} x_t, \bar{\sigma}_0^2 I)$（随机初始条件提供随机性），$\bar{x}_1 \sim p_{t'|t}(\cdot | x_t)$（终态服从目标转移分布）。
+GLASS Flows 要解决的矛盾是：奖励对齐采样（如 Feynman-Kac Steering, FKS）必须靠**随机转移**在去噪轨迹里分叉、探索高奖励区域，但传统的 SDE 随机转移在少步数下会严重降质，反而拖垮整体效果。它的整体思路是——**外层的奖励引导循环原样不动，只把其中每一步的随机转移换成一个高效的"内部流匹配 ODE"**。
+
+具体地，外层是一个 FKS 循环：维护一组粒子，沿着 $x_1 \to \cdots \to x_0$ 的去噪轨迹推进，每隔若干步按奖励对粒子做 reweight + resample，把算力集中到高奖励轨迹上。原本 FKS 用 SDE 来完成相邻时刻 $x_t \to x_{t'}$ 的随机转移；GLASS 把**这一步随机转移本身**重铸成一个小的条件流匹配问题：给它一个随机初值 $\bar{x}_0 \sim \mathcal{N}(\bar{\gamma} x_t, \bar{\sigma}_0^2 I)$，再用预训练去噪器驱动一段辅助时间 $s\in[0,1]$ 上的内部 ODE $\frac{d\bar{x}_s}{ds} = \bar{u}_s(\bar{x}_s \mid x_t, t)$，Euler 积分 $M$ 步即得终态 $\bar{x}_1 \sim p_{t'|t}(\cdot \mid x_t)$，也就是一个 $x_{t'}$ 样本。随机性全部来自起点、之后的演化是确定性 ODE——于是同时拿到 SDE 的多样性和 ODE 的稳定与效率。这正是"流模型中的流模型"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["文本提示 + 预训练流模型<br/>(速度场 u_t、去噪器 D_t)"]
+    KERNEL["GLASS 转移核构造<br/>潜变量耦合相邻两步，ρ 调随机性"]
+    subgraph INNER["内部条件流 ODE（单步随机转移 x_t → x_t'）"]
+        direction TB
+        INIT["随机初值 x̄₀<br/>(随机性的唯一来源)"]
+        STAT["充分统计量重参数化<br/>两份观测合一 → 复用去噪器 D_t*"]
+        EULER["Euler 积分 M 步<br/>输出样本 x_t'"]
+        INIT --> STAT --> EULER
+    end
+    FKS["接入 FKS 与梯度引导<br/>粒子按奖励 reweight + resample"]
+    OUT["奖励对齐图像"]
+    IN --> KERNEL --> INNER
+    INNER -->|"共 K 个外部步"| FKS
+    FKS -->|"进入下一步转移"| KERNEL
+    FKS --> OUT
+```
 
 ### 关键设计
 

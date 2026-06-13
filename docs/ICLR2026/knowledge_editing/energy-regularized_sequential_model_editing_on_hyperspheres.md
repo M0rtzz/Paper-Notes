@@ -38,7 +38,22 @@ tags:
 
 ### 整体框架
 
-SPHERE（Sparse Projection for Hyperspherical Energy-Regularized Editing）的核心思路是：把权重矩阵看成超球面上的一组神经元，编辑之所以崩溃是因为扰动破坏了这组神经元的均匀分布（即超球面均匀性 HE）。于是 SPHERE 先估出预训练权重里承载知识的"主超球方向"，再把每次编辑的扰动投影到这些主方向的正交补空间里，让编辑既能改写目标知识、又尽量不去扰动那些撑起原有几何结构的关键方向。整套操作只在原有编辑方法的闭式解后面加一步投影，因此可以即插即用。
+SPHERE（Sparse Projection for Hyperspherical Energy-Regularized Editing）的核心思路是：把权重矩阵看成超球面上的一组神经元，编辑之所以崩溃是因为扰动破坏了这组神经元的均匀分布（即超球面均匀性 HE）。于是 SPHERE 先估出预训练权重里承载知识的"主超球方向"，再把每次编辑的扰动投影到这些主方向的正交补空间里，让编辑既能改写目标知识、又尽量不去扰动那些撑起原有几何结构的关键方向。整套操作只在原有编辑方法的闭式解后面加一步投影，因此可以即插即用。整条流水线如下：先从预训练权重估出主空间 $U$，据此构造投影矩阵 $P_\perp$；任意现有编辑器照常算出自己的扰动 $\Delta W$，再让 $\Delta W$ 过一遍投影后写回权重，得到 HE 稳定、旧知识不被破坏的编辑后模型。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    W["预训练权重 W"] --> A
+    subgraph MAIN["主空间估计（设计 1）"]
+        direction TB
+        A["二阶统计 WᵀW/n"] --> B["特征分解"]
+        B --> C["按能量比 η 选 top-r<br/>主方向 → U"]
+    end
+    C --> P["稀疏空间投影<br/>构造 P⊥ = I − αUUᵀ"]
+    E["即插即用增强<br/>MEMIT/RECT/AlphaEdit 算 ΔW"] -->|"扰动 ΔW"| PROJ
+    P --> PROJ["投影并写回<br/>Ŵ = W + ΔW·P⊥"]
+    PROJ --> OUT["编辑后模型<br/>HE 稳定、保住旧知识"]
+```
 
 ### 关键设计
 

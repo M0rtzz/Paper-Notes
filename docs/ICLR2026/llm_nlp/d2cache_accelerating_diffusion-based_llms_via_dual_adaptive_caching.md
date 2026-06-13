@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-dLLM 从全 mask 序列出发，经 $T$ 步迭代去噪生成文本。d²Cache 在每步将 token 分为三类（prompt/masked/decoded），通过两阶段策略选出需要更新 KV 的少量 token 子集，其余 token 的 KV 从上一步缓存复用，大幅减少每步计算量。
+dLLM 从全 mask 序列出发，经 $T$ 步迭代去噪生成文本，双向注意力让每步都得重算整段 KV、标准缓存彻底失效。d²Cache 的思路是：先看清 masked token 的 KV 到底什么时候才真正变化（三阶段分析），再据此在**每一步**只挑出少量真正需要更新 KV 的 token。具体地，每步把 token 分为三类（prompt / masked / decoded），用两条互补的选择通道筛选——Stage 1 用确定性先验从 masked token 里挑"即将被解码"的那批，Stage 2 用注意力分数从 prompt/decoded token 里挑"高影响力"的那批；被选中的 token 重算 KV，其余全部复用上一步缓存，每步计算量因此大幅压缩。更巧的是，Stage 1 用来选 KV 的那套确定性先验还能顺手决定下一个该解码哪个 token，让生成呈现准从左到右的顺序，既省时间又提升质量。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["全 mask 序列<br/>(prompt + masked)"] --> CLS["每步 token 分三类<br/>prompt / masked / decoded"]
+    CLS --> S1["Stage 1：确定性先验选择<br/>挑即将解码的 masked token"]
+    CLS --> S2["Stage 2：注意力感知选择<br/>挑高影响力 prompt/decoded token"]
+    S1 --> UPD["仅更新选中 token 的 KV<br/>其余 token 复用上一步缓存"]
+    S2 --> UPD
+    UPD --> DEC["确定性先验引导解码<br/>优先解码确定性高的 token"]
+    DEC -->|未走完 T 步| CLS
+    DEC -->|走完| OUT["生成文本"]
+```
+
+> KV 三阶段分析（缓变→剧变→稳定）是支撑整套策略的底层观察，它解释了"为什么只更新少量 token 就够"，因此不单列为流程节点，而是 Stage 1 选择逻辑的依据。
 
 ### 关键设计
 

@@ -37,7 +37,19 @@ tags:
 
 ### 整体框架
 
-Draft-based Approximate Inference 用一个小型 draft 模型先对输入生成前瞻 token，再借这些前瞻信息（draft 的输出或注意力激活）去判断 target 模型该保留哪些 KV pair、哪些 prompt token。与 speculative decoding 不同，这里 draft 的前瞻不是用来加速验证，而是为重要性估计补上"未来视角"，从而真正压低 target 模型的总计算与峰值内存。
+Draft-based Approximate Inference 用一个小型 draft 模型先对输入生成前瞻（lookahead）token，再借这些前瞻信息（draft 的输出或注意力激活）去判断 target 模型该保留哪些 KV pair、哪些 prompt token。与投机解码（speculative decoding）不同，这里 draft 的前瞻不是用来加速验证，而是为重要性估计补上"未来视角"，从而真正压低 target 模型的总计算与峰值内存。
+
+框架在这套思路上落出两个独立算法和一个级联：SpecKV 用前瞻 token 给 target 的 KV cache 打分做丢弃，SpecPC 直接拿 draft 的注意力图给 prompt token 打分做删除，SpecKV-PC 则把两者串成一条流水线——先用 SpecPC 粗删 prompt，再用 SpecKV 细删 KV。三者共享同一个 draft 前瞻前端，只是用了它输出的不同信号。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["长上下文输入 prompt"] --> DRAFT["小型 draft 模型前瞻<br/>生成前瞻 token + 注意力分数"]
+    DRAFT -->|"前瞻 token 补未来视角"| SPECKV["SpecKV<br/>交叉注意力打分<br/>保留 top-Cmax KV + 窗口"]
+    DRAFT -->|"draft 注意力图打分"| SPECPC["SpecPC<br/>删无关 prompt token<br/>压到中等长度"]
+    SPECPC -->|"SpecKV-PC 级联：先压 prompt"| SPECKV
+    SPECKV --> OUT["target 模型 prefill + 解码<br/>(压缩后 prompt 与 KV cache)"]
+```
 
 ### 关键设计
 

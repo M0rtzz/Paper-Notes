@@ -41,7 +41,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定两个预训练扩散/Flow 策略 $\pi_1, \pi_2$，GPC 在推理时的每个去噪步骤中凸组合两者的分数估计：$\hat{s}_{\text{comp}} = w_1 s_1 + w_2 s_2$，然后在 $w_1 \in \{0.0, 0.1, \dots, 1.0\}$ 上搜索最优权重。支持异构策略组合（VA+VLA、不同视觉模态、diffusion+flow-matching）。
+GPC 要解决的问题是：手头已经有几个各有所长的预训练扩散/Flow 策略，能不能在不再训练、不收集新数据的前提下，把它们拼成一个比谁都强的策略。它的答案是把"组合"放到**分数空间**里、放到**推理时**做。给定两个预训练策略 $\pi_1, \pi_2$，在去噪采样的每一步都各自算出分数估计 $s_1, s_2$，按权重凸组合成 $\hat{s}_{\text{comp}} = w_1 s_1 + w_2 s_2$，再用这个合成分数走一步去噪；如此逐步迭代直到得到干净的动作轨迹。其中权重 $w$ 不是固定常数，而是对每个任务在 $\{0.0, 0.1, \dots, 1.0\}$ 上搜出来的最优值。因为组合只发生在分数层面，两个父策略哪怕架构、视觉模态、去噪方式都不同（VA+VLA、RGB+点云、diffusion+flow-matching）也能混着组。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["含噪动作 τ_t"]
+    subgraph POL["两个预训练父策略"]
+        direction TB
+        P1["策略 π₁<br/>分数 s₁"]
+        P2["策略 π₂<br/>分数 s₂"]
+    end
+    COMB["分数空间凸组合<br/>ŝ = w·s₁ + (1-w)·s₂"]
+    OP["组合算子选择<br/>凸 / AND / OR"]
+    SEARCH["测试时权重搜索<br/>逐任务选 w"]
+    STEP["按 ŝ 去噪一步"]
+    OUT["动作轨迹"]
+
+    IN --> POL
+    POL --> COMB
+    OP -.->|语义| COMB
+    SEARCH -.->|提供 w| COMB
+    COMB --> STEP
+    STEP -->|未收敛| IN
+    STEP -->|收敛| OUT
+```
 
 ### 关键设计
 

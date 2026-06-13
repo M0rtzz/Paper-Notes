@@ -38,7 +38,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-UIS-Digger 是**四 Agent 协作系统**，基于 ReAct 范式通过请求-响应消息通信。输入为用户查询，输出为最终答案。Planner 分解查询为子任务，协调三个下属 Agent：Web Searcher（索引信息检索）、Web Surfer（深层网页浏览）、File Reader（文件解析）。
+本文有两个并列的产出：一把新尺子和一个新系统。尺子是 UIS-QA 基准，专门把"搜索引擎直接拿不到"的题目筛出来，用来戳穿现有评估的虚高；系统是 UIS-Digger，要真的去把这些未索引信息挖出来。
+
+UIS-Digger 的运行时是一个**四 Agent 协作系统**，每个 Agent 配一套工具、负责一类子任务，整体按 ReAct 范式（思考→行动→观察迭代）跑。流程上，顶层的 Planner 接到用户查询后先初始化空记忆、把查询拆成子任务，再把子任务分派给三个下属 Agent：Web Searcher 走搜索引擎+爬虫这条索引信息通道、Web Surfer 操作浏览器去深层网页里抠交互式内容、File Reader 解析下载下来的 PDF/XLSX/DOCX 文件。Web Searcher 在干活时还能把网页浏览、文件解析的子任务进一步委派给后两者。各 Agent 的结果回流给 Planner 汇总，迭代若干轮后产出最终答案。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["用户查询"] --> P["Planner<br/>拆子任务·协调下属·迭代汇总"]
+    P -->|"索引信息"| WS["Web Searcher<br/>搜索引擎+爬虫并行取数"]
+    P -->|"深层网页"| SF["双模式浏览器 Web Surfer<br/>文本/视觉模式动态切换·共享状态"]
+    P -->|"文件"| FR["File Reader<br/>PDF/XLSX/DOCX 分块解析"]
+    WS -.->|"委派"| SF
+    WS -.->|"委派"| FR
+    WS --> P
+    SF --> P
+    FR --> P
+    P --> A["最终答案"]
+```
+
+下面三个关键设计：第一个是用来量问题的尺子（UIS-QA），后两个分别撑起图里 Web Surfer 和 Web Searcher/File Reader 两条挖取通道；让模型真能用好这套大动作空间的 SFT+RFT 训练，放在「训练策略」里讲。
 
 ### 关键设计
 

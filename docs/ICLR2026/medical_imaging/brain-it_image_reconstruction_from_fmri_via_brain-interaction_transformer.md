@@ -42,7 +42,24 @@ tags:
 
 ### 整体框架
 
-Brain-IT 把"从 fMRI 重建图像"拆成两个串联阶段：先用脑启发的 Brain Interaction Transformer (BIT) 把脑信号翻译成**局部化的图像特征**，再用语义与结构两个分支把这些特征还原为图像。整条流水线的关键在于全程不把脑活动压成一个全局向量，而是让视觉皮层的分布式信息一路保留到图像空间，从而既忠实于实际看到的结构、又能借扩散模型补全细节。
+Brain-IT 把"从 fMRI 重建图像"拆成两个串联阶段：先用脑启发的 Brain Interaction Transformer (BIT) 把脑信号翻译成**局部化的图像特征**，再用语义与结构两个分支把这些特征还原为图像。具体地，几万个体素先经体素到聚类映射 (V2C) 压成 128 个跨被试共享的功能聚类，BIT 内部由 Brain Tokenizer（产出 128 个 Brain Token）和 Cross-Transformer（建模聚类交互并写出局部图像特征）两步组成；随后语义分支预测 CLIP token 作生成条件、低级分支经 Deep Image Prior 反演出粗结构图，推理时二者在扩散模型里融合。整条流水线的关键在于全程不把脑活动压成一个全局向量，而是让视觉皮层的分布式信息一路保留到图像空间，从而既忠实于实际看到的结构、又能借扩散模型补全细节。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["fMRI 激活<br/>(~4 万体素)"] --> V2C["体素到聚类映射 V2C<br/>GMM 聚类→128 个<br/>跨被试共享功能聚类"]
+    AUG["编码器合成数据增强<br/>图像→fMRI 编码器<br/>扩出 12 万训练对"] -. 训练样本 .-> V2C
+    V2C --> BIT
+    subgraph BIT["Brain Interaction Transformer"]
+        direction TB
+        TOK["Brain Tokenizer<br/>图注意力→128 个 Brain Token"] --> XT["Cross-Transformer<br/>聚类自注意力 + 交叉注意力<br/>→局部化图像特征"]
+    end
+    BIT --> SEM["语义分支<br/>预测 256 个 OpenCLIP token"]
+    BIT --> LOW["低级分支<br/>预测 VGG 特征→DIP 反演<br/>→粗略结构图"]
+    LOW -->|"加噪作初始化"| DIFF["扩散模型融合<br/>从粗到细细化"]
+    SEM -->|"作语义条件"| DIFF
+    DIFF --> OUT["重建图像"]
+```
 
 ### 关键设计
 

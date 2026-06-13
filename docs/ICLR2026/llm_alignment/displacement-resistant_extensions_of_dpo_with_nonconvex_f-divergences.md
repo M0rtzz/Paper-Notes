@@ -40,7 +40,9 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文的目标不是再造一个对齐算法，而是回答"f-DPO 这一大类损失到底由 f 的什么性质决定行为"。出发点是广义 RLHF 目标 $\max_{\pi_\theta} \mathbb{E}[r(x,y)] - \beta D_f[\pi_\theta \| \pi_{ref}]$，把它闭式求解后代入 Bradley-Terry 偏好模型，就得到 f-DPO 损失 $-\log\sigma(\beta f'(\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)}) - \beta f'(\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)}))$——这里出现的是 f 的导数 $f'$，而不是 f 本身，这一点是后面所有结论的关键。论文沿两条线推进：先问什么样的 f 能让这个推导成立（可解性），再问在可解的 f 里哪些能避免 winner 概率塌缩（抗位移），最后给出一个同时满足两者的具体 f。
+论文的目标不是再造一个对齐算法，而是回答一个更基础的问题：f-DPO 这一大类损失的行为，到底由 f 的什么性质决定。起点是广义 RLHF 目标 $\max_{\pi_\theta} \mathbb{E}[r(x,y)] - \beta D_f[\pi_\theta \| \pi_{ref}]$；把它在 f-divergence 约束下闭式求解，再代入 Bradley-Terry 偏好模型，就得到 f-DPO 损失 $-\log\sigma(\beta f'(\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)}) - \beta f'(\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)}))$。值得注意的是损失里出现的是 f 的导数 $f'$、而不是 f 本身——后面所有结论都挂在 $f'$（以及 f 最小值位置）的性质上。顺着这条线，论文分三步推进：先问什么样的 f 能让上面的推导成立（可解性），再问在可解的 f 里哪些能避免 winner 概率塌缩（抗位移），最后给出一个同时满足两者的具体 f。下面三个关键设计正对应这三步。
+
+> 这是一篇纯理论/损失函数论文（DPO 的 f-divergence 推广 + 一个新损失），没有多阶段管线或多模块协同，框架就是"目标→闭式解→两个 f 条件→具体 f"的推导链，因此**不画 Mermaid 框架图**；三者一致改由整体框架与三个设计逐条对齐保证。
 
 ### 关键设计
 
@@ -50,7 +52,9 @@ tags:
 
 **2. Displacement-Resistant 条件：$\arg\min f \geq 1$ 是抗位移的必要门槛**
 
-概率位移指训练中 winner 概率不升反降。Lemma 2 给出它的成因刻画：若 $\arg\min_{t \geq 0} f(t) < 1$，则最优策略对 in-sample response 的概率必然被压到低于 $c \cdot \pi_{ref}$，也就是必然位移；反过来，抗位移的必要条件是 $\arg\min f(t) \geq 1$。把 DPO 代进来就一目了然：它对应 $f_{KL}(t) = t\log t$，最小值在 $t = e^{-1} < 1$，所以 DPO 在理论层面就注定会把 winner 概率往下压。更深一层的原因来自 Lemma 1——f-DPO 名义上解的是完整 RLHF 问题 (5)，但它同时也解一个退化问题 (7)，后者的正则化只覆盖出现在训练数据里的 in-sample response，对 out-of-sample 行为毫无约束。于是模型可以毫无代价地把概率质量挪到没见过的 response 上，winner 概率随之下降。位移因此不是实现 bug，而是损失结构里的数学必然。
+概率位移指训练中 winner 概率不升反降。Lemma 2 给出它的成因刻画：若 $\arg\min_{t \geq 0} f(t) < 1$，则最优策略对 in-sample response 的概率必然被压到低于 $c \cdot \pi_{ref}$，也就是必然位移；反过来，抗位移的必要条件是 $\arg\min f(t) \geq 1$。把 DPO 代进来就一目了然：它对应 $f_{KL}(t) = t\log t$，最小值在 $t = e^{-1} < 1$，所以 DPO 在理论层面就注定会把 winner 概率往下压。
+
+更深一层的原因来自 Lemma 1——f-DPO 名义上解的是完整 RLHF 问题 (5)，但它同时也解一个退化问题 (7)，后者的正则化只覆盖出现在训练数据里的 in-sample response，对 out-of-sample 行为毫无约束。于是模型可以毫无代价地把概率质量挪到没见过的 response 上，winner 概率随之下降。位移因此不是实现 bug，而是损失结构里的数学必然；而 $\arg\min f \geq 1$ 之所以能挡住它，正是因为它要求 f 在 $t < 1$（即概率被压低于参考模型）时付出更大代价，从而堵住这条挪走概率质量的通道。
 
 **3. SquaredPO：用 $f(t)=\frac{1}{2}(\log t)^2$ 同时踩中两个条件**
 

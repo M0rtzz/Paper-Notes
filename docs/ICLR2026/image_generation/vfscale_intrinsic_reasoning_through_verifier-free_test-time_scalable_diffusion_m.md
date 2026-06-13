@@ -41,7 +41,29 @@ VFScale提出无需外部验证器的测试时可缩放扩散模型，通过MRNC
 ## 方法详解
 
 ### 整体框架
-VFScale 想让扩散模型在不依赖外部验证器的情况下也能做测试时缩放，关键是让模型自己的能量函数变成可信的"质量打分器"。它分两条线推进：训练侧在标准的 MSE 重建损失和对比损失之上，补上 MRNCL 损失（把能量值和样本质量的单调关系对齐）与 KL 正则化（把能量景观抹平），让低能量真正对应高质量解；推理侧则用混合 MCTS 去噪，在去噪早期噪声大时广撒网、晚期噪声小时深挖，用模型自己的能量当 reward 来引导搜索。
+VFScale 想让扩散模型在不依赖外部验证器的情况下也能做测试时缩放，关键是让模型自己的能量函数变成可信的"质量打分器"。它分两条线推进：训练侧在标准的 MSE 重建损失和对比损失之上，补上 MRNCL 损失（把能量值和样本质量的单调关系对齐）与 KL 正则化（把能量景观抹平），让低能量真正对应高质量解；推理侧则用混合 MCTS 去噪，在去噪早期噪声大时广撒网、晚期噪声小时深挖，用模型自己的能量当 reward 来引导搜索。训练侧产出一个可信的内在能量函数，推理侧再把它当验证器驱动搜索，两条线接力完成无验证器的测试时缩放。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["训练数据<br/>(迷宫 / 数独)"] --> TR
+    subgraph TR["训练侧：改善能量景观"]
+        direction TB
+        B["MSE + 对比损失<br/>(基础重建)"]
+        C["MRNCL 损失<br/>能量随距离单调上升"]
+        D["KL 正则化<br/>抹平整条去噪轨迹"]
+    end
+    TR --> E["内在能量函数<br/>可当验证器"]
+    F["测试问题<br/>(超出训练难度)"] --> G
+    E -->|"提供 reward"| G
+    subgraph G["hMCTS 去噪：早撒网晚深挖"]
+        direction TB
+        H["噪声大：Best-of-N<br/>并行去噪撒网"]
+        I["噪声小：MCTS<br/>UCB 深挖 + DDIM 回滚"]
+        H --> I
+    end
+    G --> J["高质量解"]
+```
 
 ### 关键设计
 
@@ -69,7 +91,9 @@ $$\text{UCB}(x_t, a_t) = Q(x_t, a_t) + c\sqrt{\frac{\ln N_i}{n_i}}$$
 
 Expansion 对当前节点单步去噪并叠加不同高斯噪声，分出 $K$ 个子分支；Simulation 用 DDIM 快速采样直达 $x_0$，再用模型自己的能量 $E_\theta(\hat{x}_0)$ 作为 reward——这正是"无需外部验证器"的关键，打分信号全部来自训练好的内在能量；Backpropagation 把这个 reward 回传更新路径上所有节点的值。DDIM 的子序列采样特性让每次 simulation 都能跳步直达终点，使得整个回滚足够廉价、MCTS 才跑得起来。
 
-### 完整训练目标
+### 损失函数 / 训练策略
+训练侧四项损失联合优化，前两项保证基本生成质量、后两项专门塑形能量景观：
+
 $$\mathcal{L} = \mathcal{L}_{\text{MSE}} + \mathcal{L}_{\text{Contrast}} + \mathcal{L}_{\text{MRNCL}} + \mathcal{L}_{\text{KL}}$$
 
 ## 实验关键数据

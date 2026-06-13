@@ -36,15 +36,35 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GTM 是一个 decoder-only Transformer：单变量序列先经 RevIN 归一化、通道独立切分与 patching，再做掩码处理后送入 $N$ 层堆叠的解码器块，每块内部串联一个时序自注意力和一个 Fourier attention，最后由一个统一的线性投影层自回归地把被掩码位置生成出来。整个模型在 UTSD-12G 大规模无标注数据上预训练，下游不论是预测、补全还是异常检测都复用同一套权重与生成流程。
+GTM 是一个 decoder-only Transformer，整条 pipeline 要解决的是：让一套权重既学到包含频域信息的丰富表示、又能零修改适配所有生成式下游任务。单变量序列先经 RevIN 归一化、通道独立（CI）切分与 patching 切成 patch token；接着做混合掩码——每个样本以概率开关决定走「尾部连续掩码 + 自回归」还是「随机 span 掩码 + 重建」，被掩码的 span 被随机打乱重排；打乱后的 token 叠加 1D/2D 位置编码送入 $N$ 层堆叠的解码块，每块内部先过一层时序自注意力、再过一层 Fourier attention 注入频域信息；最后由一个统一的线性投影层自回归地把被掩码位置生成出来。整个模型在 UTSD-12G 大规模无标注数据上预训练，下游不论是预测、补全还是异常检测都复用同一套权重与生成流程。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["单变量序列<br/>RevIN 归一化 + 通道独立 + Patching"] --> B
+    B["混合掩码<br/>概率 p：尾部连续掩码（自回归）<br/>概率 1-p：随机 span 掩码（重建）"] --> C
+    C["输入嵌入 + 2D 位置编码 + Span 打乱"] --> D
+    subgraph D["N 层解码块"]
+        direction TB
+        D1["时序自注意力"] --> D2["Fourier Attention<br/>FFT → 5 粒度低秩算子<br/>+ 全局算子（粒度权重 α）→ iFFT"]
+    end
+    D --> E["统一线性投影层<br/>自回归生成被掩码位置"]
+    E --> F["下游任务：预测 / 补全 / 异常检测 / 分类"]
+```
 
 ### 关键设计
 
-**1. Fourier Attention：把"采样粒度"作为先验注入频域建模。** 作者先用 FFT 加 2D 核密度估计分析海量真实序列，发现秒级、分级、小时级、天级数据的幅频/相频联合分布存在系统性差异——这一维度此前的 TSFM 普遍在纯时域建模中被忽略。GTM 因此在每个解码块里加了一条频域支路：把时序自注意力的输出按列做 FFT 得到 $\mathbf{H}_{\text{FFT}} = \text{FFT}(\mathbf{H}_{\text{TemAttOut}})$，再用 5 个低秩矩阵对 $\{(\mathbf{A}_i, \mathbf{B}_i)\}_{i=1}^5$ 分别对应日/时/分/秒/毫秒五种粒度、外加一个全连接的全局支路 $\mathbf{W}_{\text{full}}$ 捕获粒度无关的通用频率模式。当前序列的时间粒度被编码成一个五元组 query，与 5 个可学习 key 做 softmax 得到权重 $\alpha$，按权重聚合各粒度变换的结果：$\mathbf{H}_{\text{FourierAtt}} = \sum_{i=1}^{5} \alpha_i (\mathbf{A}_i \mathbf{B}_i) \mathbf{H}_{\text{FFT}} + \mathbf{W}_{\text{full}} \mathbf{H}_{\text{FFT}}$，最后 iFFT 变回时域。低秩分解把这条频域支路的参数量压到很小，而注意力权重让模型对不同采样率的输入自适应地挑选对应的频域算子，这也是消融里贡献最大的模块。
+**1. 混合掩码预训练：用一个概率开关统一重建与自回归**
 
-**2. 混合掩码预训练：用一个概率开关统一重建与自回归。** 纯重建式预训练学到的表示丰富但不擅长外推预测，纯自回归预训练擅长预测却表示质量有限，过去的多任务 TSFM 往往要为不同任务切换 tokenization 或预训练策略。GTM 用一个超参数 $pred\_ratio$（即概率 $p$）做开关：每个样本以概率 $p$ 施加尾部连续掩码、走自回归预测目标，以概率 $1-p$ 施加随机 span 掩码、走重建目标。被掩码的 span 会被随机排列后拼接 [START]/[END] token；重建分支用 full attention 让模型看到全部上下文，自回归分支用 causal attention 防止未来信息泄漏。这样同一套预训练权重就同时具备了表示能力和预测能力，下游补全（重建）和预测（自回归）都能零修改直接复用，真正做到生成任务无关。
+纯重建式预训练学到的表示丰富但不擅长外推预测，纯自回归预训练擅长预测却表示质量有限，过去的多任务 TSFM 往往要为不同任务切换 tokenization 或预训练策略。GTM 用一个超参数 $pred\_ratio$（即概率 $p$）做开关：每个样本以概率 $p$ 施加尾部连续掩码、走自回归预测目标，以概率 $1-p$ 施加随机 span 掩码、走重建目标。重建分支用 full attention 让模型看到全部上下文，自回归分支用 causal attention 防止未来信息泄漏。这样同一套预训练权重就同时具备了表示能力和预测能力，下游补全（重建）和预测（自回归）都能零修改直接复用，真正做到生成任务无关。
 
-**3. 2D 位置编码 + Span 打乱：让模型知道每个待填 span 有多长。** 由于掩码 span 被打乱重排，模型在生成时必须知道当前要填充的片段长度，否则无法正确对齐输出。GTM 借鉴 GLM 的做法，在输入 embedding 上叠加 1D 与 2D 两套位置编码：$\mathbf{H}_{in} = \mathbf{W}_{emb} \mathbf{X}_{in} + \mathbf{W}_{1D\_pos} + \mathbf{W}_{2D\_pos}$，其中 1D 编码刻画 patch 在原序列中的全局位置，2D 编码刻画当前 token 在所属 span 内部的相对位置和 span 长度。配合 span 随机排列，既保证了生成时的长度可控，也增加了预训练的鲁棒性。
+**2. 2D 位置编码 + Span 打乱：让模型知道每个待填 span 有多长**
+
+混合掩码会把被掩码的 span 随机排列后拼接 [START]/[END] token，模型在生成时必须知道当前要填充的片段长度，否则无法正确对齐输出。GTM 借鉴 GLM 的做法，在输入 embedding 上叠加 1D 与 2D 两套位置编码：$\mathbf{H}_{in} = \mathbf{W}_{emb} \mathbf{X}_{in} + \mathbf{W}_{1D\_pos} + \mathbf{W}_{2D\_pos}$，其中 1D 编码刻画 patch 在原序列中的全局位置，2D 编码刻画当前 token 在所属 span 内部的相对位置和 span 长度。配合 span 随机排列，既保证了生成时的长度可控，也增加了预训练的鲁棒性。
+
+**3. Fourier Attention：把"采样粒度"作为先验注入频域建模**
+
+作者先用 FFT 加 2D 核密度估计分析海量真实序列，发现秒级、分级、小时级、天级数据的幅频/相频联合分布存在系统性差异——这一维度此前的 TSFM 普遍在纯时域建模中被忽略。GTM 因此在每个解码块里、时序自注意力之后加一条频域支路：把时序自注意力的输出按列做 FFT 得到 $\mathbf{H}_{\text{FFT}} = \text{FFT}(\mathbf{H}_{\text{TemAttOut}})$，再用 5 个低秩矩阵对 $\{(\mathbf{A}_i, \mathbf{B}_i)\}_{i=1}^5$ 分别对应日/时/分/秒/毫秒五种粒度、外加一个全连接的全局支路 $\mathbf{W}_{\text{full}}$ 捕获粒度无关的通用频率模式（始终激活）。当前序列的时间粒度被编码成一个五元组 query（如 ETTm 编码为 $[0,0,15,0,0]$），与 5 个可学习 key 做 softmax 得到权重 $\alpha$，按权重聚合各粒度变换的结果：$\mathbf{H}_{\text{FourierAtt}} = \sum_{i=1}^{5} \alpha_i (\mathbf{A}_i \mathbf{B}_i) \mathbf{H}_{\text{FFT}} + \mathbf{W}_{\text{full}} \mathbf{H}_{\text{FFT}}$，最后 iFFT 变回时域。低秩分解把这条频域支路的参数量压到很小，而注意力权重让模型对不同采样率的输入自适应地挑选对应的频域算子，这也是消融里贡献最大的模块。
 
 ### 损失函数 / 训练策略
 模型统一用 MSE 监督被掩码位置的重建/预测值，$\text{Loss} = \frac{1}{|\mathbf{Y}|} \sum_i \|\mathbf{X}_{out_i} - \mathbf{y}_i\|^2$；自回归分支按链式法则逐 token 生成，$\mathbb{P}(\mathbf{X}_{out}) = \prod_i \mathbb{P}(\mathbf{X}_{out_i} \mid \mathbf{X}_{P_{crpt}}, \mathbf{S}_{\sigma(j \leq i)})$。预训练只用 UTSD-12G，严格隔离下游评测数据避免泄漏；下游适配时预测/补全/异常检测三类生成任务完全不改架构，只有分类任务需要替换 projection head。

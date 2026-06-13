@@ -43,7 +43,17 @@ tags:
 
 ### 整体框架
 
-Mamba-3在Mamba-2基础上引入三项由SSM视角驱动的核心改进，外加若干架构优化。整体架构沿用Llama风格，交替排列Mamba-3块和SwiGLU MLP块，采用pre-norm。
+Mamba-3 要补的是亚二次序列模型（状态空间模型，SSM）相对 Transformer 的三块短板：表达力被训练加速牺牲、缺乏状态追踪能力、解码阶段算术密度太低导致硬件空转。它不动 Mamba-2 的整体骨架——仍是 Llama 风格、Mamba-3 块与 SwiGLU MLP 块交替、pre-norm——而是把全部改动压进单个 Mamba-3 块内部那条递推里。一个 token 进入块后先做 B/C/x 投影，经**指数-梯形离散化**定义的二阶递推核更新状态、在递推核里叠加**复值状态空间**带来的数据依赖旋转、再用 **MIMO** 把递推中的外积升秩成能吃满算力的矩阵乘，最后由几处**架构优化**（BC 归一化、B/C 偏置、移除短卷积）收尾，输出送进 SwiGLU MLP。下面四项关键设计就是这条递推自上而下的四处改造。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入序列 x_t<br/>B/C/x 投影"] --> D1["指数-梯形离散化<br/>二阶精度递推核 h_t"]
+    D1 --> D2["复值状态空间<br/>递推核叠加旋转 R_t<br/>(数据依赖 RoPE)"]
+    D2 --> D3["MIMO 升秩<br/>外积→矩阵乘<br/>吃满 tensor core 算力"]
+    D3 --> D4["架构优化<br/>BC 归一化 + B/C 偏置<br/>移除短卷积"]
+    D4 --> OUT["输出 → SwiGLU MLP → 下一块"]
+```
 
 ### 关键设计
 

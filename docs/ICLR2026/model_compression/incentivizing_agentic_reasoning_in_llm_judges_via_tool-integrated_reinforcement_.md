@@ -38,7 +38,23 @@ LLM评判模型（LLM-as-a-Judge）在LLM生态中日益关键——训练阶段
 ### 整体框架
 TIR-Judge 要解决的是：让评判模型不再只靠脑补文本推理来打分，而是在评判过程中边想边写代码、用执行结果来校正判断。整篇方法围绕「把工具集成推理(TIR)塞进评判任务、并用 RL 端到端训练它」展开。
 
-具体来说，评判被建模成一条多轮 TIR 轨迹 $s_k = \{r_1,c_1,o_1,...,r_k,c_k,o_k\}$：每一轮模型先产出推理步骤 $r_i$，再生成一段代码 $c_i$，工具执行后返回结果 $o_i = \mathcal{I}(c_i)$，模型据此进入下一轮推理，直到给出最终判断。这套轨迹用 DAPO（GRPO 的改进版）做 RL 优化，并统一支持 Pointwise（单样本打分）、Pairwise（两两比较）、Listwise（列表排序）三种评判格式。
+具体来说，评判被建模成一条多轮 TIR 轨迹 $s_k = \{r_1,c_1,o_1,...,r_k,c_k,o_k\}$：每一轮模型先产出推理步骤 $r_i$，再生成一段代码 $c_i$，工具执行后返回结果 $o_i = \mathcal{I}(c_i)$，模型据此进入下一轮推理（最多 3 轮），直到给出最终判断。这条轨迹整体在 DAPO（GRPO 的改进版）框架下做 RL 优化，并统一支持 Pointwise（单样本打分）、Pairwise（两两比较）、Listwise（列表排序）三种评判格式。围绕这套主干，论文的三处核心贡献依次落在：喂什么数据（多样化训练数据）、用什么信号（三维度乘法奖励）、怎么冷启动（迭代自举训练）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    D["多样化训练数据<br/>可验证域(数学/编程)+<br/>不可验证域(对话/安全)<br/>真实+合成约 26K 偏好对"] --> T
+    subgraph T["TIR 评判轨迹（边想边算）"]
+        direction TB
+        R["推理步骤 r_i"] --> C["生成代码 c_i"] --> O["工具执行 o_i=I(c_i)"]
+        O -->|"迭代 ≤3 轮"| R
+    end
+    T --> J["最终判断<br/>Pointwise/Pairwise/Listwise"]
+    J --> RW["三维度乘法奖励<br/>R=Rc×(0.1+0.9·[Rt∧Rf])"]
+    RW --> RL["DAPO 强化学习<br/>端到端更新策略"]
+    RL --> BOOT["迭代自举训练<br/>RL→拒绝采样→SFT→RL"]
+    BOOT -.->|"自我进化, 无需教师"| D
+```
 
 ### 关键设计
 

@@ -47,23 +47,45 @@ $$\frac{\partial \mathcal{T}}{\partial x}(x,t) f(x, u(t)) + \frac{\partial \math
 
 ### 整体框架
 
-HyperKKL 把"非自治"这件难事拆成两阶段顺序训练：先在无外部输入（$u \equiv 0$）的纯自治条件下，用 physics-informed 损失训练出基础编码器 $\hat{\mathcal{T}}_{\theta^{\text{base}}}$ 和解码器 $\hat{\mathcal{T}}^*_{\phi^{\text{base}}}$，让它们满足自治 KKL 条件，随后冻结这套基础映射；第二阶段只训练一个超网络 $\psi$，让它读入输入信号的近期历史，即时吐出对基础参数的扰动。推理时一段新输入信号经 LSTM 编码后生成参数扰动 $\Delta\theta, \Delta\phi$，叠加到冻结的基础参数上，就得到一个针对当前输入条件自适应的观测器——全程纯前向，无需重训练或在线梯度更新。
+HyperKKL 要解决的是：经典 KKL 观测器只会处理自治系统，一旦系统被外源输入 $u(t)$ 驱动，变换映射就得变成时变的 $\mathcal{T}(x,t)$、满足带时间偏导项的时变 PDE，而现有学习方法要么逐场景重训、要么在线更新梯度。它的破法是把"非自治"拆成**两阶段顺序训练**：先在无外部输入（$u \equiv 0$）的纯自治条件下，用 physics-informed 损失训练出基础编码器 $\hat{\mathcal{T}}_{\theta^{\text{base}}}$（lifting map）和解码器 $\hat{\mathcal{T}}^*_{\phi^{\text{base}}}$（其左逆），让它们满足自治 KKL 条件，随后**冻结**这套基础映射；第二阶段只训练一个超网络（hypernetwork），让它读入输入信号的近期历史窗口 $u_{[t-w,t]}$，经共享 LSTM 编码后即时吐出对基础参数的扰动。推理时一段新输入信号编码生成参数扰动 $\Delta\theta, \Delta\phi$，叠加到冻结的基础参数上，就得到一个针对当前输入条件自适应的观测器——全程纯前向，无需重训练或在线梯度更新。
 
-整个学习目标把重建误差和时变 PDE 残差捆在一起优化：
+针对系统复杂度不同，第二阶段有两条适配路线：混沌系统里输入会持续重塑吸引子几何，需要 **Dynamic HyperKKL** 直接改写编码器/解码器权重让变换真正时变；低维振荡系统里输入只是有界扰动，用 **Static HyperKKL** 保留自治变换、只往观测器动力学里注一项更轻更稳。论文另设一个不碰架构、只升级训练数据复杂度的**课程学习基线**作对照，用来分离"架构贡献"和"训练贡献"。整个学习目标把重建误差和时变 PDE 残差捆在一起优化：
 
 $$\min_\psi \mathbb{E}_{(x,u) \sim \mathcal{D}} \left[ \underbrace{\| x - \hat{\mathcal{T}}^*(\hat{\mathcal{T}}(x; \theta_u), \phi_u) \|^2}_{\mathcal{L}_{\text{rec}}} + \lambda \underbrace{\left\| \frac{\partial \hat{\mathcal{T}}}{\partial x} f(x,u) + \frac{\Delta \hat{\mathcal{T}}}{\Delta t} - A\hat{\mathcal{T}} - Bh(x) \right\|^2}_{\mathcal{L}_{\text{PDE}}} \right]$$
 
-前一项保证状态能从潜空间重建回来，后一项强制变换满足非自治 KKL 的时变偏微分方程；针对系统复杂度不同，论文给出 Dynamic 与 Static 两套超网络设计，并配一个纯训练的课程学习作对照。
+前一项保证状态能从潜空间重建回来，后一项强制变换满足非自治 KKL 的时变偏微分方程。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["自治轨迹 (u≡0)"] --> B["阶段1·自治预训练<br/>physics-informed 损失<br/>得基础编码器/解码器"]
+    B --> C["冻结基础映射<br/>θ_base, φ_base"]
+    D["外源输入历史<br/>窗口 u[t-w,t]"] --> E["共享 LSTM<br/>编码输入历史 → h_t"]
+    C --> F{"按系统复杂度<br/>选适配路线"}
+    E --> F
+    F -->|"混沌·吸引子被重塑"| G["Dynamic HyperKKL<br/>双 MLP 头预测分块扰动<br/>Δθ,Δφ 叠加基础权重"]
+    F -->|"振荡·有界扰动"| H["Static HyperKKL<br/>保留自治变换<br/>动力学注入项 φ̄"]
+    G --> I["输入自适应观测器<br/>纯前向推理 → x̂(t)"]
+    H --> I
+    B -.->|"训练侧对照"| K["自适应课程学习基线<br/>只升级数据复杂度<br/>不改架构"]
+    K -.-> I
+```
 
 ### 关键设计
 
-**1. Dynamic HyperKKL：用残差超网络生成真正时变的变换。** 当输入会持续重塑吸引子几何（如混沌系统）时，静态映射无能为力，必须让变换本身随时间漂移成 $\mathcal{T}(x, \theta(t))$。Dynamic HyperKKL 把参数显式拆成"基础值 + 输入条件扰动"两部分，编码器参数取 $\theta_{\text{enc}}(t) = \theta_{\text{enc}}^{\text{base}} + \Delta\theta_{\text{enc}}(u_{[t-w, t]})$、解码器参数取 $\phi_{\text{dec}}(t) = \phi_{\text{dec}}^{\text{base}} + \Delta\phi_{\text{dec}}(u_{[t-w, t]})$，其中扰动由一个共享 LSTM 读入长度 $w = 100$ 的输入窗口 $u_{[t-w, t]}$、输出隐状态 $h_t$ 后，再经编码器头和解码器头两个 MLP 分别预测得到。这种残差写法的好处是天然保证 $u \equiv 0$ 时 LSTM 产出 $\Delta\theta = \Delta\phi = 0$，精确退回自治观测器，无外部输入时不会比基础模型更差。
+**1. Dynamic HyperKKL：用残差超网络生成真正时变的变换**
 
-由于一次性预测整张权重矩阵 $W \in \mathbb{R}^{m \times n}$ 维度过高，超网络改用分块预测（chunked prediction），把目标矩阵切块、让 MLP 独立预测每个块，在保住表达能力的同时把输出维度压下来。PDE 残差里的时间偏导项则用有限差分近似，$\frac{\Delta \hat{\mathcal{T}}}{\Delta t} \approx \frac{\hat{\mathcal{T}}(x; \theta(u_{[t, t+\Delta t]})) - \hat{\mathcal{T}}(x; \theta(u_{[t-\Delta t, t]}))}{\Delta t}$，把变换随输入演化的速率直接喂进训练损失。
+混沌系统里输入会持续重塑吸引子几何，静态映射无能为力，必须让变换本身随时间漂移成 $\mathcal{T}(x, \theta(t))$。Dynamic HyperKKL 把参数显式拆成"基础值 + 输入条件扰动"两部分，编码器参数取 $\theta_{\text{enc}}(t) = \theta_{\text{enc}}^{\text{base}} + \Delta\theta_{\text{enc}}(u_{[t-w, t]})$、解码器参数取 $\phi_{\text{dec}}(t) = \phi_{\text{dec}}^{\text{base}} + \Delta\phi_{\text{dec}}(u_{[t-w, t]})$。扰动由一个共享 LSTM 读入输入窗口 $u_{[t-w, t]}$、输出隐状态 $h_t$ 汇总输入历史后，再经编码器头、解码器头两个 MLP 分别预测得到。这种残差写法天然保证 $u \equiv 0$ 时 LSTM 产出 $\Delta\theta = \Delta\phi = 0$，精确退回自治观测器，无外部输入时不会比基础模型更差。
 
-**2. Static HyperKKL：保留自治变换，只在观测器动力学里注入输入。** 对那些输入只造成有界扰动、吸引子几何基本不变的简单系统，重训整套变换是浪费。Static HyperKKL 直接复用自治变换 $\mathcal{T}(x)$ 不动，只在潜空间观测器的动力学上加一个学习出来的输入注入项，写成 $\dot{\hat{z}} = A\hat{z} + By + \bar{\varphi}(\hat{z}, u; \xi)$。这里 $\bar{\varphi}$ 是个小 MLP，输入是 LSTM 编码的输入上下文和当前潜状态 $\hat{z}$，训练时同样约束它在 $u = 0$ 时输出零、保持与自治情形一致。这套设计在低维振荡系统上既轻量又稳，实验中正是它在 Duffing、Van der Pol 上取得最优。
+由于一次性预测整张权重矩阵 $W \in \mathbb{R}^{m \times n}$ 维度过高，每个 MLP 头改用分块预测（chunked prediction）：把目标矩阵切成小块、独立预测每块，既把输出维度压下来，又在每块内保住满秩表达力、避开低秩分解的表征瓶颈。PDE 残差里的时间偏导项 $\frac{\partial \mathcal{T}}{\partial t}$ 用有限差分近似 $\frac{\Delta \hat{\mathcal{T}}}{\Delta t} \approx \frac{\hat{\mathcal{T}}(x; \theta(u_{[t, t+\Delta t]})) - \hat{\mathcal{T}}(x; \theta(u_{[t-\Delta t, t]}))}{\Delta t}$——同一个状态 $x$ 在相邻两个输入窗口下各过一遍编码器、取差，就量到了变换随输入演化的速率，不必显式对 LSTM 求导。
 
-**3. 自适应课程学习基线：检验"换数据能不能替代换架构"。** 论文还设了一个不碰架构、只调训练策略的对照，把训练数据按输入复杂度分级（$\mathcal{D}_1$ 常数 → $\mathcal{D}_2$ 低频正弦 → … → 高频混合），当前级别损失停滞后再推进到下一级。它要回答的问题很直接：在静态架构不变的前提下，仅靠更丰富的训练课程能否解决非自治问题？后续实验给出否定答案——这一基线在所有系统上反而劣于自治基线，从而坐实瓶颈是表征性的而非训练数据不够。
+**2. Static HyperKKL：保留自治变换，只往观测器动力学注入输入**
+
+对那些输入只造成有界扰动、吸引子几何基本不变的简单系统，重训整套变换是浪费。Static HyperKKL 直接复用自治变换 $\mathcal{T}(x)$ 不动，只在潜空间观测器的动力学上加一个学习出来的输入注入项，写成 $\dot{\hat{z}} = A\hat{z} + By + \bar{\varphi}(\hat{z}, u; \xi)$。这里 $\bar{\varphi}$ 是个小 MLP，用来逼近控制仿射形式下理论要求的注入项 $\bar{\varphi}(\mathcal{T}(x)) = \frac{\partial \mathcal{T}}{\partial x}(x)\,g(x)$；它的输入是 LSTM 编码的输入上下文拼上当前潜状态 $\hat{z}$，训练时同样约束 $u = 0$ 时输出零、与自治情形一致。这套设计不碰已训好的编解码映射，只靠观测器动力学补偿输入效应，在低维振荡系统上既轻量又稳，实验中正是它在 Duffing、Van der Pol 上取得最优。
+
+**3. 自适应课程学习基线：检验换数据能否替代换架构**
+
+论文还设了一个不碰架构、只调训练策略的对照（对应贡献"分离架构与训练"），把训练数据按输入的频谱复杂度分级（$\mathcal{D}_1$ 常数 → $\mathcal{D}_2$ 低频正弦 → … → 高频混合），从自治预训练初始化、在当前级别损失停滞（plateau）后再推进到下一级。它要回答的问题很直接：在静态架构不变的前提下，仅靠更丰富的训练课程能否解决非自治问题？后续实验给出否定答案——这一基线在所有系统上反而劣于自治基线，从而坐实瓶颈是表征性的（架构）而非训练数据不够。
 
 ## 实验结果
 

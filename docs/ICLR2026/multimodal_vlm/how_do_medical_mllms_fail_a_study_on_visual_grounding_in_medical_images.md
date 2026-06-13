@@ -43,6 +43,22 @@ tags:
 
 本文要回答的不是"怎么让医学MLLM更强"，而是"它到底败在哪一步"，并顺手给出一个轻量修复。整条线索按"造尺子→量病灶→开药方"展开：先构建一个专门考视觉扎根的 VGMED 数据集，让每个问题都必须看准标注区域才能答对；再用注意力比、KL 散度、JS 散度三把尺子去量 8 个 SOTA 医学 MLLM，定位出它们注意力系统性偏离临床区域的事实；最后提出无训练的 VGRefine，在推理时分两步把跑偏的注意力拉回相关区域。三部分环环相扣——前两步证明"视觉扎根才是瓶颈"，第三步反过来用一个不注入任何医学知识的修复证实这个诊断。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["医学图像 + VQA 问题"] --> B["VGMED 数据集构建<br/>分割 mask→bbox<br/>定位/属性两类问题"]
+    B --> C["注意力诊断尺子<br/>AR + KL/JS 散度<br/>量注意力是否铺满 bbox"]
+    C --> D{"诊断 8 个<br/>SOTA 医学 MLLM"}
+    D -->|"注意力系统性<br/>偏离临床区域"| E
+    subgraph E["VGRefine 推理时修正（无训练）"]
+        direction TB
+        E1["Step 1 注意力分诊<br/>COCO 选 top-K 头→聚合<br/>→抑制低激活→二值 mask"]
+        E1 --> E2["Step 2 注意力敲除<br/>mask 屏蔽问题 token<br/>到无关视觉 token 的连接"]
+    end
+    E --> F["修正后注意力<br/>聚焦临床相关区域"]
+    F --> G["医学 VQA 答案"]
+```
+
 ### 关键设计
 
 **1. VGMED 数据集：把视觉扎根从语义扎根里单独拎出来考**

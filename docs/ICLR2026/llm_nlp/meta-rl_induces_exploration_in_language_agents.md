@@ -48,13 +48,35 @@ tags:
 
 ### 整体框架
 
-LaMer（LLM Agent with Meta-RL）把一次任务尝试拆成由 $N$ 个 episode 顺序组成的一个 trial $\mathcal{T} = (\tau^{(0)}, \tau^{(1)}, \dots, \tau^{(N-1)})$，让 agent 在早期 episode 大胆探索、在后续 episode 利用积累的经验，并在每个 episode 结束时用一段文本反思把经验写进上下文。整套机制既不增加训练轨迹数量，也不改动底层优化器，只是改变了轨迹的组织和奖励的传播方式，把"探索"本身变成了可被 RL 优化的目标。
+LaMer（LLM Agent with Meta-RL）把一次任务尝试拆成由 $N$ 个 episode 顺序组成的一个 trial $\mathcal{T} = (\tau^{(0)}, \tau^{(1)}, \dots, \tau^{(N-1)})$：agent 在早期 episode 大胆探索、在后续 episode 利用积累的经验。每个 episode 结束后，若已成功就终止本次 trial，否则让 agent 写一段文本反思、把经验追加进 inter-episode 记忆，再从**同一初始状态**重开下一个 episode，直到成功或用满 $N$ 个预算。trial 跑完后，奖励不再只在单个 episode 内结算，而是沿整条 trial 向前传播，喂给一个标准的策略梯度优化器。整套机制既不增加训练轨迹数量、也不改动底层优化器，只是改变了轨迹的组织方式与奖励的传播方式，把"探索"本身变成了可被 RL 直接优化的目标。两个核心设计——跨 episode 折扣回报、基于反思的上下文策略适应——分别回答"信用怎么跨 episode 分配"和"测试时不更新权重怎么适应"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任务初始状态 s₀<br/>同一 trial 内 N 个 episode 共享"] --> TRIAL
+    subgraph TRIAL["跨 episode 折扣回报：把信用沿 trial 向前传播（设计 1）"]
+        direction TB
+        B["Episode n：策略 π(·|记忆 H⁽ⁿ⁾)<br/>rollout 一条轨迹 τ⁽ⁿ⁾"] --> C{该 episode 成功?}
+        C -->|否, 还有预算| D["基于反思的上下文策略适应：<br/>生成文本反思，追加进<br/>inter-episode 记忆 H⁽ⁿ⁺¹⁾"]
+        D -->|从同一 s₀ 重开下一 episode| B
+    end
+    C -->|成功 或 用满 N 个 episode| E["计算跨 episode 回报<br/>G_t⁽ⁿ⁾ = episode 内回报 + γ_traj 衰减后续 episode"]
+    E --> F["Meta-RL 目标 J(θ) → 策略梯度<br/>兼容 PPO / GRPO / GiGPO"]
+```
 
 ### 关键设计
 
-**1. 跨 episode 折扣回报：让探索行为也能拿到奖励。** 多轮任务的成功信号往往稀疏到只在 episode 结尾出现，单 episode RL 因此学不会"先试错再收敛"——前期的探索动作在自己的 episode 里几乎得不到回报，会被梯度抑制掉。LaMer 的做法是把奖励沿 trial 向前传播：第 $n$ 个 episode 中第 $t$ 步的回报定义为 $G_t^{(n)} = g_t^{(n)} + \sum_{m=n+1}^{N-1} \gamma_{\text{traj}}^{m-n} g_0^{(m)}$，前半项 $g_t^{(n)} = \sum_{l=t}^{T-1} \gamma_{\text{step}}^{l-t} r_l^{(n)}$ 是 episode 内的常规折扣回报，后半项把后续 episode 的初始回报以跨 episode 折扣因子 $\gamma_{\text{traj}}$ 衰减后累加进来。这样即便某个早期 episode 自身失败，只要它带来的信息帮助后续 episode 成功，这次探索就会获得正向信用。对应的元强化目标为 $J(\theta) = \mathbb{E}_{\mathcal{T} \sim \pi_\theta} \big[ \sum_{n=0}^{N-1} \gamma_{\text{traj}}^n \sum_{t=0}^{T-1} \gamma_{\text{step}}^t r_t^{(n)} \big]$。这里的 $\gamma_{\text{traj}}$ 是一个直观的探索-利用旋钮：取小值（如 0.6）偏向快速利用、压低后期 episode 权重，取大值（如 0.9）则鼓励 agent 把更多预算花在战略性探索上，实验中 Sokoban/Webshop 偏好 0.6、需要更多探索的 MineSweeper 偏好 0.9。
+**1. 跨 episode 折扣回报：让探索行为也能拿到奖励**
 
-**2. 基于反思的上下文策略适应：不更新权重也能在测试时变强。** 经典 Meta-RL 靠隐式记忆或内循环梯度做任务内适应，但对 LLM 既笨重又不自然。LaMer 直接利用 LLM 的语言能力：每个 episode 结束后让 agent 生成一段文本反思，连同历史轨迹一起构成 inter-episode 记忆 $\mathcal{H}^{(n)}$，下一个 episode 的策略就条件化在这段记忆上，即 $\pi_\theta^{(n)}(\cdot) = \pi_\theta(\cdot | \mathcal{H}^{(n)})$。适应过程完全发生在上下文里、不需要任何梯度更新，因此天然支持测试时持续改进。更关键的是反思不是冻结的提示技巧——它由后续 episode 拿到的奖励反向训练，agent 会逐渐学会写出"对下一次真正有用"的反思。这一点正是 LaMer 区别于 Reflexion 之处：后者用同样的多 episode + 反思结构，却保持 LLM 冻结、反思无法被优化。消融也显示，仅保留反思（去掉原始轨迹）反而比同时保留两者更好，因为反思更简洁聚焦、不会用冗长历史挤占上下文。
+多轮任务的成功信号往往稀疏到只在 episode 结尾出现，单 episode RL 因此学不会"先试错再收敛"——前期的探索动作在自己的 episode 里几乎得不到回报，会被梯度抑制掉。LaMer 的做法是把奖励沿 trial 向前传播：第 $n$ 个 episode 中第 $t$ 步的回报定义为
+
+$$G_t^{(n)} = g_t^{(n)} + \sum_{m=n+1}^{N-1} \gamma_{\text{traj}}^{m-n} g_0^{(m)}$$
+
+前半项 $g_t^{(n)} = \sum_{l=t}^{T-1} \gamma_{\text{step}}^{l-t} r_l^{(n)}$ 是 episode 内的常规折扣回报，后半项把后续每个 episode 的初始回报 $g_0^{(m)}$ 以跨 episode 折扣因子 $\gamma_{\text{traj}}$ 衰减后累加进来。这样即便某个早期 episode 自身失败，只要它带来的信息帮助后续 episode 成功，这次探索就会获得正向信用。对应的元强化目标为 $J(\theta) = \mathbb{E}_{\mathcal{T} \sim \pi_\theta} \big[ \sum_{n=0}^{N-1} \gamma_{\text{traj}}^n \sum_{t=0}^{T-1} \gamma_{\text{step}}^t r_t^{(n)} \big]$。这里的 $\gamma_{\text{traj}} \in [0,1]$ 是一个直观的探索-利用旋钮：取小值（如 0.6）偏向快速利用、压低后期 episode 权重，取大值（如 0.9）则鼓励 agent 把更多预算花在战略性探索上——实验中 Sokoban/Webshop 偏好 0.6、需要更多探索的 MineSweeper 偏好 0.9。
+
+**2. 基于反思的上下文策略适应：不更新权重也能在测试时变强**
+
+经典 Meta-RL 的内循环靠隐式记忆或梯度做任务内适应，但对 LLM 既笨重又不自然。LaMer 直接利用 LLM 的语言能力：每个 episode 结束后让 agent 生成一段文本反思，连同历史轨迹一起构成 inter-episode 记忆 $\mathcal{H}^{(n)}$，下一个 episode 的策略就条件化在这段记忆上，即 $\pi_\theta^{(n)}(\cdot) = \pi_\theta(\cdot | \mathcal{H}^{(n)})$。适应过程完全发生在上下文里、不需要任何梯度更新，因此天然支持测试时持续改进。更关键的是，反思不是冻结的提示技巧——它由后续 episode 拿到的奖励反向训练，agent 会逐渐学会写出"对下一次真正有用"的反思。这一点正是 LaMer 区别于 Reflexion 之处：后者用同样的多 episode + 反思结构，却保持 LLM 冻结、反思无法被优化。消融也显示，仅保留反思（去掉原始轨迹）反而比同时保留两者更好，因为反思更简洁聚焦、不会用冗长历史挤占上下文。
 
 ### 损失函数 / 训练策略
 

@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-TimeOmni 接收时间序列信号 $\mathbf{X} \in \mathbb{R}^{T' \times N}$ 和任务 prompt。时间序列先沿时间维度展平，经 Time Series Encoder（Router + Patch Expert + Patch Reprogramming）编码为 $\mathbf{X}_{enc} \in \mathbb{R}^{T_{enc} \times D_{llm}}$（其中 $T_{enc}$ 通常 100-200）。Prompt 经文本 tokenizer 编码。两者拼接输入预训练 LLM。理解任务通过 softmax 输出文本，生成任务通过线性回归头输出时间序列。
+TimeOmni 接收时间序列信号 $\mathbf{X} \in \mathbb{R}^{T' \times N}$ 和任务 prompt。时间序列先沿时间维度展平，经时间序列编码器（Time Series Encoder）编码：先由 Router 按信号实际长度选出合适的 Patch Expert 把序列切片成 token，再经 Patch Reprogramming 借 LLM 词汇空间对齐，得到 $\mathbf{X}_{enc} \in \mathbb{R}^{T_{enc} \times D_{llm}}$（其中 $T_{enc}$ 通常 100-200）。Prompt 经文本 tokenizer 编码为 $\mathbf{P}$。两者按任务类型调换顺序后拼接，输入预训练 LLM 骨干。最后由双输出头分流：理解任务过 softmax 输出文本，生成任务过回归头输出时间序列。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["科学时间序列<br/>X ∈ R^(T'×N)，沿时间展平"]
+    subgraph ENC["时间序列编码器"]
+        direction TB
+        R["Router + Patch Expert Family<br/>按长度选 patch 大小<br/>token 数控在 100-200"]
+        RP["Patch Reprogramming<br/>借 LLM 词汇空间<br/>跨注意力对齐"]
+        R -->|"X_patch"| RP
+    end
+    P["任务 prompt<br/>tokenizer + 嵌入层 → P"]
+    X --> ENC
+    ENC -->|"X_enc"| CAT["双输出头 + Prompt 顺序策略<br/>理解:信号在前 / 生成:提示在前<br/>按任务拼接"]
+    P --> CAT
+    CAT --> LLM["预训练 LLM 骨干<br/>(Qwen3-8B)"]
+    LLM -->|"理解任务"| H1["softmax 头<br/>输出文本"]
+    LLM -->|"生成任务"| H2["回归头族<br/>选最近长度输出序列"]
+```
 
 ### 关键设计
 

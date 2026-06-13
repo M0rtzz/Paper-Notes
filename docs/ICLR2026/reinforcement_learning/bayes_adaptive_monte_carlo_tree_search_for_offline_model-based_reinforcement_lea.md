@@ -42,7 +42,19 @@ tags:
 ### 整体框架
 这篇论文要解决的是离线模型基 RL 里一个被长期忽视的问题：从静态数据集学出来的是一**组** ensemble 世界模型，它们在数据覆盖区域行为一致、在 OOD 区域却各执一词，可现有方法要么均匀采样一个成员、要么静态地加个悲观惩罚，始终没让 agent 学会"此时此地该信哪个模型"。BA-MCTS 的整体思路是把离线 MBRL 重新建模成一个贝叶斯自适应 MDP（BAMDP），让"对模型的信念"成为状态的一部分并在规划过程中动态更新。
 
-具体流程是：先在离线数据集 $\mathcal{D}_\mu$ 上训练 $K$ 个 ensemble 世界模型 $\{(\mathcal{P}_\theta^i, \mathcal{R}_\theta^i)\}_{i=1}^K$；再以这组模型构建一个带悲观奖励惩罚的 BAMDP；然后对每个采样到的状态，用 Continuous BAMCP 做一次带信念更新的树搜索；最后把搜索得到的改进策略和值估计蒸馏回 actor-critic 网络，如此循环做策略迭代。这是一套把 AlphaZero 式"RL + Search"搬到离线连续控制上的范式。
+具体流程是：先在离线数据集 $\mathcal{D}_\mu$ 上训练 $K$ 个 ensemble 世界模型 $\{(\mathcal{P}_\theta^i, \mathcal{R}_\theta^i)\}_{i=1}^K$；再以这组模型构建一个带悲观奖励惩罚的 BAMDP（把"对模型的信念"塞进状态、并对不确定区域加惩罚）；然后对每个采样到的状态，用 Continuous BAMCP 做一次带信念更新的树搜索，得到改进的策略与值估计；最后把搜索结果蒸馏回 actor-critic，并用更新后的网络驱动下一轮搜索，如此循环做策略迭代。这是一套把 AlphaZero 式"RL + Search"搬到离线连续控制上的范式。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集 D"] --> ENS["训练 K 个<br/>ensemble 世界模型"]
+    ENS --> BELIEF["BAMDP 建模与信念更新<br/>信息状态 (s, b)<br/>沿轨迹贝叶斯更新信念 b"]
+    BELIEF --> PESS["悲观 BAMDP（P-BAMDP）<br/>奖励叠加一步前瞻 Q<br/>目标的悲观惩罚"]
+    PESS --> BAMCP["Continuous BAMCP 树搜索<br/>DPW + PUCT，按信念<br/>加权采样后继状态"]
+    BAMCP --> RET["返回改进策略 π_ret<br/>与值估计 v_ret"]
+    RET --> PI["搜索基策略迭代<br/>KL 蒸馏 actor + SAC 更新 critic"]
+    PI -->|下一轮：用更新后的 π、V 重搜| BAMCP
+```
 
 ### 关键设计
 
@@ -54,17 +66,17 @@ $$b'(\theta)(i) \propto b(\theta)(i) \cdot \mathcal{P}_\theta^i(s'|s,a) \cdot \m
 
 也就是说，预测越准确的成员会在后续规划中被赋予越高的权重。这与"均匀采样 ensemble"的做法有本质区别——agent 能沿着每条轨迹针对性地信任最精确的那个模型，而不是把不确定性当成一个固定的启发式去处理。
 
-**2. Continuous BAMCP：把贝叶斯规划从离散空间推到连续随机控制**
+**2. 悲观 BAMDP（P-BAMDP）：在所有模型都不准的区域兜底**
 
-原始 BAMCP（Guez 2013）只能处理离散空间且依赖真实世界模型，没法直接用在连续状态/动作的离线 MBRL 上。这里的关键是引入 Double Progressive Widening (DPW)：搜索树为每个节点维护一个有限的子节点列表，按访问计数 $\lfloor N^{\alpha} \rfloor$ 控制扩展速率，新动作或新后继状态只有在该节点被访问足够多次后才添加进来，从而在连续空间里把分支因子约束住。但 DPW 一引入，原始 BAMCP 赖以成立的 root sampling 就失效了——Lemma A.1 的等式不再成立，所以选择规则改成 PUCT。在状态扩展（StatePW）时，后继状态按当前信念加权采样 $s' \sim \sum_i b(\theta)(i) \mathcal{P}_\theta^i(\cdot|s,a)$，并在每次转移后立刻更新信念。论文进一步证明了这个规划器的一致性，即它能收敛到近贝叶斯最优策略。
-
-**3. 悲观 BAMDP（P-BAMDP）：在所有模型都不准的区域兜底**
-
-即便 BAMDP 能适应性地选信更靠谱的模型，仍会遇到所有 ensemble 成员都不准的 OOD 区域，光靠信念更新救不了。P-BAMDP 在奖励上叠一层悲观惩罚（Eq. 5）：
+即便 BAMDP 能适应性地选信更靠谱的模型，仍会遇到所有 ensemble 成员都不准的 OOD 区域，光靠信念更新救不了。P-BAMDP 在奖励上叠一层悲观惩罚（Eq. 5），和信念机制一起构成搜索所求解的"环境"：
 
 $$\tilde{r} = r - \lambda \cdot \text{std}[r^i + \gamma \mathbb{E}_{s'^i, a'} Q_{\psi^-}(s'^i, a')]_{i=1}^K$$
 
 值得注意的是惩罚的对象——它不像 MOPO/MOReL 那样只惩罚 next-state 预测的分歧，而是惩罚**一步前瞻 Q 值目标**在各成员上的标准差。这个量更直接地刻画了 agent 在某个状态-动作对上整体的不确定性，因此对高风险区域的抑制更贴切，相当于给信念机制加了一道安全阀。
+
+**3. Continuous BAMCP：把贝叶斯规划从离散空间推到连续随机控制**
+
+原始 BAMCP（Guez 2013）只能处理离散空间且依赖真实世界模型，没法直接用在连续状态/动作的离线 MBRL 上。这里的关键是引入 Double Progressive Widening (DPW)：搜索树为每个节点维护一个有限的子节点列表，按访问计数 $\lfloor N^{\alpha} \rfloor$ 控制扩展速率，新动作或新后继状态只有在该节点被访问足够多次后才添加进来，从而在连续空间里把分支因子约束住。但 DPW 一引入，原始 BAMCP 赖以成立的 root sampling 就失效了——Lemma A.1 的等式不再成立，所以选择规则改成 PUCT。在状态扩展（StatePW）时，后继状态按当前信念加权采样 $s' \sim \sum_i b(\theta)(i) \mathcal{P}_\theta^i(\cdot|s,a)$，并在每次转移后立刻更新信念（呼应设计 1 的贝叶斯更新）。论文进一步证明了这个规划器的一致性，即它能收敛到近贝叶斯最优策略。
 
 **4. 搜索基策略迭代（"RL + Search"）：把搜索的强信号蒸馏成可部署的网络**
 

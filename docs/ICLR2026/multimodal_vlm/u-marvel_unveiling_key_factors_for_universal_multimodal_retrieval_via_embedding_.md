@@ -43,30 +43,55 @@ tags:
 
 ### 整体框架
 
-U-MARVEL基于Qwen2-VL-7B-Instruct，用LoRA微调，整体pipeline分三大阶段：(1) 渐进过渡——从纯文本检索到跨模态对齐再到指令导向的多模态检索，分步适配decoder-only模型为嵌入模型；(2) 硬负样本挖掘——用过滤策略消除false negative噪声后持续训练；(3) 重排蒸馏——训练generative reranker后与recall模型融合，再通过改进的KL蒸馏压缩为单模型。输入为任意模态的query（文本/图像/文本+图像），输出为统一嵌入向量，通过余弦相似度检索候选。
+U-MARVEL 想回答一个被社区忽略的问题：把一个为自回归生成而生的 decoder-only MLLM 改造成通用多模态检索器，到底哪些设计决策真正重要。它的做法是"先理解再构建"——先实现一个通用的对比学习 pipeline，沿三条轴线逐项消融：嵌入怎么从 token 序列里提取、对比目标的超参怎么调、recall+rerank 双模型怎么压成单模型；每条轴线上跑赢的配置才被组装进最终框架。
+
+成品 U-MARVEL 以 Qwen2-VL-7B-Instruct 为骨干、用 LoRA 微调，可以分成"提取"和"训练"两层来看。底层是**嵌入提取架构**（双向注意力 + mean pooling + 去掉压缩 prompt + 指令掩码），决定任意模态的 query 如何被压成一个检索向量；上层是**三阶段渐进训练**——先分三步把模型从纯文本检索平滑过渡到多模态指令检索，再做过滤式硬负挖掘进一步拉开难分候选，最后把 recall+rerank 双模型蒸馏成单模型。推理时 query（文本/图像/文本+图像）经嵌入提取得到统一向量，用余弦相似度检索候选。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    Q["query（文本/图像/文本+图像）"] --> E
+    E["嵌入提取<br/>双向注意力+mean pooling<br/>去压缩prompt+指令掩码"] --> S1
+    subgraph PT["渐进过渡训练"]
+        direction TB
+        S1["Step1 NLI 纯文本<br/>单向 InfoNCE"] --> S2["Step2 CC3M 图文对<br/>双向 InfoNCE 重建跨模态对齐"] --> S3["Step3 M-BEIR<br/>指令微调"]
+    end
+    PT --> HN["过滤式硬负挖掘<br/>阈值0.7剔除false negative<br/>→取top-5"]
+    HN --> RD["高效重排蒸馏<br/>reranker融合→top-k范围KL蒸馏"]
+    RD --> M["单一嵌入模型"]
+    M --> R["余弦相似度检索候选"]
+```
 
 ### 关键设计
 
-**1. 嵌入提取策略：把 decoder-only MLLM 的 token 序列压成一个检索向量，到底该怎么压**
+**1. 嵌入提取：双向注意力 + mean pooling + 去压缩 prompt**
 
-这是全文最核心的发现。社区主流做法几乎一致——causal attention + 一句压缩 prompt（"Summarize in one word: emb"）+ 取 last token 作嵌入。作者把注意力方向、pooling 方式、是否加压缩 prompt 排列组合成 5 种方案逐一对比，结论是 **双向注意力 + mean pooling + 不加压缩 prompt** 最优（Local 57.2 vs 主流方案 56.6）。关键洞察在于压缩 prompt 和 mean pooling 本质上互相打架：prompt 逼着模型把信息全挤到最后一个 token 上，而 mean pooling 恰恰要求信息均匀摊在所有 token 上，二者诉求相反。去掉 prompt 后，mean pooling 才能正常聚合全局信息；再配上双向注意力，每个 token 都能看到完整上下文，也就消除了 last token 固有的 recency bias。这个结论直接挑战了社区默认的 last token 范式——它与纯文本领域的 NV-Embed 一致，却与同样基于 Qwen2-VL 的 GME 相反。
+这是全文最核心的发现。社区主流做法几乎一致——causal attention + 一句压缩 prompt（"Summarize above image and sentence in one word: emb"）+ 取 last token 作嵌入。作者把注意力方向、pooling 方式、是否加压缩 prompt 排列组合成 5 种方案逐一对比，结论是**双向注意力 + mean pooling + 不加压缩 prompt** 最优（Local 57.2 vs 主流方案 56.6）。关键洞察在于压缩 prompt 和 mean pooling 本质上互相打架：prompt 逼着模型把信息全挤到最后一个 token 上，而 mean pooling 恰恰要求信息均匀摊在所有 token 上——消融里把 last token 直接换成 mean token 而不去 prompt，性能反而暴跌 22.9%/27.2%，正是这种冲突的体现。去掉 prompt 后 mean pooling 才能正常聚合全局信息；再配上双向注意力，每个 token 都能看到完整上下文，也就消除了 last token 固有的 recency bias。这个结论直接挑战了社区默认的 last token 范式——它与纯文本领域的 NV-Embed 一致，却与同样基于 Qwen2-VL 的 GME 相反。
 
-**2. 指令掩码：双向注意力下指令已经渗进 query，pooling 时就别再重复算一遍**
+改用双向注意力后还顺手带来一个修正——**指令掩码**。双向 self-attention 下，instruction tokens 在前向传播里已经把语义渗进了 query 的每一个 token，若 mean pooling 时再把 instruction tokens 一起平均就成了重复计算。于是 pooling 阶段把 instruction tokens 全部 mask 掉、只对 query 部分取平均，数值提升虽小（+0.1%/+0.3%），却从原理上消除了 instruction bias，让嵌入更纯粹地反映 query 与 candidate 的语义匹配。
 
-U-MARVEL 改用双向自注意力后，instruction tokens 在前向传播中已经通过 self-attention 影响了 query 每一个 token 的表征。既然语义已经渗透进去，再在 mean pooling 时把 instruction tokens 一起平均就成了重复计算。于是 pooling 阶段把 instruction tokens 全部 mask 掉，只对 query 部分的 token 取平均。数值上提升很小（+0.1%/+0.3%），但它从原理上消除了 instruction bias，让最终嵌入更纯粹地反映 query 与 candidate 的语义匹配，而不掺入指令本身的偏置。
+**2. 渐进过渡训练：分三步把 decoder-only 模型平滑变成嵌入模型**
 
-**3. 渐进过渡训练：任务跨度太大就分三步走，让 decoder-only 模型平滑变成嵌入模型**
+直接拿多模态检索数据去微调一个为自回归生成而生的 MLLM，任务跨度过大，结果反而次优。作者把适配拆成由简到难的三步：Step 1 在 NLI 纯文本上用单向 InfoNCE 训练，先建立文本编码器的语义检索能力；Step 2 在 CC3M 图文对上换成双向 InfoNCE，重建文本与视觉编码器的跨模态对齐——MLLM 原本用 causal attention，一旦切到 bidirectional 就会破坏已有对齐，必须显式重建；Step 3 才在 M-BEIR 多模态检索数据上做指令微调。一个有意思的细节是 Step 2 里 CC3M 的简洁文本比 ShareGPT4V 的详细描述更适合检索，说明对齐阶段要的是干净的图文对应而非冗长描述。每一步都站在上一步的基础上，使整条适配路径平滑收敛，也是模型对 CIR、视频检索零样本泛化的根源。
 
-直接拿多模态检索数据去微调一个为自回归生成而生的 MLLM，任务跨度过大，结果反而次优。作者把适配拆成由简到难的三步：Step 1 在 NLI 纯文本上用单向 InfoNCE 训练，先建立文本编码器的语义检索能力；Step 2 在 CC3M 图文对上换成双向 InfoNCE，重建文本与视觉编码器的跨模态对齐——因为 MLLM 原本用 causal attention，一旦切到 bidirectional 就会破坏已有对齐，必须显式重建；Step 3 才在 M-BEIR 多模态检索数据上做指令微调。一个有意思的细节是：Step 2 里 CC3M 的简洁文本比 ShareGPT4V 的详细描述更适合检索任务，说明对齐阶段要的是干净的图文对应而非冗长描述。每一步都站在上一步的基础上，使整条适配路径平滑收敛。
+**3. 过滤式硬负挖掘：先剔除 false negative，再挖硬负**
+
+在渐进过渡得到的模型上继续用硬负样本训练，能进一步拉开 query 与难混淆候选的距离，但直接取 top-k 硬负会崩塌——检索数据标注常有遗漏，相似度最高的"硬负"里混着实际为正例的 false negative，把它们当负样本会给出矛盾梯度。作者的做法是先设相似度阈值 0.7 把过高的候选（疑似漏标正例）滤掉，再从剩下的取 top-5 作硬负，与 in-batch negative 混合训练。这一步过滤把性能从 60.6 提到 61.7，说明硬负挖掘的关键不在"挖得多硬"，而在"先把假负样本择干净"。
+
+**4. 高效重排蒸馏：把 recall+rerank 双模型蒸成单模型**
+
+recall-then-rerank 能提精度，但推理开销翻倍。U-MARVEL 想让单模型也逼近双模型的效果。作者先训练一个生成式 reranker（对每个 query-candidate 对输出 YES/NO），把它与 recall 模型的分数线性融合（$\alpha=0.5$）当作 teacher，再用 KL 散度把 teacher 蒸进单一 student。真正巧妙的是蒸馏范围：传统做法在整个 $O(n^2)$ 的 similarity matrix 上蒸馏，U-MARVEL 只对每个 query 的 top-k 硬负范围（$O(nk)$）做蒸馏，计算量降到传统方法的 4.1%（14h vs 340h），训练特征的多样性反而增加 26 倍。蒸馏后单模型 63.2% 已逼近双模型 63.7%，差距仅 0.5%。
 
 ### 损失函数 / 训练策略
 
-训练目标为InfoNCE对比损失：$\mathcal{L}_{\text{InfoNCE}}=-\log\frac{\exp(\text{sim}(e_q,e_{c^+})/\tau)}{\sum_i\exp(\text{sim}(e_q,e_{c_i})/\tau)}$。作者发现三个参数之间存在强交互效应：
+对比学习目标为 InfoNCE：
 
-- **Batch size + Learning rate缩放**：单纯增大batch而不调lr几乎无效（480→1920仅+0.2%）；配合lr线性缩放后提升显著（+1.7%）。这与视觉训练中的lr scaling rule一致
-- **可学习温度 >> 固定温度**：将$\tau$从固定0.05改为可学习参数，同等batch下提升1.2~1.4%。可学习温度能自适应调整softmax分布的锐度，是被社区严重忽视的关键因子
-- **硬负样本过滤**：直接用top-k硬负样本会因false negative导致训练崩塌；作者提出先设阈值0.7过滤掉相似度过高的候选（可能是标注遗漏的正例），再取top-5作为硬负，与in-batch negative混合训练。过滤后性能从60.6提升到61.7
-- **重排蒸馏**：训练一个generative reranker（对每个query-candidate对输出YES/NO），与recall模型线性融合（$\alpha=0.5$）得到teacher分数，然后用KL散度蒸馏到单一student模型。改进之处在于仅对query的top-k硬负范围做蒸馏，而非全similarity matrix，计算量降至传统方法的4.1%（14h vs 340h），同时训练特征多样性增加26倍
+$$\mathcal{L}_{\text{InfoNCE}}=-\log\frac{\exp(\text{sim}(e_q,e_{c^+})/\tau)}{\sum_i\exp(\text{sim}(e_q,e_{c_i})/\tau)}$$
+
+作者发现其中两个常被忽视的超参与训练规模有强交互效应：
+
+- **batch size 必须配合 learning rate 线性缩放**：单纯增大 batch 而不调 lr 几乎无效（480→1920 仅 +0.2%），配合 lr 线性缩放后才显著（+1.7%），与视觉训练里的 lr scaling rule 一致。
+- **可学习温度 ≫ 固定温度**：把 $\tau$ 从固定 0.05 改为可学习参数，同等 batch 下提升 1.2~1.4%，这个增益甚至超过把 batch 从 480 扩到 3840 的效果。可学习温度能自适应调节 softmax 分布的锐度，是被社区严重低估的关键因子。
 
 ## 实验关键数据
 

@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 AIR 嵌在 Transformer 每一层的 FFN 阶段，做的事情就一件——在解码当前 token 时，把"真正相关"的视觉信息以残差形式补回 FFN 输出。它先用原型距离把数百个视觉 token 精简成少数最有信息量的子集，再用最优传输衡量当前隐状态和各图像 patch 的对齐程度，只把高对齐的 patch 注入增强。整个过程无需训练，可直接挂载到 LLaVA、Qwen-VL、GLM-4V 等任意 MLLM 上。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前隐状态 H<br/>+ 视觉 token（K=576）"] --> B["原型距离的 token 精简<br/>取均值原型 → L2 距离排序<br/>保留 Top-Q 离群 token"]
+    B --> C["最优传输引导的 patch 选择<br/>图裁 M 个 patch → Sinkhorn 求 OT 距离"]
+    C -->|"仅留 d_OT ≤ τ 的 patch"| D["残差式选择性视觉接地<br/>选中 patch 拼成 Z̃<br/>作残差项加回 FFN 输出"]
+    A -.->|"原始 FFN 主干"| D
+    D --> E["增强后的 FFN 输出<br/>→ 解码下一 token"]
+```
+
 ### 关键设计
 
 **1. 原型距离的 token 精简：先把背景冗余 token 筛掉**

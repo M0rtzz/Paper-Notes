@@ -36,7 +36,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IterResearch 将深度研究建模为MDP $\langle\mathcal{S},\mathcal{D},\mathcal{E},\mathcal{T},R\rangle$。每一轮Agent在重构的工作区上"思考-更新报告-执行动作"，环境返回结果后重构下一轮工作区，只保留问题、进化报告和最近一轮的上下文。
+IterResearch 想解决的是深度研究 Agent 在长程任务上"越走越差"的问题：根因在于主流的单上下文范式把每一轮的检索结果和推理步骤都追加进同一个不断膨胀的窗口，导致上下文窒息与噪声污染。它的破法是把深度研究重新建模成一个马尔可夫决策过程 $\langle\mathcal{S},\mathcal{D},\mathcal{E},\mathcal{T},R\rangle$，让 Agent 不再背着全部历史前进，而是每一轮都在一个大小恒定的"工作区"上重新出发。
+
+整条流程是一个回环。每轮开始，Agent 拿到一个重构出来的工作区状态 $s_t = (q, \mathcal{M}_t, \{a_{t-1}, \text{TR}_{t-1}\})$，里面只有三样东西——固定不变的问题 $q$、一份滚动更新的进化报告 $\mathcal{M}_t$、以及上一步的动作及其返回结果；策略 $\pi$ 据此产出一个结构化决策 $d_t = [\text{Think}_t, \mathcal{M}_{t+1}, a_t]$，即先思考、把新发现写进更新后的报告、再发出动作；环境执行动作后返回结果 $\text{TR}_t$，转移函数随即丢弃整条历史轨迹、只用新报告重构出下一轮工作区 $s_{t+1}$。如此循环，直到动作变成"给出最终答案"才终止。这套范式要真正高效运转，还需要配套的训练：用 EAPO 给探索施加"快而准"的效率压力，再用两阶段训练让 Qwen3-30B-A3B 先学会范式、后学好策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    Q["问题 q + 空报告 M0"] --> S
+    subgraph LOOP["迭代工作区重构"]
+        direction TB
+        S["重构工作区 s_t<br/>= (问题 q, 进化报告 M_t, 上一步动作/结果)"] --> P["策略 π 生成决策 d_t<br/>= [思考, 新报告, 动作 a_t]"]
+        P --> ENV["环境执行动作 a_t<br/>返回结果 TR_t"]
+        ENV --> TR["转移 T：丢弃历史轨迹<br/>只用新报告重构下一轮（恒定 O(1)）"]
+        TR -->|"动作非答案，进入下一轮"| S
+    end
+    TR -->|"动作 = 答案"| OUT["输出最终答案"]
+    EAPO["效率感知策略优化 EAPO<br/>几何折扣奖励 + 自适应下采样"] --> TS["两阶段训练<br/>RFT 学范式 → RL 学策略"]
+    TS -.->|"训练出策略 π"| P
+```
 
 ### 关键设计
 
@@ -51,11 +69,6 @@ IterResearch 将深度研究建模为MDP $\langle\mathcal{S},\mathcal{D},\mathca
 **3. 两阶段训练：先学会范式，再学会策略**
 
 模型分两步成型。第一阶段 RFT（拒绝采样微调）让 Qwen3-30B-A3B 骨干先掌握迭代范式的基本动作——怎么读报告、怎么更新报告、怎么发动作；第二阶段 RL 再用 EAPO 优化搜索策略与推理深度，把"会用"打磨成"用得高效"。选 Qwen3-30B-A3B 这个 MoE 骨干，是为了在性能和推理效率之间取得平衡。
-
-### 三个核心发现
-- **交互扩展 (Interaction Scaling)**：2→2048次交互，BrowseComp准确率从3.5%→42.5%
-- **跨范式知识迁移**：IterResearch生成的轨迹用于训练单上下文Agent也能提升性能
-- **作为提示策略**：直接应用于GPT-4o/Claude等前沿模型（无训练），在BrowseComp上比ReAct提升12.7-19.2pp
 
 ## 实验关键数据
 
@@ -83,6 +96,7 @@ IterResearch 将深度研究建模为MDP $\langle\mathcal{S},\mathcal{D},\mathca
 - 在6个benchmark上平均超出最佳开源Agent 14.5pp
 - 在HLE和BC-zh上超越OpenAI DeepResearch
 - 交互扩展到2048次实现12倍性能提升，表明长视野任务的难度可能源于探索容量不足
+- 跨范式知识迁移：用 IterResearch 生成的轨迹去训练单上下文 Agent 同样能提升其性能
 - 作为零训练的提示策略用于GPT-4o在BrowseComp上+19.2pp，证明范式本身的通用价值
 
 ## 亮点与洞察

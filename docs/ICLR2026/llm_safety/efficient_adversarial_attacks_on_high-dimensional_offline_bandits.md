@@ -43,23 +43,40 @@ tags:
 
 ### 整体框架
 
-威胁模型设定为：攻击者 $\mathscr{A}$ 能访问各 arm 的离线 logged 数据集 $\mathcal{D}_1, \ldots, \mathcal{D}_K$，并在 bandit 评估**开始之前**对奖励模型 $r(\cdot)$ 的参数注入一个极小扰动 $\boldsymbol{\delta}$，使被污染的奖励引导 bandit 选错 arm。对线性奖励模型，整个攻击被刻画为"找最小范数扰动、同时满足一组使错误轨迹成立的线性约束"的凸优化问题，再借 NTK 理论把神经网络奖励模型也拉回到这个线性框架，并用高维下扰动范数随维度衰减的定理解释攻击为何如此隐蔽。
+这篇论文要解决的问题是：当用离线多臂老虎机（offline MAB）评估生成模型时，攻击者只动**公开的奖励模型权重**，能不能悄无声息地让 bandit 选错模型？整套攻击的数据流是这样转的：攻击者 $\mathscr{A}$ 先拿到各 arm 的离线日志数据集 $\mathcal{D}_1, \ldots, \mathcal{D}_K$，在 bandit 评估**开始之前**把"让 bandit 选错 arm"这件事翻译成一组关于扰动 $\boldsymbol{\delta}$ 的线性约束，再求解一个"范数最小、同时满足全部约束"的凸二次规划（convex QP），得到最不可感知的最优扰动 $\boldsymbol{\delta}^*$，注入奖励模型后污染整条评估轨迹。若奖励模型是 CLIP、美学评分器这类神经网络，先用 NTK（Neural Tangent Kernel）把它一阶线性化、退回到同一个 QP 框架；最后再用一条高维定理证明：维度越高，所需扰动反而越小，攻击越隐蔽。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["各 arm 离线日志 D1…DK<br/>+ 公开奖励模型 r(·)"]
+    IN -->|"线性奖励 wᵀX"| QP
+    IN -->|"神经网络奖励"| NTK["NTK 一阶线性化<br/>把 NN 退回线性框架"]
+    NTK --> QP["凸 QP：把'选错 arm'写成线性约束<br/>Full / Trajectory-Free / OSA 三种强度<br/>求范数最小的扰动 δ*"]
+    QP --> THM["高维可行性 &amp; 范数衰减定理<br/>‖δ*‖ ≈ O(d^-1/2)"]
+    THM --> OUT["注入 δ* 污染奖励<br/>→ bandit 被劫持、选错 arm"]
+```
 
 ### 关键设计
 
-**1. 把劫持 bandit 写成最小范数扰动的凸二次规划：用最不可感知的改动满足"选错"约束。** 攻击的核心困难是既要让 bandit 的决策按攻击者意图走，又要让扰动小到无法被察觉。对线性奖励 $r(\mathbf{X}) = \mathbf{w}^\top \mathbf{X}$，作者把"在第 $t$ 步让 arm $i$ 比当前最优 arm 的 UCB 分数更高"这类要求整理成一组关于 $\boldsymbol{\delta}$ 的线性不等式，于是最优扰动就是范数最小且满足全部约束的解：
+**1. 把劫持 bandit 写成最小范数扰动的凸二次规划**
+
+攻击的核心困难是要同时满足两件相互拉扯的事：既要让 bandit 的决策按攻击者意图走，又要让扰动小到无法被察觉。对线性奖励 $r(\mathbf{X}) = \mathbf{w}^\top \mathbf{X}$，作者把"在第 $t$ 步让 arm $i$ 比当前最优 arm 的 UCB 分数更高"这类要求整理成一组关于 $\boldsymbol{\delta}$ 的线性不等式，于是最优扰动就是范数最小且满足全部约束的解：
 
 $$\boldsymbol{\delta}^* = \arg\min_{\boldsymbol{\delta}} \|\boldsymbol{\delta}\|_2^2 \quad \text{s.t.} \quad \boldsymbol{\delta}^\top \mathbf{T}_{i,t} > R_{i,t}, \ \forall (i,t) \in \mathcal{I}$$
 
-这是一个凸 QP，约束集 $\mathcal{I}$ 的规模直接决定求解成本（总复杂度 $\widetilde{\mathcal{O}}(|\mathcal{I}|^3 + d|\mathcal{I}|^2)$），因此作者给出三种约束强度递减的策略。Full Trajectory Attack 强制 bandit 走完全指定的目标轨迹 $\widetilde{A}_t$，约束最严、共 $(T-K)(K-1)$ 条；Trajectory-Free Attack 只要求最优 arm $i^*$ 永不被选、不规定改选谁，约束降到 $T-K$ 条；Online Score-Aware (OSA) Attack 则在线运行——只在最优 arm 即将被选中的那一刻临时补一条约束，实际只需 $\mathcal{O}(\log T)$ 条，把求解成本压低一个数量级，却仍能维持 100% 攻击成功率，是工程上最实用的一种。
+这是一个凸 QP，约束集 $\mathcal{I}$ 的规模直接决定求解成本（总复杂度 $\widetilde{\mathcal{O}}(|\mathcal{I}|^3 + d|\mathcal{I}|^2)$），因此作者给出三种约束强度递减的策略。Full Trajectory Attack 强制 bandit 走完全指定的目标轨迹 $\widetilde{A}_t$，约束最严、共 $(T-K)(K-1)$ 条；Trajectory-Free Attack 只要求最优 arm $i^*$ 永不被选、不规定改选谁，约束降到 $T-K$ 条；Online Score-Aware（OSA）Attack 则在线运行——只在最优 arm 即将被选中的那一刻临时补一条约束，实际只需 $\mathcal{O}(\log T)$ 条，把求解成本压低一个数量级，却仍能维持 100% 攻击成功率，是工程上最实用的一种。
 
-**2. 用 NTK 把神经网络奖励模型退化成线性攻击：让凸 QP 框架直接复用。** 真实评估里的奖励模型往往是 CLIP、美学评分器这类深网络，参数与输出并非线性关系，QP 框架本不适用。作者借助 Neural Tangent Kernel 理论：对足够宽、随机初始化的网络，参数扰动 $\boldsymbol{\delta}$ 引起的输出变化可用一阶 Taylor 展开近似，
+**2. 用 NTK 把神经网络奖励模型退化成线性攻击**
+
+真实评估里的奖励模型往往是 CLIP、美学评分器这类深网络，参数与输出并非线性关系，上面的 QP 框架本不适用。作者借助 Neural Tangent Kernel 理论：对足够宽、随机初始化的网络，参数扰动 $\boldsymbol{\delta}$ 引起的输出变化可用一阶 Taylor 展开近似，
 
 $$\text{NN}_{\boldsymbol{\theta}+\boldsymbol{\delta}}(\mathbf{X}) \approx \text{NN}_{\boldsymbol{\theta}}(\mathbf{X}) + \nabla_{\boldsymbol{\theta}}\text{NN}_{\boldsymbol{\theta}}(\mathbf{X})^\top \boldsymbol{\delta}$$
 
 也就是过参数化网络在参数空间近似线性，梯度 $\nabla_{\boldsymbol{\theta}}\text{NN}$ 充当线性情形里的特征向量，于是整套凸 QP 攻击可原样套用到神经网络上。这一近似对足够宽的网络足够精确——实验中隐藏层宽度超过 750 时攻击成功率即达到 100%，印证了 NTK 线性化在实操中成立。
 
-**3. 高维可行性与范数衰减定理：解释攻击为何随维度升高反而更隐蔽。** 这一设计回答的是"攻击什么时候一定能成、扰动会有多小"。可行性定理（Theorem 3.3）证明当参数维度 $d > (T-K)(K-1)$ 且数据分布非退化时，约束集 $\mathcal{I}$ 描述的可行域以概率 1 非空，即攻击几乎必然存在——高维参数空间的自由度天然给攻击者留足操作余地。攻击范数定理（Theorem 3.4）进一步给出扰动的尺度：在 $d \geq KT$ 的高维情形下，全轨迹攻击的最优扰动满足
+**3. 高维可行性与范数衰减定理**
+
+这一设计回答的是"攻击什么时候一定能成、扰动会有多小"，也是全文最反直觉的发现。可行性定理（Theorem 3.3）证明当参数维度 $d > (T-K)(K-1)$ 且数据分布非退化时，约束集 $\mathcal{I}$ 描述的可行域以概率 1 非空，即攻击几乎必然存在——高维参数空间的自由度天然给攻击者留足操作余地。攻击范数定理（Theorem 3.4）进一步给出扰动的尺度：在 $d \geq KT$ 的高维情形下，全轨迹攻击的最优扰动满足
 
 $$\|\boldsymbol{\delta}^*\|_2 \leq \mathcal{O}\left(\sqrt{\frac{T^3 \log T \cdot \log d}{Kd}}\right)$$
 

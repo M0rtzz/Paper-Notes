@@ -90,7 +90,7 @@ _PAPER_PRIORITY_DEFAULT = "0.6"  # for any new conference not listed above
 
 # Domain-index priority overrides that apply ONLY to sitemap-sections.xml.
 # sitemap.xml and sitemap-focus.xml keep the generic domain_index priority (0.8).
-# New conferences not listed here default to 0.7.
+# New conferences not listed here default to 0.8.
 _SECTION_DOMAIN_PRIORITY_OVERRIDES = {
     "CVPR2026": "0.8",
     "ICML2026": "0.8",

@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FINO (Flow matching with Injected Noise for Offline-to-online RL) 要解决的核心问题是：离线预训练出来的流匹配策略覆盖太窄，到了在线微调阶段探索不动。它的思路是在「训练目标」和「采样策略」两端同时下手。整体仍沿用 FQL 的双策略 + Q 网络骨架，但做了两处改动：离线阶段把标准 flow matching 的训练目标改成注入噪声的版本，让策略从一开始就学到比数据集更宽的动作支持集；在线阶段不再用固定的贪心或固定温度采样，而是按策略熵自适应调节一个 softmax 温度，动态在探索与利用之间切换。输入是状态-动作对数据集，输出是一个能在有限在线交互预算下高效探索的策略。
+FINO (Flow matching with Injected Noise for Offline-to-online RL) 要解决的核心问题是：离线预训练出来的流匹配策略覆盖太窄，到了在线微调阶段探索不动。它的思路是在「训练目标」和「采样策略」两端同时下手。整体仍沿用 FQL 的双策略 + Q 网络骨架（flow policy 负责表达多模态分布，one-step policy 蒸馏自 flow policy 并直接与环境交互），但做了两处改动：离线阶段把标准 flow matching 的训练目标改成注入噪声的版本，让策略从一开始就学到比数据集更宽的动作支持集；在线阶段不再用固定的贪心或固定温度采样，而是按策略熵自适应调节一个 softmax 温度，动态在探索与利用之间切换。输入是状态-动作对数据集，输出是一个能在有限在线交互预算下高效探索的策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集<br/>状态-动作对"] --> A["噪声注入流匹配<br/>训练目标沿路径注入 ε_t"]
+    A --> P["宽覆盖策略<br/>flow + one-step + Q 网络"]
+    P --> S["在线采一批候选动作"]
+    S --> G["GMM 估熵<br/>拟合样本估计策略熵 H"]
+    G --> E["熵引导采样<br/>按熵调温度 ξ 做 Q 值 softmax"]
+    E --> ENV["与环境交互<br/>回收数据更新三网络"]
+    ENV -->|在线微调循环| S
+```
 
 ### 关键设计
 

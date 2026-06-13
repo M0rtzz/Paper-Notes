@@ -40,7 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AlphaSteer 要解决的是激活引导里"注入同一个拒绝向量会误伤良性提示"的老问题：它不再注入固定向量，而是让 steering 向量随输入自适应变化——良性输入几乎不被改动，恶意输入才被推向拒绝方向。具体地，取 LLM 某层激活 $\mathbf{h}^{(l)}$，用一个变换矩阵 $\Delta^{(l)}$ 动态生成 steering 向量 $\mathbf{s}^{(l)} = \Delta^{(l)} \mathbf{h}^{(l)}$，再加回激活：$\mathbf{h}'^{(l)} = \mathbf{h}^{(l)} + \lambda \Delta^{(l)} \mathbf{h}^{(l)}$。这个 $\Delta$ 被拆成两块相乘 $\Delta = \tilde{\Delta} \hat{\mathbf{P}}$，其中 $\hat{\mathbf{P}}$ 是良性激活的零空间投影矩阵，负责"对良性输入失效"；$\tilde{\Delta}$ 是用正则化最小二乘解出来的矩阵，负责"对恶意输入重建拒绝方向"。两块各管一个目标，从结构上把安全和效用解耦开。
+AlphaSteer 要解决的是激活引导里"注入同一个拒绝向量会误伤良性提示"的老问题：它不再注入固定向量，而是让 steering 向量随输入自适应变化——良性输入几乎不被改动，恶意输入才被推向拒绝方向。具体地，取 LLM 某层激活 $\mathbf{h}^{(l)}$，用一个变换矩阵 $\Delta^{(l)}$ 动态生成 steering 向量 $\mathbf{s}^{(l)} = \Delta^{(l)} \mathbf{h}^{(l)}$，再加回激活：$\mathbf{h}'^{(l)} = \mathbf{h}^{(l)} + \lambda \Delta^{(l)} \mathbf{h}^{(l)}$。关键在于把 $\Delta$ 拆成两块相乘 $\Delta = \tilde{\Delta} \hat{\mathbf{P}}$：右边的 $\hat{\mathbf{P}}$ 是从良性激活解析出的零空间投影矩阵，负责"对良性输入失效"；左边的 $\tilde{\Delta}$ 是以拒绝方向为回归目标、用正则化最小二乘闭式解出的矩阵，负责"对恶意输入重建拒绝方向"。整条流水线分两路准备再汇合——良性激活一路 SVD 出投影矩阵，恶意激活配上拒绝方向一路回归出变换矩阵，两者相乘得到 $\Delta$ 后只在推理时多做一次矩阵乘法。两块各管一个目标，从结构上把安全和效用解耦开，全程无需梯度训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Hb["良性激活矩阵 Hb<br/>(Nb 个良性提示)"] --> NSP["零空间投影<br/>对 Hb·Hbᵀ 做 SVD，取近零特征向量构造投影矩阵 P̂"]
+    Refusal["拒绝方向提取<br/>difference-in-means 得目标 R"] --> REG
+    Hm["恶意激活矩阵 Hm<br/>(Nm 个恶意提示)"] --> REG["正则化线性回归<br/>闭式解出 Δ̃，使 Δ̃·P̂·Hm 贴近 R"]
+    NSP -->|"约束 Δ 落在零空间"| REG
+    NSP --> COMB["合成变换矩阵<br/>Δ = Δ̃ · P̂"]
+    REG --> COMB
+    COMB --> STEER["推理时注入<br/>h' = h + λ·Δ·h"]
+    STEER -->|"良性: Δh ≈ 0"| U1["效用保持"]
+    STEER -->|"恶意: Δh ≈ r"| U2["触发拒绝"]
+```
 
 ### 关键设计
 

@@ -42,7 +42,26 @@ tags:
 
 ### 整体框架
 
-DRR 范式包含三个阶段。**离线精炼阶段**：(1) 对基础 embedding 结构 $\mathcal{G}$ 施加非参数变换 $\pi$（如结构超分辨率、位置编码特征上采样）得到 $\hat{\mathcal{G}} = \pi(\mathcal{G})$；(2) 深度 refiner 网络 $R_\psi$ 学习精炼偏移量 $\Delta\mathcal{G} = R_\psi(\hat{\mathcal{G}})$；(3) 通过残差连接得到精炼结构 $\mathcal{G}' = \hat{\mathcal{G}} + \Delta\mathcal{G}$。**训练阶段**：联合优化基础结构 $\mathcal{G}$ 和 refiner $R_\psi$。**在线推理阶段**：丢弃 refiner，仅用缓存的 $\mathcal{G}'$ 进行插值查询 + 轻量解码器。
+DRR 想解开隐式神经表示（INR）里"精度高就慢、查询快就欠表达"的死结，办法是把"构建表示"和"查询表示"两件事彻底拆开。整体只有一条主线：**离线阶段**先对基础 embedding 结构 $\mathcal{G}$（空间 3D 特征网格 + 条件 1D 特征线）做非参数变换 $\pi$（多分辨率统一、结构超分辨率、可选位置编码上采样），再让深度 refiner 网络 $R_\psi$ 学一个残差偏移 $\Delta\mathcal{G}=R_\psi(\pi(\mathcal{G}))$，残差相加得到精炼结构 $\mathcal{G}'=\pi(\mathcal{G})+\Delta\mathcal{G}$ 并**缓存**下来；训练时基础结构、refiner、解码器端到端联合优化，并用 Variational Pairs（VP）增强稀疏的集成仿真数据。**在线阶段**直接丢弃 refiner，每次查询只在缓存的 $\mathcal{G}'$ 上做一次插值 + 轻量解码，于是把深层网络的表达力"预付"进了缓存、查询成本退回纯 embedding 级别。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["基础 embedding 结构 G<br/>空间3D网格 + 条件1D特征线"]
+    subgraph DRR["解耦表示精炼（DRR）· 离线一次性"]
+        direction TB
+        UNI["多分辨率统一 π<br/>超分上采样→统一→(可选P.E.)"]
+        REF["深度 refiner R_ψ<br/>学残差 ΔG = R_ψ(π(G))"]
+        CACHE["残差 + 缓存精炼结构<br/>G' = π(G) + ΔG"]
+        UNI --> REF --> CACHE
+    end
+    VP["Variational Pairs（VP）数据增强<br/>插值生成物理可信训练样本"]
+    QUERY["在线查询<br/>插值 I(x;G') + 轻量解码器"]
+    OUT["重建空间场"]
+    IN --> DRR
+    VP -.端到端训练监督.-> DRR
+    CACHE -->|丢弃 refiner, 只留 G'| QUERY --> OUT
+```
 
 ### 关键设计
 

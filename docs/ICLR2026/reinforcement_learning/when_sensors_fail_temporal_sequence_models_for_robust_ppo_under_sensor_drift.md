@@ -43,21 +43,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文先用一个两层Markov链刻画真实系统中"既有个体故障又有成组故障"的传感器失效过程，再把Transformer、RNN、SSM等序列编码器统一接到PPO的actor-critic骨架里，让策略能利用历史观测填补当前的缺失，最后从理论上推导出一个高概率的奖励退化上界，并在MuJoCo上做架构横评。
+本文要回答的问题是：当传感器会不定时掉线、策略只能看到残缺观测时，PPO 该用什么样的网络架构才扛得住。整条流水线是这样转的：先用一个两层 Markov 链刻画真实系统中"既有个体故障又有成组故障"的传感器失效过程，由它对环境真实状态打掩码、产生残缺观测；这些观测被压进一个固定长度的历史缓存（history buffer），再交给一个序列编码器（Transformer 或 RNN/SSM）把缺失位置屏蔽掉、从可用历史里重建出一个固定维特征；该特征同时喂给 PPO 的 actor 和 critic 两个 head 输出动作与价值。在这套运行流水线之外，本文还从理论上推导出一个高概率的奖励退化上界，把"哪些因素决定鲁棒性"拆成可解释的因子，并在 MuJoCo 上对 8 种架构做横评。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S["环境真实状态 s_t"] --> M["两层 Markov 故障模型<br/>个体链 z_i × 组链 y_j → 掩码"]
+    M --> X["残缺观测 x_t<br/>（部分维度缺失）"]
+    X --> H["history buffer<br/>缓存最近 L 步观测"]
+    H --> E["序列编码器<br/>Transformer + key-padding mask<br/>（RNN/SSM 为基线）"]
+    E --> P["attention pooling<br/>变长序列 → 固定维特征"]
+    P --> AC["actor / critic 双 head"]
+    AC --> A["动作 a_t"]
+    A --> S
+```
 
 ### 关键设计
 
-**1. 两层Markov传感器故障模型：把"独立掩码"换成贴近真实的相关故障。** 现有工作大多假设每个传感器独立随机失效，但真实系统里共享通信总线或电源的传感器往往成组同时挂掉，且故障会持续若干步而非逐帧重采样。本文为此设计两层结构：个体层给每个传感器 $i$ 一条二值Markov链 $z_i(t)\in\{0,1\}$（故障率 $p_{\text{fail}}$、恢复率 $p_{\text{recover}}$），组层给每个组 $j$ 一条链 $y_j(t)\in\{0,1\}$（参数 $p_{\text{fail}}^{\text{group}}$、$p_{\text{recover}}^{\text{group}}$）；传感器真正可用当且仅当个体和所在组都在线，即有效状态 $x_i(t)=z_i(t)\cdot y_j(t)$，稳态可用概率因两层独立而相乘 $\pi_x=\pi_z\cdot\pi_y$，有效故障概率 $p_{\text{fail}}^{\text{eff}}=1-(1-p_{\text{fail}})(1-p_{\text{fail}}^{\text{group}})$。Markov结构天然带来时间持续性，组层耦合带来相关性，两者合起来就能模拟快速个体抖动、成组掉线、慢恢复长中断等丰富故障模式，使鲁棒性评测不再失真。
+**1. 两层 Markov 传感器故障模型：把"独立掩码"换成贴近真实的相关故障**
 
-**2. Transformer-PPO：用自注意力直接引用历史有效观测、自然跳过缺失。** 传感器随时掉线意味着当前观测可能残缺，策略必须从过去补信息。本文维护一个长度 $L$ 的循环history buffer缓存最近观测，经线性投影加正弦位置编码后送入Transformer encoder，并用key-padding mask把无效（缺失）位置直接屏蔽，让注意力只在真正可用的token上计算；随后用一个可学习的attention pooling把变长序列加权汇聚成固定维特征，分别喂给actor和critic两个head。这样每个动作的产生都能跨越数据gap直接attend到任意一段有效历史，缺失越多、回看越远，正是Transformer相对recurrent结构的核心优势所在。
+整体框架里给观测打掩码的第一环，必须先把"故障长什么样"建对。现有工作大多假设每个传感器独立、逐帧随机失效，但真实系统里共享通信总线或电源的传感器往往成组同时挂掉，且故障会持续若干步而非逐帧重采样。本文为此设计两层结构：个体层给每个传感器 $i$ 一条二值 Markov 链 $z_i(t)\in\{0,1\}$（故障率 $p_{\text{fail}}$、恢复率 $p_{\text{recover}}$），组层给每个组 $j$ 一条链 $y_j(t)\in\{0,1\}$（参数 $p_{\text{fail}}^{\text{group}}$、$p_{\text{recover}}^{\text{group}}$）；传感器真正可用当且仅当个体和所在组都在线，即有效状态 $x_i(t)=z_i(t)\cdot y_j(t)$，稳态可用概率因两层独立而相乘 $\pi_x=\pi_z\cdot\pi_y$，有效故障概率 $p_{\text{fail}}^{\text{eff}}=1-(1-p_{\text{fail}})(1-p_{\text{fail}}^{\text{group}})$。Markov 结构天然带来时间持续性，组层耦合带来相关性，两者合起来就能模拟快速个体抖动、成组掉线、慢恢复长中断等丰富故障模式，使鲁棒性评测不再失真。
 
-**3. RNN/SSM-PPO：统一接口下的recurrent基线。** 为公平横评，本文把GRU、LRU、LinOSS等递归/状态空间模型也套进同一套PPO骨架，统一成接口 $(h_t,z_t)=\mathcal{E}_\psi(h_{t-1},x_t;d_t)$，其中 $h_t$ 为隐状态、$d_t$ 为episode结束标志（用于在边界重置状态）。这类模型靠逐步更新的隐状态隐式记忆历史，但其状态更新假设输入流平滑连续，一旦遇到成组、持续的缺失就容易偏移或冲掉关键信息，这也为后文"为何recurrent不如attention鲁棒"的实验结论埋下伏笔。
+**2. 序列编码器统一接入 PPO：Transformer 用自注意力跨越缺失、RNN/SSM 作对照**
 
-**4. 高概率奖励退化bound：把鲁棒性拆成可解释的若干因子。** 为了不止于经验比较，本文在若干平滑性与混合性假设（Assumptions 5.1–5.5）下证明，以概率 $\geq 1-\delta$ 累积奖励退化 $S$ 满足
+观测一旦残缺，策略就必须从历史里把信息补回来，所以框架中段把序列编码器统一插进 PPO 的 actor-critic 骨架。核心架构是 Transformer-PPO：维护一个长度 $L$ 的循环 history buffer 缓存最近观测，经线性投影加正弦位置编码后送入 Transformer encoder，并用 key-padding mask 把无效（缺失）位置直接屏蔽，让注意力只在真正可用的 token 上计算；随后一个可学习的 attention pooling 把变长序列加权汇聚成固定维特征，分别喂给 actor 和 critic 两个 head。这样每个动作的产生都能跨越数据 gap 直接 attend 到任意一段有效历史，缺失越多、回看越远，越能体现注意力相对 recurrent 结构的优势。为公平横评，本文把 GRU、LRU、LinOSS 等递归/状态空间模型也套进同一套 PPO 骨架，统一成接口 $(h_t,z_t)=\mathcal{E}_\psi(h_{t-1},x_t;d_t)$，其中 $h_t$ 为隐状态、$d_t$ 为 episode 结束标志（用于在边界重置状态）。这类模型靠逐步更新的隐状态隐式记忆历史，但其状态更新假设输入流平滑连续，一旦遇到成组、持续的缺失就容易偏移或冲掉关键信息——这正为后文"为何 recurrent 不如 attention 鲁棒"的实验结论埋下伏笔。
+
+**3. 高概率奖励退化 bound：把鲁棒性拆成可解释的若干因子**
+
+为了不止于经验比较，本文在若干平滑性与混合性假设（Assumptions 5.1–5.5）下证明，以概率 $\geq 1-\delta$ 累积奖励退化 $S$ 满足
 
 $$S \leq \mu_S + C_{\max}\min\left\{\sqrt{\frac{2\tau}{1-\gamma^2}\ln\frac{2}{\delta}} + \frac{4}{3}\tau\ln\frac{2}{\delta},\ \frac{1}{1-\gamma}\right\}$$
 
-其中均值退化 $\mu_S\leq\frac{L_Q L_\pi}{1-\gamma}\sum_{i=1}^d(1-\pi_{x,i})h_i$，最坏情况下单步影响 $C_{\max}=L_Q L_\pi\sum_i B_i$，$\tau$ 是增广Markov链的mixing time。这个式子把退化拆成均值项与波动项：均值项只依赖各传感器的边际可用率 $\pi_{x,i}$，故障的相关性不直接进入期望；波动项随mixing time $\tau$ 以 $\sqrt{\tau}$ 和 $\tau$ 两个量级增长，意味着故障越持久（链混合越慢）抖动越大；而策略平滑性 $L_\pi$ 与critic平滑性 $L_Q$ 全局缩放整个上界——这正解释了为何能利用历史、产生更平滑动作的序列模型更鲁棒，也给出了"提升可用率、缩短中断、压低策略Lipschitz常数"这一可操作的鲁棒化方向。
+其中均值退化 $\mu_S\leq\frac{L_Q L_\pi}{1-\gamma}\sum_{i=1}^d(1-\pi_{x,i})h_i$，最坏情况下单步影响 $C_{\max}=L_Q L_\pi\sum_i B_i$，$\tau$ 是增广 Markov 链的 mixing time。这个式子把退化拆成均值项与波动项：均值项只依赖各传感器的边际可用率 $\pi_{x,i}$，故障的相关性不直接进入期望；波动项随 mixing time $\tau$ 以 $\sqrt{\tau}$ 和 $\tau$ 两个量级增长，意味着故障越持久（链混合越慢）抖动越大；而策略平滑性 $L_\pi$ 与 critic 平滑性 $L_Q$ 全局缩放整个上界——这正解释了为何能利用历史、产生更平滑动作的序列模型更鲁棒，也给出了"提升可用率、缩短中断、压低策略 Lipschitz 常数"这一可操作的鲁棒化方向。
 
 ## 实验关键数据
 

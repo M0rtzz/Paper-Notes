@@ -42,13 +42,33 @@ tags:
 
 ### 整体框架
 
-ConFu 在标准推测解码的 draft–verify 循环里塞进一类额外的 contemplate token：每次 target model 前向验证 draft 候选时，顺带让它"分心"算出一份对未来生成方向的预判，并把这份预判作为 future token 喂给 draft model。这样 draft model 不再只盯着当前前缀盲猜，而是带着 target 的高层意图去提议候选，从源头缓解多步 draft 的误差累积。整套机制建立在 EAGLE-3 之上，只动 draft 侧的条件输入而不改 target 主干，属于正交改进。
+ConFu 在标准推测解码的 draft–verify 循环里塞进一类额外的 contemplate token：每次 target model 前向验证 draft 候选时，顺带让它"分心"算出一份对未来生成方向的预判，并把这份预判作为 future token 喂给 draft model。这样 draft model 不再只盯着当前前缀盲猜，而是带着 target 的高层意图去提议候选，从源头缓解多步 draft 的误差累积。具体一轮迭代是：target model 在前缀后附 soft prompt 与 contemplate token，算出 future token $\mathbf{f}$；draft model 以 $\mathbf{f}$ 为额外条件自回归生成一棵 draft 树；target 把树里每个节点配一个 contemplate token 并行验证，既判接受又为每个候选产出未来预判；取最后一个被接受 token 对应的 future prediction 进入下一轮。整套机制建立在 EAGLE-3 之上，只动 draft 侧的条件输入而不改 target 主干，属于正交改进。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["输入前缀 x₁:ₙ"] --> TGT
+    subgraph TGT["Contemplate token + soft prompt（设计 1）"]
+        direction TB
+        SP["soft prompt 注入<br/>target KV cache"] --> CON["contemplate token<br/>注意力掩码只看 soft prompt"]
+        CON --> F["取隐状态 → future token f"]
+    end
+    MOE["MoE 动态 contemplate token（设计 2）<br/>按最近接受 token 路由<br/>选 top-K experts"] -.动态生成 con / f.-> TGT
+    TGT --> DRAFT["draft model 条件于 f<br/>自回归生成 draft 树"]
+    DRAFT --> VER["验证：每个 draft 节点挂<br/>一个 contemplate token<br/>2T token 并行前向"]
+    VER -->|"末个接受 token<br/>的 future prediction"| DRAFT
+    VER --> OUT["输出已接受 token"]
+```
 
 ### 关键设计
 
-**1. Contemplate token 与 soft prompt：让 target 几乎免费地"想一步"。** draft model 仅以已生成前缀为条件，越往后走分布越偏离 target，接受率随之滑坡。ConFu 借鉴 pause token 的机理在并行计算中挤出额外算力：在 target 输入前插入一组可学习的 soft prompt token（落在 KV cache 维度上），并在末尾追加一个 contemplate token，再用注意力掩码限制只有 contemplate token 能 attend 到这些 soft prompt，从而不污染原始前缀的表征。contemplate token 的隐状态由此编码出 target 当前的"中间思路"，被取出作为 future token $\mathbf{f}$ 交给 draft model。推理时这一步嵌入验证阶段——在 draft tree 的每个节点都挂一个 contemplate token，与 draft 候选一次性并行验证并产出未来预测；某节点被接受后，就把它对应的 future prediction 传给下一轮迭代。代价是验证时要处理 $2T$ 个 token（$T$ 个 draft 节点加 $T$ 个 contemplate token，$T$ 通常取 30–60），但因为是并行前向，并未额外增加前向次数。
+**1. Contemplate token 与 soft prompt：让 target 几乎免费地"想一步"**
 
-**2. MoE 动态 contemplate token：按上下文切换"提示语气"。** 单一静态的 contemplate embedding 难以适配差异极大的场景——数学推理时它该暗示"接下来是某个等式"，创意写作时又该暗示"这段在讲什么"。ConFu 用一个 MoE 来参数化 contemplate token 的 embedding：以最新被接受 token 的隐状态作为输入，经线性 router 选出 top-K experts 的加权组合，从而让"提示指令"随上下文自适应。target 端的 [con] 与 draft 端的 [f] 各配一套独立的 MoE 模块。这也是首次在 pause token 这类设置里引入动态性，相比固定 embedding 更贴合多样化任务。
+draft model 仅以已生成前缀为条件，越往后走分布越偏离 target，接受率随之滑坡。ConFu 借鉴 pause token 的机理在并行计算中挤出额外算力：在 target 输入前插入一组可学习的 soft prompt token（落在 KV cache 维度上），并在末尾追加一个 contemplate token，再用注意力掩码限制只有 contemplate token 能 attend 到这些 soft prompt，从而不污染原始前缀的表征。contemplate token 的隐状态由此编码出 target 当前的"中间思路"，被取出作为 future token $\mathbf{f}$ 交给 draft model。和 BiTA 直接从 contemplate token 解码 future token 不同，ConFu 是拿这份隐状态去**引导** draft 生成，而非直接当输出。推理时这一步嵌入验证阶段——在 draft tree 的每个节点都挂一个 contemplate token，让 target 一次前向就为每个候选并行产出对应的未来预测；某节点被接受后，就把它对应的 future prediction 传给下一轮迭代。代价是验证时要处理 $2T$ 个 token（$T$ 个 draft 节点加 $T$ 个 contemplate token，$T$ 通常取 30–60），但因为是并行前向，并未额外增加前向次数。
+
+**2. MoE 动态 contemplate token：按上下文切换"提示语气"**
+
+单一静态的 contemplate embedding 难以适配差异极大的场景——数学推理时它该暗示"接下来是某个等式"，创意写作时又该暗示"这段在讲什么"。ConFu 用一个 MoE 来参数化 contemplate token 的 embedding：MoE 维护一组 $n_{expert}$ 个可学习 embedding 当 experts，以最新被接受 token 的隐状态作为输入，经线性 router 打分、Softmax 归一化后选出 top-$K_{expert}$ 个 experts，按门控权重加权求和得到最终 embedding，从而让"提示指令"随上下文自适应。喂给 target 的 [con] 与喂给 draft 的 [f] 各配一套独立的 MoE 模块（前者用 target 的拼接隐状态、后者用 draft 的隐状态作输入）。这也是首次在 pause token 这类设置里引入动态性，相比固定 embedding 更贴合多样化任务。
 
 ### 损失函数 / 训练策略
 

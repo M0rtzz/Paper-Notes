@@ -41,7 +41,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇工作要解决的是「检测器在信息图上集体失灵、VLM 又只能盯着原始像素硬猜」这两件事，因此它同时给出一个数据集和一套用法。前半部分构建 InfoDet——10.1 万张信息图、1420 万个标注，把元素分成图表组件（Chart）和人类可识别对象（HRO，如图标）两大类；后半部分提出 Grounded CoT，把检测器吐出的元素框当成「视觉提示 + 文本描述」喂回 VLM，让它先看清元素再推理（Thinking-with-Boxes）。整条链路是：原始信息图 → 检测器标出所有元素 → 把框和属性叠加/拼进 prompt → VLM 引用这些带标识的元素逐步作答。
+这篇工作要解决的是「检测器在信息图上集体失灵、VLM 又只能盯着原始像素硬猜」这两件事，因此它同时给出一个数据集和一套用法。前半部分构建 InfoDet——10.1 万张信息图、1420 万个标注，把元素分成图表组件（Chart）和人类可识别对象（HRO，如图标）两大类；这个数据集用来训出一个真正能在信息图上工作的检测器。后半部分提出 Grounded CoT，把检测器吐出的元素框当成「视觉提示 + 文本描述」喂回 VLM，让它先看清元素再推理（Thinking-with-Boxes）。串起来就是：先靠合成+真实两路数据建库、训检测器，再把检测器接到推理期——原始信息图经检测器标出所有元素后，框和属性被拼成提示喂给 VLM，由 VLM 引用这些带标识的元素逐步作答。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    subgraph BUILD["数据集构建"]
+        direction TB
+        SYN["合成 9 万张<br/>VizNet 表格→模板渲染<br/>SVG 程序化抽框"]
+        REAL["真实 1.1 万张<br/>10 平台采集→CLIP 去重<br/>→GPT-4o 把关"]
+        SYN --> DET["训练信息图检测器"]
+        REAL -->|"model-in-the-loop<br/>预标→专家修正→回灌"| DET
+    end
+    DET --> SET["InfoDet<br/>10.1 万图 / 1420 万标注"]
+    IMG["原始信息图"] --> GR
+    SET -.训练好的检测器.-> GR
+    subgraph GCOT["Grounded CoT"]
+        direction TB
+        GR["检测全部元素<br/>(Chart / HRO / 文本)"]
+        GR --> VIS["双层视觉提示<br/>图表层 + 文本层<br/>叠框+字母标识"]
+        GR --> TXT["文本描述清单<br/>逐元素列属性"]
+        VIS --> VLM["VLM 走 grounded CoT<br/>逐步引用带标识元素"]
+        TXT --> VLM
+    end
+    VLM --> ANS["图表问答输出"]
+```
 
 ### 关键设计
 

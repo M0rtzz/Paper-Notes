@@ -37,7 +37,22 @@ tags:
 
 ### 整体框架
 
-RepoMem 把 commit 历史包装成两类记忆工具，挂进 LocAgent 现成的 ReAct 循环里，让代理在做底层代码图遍历之前先有一层"仓库经验"可查。情景记忆记的是过去解过的具体问题（哪些 commit 改了什么），语义记忆记的是仓库架构层面的常识（哪些文件最活跃、各自负责什么），两者一起把"从零推理"变成"先回忆再验证"。
+RepoMem 把 commit 历史包装成两类记忆工具，挂进 LocAgent 现成的 ReAct 循环里，让代理在做底层代码图遍历之前先有一层"仓库经验"可查。情景记忆记的是过去解过的具体问题（哪些 commit 改了什么），语义记忆记的是仓库架构层面的常识（哪些文件最活跃、各自负责什么）；代理先用这两类记忆快速形成"问题可能出在哪"的假设，再调 LocAgent 的代码图工具沿依赖关系核实，把"从零推理"变成"先回忆再验证"。记忆的检索全程用 BM25 + LLM 分词器做关键词刚性匹配，而非语义嵌入。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["新 issue 输入"] --> MEM
+    subgraph MEM["仓库记忆（从 commit 历史构建）"]
+        direction TB
+        E["情景记忆<br/>SearchCommit / ExamineCommit"]
+        S["语义记忆<br/>ViewSummary / SearchSummary"]
+    end
+    MEM -->|"BM25+LLM 分词<br/>刚性匹配检索"| H["形成定位假设<br/>问题可能出在哪"]
+    H --> V["LocAgent 图工具验证<br/>SearchEntity / TraverseGraph<br/>/ RetrieveEntity"]
+    V -->|"假设不足<br/>ReAct 回环再查记忆"| MEM
+    V --> O["输出：定位文件 / 代码片段"]
+```
 
 ### 关键设计
 

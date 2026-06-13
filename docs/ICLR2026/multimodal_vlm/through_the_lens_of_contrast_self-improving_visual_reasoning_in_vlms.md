@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 VC-STaR 的目标是造出一批"没有视觉幻觉"的推理路径来微调 VLM，难点在于 VLM 自己生成的推理本身就带幻觉，没法用来当训练数据。它的破局点是那个关键观察——VLM 单看一张图会看错，但同时摆出两张相似图让它对比，反而看得准。于是整条流水线围绕"对比"展开：先为每个 VQA 样本配一个视觉相似、问题语义相近的对比样本（对比 VQA 对构造），再让模型走"先单图推理 → 再双图对比 → 最后用对比结论改写单图推理"三步，把对比中捞到的细粒度视觉证据回灌进单图推理路径。所有改写后的路径汇成 VisCoR-55K 数据集做监督微调。注意对比只发生在数据构造阶段，**推理时回到标准的单图 VLM 范式，不需要任何对比样本**。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["21 个 VQA 数据集<br/>推理·图表·数学·通用·OCR"] --> PAIR
+    subgraph PAIR["对比 VQA 对构造（设计 1）"]
+        direction TB
+        B["相似度搜索配对<br/>问题 GTE 嵌入 + 图像度量学习"] --> C["难度过滤<br/>只保留中等难度对子"]
+    end
+    PAIR --> RGEN
+    subgraph RGEN["对比与重新思考（设计 2）"]
+        direction TB
+        E["Thinking<br/>单图初步推理（含幻觉）"] --> F["Contrasting<br/>双图对比·捞细粒度视觉证据"]
+        F --> G["Rethinking<br/>外部 LLM 把证据回灌进单图推理"]
+    end
+    RGEN --> I["VisCoR-55K 数据集（设计 3）<br/>文本匹配过滤后约 55K 忠实路径"]
+    I --> J["全参 SFT（冻结视觉塔）<br/>推理时回到标准单图范式"]
+```
+
 ### 关键设计
 
 **1. 对比 VQA 对构造：给每个样本配一个"逼模型睁眼"的对照组**

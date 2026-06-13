@@ -34,15 +34,42 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LycheeDecode 把每层的注意力头细分成少量 retrieval heads 和大量 sparse heads：前者在完整序列上跑全注意力、负责挑出当前最关键的 token 子集并往下层传递，后者直接继承这个子集、只在其上做稀疏计算。头扮演哪种角色不靠人工指定，而是用 Hard Kumaraswamy 分布端到端学出来，让稀疏结构和模型权重一起训练。
+
+LycheeDecode 想解决的是：长上下文解码时每生成一个 token 都要对整段 KV 缓存做全注意力，缓存随序列线性膨胀，内存和延迟双双爆炸。它的思路是把每层的注意力头细分成两类——少量 **retrieval heads** 在完整序列上跑全注意力、负责挑出当前最关键的 token 子集并往下层传递；大量 **sparse heads** 直接继承这个子集、只在其上做稀疏计算。这样昂贵的全量扫描只由一小撮头承担，绝大多数头都走廉价的稀疏路径。头扮演哪种角色不靠人工指定，而是给每个头挂一个 **HardKuma** 门控变量，端到端学出来，让稀疏结构和模型权重一起训练。第 0 层所有头默认都是 retrieval head，用来初始化关键 token 集，之后这个集合沿同索引的头逐层向下流动。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["长上下文输入<br/>第 0 层全部为 retrieval head<br/>初始化关键 token 集 S"]
+    RH["Retrieval Heads<br/>对完整序列做全注意力<br/>top-k 选关键 token、刷新 S 下传"]
+    SH["Sparse Heads<br/>继承上层 S、仅在子集上算注意力<br/>S 原样向下传播"]
+    HK["HardKuma 头特化<br/>每个 head 学 α,β<br/>E[z]>0.5 判为 retrieval、否则 sparse"]
+    OUT["高效自回归解码<br/>逐层传播 S，128K 上下文 2.7× 加速"]
+
+    IN --> RH
+    RH -->|"沿同索引 head 下传 S"| SH
+    SH --> OUT
+    HK -.->|"训练时学出每个 head 的角色"| RH
+    HK -.->|"训练时学出每个 head 的角色"| SH
+```
 
 ### 关键设计
 
-**1. Retrieval Heads：定期重新发现关键 token。** 层级共享之所以失效，是因为它假设一组 token 能服务全层所有 head；本文反过来只让一小撮 head 承担"找 token"的重活。这些 retrieval head 在第 $l$ 层对完整 KV 做标准 dense attention，从注意力分数里取出 top-k 个关键 token 的索引集合 $\mathcal{S}_h^{(l+1)} = \text{argsTopK}(A_h^{(l)}, k)$，并把它交给下一层同索引位置的 head 使用。第一层所有 head 默认都是 retrieval head，用来给整条管线初始化 token 集合。因为只有少量 head 付出全注意力代价，又能随解码进度不断刷新关键 token，框架既保住了上下文适应性，又把昂贵的全量扫描压到最低。
+**1. Retrieval Heads：定期重新发现关键 token**
 
-**2. Sparse Heads：复用子集换取计算与显存的双重节省。** 占绝大多数的 sparse head 不再自己搜索 token，而是继承上层传来的集合 $\mathcal{S}_h^{(l)}$，只在这个子集上算注意力 $O_h^{(l)} = \text{softmax}\!\left(\frac{q_h^{(l)} (K_h^{(l)}[\mathcal{S}_h^{(l)}])^T}{\sqrt{d_k}}\right) V_h^{(l)}[\mathcal{S}_h^{(l)}]$，且不更新集合、原样往下传。由于参与运算的 key/value 只剩 $k$ 个而非整段历史，单 head 的计算量和需要从 KV 缓存里加载的数据量同步骤降，这正是端到端 2.7× 加速的主要来源。
+层级共享之所以失效，是因为它假设一组 token 能服务全层所有 head；本文反过来只让一小撮 head 承担"找 token"的重活。这些 retrieval head 在第 $l$ 层对完整 KV 做标准 dense attention $A_h^{(l)} = \text{softmax}\!\left(\frac{q_h^{(l)}(K_h^{(l)})^T}{\sqrt{d_k}}\right)$，再从注意力分数里取出 top-k 个关键 token 的索引集合 $\mathcal{S}_h^{(l+1)} = \text{argsTopK}(A_h^{(l)}, k)$，并把它交给下一层同索引位置的 head 使用。第一层所有 head 默认都是 retrieval head，用来给整条管线初始化 token 集合。因为只有少量 head 付出全注意力代价，又能随解码进度不断刷新关键 token，框架既保住了上下文适应性，又把昂贵的全量扫描压到最低。
 
-**3. HardKuma 头特化机制：让离散的角色分配变得可微。** 一个 head 是 retrieval 还是 sparse 本质是个二值选择，DuoAttention 那样用连续变量学完再取整会带来训练-推理不一致。作者改用 Hard Kumaraswamy 分布：先从均匀分布采样、经 Kuma 逆 CDF 变换，再线性拉伸到 $(p,q)$ 区间（$p<0,\,q>1$），最后硬截断回 $[0,1]$，这样采样值天然堆在 0 和 1 附近、却又全程可微。每个 head 只学两个参数 $\alpha_h^{(l)}, \beta_h^{(l)}$，推理时按期望 $\mathbb{E}[z_h^{(l)}] > 0.5$ 判定其为 retrieval head，从而把硬性分类问题塞进了梯度下降框架。
+**2. Sparse Heads：复用子集换取计算与显存的双重节省**
+
+占绝大多数的 sparse head 不再自己搜索 token，而是继承上层传来的集合 $\mathcal{S}_h^{(l)}$，只在这个子集上算注意力：
+
+$$O_h^{(l)} = \text{softmax}\!\left(\frac{q_h^{(l)} (K_h^{(l)}[\mathcal{S}_h^{(l)}])^T}{\sqrt{d_k}}\right) V_h^{(l)}[\mathcal{S}_h^{(l)}]$$
+
+且不更新集合、原样往下传（$\mathcal{S}_h^{(l+1)} = \mathcal{S}_h^{(l)}$）。由于参与运算的 key/value 只剩 $k$ 个而非整段历史，单 head 的计算量和需要从 KV 缓存里加载的数据量同步骤降，这正是端到端 2.7× 加速的主要来源。
+
+**3. HardKuma 头特化机制：让离散的角色分配变得可微**
+
+一个 head 是 retrieval 还是 sparse 本质是个二值选择，DuoAttention 那样用连续变量学完再取整会带来训练-推理不一致。作者改用 Hard Kumaraswamy 分布：先从均匀分布采样 $u$、经 Kuma 逆 CDF 变换得 $s=(1-u^{1/\beta})^{1/\alpha}$，再线性拉伸到 $(p,q)$ 区间（$p<0,\,q>1$）得 $s'=s\cdot(q-p)+p$，最后硬截断回 $[0,1]$ 得 $z=\min(1,\max(0,s'))$。落在 $(p,0]$ 和 $[1,q)$ 的概率质量被压到恰好 0 和 1，采样值天然堆在两端、却又全程可微。每个 head 只学两个参数 $\alpha_h^{(l)}, \beta_h^{(l)}$，推理时把随机采样换成确定性判定：按期望 $\mathbb{E}[z_h^{(l)}] > 0.5$ 判为 retrieval head、否则 sparse head，从而把硬性分类问题塞进了梯度下降框架。
 
 ### 损失函数 / 训练策略
 训练阶段每个 head 同时算出 sparse 和 full 两份注意力图，再用 HardKuma 采样值 $z_h^{(l)}$ 做线性混合 $\tilde{A}_h^{(l)} = z_h^{(l)} \cdot A_{R,h}^{(l)} + (1 - z_h^{(l)}) \cdot A_{S,h}^{(l)}$，使得"该选哪种 head"的梯度能直接回流。目标函数由蒸馏项和稀疏约束两部分组成：蒸馏项让混合注意力的 student 在 logits 上逼近全注意力 teacher（L2 距离），稀疏约束则把 retrieval head 的总数压到目标值，整体写成 $\min_{\alpha,\beta} \max_{\lambda \geq 0} \mathcal{L}_{\text{distill}} + \lambda \cdot (\mathbb{E}[\|\mathbf{z}\|_0] - N_{\text{target}})$。其中 $\mathbb{E}[\|\mathbf{z}\|_0]$ 有闭式解，拉格朗日乘子 $\lambda$ 由梯度上升自动调节，省去了手工搜稀疏度超参的麻烦；整个训练只需在单张 A100 上跑 3000 步、几小时即可完成。

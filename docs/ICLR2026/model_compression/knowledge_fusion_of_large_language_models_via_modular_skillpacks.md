@@ -43,17 +43,41 @@ tags:
 
 ### 整体框架
 
-GraftLLM把"迁移来的能力"和"目标模型本体"解耦存储，落成"**目标模型 + SkillPack**"两件套：先用蒸馏把源模型能力学进目标模型的全参微调权重里，再把微调前后的参数增量压成一个紧凑、可插拔的 SkillPack。推理时按需把若干 SkillPack 叠加回目标模型，从而在不碰本体参数的前提下完成异构融合与持续学习。
+GraftLLM 把"迁移来的能力"和"目标模型本体"解耦存储，落成"**目标模型 + SkillPack**"两件套。整条流水线分四步走：先用两阶段蒸馏（SFT 对齐分布、DPO 对齐偏好）把源模型能力学进目标模型的全参微调权重里，得到微调前后的参数增量 $\Delta\theta$；再用模块感知压缩把这个庞大增量按层结构压成一个紧凑、可插拔的 SkillPack；推理时由一个路由函数按源模型/任务类型把若干 SkillPack 分派回目标模型的不同子模块，从而在不碰本体参数的前提下完成异构融合；同一套机制顺序施加，又自然支撑无遗忘的持续学习。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["异构源模型<br/>(27B~72B)"] --> B["两阶段跨能力迁移<br/>SFT对齐分布 → DPO对齐偏好"]
+    T["目标模型<br/>Llama-3.1-8B"] --> B
+    B --> C["全参微调增量<br/>Δθ = θ* − θ_tgt"]
+    C --> D["模块感知自适应压缩<br/>Embedding剪枝 · MLP/Attn 低秩SVD+量化"]
+    D --> E["SkillPack<br/>紧凑可插拔技能包"]
+    E --> F["路由式知识融合<br/>R 把各包分派到不同子模块"]
+    E --> G["模块化持续学习<br/>按任务激活SkillPack子集"]
+    T --> F
+    T --> G
+    F --> H["融合模型 / 无遗忘持续学习"]
+    G --> H
+```
 
 ### 关键设计
 
-**1. 两阶段跨能力迁移：先对齐分布、再对齐偏好。** 单靠一步蒸馏很难既补上源模型的复杂能力又稳住对齐质量，所以迁移拆成 SFT 和 DPO 两步走。SFT 阶段在源模型生成的高质量数据 $\mathcal{D}_{SFT}$ 上最小化负对数似然 $\mathcal{L}_{SFT}(\theta) = -\mathbb{E}[\log p_\theta(y_i, x_i)]$，把源、目标模型之间的输出分布差异先抹平；随后 DPO 阶段用同一源模型对同一输入产生的最优、最差回复构成偏好对 $(y_w, y_l)$，以 $\mathcal{L}_{DPO} = -\mathbb{E}[\log\sigma(\beta \log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)})]$ 进一步把偏好对齐到源模型，最终得到既懂源能力又对齐良好的全参微调权重 $\theta_{tgt}^*$，对应增量 $\Delta\theta = \theta_{tgt}^* - \theta_{tgt}$。
+**1. 两阶段跨能力迁移：先对齐分布、再对齐偏好**
 
-**2. 模块感知自适应压缩：按层结构挑最划算的压缩算子。** 全参增量直接存太大，但不同模块的冗余特性差别很大，统一压缩会顾此失彼，于是对每类模块分别下手。Embedding 和 Output Head 这类对词表对齐、任务适配高度敏感的层只做幅度剪枝，保留绝对值最大的 $\alpha$ 比例权重；MLP 模块用 SVD 分解 $\Delta\theta = \mathbf{U}\Sigma\mathbf{V}^\top$ 吃掉其参数冗余；Attention 模块做低秩 SVD，只保留前 $r$ 个奇异值对应的分量。在 SVD 之上再叠一层混合精度量化：按各分量的重要性自适应分配 bit 精度 $k$，用 GPTQ 做分组量化 $\hat{\mathbf{V}}_{[r]}^\top = \text{Quant}_k(\mathbf{V}_{[r]}^\top, \mathbf{x})$，让敏感分量保高精度、冗余分量压到低 bit。最终的 SkillPack 写成 $\Delta\hat{\theta} = \{C_m(\Delta\theta_m)\}_{m \in \mathcal{M}}$，每个模块 $m$ 配一个最适配其结构的压缩算子 $C_m$，于是它既是全参微调精度的载体，又小到可以随手搬运。
+单靠一步蒸馏很难既补上源模型的复杂能力又稳住对齐质量，所以迁移拆成 SFT 和 DPO 两步走。SFT 阶段在源模型生成的高质量数据 $\mathcal{D}_{SFT}$ 上最小化负对数似然 $\mathcal{L}_{SFT}(\theta) = -\mathbb{E}[\log p_\theta(y_i, x_i)]$，把源、目标模型之间的输出分布差异先抹平；随后 DPO 阶段用同一源模型对同一输入产生的最优、最差回复构成偏好对 $(y_w, y_l)$，以 $\mathcal{L}_{DPO} = -\mathbb{E}[\log\sigma(\beta \log\frac{\pi_\theta(y_w|x)}{\pi_{ref}(y_w|x)} - \beta \log\frac{\pi_\theta(y_l|x)}{\pi_{ref}(y_l|x)})]$ 进一步把偏好对齐到源模型，最终得到既懂源能力又对齐良好的全参微调权重 $\theta_{tgt}^*$，对应增量 $\Delta\theta = \theta_{tgt}^* - \theta_{tgt}$。之所以非要 DPO 这一步，是因为后面实验发现 LoRA 类方法恰恰栽在 DPO 上——容量不足时偏好对齐几乎失效，而全参微调能稳住。
 
-**3. 路由式知识融合：把多个技能隔离在各自子模块里避免互相打架。** 传统参数融合把多个增量直接加总会引发任务间干扰，GraftLLM 改用路由把它们分而治之。多个 SkillPack 融合时按 $\theta_{fused} = \theta_{tgt} + \sum_{i=1}^{n} \mathcal{R}(\Delta\hat{\theta}_i)$ 叠加，路由函数 $\mathcal{R}$ 依据源模型或任务类型把每个 SkillPack 分派到对应子模块，不同技能落在不同位置而非搅在一起，从而绕开 Task Arithmetic、TIES 这类方法的参数冲突瓶颈。
+**2. 模块感知自适应压缩：按层结构挑最划算的压缩算子**
 
-**4. 模块化持续学习：按需激活、即插即用。** 因为本体参数始终不动、能力都封装在独立 SkillPack 里，持续学习就变成对 SkillPack 的增删而非对权重的覆盖。每个任务 $t$ 只激活与之相关的子集 $\mathcal{S}_t$，按 $\theta_t = \theta_{tgt} + \sum_{\Delta\hat{\theta}_i \in \mathcal{S}_t} \mathcal{R}(\Delta\hat{\theta}_i)$ 拼出当前模型，新增技能不触碰旧技能，天然规避灾难性遗忘；反过来随时卸载某个 SkillPack，又能实现"反学习"或去毒化。
+全参增量直接存太大，但不同模块的冗余特性差别很大，统一压缩会顾此失彼，于是对每类模块分别下手。Embedding 和 Output Head 这类对词表对齐、任务适配高度敏感的层只做幅度剪枝，保留绝对值最大的 $\alpha$ 比例权重；MLP 模块用 SVD 分解 $\Delta\theta = \mathbf{U}\Sigma\mathbf{V}^\top$ 吃掉其参数冗余；Attention 模块做低秩 SVD，只保留前 $r$ 个奇异值对应的分量。在 SVD 之上再叠一层混合精度量化：按各分量的重要性自适应分配 bit 精度 $k$，用 GPTQ 做分组量化 $\hat{\mathbf{V}}_{[r]}^\top = \text{Quant}_k(\mathbf{V}_{[r]}^\top, \mathbf{x})$，让敏感分量保高精度、冗余分量压到低 bit。最终的 SkillPack 写成 $\Delta\hat{\theta} = \{C_m(\Delta\theta_m)\}_{m \in \mathcal{M}}$，每个模块 $m$ 配一个最适配其结构的压缩算子 $C_m$，于是它既是全参微调精度的载体，又小到可以随手搬运。
+
+**3. 路由式知识融合：把多个技能隔离在各自子模块里避免互相打架**
+
+传统参数融合把多个增量直接加总会引发任务间干扰，GraftLLM 改用路由把它们分而治之。多个 SkillPack 融合时按 $\theta_{fused} = \theta_{tgt} + \sum_{i=1}^{n} \mathcal{R}(\Delta\hat{\theta}_i)$ 叠加，路由函数 $\mathcal{R}$ 依据源模型或任务类型把每个 SkillPack 分派到对应子模块——隐式融合里它是一个以目标模型 4096 维隐表示为输入的轻量前馈分类器，显式融合里则可直接按任务类型指派、无需额外训练。不同技能落在不同位置而非搅在一起，从而绕开 Task Arithmetic、TIES 这类方法的参数冲突瓶颈。
+
+**4. 模块化持续学习：按需激活、即插即用**
+
+因为本体参数始终不动、能力都封装在独立 SkillPack 里，持续学习就变成对 SkillPack 的增删而非对权重的覆盖。每个任务 $t$ 只激活与之相关的子集 $\mathcal{S}_t$，按 $\theta_t = \theta_{tgt} + \sum_{\Delta\hat{\theta}_i \in \mathcal{S}_t} \mathcal{R}(\Delta\hat{\theta}_i)$ 拼出当前模型，新增技能不触碰旧技能，天然规避灾难性遗忘；反过来随时卸载某个 SkillPack，又能实现"反学习"或去毒化。
 
 ### 损失函数 / 训练策略
 

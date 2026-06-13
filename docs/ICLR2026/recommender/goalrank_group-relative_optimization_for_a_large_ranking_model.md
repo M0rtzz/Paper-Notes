@@ -40,21 +40,37 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GoalRank 把传统两阶段排序压缩成一个端到端的大 generator：先训练一个列表级 reward model $\hat{r}(l)$ 预估整张列表带来的用户反馈，再对每个用户收集一批候选列表组成列表组 $\mathcal{B}_u$，用组内相对的 softmax 把 reward 转成一个参考策略 $\pi^{ref}$，最后让大排序模型 $\pi_\theta$ 通过交叉熵去逼近这个参考分布。整套流程不再依赖独立的 evaluator 做选择，而是把"评价"信号蒸馏进单一模型的训练目标里。
+GoalRank 把传统两阶段排序压缩成一个端到端的大 generator（generator-only），训练分三步走。第一步先用真实用户反馈训练一个列表级 reward model $\hat{r}(l)$，预估整张推荐列表能换来多少用户反馈（如观看时长、互动行为）。第二步为每个用户采样一批候选列表凑成列表组 $\mathcal{B}_u$，候选既来自正在训练的主排序模型 $\pi_\theta$，也来自一个辅助策略集 $\mathcal{M}$（启发式规则 + 轻量神经模型），以保证组内列表足够多样。第三步在组内对 reward 做减均值除标准差的标准化、再过 softmax，把 reward 转成一个参考策略 $\pi^{ref}$，让 $\pi_\theta$ 通过交叉熵去逼近它。整套流程不再依赖独立的 evaluator 做挑选，而是把"评价"信号蒸馏进单一模型的训练目标里；至于为什么敢放弃 evaluator、押注一个大 generator，由 Theorem 1 在理论上兜底。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    F["真实用户反馈日志"] --> R["训练列表级<br/>reward model r̂(l)"]
+    M["辅助策略集 M<br/>启发式+轻量模型"] --> B["列表组构建<br/>多样化候选 → 列表组 B_u"]
+    P["大排序模型 πθ<br/>(generator-only)"] --> B
+    B --> G["group-relative 参考策略<br/>组内标准化 + softmax → π_ref"]
+    R --> G
+    G --> T["交叉熵对齐<br/>训练 πθ 逼近 π_ref"]
+    T -->|迭代采样| P
+```
 
 ### 关键设计
 
 **1. Theorem 1：用理论说明 generator-only 为什么值得做**
 
-GoalRank 的出发点是一个反直觉的结论——单一大模型在原理上能赢过任意多个小 generator 的集成。论文把两阶段方案抽象为 k-mixture 的 $(α,β)$-bounded 策略空间 $\mathcal{C}_m^k$，把端到端方案抽象为 generator-only 策略空间 $\mathcal{F}_M$，并证明只要后者宽度 $\geq kα+n$，就存在 $\mathcal{E}(\mathcal{F}_M) < \mathcal{E}(\mathcal{C}_m^k)$，即逼近最优策略的误差严格更小；更进一步，随着模型容量 $n→∞$ 有 $\lim_{n→∞}\mathcal{E}(\mathcal{F}_M)=0$。这条定理直接解释了实验里"多 generator 收益饱和"的现象：集成的策略空间被 k 个小模型的混合卡死了上限，而 scaling up 单模型才能持续逼近最优，因此整个框架才敢放弃 evaluator、押注一个大 generator。
+GoalRank 的出发点是一个反直觉的结论——单一大模型在原理上能赢过任意多个小 generator 的集成。论文把两阶段方案抽象为 k-mixture 的 $(α,β)$-bounded 策略空间 $\mathcal{C}_m^k$，把端到端方案抽象为 generator-only 策略空间 $\mathcal{F}_M$，并证明只要后者宽度 $\geq kα+n$，就存在 $\mathcal{E}(\mathcal{F}_M) < \mathcal{E}(\mathcal{C}_m^k)$，即逼近最优策略 $\pi^*$ 的误差严格更小；更进一步，随着模型容量 $n→∞$ 有 $\lim_{n→∞}\mathcal{E}(\mathcal{F}_M)=0$。这条定理直接解释了实验里"多 generator 收益饱和"的现象：集成的策略空间被 $k$ 个小模型的混合卡死了上限，而 scaling up 单模型才能持续逼近最优，因此整个框架才敢放弃 evaluator、押注一个大 generator。
 
-**2. Group-relative 参考策略：让有偏的 reward model 也能给出可靠监督**
+**2. 列表组构建：靠多样化候选撑开足够大的 reward 差距**
 
-直接拿 reward model 的绝对分数当训练目标很危险，因为它几乎一定带系统性偏差。GoalRank 的做法是只信任组内的相对关系：在列表组 $\mathcal{B}$ 上做减均值除标准差的标准化后再过 softmax，得到参考策略 $\pi^{ref}(l|\mathcal{B}) = \frac{\exp((\hat{r}(l) - \bar{r}_\mathcal{B})/\sigma_\mathcal{B})}{\sum_{l'} \exp((\hat{r}(l') - \bar{r}_\mathcal{B})/\sigma_\mathcal{B})}$，其中 $\bar{r}_\mathcal{B}$、$\sigma_\mathcal{B}$ 是组内均值与标准差。这样无论 reward model 整体偏高还是偏低，标准化都会把绝对偏差消掉，只要组内 reward 差距大于一个阈值 $\sigma^*$，列表之间的序关系就能保持正确——而序关系正是训练真正需要的信号。这也是它与 RLHF/DPO 共享的内核：用相对偏好而非绝对打分来约束策略。
+第三步的 group-relative 标准化能成立的前提，是同一个列表组内的 reward 必须拉得开——若只从单个 generator 反复采样，列表彼此太像、reward 差距太小，标准化反而会把噪声放大。为此 GoalRank 给每个用户构建列表组 $\mathcal{B}_u$ 时，除了正在训练的主模型 $\pi_\theta$，还引入一个辅助策略集 $\mathcal{M}$，里面既有启发式规则也有轻量神经模型，生成风格各异的候选列表一起塞进组里。多样化的来源保证同一组里既有好列表也有差列表，reward 差距更容易超过临界阈值，从而让下一步的参考策略序关系稳定可用。消融实验显示组太小（3–5）样本不足、组太大（50–100）又会摊薄 reward 差距，中等规模（8–20）最佳。
 
-**3. 列表组构建：靠多样化候选撑开足够大的 reward 差距**
+**3. group-relative 参考策略：让有偏的 reward model 也能给出可靠监督**
 
-group-relative 能成立的前提是组内 reward 要拉得开，否则标准化会放大噪声。为此 GoalRank 引入一个辅助策略集 $\mathcal{M}$，里面既有启发式规则也有轻量神经模型，为每个用户生成风格各异的候选列表，再连同主模型的输出一起组成列表组。多样化的来源保证了同一组里既有好列表也有差列表，reward 差距更容易超过 $\sigma^*$，从而让参考策略的序关系稳定可用。
+直接拿 reward model 的绝对分数当训练目标很危险，因为真实 reward model 几乎一定带系统性偏差 $\hat{r}(l)=r^*(l)+b(l)$。GoalRank 的做法是只信任组内的相对关系：在列表组 $\mathcal{B}$ 上做减均值除标准差的标准化后再过 softmax，得到参考策略
+
+$$\pi^{ref}(l|\mathcal{B}) = \frac{\exp((\hat{r}(l) - \bar{r}_\mathcal{B})/\sigma_\mathcal{B})}{\sum_{l'} \exp((\hat{r}(l') - \bar{r}_\mathcal{B})/\sigma_\mathcal{B})}$$
+
+其中 $\bar{r}_\mathcal{B}$、$\sigma_\mathcal{B}$ 是组内均值与标准差。这样无论 reward model 整体偏高还是偏低，标准化都会把绝对偏差消掉，只要组内 reward 差距够大、列表之间的序关系就能保持正确——而序关系正是训练真正需要的信号。拿到 $\pi^{ref}$ 后，用交叉熵让 $\pi_\theta$ 去对齐它（等价于最小化到 $\pi^*$ 的 KL 散度的一个可行上界）。这也是它与 RLHF/DPO 共享的内核：用相对偏好而非绝对打分来约束策略。
 
 ## 实验关键数据
 

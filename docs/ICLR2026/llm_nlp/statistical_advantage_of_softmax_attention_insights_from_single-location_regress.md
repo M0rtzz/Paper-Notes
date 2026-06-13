@@ -48,27 +48,45 @@ tags:
 
 ### 整体框架
 
-本文把检索任务抽象成"单位置回归"(SLR)：序列 $X \in \mathbb{R}^{L \times D}$ 的标签 $y$ 只由某个隐藏位置 $\epsilon^*$ 上的 token 决定，模型要同时学键方向 $k^*$ 去定位它、再沿值方向 $v^*$ 提取信息。在 $D \to \infty$ 的高维极限下，作者借统计物理的 order parameter 把高维风险压成低维函数，从而能逐个激活函数地比较 softmax 与线性 attention 谁能逼近 Bayes 最优，并进一步用 replica method 刻画有限样本下的表现。
+本文要回答一个长期悬而未决的问题：为什么 softmax attention 在检索任务上稳稳压过线性 attention？作者的做法是把检索任务抽象成一个可以严格分析的统计模型——"单位置回归"(Single-Location Regression, SLR)：序列 $X \in \mathbb{R}^{L \times D}$ 的标签 $y$ 只由某个隐藏位置 $\epsilon^*$ 上的 token 决定，模型必须先沿键方向 $k^*$ 把这个位置"捞"出来、再沿值方向 $v^*$ 读出它的信息。有了这个模型，作者把各种 attention 统一写成"只换打分函数 $\sigma$"的单层估计器，于是 softmax、线性、erf、softplus 能放在同一框架里逐一比较；再借统计物理的 order parameter，在 $D \to \infty$ 的高维极限下把高维风险压成几个标量的函数，从而严格证明谁能触到 Bayes 最优；最后用 replica method 把分析从"无穷样本的逼近能力"推进到"有限样本 $\alpha = N/D$ 的统计效率"。整条链路环环相扣：**建模 → 统一估计器 → 降维与定理 → 有限样本**，最终给出 softmax 优势的原理性解释。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["检索任务<br/>NIAH / AR / MQAR"]
+    D1["SLR 数据模型<br/>标签只挂在隐藏位置 ε*"]
+    D2["单层注意力估计器<br/>只换打分函数 σ：<br/>softmax / 线性 / erf / softplus"]
+    D3["Order parameter 降维与核心定理<br/>高维风险→标量；<br/>softmax 触 Bayes（Nishimori），线性触不到"]
+    D4["有限样本分析<br/>replica 给出 α=N/D 下精确风险"]
+    OUT["softmax > 线性 的原理性解释"]
+    IN --> D1 --> D2 --> D3 --> D4 --> OUT
+```
 
 ### 关键设计
 
-**1. SLR 数据模型：把"大海捞针"写成可分析的回归。** 检索任务（NIAH、AR、MQAR）此前缺一个能撑起理论推导的统一形式，作者用单位置依赖来抓住其本质——标签
+**1. SLR 数据模型：把"大海捞针"写成可分析的回归**
+
+检索任务（NIAH、AR、MQAR）此前缺一个能撑起理论推导的统一形式，作者用单位置依赖来抓住其本质——标签
 
 $$y = \frac{1}{\sqrt{D}} X_{\epsilon^*} v^* + \Delta \xi$$
 
-只挂在一个隐藏位置 $\epsilon^*$ 上（$\xi$ 为高斯噪声，$\Delta$ 控噪声强度）。位置信息通过加权高斯分布 $P(x \mid L, \epsilon^*, k^*) = g_\nu(\epsilon^*, \chi^*) \prod_\ell \mathcal{N}(x_\ell; 0, I_D)$ 注入，其中 $\chi = \tfrac{1}{\sqrt{D}}Xk^*$ 是 token 在键方向上的投影。权重函数 $g_\nu$ 有两种实例化：**Spiked-SLR** 取 $g_\nu=e^{\sqrt{\nu}\chi_\epsilon-\frac12\nu}$，让相关 token 在 $k^*$ 方向有一个均值 spike；**Max-SLR** 取 $g_\nu=L\,e^{\nu\chi_\epsilon}/\sum_\ell e^{\nu\chi_\ell}$，让相关 token 是与 $k^*$ 内积最大的那个。$\nu$ 是信号强度，越大相关位置越突出，这两种变体覆盖了"偏移检索"和"argmax 检索"两类典型机制。
+只挂在一个隐藏位置 $\epsilon^*$ 上（$\xi$ 为高斯噪声，$\Delta$ 控噪声强度）。位置信息通过加权高斯分布 $P(x \mid L, \epsilon^*, k^*) = g_\nu(\epsilon^*, \chi^*) \prod_\ell \mathcal{N}(x_\ell; 0, I_D)$ 注入，其中 $\chi = \tfrac{1}{\sqrt{D}}Xk^*$ 是 token 在键方向上的投影。权重函数 $g_\nu$ 有两种实例化：**Spiked-SLR** 取 $g_\nu=e^{\sqrt{\nu}\chi_\epsilon-\frac12\nu}$，让相关 token 在 $k^*$ 方向有一个均值 spike；**Max-SLR** 取 $g_\nu=L\,e^{\nu\chi_\epsilon}/\sum_\ell e^{\nu\chi_\ell}$，让相关 token 是与 $k^*$ 内积最大的那个。$\nu$ 是信号强度，越大相关位置越突出。这两种变体分别覆盖了"偏移检索"和"argmax 检索"两类典型机制，让后面所有结论都建立在一个干净、可推导、又抓住检索本质的玩具模型上。
 
-**2. 单层注意力估计器：用激活函数解耦 softmax 的两种能力。** 为了搞清 softmax 到底强在哪，作者把估计器统一写成
+**2. 单层注意力估计器：用打分函数解耦 softmax 的两种能力**
+
+要搞清 softmax 到底强在哪，关键是别把它当黑箱，而是把它的"指数非线性"和"全局归一化"两种能力拆开单独归因。作者把估计器统一写成
 
 $$f_{\sigma, k, v}(X) = \sigma(\chi)^\top z, \quad \chi = \frac{1}{\sqrt{D}} X k, \quad z = \frac{1}{\sqrt{D}} X v,$$
 
-只换打分函数 $\sigma$ 就能对比四种 attention。Softmax $\sigma(\chi)_\ell=e^{\chi_\ell}/\sum_{\ell'}e^{\chi_{\ell'}}$ 同时具备指数非线性和全局归一化；Linear $\sigma(\chi)_\ell=1+\chi_\ell$ 是它在原点的线性化；Element-wise erf $\sigma(\chi)_\ell=1+\text{erf}(c+\chi_\ell)$ 有非线性但缺归一化；Softplus 核化 $\sigma(\chi)_\ell=\text{softplus}(\chi_\ell)/\sum_{\ell'}\text{softplus}(\chi_{\ell'})$ 有归一化但增长慢于指数。这样一组对照能把"指数非线性"和"全局归一化"两个属性单独拆出来归因。
+只换打分函数 $\sigma$ 就能对比四种 attention：Softmax $\sigma(\chi)_\ell=e^{\chi_\ell}/\sum_{\ell'}e^{\chi_{\ell'}}$ 同时具备指数非线性和全局归一化；Linear $\sigma(\chi)_\ell=1+\chi_\ell$ 是它在原点的线性化（两者都没有）；Element-wise erf $\sigma(\chi)_\ell=1+\text{erf}(c+\chi_\ell)$ 有非线性但缺归一化；Softplus 核化 $\sigma(\chi)_\ell=\text{softplus}(\chi_\ell)/\sum_{\ell'}\text{softplus}(\chi_{\ell'})$ 有归一化但增长慢于指数。这样一组"两两差一个属性"的对照，能把后面观察到的性能差距精确归因到底是缺了哪个属性，而不是笼统地说"softmax 就是更好"。
 
-**3. Order parameter 降维：把高维风险变成几个标量的函数。** 直接分析高维 $k,v$ 不可行，作者借统计物理在 $D \to \infty$ 下用 7 个 order parameter 完全刻画种群风险：恢复参数 $m_{kk^*}=\tfrac1D k^\top k^*$、$m_{vv^*}=\tfrac1D v^\top v^*$ 衡量对隐藏方向的还原程度，范数参数 $q_{kk}=\tfrac1D k^\top k$、$q_{vv}=\tfrac1D v^\top v$ 控制尺度，剩下 $m_{kv^*},m_{vk^*},q_{vk}$ 是交叉项。在流形 $\mathcal{M}=\{(k,v): m_{kv^*}=m_{vk^*}=q_{vk}=0\}$ 上这些交叉项为零，风险进一步收成 4 个标量的函数，高维优化问题就变得可处理。
+**3. Order parameter 降维与核心定理：把高维风险压成标量，证明 softmax 触到 Bayes 下界**
 
-**4. 核心定理：softmax 触到 Bayes 下界、线性 attention 触不到。** 在上述降维基础上得到两条结论。Proposition 4.2 表明，只要权重函数满足 $g_\nu(\epsilon,\chi)/g_\nu(\epsilon',\chi)=e^{c_\nu(\chi_\epsilon-\chi_{\epsilon'})}$（spiked 和 max 两种 SLR 都满足），softmax 就能在 $k=c_\nu k^*,\,v=v^*$ 处取到 Bayes 风险 $\min_{f}\mathcal{E}(y,f_{k,v}(X))=\mathcal{E}_{\text{Bayes}}$——这恰好对应统计物理里的 Nishimori 条件，是 softmax 指数形式与后验形式相容的结构性原因。Corollary 4.3 则量化了差距：spiked-SLR 中当 $\nu\to\infty$，线性 attention 的误差只以多项式速率 $\mathsf{E}_{\text{lin}}\sim\frac{L}{L-1}\cdot\frac1\nu$ 衰减，而 softmax 以指数速率 $\mathsf{E}_{\text{softmax}}=e^{-c_L\nu+o(\nu)}$ 衰减；max-SLR 中当 $L\to\infty$，线性 attention 的误差趋向 1（退化成平凡预测器），softmax 仍为 0。这从原理上说明线性 attention 不只是常数倍变差，而是本质上够不到最优。
+直接分析高维向量 $k,v$ 不可行，作者借统计物理在 $D \to \infty$ 下用 7 个 order parameter 完全刻画种群风险：恢复参数 $m_{kk^*}=\tfrac1D k^\top k^*$、$m_{vv^*}=\tfrac1D v^\top v^*$ 衡量对隐藏方向 $k^*,v^*$ 的还原程度，范数参数 $q_{kk}=\tfrac1D k^\top k$、$q_{vv}=\tfrac1D v^\top v$ 控制尺度，剩下 $m_{kv^*},m_{vk^*},q_{vk}$ 是交叉项；在流形 $\mathcal{M}=\{(k,v): m_{kv^*}=m_{vk^*}=q_{vk}=0\}$ 上交叉项为零，风险进一步收成 4 个标量的函数，高维优化问题就变得可处理。降维之后两条核心定理随之而来。Proposition 4.2 表明：只要权重函数满足 $g_\nu(\epsilon,\chi)/g_\nu(\epsilon',\chi)=e^{c_\nu(\chi_\epsilon-\chi_{\epsilon'})}$（spiked 和 max 两种 SLR 都满足），softmax 就能在 $k=c_\nu k^*,\,v=v^*$ 处取到 Bayes 风险 $\min_{f}\mathcal{E}(y,f_{k,v}(X))=\mathcal{E}_{\text{Bayes}}$——这恰好对应统计物理里的 **Nishimori 条件**，正是 softmax 的指数形式与贝叶斯后验形式相容的结构性原因。Corollary 4.3 进一步量化差距：spiked-SLR 中当 $\nu\to\infty$，线性 attention 的误差只以多项式速率 $\mathsf{E}_{\text{lin}}\sim\frac{L}{L-1}\cdot\frac1\nu$ 衰减，softmax 却以指数速率 $\mathsf{E}_{\text{softmax}}=e^{-c_L\nu+o(\nu)}$ 衰减；max-SLR 中当 $L\to\infty$，线性 attention 的误差趋向 1（退化成平凡预测器），softmax 仍为 0。这说明线性 attention 不是"常数倍变差"，而是本质上够不到最优。
 
-**5. 有限样本分析：replica method 给出 $\alpha=N/D$ 下的精确风险。** 种群层面的结论假设样本无穷，实际更关心样本有限时谁更好。作者在 $N,D\to\infty$ 且比例 $\alpha=N/D=\Theta(1)$ 的高维极限下用 replica method 推导，把经验风险最小化(ERM)的测试风险收敛到一个由自洽方程决定的确定性量 $\mathsf{E}_\sigma(\alpha)$，需迭代求解 6 个 order parameter。这把分析从"无穷样本的逼近能力"推进到"有限样本的统计效率"，给出可与数值优化直接对照的预测曲线。
+**4. 有限样本分析：replica method 给出 $\alpha=N/D$ 下的精确风险**
+
+种群层面的结论假设样本无穷，但实际更关心样本有限时谁更好——这正是逼近能力之外的"统计效率"问题。作者在 $N,D\to\infty$ 且比例 $\alpha=N/D=\Theta(1)$ 的高维极限下用 replica method 推导，把经验风险最小化(ERM)的测试风险收敛到一个由自洽方程决定的确定性量 $\mathsf{E}_\sigma(\alpha)$，需迭代求解 6 个 order parameter。这把分析从"无穷样本的逼近能力"推进到"有限样本的统计效率"，给出可与数值优化直接对照的预测曲线，也让后面 Figure 3 中理论实线与实际优化点能严丝合缝地比对。
 
 ---
 

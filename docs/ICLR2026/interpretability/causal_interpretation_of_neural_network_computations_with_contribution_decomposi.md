@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CODEC 包含四个阶段：(1) 定义贡献目标（contribution target）——选择要解释的输出标量（如 top logit）；(2) 计算贡献——用 Integrated Gradients 从目标输出到隐藏层，得到每个神经元对每个输入的贡献值；(3) 分解贡献——用 Sparse Autoencoder 将贡献矩阵分解为稀疏模式（modes）；(4) 可视化——将 modes 映射回输入空间，展示哪些输入特征通过哪些模式驱动输出。
+CODEC 想回答的问题是"隐藏层里哪些神经元群体、通过什么方式共同撑起了网络的某个输出"，而不只是"哪些神经元对什么输入敏感"。整条流水线从网络输出端起步：先选定一个要解释的标量目标（如 top logit），用 Integrated Gradients 把归因从常规的"输出→输入"改写成"输出→隐藏层"，给每个隐藏神经元算出一个有正有负的贡献值；再对整张贡献矩阵做稀疏自编码（Sparse Autoencoder），挖出若干"总是协同出力"的稀疏模式（modes）；最后兵分两路——一路把每个 mode 还原成像素空间里的一条通路做可视化，另一路通过 ablation / preservation 干预这些模式，验证它们确实是因果结构而非相关巧合，最终汇成可实验验证的因果解释。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入图像 + 网络<br/>(ResNet-50 / 视网膜 CNN)"] --> T["选定贡献目标<br/>(top logit 等输出标量)"]
+    T --> C["隐藏层贡献计算<br/>Integrated Gradients 输出→隐藏层"]
+    C --> S["Sparse Autoencoder 分解<br/>贡献矩阵 → k 个稀疏模式 modes"]
+    S --> V["贡献映射可视化<br/>每个 mode 还原成像素通路"]
+    S --> N["网络控制实验<br/>ablation / preservation 干预"]
+    V --> O["因果可解释性 + 可验证假设"]
+    N --> O
+```
 
 ### 关键设计
 

@@ -39,7 +39,21 @@ tags:
 
 ### 整体框架
 
-OPRM 把奖励建模从"回归一个标量"改成"预测一个概率分布"。一段 prompt+response 喂进 LLM backbone 后，直接读取最后一个 token 位置 softmax 后的词汇表概率，把数字 token '1' 到 '9' 这九个 logit 的概率抽出来归一化，就得到一条覆盖九个序数质量等级的分布 $p_\psi(s|x,y)$；推理时对这条分布做加权平均即可还原成一个标量奖励。整个过程不引入任何 value head，复用的就是现成的 LM head。
+OPRM 把奖励建模从"回归一个标量"改成"预测一条概率分布"。给定 prompt 和一段 response，模型走一遍 LLM backbone，复用现成的 LM head（不引入任何 value head）读出最后一个 token 位置 softmax 后的词表概率，再把数字 token '1' 到 '9' 这九个概率抽出来归一化，就得到一条覆盖九个序数质量等级的分布 $p_\psi(s|x,y)$。
+
+训练时成对喂入 chosen 与 rejected，两条九级分布做笛卡尔积得到一个联合概率矩阵，由此闭式算出"chosen 比 rejected 好"的偏好概率，再用负对数似然优化；当偏好对还附带 good / normal / bad 质量等级标注时，区域洪泛调优（RgFT）会把分布进一步约束到对应区间。推理时只需喂入单条 response，对它的分布做加权平均即可还原成一个标量奖励。整套流程没有新增任何参数，分布的方差天然成了置信度指标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入 prompt x +<br/>chosen y_c / rejected y_r"] --> B["LLM backbone + LM head<br/>（共享，无 value head）"]
+    B --> C["抽数字 token '1'–'9' 概率<br/>并归一化"]
+    C --> D["两条九级序数分布<br/>（chosen、rejected）"]
+    D -->|训练| E["联合概率矩阵<br/>闭式偏好 P(y_c≻y_r)"]
+    E --> F["NLL 损失：对比梯度<br/>把两条分布推开"]
+    F -->|有质量标注| G["RgFT 按 bad/normal/good 分区<br/>洪泛成三角形景观"]
+    D -->|推理| H["加权平均<br/>→ 标量奖励 r(x,y)"]
+```
 
 ### 关键设计
 

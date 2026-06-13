@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文要解决的是：怎样在不大量收集人类反馈的前提下，给"解释生成LLM"提供一个能反映人类多元评判的奖励信号。整套系统由三个角色组成并交替训练。Explanation LLM $\pi_e(\theta_e)$ 拿到一个隐藏了真实决策的上下文，要生成一段自然语言解释；$K=3$ 个独立的 Proxy LLM 各自给这段解释打分，提供带噪声的奖励样本；Rectified Flow 奖励模型 $\varphi(\theta_\varphi)$ 则把这些代理奖励样本当作"被高斯噪声污染过的真实人类奖励"，学一个逆向去噪流把它们还原成接近真实人类的奖励分布。每一轮先用代理样本更新 Flow 模型，再用 Flow 给出的奖励通过 PPO 更新 Explanation LLM，如此往复。
+这篇论文要解决的是：怎样在不大量收集人类反馈的前提下，给"解释生成LLM"提供一个能反映人类多元评判的奖励信号。整套系统由三个角色组成并交替训练。Explanation LLM $\pi_e(\theta_e)$ 拿到一个隐藏了真实决策的上下文，要生成一段自然语言解释；$K=3$ 个独立的 Proxy LLM 各自给这段解释打分，提供带噪声的奖励样本；Rectified Flow 奖励模型 $\varphi(\theta_\varphi)$ 则把这些代理奖励样本当作"被高斯噪声污染过的真实人类奖励"，学一个逆向去噪流把它们还原成接近真实人类的奖励分布。每一轮先用代理样本更新 Flow 模型，再用 Flow 给出的奖励通过 PPO 更新 Explanation LLM，交替迭代两轮收敛。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["隐藏真实决策的<br/>上下文"] --> B["Explanation LLM<br/>生成自然语言解释"]
+    B --> C["K=3 个 Proxy LLM 打分<br/>rejection sampling 留正样本"]
+    C --> D["1. Rectified Flow 嵌进 LLM 当奖励模型<br/>flow token → 交叉注意力 → projector<br/>把噪声代理奖励去噪成奖励分布"]
+    B -->|上下文+解释隐藏状态| D
+    D -.理论保证.-> E["2. Theorem 1 误差界<br/>去噪后逼近真实人类奖励"]
+    D --> F["3. 句子级密集奖励<br/>逐句取真实决策 logit 增量"]
+    F --> G["PPO + LoRA 更新 Explanation LLM"]
+    G -->|交替训练 2 轮| B
+```
 
 ### 关键设计
 

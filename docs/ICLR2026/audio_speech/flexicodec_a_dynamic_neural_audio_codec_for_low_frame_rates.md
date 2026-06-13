@@ -45,6 +45,20 @@ tags:
 
 FlexiCodec 把语音拆成两条平行的流：一条「语义流」用冻结 ASR 编码器抓内容，一条「声学流」用 CNN 抓音色波形，两者都先在 12.5Hz 上对齐。核心创新发生在中间——动态帧合并模块按 ASR 特征的相似度把连续相似帧并成一帧，让帧率随语音内容自适应地降到 3–12.5Hz，随后语义流过 FSQ、声学残差过 RVQ 完成量化；解码时再把动态帧率序列展开回 12.5Hz 固定帧率，交给 CNN 解码器合成波形。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入语音波形 16kHz"] --> B["ASR 特征<br/>冻结 SenseVoice 编码器"]
+    A --> C["声学特征<br/>CNN 编码器"]
+    B --> D["动态帧合并<br/>相似度≥τ 合并相似帧<br/>τ 调控 3–12.5Hz 帧率"]
+    C -->|复用语义流合并边界| D
+    D --> E["FSQ 量化语义<br/>RVQ-1 token"]
+    D --> F["RVQ 量化声学残差<br/>24 层"]
+    E --> G["帧展开<br/>恢复 12.5Hz 固定帧率"]
+    F --> G
+    G --> H["CNN 解码器<br/>合成波形"]
+```
+
 ### 关键设计
 
 **1. ASR 特征替代 SSL 特征：把 RVQ-1 喂得更「干净」**

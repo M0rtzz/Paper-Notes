@@ -42,7 +42,7 @@ tags:
 
 ### 整体框架
 
-给定数据集 $\mathcal{D} = \{z_i\}_{i \in [n]}$、一个 semivalue 权重向量 $\omega$ 和两个基础 utility $u_1, u_2$，本文的方法分三步：(1) 将每个数据点 $z_i$ 嵌入到二维空间 $\mathbb{R}^2$ 形成 spatial signature；(2) 分析单位圆 $\mathcal{S}^1$ 上所有方向 $\bar{\alpha}$ 对应的排序如何变化；(3) 计算鲁棒性指标 $R_p$ 衡量排序稳定度。
+本文不训练任何模型，而是搭建一个分析性框架，回答一个实践问题：换一个 utility，数据估值的排序会不会大变？给定数据集 $\mathcal{D} = \{z_i\}_{i \in [n]}$、一个 semivalue 权重向量 $\omega$ 和两个基础 utility $u_1, u_2$，论文分四步把这个问题层层化简。第一步，把 utility 选择的两种不确定来源（明确的 trade-off，以及"多个指标都看起来合理"）统一写成线性组合 $u_\alpha = \alpha_1 u_1 + \alpha_2 u_2$，于是"用哪个 utility"就坍缩成"取哪个系数方向 $\alpha$"。第二步，证明每个数据点能被嵌入到二维平面得到它的 spatial signature，任意 utility 下的价值分数恰好是该 signature 在 $\alpha$ 方向上的投影，排序稳定性因此等价为"$\alpha$ 在单位圆 $\mathcal{S}^1$ 上旋转时投影顺序会不会翻转"这个纯几何问题。第三步，定义鲁棒性指标 $R_p$，用"要转过多少角度排序才会乱"把稳定度量成一个 $[0,1]$ 的数。第四步，用这套几何语言解释为什么 Banzhaf 值在各种 utility 下排序最稳。
 
 ### 关键设计
 
@@ -66,13 +66,13 @@ $$R_p = \frac{\mathbb{E}[\rho_p]}{\pi/4},$$
 
 分母 $\pi/4$ 是所有点完全共线时 $\rho_p$ 能取到的最大值，因此 $R_p \in [0,1]$，越接近 1 越鲁棒。它的实用之处在于可在 $O(n^2 \log n)$ 时间内精确算出，并且其高低与 Kendall 排序相关性的退化程度直接对应——$R_p$ 低就意味着换个 utility 排序就会大幅重排。
 
-### 理论分析：为什么 Banzhaf 最稳
+**4. 为什么 Banzhaf 最稳：把权重压在对齐因子最高处，让 spatial signature 近乎共线**
 
-本文不涉及神经网络训练，整套方法是一个分析性框架，鲁棒性差异的根源由 Proposition 3.3 直接给出。它把两个基础 utility 下 semivalue 分数向量的 Pearson 相关性拆解为
+有了 $R_p$ 这把尺子，还剩最后一问：为什么实证里 Banzhaf 在各种 utility 下排序总是最稳？Proposition 3.3 把两个基础 utility 下 semivalue 分数向量的 Pearson 相关性精确拆解为
 
 $$\text{Corr}(\phi(u_1), \phi(u_2)) = \frac{\sum_j \omega_j^2 r_j}{\sqrt{\sum_j \omega_j^2 \text{Var}_j(u_1)} \sqrt{\sum_j \omega_j^2 \text{Var}_j(u_2)}},$$
 
-其中 $\omega_j$ 是 semivalue 在 coalition size $j$ 上的权重，$r_j$ 是 size-$j$ 的对齐因子。对齐因子 $r_j$ 通常在中等 coalition size 区域最高，而 Banzhaf 权重 $\omega_j = \binom{n-1}{j-1}/2^{n-1}$ 恰好集中在这一区域，于是它系统性地把权重压在 $r_j$ 大的地方，得到更高的相关性、更共线的 spatial signature，最终拿到最高的 $R_p$；Shapley 则均匀摊到所有 size、被极端 size 的高方差拖累，因此更不稳。
+其中 $\omega_j$ 是 semivalue 在 coalition size $j$ 上的权重，$r_j$ 是 size-$j$ 的对齐因子（两个 utility 的 marginal contribution 在该 size 上有多对齐）。这个相关性越高，spatial signature 的点就越贴近同一条过原点的直线，$R_p$ 也越大。经验上 $r_j$ 在中等 coalition size 区域最高、向两端衰减，而 Banzhaf 权重 $\omega_j = \binom{n-1}{j-1}/2^{n-1}$ 恰好集中在这一区域，于是它系统性地把权重压在 $r_j$ 大的地方，得到最高的相关性、最共线的 signature、最大的 $R_p$；Shapley 把权重均摊到所有 size、被两端 size 的高方差拖累，因此更不稳。这条解释也呼应了此前文献只在经验上观察到的"Banzhaf 更稳定"，第一次从权重分布与对齐因子交互的角度给出了几何根因。
 
 ## 实验关键数据
 

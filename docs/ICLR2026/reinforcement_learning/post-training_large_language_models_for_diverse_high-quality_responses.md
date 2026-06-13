@@ -41,7 +41,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在标准 RL 后训练目标中增加 DPP 多样性项。对每个 prompt $x$，采样 $k$ 个响应 $y_{1:k}$，用预训练 embedding 模型 $\phi$ 映射到语义空间，构造 Gram 矩阵 $L_\phi(y_{1:k})[i,j] = \langle \phi(y_i), \phi(y_j) \rangle$，多样性得分为 $\text{Div}(y_{1:k}) = \det(L_\phi(y_{1:k}))$。
+DQO 想解决的是"后训练让模型质量上去了、多样性却塌掉"这个矛盾，做法是在标准 RL 后训练目标里挂一项语义多样性奖励，整个流程仍套在 GRPO/PPO 框架里。对每个 prompt $x$，先用当前策略采样 $k$ 个响应 $y_{1:k}$，用预训练 embedding 模型 $\phi$ 把它们映射到语义空间。第一步用 **DPP 行列式多样性度量** 把这组语义向量张成的体积 $\det(L_\phi)$ 当作多样性得分；第二步在 **质量-多样性联合目标** 里把奖励经指数缩放折进嵌入向量长度（奖励增强嵌入 $\psi$），让"体积大"同时意味着"质量高 + 语义不同"；第三步用 **leave-one-out 梯度估计器** 把不稳的 $\log\det$ 目标换成有界、低方差的替代量，再回传更新策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["prompt x"] --> SAMPLE["当前策略 π_θ<br/>采样 k 个响应 y_1..y_k"]
+    SAMPLE --> EMB["预训练 embedding φ<br/>映射到语义空间"]
+    SAMPLE --> RM["奖励模型<br/>打分 r(x,y_i)"]
+    EMB --> DIV["DPP 行列式多样性度量<br/>体积 det(L_φ) 越大越多样"]
+    DIV --> OBJ["质量-多样性联合目标<br/>奖励增强嵌入 ψ：方向=语义 长度=奖励<br/>J_Div = 奖励 + α·logdet − β·KL"]
+    RM --> OBJ
+    OBJ --> LOO["Leave-one-out 梯度估计器<br/>有界 + 低方差"]
+    LOO --> UPD["更新策略<br/>叠加在 GRPO/PPO 上"]
+```
 
 ### 关键设计
 

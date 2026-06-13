@@ -46,15 +46,40 @@ tags:
 
 ### 整体框架
 
-CryoNet.Refine 接收一张实验 cryo-EM 密度图 $d_0$ 和一份初始原子结构 $x_0$（如 AlphaFold3 的预测），目标是把原子坐标推到既贴合实验密度、又符合立体化学的状态。结构先经 Atom encoder 提取成对特征 $z$、Sequence embedder 编码原子类型 $s$，再用参考 Boltz-2 的 Pairformer 做交叉注意力，随后由单步扩散模块一次性输出精修结构 $x_1$；一个可微密度生成器把 $x_1$ 渲染成模拟密度图，与实验图比对得到密度损失，再叠加几何约束损失 $\mathcal{L} = \gamma_{\text{den}}\,\mathcal{L}_{\text{den}} + \mathcal{L}_{\text{geo}}$ 反传更新。整个网络参数初始化自 Boltz-2 而只让扩散模块可训练，并以测试时优化的方式对每个案例单独迭代（最多 300 次 recycle 加早停），相当于为每份结构现场拟合而非套用一个通用模型。
+CryoNet.Refine 接收一张实验 cryo-EM 密度图 $d_0$ 和一份初始原子结构 $x_0$（如 AlphaFold3 的预测），目标是把原子坐标推到既贴合实验密度、又符合立体化学的状态。整个网络由五个模块组成：结构先经 Atom encoder 提取成对特征 $z$、Sequence embedder 编码原子类型 $s$，再用承自 Boltz-2 的 Pairformer 做交叉注意力，随后由单步扩散模块一次性输出精修结构 $x_i$；一个可微密度生成器把 $x_i$ 渲染成模拟密度图，与实验图比对得到密度损失，再叠加几何约束损失，合成总损失 $\mathcal{L} = \gamma_{\text{den}}\,\mathcal{L}_{\text{den}} + \mathcal{L}_{\text{geo}}$ 反传更新。关键的是参数初始化自 Boltz-2 后只让扩散模块可训练（编码器与 Pairformer 全程冻结），并以测试时优化的方式对每个案例单独迭代——固定输入反复 recycle、每轮用损失梯度微调扩散模块权重（最多 300 次 + 早停），相当于为每份结构现场拟合而非套用一个通用模型。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D0["实验密度图 d0"] --> ENC
+    X0["初始结构 x0<br/>(AlphaFold3 预测)"] --> ENC["编码器 + Pairformer<br/>(冻结，承自 Boltz-2)"]
+    ENC --> DIFF["单步确定性扩散<br/>一次预测精修结构 xi"]
+    D0 --> GEN
+    DIFF --> GEN["可微密度损失<br/>密度生成器渲染合成图<br/>→ 余弦相似度"]
+    DIFF --> GEO["可微几何约束<br/>Rama / Rotamer / 键角 / Cβ / 碰撞"]
+    GEN --> LOSS["总损失 L = γ_den·L_den + L_geo"]
+    GEO --> LOSS
+    LOSS -->|"测试时优化：反传更新扩散模块 θ，逐案 recycle"| DIFF
+    LOSS -->|"达 300 次或早停"| OUT["精修原子模型 xn"]
+```
 
 ### 关键设计
 
-**1. 单步确定性扩散：从初始结构出发而非从噪声。** 像 AlphaFold3 这类扩散模型要从高斯噪声起步、反复去噪数百步才能成型，对"已经有一份大致正确结构、只需微调"的精修场景既浪费又危险——多步随机采样反而会破坏已有的正确部分。CryoNet.Refine 把精修写成一次预条件化的确定性映射 $\hat{\mathbf{x}} = c_{\text{skip}}(\sigma)\,\mathbf{x}_0 + c_{\text{out}}(\sigma)\,\mathcal{F}_\theta\!\left(c_{\text{in}}(\sigma)\mathbf{x}_0,\, c_{\text{noise}}(\sigma),\, \mathcal{C}\right)$，其中 $c_{\text{skip}}, c_{\text{out}}, c_{\text{in}}, c_{\text{noise}}$ 是与噪声水平 $\sigma$ 相关的预条件系数，$\mathcal{F}_\theta$ 是可训练网络。它直接以初始结构（而非噪声）为输入做单步预测，并去掉了 AlphaFold3 里的 MSA 处理和置信度头，转而完全依赖物理密度约束来定方向。后续实验也印证这一取舍：经典 200 步扩散的 CC_mask 只有 0.30，而单步版本达到 0.65。
+**1. 单步确定性扩散：从初始结构出发而非从噪声**
 
-**2. 可微密度损失：让密度图相关性第一次能反传。** 此前的 AI 精修方法只从已知结构学几何特征，与实验密度图完全脱钩，预测出来的结构"看着合理却对不上数据"。本文的关键是把密度匹配做成端到端可微的损失。密度生成器是一个物理模拟器而非神经网络：以每个原子位置为中心叠加高斯球得到合成密度 $\hat{\boldsymbol{\rho}}(\vec{\boldsymbol{m}}, \vec{\mathbf{x}}) = \sum_{i=1}^{N} w_i e^{-k|\vec{\boldsymbol{m}} - \vec{\mathbf{x}}_i|^2}$，其中权重 $w_i$ 取原子序数，宽度 $k = 8 \cdot res / (\pi \cdot v)$ 由分辨率和体素大小决定。合成图与实验图之间用余弦相似度构造损失 $\mathcal{L}_{\text{den}} = 1 - \frac{\hat{\boldsymbol{\rho}} \cdot \boldsymbol{\rho}}{\lVert\hat{\boldsymbol{\rho}}\rVert \cdot \lVert\boldsymbol{\rho}\rVert}$。由于整条链路用 PyTorch 重写，梯度可以一路回传到原子坐标，这也是首次把密度图相关性直接当作可微损失——其平均相关系数 0.892，高于 ChimeraX 的 0.803。
+像 AlphaFold3 这类扩散模型要从高斯噪声起步、反复去噪数百步才能成型，对"已经有一份大致正确结构、只需微调"的精修场景既浪费又危险——多步随机采样反而会破坏已有的正确部分。CryoNet.Refine 把精修写成一次预条件化的确定性映射 $\hat{\mathbf{x}} = c_{\text{skip}}(\sigma)\,\mathbf{x}_0 + c_{\text{out}}(\sigma)\,\mathcal{F}_\theta\!\left(c_{\text{in}}(\sigma)\mathbf{x}_0,\, c_{\text{noise}}(\sigma),\, \mathcal{C}\right)$，其中 $c_{\text{skip}}, c_{\text{out}}, c_{\text{in}}, c_{\text{noise}}$ 是与噪声水平 $\sigma$ 相关的预条件系数，$\mathcal{F}_\theta$ 是可训练网络。它直接以初始结构（而非噪声）为输入做单步预测，并去掉了 AlphaFold3 里的 MSA 处理和置信度头，转而完全依赖物理密度约束来定方向。后续实验也印证这一取舍：经典 200 步扩散的 CC_mask 只有 0.30，而单步版本达到 0.65。
 
-**3. 可微几何约束：把立体化学规则写成可优化项。** 光拟合密度容易让原子陷进密度噪声里、产生违反化学常识的构象，因此还需要一组几何损失共同把关：$\mathcal{L}_{\text{geo}} = \gamma_{\text{rama}} \mathcal{L}_{\text{rama}} + \gamma_{\text{rot}} \mathcal{L}_{\text{rot}} + \gamma_{\text{angle}} \mathcal{L}_{\text{angle}} + \gamma_{C_\beta} \mathcal{L}_{C_\beta} + \gamma_{\text{viol}} \mathcal{L}_{\text{viol}}$。其中 Ramachandran 损失依据 Top8000 数据集，惩罚骨架二面角 $\phi, \psi$ 落入异常值区域，守住主链构象；Rotamer 损失约束侧链的 4 个 $\chi$ 角不偏离常见转子；$C_\beta$ 偏差损失把实际 $C_\beta$ 与理想位置偏差超过 0.25Å 的情况记为惩罚；键角损失以键角 RMSD 拉近理想几何；碰撞损失则按 Van der Waals 半径惩罚非键合原子的空间冲突。消融显示这几项缺一不可——去掉 Ramachandran 后骨架 favored 比例从 98.80% 跌到 90.75%，去掉 Rotamer 后侧链 favored 从 98.58% 跌到 94.48%。
+**2. 可微密度损失：让密度图相关性第一次能反传**
+
+此前的 AI 精修方法只从已知结构学几何特征，与实验密度图完全脱钩，预测出来的结构"看着合理却对不上数据"。本文的关键是把密度匹配做成端到端可微的损失。密度生成器是一个物理模拟器而非神经网络：以每个原子位置为中心叠加高斯球得到合成密度 $\hat{\boldsymbol{\rho}}(\vec{\boldsymbol{m}}, \vec{\mathbf{x}}) = \sum_{i=1}^{N} w_i e^{-k|\vec{\boldsymbol{m}} - \vec{\mathbf{x}}_i|^2}$，其中权重 $w_i$ 取原子序数，宽度 $k = 8 \cdot res / (\pi \cdot v)$ 由分辨率和体素大小决定。合成图与实验图之间用余弦相似度构造损失 $\mathcal{L}_{\text{den}} = 1 - \frac{\hat{\boldsymbol{\rho}} \cdot \boldsymbol{\rho}}{\lVert\hat{\boldsymbol{\rho}}\rVert \cdot \lVert\boldsymbol{\rho}\rVert}$。由于整条链路用 PyTorch 重写，梯度可以一路回传到原子坐标，这也是首次把密度图相关性直接当作可微损失——其平均相关系数 0.892，高于 ChimeraX 的 0.803。
+
+**3. 可微几何约束：把立体化学规则写成可优化项**
+
+光拟合密度容易让原子陷进密度噪声里、产生违反化学常识的构象，因此还需要一组几何损失共同把关：$\mathcal{L}_{\text{geo}} = \gamma_{\text{rama}} \mathcal{L}_{\text{rama}} + \gamma_{\text{rot}} \mathcal{L}_{\text{rot}} + \gamma_{\text{angle}} \mathcal{L}_{\text{angle}} + \gamma_{C_\beta} \mathcal{L}_{C_\beta} + \gamma_{\text{viol}} \mathcal{L}_{\text{viol}}$。其中 Ramachandran 损失依据 Top8000 数据集，惩罚骨架二面角 $\phi, \psi$ 落入异常值区域，守住主链构象；Rotamer 损失约束侧链的 4 个 $\chi$ 角不偏离常见转子；$C_\beta$ 偏差损失把实际 $C_\beta$ 与理想位置偏差超过 0.25Å 的情况记为惩罚；键角损失以键角 RMSD 拉近理想几何；碰撞损失则按 Van der Waals 半径惩罚非键合原子的空间冲突。消融显示这几项缺一不可——去掉 Ramachandran 后骨架 favored 比例从 98.80% 跌到 90.75%，去掉 Rotamer 后侧链 favored 从 98.58% 跌到 94.48%。
+
+**4. 测试时优化：把精修当成一次逐案过拟合**
+
+cryo-EM 每份密度图各不相同，一个训练好的通用模型很难对任意结构都精确贴合。CryoNet.Refine 因此放弃静态推理，把每个案例当成一次小型训练：固定输入 $x_0$，单步前向得到精修结构，在输出上算密度损失与几何损失，再把梯度反传回去——但只更新扩散模块的参数 $\theta$（编码器与 Pairformer 始终冻结），如此循环（recycle）。迭代最多 300 次并配早停（patience 20），收敛呈两阶段：前约 100 次 recycle 的 CC 急剧上升（高敏感期），此后趋于平台（鲁棒收敛期）。这本质上是类似 NeRF 的逐场景过拟合思路，把网络的全部优化容量都集中到贴合当前这张密度图上，也正是它区别于 AlphaFold3「固定权重一次推理」的根本所在。
 
 ## 实验关键数据
 

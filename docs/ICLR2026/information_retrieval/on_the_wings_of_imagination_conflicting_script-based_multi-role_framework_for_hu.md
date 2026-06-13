@@ -44,17 +44,46 @@ tags:
 
 ### 整体框架
 
-HOMER（Humor-theory-driven multi-role LLM collaboration framework augmented with humor Retrieval）把"看图说笑话"拆成三个 LLM 角色的流水协作：冲突脚本提取器 $\mathrm{Extract}(\cdot)$ 先从图像里读出场景描述 $D$ 和脚本对立集合 $\mathcal{C}$，层次想象器 $\mathrm{Imagine}(\cdot)$ 再以 $\mathcal{C}$、$D$ 为锚点把候选幽默目标展开成想象树 $\mathcal{T}_{\mathrm{im}}$，标题生成器 $\mathrm{Gen}(\cdot)$ 最后从树里采样一条创意路径写出标题。整条链路可写成 $\mathrm{Cap}(I) = \mathrm{Gen}(\Phi(\mathcal{C}, D, \mathcal{T}_{\mathrm{im}}, \Omega))$，其中 $\Omega \in NS \times LA$ 对应 GTVH 中叙述策略与语言风格两个知识资源，让生成在"有理论配方"的约束下进行而非靠 LLM 自由发挥。
+HOMER（Humor-theory-driven multi-role LLM collaboration framework augmented with humor Retrieval）要解决的是"LLM 直接看图搞笑只会写描述句、不知道笑点在哪、也无法解释为什么好笑"这个核心难题。它的思路是把幽默生成按 GTVH 幽默理论拆成一条"有配方"的三角色流水线：先抠出笑点的逻辑前提，再围绕它把创意空间撑开、打分剪枝，最后落成标题——每一步都对应理论里的某个知识资源，而不是让 LLM 自由发挥。
+
+具体地，冲突脚本提取器 $\mathrm{Extract}(\cdot)$ 先从图像里读出场景描述 $D$ 和脚本对立集合 $\mathcal{C}$；层次想象器 $\mathrm{Imagine}(\cdot)$ 以 $\mathcal{C}$、$D$ 为锚点，把候选幽默目标用"深度联想链 + 笑话库广度检索"展开成想象树 $\mathcal{T}_{\mathrm{im}}$，并用幽默相关性分数对叶节点打分剪枝去噪；标题生成器 $\mathrm{Gen}(\cdot)$ 最后从树里采样一条创意路径写出标题。整条链路可写成 $\mathrm{Cap}(I) = \mathrm{Gen}(\Phi(\mathcal{C}, D, \mathcal{T}_{\mathrm{im}}, \Omega))$，其中 $\Omega \in NS \times LA$ 对应 GTVH 中叙述策略与语言风格两个知识资源，让生成在结构化约束下进行。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    I["输入：漫画图像 I"] --> E["冲突脚本提取器<br/>场景描述 D + 脚本对立集 C"]
+    subgraph IM["层次想象器"]
+        direction TB
+        R["候选幽默目标<br/>局部实体 + 全局实体"] --> CH["深度联想链<br/>coffee→milk→cow"]
+        CH --> RT["广度检索<br/>12 个笑话库 top-k token"]
+    end
+    E --> R
+    RT --> SC["幽默相关性评分<br/>H_rel + H_freq + H_div 打分剪枝"]
+    SC --> G["标题生成器<br/>DFS 采样路径 + GTVH 约束"]
+    G --> O["输出：幽默标题"]
+```
 
 ### 关键设计
 
-**1. 冲突脚本提取器：先把"笑点的逻辑前提"显式抠出来。** 现有方法的通病是直接让 LLM 看图搞笑，模型既不知道笑点在哪也无从推理，结果往往只是描述句。HOMER 把这一步前置成结构化抽取：先让 LLM 分析画面生成包含位置、人物、表情、动作的场景描述 $D = \mathrm{Extract}(I)$，再按 GTVH 对脚本对立的定义（两个冲突或对比的语义框架之间的关系）设计 prompt，引导模型穷举所有相关冲突脚本 $\mathcal{C} = \mathrm{Extract}(\Phi_{\mathrm{script}}(I, D))$。比如办公会议配一只巨大咖啡杯的漫画，这里被抽出的对立就是"巨大杯 vs 正常杯"。之所以把它放在最前面，是因为脚本对立是幽默成立的逻辑基石——没有冲突就没有笑点；消融实验里去掉 $\mathcal{C}$ 带来的下降最大，印证了 $D$ 与 $\mathcal{C}$ 共同撑起后续全部生成。
+**1. 冲突脚本提取器：先把"笑点的逻辑前提"显式抠出来**
 
-**2. 层次想象器：用深度联想 + 广度检索把创意空间撑大，再剪枝去噪。** 纯靠 LLM 联想容易反复绕圈、不够发散，单纯检索笑话又会引入大量噪声，这一模块用"先扩后剪"同时拿到创意深度和幽默广度。它先从局部（描述 $D$ 里的细粒度实体）和全局（图像 $I$ 的粗粒度实体）两个视角挑出候选幽默目标 $\{t_i\}$ 作为想象树根节点；对每个目标用一阶联想函数沿骨干链递归深入，$e_{\tau+1}^{(i)} = f_{\mathrm{chain}}(e_{\tau}^{(i)})$（$\tau = 0,\ldots,n-1$，平均链长 $\mathbb{E}[\tau]\approx 4$），这正是"coffee→milk→cow"那种逐层跳跃；再对链上每个实体 $e_{\tau}^{(i)}$ 构造查询嵌入 $\mathbf{z}_q = f_{\mathrm{emb}}(D, \mathcal{C}, e_{\tau}^{(i)})$，从整合的 12 个笑话数据集里检索 top-$k$ 笑话、提取 token 当叶节点做广度扩展。最后用幽默相关性分数 $\mathbf{H}(e_{\tau}^{(i)}, \varepsilon) = \mathbf{H}_{\mathrm{rel}} + \mathbf{H}_{\mathrm{freq}} + \mathbf{H}_{\mathrm{div}}$ 给叶节点打分剪枝，三项分别衡量"相关且对立"的程度、token 与笑话频率的几何均值、以及词性多样性（多词性意味着更多双关机会）。消融显示三项缺一不可，其中相关-对立项最关键。
+现有方法的通病是直接让 LLM 看图搞笑，模型既不知道笑点在哪也无从推理，结果往往只是描述句。HOMER 把这一步前置成结构化抽取：先让 LLM 分析画面生成包含位置、人物、表情、动作的场景描述 $D = \mathrm{Extract}(I)$，再按 GTVH 对脚本对立的定义（两个冲突或对比的语义框架之间的关系）设计 prompt，引导模型穷举所有相关冲突脚本 $\mathcal{C} = \mathrm{Extract}(\Phi_{\mathrm{script}}(I, D))$。比如办公会议配一只巨大咖啡杯的漫画，这里被抽出的对立就是"巨大杯 vs 正常杯"。之所以把它放在最前面，是因为脚本对立是幽默成立的逻辑基石——没有冲突就没有笑点；消融实验里去掉 $\mathcal{C}$ 带来的下降最大，印证了 $D$ 与 $\mathcal{C}$ 共同撑起后续全部生成。
 
-**3. 标题生成器：从想象树里采样路径，在结构约束下产出多样标题。** 有了脚本对立和想象树，最后一步要把它们落成一句真正好笑的话，并且能批量产出不同候选。生成器随机选定一个关键冲突脚本 $C\in\mathcal{C}$ 和一个幽默目标 $t_i$，对对应子树 $T_i$ 做 DFS 枚举所有根到叶路径 $\mathcal{P}_i$，采样其中一条 $P_i$，再连同叙述策略一起拼成 prompt：$\mathrm{Cap}(I) = \mathrm{Gen}(\Phi(\mathcal{C}, D, P_i, \Omega))$。每次采样落在不同路径、不同目标上，自然得到多样的标题，而 GTVH 的五个知识资源又作为结构化约束兜住幽默质量，避免发散成无关内容。
+**2. 层次想象器：用深度联想 + 广度检索把创意空间撑大**
 
-**4. 幽默相关性评分：用"相关但出乎意料"把幽默量化进 WordNet。** 检索回来的笑话 token 良莠不齐，需要一个能对齐幽默直觉的打分函数来挑。HOMER 的相关-对立分数借 WordNet 的结构化语义关系拆成两部分：目标语义相似度 TSS 用 Wu-Palmer 相似度，$\mathrm{TSS}(s_{e_\tau}, s_\varepsilon) = \max_{s_{e_\tau}\in S_{e_\tau}, s_\varepsilon\in S_\varepsilon}\mathrm{Sim}_{\mathrm{wup}}(s_{e_\tau}, s_\varepsilon)$；概念对立度 CO 用 Jaccard 不相似度，$\mathrm{CO}(s_{e_\tau}, s_\varepsilon) = 1 - \max_{s_{e_\tau}, s_\varepsilon}\frac{|\mathcal{R}(s_{e_\tau})\cap\mathcal{R}(s_\varepsilon)|}{|\mathcal{R}(s_{e_\tau})\cup\mathcal{R}(s_\varepsilon)|}$。两者经塑形函数 $f(x)=x\exp(-x)$ 合成 $\mathbf{H}_{\mathrm{rel}} = \mathrm{TSS} + f(\mathrm{TSS})\cdot\mathrm{CO}$。这条设计精准对应幽默的本质——语义上有关联（高 TSS）、概念上却对立（高 CO）才好笑；塑形函数保证语义相似度主导、对立性只作有界加成，使两者自然平衡而不会被极端值带偏。
+纯靠 LLM 联想容易反复绕圈、不够发散，单纯检索笑话又会引入大量噪声，这一模块用"先扩后剪"同时拿到创意深度和幽默广度。它先从局部（描述 $D$ 里的细粒度实体）和全局（图像 $I$ 的粗粒度实体）两个视角挑出候选幽默目标 $\{t_i\}$ 作为想象树根节点；对每个目标用一阶联想函数沿骨干链递归深入，$e_{\tau+1}^{(i)} = f_{\mathrm{chain}}(e_{\tau}^{(i)})$（$\tau = 0,\ldots,n-1$，平均链长 $\mathbb{E}[\tau]\approx 4$），这正是"coffee→milk→cow"那种逐层跳跃，构成想象树的骨干；再对链上每个实体 $e_{\tau}^{(i)}$ 构造查询嵌入 $\mathbf{z}_q = f_{\mathrm{emb}}(D, \mathcal{C}, e_{\tau}^{(i)})$，从整合的 12 个笑话数据集里检索 top-$k$ 笑话、提取 token 当叶节点做广度扩展，把日常生活里的幽默关联补进来。展开出的想象树再交给下一步打分剪枝去噪。
+
+**3. 幽默相关性评分：用"相关但出乎意料"把幽默量化进 WordNet**
+
+想象树扩展出来的叶节点 token 良莠不齐，需要一个能对齐幽默直觉的打分函数来剪枝。HOMER 用幽默相关性分数 $\mathbf{H}(e_{\tau}^{(i)}, \varepsilon) = \mathbf{H}_{\mathrm{rel}} + \mathbf{H}_{\mathrm{freq}} + \mathbf{H}_{\mathrm{div}}$ 给每个叶节点打分，三项分别衡量"相关且对立"的程度、token 与笑话频率的几何均值、以及词性多样性（多词性意味着更多双关机会）。其中最关键的相关-对立项 $\mathbf{H}_{\mathrm{rel}}$ 借 WordNet 的结构化语义关系拆成两部分：目标语义相似度 TSS 用 Wu-Palmer 相似度衡量语义关联，$\mathrm{TSS}(s_{e_\tau}, s_\varepsilon) = \max_{s_{e_\tau}\in S_{e_\tau}, s_\varepsilon\in S_\varepsilon}\mathrm{Sim}_{\mathrm{wup}}(s_{e_\tau}, s_\varepsilon)$；概念对立度 CO 用 Jaccard 不相似度衡量概念冲突，$\mathrm{CO}(s_{e_\tau}, s_\varepsilon) = 1 - \max_{s_{e_\tau}, s_\varepsilon}\frac{|\mathcal{R}(s_{e_\tau})\cap\mathcal{R}(s_\varepsilon)|}{|\mathcal{R}(s_{e_\tau})\cup\mathcal{R}(s_\varepsilon)|}$。两者经塑形函数 $f(x)=x\exp(-x)$ 合成
+
+$$\mathbf{H}_{\mathrm{rel}} = \mathrm{TSS} + f(\mathrm{TSS})\cdot\mathrm{CO}$$
+
+这条设计精准对应幽默的本质——语义上有关联（高 TSS）、概念上却对立（高 CO）才好笑；塑形函数保证语义相似度主导、对立性只作有界加成，使两者自然平衡而不会被极端值带偏。消融显示三项缺一不可，其中相关-对立项最关键。
+
+**4. 标题生成器：从想象树里采样路径，在结构约束下产出多样标题**
+
+有了脚本对立和剪枝后的想象树，最后一步要把它们落成一句真正好笑的话，并且能批量产出不同候选。生成器随机选定一个关键冲突脚本 $C\in\mathcal{C}$ 和一个幽默目标 $t_i$，对对应子树 $T_i$ 做 DFS 枚举所有根到叶路径 $\mathcal{P}_i$，采样其中一条 $P_i$，再连同叙述策略一起拼成 prompt：$\mathrm{Cap}(I) = \mathrm{Gen}(\Phi(\mathcal{C}, D, P_i, \Omega))$。每次采样落在不同路径、不同目标上，自然得到多样的标题，而 GTVH 的五个知识资源又作为结构化约束兜住幽默质量，避免发散成无关内容。
 
 ## 实验关键数据
 

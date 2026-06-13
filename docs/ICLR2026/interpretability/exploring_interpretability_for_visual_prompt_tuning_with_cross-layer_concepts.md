@@ -46,6 +46,15 @@ tags:
 
 IVPT 想解决的问题很具体：VPT 在 Transformer 各层插入的 prompt 是一堆不受约束的抽象向量，没法告诉人它到底"看"了图像的哪一块。IVPT 的思路是冻结预训练 ViT，在每一层用一组跨层概念原型把 prompt 重新"接地"——先由概念原型在图像上发现各自负责的语义区域（CRD），再把区域内的 patch 特征聚合成对应的 prompt 嵌入（IFA），并把浅层细粒度 prompt 逐步融合成深层粗粒度 prompt。最终每个概念给出一个条件类别得分，取平均作为预测，于是每条 prompt 都对应到一块可视化的语义区域，解释性内建在 prompt 的构造过程里而非事后补打。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像<br/>（冻结 ViT 各层 patch 嵌入）"] --> CRD["概念区域发现（CRD）<br/>类别无关原型按负欧氏距离注意力<br/>在图像上圈出各自的语义区域"]
+    CRD --> IFA["区域内特征聚合（IFA）<br/>区域概率加权聚合区域内 patch 特征<br/>得到可解释的 prompt 嵌入"]
+    IFA --> FUSE["跨层概念原型与细→粗融合<br/>浅层多原型抓纹理颜色、深层少原型抓部件语义<br/>可学习分组 + 区域一致性损失对齐"]
+    FUSE --> OUT["各概念条件类别得分取平均<br/>→ 类别预测"]
+```
+
 ### 关键设计
 
 **1. 概念区域发现（Concept Region Discovery, CRD）：把抽象 prompt 锚定到图像里的一块语义区域**

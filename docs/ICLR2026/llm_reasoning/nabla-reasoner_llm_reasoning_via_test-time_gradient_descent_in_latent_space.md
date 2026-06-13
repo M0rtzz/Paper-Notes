@@ -40,7 +40,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-∇-Reasoner 是一个迭代解码框架：给定 prompt，LLM 先生成一个完整的 rollout 及其 logits，然后通过 DTO 优化这些 logits，从优化后的 logits 中重新采样第一个 token，配合 rejection sampling 决定是否接受，再继续下一个 token 的生成。整个过程逐 token 推进，每个 token 都可能经过梯度优化。
+∇-Reasoner 是一个迭代解码框架：给定 prompt，base LLM 先生成一个完整的 rollout 及其逐 token logits，作为初始策略；然后用可微文本优化（DTO）在 logits 上做梯度下降把策略往高 reward 方向推，从优化后的 logits 重采样第一个 token；再用拒绝采样（rejection sampling）判断这个改动是否真涨 reward——涨了才接受，否则退回原 token；接受后推进到下一个 token、回到循环，直到整段解答生成完。整个过程逐 token 推进，每步都可能经过一轮梯度优化，三项加速策略则贯穿每一步把开销压到接近一次前向传播。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["问题 prompt x"] --> ROLL["base LLM 生成<br/>完整 rollout 与逐 token logits"]
+    ROLL --> DTO["可微文本优化 DTO<br/>在 logits 上梯度下降<br/>联合 reward 与 LLM 似然损失"]
+    DTO --> SAMP["从优化后 logits<br/>重采样首 token"]
+    SAMP --> REJ["迭代解码 + 拒绝采样<br/>首 token 变了就续写比 reward<br/>更高才接受、否则退回原 token"]
+    REJ --> NEXT{"整段解答<br/>已生成完？"}
+    NEXT -->|否，推进到下一 token| ROLL
+    NEXT -->|是| OUT["高 reward 最终解答"]
+    ACC["三项加速策略<br/>梯度缓存 / rollout 复用<br/>置信度与梯度引导跳过 token"] -. 贯穿每一步 .-> DTO
+```
 
 ### 关键设计
 

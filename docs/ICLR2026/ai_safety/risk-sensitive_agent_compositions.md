@@ -43,43 +43,53 @@ tags:
 
 ### 整体框架
 
-整个方法把Agent工作流抽象成一张有向无环图，每条可行路径对应一种Agent组合，目标是在所有路径里挑出尾部风险（VaR/CVaR）最小的那一条。核心障碍是路径数量随Agent数指数爆炸、无法逐条估计风险，作者用一个联合界把"整条路径的风险"拆成"各Agent风险之和"，再配合风险预算的桶离散化和按拓扑序的动态规划，把搜索压到多项式时间，并证明这样得到的解渐近近最优。
+整个方法把Agent工作流抽象成一张有向无环图，每条可行路径对应一种Agent组合，目标是在所有路径里挑出尾部风险（VaR/CVaR）最小的那一条。核心障碍是路径数量随Agent数指数爆炸、无法逐条估计风险：作者先把"需求违规"形式化为对各Agent损失取 max、再以VaR/CVaR盯住尾部分布，然后用一个联合界把"整条路径的风险"拆成"各边分位数之和"，从而能给每个Agent分配风险预算；接着把预算做桶离散化、按拓扑序跑动态规划，在多项式时间里选出最优组合，并给出渐近近最优的理论保证。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["Agent工作流<br/>(仅黑盒采样访问)"]
+    subgraph FORM["问题形式化：Agent Graph + max损失 + VaR/CVaR目标"]
+        direction TB
+        G["Agent Graph (DAG)<br/>每条边=一个Agent+损失"] --> MAX["组合损失取 max<br/>最坏Agent即整体违规"]
+        MAX --> OBJ["RMAG目标<br/>在所有路径最小化 VaR/CVaR"]
+    end
+    IN --> FORM
+    FORM --> UB["联合界分解<br/>路径风险→各边分位数之和<br/>给每个Agent分配风险预算"]
+    UB --> BV["BucketedVaR<br/>风险预算切 d+1 桶 + 拓扑序DP<br/>pathVaR=max(已有, 边VaR)"]
+    BV --> OUT["输出最优Agent组合<br/>+ 尾部上界 q（多项式时间、近最优）"]
+    BV -->|"离散VaR取平均"| CV["CVaR（DP副产品）"]
+```
 
 ### 关键设计
 
-**1. Agent Graph 与 max 损失：用"最坏Agent"刻画需求违规**
+**1. 问题形式化：用 Agent Graph + max 损失盯住"最坏Agent"的尾部风险**
 
-传统组合MDP把各步成本累加，但安全/公平/隐私这类需求违规的逻辑是"一个Agent严重越界，整体就算违规"，累加会稀释掉这种尾部信号。为此作者把工作流建模成DAG $G = (V, E, X, T, F, L, s, t, \mathcal{D}_s)$：每条边 $e \in E$ 绑定一个Agent $f_e$、轨迹集 $T_e$ 和损失函数 $L_e: T_e \to \mathbb{R}$，源点 $s$ 带初始输入分布 $\mathcal{D}_s$，终点 $t$ 是目标；一条路径 $p = v_1 \xrightarrow{e_1} \cdots \xrightarrow{e_m} v_{m+1}$ 就是一种Agent组合。关键在于组合损失取各步的最大值而非求和：
+传统组合MDP把各步成本累加，但安全/公平/隐私这类需求违规的逻辑是"一个Agent严重越界，整体就算违规"，累加会稀释掉这种尾部信号。为此作者把工作流建模成DAG $G = (V, E, X, T, F, L, s, t, \mathcal{D}_s)$：每条边 $e \in E$ 绑定一个Agent $f_e$、轨迹集 $T_e$ 和损失函数 $L_e: T_e \to \mathbb{R}$，源点 $s$ 带初始输入分布 $\mathcal{D}_s$，终点 $t$ 是目标，一条路径 $p = v_1 \xrightarrow{e_1} \cdots \xrightarrow{e_m} v_{m+1}$ 就是一种Agent组合。组合损失取各步的最大值而非求和：
 
 $$L_p(t_1, \ldots, t_m) = \max_i \{L_{e_i}(t_i)\}$$
 
-这条max定义把问题从累积成本优化彻底改写成最坏情形优化，也正是后面所有理论工具需要重做的根源。
-
-**2. 风险最小化目标（RMAG）：用VaR/CVaR盯住尾部而非均值**
-
-由于只有采样访问权、Agent当黑盒看待，作者用蒙特卡洛估计风险度量，并在给定风险水平 $\alpha \in (0,1)$ 下把目标写成在所有路径上最小化尾部风险：
+由于只有采样访问权、Agent当黑盒看待，目标便是在给定风险水平 $\alpha \in (0,1)$ 下、用蒙特卡洛在所有路径上最小化尾部风险（RMAG 问题）：
 
 $$\arg\min_{p \in \mathcal{P}} \rho[L_p(Z_p)], \quad \rho \in \{\text{VaR}_\alpha, \text{CVaR}_\alpha\}$$
 
-这里 $\text{VaR}_\alpha$ 取 $(1-\alpha)$-分位数，控制"以 $1-\alpha$ 概率不超过的损失上界"：
+其中 $\text{VaR}_\alpha$ 取 $(1-\alpha)$-分位数，控制"以 $1-\alpha$ 概率不超过的损失上界"，$\text{CVaR}_\alpha$ 取尾部条件期望、衡量"一旦进入最坏 $\alpha$ 区间平均会有多糟"：
 
 $$\text{VaR}_\alpha[L(Z)] = \inf\{q \in \mathbb{R}: \Pr[L(Z) \leq q] \geq 1-\alpha\}$$
 
-而 $\text{CVaR}_\alpha$ 取尾部条件期望，衡量"一旦进入最坏 $\alpha$ 区间平均会有多糟"：
-
 $$\text{CVaR}_\alpha[L(Z)] = \frac{1}{\alpha}\int_0^\alpha \text{VaR}_\gamma[L(Z)]\,d\gamma$$
 
-相比期望损失，这两个度量都能捕捉低概率高后果的极端事件，正对应安全关键场景的真实诉求。
+这条max定义把问题从累积成本优化彻底改写成最坏情形优化，而VaR/CVaR相比期望损失都能捕捉低概率高后果的极端事件，正对应安全关键场景的真实诉求——也正是后面所有理论工具需要重做的根源。
 
-**3. 联合界分解：把指数级的路径风险拆成可独立估计的逐边分位数**
+**2. 联合界分解：把指数级的路径风险拆成可独立估计的逐边分位数**
 
 直接对每条路径估计VaR需要遍历指数条路径，不可行。作者注意到对max损失有联合界 $\Pr[\max(R_1,\dots,R_m) > q] \leq \sum_i \Pr[R_i > q]$，于是只要给每个Agent分配一份"风险预算"、让各边各自超界的概率之和不超过 $\alpha$，就能保证整条路径越界概率受控。这把"联合估计一条路径"降维成"分别估计每条边的分位数"，是整个算法能做动态规划的前提。
 
-**4. BucketedVaR：风险预算桶离散化 + 拓扑序动态规划**
+**3. BucketedVaR：风险预算桶离散化 + 拓扑序动态规划**
 
 要在图上做DP，连续的风险预算必须离散。作者把总预算 $\alpha$ 切成 $d+1$ 个桶 $B = \{0, \alpha/d, 2\alpha/d, \ldots, \alpha\}$，然后按拓扑序遍历，对每个"顶点–桶"对 $(v, \bar{\alpha})$ 维护到达 $v$ 且累计预算为 $\bar{\alpha}$ 时的最优部分路径。扩展一条边时，把增量预算 $\bar{\alpha} - \alpha'$ 分给这条边，用该边样本的经验 $(1-(\bar{\alpha}-\alpha'))$-分位数作为边VaR估计，再因为组合损失取max而把路径VaR更新为 $\text{pathVaR} = \max(\text{VaR}[v', \alpha'], \text{edgeVaR})$。CVaR几乎免费：它等于对一串离散VaR取平均 $\text{CVaR}_\alpha \approx \frac{1}{d}\sum_{k=1}^d \text{VaR}_{k\alpha/d}$，直接复用DP里已经算好的VaR值即可，无需额外采样。
 
-**5. 理论保证：多项式复杂度下的近最优性**
+**4. 理论保证：多项式复杂度下的近最优性**
 
 Theorem 1 给出时间复杂度 $O(n(d+1)^2|V|^2)$，且以概率 $\geq 1-\delta$ 输出的 $q$ 是一个有效的尾部上界：
 

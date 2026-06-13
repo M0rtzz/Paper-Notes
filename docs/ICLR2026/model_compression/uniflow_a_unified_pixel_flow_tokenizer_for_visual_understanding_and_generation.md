@@ -36,13 +36,36 @@ tags:
 
 ### 整体框架
 
-UniFlow 把一个预训练视觉编码器改造成既能理解又能重建的统一 tokenizer：统一编码器 $\mathcal{E}_U$ 在自蒸馏约束下编码出语义 token，再交给一个轻量的 patch-wise 像素流解码器 $\mathcal{D}_{\text{flow}}$ 直接在像素空间还原图像。它不引入第二个编码器、也不依赖预训练 VAE，整套适配只需在 ImageNet 上训练 30 个 epoch，且可嫁接到任意 VFM 或 MLLM 视觉骨干。
+UniFlow 把一个预训练视觉编码器改造成既能理解又能重建的统一 tokenizer：统一编码器 $\mathcal{E}_U$ 在自蒸馏约束下编码出语义 token，这串 token 一边直接喂给 MLLM 做视觉理解，一边交给一个轻量的 patch-wise 像素流解码器 $\mathcal{D}_{\text{flow}}$ 直接在像素空间还原图像。它不引入第二个编码器、也不依赖预训练 VAE，整套适配只需在 ImageNet 上训练 30 个 epoch，且可嫁接到任意 VFM 或 MLLM 视觉骨干。下图给出从输入图像到语义 token、再分叉到理解与重建两条支路的完整数据流：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入图像<br/>切成 patch"] --> SD
+    subgraph SD["1. 层级自适应自蒸馏"]
+        direction TB
+        ENC["统一编码器 E_U"] -.->|"逐层余弦对齐<br/>深层强约束·浅层放松"| T["冻结教师 VFM E_T"]
+    end
+    SD --> TOK["语义 token z"]
+    TOK --> UND["视觉理解<br/>接入 MLLM"]
+    TOK --> DEC
+    subgraph DEC["2. patch-wise 像素流解码器"]
+        direction TB
+        GTB["全局 Transformer 块<br/>上采样+PE 后自注意力互通"] --> COND["全局一致条件 C"]
+        COND --> FLOW["逐 patch 速度场 MLP<br/>Rectified Flow"]
+    end
+    DEC --> OUT["重建图像<br/>单步解码"]
+```
 
 ### 关键设计
 
-**1. 层级自适应自蒸馏：让重建目标不再侵蚀语义理解。** 统一编码器既要保留教师 VFM 的语义，又要为下游重建腾出建模细节的空间，二者天然冲突——若全层都强行对齐教师，细节无从学起；若放松约束，语义又会退化。UniFlow 的观察是深层负责语义消歧、浅层负责细粒度细节，因此蒸馏强度应该分层而非一刀切：深层施加更强的保留约束，浅层给更大灵活性。它用冻结教师 $\mathcal{E}_T$ 监督学生 $\mathcal{E}_U$，并按层自适应分配权重 $w_l = \frac{w_l^{\text{base}} \cdot \exp(\beta \cdot \alpha_l)}{\sum_{k=1}^{L} w_k^{\text{base}} \cdot \exp(\beta \cdot \alpha_k)}$，其中层级先验 $w_l^{\text{base}} = l/L$ 让深层基础权重更高，对齐惩罚 $\alpha_l$（第 $l$ 层学生与教师 token 的平均余弦距离）让对齐越差的层临时获得更多关注，$\beta$ 控制这种自适应的强度。最终蒸馏损失是加权的逐层余弦距离 $\mathcal{L}_{\text{dist}} = \sum_{l=1}^{L} w_l \cdot \left(1 - \frac{1}{S} \sum_{i,j} \frac{\langle \mathbf{H}_U^{(l,i,j)}, \mathbf{H}_T^{(l,i,j)} \rangle}{\|\mathbf{H}_U^{(l,i,j)}\| \|\mathbf{H}_T^{(l,i,j)}\|}\right)$，这样深层守住语义、浅层放手补细节，避免了 VILA-U/UniTok 那种微调即退化的问题。
+**1. 层级自适应自蒸馏：让重建目标不再侵蚀语义理解**
 
-**2. Patch-wise 像素流解码器：绕过 VAE 天花板直接在像素空间重建。** 现有统一方案大多在预训练 VAE 的潜空间上接扩散/流解码器，重建上限被 VAE 锁死。UniFlow 改为直接在像素空间学习速度场：基于 Rectified Flow 定义干净图像与噪声之间的线性插值路径 $\mathbf{x}_t^{(i,j)} = (1-t)\mathbf{x}^{(i,j)} + t \cdot \epsilon^{(i,j)},\ t \in [0,1]$，再用一个轻量 MLP 逐 patch 预测速度场 $v_\theta(\mathbf{x}_t^{(i,j)}, t, \mathbf{c}^{(i,j)})$。逐 patch 解码把整张图的复杂分布拆成局部子分布，简化了学习目标、提升了训练效率，但代价是各 patch 各自为政会留下网格状接缝伪影。为此在条件注入前加一个全局 Transformer 块，让上采样后的 token 先经自注意力互通信息再分发条件 $\mathbf{C} = \mathcal{GTB}(\mathcal{P}_{\text{up}}(\mathbf{z}) + \mathbf{PE})$，使每个 patch 的解码都带上全局上下文，从而消除网格伪影。
+统一编码器既要保留教师 VFM 的语义，又要为下游重建腾出建模细节的空间，二者天然冲突——若全层都强行对齐教师，细节无从学起；若放松约束，语义又会退化。UniFlow 的观察是深层负责语义消歧、浅层负责细粒度细节，因此蒸馏强度应该分层而非一刀切：深层施加更强的保留约束，浅层给更大灵活性。它用冻结教师 $\mathcal{E}_T$ 监督学生 $\mathcal{E}_U$，并按层自适应分配权重 $w_l = \frac{w_l^{\text{base}} \cdot \exp(\beta \cdot \alpha_l)}{\sum_{k=1}^{L} w_k^{\text{base}} \cdot \exp(\beta \cdot \alpha_k)}$，其中层级先验 $w_l^{\text{base}} = l/L$ 让深层基础权重更高，对齐惩罚 $\alpha_l$（第 $l$ 层学生与教师 token 的平均余弦距离）让对齐越差的层临时获得更多关注，$\beta$ 控制这种自适应的强度。最终蒸馏损失是加权的逐层余弦距离 $\mathcal{L}_{\text{dist}} = \sum_{l=1}^{L} w_l \cdot \left(1 - \frac{1}{S} \sum_{i,j} \frac{\langle \mathbf{H}_U^{(l,i,j)}, \mathbf{H}_T^{(l,i,j)} \rangle}{\|\mathbf{H}_U^{(l,i,j)}\| \|\mathbf{H}_T^{(l,i,j)}\|}\right)$，这样深层守住语义、浅层放手补细节，避免了 VILA-U/UniTok 那种微调即退化的问题。
+
+**2. Patch-wise 像素流解码器：绕过 VAE 天花板直接在像素空间重建**
+
+现有统一方案大多在预训练 VAE 的潜空间上接扩散/流解码器，重建上限被 VAE 锁死。UniFlow 改为直接在像素空间学习速度场：基于 Rectified Flow 定义干净图像与噪声之间的线性插值路径 $\mathbf{x}_t^{(i,j)} = (1-t)\mathbf{x}^{(i,j)} + t \cdot \epsilon^{(i,j)},\ t \in [0,1]$，再用一个轻量 MLP 逐 patch 预测速度场 $v_\theta(\mathbf{x}_t^{(i,j)}, t, \mathbf{c}^{(i,j)})$；由于速度场直接拟合噪声到目标的线性映射，推理时单步采样即可还原一个 patch。逐 patch 解码把整张图的复杂分布拆成局部子分布，简化了学习目标、提升了训练效率，但代价是各 patch 各自为政、缺乏长程交互，会留下网格状接缝伪影。为此在条件注入前加一个深度为 $K$ 的全局 Transformer 块（每块含自注意力 + FFN），让上采样后的 token 先互通信息再分发条件 $\mathbf{C} = \mathcal{GTB}(\mathcal{P}_{\text{up}}(\mathbf{z}) + \mathbf{PE})$，使每个 patch 的解码都带上全局上下文——消融显示 GTB 层数从 0 增到 6 时网格伪影逐步消失、flow loss 收敛更快。
 
 ### 损失函数 / 训练策略
 

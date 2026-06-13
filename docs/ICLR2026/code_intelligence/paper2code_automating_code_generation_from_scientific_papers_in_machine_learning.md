@@ -42,6 +42,25 @@ tags:
 
 $$\text{Planning: } P = M_{\text{plan}}(R), \quad \text{Analysis: } A = M_{\text{analysis}}(R, P), \quad \text{Coding: } C = M_{\text{code}}(R, P, A)$$
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    R["论文 R<br/>(无代码/API/补充材料)"]
+    subgraph PLAN["规划阶段（Planning）→ 施工图 P"]
+        direction TB
+        P1["Overall Plan<br/>提炼核心功能摘要"] --> P2["Architecture Design<br/>文件列表 + 类图 + 序列图"]
+        P2 --> P3["Logic Design<br/>文件依赖与执行顺序"]
+        P3 --> P4["Configuration Generation<br/>合成 config.yaml"]
+    end
+    ANA["分析阶段（Analysis）→ 文件级规范 A<br/>逐文件生成功能/输入输出/依赖/算法分析"]
+    COD["编码阶段（Coding）<br/>按依赖顺序逐文件生成<br/>每步感知已生成文件"]
+    OUT["可运行代码仓库 C"]
+    R --> PLAN
+    PLAN --> ANA
+    ANA --> COD
+    COD --> OUT
+```
+
 ### 关键设计
 
 **1. 规划阶段（Planning）：把整篇论文先拆成一份可执行的施工图**

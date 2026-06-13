@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 这篇论文要解决的是：在差分隐私约束下，怎么从一堆用户数据里发现"哪些项值得保留"，并且能给出可证明的实用性保证。整个方法围绕一个简单到几乎朴素的机制——Weighted Gaussian Mechanism (WGM)——展开。对于最基础的 DP 集合并集问题，WGM 直接读入所有用户的项集，输出一个高频项的子集；这一步本身就是"域发现"。而对于 top-$k$、$k$-hitting set 这类需要在未知域上做选择的下游问题，作者把 WGM 当成一个前置步骤接成两阶段流水线（Algorithm 2）：先用一半隐私预算跑 WGM 拿到一个候选域 $D$，再用另一半预算在这个小得多的 $D$ 上跑已知域的标准算法，两段的隐私损失通过基本组合定理相加。论文的理论主线则是给这套流程的"漏掉了多少质量"——即缺失质量——配上严格的上界和近匹配的下界。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    U["各用户项集<br/>单用户可贡献海量项"] --> WGM
+    subgraph WGM["Weighted Gaussian Mechanism"]
+        direction TB
+        S["子采样<br/>每用户至多取 Δ₀ 项"] --> H["加权直方图<br/>贡献加权使 ℓ₂ 范数=1"]
+        H --> N["加噪阈值<br/>仅留噪声计数 > T 的项"]
+    end
+    WGM --> D["候选域 D<br/>高频项子集"]
+    D -->|"集合并集<br/>D 即域发现结果"| O1["输出高频项"]
+    D -->|"两阶段<br/>另一半预算在 D 上跑标准算法"| O2["top-k / k-hitting set 结果"]
+```
+
 ### 关键设计
 
 **1. Weighted Gaussian Mechanism：用 $\ell_2$ 归一化代替硬截断来保留信息**

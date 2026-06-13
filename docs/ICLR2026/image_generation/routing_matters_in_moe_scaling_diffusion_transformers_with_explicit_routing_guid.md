@@ -44,17 +44,29 @@ MoE 在 LLM 中取得了巨大成功，但在 DiT 中的表现令人失望：
 
 ProMoE 在 DiT 的每个 MoE 层前接一个两步路由器，先按令牌的功能角色把它们劈成无条件与条件两支，再用可学习原型为条件令牌挑选专家，最后用一项路由对比损失从外部约束原型，逼着"同一专家盯住相似模式、不同专家彼此分开"。整套设计想同时达成两件事——内部专家一致性（同一专家持续处理相似模式）与跨专家多样性（不同专家特化于不同任务）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["DiT 图像令牌"] --> COND["条件路由<br/>按功能角色硬分区"]
+    COND -->|"无条件令牌"| UEXP["固定 Nu 个<br/>无条件专家"]
+    COND -->|"条件令牌"| PROTO["原型路由<br/>令牌↔可学习原型<br/>余弦相似度选专家"]
+    PROTO --> REXP["NE 个路由专家"]
+    UEXP --> OUT["MoE 层输出<br/>(+共享专家)"]
+    REXP --> OUT
+    RCL["路由对比损失 RCL<br/>InfoNCE 拉近/推开原型质心"] -.约束.-> PROTO
+```
+
 ### 关键设计
 
-**1. 条件路由：先按功能角色把混在一起的两类令牌拆开。** CFG 训练让同一批图像块里既有特定条件下的输入、又有空标签/文本下的无条件输入，二者功能截然不同，朴素 MoE 把它们丢进同一个 softmax router 会让路由信号互相污染。ProMoE 在第一步就做硬分区：无条件令牌 $\mathbf{X}_u$ 直接送进固定的 $N_u$ 个无条件专家，条件令牌 $\mathbf{X}_c$ 才进入第二步的原型路由决定去向。整层前向写成
+**1. 条件路由：先按功能角色把混在一起的两类令牌拆开** CFG 训练让同一批图像块里既有特定条件下的输入、又有空标签/文本下的无条件输入，二者功能截然不同，朴素 MoE 把它们丢进同一个 softmax router 会让路由信号互相污染。ProMoE 在第一步就做硬分区：无条件令牌 $\mathbf{X}_u$ 直接送进固定的 $N_u$ 个无条件专家，条件令牌 $\mathbf{X}_c$ 才进入第二步的原型路由决定去向。整层前向写成
 
 $$\text{MoE}(\mathbf{x}) = \underbrace{\sum_{i=1}^{N_s} E_i^S(\mathbf{x})}_{\text{Shared}} + \begin{cases}\sum_{j=1}^{N_E}\mathbf{G}_j E_j(\mathbf{x}) & \mathbf{x} \in \mathbf{X}_c \\ \sum_{k=1}^{N_u}E_k^U(\mathbf{x}) & \mathbf{x} \in \mathbf{X}_u\end{cases}$$
 
 其中 $N_s$ 个共享专家始终参与、承接两类令牌的公共部分。这样无条件令牌不再去抢路由专家的容量，路由专家可以专注在真正需要区分的条件语义上。
 
-**2. 原型路由：用可学习原型替代线性 router，给路由一个可解释的语义锚点。** 视觉令牌高度冗余、类间/类内距离比仅 0.748，普通线性 router 学不出有区分度的子空间。ProMoE 为每个专家配一个可学习原型 $\mathbf{P} \in \mathbb{R}^{N_E \times D}$，令牌与原型的匹配度用余弦相似度算，$\mathbf{Z}_{i,j} = \alpha \frac{\mathbf{x}_i \mathbf{p}_j^\top}{\|\mathbf{x}_i\| \|\mathbf{p}_j\|}$，缩放系数 $\alpha$ 把相似度拉回合适的量级。激活函数刻意选恒等映射 $\mathcal{A}(\mathbf{Z}) = \mathbf{Z}$ 而非 softmax 或 sigmoid——后两者会压缩相似度差异、削弱专家间的区分，实验里恒等映射效果最好。原型把"专家代表什么语义"显式参数化出来，路由从此对着一个可被监督的目标走。
+**2. 原型路由：用可学习原型替代线性 router，给路由一个可解释的语义锚点** 视觉令牌高度冗余、类间/类内距离比仅 0.748，普通线性 router 学不出有区分度的子空间。ProMoE 为每个专家配一个可学习原型 $\mathbf{P} \in \mathbb{R}^{N_E \times D}$，令牌与原型的匹配度用余弦相似度算，$\mathbf{Z}_{i,j} = \alpha \frac{\mathbf{x}_i \mathbf{p}_j^\top}{\|\mathbf{x}_i\| \|\mathbf{p}_j\|}$，缩放系数 $\alpha$ 把相似度拉回合适的量级。激活函数刻意选恒等映射 $\mathcal{A}(\mathbf{Z}) = \mathbf{Z}$ 而非 softmax 或 sigmoid——后两者会压缩相似度差异、削弱专家间的区分，实验里恒等映射效果最好。原型把"专家代表什么语义"显式参数化出来，路由从此对着一个可被监督的目标走。
 
-**3. 路由对比损失（RCL）：从外部把原型推成彼此分离的语义簇心，顺带做负载均衡。** 光有原型还不够，没有外部约束时多个原型会塌缩到相似方向、专家照样同质化。RCL 把分配给专家 $E_i$ 的所有令牌求质心 $\mathbf{m}_i$，再以 InfoNCE 的形式拉近每个原型与自己正集质心、推开其它负集质心：
+**3. 路由对比损失（RCL）：从外部把原型推成彼此分离的语义簇心，顺带做负载均衡** 光有原型还不够，没有外部约束时多个原型会塌缩到相似方向、专家照样同质化。RCL 把分配给专家 $E_i$ 的所有令牌求质心 $\mathbf{m}_i$，再以 InfoNCE 的形式拉近每个原型与自己正集质心、推开其它负集质心：
 
 $$\mathcal{L}_{\text{RCL}} = -\frac{1}{N_a}\sum_{i=1}^{N_a}\log\frac{\exp(\text{sim}(\mathbf{p}_i, \mathbf{m}_i)/\tau)}{\sum_{j=1}^{N_a}\exp(\text{sim}(\mathbf{p}_i, \mathbf{m}_j)/\tau)}$$
 

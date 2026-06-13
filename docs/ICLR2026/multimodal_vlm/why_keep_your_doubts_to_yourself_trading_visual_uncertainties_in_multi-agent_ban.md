@@ -44,15 +44,36 @@ tags:
 
 ### 整体框架
 
-Agora 把多智能体 VLM 协调改写成一个去中心化微经济：每个智能体先把自己对一道题的"看不准"量化成可标价的不确定性资产，再按"只做赚钱买卖"的规则把这些资产转手给更擅长处理它的同伴，由一个市场感知的 Broker 决定让谁先接手并调度整个交易过程。系统里有 $N$ 个异构 VLM 智能体 $\mathcal{A} = \{a_1, \dots, a_N\}$，每个智能体带一个单位处理成本 $c_i > 0$ 和三维专长向量 $\boldsymbol{\xi}_i = [\xi_{i,\text{perc}}, \xi_{i,\text{sem}}, \xi_{i,\text{inf}}]^T$，整体要在把最终残余不确定性压到阈值以下的约束下最小化期望协调成本：$\min_\pi \mathbb{E}_{t \sim \mathcal{T}}[\mathcal{C}(\pi, \mathbf{u}(t), \mathbf{c}, \Xi)]$ s.t. $\|\mathbf{u}_{\text{final}}\| \leq \epsilon$。
+Agora 把多智能体 VLM 协调改写成一个去中心化微经济：每个智能体先把自己对一道题的"看不准"量化成可标价的不确定性资产，由一个市场感知的 Broker 挑出最划算的智能体先接手，再按"只做赚钱买卖"的规则把这些资产反复转手给更擅长处理它的同伴，直到没有任何有利可图的交易、市场收敛为止。系统里有 $N$ 个异构 VLM 智能体 $\mathcal{A} = \{a_1, \dots, a_N\}$，每个智能体带一个单位处理成本 $c_i > 0$ 和三维专长向量 $\boldsymbol{\xi}_i = [\xi_{i,\text{perc}}, \xi_{i,\text{sem}}, \xi_{i,\text{inf}}]^T$，整体要在把最终残余不确定性压到阈值以下的约束下最小化期望协调成本：$\min_\pi \mathbb{E}_{t \sim \mathcal{T}}[\mathcal{C}(\pi, \mathbf{u}(t), \mathbf{c}, \Xi)]$ s.t. $\|\mathbf{u}_{\text{final}}\| \leq \epsilon$。论文把整个过程落成一个两阶段算法：Phase 1 由 Broker 做效用最大化的初始化，Phase 2 进入迭代市场、对总成本函数做确定性的贪心下降。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["视觉问答任务<br/>初始不确定性 u(t)"] --> ASSET["三维不确定性资产模型<br/>认知不确定性铸成<br/>感知/语义/推理向量"]
+    ASSET --> BROKER["市场感知 Broker<br/>按市场效用打分采样<br/>选初始处理者"]
+    BROKER --> HANDLER["处理者初步作答<br/>铸造三维残余不确定性"]
+    HANDLER --> TRADE["利润驱动交易协议<br/>贪心执行最有利可图<br/>且容量够的转手"]
+    TRADE -->|"仍有利可图"| TRADE
+    TRADE -->|"无利可图<br/>残余 ≤ ε"| OUT["市场收敛<br/>输出最终答案"]
+```
 
 ### 关键设计
 
-**1. 三维不确定性资产模型：把"看不准"拆成可路由的专家化资产。** 以往方法用一个标量代表整体不确定性，于是无论是认错字、读不懂语境还是算错数，都只能让同一个模型重算，造成"一刀切"的冗余计算。Agora 先把总不确定性区分为可交易的认知不确定性（Epistemic，源自模型知识不足、可通过换人解决）和不可交易的偶然不确定性（Aleatoric，源自数据本身噪声），再把可交易部分铸造成三维向量 $\mathbf{u}_{\text{epis}} = [u_{\text{perc}}, u_{\text{sem}}, u_{\text{inf}}]^T$，分别对应视觉感知层面（如 OCR、物体识别）、语义理解层面（如上下文推断）和逻辑推理层面（如数学、因果）的"看不准"。每个智能体维护一个随交易动态变化的不确定性组合 $\mathbf{U}(a_i, t) = \mathbf{U}_{\text{base}}(a_i, t) + \sum_{j \neq i} \mathbf{U}_{\text{transfer}}(a_j \to a_i, t)$，其中第一项是它自身产生的不确定性，第二项是别人转移给它的。向量化之后，系统就能把每一类不确定性精准路由到最擅长那一维的专家，而不是让所有人对整道题重复劳动。
+**1. 三维不确定性资产模型：把"看不准"拆成可路由的专家化资产**
 
-**2. 利润驱动交易协议：用经济理性约束每一笔不确定性转手。** 有了可交易资产还需要回答"什么时候该转给谁"，否则转手本身可能比重算更贵。Agora 给每笔交易设一道经济门槛：把不确定性包 $T_{ij}(t)$ 从 $a_i$ 转给 $a_j$ 带来的全局成本变化为 $\Delta \mathcal{C}(T_{ij}(t)) = T_{ij}(t) \cdot [c_j(1 - \xi_j) - c_i]$——接收方处理这部分不确定性的有效代价 $c_j(1-\xi_j)$（成本越低、专长越高则越便宜）减去发送方自己扛着的代价 $c_i$。只有当这笔买卖既有利可图又可行时才执行，即 $\text{Execute trade}(i \to j, T_{ij}(t)) \iff (\Delta \mathcal{C} < 0) \wedge (U_j(t) + T_{ij}(t) \leq C_j(t))$：第一个条件保证交易让系统总成本下降，第二个条件保证接收方还有足够认知容量 $C_j(t)$ 接得住。这样每一笔合法交易都等价于对全局成本函数走了一步贪心下降，市场在反复套利中自然朝低成本均衡收敛。
+以往方法用一个标量代表整体不确定性，于是无论是认错字、读不懂语境还是算错数，都只能让同一个模型重算，造成"一刀切"的冗余计算。Agora 先把总不确定性区分为可交易的认知不确定性（Epistemic，源自模型知识不足、可通过换人解决）和不可交易的偶然不确定性（Aleatoric，源自数据本身噪声），再把可交易部分铸造成三维向量 $\mathbf{u}_{\text{epis}} = [u_{\text{perc}}, u_{\text{sem}}, u_{\text{inf}}]^T$，分别对应视觉感知层面（如 OCR、物体识别）、语义理解层面（如上下文推断）和逻辑推理层面（如数学、因果）的"看不准"。每个智能体维护一个随交易动态变化的不确定性组合 $\mathbf{U}(a_i, t) = \mathbf{U}_{\text{base}}(a_i, t) + \sum_{j \neq i} \mathbf{U}_{\text{transfer}}(a_j \to a_i, t)$，其中第一项是它自身产生的不确定性，第二项是别人转移给它的。向量化之后，系统就能把每一类不确定性精准路由到最擅长那一维的专家，而不是让所有人对整道题重复劳动。
 
-**3. 市场感知 Broker：用扩展 Thompson Sampling 选好"第一个接手人"。** 交易能否收敛到好的均衡，很大程度取决于谁先拿到任务，纯随机或纯历史评分的选择都会浪费交易回合。Agora 的 Broker 把经典 Thompson Sampling 扩展成一个多因子市场效用 $\tilde{\theta}_S^{(t)} = (\mathbb{E}[\text{Reward}_S^{(t)}] - \text{Cost}_S^{(t)}) \cdot \exp(-\lambda \cdot \text{Dist}(S, t)) \cdot U_{\text{strategic}}(S)^\omega \cdot \text{Synergy}(S)^\eta \cdot \gamma^{\Delta t}$，并从中采样选出初始智能体组合 $S$。这个效用把五件事乘在一起：净回报（期望奖励减成本，守住经济理性）、任务距离 $\text{Dist}(S,t)$（智能体与当前任务的匹配度，越近越好故取负指数）、战略不确定性 $U_{\text{strategic}}$（保留探索空间以防过早收敛到次优组合）、协同效应 $\text{Synergy}$（组合内成员能力互补的程度）和时间衰减 $\gamma^{\Delta t}$（让久未更新的历史信息权重下降）。消融显示其中战略不确定性因子贡献最大，去掉它准确率会掉 3 个百分点以上，说明在冷启动阶段保留探索对找到好均衡至关重要。
+**2. 市场感知 Broker：用扩展 Thompson Sampling 选好"第一个接手人"**
+
+交易能否收敛到好的均衡，很大程度取决于谁先拿到任务，纯随机或纯历史评分的选择都会浪费交易回合。Agora 的 Broker 把经典 Thompson Sampling 扩展成一个多因子市场效用，并从中采样选出初始智能体组合 $S$：
+
+$$\tilde{\theta}_S^{(t)} = (\mathbb{E}[\text{Reward}_S^{(t)}] - \text{Cost}_S^{(t)}) \cdot \exp(-\lambda \cdot \text{Dist}(S, t)) \cdot U_{\text{strategic}}(S)^\omega \cdot \text{Synergy}(S)^\eta \cdot \gamma^{\Delta t}$$
+
+这个效用把五件事乘在一起：净回报（期望奖励减成本，守住经济理性）、任务距离 $\text{Dist}(S,t)$（智能体与当前任务的匹配度，越近越好故取负指数）、战略不确定性 $U_{\text{strategic}}$（保留探索空间以防过早收敛到次优组合）、协同效应 $\text{Synergy}$（组合内成员能力互补的程度）和时间衰减 $\gamma^{\Delta t}$（让久未更新的历史信息权重下降）。消融显示其中战略不确定性因子贡献最大，去掉它准确率会掉 3 个百分点以上（MMBench 上 $-3.08\%$），说明在冷启动阶段保留探索对找到好均衡至关重要。
+
+**3. 利润驱动交易协议：用经济理性约束每一笔不确定性转手**
+
+选定第一个处理者后还需要回答"什么时候该把哪部分不确定性转给谁"，否则转手本身可能比重算更贵。Agora 给每笔交易设一道经济门槛：把不确定性包 $T_{ij}(t)$ 从 $a_i$ 转给 $a_j$ 带来的全局成本变化为 $\Delta \mathcal{C}(T_{ij}(t)) = T_{ij}(t) \cdot [c_j(1 - \xi_j) - c_i]$——接收方处理这部分不确定性的有效代价 $c_j(1-\xi_j)$（成本越低、专长越高则越便宜）减去发送方自己扛着的代价 $c_i$。只有当这笔买卖既有利可图又可行时才执行，即 $\text{Execute trade}(i \to j, T_{ij}(t)) \iff (\Delta \mathcal{C} < 0) \wedge (U_j(t) + T_{ij}(t) \leq C_j(t))$：第一个条件保证交易让系统总成本下降，第二个条件保证接收方还有足够认知容量 $C_j(t)$ 接得住。这样每一笔合法交易都等价于对全局成本函数走了一步贪心下降，市场在反复套利中自然朝低成本均衡收敛。
 
 ### 一个完整示例
 

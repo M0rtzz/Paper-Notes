@@ -31,6 +31,27 @@ tags:
 
 InFOM 分预训练和微调两个阶段：预训练时从无标注数据中用变分推断抽出潜在意图 $z$，并用带 TD 思想的流匹配学一个意图条件化的占据模型 $q_d(s_f|s,a,z)$，刻画"从当前状态出发、在意图 $z$ 驱动下未来会落到哪些状态"。微调时把这个生成模型当作未来状态采样器，用蒙特卡洛估计 Q 值，再通过隐式 GPI 蒸馏成可用于策略改进的单一价值函数。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    D["无标注离线数据<br/>(s, a, s', a')"]
+    subgraph PRE["预训练阶段"]
+        direction TB
+        E["变分意图推断<br/>编码器 p_e 从 (s',a') 推潜意图 z"]
+        F["SARSA 流占据模型<br/>q_d(s_f|s,a,z)：TD 注入流匹配"]
+        E --> F
+    end
+    subgraph FT["微调阶段（冻结占据模型）"]
+        direction TB
+        G["生成式价值估计<br/>采 N 个 s_f，蒙特卡洛算 Q_z"]
+        H["隐式广义策略改进<br/>expectile 蒸馏成单一 Q"]
+        G --> H
+    end
+    D --> E
+    F --> G
+    H --> P["策略改进<br/>+ BC 正则抑制 OOD 动作"]
+```
+
 ### 关键设计
 
 **1. 变分意图推断：把数据里没标注的"用户目的"显式抽出来**

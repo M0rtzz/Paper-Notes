@@ -42,11 +42,23 @@ tags:
 
 ### 整体框架
 
-理论推导链：Self-Attention Hessian（已有） → LayerNorm Jacobian/Hessian（Theorem 2-3） → ReLU FFN 导数（Lemma 1） → 完整 Transformer Block Hessian（Theorem 4-5） → 谱范数上界（Theorem 1, 6） → 损失面收敛定理（Theorem 7）。
+这篇论文要补全 Transformer 的二阶（曲率）理论：此前只有 Self-Attention 的 Hessian 被显式推导过，LayerNorm 和 FFN 留着一块"曲率空白"，导致无法端到端地理解优化地形随数据量怎么变。作者沿子层逐层往上搭——先把 LayerNorm 的 Jacobian/Hessian 写出来（Theorem 2-3），配上 FFN 里 ReLU 的导数（Lemma 1），再和已有的 Self-Attention Hessian 组装成完整 Transformer block 的 Hessian（Theorem 4-5）；接着对这个表达式取谱范数上界（Theorem 1, 6），把"曲率有多大"落到输入范数、权重范数、序列长度等可观测量上；最后用 Taylor 展开把曲率界翻译成"损失面随数据量 $k$ 增大以 $O(1/k)$ 速率收敛"的定理（Theorem 7），从而给 scaling laws 一个数学解释。
 
-Transformer block 定义（post-norm）：
+分析对象是 post-norm 的 Transformer block：
+
 $$\mathbf{Y} = \text{LayerNorm}(\mathbf{X} + \mathbf{F}(\mathbf{X}))$$
 $$\mathbf{Z} = \text{LayerNorm}(\mathbf{Y} + \text{FFN}(\mathbf{Y}))$$
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Self-Attention Hessian<br/>（已有工作）"] --> D
+    B["LayerNorm 的 Jacobian 和 Hessian"] --> D
+    C["FFN / ReLU 导数（Lemma 1）"] --> D
+    D["完整 Transformer Block 的 Hessian"] --> E["谱范数上界"]
+    E --> F["损失面收敛定理"]
+    F --> G["损失差以 O(1/k) 收敛<br/>→ scaling laws 数学解释"]
+```
 
 ### 关键设计
 

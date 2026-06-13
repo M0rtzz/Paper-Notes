@@ -50,6 +50,18 @@ tags:
 
 Kaleido 把新视角合成彻底改写成一个纯粹的序列到序列图像合成问题：给定 $N$ 张参考视图及其 6-DoF 位姿 $\{(I_i, P_i)\}_{i=1}^{N}$ 和 $M$ 个目标位姿 $\{P_j\}_{j=1}^{M}$，由单一的 decoder-only rectified flow transformer 直接吐出 $M$ 张目标视图，全程不依赖任何显式 3D 表示（无点云、无 NeRF、无 3DGS、无深度估计）。每张图像先经 VAE 编成 latent tokens，相机位姿通过位置编码注入序列，参考视图保持干净作为条件、目标视图被加噪后由 rectified flow 去噪生成——视频与 3D 在这套框架里只是同一序列任务的两种位置编码方式。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["N 张参考视图+6-DoF 位姿<br/>M 个目标位姿"] --> VAE["图像 VAE 编码<br/>→ latent tokens"]
+    VAE --> NOISE["参考 token 保持干净作条件<br/>目标 token 按 rectified flow 加噪"]
+    NOISE --> UPE["统一位置编码<br/>3D 走 Plücker/SE(3)、视频走时空 RoPE"]
+    UPE --> MAR["掩码自回归 Transformer<br/>causal mask 分条件/目标，变长 N→M"]
+    SCALE["缩放配方<br/>SwiGLU+GQA · 抑制激活溢出 · noise-biased SNR"] --> MAR
+    MAR --> OUT["去噪生成 M 张目标视图"]
+    OUT -.->|已生成视图回灌为新条件| NOISE
+```
+
 ### 关键设计
 
 **1. 统一位置编码：让一个 Transformer 零修改吃下视频和 3D 两种数据**

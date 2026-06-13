@@ -44,6 +44,17 @@ tags:
 
 本文不训练新模型，而是把三个现成模型——LLaDA-8B（原生 dLLM）、Qwen2.5-7B（原生 AR）、Dream-7B（在 AR 模型上做扩散微调）——放到同一套表征诊断流程下逐层量化它们的冗余结构。先用层间和 token 间的 cosine 相似度画出每个模型的"冗余地图"，再把地图上相似度最高的那些层在推理时直接短路掉，得到一个静态、任务无关、不改架构的加速策略。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["三个现成模型<br/>LLaDA / Qwen2.5 / Dream"] --> B["层间相似度分析<br/>逐层 cosine 画冗余地图"]
+    A --> C["Token间相似度与<br/>recency bias 分析"]
+    B --> D["冗余地图<br/>前段层为高冗余平台"]
+    C -->|解释冗余来源| D
+    D --> E["静态层跳过策略<br/>阈值θ + 非相邻 + top-k"]
+    E --> F["推理时短路跳过<br/>削减 FLOPs，不改架构"]
+```
+
 ### 关键设计
 
 **1. 层间相似度分析：把"哪些层在做重复劳动"量化出来**

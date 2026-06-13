@@ -40,21 +40,41 @@ tags:
 
 ### 整体框架
 
-RPG 把所有 KL 正则化策略梯度方法放进同一个推导模板里：先写出 KL 正则化目标 $J(\theta) = \mathbb{E}_{\pi_\theta}[R] - \beta \cdot \text{KL}$，再用 off-policy 的重要性权重 $w(x) = \pi_\theta(x)/\pi_{\text{old}}(x)$ 把它转成可直接梯度下降的代理损失。整个过程是迭代式的——每轮把参考模型 $\pi_{\text{old}}$ 替换成上一轮策略 $\pi_{\theta^{(t)}}$，让正则化目标随训练动态自适应，而不是钉死在某个固定的 SFT 模型上。沿着「KL 方向（Forward/Reverse）× 是否归一化 × 完全可微分还是 REINFORCE 风格」三个维度展开，就得到一族共 8 个变体的代理损失。
+RPG 想解决的问题是：当下一堆 KL 正则化策略梯度方法（GRPO、REINFORCE++、DAPO…）在 KL 方向、是否归一化、用什么估计器上各搞各的，谁对谁错、彼此什么关系没人说清。RPG 把它们全放进同一个推导模板里：先写出 KL 正则化目标 $J(\theta) = \mathbb{E}_{\pi_\theta}[R] - \beta \cdot \text{KL}$，再用 off-policy 的重要性权重 $w(x) = \pi_\theta(x)/\pi_{\text{old}}(x)$ 把它转成可直接梯度下降的代理损失。整个过程是迭代式的——每轮把参考模型 $\pi_{\text{old}}$ 替换成上一轮策略 $\pi_{\theta^{(t)}}$，让正则化目标随训练动态自适应，而不是钉死在某个固定的 SFT 模型上。从这个统一模板出发，沿三个维度展开就得到一族共 8 个变体：**KL 方向**（Forward 还是 Reverse）、**是否归一化**（归一化还是非归一化，后者对应 $k_3$ 估计器）、**估计器类型**（完全可微分还是 REINFORCE 风格）。三维度组合完后，框架顺手诊断出 GRPO 的一处理论不一致，并给出修正。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["KL 正则化目标<br/>J(θ)=E_π[R] − β·KL"] --> B["off-policy 重要性权重 w=π_θ/π_old<br/>迭代替换参考模型 → 代理损失模板"]
+    B --> DIM
+    subgraph DIM["三维度组合 → 8 个变体"]
+        direction TB
+        C["维度一·KL 方向<br/>Forward 覆盖 / Reverse 模式寻找"]
+        D["维度二·是否归一化<br/>非归一化 = GRPO 的 k3 估计器"]
+        E["维度三·估计器类型<br/>完全可微分 / REINFORCE(stop-grad)"]
+        C --> D --> E
+    end
+    DIM --> F["8 个变体代理损失<br/>L_FKL / RKL / UFKL / URKL …"]
+    F --> G["GRPO 理论不一致性诊断<br/>补回缺失的重要性权重 w_i,t"]
+```
 
 ### 关键设计
 
-**1. Forward KL 正则化（FKL）：用覆盖性约束把 RL 退化成带奖励的 SFT。** Forward KL 取 $\text{KL}(\pi_{\text{old}} \| \pi_\theta)$ 这个方向，目标写作 $J_{\text{FKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_{\text{old}} \| \pi_\theta)$。它的梯度可以整理成在 $\pi_{\text{old}}$ 采样下的简洁形式 $\nabla_\theta J = \mathbb{E}_{x \sim \pi_{\text{old}}}[(w(x)R(x) + \beta) \nabla_\theta \log \pi_\theta(x)]$，对应代理损失 $\mathcal{L}_{\text{FKL}} = \mathbb{E}[-w(x)R(x) - \beta \log \pi_\theta(x)]$。这个方向的好处是 zero-forcing：它逼着 $\pi_\theta$ 去覆盖 $\pi_{\text{old}}$ 的整个高概率支撑集，不敢遗漏。一个很有启发的边界情形是当 $R=0$ 时损失退化成纯 MLE，正好就是 SFT 的训练目标——这解释了为什么 Forward KL 在训练里起的是类似 SFT 的稳定化作用。
+**1. 维度一·KL 方向：Forward 覆盖 vs Reverse 模式寻找**
 
-**2. Reverse KL 正则化（RKL）：用模式寻找聚焦到已知好策略上。** 把 KL 方向反过来取 $\text{KL}(\pi_\theta \| \pi_{\text{old}})$，目标变成 $J_{\text{RKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_\theta \| \pi_{\text{old}})$，代理损失为 $\mathcal{L}_{\text{RKL}} = \mathbb{E}[w(x)(-R(x) + \beta \log w(x))]$。和 Forward 的覆盖性相反，Reverse KL 是 mode-seeking：它鼓励 $\pi_\theta$ 收缩到 $\pi_{\text{old}}$ 概率最高的几个模态上，因此更适合在已经知道某些策略不错时把概率质量集中过去，而不是均匀铺开。
+第一个要选的是 KL 往哪边算，这直接决定策略会铺开还是收紧。**Forward KL（FKL）** 取 $\text{KL}(\pi_{\text{old}} \| \pi_\theta)$，目标写作 $J_{\text{FKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_{\text{old}} \| \pi_\theta)$，梯度可整理成在 $\pi_{\text{old}}$ 采样下的简洁形式 $\nabla_\theta J = \mathbb{E}_{x \sim \pi_{\text{old}}}[(w(x)R(x) + \beta) \nabla_\theta \log \pi_\theta(x)]$，对应代理损失 $\mathcal{L}_{\text{FKL}} = \mathbb{E}[-w(x)R(x) - \beta \log \pi_\theta(x)]$。它是 zero-forcing 的：逼着 $\pi_\theta$ 去覆盖 $\pi_{\text{old}}$ 的整个高概率支撑集，不敢遗漏；一个很有启发的边界情形是当 $R=0$ 时损失退化成纯 MLE，正好是 SFT 的训练目标——这解释了为什么 Forward KL 在训练里起的是类似 SFT 的稳定化作用。把方向反过来取 $\text{KL}(\pi_\theta \| \pi_{\text{old}})$ 就是 **Reverse KL（RKL）**，目标变成 $J_{\text{RKL}}(\theta) = \mathbb{E}_{\pi_\theta}[R(x)] - \beta \text{KL}(\pi_\theta \| \pi_{\text{old}})$，代理损失 $\mathcal{L}_{\text{RKL}} = \mathbb{E}[w(x)(-R(x) + \beta \log w(x))]$。它是 mode-seeking 的：鼓励 $\pi_\theta$ 收缩到 $\pi_{\text{old}}$ 概率最高的几个模态上，更适合在已知某些策略不错时把概率质量集中过去，而不是均匀铺开。两个方向各有取舍，实验里 FKL 在 AMC23、RKL 在 AIME25 各占优。
 
-**3. 非归一化 Forward KL（UFKL）：把 GRPO 的 $k_3$ 估计器嵌进框架。** 真实训练里参考分布往往不是严格归一化的，于是引入非归一化 KL，多出一个质量修正项，代理损失写作 $\mathcal{L}_{\text{UFKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x) - \log w(x) - 1)]$。关键的观察是其中的正则化项 $w(x) - \log w(x) - 1$ 恰好就是 GRPO 在用的 $k_3$ 估计器形式——这一步把 GRPO 那个看似经验性的 KL 惩罚拉进了 RPG 的统一推导里，给它一个明确的理论出处。
+**2. 维度二·是否归一化：把 GRPO 的 $k_3$ 估计器嵌进统一推导**
 
-**4. 非归一化 Reverse KL（URKL）：更简洁的有效奖励缩放。** 同样对 Reverse 方向做非归一化处理，作者证明 $k_3(\pi_{\text{old}}/\pi_\theta)$ 的期望等价于 $\text{UKL}(\pi_\theta \| \pi_{\text{old}})$，得到代理损失 $\mathcal{L}_{\text{URKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x)\log w(x) - w(x))]$。它的吸引力在于梯度里的有效奖励缩放因子被压成了干净的 $R(x) - \beta \log w(x)$，既好实现又与 $k_3$ 估计器严格等价。
+真实训练里参考分布往往不是严格归一化的，于是第二个维度是用归一化 KL 还是非归一化 KL（UKL），后者会多出一个质量修正项。**非归一化 Forward KL（UFKL）** 的代理损失为 $\mathcal{L}_{\text{UFKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x) - \log w(x) - 1)]$，关键观察是其中的正则化项 $w(x) - \log w(x) - 1$ 恰好就是 GRPO 在用的 $k_3$ 估计器形式——这一步把 GRPO 那个看似经验性的 KL 惩罚拉进了 RPG 的统一推导里，给它一个明确的理论出处。**非归一化 Reverse KL（URKL）** 这边，作者证明 $k_3(\pi_{\text{old}}/\pi_\theta)$ 的期望等价于 $\text{UKL}(\pi_\theta \| \pi_{\text{old}})$，得到 $\mathcal{L}_{\text{URKL}} = Z_{\text{old}} \mathbb{E}[-w(x)R(x) + \beta(w(x)\log w(x) - w(x))]$，它的吸引力在于梯度里的有效奖励缩放因子被压成了干净的 $R(x) - \beta \log w(x)$，既好实现又与 $k_3$ 估计器严格等价。换句话说，这个维度不只是多了两种损失，更是给社区里被广泛使用、却一直缺理论说法的 $k_3$ 估计器补上了「它就是非归一化 KL」这一身份证。
 
-**5. REINFORCE 风格变体：用 stop-gradient 换实现灵活性。** 上面四种 KL 形式都各自再派生一个 REINFORCE 风格版本，把奖励权重用 stop-gradient 算子 $\text{SG}(\cdot)$ 冻住，统一写成 $\mathcal{L}^{\text{REINFORCE}} = -\mathbb{E}[\text{SG}(\text{Weight}(x, \theta)) \log \pi_\theta(x)]$。这样梯度只通过 $\log \pi_\theta(x)$ 这一项回传，结构和经典 REINFORCE 对齐，便于接进只支持这种接口的训练框架，也和前面的完全可微分版本形成性能互补。
+**3. 维度三·完全可微分 vs REINFORCE 风格：用 stop-gradient 换实现灵活性**
 
-**6. GRPO 理论不一致性分析：补上缺失的重要性权重。** 框架最实用的副产品是诊断出 GRPO 的一个理论缺陷：GRPO 拿 $k_3$ 估计器当 KL 惩罚，但在 off-policy 设置下是直接把这一项减掉，没有乘上对应的重要性权重 $w_{i,t}$。结果是它的实际梯度无法精确对应到目标 $J_{\text{Clip}} - \beta \text{UKL}(\pi_\theta \| \pi_{\text{ref}})$ 的梯度上——即优化的东西和声称要优化的目标对不上。RPG 通过在代理损失里显式带上重要性权重，把这个偏差修掉。
+前两个维度定下的每一种 KL 形式，都可以再选用完全可微分还是 REINFORCE 风格来落地。REINFORCE 风格把奖励权重用 stop-gradient 算子 $\text{SG}(\cdot)$ 冻住，统一写成 $\mathcal{L}^{\text{REINFORCE}} = -\mathbb{E}[\text{SG}(\text{Weight}(x, \theta)) \log \pi_\theta(x)]$，梯度只通过 $\log \pi_\theta(x)$ 这一项回传，结构和经典 REINFORCE 对齐。作者证明带 stop-gradient 的 REINFORCE 风格损失与对应的完全可微分代理损失梯度等价，所以选哪种纯看工程便利——只支持 REINFORCE 接口的训练框架直接用前者即可，两种版本在实验里还形成性能互补（前者在 AIME24 更优、后者在 AMC23 更优）。三个维度（方向 × 归一化 × 估计器）两两组合，正好铺满 8 个变体。
+
+**4. GRPO 理论不一致性诊断：补回缺失的重要性权重**
+
+框架最实用的副产品是诊断出 GRPO 的一个理论缺陷。GRPO 拿 $k_3$ 估计器当 KL 惩罚，但在 off-policy 设置下是直接把这一项减掉，没有乘上对应的重要性权重 $w_{i,t} = \pi_\theta(o_{i,t})/\pi_{\text{old}}(o_{i,t})$。按 RPG 的统一推导，正确的梯度里这一项本应带权；漏掉它，GRPO 的实际梯度就无法精确对应到它声称要优化的目标 $J_{\text{Clip}} - \beta \text{UKL}(\pi_\theta \| \pi_{\text{ref}})$ 上——即优化的东西和写在纸上的目标对不上。RPG 通过在代理损失里显式带上重要性权重把这个偏差修掉，这也是它在数学推理上稳定性和成绩都超过 GRPO 的一个直接原因。
 
 ### 损失函数 / 训练策略
 

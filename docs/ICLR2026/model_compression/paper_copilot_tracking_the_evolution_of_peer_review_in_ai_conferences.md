@@ -44,7 +44,28 @@ tags:
 
 ### 整体框架
 
-Paper Copilot 要解决的核心问题是：AI 会议的评审信息分散在 OpenReview、社交平台、社区私下交流里，既碎片化又会随时间被覆盖丢失，没有一个统一、持久、可纵向分析的数据底座。系统按"配置一个会议 → 多源抓数据 → 清洗成结构化档案 → 存储并对外可视化"的链路把这件事工程化：venue 配置层声明每个会议的来源和字段，数据收集管道用多源 assigner + worker pool + 并行 bot 同时拉取，抓回的原始评审经过清洗标准化后落成版本化的 JSON 数据集（每篇论文 30+ 字段），再进入 LAMP/MySQL 后端，最终由 WordPress + 自定义 JS 的前端做可视化分析。接入一个新会议只需补一份最小配置，其余流程复用。
+Paper Copilot 要解决的核心问题是：AI 会议的评审信息分散在 OpenReview、社交平台、社区私下交流里，既碎片化又会随时间被覆盖丢失，没有一个统一、持久、可纵向分析的数据底座。系统按"配置一个会议 → 多源抓数据 → 清洗成结构化档案 → 存储并对外可视化"的链路把这件事工程化：venue 配置层声明每个会议的来源和字段，数据收集管道用多源 assigner + worker pool + 并行 bot 同时拉取，抓回的原始评审经过清洗标准化后落成版本化的 JSON 数据集（每篇论文 30+ 字段），再进入 LAMP/MySQL 后端，最终由 WordPress + 自定义 JS 的前端做可视化分析。其中评审时序快照与决策熵分析是两个真正不可替代的环节，而 LLM 元数据提取补上了会议普遍缺失的结构化映射；接入一个新会议只需补一份最小配置，其余流程复用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    CFG["会议配置<br/>声明来源与字段"] --> SRC
+    subgraph SRC["三源混合数据收集"]
+        direction TB
+        API["OpenReview API<br/>开放评审会议"]
+        WEB["网页抓取<br/>无 API 会议"]
+        COM["社区 opt-in 贡献<br/>封闭评审会议"]
+    end
+    API --> SNAP["评审动态时间快照归档<br/>每日爬取 rebuttal 前后评分"]
+    PDF["camera-ready PDF"] --> LLM["LLM 作者-机构元数据提取"]
+    SRC --> CLEAN["清洗标准化<br/>版本化 JSON（30+ 字段/篇）"]
+    SNAP --> CLEAN
+    LLM --> CLEAN
+    CLEAN --> DB["存储 LAMP/MySQL"]
+    DB --> ENT["决策熵分析<br/>量化评审体系演化"]
+    DB --> FE["WordPress+JS 前端可视化"]
+    ENT --> FE
+```
 
 ### 关键设计
 

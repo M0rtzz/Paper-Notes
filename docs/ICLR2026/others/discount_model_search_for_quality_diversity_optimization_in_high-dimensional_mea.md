@@ -42,23 +42,41 @@ Quality Diversity (QD) 优化旨在找到一组既高质量又多样化的解集
 
 ### 整体框架
 
-DMS 沿用 MAP-Elites 的 archive 与 CMA-ES emitter，但把 CMA-MAE 中按 cell 存标量 discount 值的直方图，换成一个直接拟合连续 discount 函数的神经网络 $\hat{f}_A(\cdot;\psi)$。每轮迭代在"搜索"和"训练 discount model"两个阶段间循环：emitter 从当前分布采样一批解，用 discount model 给出的 improvement 排名来更新搜索方向，再用这批新解回拟 discount model，从而在高维 measure space 中持续保有可区分的搜索信号。
+DMS 要解决的是：在高维 measure space 里，CMA-MAE 那套"按 cell 存标量 discount 值的直方图"会因 distortion 而失灵，搜索很快停滞。它的整体思路是沿用 MAP-Elites 的 archive 和 CMA-ES emitter 这套黑盒 QD 骨架，但把直方图换成一个直接拟合连续 discount 函数的神经网络 $\hat{f}_A(\cdot;\psi)$。每轮迭代在"搜索"和"训练 discount model"两个阶段间循环：emitter 先从当前高斯分布采一批解，用 discount model 给出的 improvement 排名更新搜索方向、并把更优的解写进 archive；随后用这批新解外加一批"空 cell 样本"回拟 discount model。如此往复，即便维度很高、大量解的 measure 彼此接近，连续模型仍能给出有差别的 discount，从而始终保有可区分的搜索信号。当 measure space 由一个数据集（QDDM）定义时，archive 改用 CVT 在数据流形上划分，整套流程不变。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["初始解 θ₀ + measure 空间<br/>(QDDM 时: 数据集 → CVT archive)"] --> B["emitter 从 N(θ*, Σ)<br/>采样 λ 个解"]
+    B --> C["discount model f̂_A(m;ψ)<br/>算 improvement Δ = f − f̂_A"]
+    C --> D["CMA-ES 按 Δ 排名更新分布<br/>解优于所在 cell 则写入 archive"]
+    D --> E["构建训练集 D_A<br/>解数据 + Empty points 正则"]
+    E --> F["回拟 discount model f̂_A"]
+    F -->|未达评估预算, 继续迭代| B
+    F --> G["输出 QD archive<br/>(高质量 + 多样解集)"]
+```
 
 ### 关键设计
 
-**1. 连续 discount model 替代离散直方图：从根上消除 distortion 停滞。** CMA-MAE 把 measure space 切成网格，同一 cell 内的所有解共享一个标量 discount，高维下大量相近 measure 的解落进同一 cell、拿到相同 discount，CMA-ES 便无法分辨谁的 archive improvement 更大而停滞。DMS 改用神经网络 $\hat{f}_A(\bm{m};\psi)$ 直接把 measure 向量映射到 discount 值：网络输出天然连续平滑，即便两个解的 measure 非常接近，也会给出略有差别的 discount，从而保留可用于排名的梯度方向。这正是 10D 以上场景里 DMS 相对直方图实现数量级提升的根因。
+**1. 连续 discount model 替代离散直方图**
 
-**2. improvement 排名驱动 emitter 更新：把搜索拉向 archive 增益最大的方向。** 每个 emitter 从高斯分布 $\mathcal{N}(\bm{\theta}^*,\bm{\Sigma})$ 采样 $\lambda$ 个解，对每个解 $\bm{\theta}_i$ 计算目标值 $f(\bm{\theta}_i)$、measure $\bm{m}(\bm{\theta}_i)$，再用 discount model 给出 improvement $\Delta_i = f(\bm{\theta}_i) - \hat{f}_A(\bm{m}(\bm{\theta}_i))$。$\Delta_i$ 衡量该解相对 archive 当前水位能带来多大增益，CMA-ES 按 $\Delta_i$ 排名更新分布参数，把搜索逐步推向 archive improvement 最大的方向；若解优于其对应 cell 中已有解，则替换之。
+CMA-MAE 把 measure space 切成网格，同一 cell 内的所有解共享一个标量 discount；高维下大量相近 measure 的解落进同一 cell、拿到相同 discount，CMA-ES 便无法分辨谁的 archive improvement 更大而停滞。DMS 改用神经网络 $\hat{f}_A(\bm{m};\psi)$ 直接把 measure 向量映射到 discount 值：网络输出天然连续平滑，即便两个解的 measure 非常接近也会给出略有差别的 discount，从而保留可用于排名的梯度方向——这正是 10D 以上场景里 DMS 相对直方图实现数量级提升的根因。由于模型输入就是 measure，骨干可按模态灵活替换：低维 measure 用 MLP、图像 measure 用 CNN、文本 measure 用 Transformer，这让 DMS 能直接吃高维输入而无需手工降维。
 
-**3. Empty points 正则化：堵住未探索区域的虚高 discount。** 神经网络在没见过的 measure 区域可能外推出虚高的 discount，使 improvement 被低估、误导搜索绕开本该探索的区域。DMS 在每轮训练集里额外加入"空 cell 数据"：从 archive 随机采样 $n_{empty}$ 个未被占据的 cell 中心，把它们的 target 钉在 $f_{min}$。这相当于对未探索区域做 clamping，强制模型在这些位置输出合理的低 discount，确保新解落到空白处时能拿到足够大的 improvement 而被搜索青睐。
+**2. improvement 排名驱动 emitter 更新**
 
-**4. 灵活架构与 archive learning rate $\alpha$：按 measure 模态选网络、按需调探索强度。** discount model 的输入就是 measure，因此可按模态选骨干——低维 measure 用 MLP，图像 measure 用 CNN，文本 measure 用 Transformer——这让 DMS 能直接吃高维输入。训练 target 里的 archive learning rate $\alpha$ 沿用 CMA-MAE 语义控制探索/利用平衡：$\alpha=1$ 趋于纯探索（铺满 archive），$\alpha=0$ 趋于纯目标优化（只追求高 $f$）。
+有了连续 discount，搜索就要被拉向 archive 增益最大的方向。每个 emitter 从高斯分布 $\mathcal{N}(\bm{\theta}^*,\bm{\Sigma})$ 采样 $\lambda$ 个解，对每个解 $\bm{\theta}_i$ 计算目标值 $f(\bm{\theta}_i)$ 与 measure $\bm{m}(\bm{\theta}_i)$，再用 discount model 给出 improvement $\Delta_i = f(\bm{\theta}_i) - \hat{f}_A(\bm{m}(\bm{\theta}_i))$。$\Delta_i$ 衡量该解相对 archive 当前水位能带来多大增益，CMA-ES 据此对这批解排名并更新分布参数 $(\bm{\theta}^*,\bm{\Sigma})$，把搜索逐步推向 archive improvement 最大的方向；若某个解优于其对应 cell 中已有解，则替换之。
 
-**5. QDDM 范式：用数据集直接定义 measure space。** 连续 discount model 让 DMS 支撑起一种新用法——Quality Diversity with Datasets of Measures (QDDM)：用户不再手设低维 measure 函数，而是直接给一个数据集（如图像集）来表达期望的多样性维度。构建 CVT archive 时以数据集样本作为 Voronoi 中心点；依据 manifold hypothesis，高维数据实际分布在低维流形上，CVT 只需划分用户真正关心的子空间。cell 间的距离函数也可灵活选择，文中用过 Euclidean 与 CLIP score，后者借预训练模型的语义表征来度量图像 measure 之间的差异。
+**3. Empty points 正则化**
+
+神经网络在没见过的 measure 区域可能外推出虚高的 discount，使那里的 improvement 被低估、误导搜索绕开本该探索的空白区。DMS 在每轮训练集里额外加入"空 cell 数据"：从 archive 随机采样 $n_{empty}$ 个未被占据的 cell，取其中心 measure，把 target 钉在最小目标值 $f_{min}$。这相当于对未探索区域做 clamping，强制模型在这些位置输出合理的低 discount，于是新解一旦落到空白处就能拿到足够大的 improvement 而被搜索青睐，探索得以持续推进。
+
+**4. QDDM 范式：用数据集直接定义 measure space**
+
+连续 discount model 让 DMS 支撑起一种新用法——Quality Diversity with Datasets of Measures (QDDM)：用户不再手设低维 measure 函数，而是直接给一个数据集（如图像集）来表达期望的多样性维度。构建 archive 时以数据集样本作为质心，做 centroidal Voronoi tessellation (CVT) 划分；依据流形假设（manifold hypothesis），高维数据实际分布在低维流形上，CVT 因此只需划分用户真正关心的子空间，避免网格在高维下的指数内存。cell 间的距离函数也可灵活选择，文中用过欧氏距离与 CLIP score，后者借预训练模型的语义表征来度量图像 measure 之间的差异。
 
 ### 损失函数 / 训练策略
 
-每轮迭代构建训练集 $\mathcal{D}_A$ 来回拟 discount model，由两类数据组成。一是**解数据**：对 emitter 本轮采样的每个解生成 $(\bm{m}(\bm{\theta}), t_A)$ 条目，其中 target $t_A$ 仿照 CMA-MAE 的阈值更新规则——只有当解超过当前水位 $\hat{f}_A(\bm{s})$ 时才以学习率 $\alpha$ 向 $f(\bm{\theta})$ 抬升，否则维持原值：
+每轮迭代构建训练集 $\mathcal{D}_A$ 来回拟 discount model，由两类数据组成。一是**解数据**：对 emitter 本轮采样的每个解生成 $(\bm{m}(\bm{\theta}), t_A)$ 条目，其中 target $t_A$ 仿照 CMA-MAE 的阈值更新规则，由 archive learning rate $\alpha$ 控制探索/利用平衡（$\alpha=1$ 趋于纯探索、铺满 archive，$\alpha=0$ 趋于纯目标优化、只追高 $f$）——只有当解超过当前水位 $\hat{f}_A(\bm{s})$ 时才以 $\alpha$ 向 $f(\bm{\theta})$ 抬升，否则维持原值：
 
 $$t_A = \begin{cases} \hat{f}_A(\bm{s}) & \text{if } f(\bm{\theta}) \leq \hat{f}_A(\bm{s}) \\ (1-\alpha)\hat{f}_A(\bm{s}) + \alpha f(\bm{\theta}) & \text{if } f(\bm{\theta}) > \hat{f}_A(\bm{s}) \end{cases}$$
 

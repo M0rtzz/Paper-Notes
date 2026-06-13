@@ -42,7 +42,18 @@ tags:
 
 ### 整体框架
 
-RedSage基于Qwen3-8B-Base构建，训练分为三个阶段。**阶段一（持续预训练CPT）**：先用CyberFineWeb（11.7B tokens网络安全过滤语料+30%通用replay）做持续预训练得到RedSage-CFW，再用高质量策展数据RedSage-Seed（28,637样本，150M tokens）和非分类dumps（459K文档，700M tokens）继续训练得到RedSage-Base。**阶段二（监督微调SFT）**：使用Agentic Augmentation从种子数据生成的266K多轮对话（RedSage-Conv，353M tokens）加上SmolLM3的通用指令数据做SFT，得到RedSage-Ins。**阶段三（偏好对齐DPO）**：使用Tulu 3 8B开源偏好数据做DPO对齐，得到最终的RedSage-DPO。同时构建RedSage-Bench评测基准（30K MCQ + 240开放问答），在知识、技能和工具三个维度上评估模型能力。
+RedSage基于Qwen3-8B-Base构建，训练分为三个阶段。**阶段一（持续预训练CPT）**：先用CyberFineWeb（11.7B tokens网络安全过滤语料+30%通用replay）做持续预训练得到RedSage-CFW，再用高质量策展数据RedSage-Seed（28,637样本，150M tokens）和非分类dumps（459K文档，700M tokens）继续训练得到RedSage-Base。**阶段二（监督微调SFT）**：使用Agentic Augmentation从种子数据生成的266K多轮对话（RedSage-Conv，353M tokens）加上SmolLM3的通用指令数据做SFT，得到RedSage-Ins。**阶段三（偏好对齐DPO）**：使用Tulu 3 8B开源偏好数据做DPO对齐，得到最终的RedSage-DPO。同时构建RedSage-Bench评测基准（30K MCQ + 240开放问答），在知识、技能和工具三个维度上评估模型能力。三个核心贡献分别落在这条链路的三个位置：预训练阶段的数据怎么来（CyberFineWeb）、SFT阶段的对话数据怎么来（Agentic 数据增强）、以及拿什么评（RedSage-Bench）；DPO 阶段直接复用开源偏好数据，不是本文的创新点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Qwen3-8B-Base"] --> B["CyberFineWeb 持续预训练<br/>11.7B token 领域语料<br/>+30% 通用 replay 防遗忘"]
+    B --> C["RedSage-Base<br/>(+ Seed 策展数据)"]
+    C --> D["Agentic 数据增强 SFT<br/>Planner→Augmenter 双 agent<br/>静态文档→266K 多轮对话"]
+    D --> E["RedSage-Ins"]
+    E -->|"Tulu 3 偏好数据 DPO"| F["RedSage-DPO（最终模型）"]
+    F --> G["RedSage-Bench 三维评测<br/>知识 / 技能 / 工具<br/>30K MCQ + 240 开放问答"]
+```
 
 ### 关键设计
 

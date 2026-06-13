@@ -47,6 +47,18 @@ tags:
 
 具体来说，输入一张概念图像和对应的概念词（如 "surface"），Mod-Adapter 输出调制方向 $\{\Delta_i \mid i=1,\dots,N\}$，其中 $N=57$ 对应 FLUX 的 57 个 DiT block。这些方向被加到该概念文本 token 的调制向量上，经过 joint attention 层后，只对这个概念相关的图像区域产生影响。多概念推理时各概念的调制方向分别作用在各自的文本 token 上，互不干扰，从而实现解耦控制。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["概念图像 + 概念词<br/>(如 surface)"] --> B["Vision-Language<br/>Cross-Attention<br/>概念词当锚点抠出目标概念"]
+    P["VLM 生成文字描述 p+"] -.->|VLM 引导预训练<br/>抹平 image-modulation gap| B
+    B --> C["MoE 投影<br/>k-means 路由到 12 个 expert"]
+    C --> D["调制方向 Δ (N=57)"]
+    D --> E["加到概念 text token<br/>的调制向量"]
+    E --> F["joint attention<br/>局部化概念控制"]
+    F --> G["定制生成图像"]
+```
+
 ### 关键设计
 
 **1. Vision-Language Cross-Attention：以概念词为锚点，从图像里只抠出目标概念**

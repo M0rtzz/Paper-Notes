@@ -49,6 +49,35 @@ tags:
 
 这篇论文想搞清楚一件事：偏好模型为什么会偏爱那些"看起来好"但实质未必好的回复，问题出在哪、又怎么修。它把整套工作拆成诊断、溯源、修复三步，沿着一条因果链推进。诊断阶段（§3）针对冗长、结构化、术语、谄媚、模糊这五种表面特征，分别构造一组"只在该特征上不同、其余尽量一致"的反事实回复对，再用偏好模型给两端打分，量化它有多偏（skew）以及与人类判断有多不一致（miscalibration）。溯源阶段（§4）把镜头转向训练数据，统计这些偏差特征在 chosen/rejected 标注里的分布，看模型的偏好是不是从数据里学来的。修复阶段（§5）则不碰模型结构和训练算法，只在数据层面做反事实数据增强（CDA），重新微调奖励模型。整条流水线的逻辑是：先证明偏差存在且可量化，再把它归因到数据的分布不平衡，最后从源头补上反偏差信号。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["五种表面特征<br/>冗长·结构化·术语·谄媚·模糊"]
+    subgraph DIAG["诊断：量化偏差"]
+        direction TB
+        A["反事实对构造（RATE 协议）<br/>两步重写隔离单一特征"]
+        B["偏好模型给两端打分"]
+        C["度量体系<br/>skew + miscalibration"]
+        A --> B --> C
+    end
+    subgraph TRACE["溯源：归因到训练数据"]
+        direction TB
+        D["统计 chosen/rejected<br/>偏差分布"]
+        E["相关性对比<br/>r_human=-0.12 vs r_model=+0.36"]
+        D --> E
+    end
+    subgraph FIX["反事实数据增强（CDA）"]
+        direction TB
+        F["重写被拒回复<br/>注入反偏差样本"]
+        G["重新微调奖励模型"]
+        F --> G
+    end
+    IN --> A
+    C -->|偏差存在且可量化| D
+    E -->|数据不平衡是根因| F
+    G --> OUT["miscalibration<br/>39.4% → 32.5%"]
+```
+
 ### 关键设计
 
 **1. 反事实对构造（RATE 协议）：用实验性隔离取代相关分析**

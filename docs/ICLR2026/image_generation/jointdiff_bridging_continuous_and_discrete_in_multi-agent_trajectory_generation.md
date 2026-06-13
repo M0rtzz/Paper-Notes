@@ -41,7 +41,26 @@ tags:
 
 ### 整体框架
 
-JointDiff 将场景状态表示为元组 $\mathbf{X} = (\mathbf{Y}, \mathbf{E})$，其中 $\mathbf{Y} \in \mathbb{R}^{T \times N \times 2}$ 为连续轨迹坐标，$\mathbf{E} \in \{0,1\}^{T \times N}$ 为离散控球事件（one-hot）。正向过程中，两模态独立加噪：轨迹用高斯扩散，事件用多项式扩散（向均匀分布融合）。反向过程中，单一神经网络同时建模两模态，通过共享状态实现跨模态依赖学习。
+JointDiff 要解决的是体育多智能体场景的生成：球员的连续运动轨迹和离散的控球事件本应同步发生、互相牵制，但现有扩散模型只生成轨迹、把事件丢在一边。它的做法是把场景状态打包成一个元组 $\mathbf{X} = (\mathbf{Y}, \mathbf{E})$ 一起去噪——$\mathbf{Y} \in \mathbb{R}^{T \times N \times 2}$ 是连续轨迹坐标，$\mathbf{E} \in \{0,1\}^{T \times N}$ 是离散控球事件（one-hot）。正向过程两模态独立加噪：轨迹走高斯扩散，事件走多项式扩散（逐渐融向均匀分布）。反向过程是关键——同一个去噪网络（沿用 U2Diff 的两层 Social-Temporal Block，每层内是 Temporal Mamba 建模单 agent 时序、Social Transformer 建模 agent 间交互）吃进完整噪声状态，末端分出回归头和分类头，分别吐出轨迹噪声和事件概率，从而在共享表征里学到跨模态依赖。要做可控生成时，再往 Block 内部插一个 CrossGuid 模块注入引导信号；推理时两模态用各自的采样器、再把时间步对齐。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["噪声状态<br/>轨迹 Y_s + 控球事件 E_s<br/>（含观测帧与掩码）"] --> TM
+    G["引导信号<br/>球员索引序列 / 文本"] -.-> CG
+    subgraph NET["1. 联合连续-离散扩散（单一去噪网络 + 双头）"]
+        direction TB
+        TM["Temporal Mamba<br/>逐 agent 时序建模"] --> CG["2. CrossGuid 条件注入<br/>交叉注意力塞入引导"]
+        CG --> ST["Social Transformer ×2<br/>agent 间交互"]
+        ST --> H1["回归头<br/>轨迹噪声 ε_θ"]
+        ST --> H2["分类头<br/>事件概率 Ê_0"]
+    end
+    H1 --> S
+    H2 --> S
+    S["3. 混合采样<br/>轨迹 DDIM(ζ=5) + 事件多项式采样<br/>步数对齐 s_d=⌈s·S_d/S⌉"]
+    S -->|s>0 回灌下一步| A
+    S -->|s=0| OUT["输出场景<br/>轨迹 + 同步控球事件"]
+```
 
 ### 关键设计
 

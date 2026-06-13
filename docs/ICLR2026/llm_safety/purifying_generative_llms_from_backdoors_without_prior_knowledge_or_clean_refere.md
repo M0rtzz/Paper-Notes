@@ -50,6 +50,25 @@ tags:
 
 整条流水线分三步：先做**机制分析**，用消融实验确认后门关联藏在 MLP 里且呈冗余分布；再做**免疫类比签名提取**，从可疑模型出发主动培育出若干个"后门变体"，比对它们共同的参数变化模式，提炼出一份跨变体一致的"后门签名"（即一组可疑神经元下标）；最后做**净化**，把签名里的神经元重置掉，再用约 200 个干净样本轻量微调，把被误伤的通用能力补回来。整个过程输入是一个被怀疑植了后门的模型，输出是 ASR 大幅下降而 utility 基本不变的净化模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["可疑模型 θ_susp<br/>(疑植后门, 触发器未知)"] --> ANA["机制分析<br/>权重消融定位: 后门冗余<br/>编码在多个 MLP block"]
+    ANA -->|"只在 MLP 神经元粒度找"| SIG
+    subgraph SIG["免疫类比签名提取"]
+        direction TB
+        VAR["从 θ_susp 培育 N 个变体<br/>各训中毒 θ_bd 与干净 θ_clean"] --> DIFF["差分更新<br/>Δ_i = Δθ_bd − Δθ_clean"]
+        DIFF --> SCORE["神经元打分 s_j<br/>平均范数 + 正余弦一致性"]
+        SCORE --> THR["阈值筛出后门签名<br/>S = {j : s_j ≥ τ}"]
+    end
+    SIG --> PUR
+    subgraph PUR["净化"]
+        direction TB
+        RESET["重置签名神经元<br/>全参 gate/up_proj · LoRA A行/B列"] --> FT["~200 干净样本轻量修复<br/>lr=1e-5, 5 epoch"]
+    end
+    PUR --> OUT["净化模型<br/>ASR 大降, utility 基本不变"]
+```
+
 ### 关键设计
 
 **1. 机制分析：先定位后门藏在哪一层，再谈净化**

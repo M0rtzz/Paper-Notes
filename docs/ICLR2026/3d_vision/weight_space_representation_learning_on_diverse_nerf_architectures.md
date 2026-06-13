@@ -44,6 +44,19 @@ tags:
 
 本文要解决的问题是：同一个 3D 物体可以被存成 MLP、tri-plane、hash table 等多种 NeRF，它们的权重结构天差地别，过去的权重处理方法（nf2vec、Cardace）只能吃一种架构。作者的思路是把"读权重"这件事统一成"读图"——不管哪种 NeRF，先转成一张参数图（parameter graph），再用一个对图天然等变的网络去编码。整体流程是：任意 NeRF 权重 → 参数图 → Graph Meta-Network（GMN）编码器 → 架构无关的潜在向量；这个向量一边送进 nf2vec 解码器重建辐射场（保证它真的装下了物体内容），一边参与对比对齐（保证不同架构的同一物体落在一起）。训练阶段同时优化渲染损失 $\mathcal{L}_R$ 和 SigLIP 对比损失 $\mathcal{L}_C$，推理时直接拿编码器输出的向量做分类、检索和语言任务。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["任意 NeRF 权重<br/>MLP / tri-plane / hash table"] --> B["参数图构建<br/>异构权重→统一参数图"]
+    B --> C["GMN 编码器<br/>排列等变 GNN + 边特征池化"]
+    C --> D["架构无关潜在向量"]
+    D -->|渲染损失| E["nf2vec 解码器<br/>重建辐射场"]
+    D -->|对比损失| F["SigLIP 对比损失<br/>同物体跨架构对齐"]
+    E --> G["训练目标<br/>渲染损失 + 对比损失加权和"]
+    F --> G
+    D -->|推理| H["下游任务<br/>分类 / 检索 / 语言"]
+```
+
 ### 关键设计
 
 **1. 参数图构建：把异构 NeRF 权重翻译成统一的图语言**

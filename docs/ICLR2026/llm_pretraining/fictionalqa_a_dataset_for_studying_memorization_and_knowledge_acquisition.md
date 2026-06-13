@@ -42,7 +42,28 @@ tags:
 
 ### 整体框架
 
-FictionalQA 的数据生成是一个四阶段的层次化管线：种子事件（Seed Events）→ 详情表（Fictsheets）→ 虚构文档（Fictions）→ QA 对（Fictional Q&A）。所有阶段使用 GPT-4o 生成，不同阶段使用不同温度。生成后还有 QA 标注（过滤可回答的问题）和 MCQ 重格式化两个后处理步骤。
+要在受控条件下研究 LLM 的记忆现象，核心难点是造出一批"长得像真实 webtext、但事实完全虚构"的数据，并且让"表面风格"和"事实内容"能当成两个独立变量来切。FictionalQA 为此把数据构造拆成一条层层展开的生成管线，再接两道后处理，最后用三种切分喂给训练：先用 GPT-4o 从一句话的种子事件（Seed Events）逐级扩写出结构化详情表（Fictsheets）、5 种风格的虚构文档（Fictions）和无歧义的 QA 对，每级用不同温度控制发散程度；生成完再做 QA 不可行性过滤（剔掉模型靠先验就能答对的题，7500 题筛到 3036 题）和 MCQ 重格式化（配干扰项转成 4 选 1 便于打分）；最后把同一批数据按事件 / 文档 / 风格三种方式切成 train/val，以 5% 的低注入率混进真实 webtext 做 finetune，全程监控训练/验证 loss 与 MCQ 准确率，观察事实记忆何时出现。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    subgraph GEN["分层数据生成管线"]
+        direction TB
+        A["种子事件 Seed Events<br/>一句话虚构场景（温度 1.0）"] --> B["详情表 Fictsheets<br/>结构化细节大纲（温度 0.7）"]
+        B --> C["虚构文档 Fictions<br/>5 种风格文档（温度 1.0）"]
+        C --> D["虚构 QA 对<br/>无歧义问答（温度 0.1）"]
+    end
+    D --> E["QA 不可行性过滤<br/>blind 答不出 / informed 才答出<br/>7500 → 3036 题"]
+    E --> F["MCQ 重格式化<br/>配干扰项 → 4 选 1"]
+    subgraph SPLIT["三种 train/val 分割"]
+        direction TB
+        G["Event Split<br/>跨事件迁移"]
+        H["Doc Split<br/>内容泛化"]
+        I["Style Split<br/>分离内容/风格记忆"]
+    end
+    F --> SPLIT
+    SPLIT --> J["5% 注入率 finetune<br/>监控记忆动力学曲线"]
+```
 
 ### 关键设计
 

@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 输入是用户目标（user goal，如"预订2人火车票到剑桥"），输出是包含非协作行为的多轮对话。整个流程分三层：(1) 协作用户模拟器作为骨架，负责传达所有必要信息和意图；(2) 四个非协作行为模块分别对协作输出进行干预（增加/替换/截断用户发言）；(3) goal-alignment保障机制确保无论怎么干预，任务完成所需的全部信息最终都会被传达。Agent侧使用ReAct框架，限制30步推理。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["用户目标<br/>(如订2人到剑桥的火车票)"] --> SKEL["协作用户模拟器骨架<br/>GPT-4.1-mini 生成合作发言"]
+    SKEL --> NC
+    subgraph NC["四类非协作行为模块（干预合作发言）"]
+        direction TB
+        U1["不可用服务<br/>追加超出能力的需求"]
+        U2["跑题闲聊<br/>Persona Hub 人设跑题"]
+        U3["不耐烦<br/>三级愤怒概率升级"]
+        U4["不完整表述<br/>极简措辞 / 随机截断"]
+    end
+    NC --> GA["Goal-Alignment 保障系统<br/>信息分片→状态追踪→结束校验"]
+    GA -->|仍有信息未传达| SKEL
+    GA -->|信息已传完| DLG["含非协作行为的多轮对话"]
+    DLG --> AGENT["工具 Agent<br/>ReAct 框架, 限 30 步"]
+    AGENT --> OUT["任务成功率 + 失败机制诊断"]
+```
+
 ### 关键设计
 
 **1. 协作用户模拟器骨架（Collaborative User Simulator）：先给一个会好好说话的"地基"用户**

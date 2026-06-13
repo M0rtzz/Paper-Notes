@@ -49,6 +49,17 @@ tags:
 
 这篇论文想造一个既"主动"又"懂你"的助手，但真实用户数据收集不起，于是整套系统全跑在模拟里，由三方循环驱动。第一方是基于persona的用户agent，它在Smallville家庭环境里生成一整天的日常行为序列 $\{(A_i, \text{Range}_i)\}$（比如"7:00–7:30 做早餐"）。第二方是AI助手，它每隔 $T=2.5$ 分钟观察当前行为 $A_t$ 和自己的内部状态 $S_t^{(a)}$，决定要不要推荐、推荐什么：$R_t = \mathcal{A}_\theta(A_t, S_t^{(a)})$。第三方是评估器（仍是用户agent的一部分），它按这个persona专属的rubric给刚才那条推荐打分 $\text{Score}_t = \mathcal{E}(P, r, A_t, R_t, S_t^{(u)})$。打出来的分数既是反馈信号、又是训练数据：助手每天把当天攒下的（推荐, 分数）对拿去做一次偏好学习，第二天就更懂这位用户。模拟连跑14天，助手在不接触任何真人的情况下完成"何时推荐 + 推荐什么"的双重适配。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["大五人格驱动的用户 Persona 系统<br/>32 种 persona 生成<br/>一整天日常行为序列"] --> B["每 T=2.5min 取当前行为 A_t<br/>+ 助手内部状态 S_t"]
+    B --> C["ProPerAssistant 生成推荐<br/>日记忆 + RAG 检索 → n=2 候选<br/>(含 不推荐 选项)"]
+    C --> D["四维个性化评估 Rubric<br/>Gemini 按 persona 判据<br/>打二值分 Score_t"]
+    D --> E["高分/低分配成偏好对<br/>存入 replay buffer"]
+    E --> F["ProPerAssistant 每天 DPO 训练<br/>采样 200 条偏好对更新策略"]
+    F -->|"次日, 连跑 14 天"| B
+```
+
 ### 关键设计
 
 **1. 大五人格驱动的用户Persona系统：让模拟用户的行为和口味真的因人而异**

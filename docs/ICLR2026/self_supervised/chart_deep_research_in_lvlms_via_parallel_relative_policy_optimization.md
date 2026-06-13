@@ -43,6 +43,24 @@ tags:
 ### 整体框架
 PRPO 的目标是让一个 7B 视觉语言模型同时学会图表深度研究的五种能力——背景知识整合、事实提取、关系构建、深度推理、预测规划。难点在于 GRPO 把这五维奖励压成一个标量、又把难度悬殊的样本混在一起归一化，结果是信号互相抵消、简单任务主导梯度。PRPO 把"并行解耦"分别打进这两处：在奖励侧用 Reward-PRPO 让每个维度各自算 advantage，在数据侧用 Data-PRPO 让每种能力的样本在自己的分区里归一化，最后双层加权汇成统一目标。配套的 MCDR-Bench 则换一个角度解决评估难题——把"给主观报告打分"改成"在被注入一处错误的报告里找错"，让端到端分析能力变成可客观判定的分类任务。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    Q["图表 + 深度研究问题"] --> ROLL["Qwen2.5-VL-7B<br/>采样 G 条 rollout"]
+    ROLL --> REW["五维奖励打分<br/>BG / FE / RL / DR / F+P"]
+    REW --> RP["Reward-PRPO<br/>逐维度组内标准化<br/>优势 Â^(k)"]
+    RP --> DP["Data-PRPO<br/>按 capability_uid 分 M 区<br/>区内归一化 + 异常值降级"]
+    DP --> OBJ["双层加权目标 J_PRPO<br/>更新策略模型"]
+    OBJ -->|迭代| ROLL
+    subgraph BENCH["MCDR-Bench（评估基准）"]
+        direction TB
+        P1["五阶段多智能体流水线<br/>背景→事实→关系→报告→预测"] --> P2["错误唯一性原则<br/>可控错误注入"]
+        P2 --> P3["1021 图表 / 3084 样本"]
+    end
+    OBJ --> EVAL["客观找错评估<br/>诊断五维能力强弱"]
+    BENCH --> EVAL
+```
+
 ### 关键设计
 
 **1. Reward-PRPO：让每个奖励维度保留自己的优化信号**

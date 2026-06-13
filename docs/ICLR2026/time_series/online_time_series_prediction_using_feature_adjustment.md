@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR 2026  
 **arXiv**: [2509.03810](https://arxiv.org/abs/2509.03810)  
 **代码**: [有](https://github.com/xiannanhuang/ADAPT-Z)  
-**领域**: 视频理解  
+**领域**: 时间序列  
 **关键词**: 在线学习, 分布漂移, 特征空间适应, 延迟反馈, 时间序列预测
 
 ## 一句话总结
@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 
 ADAPT-Z 把预训练好的预测模型拆成编码器 $f$ 和预测头 $g$，部署阶段不再去动模型参数，而是寻找一个特征修正项 $\delta_t$，让被修正后的特征送进预测头能贴近真值，即 $g(z_t + \delta_t) \approx y_t$，其中 $z_t = f(x_t)$。这个 $\delta_t$ 由一个轻量 adapter 在线生成，它同时看当前特征 $z_t$ 和最近一段历史梯度，再用 $k$ 步延迟的在线梯度下降持续学习，从而在分布漂移下不断校准预测。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["输入窗口 x_t"] --> F["编码器 f<br/>提取潜在特征 z_t"]
+    HG["批量历史梯度<br/>(t-k-b 到 t-k 窗口平均)"] --> ADP
+    F --> ADP
+    subgraph ADP["双路径 adapter"]
+        direction TB
+        L1["线性层<br/>变换特征 z_t"] --> SUM["相加融合"]
+        L2["线性层<br/>变换历史梯度"] --> SUM
+        SUM --> L3["两层线性<br/>输出修正项 δ_t"]
+    end
+    ADP --> ADD["特征空间适应<br/>z_t + δ_t"]
+    ADD --> P["预测头 g<br/>输出预测 ŷ_t"]
+    P --> Y["等 k 步后<br/>真值 y_t 到达"]
+    Y -->|延迟在线更新| ADP
+```
 
 ### 关键设计
 

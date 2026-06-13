@@ -54,7 +54,11 @@ tags:
 
 **3. TALR：按 token 概率自适应重加权，压住退化的真正来源**
 
-理论把退化的主要驱动力指向 hard token（模型当前概率很低的 token），TALR 便直接在损失层面下调这些 token 的权重。它被写成一个单纯形上的约束优化：最小化加权损失再加一项熵正则，从而得到闭式解 $w_i^* \propto p_\theta(x_i)^{1/\tau}$——概率高的简单 token 拿到更大权重，概率低的 hard token 被自动压低，不需要额外的超参搜索。温度 $\tau$ 也不是手调的，而是取 batch 内 token 损失的中位数，随训练推进自动衰减，于是权重分布会动态变化：训练初期聚焦容易学的 token，随着模型进步再逐渐纳入原先的 hard token，整体呈现课程学习的动态（实验中 $p>0.2$ 的 token 占比从 Epoch 1 到 Epoch 2 稳步上升即印证了这一点）。为保证优化稳定，权重 $w_i$ 通过 stop-gradient 计算、不参与反向传播，避免权重与损失互相耦合震荡。
+理论把退化的主要驱动力指向 hard token（模型当前概率很低的 token），TALR 便直接在损失层面下调这些 token 的权重，回避了"如何挑 hard token、阈值定多少、降权多少"这些手调难题。它被写成一个单纯形（simplex）上的约束优化：最小化加权损失再加一项熵正则，
+
+$$\min_{\mathbf{w}\in\Delta_n}\ \sum_i w_i\,\ell_i(\theta)+\tau\sum_i w_i\log w_i,$$
+
+其中第一项偏好低损失 token、熵正则防止权重过度集中。该问题有闭式解 $w_i^* \propto p_\theta(x_i)^{1/\tau}$——概率高的简单 token 拿到更大权重、概率低的 hard token 被自动压低，无需任何额外超参搜索。温度 $\tau$ 也不是手调的，而是取每个 batch 内 token 损失的中位数，随训练推进自动衰减，于是权重分布会动态变化：训练初期聚焦容易学的 token，随着模型进步再逐渐纳入原先的 hard token，整体呈现课程学习的动态（实验中 $p>0.2$ 的 token 占比从 Epoch 1 到 Epoch 2 稳步上升即印证了这一点）。工程上还有两处细节保证稳定：权重 $w_i$ 经 stop-gradient 计算、不参与反向传播，避免权重与损失互相耦合震荡；同时对权重设下界 $w_{\min}$ 做截断（$w_i\leftarrow\max(w_i,w_{\min})$），防止 hard token 被压成零权重而彻底学不到领域知识。
 
 ## 实验关键数据
 

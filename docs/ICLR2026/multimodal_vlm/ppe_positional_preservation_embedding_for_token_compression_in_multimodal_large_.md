@@ -42,7 +42,22 @@ tags:
 
 ### 整体框架
 
-PPE把自己挂在任何一个token合并框架之后：先让原框架（如ChatUniVi的DPC-KNN）把相似视觉token聚成簇并平均成一个压缩token，PPE再接手为这个压缩token重新分配位置ID。它的全部动作就是从簇内挑出最有代表性的 $K$ 个原始token，把它们的位置ID分块写进压缩token嵌入的不同维度段里，于是注意力计算时这一个token能同时被感知为 $K$ 个空间/时序位置。整个过程不动特征、不加参数，只改位置ID。
+PPE把自己挂在任何一个token合并框架之后：先让原框架（如ChatUniVi的DPC-KNN）把相似视觉token聚成簇并平均成一个压缩token，PPE再接手为这个压缩token重新分配位置ID。它的全部动作就是从簇内挑出最有代表性的 $K$ 个原始token，把它们的位置ID分块写进压缩token嵌入的不同维度段里，于是注意力计算时这一个token能同时被感知为 $K$ 个空间/时序位置。整个过程不动特征、不加参数，只改位置ID。在极高压缩率下，PPE还能沿网络深度逐级重复这套"聚类→重分配位置"的动作（级联压缩），让布局信息逐层保住而不一次性崩塌。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["视觉token序列<br/>(高分辨率→上千token)"] --> B["外部合并框架<br/>DPC-KNN聚类→簇平均成压缩token"]
+    subgraph PPE["用RoPE维度独立性塞入多位置（设计1）"]
+        direction TB
+        C["从簇内选距中心最近<br/>top-K代表token"] --> D["按维度切K段<br/>第k段写第k个token位置ID"]
+        D --> E["M-RoPE: 先按时/高/宽轴分<br/>再各轴内切K组独立编码"]
+    end
+    B --> PPE
+    PPE --> F["RoPE注意力<br/>一个压缩token=K个位置"]
+    F -->|"级联压缩: LLM第11/23/35层<br/>各级重做聚类+PPE（设计2）"| B
+    F --> G["送入LLM理解<br/>空间/时序布局保留"]
+```
 
 ### 关键设计
 

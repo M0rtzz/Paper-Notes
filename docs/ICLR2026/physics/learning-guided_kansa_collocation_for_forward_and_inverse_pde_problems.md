@@ -42,33 +42,42 @@ tags:
 
 ### 整体框架
 
-整个框架建立在Kansa配置点法之上：把待求场写成径向基函数的线性组合 $\hat{u}(\mathbf{x}) = \sum_k \alpha_k \psi_k(\|\mathbf{x} - \mathbf{x}_k\|)$，让它在一批配置点上同时满足PDE算子约束和边界条件，从而把求解归结为确定系数 $\alpha_k$。本文在这条主线上做了四处扩展——耦合多变量、非线性算子、形状参数自调优、反问题，使原本只能处理单变量线性PDE的Kansa方法覆盖到耦合方程组与非线性场景。
+整个框架建立在 Kansa 配置点法（Kansa collocation）之上：把待求场写成径向基函数（radial basis function, RBF）的线性组合 $\hat{u}(\mathbf{x}) = \sum_k \alpha_k \psi_k(\|\mathbf{x} - \mathbf{x}_k\|)$，让它在一批配置点上同时满足 PDE 算子约束 $\mathcal{F}$ 和边界条件 $h$，于是求解就归结为确定系数 $\alpha_k$——若算子是线性的，整组配置点方程组成线性系统 $\mathbf{Fa}=\mathbf{h}$，直接用最小二乘闭式求解。本文沿这条主线做了四处扩展，使原本只能处理单变量线性 PDE 的 Kansa 方法覆盖到耦合方程组与非线性场景：先把单场推广为多物理量耦合（耦合多变量扩展），再用微分矩阵把非线性算子拆开（非线性算子处理），同时自动选取决定精度与稳定性的核形状参数（形状参数自调优），最后把训好的可微正向求解器接到下游做参数反演（反问题求解）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["PDE 问题<br/>算子 F + 边界条件 h"] --> RBF["Kansa RBF 表示<br/>u_hat = Σ αₖ ψₖ"]
+    RBF --> COUP["耦合多变量扩展<br/>向量场 u=[u₁..u_ND]<br/>块矩阵联立"]
+    COUP -->|"线性算子"| LIN["最小二乘闭式解<br/>a=(FᵀF)⁻¹Fᵀh"]
+    COUP -->|"非线性算子"| NL["非线性算子处理<br/>微分矩阵 Dₓ=Kₓ·K⁻¹<br/>5 种时间步进"]
+    LIN --> EPS["形状参数自调优<br/>权衡精度与条件数选 ε"]
+    NL --> EPS
+    EPS --> FWD["正问题解 u_hat(x)"]
+    FWD --> INV["反问题求解<br/>argmin_π L(u_obs, u_pred(π))"]
+```
 
 ### 关键设计
 
 **1. 耦合多变量扩展：让一套RBF同时求解多个物理量**
 
-Navier-Stokes、Maxwell这类方程本质上是若干物理量相互牵制的耦合方程组，单场表示无法描述。本文把单一未知场 $u$ 推广为多维向量 $\mathbf{u} = [u_1, u_2, \ldots, u_{N_D}]$，每个分量 $u_d$ 各自拥有独立的RBF展开和系数 $\alpha_k^{(d)}$。各分量之间通过线性耦合算子 $\mathcal{G}$ 联立起来，把所有维度的配置点方程水平堆叠成一个块矩阵系统一次性求解。这样既保留了无网格表示的灵活性，又让分量间的耦合在同一个线性系统里得到一致处理；实验中耦合维度 $N_D$ 从1增长到多维时，计算成本近似线性上升而精度基本维持。
+Navier-Stokes、Maxwell 这类方程本质上是若干物理量相互牵制的耦合方程组，单场表示无法描述，这正是基础 Kansa 框架卡住的第一道坎。本文把单一未知场 $u$ 推广为多维向量 $\mathbf{u} = [u_1, u_2, \ldots, u_{N_D}]$，每个分量 $u_d$ 各自拥有独立的 RBF 展开和系数 $\alpha_k^{(d)}$，再通过一个对各分量线性的耦合算子 $\mathcal{G}(\hat{v}_1,\ldots,\hat{v}_{N_D}) = \sum_d \beta_d \hat{v}_d$ 把它们联立起来。实现上是把各维度的算子矩阵 $\mathbf{F}^{(d)}$ 水平堆叠、配上权重块 $\boldsymbol{\beta}$ 组成一个块矩阵系统一次性求解。这样既保留了无网格表示的灵活性，又让分量间的耦合在同一个线性系统里得到一致处理；实验中耦合维度 $N_D$ 增长时，计算成本近似线性上升而精度基本维持。
 
 **2. 非线性算子处理：用微分矩阵把非线性项拆成已知场的微分组合**
 
-非线性算子（如Burgers方程里的 $u\,\partial u/\partial x$ 项）无法像线性情形那样直接分离出一个可解的线性系统。本文的关键工具是微分矩阵 $\mathbf{D}_x = \mathbf{K}_x \cdot \mathbf{K}^{-1}$——它把对场的微分操作表达成作用在RBF系数上的矩阵，于是非线性项可以分解为已知场上的微分组合，再交给时间离散或迭代优化处理。围绕这一点本文给出五种求解策略：显式的前向Euler、半隐式的IMEX、配合Newton-Raphson的隐式后向Euler、二阶的Crank-Nicolson，以及不做时间分裂、直接对残差做全局优化的全非线性方案，覆盖了从快速但易失稳到稳定且高精度的不同需求。
+非线性算子（如 Burgers 方程里的 $u\,\partial u/\partial x$ 项）无法像线性情形那样把系数 $\alpha_k$ 直接提到算子外、分离出可解的线性系统。本文的关键工具是微分矩阵（differentiable matrix）$\mathbf{D}_x = \mathbf{K}_x \cdot \mathbf{K}^{-1}$：由 $\mathbf{u}' = \mathbf{K}_x \mathbf{a}$ 与 $\mathbf{a} = \mathbf{K}^{-1}\mathbf{u}$ 联立得到，它把"对场求导"这一操作直接表达成作用在场值 $\mathbf{u}$ 上的矩阵，于是非线性项可以写成已知场的微分组合（如 $u\cdot(\mathbf{D}_x\mathbf{u})$），再交给时间离散或迭代优化处理。围绕这一点本文给出五种求解策略：显式的前向 Euler、半隐式的 IMEX、配合 Newton-Raphson 的隐式后向 Euler、二阶的 Crank-Nicolson，以及不做时间分裂、直接对残差做全局优化的全非线性方案，覆盖了从快速但易失稳到稳定且高精度的不同需求。
 
 **3. 形状参数自调优：自动权衡精度与条件数**
 
-RBF核的形状参数 $\epsilon$ 对结果影响极大——取得太尖会损失精度，取得太平则让算子矩阵条件数恶化，二者之间存在精度-条件数的内在权衡，手工调参既费力又不可靠。对线性PDE，本文联合最小化算子矩阵的条件数与解场的变分来选 $\epsilon$；对非线性PDE，则提出一个组合目标，同时压低PDE残差、解场变分以及训练数据上的L2损失。把 $\epsilon$ 的选取从人工试错变成可优化的目标，实验显示自调优相比手动设值能显著降低误差。
+RBF 核的形状参数 $\epsilon$ 对结果影响极大——取得太尖（$\epsilon$ 大）会损失精度，取得太平（$\epsilon$ 小）则让算子矩阵条件数恶化、求解失稳，二者之间存在精度-条件数的内在权衡，手工调参既费力又不可靠。对线性 PDE，本文联合最小化算子矩阵的条件数与解场的变分来选 $\epsilon$；对非线性 PDE，则换成一个组合目标，同时压低 PDE 残差、解场变分以及训练数据上的 L2 损失。把 $\epsilon$ 的选取从人工试错变成可优化的目标后，实验显示自调优相比手动设值能显著降低误差。
 
 **4. 反问题求解：把参数反演变成标准优化**
 
-从观测数据反推未知PDE参数（扩散系数、流速等）对科学模拟很重要，但此前的Kansa框架并未涉及。借助RBF表示对参数的可微性，本文把反问题写成 $\boldsymbol{\pi}^* = \arg\min_{\boldsymbol{\pi}} \mathcal{L}(u^{\text{obs}}, u^{\text{pred}}(\boldsymbol{\pi}))$，即调整未知参数 $\boldsymbol{\pi}$ 使预测解逼近观测 $u^{\text{obs}}$，再用SciPy的最小二乘与求根算法求解。由于正向求解器本身可微，参数推断自然落入标准优化框架，无需额外的伴随推导。
-
-**5. 与神经求解器的系统对比：给出选型指南**
-
-为厘清扩展后的Kansa方法相对神经PDE求解器的位置，本文在一组benchmark PDE上统一对比Kansa、PINN与FNO，采用一致的评估口径——相对L2误差、计算效率、内存、收敛速度，并公平地配置各方法的训练数据量。这组对比不只是刷指标，而是为不同PDE类型给出"何时该选哪种求解器"的实用结论，比如在配置点稀少、缺乏训练数据的场景下Kansa优势明显，而FNO的训练数据需求约是Kansa/PINN的100倍。
+从观测数据反推未知 PDE 参数（扩散系数、流速等）对科学模拟很重要，但此前的 Kansa 框架并未涉及。由于前三步搭出的正向求解器本身对参数可微，本文把反问题直接写成 $\boldsymbol{\pi}^* = \arg\min_{\boldsymbol{\pi}} \mathcal{L}(u^{\text{obs}}, u^{\text{pred}}(\boldsymbol{\pi}))$，即调整未知参数 $\boldsymbol{\pi}$ 使预测解逼近观测 $u^{\text{obs}}$，再用 SciPy 的最小二乘与求根算法求解。因为求解器可微，参数推断自然落入标准优化框架，无需额外推导伴随方程（adjoint）。
 
 ### 损失函数 / 训练策略
 
-线性PDE直接走最小二乘闭式解 $\mathbf{a}^{\text{opt}} = (\mathbf{F}^T\mathbf{F})^{-1}\mathbf{F}^T\mathbf{h}$；非线性PDE改为最小化配置点上的残差 $\min_\alpha \sum_i (\mathcal{F}[\hat{u}](\mathbf{x}_i) - h(\mathbf{x}_i))^2$；形状参数 $\epsilon$ 通过网格搜索按上述自调优目标选取。作为对照，PINN用Adam优化器、学习率 $10^{-3}$、训练3000 epochs，FNO则需要100个PDE实例、训练100 epochs。
+线性 PDE 直接走最小二乘闭式解 $\mathbf{a}^{\text{opt}} = (\mathbf{F}^T\mathbf{F})^{-1}\mathbf{F}^T\mathbf{h}$；非线性 PDE 改为最小化配置点上的残差 $\min_\alpha \sum_i (\mathcal{F}[\hat{u}](\mathbf{x}_i) - h(\mathbf{x}_i))^2$；形状参数 $\epsilon$ 通过网格搜索按上述自调优目标选取。作为对照基线，PINN 用 Adam 优化器、学习率 $10^{-3}$、训练 3000 epochs，FNO 则需要 100 个 PDE 实例、训练 100 epochs。
 
 ## 实验关键数据
 

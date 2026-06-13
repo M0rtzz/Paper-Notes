@@ -41,7 +41,23 @@ tags:
 
 ### 整体框架
 
-TI-DPO 把原本作用在整条序列上的 DPO 信号下放到 token 级别：先用一套混合权重为偏好对 $(y_w, y_l)$ 里的每个 token 估计重要性，再把权重灌进 token 级的隐式奖励差里做加权对比，最后额外挂一项三元组损失，让策略模型在连续语义空间里靠近优答案、远离劣答案。总损失为 $\mathcal{L}_{\text{TI-DPO}} = \mathcal{L}_{\text{DPO-w}} + \gamma \mathcal{L}_{\text{triplet}}$，其中 $\gamma$ 平衡加权 DPO 项与三元组项。
+TI-DPO 把原本作用在整条序列上的 DPO 信号下放到 token 级别。给定一条偏好数据 $(x, y_w, y_l)$，它分三步走：先用一套**混合权重机制**为 $y_w$、$y_l$ 里的每个 token 估计重要性（梯度归因定位语义关键位、高斯先验修正首尾偏置）；再把这套权重灌进 token 级的隐式奖励差里做**加权对比**，让关键 token 主导优化信号；与此并行，让策略模型自己生成一个锚点回答，挂一项**三元组损失**在连续语义空间里把锚点拉近优答案、推远劣答案。两路损失合成总目标 $\mathcal{L}_{\text{TI-DPO}} = \mathcal{L}_{\text{DPO-w}} + \gamma \mathcal{L}_{\text{triplet}}$，其中 $\gamma$ 平衡加权 DPO 项与三元组项。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["偏好对 (x, y_w, y_l)"]
+    subgraph HW["混合权重机制"]
+        direction TB
+        GA["梯度归因<br/>I_i=‖∇L‖₁<br/>(定位语义关键 token)"] --> FUSE["凸组合<br/>W=λ·I_norm+(1-λ)·P"]
+        GP["高斯位置先验<br/>P(t)=exp(...)<br/>(修正首尾 U 型偏置)"] --> FUSE
+    end
+    IN --> HW
+    HW -->|"token 权重 w_t^w, w_t^l"| DPOW["加权 token 级 DPO<br/>逐 token 加权隐式奖励差"]
+    IN -->|"策略生成锚点 y"| TRI["三元组损失<br/>拉近 y_w、推远 y_l"]
+    DPOW --> SUM["总损失<br/>L=L_DPO-w+γ·L_triplet"]
+    TRI --> SUM
+```
 
 ### 关键设计
 

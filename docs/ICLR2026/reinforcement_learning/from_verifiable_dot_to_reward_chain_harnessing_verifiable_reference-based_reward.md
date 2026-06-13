@@ -45,7 +45,35 @@ tags:
 
 RLVRR 想解决的是：RLVR 那套"检查一个可验证点给奖励"的范式只在数学/代码上跑得通，开放式生成没有唯一正确答案，单点验证无从下手。它的办法是把高质量参考答案 $z$ 当成"规则来源"，先离线把参考拆成一串可验证的语言学信号，再用这串信号在线指导 RL。
 
-整体两阶段。**数据构建**阶段，给定问题 $x$ 和参考答案 $z$，用 GPT-4o-mini 从 $z$ 里抽出两类东西：一是内容维度的层次化关键词，二是风格维度的可执行 Python 检查代码。**RL 训练**阶段，用 GRPO 优化策略 $\pi_\theta$，对每条 rollout $y$ 同时算内容奖励 $r_c$ 和风格奖励 $r_s$，再聚合成总奖励 $r_\phi(x,y) = \mathcal{F}(r_c(x,y,z), r_s(x,y,z))$（实现上取两者平均）。一句话说，原来的"一个验证点"被换成了"一条由关键词链和风格检查组成的奖励链"，监督粒度从单点升级为链式。
+整体两阶段。**数据构建**阶段（离线），给定问题 $x$ 和参考答案 $z$，用 GPT-4o-mini 从 $z$ 里抽出两类东西：一是内容维度的层次化关键词，二是风格维度的可执行 Python 检查代码，再做一次质量过滤。**RL 训练**阶段（在线），用 GRPO 优化策略 $\pi_\theta$，对每条 rollout $y$ 同时算内容奖励 $r_c$ 和风格奖励 $r_s$，再聚合成总奖励 $r_\phi(x,y) = \mathcal{F}(r_c(x,y,z), r_s(x,y,z))$（实现上取两者平均）。一句话说，原来的"一个验证点"被换成了"一条由关键词链和风格检查组成的奖励链"，监督粒度从单点升级为链式。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["问题 x + 多个<br/>参考答案 {z_1..z_I}"]
+    subgraph BUILD["离线数据构建（GPT-4o-mini）"]
+        direction TB
+        KP["两级层次关键词提取<br/>key point → 关键词"]
+        CE["Python 验证函数 CodeEval<br/>+ 权重 w_n"]
+        FILT["质量过滤<br/>参考奖励 < 0.7 丢弃"]
+    end
+    X --> BUILD
+    KP --> FILT
+    CE --> FILT
+    FILT --> ROLL["策略 π_θ 采样 rollout y"]
+    subgraph REWARD["在线奖励链计算"]
+        direction TB
+        RC["内容奖励 r_c：LCS 对齐<br/>多参考容错（取最高分）"]
+        RS["风格奖励 r_s<br/>CodeEval 加权和"]
+        AGG["聚合 r = mean(r_c, r_s)"]
+    end
+    ROLL --> RC
+    ROLL --> RS
+    RC --> AGG
+    RS --> AGG
+    AGG --> GRPO["GRPO 更新策略 π_θ"]
+    GRPO -->|迭代| ROLL
+```
 
 ### 关键设计
 

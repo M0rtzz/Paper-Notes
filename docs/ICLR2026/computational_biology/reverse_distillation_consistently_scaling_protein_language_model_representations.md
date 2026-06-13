@@ -45,6 +45,26 @@ tags:
 
 整个流程仅涉及线性变换（回归 + SVD），无需重新训练任何模型，训练数据只需1000条UniRef50序列。对ESM-2家族，沿 8M → 35M → 150M → 650M → 3B → 15B 逐级链式蒸馏，最终得到每个尺度的反向蒸馏嵌入。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["1000条<br/>UniRef50序列"] --> SMALL["小模型 M_r<br/>→ 基底嵌入 H_r"]
+    IN --> LARGE["大模型 M_p<br/>→ 目标嵌入 H_p"]
+    subgraph DECOMP["反向蒸馏分解"]
+        direction TB
+        PCR["主成分回归 PCR<br/>H_r 做PCA + Johnstone去噪<br/>学线性映射 W*"]
+        PCR --> RES["残差 R = H_p − H_r·W*<br/>大模型独有信息"]
+        RES --> SVD["对 R 做 SVD<br/>取前 k_p−k_r 个右奇异向量<br/>H_res = R·V_res"]
+        SVD --> CAT["拼接 H_rd = [H_r, H_res]<br/>当前步嵌套嵌入"]
+    end
+    SMALL --> PCR
+    LARGE --> PCR
+    CAT --> CHAIN["链式反向蒸馏<br/>8M→35M→…→15B"]
+    CHAIN -->|"未到最大尺度<br/>H_rd 当新基底, 取下一更大模型"| PCR
+    CHAIN -->|"已到 15B"| MAT["Matryoshka 嵌套嵌入<br/>按前缀截断取任意尺度"]
+    MAT --> OUT["下游线性探测<br/>突变效应 / 性质预测"]
+```
+
 ### 关键设计
 
 **1. 反向蒸馏分解（Algorithm 1）：把大模型表示拆成"小模型可解释的部分"和"大模型独有的增量"**
@@ -133,23 +153,6 @@ tags:
 - 实验充分度: ⭐⭐⭐⭐ ProteinGym 28个数据集+5个下游任务+SAE分析构成了较完整的验证，但缺少其他PLM家族的验证
 - 写作质量: ⭐⭐⭐⭐⭐ 动机阐述清晰（偏差-方差视角非常直观），算法伪代码完整，理论证明简洁有力
 - 价值: ⭐⭐⭐⭐ 对蛋白质AI领域解决缩放挑战有直接指导意义，框架通用性强，但实际影响取决于能否扩展到更多模型家族
-- 对于embedding维度不单调增长的模型家族需额外降维预处理
-
-## 相关工作与启发
-- Matryoshka表示(Kusupati 2022)→NLP中嵌入前缀可用→PLM中首次实现
-- Li et al. (2024)发现PLM下游依赖早期低级特征→验证小模型作基合理性
-- Kaplan缩放律(2020)→NLP中预测性强→PLM中失效→本文修复
-- PCA降维baseline→本文附录验证rd优于简单PCA concat
-- 传统知识蒸馏(大→小)→反向蒸馏(小→大引导)→互补方向
-- 启发：生物基础模型缩放律需特殊处理→反向蒸馏可能是通用解
-- 启发：同样思路可应用于基因组/化学语言模型的缩放问题
-
-## 评分
-- 新颖性: ⭐⭐⭐⭐⭐ 反向蒸馏概念原创
-- 技术深度: ⭐⭐⭐⭐ 理论(MSE最优)+线性代数清晰
-- 实验充分度: ⭐⭐⭐⭐ ProteinGym全面+链式消融
-- 实用性: ⭐⭐⭐⭐⭐ 极简实现+立即可用
-- 综合: ⭐⭐⭐⭐⭐ 解决PLM缩放问题→简洁优雅
 
 <!-- RELATED:START -->
 

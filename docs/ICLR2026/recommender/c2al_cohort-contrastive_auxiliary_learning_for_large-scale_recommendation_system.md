@@ -43,7 +43,24 @@ tags:
 ### 整体框架
 C2AL 要解决的是大规模推荐模型在全局目标下训练时，少数群体被多数群体"淹没"导致的表征偏差。它的做法是在不改动线上架构的前提下，给共享编码器额外挂两个辅助分类头，用群体特异的梯度信号把已经退化的 FM 注意力重新"撑开"。
 
-整条 pipeline 的主干仍是标准 CTR 模型：用户-广告特征向量 $\mathbf{x}$ 先过共享编码器 $f(\mathbf{x};\theta_S)$ 得到嵌入 $\mathbf{h}$，再由主任务头 $g_{\text{primary}}$ 预测点击率。C2AL 的全部改动集中在训练阶段——在共享编码器之上并联两个辅助头 $g_{\text{head}}, g_{\text{tail}}$，分别预测 head/tail 群体的标签，三个头共用同一个编码器一起反向传播。训练一旦结束，辅助头被整体丢弃，上线时模型退回到和 baseline 完全一致的单任务结构。
+整条 pipeline 的主干仍是标准 CTR 模型：用户-广告特征向量 $\mathbf{x}$ 先过共享编码器 $f(\mathbf{x};\theta_S)$ 得到嵌入 $\mathbf{h}$，再由主任务头 $g_{\text{primary}}$ 预测点击率。C2AL 的全部改动集中在训练阶段——先离线做一次「对比群体发现」挑出差异最大的 head/tail 群体对，再用「对比辅助任务构造」把标签拆成两路，在共享编码器之上并联两个辅助头 $g_{\text{head}}, g_{\text{tail}}$，三个头共用同一个编码器一起反向传播。这股群体特异的梯度会直接叠加进 FM 注意力矩阵，把退化的注意力重新撑稠。训练一旦结束，辅助头被整体丢弃，上线时模型退回到和 baseline 完全一致的单任务结构。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["用户-广告特征 x"] --> ENC["共享编码器<br/>含 FM 注意力矩阵 Y"]
+    COH["对比群体发现<br/>按语义轴切群→算分布散度<br/>选差异最大的 head/tail 对"] --> MASK["对比辅助任务构造<br/>群体掩码拆出 y_head / y_tail"]
+    ENC --> PRI["主任务头<br/>预测 CTR"]
+    ENC --> HEAD["head 辅助头"]
+    ENC --> TAIL["tail 辅助头"]
+    MASK --> HEAD
+    MASK --> TAIL
+    PRI --> BP["联合反向传播"]
+    HEAD --> BP
+    TAIL --> BP
+    BP -->|"群体特异梯度直接叠加进 Y"| DENSE["机制可解释性<br/>FM 注意力稠密化、少数群体交互被激活"]
+    DENSE --> INF["推理：丢弃辅助头<br/>退回单任务、零额外开销"]
+```
 
 ### 关键设计
 

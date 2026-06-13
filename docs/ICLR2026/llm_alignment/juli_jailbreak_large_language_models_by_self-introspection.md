@@ -17,8 +17,8 @@ tags:
 
 **会议**: ICLR 2026  
 **arXiv**: [2505.11790](https://arxiv.org/abs/2505.11790)  
-**代码**: 无  
-**领域**: 机器人  
+**代码**: [JessonWong/JULI](https://github.com/JessonWong/JULI)  
+**领域**: LLM 对齐  
 **关键词**: jailbreak, logit bias, API attack, token log probability, BiasNet
 
 ## 一句话总结
@@ -40,25 +40,40 @@ tags:
 ## 方法详解
 
 ### 整体框架
-JULI 不去触碰目标模型本身，而是在它的输出端挂一个轻量插件 BiasNet $F_\theta$：每生成一个 token，BiasNet 读入目标 LLM 返回的 log probability $\log p_\alpha(x_n)$，算出一组 logit bias $B = F_\theta(\log p_\alpha(x_n))$，再把它加回原始概率得到修正分布 $\tilde{p}_\alpha(x_n) = p_\alpha(x_n) + B$，从而把被对齐压低的有害 token 重新顶到采样概率的高位。
+JULI 全程不去触碰目标模型本身，而是在它的输出端挂一个轻量插件 BiasNet $F_\theta$，把越狱变成一个逐 token 的"重采样"循环。给定恶意问题 $Q$，每生成一个 token 时：目标 LLM $\alpha$ 先返回当前位置的 token log probability $\log p_\alpha(x_n)$，BiasNet 读入它算出一组 logit bias $B = F_\theta(\log p_\alpha(x_n))$，再把这组 bias 加回原始概率得到修正分布 $\log \tilde p_\alpha(x_n) = \log p_\alpha(x_n) + B$，从中采样出本步 token、拼回回复，循环直到生成完整答案——相当于把被对齐压低的有害 token 一步步重新顶到采样概率的高位。
+
+这套循环要落到两类场景。**白盒**下能拿到目标模型权重，BiasNet 的两层投影直接复用目标的 LM head，与词表语义天然对齐；**API 黑盒**下既看不到权重、又只能拿到 top-k（如 top-5）个 token 的概率，于是 BiasNet 的投影改用随机正交矩阵临时拼出语义空间，并对残缺的概率向量先做 padding 补全，再喂进同一个循环。下图给出这条逐 token 攻击回路：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["恶意问题 Q<br/>+ 已生成回复"] --> CALL["目标 LLM α 前向<br/>返回 token log prob"]
+    CALL -->|"白盒：完整 logits"| BN["BiasNet 架构<br/>Fθ 算 logit bias B"]
+    CALL -->|"API 黑盒：仅 top-k"| PAD["Padding 机制<br/>非 top-k 填 第k名−10"]
+    PAD --> BN
+    BN --> SAMP["修正分布采样<br/>log p̃ = log p + B"]
+    SAMP --> APP["拼接到回复"]
+    APP -->|"未达长度 L"| CALL
+    APP -->|"达到长度 L"| OUT["有害回复"]
+```
 
 ### 关键设计
 
 **1. Token 泄露发现：找到对齐没堵住的漏洞**
 
-整套攻击之所以成立，靠的是一个被反复验证的统计现象：对多个对齐 LLM 逐 token 统计，超过 85% 的有害 response token 其实就出现在模型自己的 top-5 预测概率里。换句话说，RLHF/DPO 这类对齐训练并没有把有害知识从模型里擦掉，只是把对应 token 的采样概率压低了——它们排名靠后但依然"在场"。这个洞察决定了攻击不需要任何梯度或权重，只要能拿到 top-k 概率并把这些 token 重新捞上来就够了。
+整套攻击之所以成立，靠的是一个被反复验证的统计现象：对多个对齐 LLM 逐 token 统计，超过 85% 的有害 response token 其实就出现在模型自己的 top-5 预测概率里（top-10 内则超过 95%）。换句话说，RLHF/DPO 这类对齐训练并没有把有害知识从模型里擦掉，只是把对应 token 的采样概率压低了——它们排名靠后但依然"在场"。这个洞察是上面那条循环能跑通的前提：攻击不需要任何梯度或权重，只要能拿到 top-k 概率、再把这些被压低的 token 重新捞上来顶高就够了。
 
 **2. BiasNet 架构：用不到 1% 的参数学一组 logit bias**
 
-BiasNet 是一个参数量约 $10^7$（不到目标模型 1%）的三层结构，本质是在 token 空间和一个低维隐藏空间之间走一个来回：第一层投影把 token 空间映射进隐藏空间，中间是可学习的变换层负责真正决定"该给哪些 token 加分"，第二层投影再把结果映射回 token 空间，输出 logit bias $B = F_\theta(\log p_\alpha(x_n))$ 并以 $\log \tilde{p} = \log p + B$ 的方式修正分布。两个投影层在白盒和黑盒下取法不同：能拿到目标模型 LM head 时直接复用它（第一层用其伪逆、第二层用其本体），保证投影与目标词表语义对齐；拿不到时则退而用随机正交矩阵，靠中间层把语义学回来。正因为只有中间层需要训练，整个插件才能做得这么小。
+这是循环里真正决定"给哪些 token 加分"的核心模块。BiasNet 是一个参数量约 $10^7$（不到目标模型 1%）的三层结构，本质是在 token 空间和一个低维隐藏空间之间走一个来回：第一层投影把 token 空间映射进隐藏空间，中间是可学习的变换层负责选出该被顶高的关键 token，第二层投影再把结果映射回 token 空间，输出 logit bias $B = F_\theta(\log p_\alpha(x_n))$ 并以 $\log \tilde p = \log p + B$ 修正分布。两个投影层在白盒和黑盒下取法不同：能拿到目标模型 LM head 时直接复用它（第二层用 LM head 本体、第一层用其伪逆），保证投影与目标词表语义对齐；拿不到时则退而用一个随机初始化、再做无数据正交化的矩阵（列向量归一化并优化到互相正交，对随机种子鲁棒），靠中间层把语义学回来。正因为只有中间层需要训练，整个插件才能做得这么小。
 
 **3. Padding 机制：让插件在残缺的概率向量上也能跑**
 
-商用 API 往往只返回 top-k（如 top-5）个 token 的概率，剩下整个词表都是缺失的，而 BiasNet 期望的是一个完整概率向量。JULI 的处理很直接：把所有非 top-k 的 token 统一填上一个 padding 值——取第 k 个 token 的概率再减去一个固定偏移 10，相当于告诉网络"这些 token 都比榜尾还低一截"。这样既补齐了输入维度，又不会让缺失 token 被误当成高概率候选，使 BiasNet 能在 top-5 这种极度受限的 API 场景下照常工作。
+商用 API 往往只返回 top-k（如 top-5）个 token 的概率，剩下整个词表都是缺失的，而 BiasNet 期望的是一个完整概率向量。JULI 的处理很直接：把所有非 top-k 的 token 统一填上一个 padding 值——取第 $k$ 个 token 的概率再减去一个固定偏移 10，相当于告诉网络"这些 token 都比榜尾还低一截"。这样既补齐了输入维度，又不会让缺失 token 被误当成高概率候选，使 BiasNet 能在 top-5 这种极度受限的 API 场景下照常嵌入逐 token 循环工作。
 
 **4. 训练：100 条数据、极低成本就能学成**
 
-因为要学的只是中间变换层，训练代价小到几乎可以忽略：仅用 100 条 LLM-LAT 有害问答对，跑 15 个 epoch，batch size 取 1，AdamW 优化器学习率 $10^{-5}$。如此小的数据和算力就能把插件训到可用，也反过来印证了"有害知识本就在模型里、只需轻轻一推"这一前提。
+因为要学的只是中间变换层（首尾投影层固定不训），训练代价小到几乎可以忽略：仅用 100 条 LLM-LAT 有害问答对，跑 15 个 epoch，batch size 取 1，AdamW 优化器学习率 $10^{-5}$，目标是让修正后的分布在每个位置都更倾向真实有害 token，即 $\min_\theta \mathbb{E}_{(x,y)}[\mathrm{CE}(F_\theta(F_\alpha(x)) + F_\alpha(x),\, y)]$。如此小的数据和算力就能把插件训到可用，也反过来印证了"有害知识本就在模型里、只需轻轻一推"这一前提。
 
 ## 实验关键数据
 

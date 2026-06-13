@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AnyBCQ的出发点是把二进制编码量化（BCQ）从固定精度推广到多精度：BCQ把权重写成若干二进制 bit-plane 的线性组合 $\hat{W} = \sum_i \alpha_i B_i$（$B_i \in \{-1,+1\}$），用 $p$ 个 bit-plane 计算恰好对应 $p$-bit 推理，这意味着「精度」天然由参与计算的 bit-plane 数量决定。整套方法分两段：离线先做一次「可增长」的量化，从基础精度 $p_L$ 出发逐级扩展到目标精度 $p_H$，每升一级都冻结已有的 binary codes、只重新拟合缩放因子，于是各精度共享同一套 bit-plane；在线则交给一个直接在 bit-plane 上做加减法的 CUDA 内核，按当前请求需要的精度加载对应数量的 plane，免去查表和转置，从而做到「一个模型、运行时按 SLO 选精度」。
+AnyBCQ的出发点是把二进制编码量化（binary-coded quantization, BCQ）从固定精度推广到多精度：BCQ把权重写成若干二进制 bit-plane 的线性组合 $\hat{W} = \sum_i \alpha_i B_i$（$B_i \in \{-1,+1\}$），用 $p$ 个 bit-plane 计算恰好对应 $p$-bit 推理，这意味着「精度」天然由参与计算的 bit-plane 数量决定。整套方法分两段：离线先做一次「可增长」的量化，从基础精度 $p_L$ 出发逐级扩展到目标精度 $p_H$，每升一级都冻结已有的 binary codes、只重新拟合缩放因子，于是各精度共享同一套 bit-plane；在线则交给一个直接在 bit-plane 上做加减法的 CUDA 内核，按当前请求需要的精度加载对应数量的 plane，免去查表和转置，从而做到「一个模型、运行时按服务级目标（SLO）选精度」。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    W["全精度权重 W"] --> INIT["基础精度 p_L<br/>greedy 初始化 + 交替优化<br/>(LS 求 α / BS 更新 B)"]
+    subgraph GROW["渐进式精度扩展（设计 1）"]
+        direction TB
+        INIT --> FREEZE["冻结已有 bit-plane<br/>B_1..B_p"]
+        FREEZE --> RES["取残差符号<br/>B_(p+1)=sign(R_p)"]
+        RES --> RELS["仅用 LS 重拟合<br/>该精度全部缩放因子 α"]
+        RELS -->|未到 p_H| FREEZE
+    end
+    GROW -->|共享同一套 bit-plane| STORE["多精度模型<br/>2/3/4-bit 共存"]
+    STORE --> KERNEL["bit-plane CUDA 内核（设计 2）<br/>逐 plane 加减法累加<br/>免转置 / 免查表"]
+    REQ["请求 SLO<br/>选定精度 p"] --> KERNEL
+    KERNEL --> OUT["p-bit 输出"]
+```
 
 ### 关键设计
 

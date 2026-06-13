@@ -37,15 +37,47 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文先在联邦 Prompt Learning（FPL）上构造一个可学习噪声触发器的后门攻击，证明冻结 CLIP、只优化 prompt 的轻量范式同样脆弱；再针对该攻击提出服务器端防御 SABRE-FL，它把"触发器在 CLIP embedding 空间留下的偏移"训成一个离线二分类检测器，每轮聚合前给各客户端的 embedding 打异常分并剔除最可疑的若干个。攻击与防御互为镜像：触发器越能骗过分类器，它在 embedding 空间的偏移就越明显、越容易被检测器抓住。
+本文是一篇"先攻后防"的论文：上半部分先在联邦 Prompt Learning（FPL，客户端冻结 CLIP、只训练 prompt 向量再上传聚合）上构造一个后门攻击，证明这种轻量范式同样脆弱；下半部分针对该攻击提出服务器端防御 SABRE-FL。攻击与防御互为镜像，串成一条主线：恶意客户端在本地用一个可学习的不可感知触发器把图像 embedding 推向目标类，从而毒化上传的 prompt；而要骗过分类器，触发器就必须在 CLIP embedding 空间留下一致偏移——SABRE-FL 正是抓住这个偏移，离线训一个二分类检测器，每轮聚合前给各客户端的 embedding 打异常分、剔除最可疑的若干个。触发器越能成功攻击，它在 embedding 空间越扎眼、越容易被检测器抓住。
+
+下图把"离线训检测器"与"每轮联邦训练里攻击注入→检测过滤→聚合回环"串成一条完整数据流：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    subgraph DET["embedding 空间异常检测器（离线训练）"]
+        direction TB
+        A["辅助集 Caltech-101<br/>(与下游任务无关)"] --> B["注入触发器<br/>得干净/中毒图像对"]
+        B --> C["冻结 CLIP 编码器<br/>+ 固定 prompt 取 embedding"]
+        C --> D["训练二分类检测器 D"]
+    end
+    DET --> S["服务器下发全局 prompt"]
+    S --> CL["客户端本地训练"]
+    CL -->|"恶意客户端"| M["可学习噪声触发器攻击<br/>毒化并重标 → 训中毒 prompt"]
+    CL -->|"良性客户端"| G["在干净数据上训 prompt"]
+    M --> U["上传 prompt + embedding"]
+    G --> U
+    U --> F["rank-based 客户端过滤<br/>用 D 打分 → 剔除 top-m"]
+    F --> AGG["聚合剩余 prompt → 新全局 prompt"]
+    AGG -->|"下一轮"| S
+```
 
 ### 关键设计
 
-**1. 可学习噪声触发器攻击：在冻结编码器下植入后门。** FPL 中图像编码器冻结、客户端只优化 prompt 向量，攻击面看似很窄，但攻击者仍可联合优化 prompt 和一个视觉上不可感知的触发器 $t$。在标准 FL 设置下，$N$ 个客户端中默认有 25% 被控制，恶意客户端对本地数据做 dirty-label 处理：把含触发图像 $x^\star = x \oplus t$ 重标为目标类别，并优化 $t$ 使其 CLIP 图像 embedding 在文本空间里更靠近目标类，即对任意非目标类 $y$ 满足 $\cos(f_{\text{img}}(x^\star), f_{\text{text}}(y_{\text{target}})) > \cos(f_{\text{img}}(x^\star), f_{\text{text}}(y))$。这样训出的全局 prompt learner 对干净样本几乎无损（Aircraft 干净精度 32.3→32.8），却在触发样本上被定向误导，Aircraft 后门成功率高达 93.9%——说明 prompt-only 的攻击面足以撑起一次强后门。
+**1. 可学习噪声触发器攻击：在冻结编码器下也能植入后门**
 
-**2. embedding 空间异常检测器：把攻击信号反用为检测信号。** 触发器在像素上不可见，但要骗过分类器就必须在 CLIP embedding 空间产生一致偏移，中毒与干净样本的 embedding 因此存在可分的间距 $\|z - z^\star\|_2 > \epsilon$。SABRE-FL 抓住这点，用与下游任务完全无关的辅助集 Caltech-101 离线构造干净/中毒 embedding 对，训练一个二分类器 $D: \mathbb{R}^d \to \{0,1\}$ 判定单个 embedding 是否中毒。由于偏移是攻击的结构性副产品而非某个数据集的特性，这个在 OOD 数据上训出的检测器无需见过下游任务，就能跨 Flowers、Pets、DTD、Aircraft、Food101 五个不同域泛化。
+FPL 中图像编码器冻结、客户端只优化 prompt 向量，攻击面看似很窄——后门信号没法直接改模型权重，只能间接经 prompt 聚合传播，信号更弱、更怕噪声。攻击者的对策是联合优化 prompt 和一个视觉上不可感知的触发器 $t$。标准 FL 设置下 $N$ 个客户端默认有 25% 被控制，恶意客户端对本地数据做 dirty-label 处理：把含触发图像 $x^\star = x \oplus t$ 重标为目标类 $c_t$，并优化 $t$ 使其 CLIP 图像 embedding 在文本空间里更靠近目标类，即对任意非目标类 $y$ 满足
 
-**3. rank-based 客户端过滤与隐私保护聚合：无需原始数据即可剔除中毒方。** 每轮聚合时，服务器对客户端 $C_k$ 回传的 embedding 集合 $\{z_j^k\}$ 求平均检测分数 $S_k = \frac{1}{n_k}\sum_j D(z_j^k)$，再按分数排序剔除最高的 $m$ 个客户端、只聚合其余 prompt。客户端只上传冻结编码器产生的压缩 embedding，不暴露原始图像、标签或梯度，因此防御几乎不增加隐私面。完整流程是：离线在辅助数据上训好 $D$ → 每轮服务器下发全局 prompt → 客户端本地训练并回传 prompt 与 embedding → 服务器用 $D$ 给各客户端打分、过滤 top-$m$ → 聚合剩余 prompt。
+$$\cos(f_{\text{img}}(x^\star), f_{\text{text}}(c_t)) > \cos(f_{\text{img}}(x^\star), f_{\text{text}}(y))$$
+
+这样训出的全局 prompt learner 对干净样本几乎无损（Aircraft 干净精度 32.3→32.8），却在触发样本上被定向误导，Aircraft 后门成功率高达 93.9%——说明 prompt-only 的攻击面足以撑起一次强后门，FPL 的脆弱性是真实存在的，这也正是防御部分要解决的痛点。
+
+**2. embedding 空间异常检测器：把攻击的成功信号反用为检测信号**
+
+攻击虽然在像素上隐形，却暴露了一个结构性破绽：触发器要骗过分类器，就必须在 CLIP embedding 空间产生一致偏移，于是中毒与干净 embedding 之间存在可分的间距 $\|z - z^\star\|_2 > \epsilon$。SABRE-FL 抓住这点，用与下游任务完全无关的辅助集 Caltech-101 离线构造训练对：把干净图和注入触发器的图都过同一个冻结编码器 $f_{\text{img}}(\cdot)$ 和固定 prompt 取 embedding，分别标为干净（$y_i=0$）与中毒（$y_i=1$），训练一个二分类器 $D: \mathbb{R}^d \to \{0,1\}$ 通过最小化标准交叉熵来判定单个 embedding 是否中毒。关键在于这个偏移是攻击的结构性副产品、而非某个数据集的特性，所以检测器在 OOD 数据上训好后无需见过下游任务，就能跨 Flowers、Pets、DTD、Aircraft、Food101 五个不同域泛化——这是它"零数据依赖"却仍有效的根本原因。
+
+**3. rank-based 客户端过滤与隐私保护聚合：无需原始数据即可剔除中毒方**
+
+有了检测器，还需要把它接进每轮联邦聚合。SABRE-FL 不用固定阈值 $\tau$（阈值难标定且跨域不稳），改用 rank-based 启发式：每轮服务器对客户端 $C_k$ 回传的 embedding 集合 $\{z_j^k\}$ 求平均检测分 $S_k = \frac{1}{n_k}\sum_j D(z_j^k)$，再按分数排序、剔除最高的 $m$ 个客户端，只聚合其余 prompt（$m$ 取恶意客户端数量上界）。整条防御链路只在 embedding 空间运作：客户端上传的是冻结编码器产出的压缩、任务无关向量，不暴露原始图像、标签或梯度，因此防御几乎不增加隐私面。完整一轮是：离线训好 $D$ → 服务器下发全局 prompt → 客户端本地训练并回传 prompt 与 embedding → 服务器用 $D$ 打分、过滤 top-$m$ → 聚合剩余 prompt 进入下一轮。
 
 ## 实验关键数据
 

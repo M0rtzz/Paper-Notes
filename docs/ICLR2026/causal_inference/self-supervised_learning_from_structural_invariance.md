@@ -42,7 +42,25 @@ tags:
 
 ### 整体框架
 
-AdaSSL 在标准 joint-embedding 框架上多挂一条潜变量支路：编码器 $f$ 把样本映射成嵌入，潜变量 $\mathbf{r}$ 专门捕获正样本对 $(\mathbf{x},\mathbf{x}^+)$ 之间那部分无法从 $\mathbf{x}$ 单独预测的不确定性，再由编辑函数 $t(f(\mathbf{x}), \mathbf{r})$ 把 $f(\mathbf{x})$ 推向 $f(\mathbf{x}^+)$。训练目标始终是「SSL 主损失（InfoNCE 或 BYOL）＋ 限制 $\mathbf{r}$ 信息量的正则项」这两部分，区别只在于 $\mathbf{r}$ 是变分采样还是确定性稀疏预测。
+AdaSSL 在标准 joint-embedding 框架上多挂一条潜变量支路：共享编码器 $f$ 把正样本对 $(\mathbf{x},\mathbf{x}^+)$ 都映射成嵌入，潜变量 $\mathbf{r}$ 专门捕获那部分「从 $\mathbf{x}$ 单独看不出来」的变化不确定性，再由编辑函数 $t(f(\mathbf{x}), \mathbf{r})$ 把 $f(\mathbf{x})$ 推向 $f(\mathbf{x}^+)$，最后仍用最简单的点积相似度 $\psi_1^\top\psi_2$ 去对齐。整套训练目标始终是「SSL 主损失（InfoNCE 或 BYOL）＋ 限制 $\mathbf{r}$ 信息量的正则项」两部分——前者保证嵌入对齐、后者逼着 $\mathbf{r}$ 只携带必要信息，合起来构成互信息 $I(f(\mathbf{x}); f(\mathbf{x}^+))$ 的一个可处理下界。唯一分叉在于 $\mathbf{r}$ 这条支路怎么实现：**AdaSSL-V** 走变分后验采样＋KL 正则，**AdaSSL-S** 走确定性稀疏预测＋L0 正则。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    PAIR["自然正样本对 (x, x+)"] --> ENC["共享编码器 f<br/>编码出 f(x) 与 f(x+)"]
+    ENC --> RINF{"潜变量 r<br/>怎么得到"}
+    RINF -->|AdaSSL-V 变分版本| RV["变分后验<br/>q(r|x,x+) 采样 r"]
+    RINF -->|AdaSSL-S 稀疏版本| RS["稀疏预测<br/>r=m(f(x),f(x+))"]
+    RV --> EDIT["编辑函数<br/>t(f(x), r) → psi_1"]
+    RS --> EDIT
+    ENC --> PSI2["归一化嵌入<br/>psi_2 = f(x+)"]
+    EDIT --> SIM["简单相似度<br/>s = psi_1 · psi_2"]
+    PSI2 --> SIM
+    RV -.->|KL 正则 β| REG["限制 r 信息量<br/>(防偷看答案)"]
+    RS -.->|L0 稀疏 β| REG
+    SIM --> OUT["互信息下界<br/>I(f(x); f(x+))"]
+    REG --> OUT
+```
 
 ### 关键设计
 

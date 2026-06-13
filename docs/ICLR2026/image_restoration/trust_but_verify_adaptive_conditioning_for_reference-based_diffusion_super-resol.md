@@ -44,6 +44,26 @@ tags:
 
 Ada-RefSR 以 S3Diff 单步扩散 SR 为骨干，冻结其余组件、只训练新插入的参考注意力模块，把整个参考利用过程拆成"先信任、后验证"两步：Trust 阶段用 Reference Attention（RA）不加筛选地把参考特征注入主干，最大化潜在匹配的捕获率；Verify 阶段用自适应隐式相关性门控（AICG）逐空间位置地估计参考可信度，把错误融合的部分压下去。两步串联，既不漏掉有用参考，又不会被错误对应污染。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    LQ["低质量输入 LQ"] --> BB["S3Diff 单步扩散主干<br/>(冻结)"]
+    REF["参考图像 Ref"] --> RN["ReferenceNet<br/>抽取多层参考特征 H_ref"]
+    BB --> TRUST
+    RN --> TRUST
+    subgraph TRUST["Trust：无差别参考特征注入"]
+        direction TB
+        RA["Reference Attention (RA)<br/>跨图注意力捕获全部 LQ-Ref 匹配"]
+    end
+    RN --> VERIFY
+    TRUST --> VERIFY
+    subgraph VERIFY["Verify：自适应隐式相关性门控 (AICG)"]
+        direction TB
+        SUM["16 个摘要 token<br/>压缩参考 → K_sum"] --> GATE["逐位置门控<br/>G = σ(...)"]
+    end
+    VERIFY -->|"H_out = ZeroLinear(G ⊙ RA) + H_src"| OUT["高质量结果 HQ"]
+```
+
 ### 关键设计
 
 **1. Trust：无差别参考特征注入，确保不漏匹配**

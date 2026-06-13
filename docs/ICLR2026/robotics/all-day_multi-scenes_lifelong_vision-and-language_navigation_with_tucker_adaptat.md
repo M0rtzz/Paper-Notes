@@ -41,7 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-TuKA要解决的是"全天候多场景终身VLN"——一个导航agent得在不断切换的场景（卧室、客厅…）和环境条件（正常、低光、过曝、散射）里持续学习，而不能学了新场景就忘掉旧场景的本领。它的做法是在LLM backbone（Qwen2-7B）的每一层挂一个四阶张量 $\mathcal{X}^l \in \mathbb{R}^{a_l \times b_l \times M \times N}$，并用Tucker分解把它拆成共享部分和专家部分：核心张量 $\mathcal{G}$ 装所有场景共用的导航技能，$U^1, U^2$ 是共享的编/解码器，$U^3 \in \mathbb{R}^{M \times r_3}$ 的每一行是一个场景专家、$U^4 \in \mathbb{R}^{N \times r_4}$ 的每一行是一个环境专家。学第t个场景时，只取出对应的场景专家行 $U^3[s,:]$ 和环境专家行 $U^4[e,:]$，和共享组件组合出这一层的适配增量 $\Delta W_t$，backbone 全程冻结、只训这些张量因子。
+TuKA要解决的是"全天候多场景终身VLN"——一个导航agent得在不断切换的场景（卧室、客厅…）和环境条件（正常、低光、过曝、散射）里持续学习，而不能学了新场景就忘掉旧场景的本领。它的做法是在LLM backbone（Qwen2-7B）的每一层挂一个四阶张量 $\mathcal{X}^l \in \mathbb{R}^{a_l \times b_l \times M \times N}$，并用Tucker分解把它拆成共享部分和专家部分：核心张量 $\mathcal{G}$ 装所有场景共用的导航技能，$U^1, U^2$ 是共享的编/解码器，$U^3 \in \mathbb{R}^{M \times r_3}$ 的每一行是一个场景专家、$U^4 \in \mathbb{R}^{N \times r_4}$ 的每一行是一个环境专家。学第t个场景时，只取出对应的场景专家行 $U^3[s,:]$ 和环境专家行 $U^4[e,:]$，和共享组件组合出这一层的适配增量 $\Delta W_t$，backbone 全程冻结、只训这些张量因子。训练时用解耦知识增量学习（DKIL）约束三类知识各自更新；测试时没有 task-id，靠 CLIP 视觉特征自动路由到该用的专家组合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    DATA["Allday-Habitat 平台<br/>物理成像合成退化环境<br/>共 24 个导航场景"] --> TASK["新场景任务 T_t<br/>第 s 个场景 + 第 e 个环境"]
+    TASK --> TUKA
+    subgraph TUKA["Tucker Adaptation（每层挂四阶张量）"]
+        direction TB
+        G["共享核心张量 G<br/>+ 编/解码器 U¹,U²"] --> DW["适配增量 ΔW_t"]
+        U3["场景专家 U³[s,:]"] --> DW
+        U4["环境专家 U⁴[e,:]"] --> DW
+    end
+    DW --> ADD["叠加到冻结 backbone<br/>(Qwen2-7B / StreamVLN)"]
+    ADD -->|训练时| DKIL["解耦知识增量学习 DKIL<br/>共享EWC + 专家一致性 + 专家正交"]
+    ADD -->|测试无 task-id| SEARCH["任务专家推理搜索<br/>CLIP 特征余弦匹配场景/环境专家"]
+    DKIL --> OUT["全天候多场景<br/>无遗忘导航动作"]
+    SEARCH --> OUT
+```
 
 ### 关键设计
 

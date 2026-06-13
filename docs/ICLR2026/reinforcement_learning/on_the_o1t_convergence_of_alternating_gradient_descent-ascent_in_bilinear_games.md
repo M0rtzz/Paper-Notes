@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 论文要回答的是一个纯理论问题：交替梯度下降上升（AltGDA）在**有约束**双线性零和博弈 $\min_{\mathbf{x}\in\mathcal{X}}\max_{\mathbf{y}\in\mathcal{Y}}\ \mathbf{y}^\top A\mathbf{x}$ 上到底收敛多快。算法本身很简单：先更新 $\mathbf{x}^{t+1} = \Pi_\mathcal{X}(\mathbf{x}^t - \eta A^\top \mathbf{y}^t)$，再用 $\mathbf{x}$ 的**新值**更新 $\mathbf{y}^{t+1} = \Pi_\mathcal{Y}(\mathbf{y}^t + \eta A \mathbf{x}^{t+1})$，两个玩家轮流走、各自投影回单纯形。收敛用遍历平均策略 $(\bar{\mathbf{x}}^T,\bar{\mathbf{y}}^T)$ 的 Duality Gap 来度量。整篇证明的脉络是：先造一个能量函数把"投影碰撞边界会耗能"这件事量化出来，再分别在"有内部均衡"和"无内部均衡"两种情形下把这份耗能转成对遗憾残差的界，最后用 PEP 把这套结论在数值上压到最紧并反推最优步长。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["有约束双线性博弈<br/>AltGDA 交替更新"] --> E["能量函数 + 碰撞耗散<br/>残差被能量单步衰减夹住"]
+    E -->|"存在内部 NE"| T1["内部 NE 全局收敛<br/>Theorem 1"]
+    E -->|"NE 在边界上"| T2["局部收敛<br/>Theorem 2"]
+    T1 --> PEP["PEP 框架<br/>SDP 压紧界 + 反推最优步长"]
+    T2 --> PEP
+    PEP --> O["确认 O(1/T)<br/>快于同步 GDA 的 O(1/√T)"]
+```
+
 ### 关键设计
 
 **1. 能量函数与"碰撞耗散"机制：把投影边界的损耗变成可加的残差界**

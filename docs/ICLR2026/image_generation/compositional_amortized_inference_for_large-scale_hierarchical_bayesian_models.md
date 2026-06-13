@@ -41,7 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-层次模型：$\mathbf{Y}_j \sim p(\mathbf{Y}_j | \boldsymbol{\theta}_j, \boldsymbol{\eta})$, $\boldsymbol{\theta}_j \sim p(\boldsymbol{\theta} | \boldsymbol{\eta})$, $\boldsymbol{\eta} \sim p(\boldsymbol{\eta})$。训练两个分数网络：局部 $s^{\text{local}}(\boldsymbol{\theta}_t, \boldsymbol{\eta}, \mathbf{Y}_j)$ 和全局 $s^{\text{global}}(\boldsymbol{\eta}_t, \mathbf{Y}_j)$。训练只需单组数据模拟。推断时用误差衰减 CSM 组合全局分数→采样 $\boldsymbol{\eta}$→条件采样各组 $\boldsymbol{\theta}_j$。
+这篇论文要解决的是：摊销贝叶斯推断（ABI）很难扩展到**层次模型**——层次模型把"数据集套数据集"组织起来，直接训练要为每个 batch 模拟数十万组数据，成本爆炸。组合分数匹配（CSM）的思路是分治：训练时只对**单组数据**学分数、推断时再把 $J$ 组的分数组合起来，于是训练成本不随组数 $J$ 增长；但代价是推断要累加 $J$ 个分数估计，$J$ 一大数值就发散。本文整条 pipeline 就是围绕"让这个组合在数十万组规模下不发散"展开。
+
+具体地，模型分两层：每组各有局部参数 $\boldsymbol{\theta}_j$，所有组共享全局参数 $\boldsymbol{\eta}$。训练阶段联合学两个分数网络——局部分数 $s^{\text{local}}(\boldsymbol{\theta}_{t,j}, \boldsymbol{\eta}, \mathbf{Y}_j)$ 和全局分数 $s^{\text{global}}(\boldsymbol{\eta}_t, \mathbf{Y}_j)$，二者都只需单组模拟。推断阶段先用一个**稳定化的组合全局分数**（由下面 4 个设计协同得到）走反向 SDE 采样出全局 $\boldsymbol{\eta}$，再以 $\boldsymbol{\eta}$ 为条件逐组采样局部 $\boldsymbol{\theta}_j$，最终得到整个层次后验的样本。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["层次数据：J 组观测"] --> B["联合训练全局/局部分数网络<br/>仅需单组模拟"]
+    B --> S
+    subgraph S["稳定化组合全局分数"]
+        direction TB
+        D["1. SDE 自适应求解器"] --> E["2. 误差衰减桥接密度"]
+        E --> F["3. Mini-batch 无偏估计器"]
+        F --> G["4. 推断期噪声调度调整"]
+    end
+    S --> H["采样全局参数 η"]
+    H --> I["逐组条件采样局部 θ_j"]
+    I --> J["层次后验样本"]
+```
 
 ### 关键设计
 

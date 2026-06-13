@@ -42,37 +42,41 @@ tags:
 
 ### 整体框架
 
-每轮迭代：
-1. **数据收集**：用任意求解器从当前模型采样 $K$ 张图像，对每张用奖励函数评分
-2. **正负划分**：每张图像以概率 $r$ 归入正集 $\mathcal{D}^+$，以概率 $1-r$ 归入负集 $\mathcal{D}^-$
-3. **策略优化**：在前向过程上同时训练正分支（flow matching on $\mathcal{D}^+$）和负分支（flow matching on $\mathcal{D}^-$），通过隐式参数化提取改进方向
-4. **只需保存干净图像**——无需存储整个采样轨迹
+DiffusionNFT 想解决的是：现有扩散 RL（FlowGRPO/DanceGRPO 等）都在**反向采样过程**上做策略梯度，因此被似然估计、SDE 求解器限制、CFG 三件事一起拖累。它换了个根本视角——一个扩散策略的前向过程是唯一确定的、反向过程却随求解器而变，所以在**前向过程**上做 RL 更本质。整体是一个迭代回环：用当前模型采一批图、按奖励把它们软划分成正集 $\mathcal{D}^+$ 和负集 $\mathcal{D}^-$，再在前向过程上用一个对比式 flow matching 目标同时"向正样本靠拢、从负样本退开"，更新模型后进入下一轮；全程只需保存干净图像，不存采样轨迹。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    M["当前策略模型<br/>v_old"] --> S["任意求解器采样<br/>K 张干净图像"]
+    S --> R["奖励函数评分"]
+    R --> SP["按概率 r 软划分<br/>正集 D+ / 负集 D-"]
+    SP --> CFM["改进方向定理<br/>对比式 flow matching 拟合正/负"]
+    CFM --> IP["隐式参数化<br/>单模型 v_θ 拼出 v_θ+ 与 v_θ-"]
+    IP --> U["更新策略 v_θ → v_old"]
+    U -->|下一轮迭代| M
+```
 
 ### 关键设计
 
-**1. 改进方向定理（Theorem 3.1）：用一个等式把"靠近正样本"和"远离负样本"绑在一起**
+**1. 改进方向定理：用一个等式把"靠近正样本"和"远离负样本"绑成同一个方向**
 
-要在前向过程上做 RL，第一步得回答：正样本、负样本和旧策略这三者的速度场之间到底是什么关系？定理 3.1 证明它们的差异方向是成比例的——
+要在前向过程上做 RL，第一步得回答正样本、负样本和旧策略这三者的速度场之间是什么关系。定理 3.1 证明它们的差异方向成比例：
 
 $$\Delta := \alpha(\mathbf{x}_t)[\mathbf{v}^+(\mathbf{x}_t) - \mathbf{v}^{\text{old}}(\mathbf{x}_t)] = [1-\alpha(\mathbf{x}_t)][\mathbf{v}^{\text{old}}(\mathbf{x}_t) - \mathbf{v}^-(\mathbf{x}_t)]$$
 
-其中 $\alpha(\mathbf{x}_t)$ 是与正策略密度比相关的标量。这个等式的意义在于：它把"朝正策略 $\mathbf{v}^+$ 靠拢"和"从负策略 $\mathbf{v}^-$ 退开"刻画成同一个方向 $\Delta$，于是不需要分别估计两个策略的似然，只要抓住这一个改进方向就够了。它在形式上和 CFG 的 guidance 项几乎一模一样，但这里的方向完全来自 RL 原理，而非人为设定的条件/无条件之差。
+其中 $\alpha(\mathbf{x}_t)$ 是与正策略密度比相关的标量。意义在于：它把"朝正策略 $\mathbf{v}^+$ 靠拢"和"从负策略 $\mathbf{v}^-$ 退开"刻画成同一个方向 $\Delta$，于是不必分别估计两个策略的似然——而似然估计正是反向 RL 绕不开、又只能近似的难点——只要抓住这一个改进方向就够。它在形式上和 CFG 的 guidance 项几乎一样，但方向完全来自 RL 原理，而非人为设定的条件/无条件之差。
 
-**2. 策略优化目标（Theorem 3.2）：用隐式参数化，让一个模型同时学正负两支**
+**2. 隐式参数化：让一个模型同时学正负两支**
 
 有了改进方向，怎么把它落进一个可训练的 flow matching 损失？定理 3.2 给出同时吃正负数据的目标：
 
 $$\mathcal{L}(\theta) = \mathbb{E}\big[r \,\|\mathbf{v}_\theta^+ - \mathbf{v}\|^2 + (1-r)\,\|\mathbf{v}_\theta^- - \mathbf{v}\|^2\big]$$
 
-关键在于正负两支并不是两个独立网络，而是同一个 $\mathbf{v}_\theta$ 经隐式参数化拼出来的：$\mathbf{v}_\theta^+ = (1-\beta)\mathbf{v}^{\text{old}} + \beta \mathbf{v}_\theta$ 当作隐式正策略，$\mathbf{v}_\theta^- = (1+\beta)\mathbf{v}^{\text{old}} - \beta \mathbf{v}_\theta$ 当作隐式负策略。这样只需训练一个模型 $\mathbf{v}_\theta$，却等价于让它同时向正策略靠拢、从负策略退开。代入求最优解可得 $\mathbf{v}_{\theta^*} = \mathbf{v}^{\text{old}} + \frac{2}{\beta}\Delta$——也就是说 reinforcement guidance 被自动整合进了策略本身，推理时不再需要额外的 guidance 模型。
+关键在于正负两支并不是两个独立网络，而是同一个 $\mathbf{v}_\theta$ 经隐式参数化拼出来：正策略 $\mathbf{v}_\theta^+ = (1-\beta)\mathbf{v}^{\text{old}} + \beta \mathbf{v}_\theta$、负策略 $\mathbf{v}_\theta^- = (1+\beta)\mathbf{v}^{\text{old}} - \beta \mathbf{v}_\theta$。这样只需训练一个模型 $\mathbf{v}_\theta$，却等价于让它同时向正策略靠拢、从负策略退开。代入求最优解得 $\mathbf{v}_{\theta^*} = \mathbf{v}^{\text{old}} + \frac{2}{\beta}\Delta$——reinforcement guidance 被自动整合进策略本身，推理时不再需要额外的 guidance 模型，这也正是它能甩掉 CFG 的根因。
 
-**3. 前向一致性：在前向过程上优化，模型不会退化成级联高斯**
+**3. 前向过程优化带来的三个连带优势：前向一致、求解器自由、CFG-free**
 
-GRPO 式方法只在反向采样过程上做策略梯度，前向-反向的一致性没人管，模型有可能退化为级联高斯。DiffusionNFT 直接在前向过程上用标准 flow matching 损失训练，而不是去优化反向 SDE 的策略梯度。因为一个扩散策略的前向过程是唯一确定的，在它上面优化天然保证训练后的模型仍对应一个有效的前向过程，绕开了反向 RL 那套需要似然估计、又容易破坏一致性的麻烦。
-
-**4. CFG-free 训练：reinforcement guidance 顶替了 CFG**
-
-GRPO 路线要同时优化有条件和无条件模型来支撑 CFG，既费算力又增加工程复杂度。DiffusionNFT 不再需要 CFG：定理 3.1 里的 $\Delta$ 在形式上就等价于一个 guidance 项，相当于 RL 自己学到了"该往哪个方向引导"，并通过设计 2 的隐式参数化吸收进单一策略模型。于是整个训练只维护一个模型，省掉了有/无条件双模型的开销。
+把 RL 放到前向过程上不只是换个损失，还顺带卸掉了反向 RL 的三个包袱。其一，**前向一致**：GRPO 式方法只优化反向采样过程、不管前向-反向是否自洽，模型可能退化成级联高斯；而扩散策略的前向过程唯一确定，在它上面用标准 flow matching 训练天然保证模型仍对应一个有效的前向过程。其二，**求解器自由**：反向 RL 把采样离散成 MDP，被锁死在一阶 SDE 采样器上，DiffusionNFT 的训练目标与采样过程解耦，采数据时可用任意 ODE/高阶求解器，而且只保存干净图像、无需存储采样轨迹。其三，**CFG-free**：定理 3.1 的 $\Delta$ 在形式上等价于一个 guidance 项，相当于 RL 自己学到了引导方向并经设计 2 吸收进单一策略，于是不必像 GRPO 那样同时维护有条件/无条件双模型。
 
 ### 损失函数 / 训练策略
 

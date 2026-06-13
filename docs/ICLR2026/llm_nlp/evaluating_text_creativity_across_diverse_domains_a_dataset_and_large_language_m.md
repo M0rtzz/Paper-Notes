@@ -41,7 +41,22 @@ tags:
 
 ### 整体框架
 
-本文把"评估文本创造力"重新定义为一个上下文感知的成对比较任务：给定指令 $I$ 和两条回复 $R_1, R_2$，判断哪条更有创意。围绕这个目标，作者先搭起 CreataSet 数据集——从多源语料初始化跨领域指令-回复对，再为同一指令增广出创意水平参差的多条回复，最后用"人工高质标注 + 弱监督伪标签"两套策略给比较关系打标签，并据此训练出评估器 CrEval。
+本文把"评估文本创造力"重新定义为一个上下文感知的成对比较任务：给定指令 $I$ 和两条回复 $R_1, R_2$，判断哪条更有创意。围绕这个目标，作者用三步流水线搭起 CreataSet 数据集——从多源语料初始化跨领域指令-回复对（CreataSet-Base），再为同一指令增广出创意水平参差的多条回复（CreataSet-Ext），最后用"人工高质标注 + 弱监督伪标签"两套策略给比较关系打标签，并据此训练出评估器 CrEval。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    SRC["8 个多源语料<br/>幽默 / 诗歌 / 歌词 / 通用指令"] --> D1["跨领域数据集初始化<br/>统一为 (I,R)、A/B/C 三类处理<br/>→ CreataSet-Base 113K"]
+    D1 --> D2["上下文感知回复增强<br/>强弱模型 × 普通/创意提示<br/>每条指令 k=5 回复 → CreataSet-Ext"]
+    subgraph LBL["混合策略标签构建"]
+        direction TB
+        T["人工高质标注<br/>30 人 4 点 Likert、ICC 0.92<br/>(3K 测试集)"]
+        W["弱监督伪标签<br/>强模型 / 创意提示更优<br/>(百万训练集)"]
+    end
+    D2 --> LBL
+    LBL --> D4["CrEval 训练<br/>交叉熵 + 位置交换 + 负采样"]
+    D4 --> OUT["创造力评估器 CrEval"]
+```
 
 ### 关键设计
 

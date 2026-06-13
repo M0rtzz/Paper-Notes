@@ -40,7 +40,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ILNN 把一整套神经网络组件都重写在 Lorentz 双曲面 $\mathbb{L}_K^n$（$K<0$）上，让特征从输入到输出始终待在同一张流形上，不再像现有方法那样在中途借道切空间或欧几里得空间做线性变换、归一化。整套设计有一个共同的约束：当曲率 $K \to 0$、流形被压平时，每个组件都应当解析地退化为它对应的标准欧几里得版本，从而保证双曲网络在平坦极限下不会比欧几里得网络更差。
+ILNN 把一整套神经网络组件都重写在 Lorentz 双曲面 $\mathbb{L}_K^n$（$K<0$）上，让特征从输入到输出始终待在同一张流形上，不再像现有方法那样在中途借道切空间或欧几里得空间做线性变换、归一化。前向通路可以理解成一串"Lorentz 残差块"的堆叠：每一块里特征先过 PLFC（充当流形上的全连接 / 卷积），再过 GyroLBN 做归一化，再经一组内禀辅助组件（激活、dropout、log-radius 拼接、gyro-bias）补齐非线性与正则化，最后由一个 PLFC 分类头把特征点到超平面的有符号距离读成类别 logit。整套设计还有一个共同的约束：当曲率 $K \to 0$、流形被压平时，每个组件都应当解析地退化为它对应的标准欧几里得版本，从而保证双曲网络在平坦极限下不会比欧几里得网络更差。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入特征<br/>提升到 Lorentz 双曲面"] --> BLK
+    subgraph BLK["Lorentz 残差块（堆叠，全程不离流形）"]
+        direction TB
+        P["PLFC：点到超平面的<br/>Lorentz 全连接 / 卷积"] --> N["GyroLBN：陀螺-Lorentz<br/>批归一化"]
+        N --> A["内禀辅助组件<br/>激活 · dropout · log-radius 拼接 · gyro-bias"]
+    end
+    BLK --> HEAD["PLFC 分类头<br/>点到超平面有符号距离 → 类别 logit"]
+    HEAD --> OUT["输出预测"]
+```
 
 ### 关键设计
 
@@ -54,7 +67,7 @@ ILNN 把一整套神经网络组件都重写在 Lorentz 双曲面 $\mathbb{L}_K^
 
 **3. 内禀辅助组件：把剩下的网络零件也搬上流形**
 
-为了让整条前向通路全程不脱离双曲面，ILNN 还把若干常规组件一并内禀化：Log-radius 拼接（把点到原点的双曲半径作为额外特征拼入）、Lorentz dropout、Lorentz activation 以及 Gyro-bias。它们各自补齐了非线性、正则化和偏置这些环节，使得"输入到输出全程留在 $\mathbb{L}_K^n$ 上"这一目标真正闭合，而不会因为某个零件偷偷退回欧几里得空间而破功。
+为了让整条前向通路全程不脱离双曲面，ILNN 还把若干常规组件一并内禀化：其中最关键的是 **log-radius 拼接**——直接堆叠 $N$ 个 Lorentz patch 的空间分量会让特征范数随维度 $Nd$ 系统性变大、压垮后续层，于是它用一个 digamma 推出的标度把"期望对数半径"对齐，使拼接结果的尺度不随被拼块数变化（无参数、对重尾半径鲁棒、且保持双曲面约束）；正是靠 PLFC + log-radius 拼接，卷积层才被改写成完全内禀的 Lorentz 卷积。其余还有 Lorentz dropout、Lorentz activation 以及 gyro-additive bias（用 gyro 加法把偏置/残差直接加在流形上）。它们各自补齐了非线性、正则化和偏置这些环节，使得"输入到输出全程留在 $\mathbb{L}_K^n$ 上"这一目标真正闭合，而不会因为某个零件偷偷退回欧几里得空间而破功。
 
 ## 实验关键数据
 

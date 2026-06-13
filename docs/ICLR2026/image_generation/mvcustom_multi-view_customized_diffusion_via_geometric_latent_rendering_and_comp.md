@@ -49,6 +49,27 @@ tags:
 
 MVCustom 要解决的是"多视角定制"：给定少量参考图像和一串目标相机位姿，生成一组既保持主体身份、又在不同视角下几何一致的图像。它把这件事拆成训练和推理两段来做。训练阶段以 AnimateDiff 的视频扩散模型为骨干，把原来只在时间维度交互的 1D 注意力换成密集时空注意力，再插入带 FeatureNeRF 的位姿条件 Transformer block 注入相机几何，并用文本反转（textual inversion）学一个主体 embedding，从有限的参考图里抠出身份和粗略几何。推理阶段则不再依赖网络隐式记忆几何，而是显式地约束：先用深度感知特征渲染把锚帧的内容按几何投影到其他视角，再用一致性感知潜码补全去填那些因视角移动而新冒出来的区域。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    REF["少量参考图 + 相机位姿<br/>(文本反转学主体 embedding)"] --> TRAIN
+    subgraph TRAIN["训练阶段：从稀疏参考学身份与几何"]
+        direction TB
+        POSE["1. 位姿条件 Transformer Block (FeatureNeRF)<br/>主分支 + 多视角分支<br/>对极几何 + 体渲染 → 位姿对齐特征"]
+        POSE --> STT["2. 密集时空注意力<br/>放开 1D 限制 + 渐进扩展空间域"]
+    end
+    TRAIN --> CKPT["定制后的视频扩散模型"]
+    POSES["目标相机位姿序列"] --> CKPT
+    CKPT --> GEN["DDIM 采样生成各视角帧"]
+    GEN --> INFER
+    subgraph INFER["推理阶段：显式几何约束"]
+        direction TB
+        DFR["3. 深度感知特征渲染 DFR<br/>选锚帧 → ZoeDepth 估深度 → 建特征网格<br/>渲染并替换可见区域"]
+        DFR --> LCC["4. 一致性感知潜码补全 LCC<br/>潜码扰动填补新露出区域"]
+    end
+    INFER --> OUT["多视角一致的定制图像"]
+```
+
 ### 关键设计
 
 **1. 位姿条件 Transformer Block（FeatureNeRF）：让扩散模型从几张参考图里学到 3D 几何**

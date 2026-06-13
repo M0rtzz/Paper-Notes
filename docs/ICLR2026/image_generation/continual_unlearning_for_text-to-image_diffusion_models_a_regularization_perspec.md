@@ -46,6 +46,23 @@ tags:
 
 作者的核心观察是「效用崩溃」来自累积参数漂移——每次遗忘都把权重推离编码了生成能力的预训练权重，序列叠加后漂移远大于一次性同时遗忘。因此所有方法的共同思路都是**约束参数更新、把模型拉回预训练权重附近**，区别只在用什么手段约束。下面四种策略都以附加项的形式挂在 $\mathcal{L}_{\text{unlearn}}$ 上，与具体用哪个遗忘算法（ConAbl / SculpMem）正交，可以即插即用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    REQ["序列遗忘请求<br/>c₁* → c₂* → … → cₙ* 逐个到达"] --> INIT["从上一轮模型 θ(n-1)* 出发"]
+    INIT --> LOSS["遗忘损失 L_unlearn<br/>擦除当前目标 cₙ*"]
+    LOSS -->|"裸更新 → 累积参数漂移 → 效用崩溃"| REG
+    subgraph REG["约束参数更新（附加正则器·即插即用·可组合）"]
+        direction TB
+        D1["1. 更新范数正则 L1/L2<br/>惩罚 ‖θ−θ(n-1)*‖ 漂移幅度"]
+        D2["2. 选择性微调 SelFT<br/>只解冻 top-k% 重要参数"]
+        D3["3. 模型合并 Model Merge<br/>各概念独立遗忘后 TIES 合并"]
+        D4["4. 梯度投影 GradProj<br/>更新正交于语义相近概念子空间"]
+    end
+    REG --> OUT["新模型 θn*<br/>擦除 cₙ* 且保住效用"]
+    OUT -->|"下一个请求"| INIT
+```
+
 ### 关键设计
 
 **1. 更新范数正则化（L1/L2）：直接惩罚漂移幅度**

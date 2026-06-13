@@ -43,6 +43,21 @@ tags:
 
 GaitSnippet 想在"无序集合"和"有序序列"之间走出第三条路：既保留集合范式对长序列的覆盖能力，又补回序列范式才有的短程时序上下文。做法是把一段轮廓序列切成若干等长 segment，每个 segment 里随机抽几帧拼成一个 snippet（代表一个局部动作），然后让特征沿着"帧 → snippet → 序列"两次聚合上来——snippet 内部用一个轻量时序模块注入局部上下文，snippet 之间再用集合池化拼成最终的序列级步态表征。整条 pipeline 仍然跑在纯 2D 卷积骨干上，时序建模全靠 snippet 结构本身完成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["轮廓序列<br/>(可超 200 帧)"] --> SAMP["Snippet 采样<br/>分段随机抽帧 (M=4×N=8)"]
+    SAMP --> BB
+    subgraph BB["2D 骨干 (Residual Snippet Block)"]
+        direction TB
+        C1["空间 2D 卷积"] --> SB["Snippet Block<br/>Gathering→Smoothing→Residual"]
+        SB --> C2["空间 2D 卷积"]
+    end
+    BB --> POOL["层级化无序集合<br/>Intra-Snippet→Cross-Snippet 两级池化<br/>帧→snippet→序列"]
+    POOL --> SUP["两级监督<br/>序列级 + snippet 级 loss"]
+    SUP --> OUT["步态表征 → 检索/识别"]
+```
+
 ### 关键设计
 
 **1. Snippet 采样：用"分段随机抽帧"同时拿到短程上下文和长程覆盖**

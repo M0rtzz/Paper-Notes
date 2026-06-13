@@ -36,7 +36,18 @@ tags:
 
 ### 整体框架
 
-PCD 把离线多目标优化整个改写成一次条件采样：用数据集训练一个以目标向量 $\boldsymbol{y}$ 为条件的扩散模型 $D_\theta(\boldsymbol{x}; \boldsymbol{y}, \sigma)$，推理时只要给出想要的目标权衡向量 $\hat{\boldsymbol{y}}$，就直接采出对应的解 $\boldsymbol{x}$。整条管线里没有任何代理模型去预测目标值，方案生成和 Pareto 前沿建模被压进同一个生成器，因此也就绕开了"代理不准 → 搜索被误导"这条传统失败链路。
+PCD 把离线多目标优化整个改写成一次条件采样：用数据集训练一个以目标向量 $\boldsymbol{y}$ 为条件的扩散模型 $D_\theta(\boldsymbol{x}; \boldsymbol{y}, \sigma)$，推理时只要给出想要的目标权衡向量 $\hat{\boldsymbol{y}}$，就直接采出对应的解 $\boldsymbol{x}$。整条管线里没有任何代理模型去预测目标值，方案生成和 Pareto 前沿建模被压进同一个生成器，因此也就绕开了"代理不准 → 搜索被误导"这条传统失败链路。训练侧由两件事喂养：**多目标重加权**给每个样本算一个偏向前沿的权重，**参考方向条件点生成**为条件向量铺出均匀覆盖前沿的"坐标"；推理侧靠 **Classifier-Free Guidance 采样** 把样本钉到指定的权衡区域。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["离线数据集 D"] --> B["多目标重加权<br/>dominance number<br/>→分箱→权重 w"]
+    A --> C["参考方向条件点生成<br/>等距方向→分配<br/>→外推+高斯扰动"]
+    B --> D["训练条件扩散模型<br/>带权去噪 L2 回归"]
+    C --> D
+    D --> E["Classifier-Free<br/>Guidance 采样<br/>给定目标 ŷ 解 ODE"]
+    E --> F["Pareto 解集 x"]
+```
 
 ### 关键设计
 

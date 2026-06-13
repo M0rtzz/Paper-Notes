@@ -40,13 +40,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-HGPO 想解决的是 group-based RL 里一个被忽视的偏差来源：同一 rollout 的不同 step 被塞进一个 group 算相对 advantage，但它们面对的历史上下文其实可能天差地别，混在一起算均值 baseline 就把偏差带了进来。它的做法是在标准 GRPO/GiGPO pipeline 里插一个层次化 advantage 估计模块——对每个 step，先按历史上下文一致性构建从粗到细的多层嵌套 group，在每一层各算一份 advantage，再用一组自适应权重把这些估计聚合成最终值。整条链路不引入任何额外模型或额外 rollout，分组与查找全部靠一个离线 hashmap 完成。
+HGPO 想解决的是 group-based RL 里一个被忽视的偏差来源：同一 rollout 的不同 step 被塞进一个 group 算相对 advantage，但它们面对的历史上下文其实可能天差地别，混在一起算均值 baseline 就把偏差带了进来。它的做法是在标准 GRPO/GiGPO pipeline 里插一个层次化 advantage 估计模块——拿到一条 rollout 的所有 step 后，先按历史上下文一致性把它们切成从粗到细的多层嵌套 group，在每一层各算一份 advantage，再用一组随层级递增的自适应权重把这些估计聚合成最终值，最后把这个 advantage 喂回原有的策略更新。整条链路不引入任何额外模型、额外 rollout 或前向传播，分组与查找全靠一个离线 hashmap 完成，因此每迭代只多花约 0.5 秒（不到总训练时间 0.001%），而且只改「advantage 怎么算」、不动 rollout 和模型，能即插即用地挂到 GRPO、GiGPO、DAPO 等任何 group-based 方法上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["一条 rollout 的<br/>所有 step"] --> B["Context-Aware<br/>Hierarchical Grouping<br/>(上下文算子 C_k 哈希分组)"]
+    B --> C["嵌套 group<br/>G_0 ⊇ G_1 ⊇ … ⊇ G_K<br/>(每层各算一份 advantage)"]
+    C --> D["Adaptive Weighting<br/>Advantage Estimation<br/>(幂律权重 w_k 聚合)"]
+    D --> E["最终 advantage"]
+    E --> F["挂回 GRPO / GiGPO<br/>策略更新"]
+```
 
 ### 关键设计
 
 **1. Context-Aware Hierarchical Grouping：按历史上下文一致性把 step 分成嵌套的多层 group**
 
-痛点很直接：把整个 rollout 的所有 step 当成一个 group，会把历史上下文完全不同的 step 当成可比对象。HGPO 的对策是定义 k-step 上下文算子 $\mathcal{C}_k$，构造一串嵌套 group $G_0^H \supseteq G_1^H \supseteq \cdots \supseteq G_K^H$：$G_k^H$ 只收那些共享前 k 步相同历史的 step。$k=0$ 时所有 step 都「共享空历史」，于是 $G_0^H$ 就是整个 rollout（退化回 GiGPO）；$k=K$ 时是约束最强、粒度最细的 group。k 越大，组内 step 的历史上下文越一致，用组内均值当 baseline 的偏差就越小。实现上把每个 step 的状态序列哈希后存进 hashmap，分组与查找都是 $O(1)$，不需要任何前向传播。
+痛点很直接：把整个 rollout 的所有 step 当成一个 group，会把历史上下文完全不同的 step 当成可比对象。HGPO 的对策是定义 k-step 上下文算子 $\mathcal{C}_k$，构造一串嵌套 group $G_0^H \supseteq G_1^H \supseteq \cdots \supseteq G_K^H$：$G_k^H$ 只收那些共享前 k 步相同历史的 step。$k=0$ 时所有 step 都「共享空历史」，于是 $G_0^H$ 就是整个 rollout（退化回 GiGPO）；$k=K$ 时是约束最强、粒度最细的 group。k 越大，组内 step 的历史上下文越一致，用组内均值当 baseline 的偏差就越小。实现上把每个 step 的状态序列哈希后存进 hashmap，分组与查找都是 $O(1)$，不需要任何前向传播——这也是整套机制几乎零开销的原因。
 
 **2. Adaptive Weighting Advantage Estimation：用一组随层级递增的权重聚合各层 advantage，显式控制 bias-variance**
 
@@ -54,11 +64,7 @@ HGPO 想解决的是 group-based RL 里一个被忽视的偏差来源：同一 r
 
 $$w_k = \frac{(k+1)^\alpha}{\sum_k (k+1)^\alpha}$$
 
-层级越高（k 越大、上下文越一致、偏差越低）拿到的权重越大。指数 $\alpha$ 就是那个旋钮：$\alpha \to 0$ 时权重趋于均匀，相当于平摊各层估计；$\alpha \to \infty$ 时权重压到最细粒度那一层。论文给出理论保证——这样聚合出来的 advantage 估计，恰好落在 step-level（无偏但高方差）和 Oracle 估计之间做插值，于是「无偏高方差」和「有偏低方差」这对矛盾被收进一个可调参数里。
-
-**3. 计算开销控制：整套机制只多花约 0.5 秒/迭代，且与现有方法即插即用**
-
-因为分组和查找全靠离线 hashmap，没有额外前向传播，HGPO 每个迭代只增加约 0.5 秒，占总训练时间不到 0.001%。也正因为它只改 advantage 怎么算、不动 rollout 和模型，所以能直接挂到任何 group-based RL 方法上——GRPO、GiGPO、DAPO 都兼容。
+层级越高（k 越大、上下文越一致、偏差越低）拿到的权重越大。指数 $\alpha$ 就是那个旋钮：$\alpha \to 0$ 时权重趋于均匀，相当于平摊各层估计；$\alpha \to \infty$ 时权重压到最细粒度那一层。这正好把开头那对矛盾收进一个可调参数——step-level 估计无偏但高方差、粗粒度 group 估计低方差但有偏，论文给出理论保证：这样聚合出来的 advantage 恰好落在 step-level（无偏高方差）和 Oracle 估计之间做插值，于是偏差和方差之间的取舍变成一条连续可调的谱。
 
 ## 实验关键数据
 

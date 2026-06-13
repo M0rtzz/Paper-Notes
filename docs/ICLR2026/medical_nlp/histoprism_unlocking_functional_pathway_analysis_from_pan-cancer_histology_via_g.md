@@ -45,6 +45,18 @@ tags:
 
 HistoPrism 把"从 H&E 图像预测基因表达"当成一个**直接的模态翻译**任务，而不是 STPath 那样的掩码重建任务。整条流程很短：H&E WSI 先经病理基础模型（UNI PFM）抽出每个 patch 的特征 $\mathbf{x}_i \in \mathbb{R}^{D_{img}}$；这些 patch 特征用癌症类型 one-hot 编码 $\mathbf{c}$ 做交叉注意力条件化，把"这是哪种癌"的全局信息注入进来；条件化后的特征过一个 Transformer 编码器建模 patch 之间的空间上下文，最后由 MLP 回归头直接吐出每个 patch 的 $D_{gene}$ 维基因表达。除了这条预测主干，本文还单独提出一套通路级评估框架 GPC，用来衡量预测结果在生物学上是否站得住。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["H&E 全切片图像 WSI"] --> B["UNI 病理基础模型<br/>抽每个 patch 特征 x_i"]
+    C["癌症类型 one-hot 编码 c"] --> D["泛癌条件化交叉注意力<br/>c 作 K/V、patch 作 Q"]
+    B --> D
+    D --> E["Transformer 编码器<br/>聚合 patch 间空间上下文"]
+    E --> F["MLP 回归头<br/>逐 patch 直接回归基因表达"]
+    F --> G["预测全转录组表达"]
+    G --> H["Gene Pathway Coherence 评估<br/>Hallmark/GO 通路一致性得分"]
+```
+
 ### 关键设计
 
 **1. 泛癌条件化交叉注意力：让一个模型同时吃下多种癌**

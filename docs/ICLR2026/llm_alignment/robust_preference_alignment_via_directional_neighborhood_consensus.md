@@ -40,7 +40,19 @@ tags:
 
 ### 整体框架
 
-RPS（Robust Preference Selection）是一个纯推理时的三阶段流程：给定用户 prompt $x$ 和目标偏好向量 $\mathbf{v}_{target}$，先在目标方向的局部邻域里采样若干个更可靠的偏好方向、各生成一个响应，再用原始目标偏好把这些候选打分挑出最优。核心动机是与其逼模型在脆弱的 OOD 方向硬生成，不如让它在熟悉的邻近方向各发挥一次，最后按用户真实意图选择。
+RPS（Robust Preference Selection）要解决的是「用户真实偏好落在训练没覆盖到的方向上、模型直接生成就崩」这个 OOD 难题，整个方法是一条纯推理时、不碰模型参数的三阶段流水线。给定用户 prompt $x$ 和一个可能落在覆盖缺口里的目标偏好向量 $\mathbf{v}_{target}$，它不把这个脆弱方向直接喂给模型，而是先在 $\mathbf{v}_{target}$ 的角度邻域里采样 $k$ 个更靠近训练密集区的邻近方向，让模型各生成一个响应、凑成一个既多样又稳定的候选池；最后再回到原始 $\mathbf{v}_{target}$ 给每个候选打分、挑出最忠实于用户真实意图的那一个输出。一句话概括：生成阶段「换方向」换稳定性，选择阶段「认目标」保忠实，二者解耦。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：prompt x + 目标偏好 v_target<br/>(可能落入偏好覆盖缺口，OOD)"]
+    IN --> NB["邻域构建<br/>在 v_target 的 θ_max=30° 内<br/>采样 k=5 个邻近方向 → 邻域 N_k"]
+    NB --> GEN["多方向生成<br/>每个邻近方向 v_i 各生成一个响应 y_i<br/>→ 多样且稳定的候选池"]
+    GEN --> SEL["共识选择<br/>回到原始 v_target 打分<br/>s_i = v_target·r(x, y_i)"]
+    SEL --> OUT["输出最优响应<br/>y* = argmax_i s_i"]
+```
+
+其中「偏好覆盖缺口」与打分用的「投影奖励」是贯穿全流程的两个基础概念，下面先把它们形式化，再依次展开三个阶段。
 
 ### 关键设计
 

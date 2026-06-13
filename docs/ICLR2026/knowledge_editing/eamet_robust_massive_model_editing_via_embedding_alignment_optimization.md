@@ -42,7 +42,22 @@ tags:
 
 ### 整体框架
 
-EAMET 沿用 MEMIT 的 locate-then-edit 范式，输入是一批需要编辑的事实三元组 $(s_i, rel_i, o_i)$，输出是对 FFN 层 $W_{out}^l$ 的参数更新 $\Delta$。与 MEMIT 一次性联合优化所有残差不同，EAMET 逐条迭代优化每条事实的残差 $r_i$，并在优化过程中加入 embedding 对齐约束。整个流程分三步：(a) 预提取所有事实的 key embedding 并计算两两 cosine 相似度分布；(b) 逐条优化残差 embedding，每优化完一条就保存，后续优化时用已保存的残差计算对齐损失；(c) 将对齐后的残差代入正规方程求解 $\Delta$。
+EAMET 沿用 MEMIT 的 locate-then-edit 范式，输入是一批需要编辑的事实三元组 $(s_i, rel_i, o_i)$，输出是对 FFN 层 $W_{out}^l$ 的参数更新 $\Delta$。与 MEMIT 一次性联合优化所有残差不同，EAMET 逐条迭代优化每条事实的残差 $r_i$，并在优化过程中加入 embedding 对齐约束。整个流程分三步：(a) 预提取所有事实的 key embedding 并计算两两 cosine 相似度分布，据此把"编辑多了就崩"量化成 misalignment 分数；(b) 逐条优化残差 embedding，每优化完一条就保存，后续优化时用已保存的残差计算对齐损失，同时用带前缀的 NLL 损失保证模型真能输出目标对象；(c) 将对齐后的残差代入正规方程一步求解 $\Delta$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["待编辑事实批<br/>(s, rel, o) ×N 条"] --> KEY["提取 key embedding<br/>(随机前缀增强)"]
+    KEY --> PK["两两 cosine 相似度<br/>→ key 邻域分布 P_k"]
+    PK --> MIS["1. Embedding Misalignment 形式化<br/>A(i)=KL(P_r‖P_k) 量化结构不一致"]
+    MIS --> LOOP{"逐条优化第 i 条残差 r_i"}
+    LOOP --> ALIGN["2. 渐进式残差保存 + KL+MSE 双损失对齐<br/>用已存 r(j&lt;i) 把邻域结构钉回 key 空间"]
+    LOOP --> OPT["3. 带前缀增强的目标记忆优化<br/>NLL 损失逼模型在各前缀下输出 o_i"]
+    ALIGN --> SAVE["保存 r_i 入残差集 R"]
+    OPT --> SAVE
+    SAVE -->|"i ← i+1"| LOOP
+    SAVE -->|"全部优化完"| SOLVE["正规方程一步求解 Δ<br/>更新 FFN 权重 W_out"]
+```
 
 ### 关键设计
 

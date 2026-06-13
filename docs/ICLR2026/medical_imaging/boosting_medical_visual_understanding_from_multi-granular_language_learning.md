@@ -45,6 +45,26 @@ MGLL 要解决的问题是：医学图像天然带有多标签、多粒度的结
 
 为支撑这种多粒度监督，作者还构建了两个配套数据集。**MGLL-Fundus** 收集了 246,389 对眼底图像-多粒度文本，来源于 49 个公开数据集、覆盖 50+ 种疾病，粒度包括正常/异常标签、具体疾病类别、临床解释描述三层；**MGLL-Xray** 收集了 190,882 张来自 MIDRC 数据库的 X 光图像，粒度包括成像方式（CR/DX）、检查描述（Study Description）、序列描述（Series Description）。这两个数据集把"同一图像配多层级文本"这件事真正落地，是后面三个损失能起作用的前提。
 
+整个 pipeline 是一个"双塔编码 → 三路损失并行约束 → 联合优化"的结构：图像与多粒度文本各自编码后，得到的特征同时喂给三个互补损失，soft CLIP loss 与 point-wise loss 一正一负撑起多标签对齐、smooth KL 散度横向拉齐各粒度，三者加权联合优化，最终产出一个可即插即用嵌入下游 VLM/MLLM 的视觉编码器。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    DATA["多粒度数据集构建<br/>MGLL-Fundus / MGLL-Xray<br/>(图像+多标签多粒度文本)"]
+    DATA --> IMG["图像编码器 ViT-L/14<br/>→ 图像特征 V"]
+    DATA --> TXT["文本编码器 BiomedicalBERT<br/>→ 各粒度文本特征 T"]
+    IMG --> SCLIP["Soft CLIP Loss<br/>多标签软对齐"]
+    TXT --> SCLIP
+    IMG --> PW["Point-wise Loss<br/>逐对压住负样本"]
+    TXT --> PW
+    IMG --> SKL["Smooth KL Loss<br/>跨粒度表征拉到同一空间"]
+    TXT --> SKL
+    SCLIP --> JOINT["联合优化<br/>L = 0.5·sCLIP + Lp + sKL"]
+    PW --> JOINT
+    SKL --> JOINT
+    JOINT --> OUT["对齐后的视觉编码器<br/>即插即用嵌入 VLM/MLLM"]
+```
+
 ### 关键设计
 
 **1. Soft CLIP Loss $\mathcal{L}_{\text{sCLIP}}$：把单标签硬匹配换成多标签软对齐**

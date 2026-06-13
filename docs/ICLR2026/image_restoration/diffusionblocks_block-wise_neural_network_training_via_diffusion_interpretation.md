@@ -44,19 +44,53 @@ tags:
 
 ### 整体框架
 
-DiffusionBlocks 的出发点是一个被忽视的对应关系：残差网络逐层叠加的更新，本质上就是一条连续时间扩散过程的离散化轨迹。顺着这个视角，它把 $L$ 层网络切成 $B$ 个 block，让每个 block 只负责扩散过程中某一段噪声级别的去噪，从而各自拥有一个完整、独立的优化目标——训练时无需在 block 之间传递梯度或激活，显存随之按 $B$ 倍下降。
+DiffusionBlocks 的出发点是一个被忽视的对应关系：残差网络逐层叠加的更新，本质上就是一条连续时间扩散过程的离散化轨迹。顺着这个视角，它把 $L$ 层网络切成 $B$ 个 block，让每个 block 只负责扩散过程中某一段噪声级别的去噪。具体落地分三步：先把网络切成 $B$ 个连续 block，再把噪声区间 $[\sigma_{\min}, \sigma_{\max}]$ 按等概率切成 $B$ 段一一分配给各 block，最后给每个 block 做噪声条件化改造，使它能在自己那段噪声里独立去噪。改造完成后，$B$ 个 block 各自拥有一个完整、互不通信的去噪损失——训练时无需在 block 之间传递梯度或激活，任何时刻只缓存一个 block 的激活，显存随之按 $B$ 倍下降；推理时再从高噪声到低噪声依次调用各 block 还原目标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["残差网络 L 层<br/>z(l+1)=z(l)+f(z(l))"]
+    LENS["残差连接 = 扩散离散步<br/>（理论根：各噪声级别可独立优化）"]
+    subgraph CONV["三步转换流程"]
+        direction TB
+        S1["block 划分<br/>L 层 切成 B 个 block"]
+        S2["噪声范围分配<br/>噪声区间切成 B 段"]
+        S3["噪声条件化改造<br/>输入加 z_σ，AdaLN 注入 σ"]
+        S1 --> S2 --> S3
+    end
+    EQ["等概率划分<br/>按 log-normal 质量等分每段"]
+    LOSS["block 独立去噪损失<br/>各 block 一张卡，互不通信<br/>→ 训练显存按 B 倍缩减"]
+    OUT["顺序推理<br/>高噪声 → 低噪声依次调用 block"]
+    IN --> LENS --> CONV
+    EQ -.->|约束切分| S2
+    CONV --> LOSS --> OUT
+```
 
 ### 关键设计
 
-**1. 残差连接 = 扩散过程离散步：为 block 独立训练找到理论根。** block-wise 训练之所以一直缺乏理论保证，是因为没人能说清"局部目标"为什么等价于全局目标。本文在 Variance Exploding (VE) 扩散框架下给出了答案：给定噪声级别序列 $\sigma_0 > \sigma_1 > \cdots > \sigma_T$，对 probability flow ODE 做 Euler 离散化得到更新式 $\mathbf{z}_{\sigma_\ell} = \mathbf{z}_{\sigma_{\ell-1}} + \frac{\Delta\sigma_\ell}{\sigma_{\ell-1}}\left(\mathbf{z}_{\sigma_{\ell-1}} - D_\theta(\mathbf{z}_{\sigma_{\ell-1}}, \sigma_{\ell-1})\right)$，它与残差网络的 skip connection 更新规则 $\mathbf{z}_\ell = \mathbf{z}_{\ell-1} + f_{\theta_\ell}(\mathbf{z}_{\ell-1})$ 形式完全一致。一旦把每一层（每个 block）看成扩散轨迹上的一段，score matching 自带的"各噪声级别可独立优化"性质就被继承下来，block 独立训练不再是启发式拼凑，而是有去噪目标背书的等价分解。
+**1. 残差连接 = 扩散过程离散步：为 block 独立训练找到理论根**
 
-**2. 三步转换流程：把任意残差网络改造成可分块的扩散去噪器。** 在上面的对应关系之上，本文用三步把现成架构改造成 DiffusionBlocks。先做 **block 划分**，把 $L$ 层网络切成 $B$ 个连续 block $\mathcal{F}_1, \ldots, \mathcal{F}_B$；再做 **噪声范围分配**，定义噪声分布 $p_{\text{noise}}$（推荐 log-normal），把区间 $[\sigma_{\min}, \sigma_{\max}]$ 切成 $B$ 段 $\{[\sigma_b, \sigma_{b-1}]\}_{b=1}^B$，让第 $b$ 个 block 专门负责这一段噪声的去噪；最后做 **噪声条件化改造**，把每个 block 的输入扩展为 $\tilde{\mathbf{x}} = (\mathbf{x}, \mathbf{z}_\sigma)$，其中 $\mathbf{z}_\sigma = \mathbf{y} + \sigma\epsilon$，并通过 AdaLN 等机制注入当前噪声级别条件，使同一组参数能在所负责的噪声区间内连续工作。三步走完后，每个 block 都变成一个只看自己那段噪声、独立预测干净目标 $\mathbf{y}$ 的小去噪器。
+block-wise 训练之所以一直缺乏理论保证，是因为没人能说清"局部目标"为什么等价于全局目标。本文在 Variance Exploding (VE) 扩散框架下给出了答案：给定噪声级别序列 $\sigma_0 > \sigma_1 > \cdots > \sigma_T$，对 probability flow ODE 做 Euler 离散化得到更新式
 
-**3. 独立训练目标：各 block 一个互不通信的去噪损失。** 改造后第 $b$ 个 block 的损失写成 $\mathcal{L}_b(\theta_b) = \mathbb{E}_{(\mathbf{x},\mathbf{y}), \sigma\sim p_{\text{noise}}^{(b)}, \epsilon\sim\mathcal{N}(0,I)}\left[w(\sigma)\cdot\|f_{\theta_b|\sigma}(\mathbf{x}, \mathbf{y}+\sigma\epsilon) - \mathbf{y}\|_2^2\right]$，即在自己负责的噪声子分布 $p_{\text{noise}}^{(b)}$ 上做加权去噪回归。这里的关键是期望只对本 block 的噪声区间取，所以 $B$ 个损失彼此完全解耦：可以各放一张卡、各自反向传播，互不等待，而它们的噪声区间拼起来又恰好覆盖整条扩散轨迹，合起来等价于训练完整网络。这正是显存按 $B$ 倍缩减的来源——任何时刻只需缓存一个 block 的激活。
+$$\mathbf{z}_{\sigma_\ell} = \mathbf{z}_{\sigma_{\ell-1}} + \frac{\Delta\sigma_\ell}{\sigma_{\ell-1}}\left(\mathbf{z}_{\sigma_{\ell-1}} - D_\theta(\mathbf{z}_{\sigma_{\ell-1}}, \sigma_{\ell-1})\right),$$
 
-**4. 等概率划分：让每个 block 承担等量去噪难度。** 噪声区间怎么切直接决定各 block 的负载是否均衡。若按 $\sigma$ 均匀划分，高噪声和低噪声两端会分到大量样本稀疏、信息量低的区域，白白浪费容量。本文改用按 log-normal 累积概率质量等分，即让每段满足 $\int_{\sigma_{b-1}}^{\sigma_b} p_{\text{noise}}(\sigma)\,d\sigma = 1/B$。这样每个 block 都处理等量的训练分布，自动在去噪最难、样本最密的中间噪声级别切出更细的区间，把容量用在刀刃上。实验里这一步贡献明显：CIFAR-10 上等概率划分把 FID 从均匀划分的 43.53 压到 38.03。
+它与残差网络的 skip connection 更新规则 $\mathbf{z}_\ell = \mathbf{z}_{\ell-1} + f_{\theta_\ell}(\mathbf{z}_{\ell-1})$ 形式完全一致。一旦把每一层（每个 block）看成扩散轨迹上的一段，score matching 自带的"各噪声级别可独立优化"性质就被继承下来——block 独立训练不再是启发式拼凑，而是有去噪目标背书的等价分解。后面所有设计都是把这个对应关系落到具体架构上的工程化步骤。
 
-**5. 顺序推理与 $B$ 倍加速：分块结构同时省推理显存。** 推理时按从高噪声到低噪声依次调用各 block 完成去噪。对 diffusion model 而言，每个去噪步只需把对应的那个 block 载入显存，因此除了训练省显存，推理也获得 $B$ 倍的显存/调度优势；代价是各 block 必须按序执行、无法并行化去噪步骤。
+**2. 三步转换流程：把任意残差网络改造成可分块的扩散去噪器**
+
+在上面的对应关系之上，本文用三步把现成架构改造成 DiffusionBlocks，对应框架图里的 `CONV` 子图。先做 **block 划分**，把 $L$ 层网络切成 $B$ 个连续 block $\mathcal{F}_1, \ldots, \mathcal{F}_B$；再做 **噪声范围分配**，定义噪声分布 $p_{\text{noise}}$（推荐 log-normal），把区间 $[\sigma_{\min}, \sigma_{\max}]$ 切成 $B$ 段 $\{[\sigma_b, \sigma_{b-1}]\}_{b=1}^B$，让第 $b$ 个 block 专门负责这一段噪声的去噪；最后做 **噪声条件化改造**，把每个 block 的输入扩展为 $\tilde{\mathbf{x}} = (\mathbf{x}, \mathbf{z}_\sigma)$，其中 $\mathbf{z}_\sigma = \mathbf{y} + \sigma\epsilon$，并通过 AdaLN 等机制注入当前噪声级别条件，使同一组参数能在所负责的噪声区间内连续工作。三步走完后，每个 block 都变成一个只看自己那段噪声、独立预测干净目标 $\mathbf{y}$ 的小去噪器。
+
+**3. block 独立的去噪损失：显存与推理同时按 $B$ 倍缩减**
+
+改造后第 $b$ 个 block 的损失写成
+
+$$\mathcal{L}_b(\theta_b) = \mathbb{E}_{(\mathbf{x},\mathbf{y}),\, \sigma\sim p_{\text{noise}}^{(b)},\, \epsilon\sim\mathcal{N}(0,I)}\left[w(\sigma)\cdot\|f_{\theta_b|\sigma}(\mathbf{x}, \mathbf{y}+\sigma\epsilon) - \mathbf{y}\|_2^2\right],$$
+
+即在自己负责的噪声子分布 $p_{\text{noise}}^{(b)}$ 上做加权去噪回归。关键在于期望只对本 block 的噪声区间取，所以 $B$ 个损失彼此完全解耦：可以各放一张卡、各自反向传播、互不等待，而它们的噪声区间拼起来又恰好覆盖整条扩散轨迹，合起来等价于训练完整网络。这正是训练显存按 $B$ 倍缩减的来源——任何时刻只需缓存一个 block 的激活。推理时则从高噪声到低噪声依次调用各 block，对 diffusion model 而言每个去噪步只需把对应 block 载入显存，于是推理也拿到 $B$ 倍的显存/调度优势；代价是各 block 必须按序执行、无法并行化去噪步骤。
+
+**4. 等概率划分：让每个 block 承担等量去噪难度**
+
+噪声区间怎么切，直接决定各 block 的负载是否均衡，因此框架图里用 `等概率划分` 这条约束去指导"噪声范围分配"那一步。若按 $\sigma$ 均匀划分，高噪声和低噪声两端会分到大量样本稀疏、信息量低的区域，白白浪费容量。本文改用按 log-normal 累积概率质量等分，即让每段满足 $\int_{\sigma_{b-1}}^{\sigma_b} p_{\text{noise}}(\sigma)\,d\sigma = 1/B$。这样每个 block 都处理等量的训练分布，自动在去噪最难、样本最密的中间噪声级别切出更细的区间，把容量用在刀刃上。实验里这一步贡献明显：CIFAR-10 上等概率划分把 FID 从均匀划分的 43.53 压到 38.03。
 
 ## 实验关键数据
 

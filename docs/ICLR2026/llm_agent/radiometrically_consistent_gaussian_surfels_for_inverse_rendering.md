@@ -42,17 +42,47 @@ tags:
 
 ### 整体框架
 
-PerfGuard是一个四角色协作的Agent系统：Analyst把多模态输入解析成任务摘要 $\tau^*$、目标图像语义 $s^*$ 和评估目标 $g$；Planner结合工具性能画像 $\mathcal{B}$ 把任务拆成子任务序列 $u_t$；Worker按性能匹配从工具库选工具执行得到输出 $o_t$；Self-Evaluator多维度评估 $o_t$ 与 $g$ 的对齐度并反馈迭代。整套系统的关键在于把"工具能做什么"从模糊的文本描述换成可计算的性能矩阵，并让这个矩阵在使用中自我校正、反过来约束规划。
+PerfGuard 要解决的核心问题是：现有视觉生成 Agent 把"工具能做什么"写成一句模糊的文本描述，导致工具选不准、任务规划脱离工具的真实能力。它的破局点是把工具能力换成一张可计算、可自我校正的**性能矩阵**，并让这张矩阵反过来约束工具选择与规划。整套系统由四个角色串成一个带反馈的闭环：Analyst 把多模态输入解析成任务摘要 $\tau^*$、目标语义 $s^*$ 和评估目标 $g$；Planner 结合工具性能画像 $\mathcal{B}$ 把任务拆成子任务序列 $u_t$（由 CAPO 优化）；Worker 按性能矩阵算分匹配工具执行得到输出 $o_t$（由 PASM 选择）；Self-Evaluator 用双粒度评估 $o_t$ 与 $g$ 的对齐度，并把"理论排名 vs 实际表现"的偏差回灌给性能矩阵（APU）、把 winning/losing 偏好回灌给规划器（CAPO），迭代到输出达标为止。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["多模态输入<br/>(文本+参考图)"] --> ANA["Analyst 解析<br/>任务摘要τ*·语义s*·目标g"]
+    ANA --> CAPO["能力对齐规划优化（CAPO）<br/>Planner 拆出能力匹配的子任务u_t"]
+    CAPO --> PASM["性能感知选择建模（PASM）<br/>按性能矩阵M_p算分排序选工具"]
+    PASM --> WORK["Worker 执行子任务<br/>输出o_t"]
+    WORK --> EVAL["双粒度评估反馈<br/>全局g_global+局部g_local"]
+    EVAL -->|"理论排名↔实际表现偏差Δ"| APU["自适应偏好更新（APU）<br/>校正性能矩阵M_p"]
+    APU -.->|"更新后的M_p"| PASM
+    EVAL -.->|"winning/losing偏好"| CAPO
+    EVAL -->|达标| OUT["最终视觉内容"]
+```
 
 ### 关键设计
 
-**1. 性能感知选择建模（PASM）：把工具能力从文本描述换成可比较的数值矩阵。** 现有Agent靠"能生成与文本语义对齐的图像"这类通用描述定义工具能力，无法区分FLUX、SD3、DALL·E3在颜色、形状、空间关系等细粒度维度上的真实差异，工具选择只能靠猜。PASM为每类工具建一套多维评分：图像生成工具沿用T2I-CompBench的7个维度（颜色、形状、纹理、2D空间、3D空间、非空间语义、数量），图像编辑工具沿用ImgEdit-Bench的7个维度（添加、移除、替换、属性变更、运动变化、风格迁移、背景替换），直接复用基准分数填入性能边界矩阵 $M_p \in \mathbb{R}^{d \times l}$（$d$ 个维度 × $l$ 个工具），省去额外评估成本。选工具时，Worker先根据子任务特征生成偏好权重 $\mathcal{W}_{task} = \pi_{\text{Worker}}(u_t, \mathcal{B}, \mathcal{D}) \in \mathbb{R}^{1 \times d}$，再与归一化后的性能矩阵相乘得到适合度分数 $S_{tools} = \mathcal{W}_{task} \cdot \text{Normalize}(M_p)^\top$，最后 $\mathcal{R} = \text{argsort}(S_{tools})$ 降序排出工具排名。这样工具选择从"读描述猜"变成"算分排序"，是把工具错误率从七成压到三成的根本一步。
+**1. 性能感知选择建模（PASM）：把工具能力从文本描述换成可比较的数值矩阵**
 
-**2. 自适应偏好更新（APU）：让预设的性能边界跟着真实执行结果自我校正。** 基准分数毕竟是静态的，预设的性能边界和实际任务执行往往有偏差。APU引入探索-利用策略：每次取 top-$m$ 个高分工具再随机采 $n$ 个工具一起执行，把理论排名 $\mathcal{R}_{theory}$ 和实际表现排名 $\mathcal{R}_{actual}$ 对比，按 $\Delta = \frac{\mathcal{R}_{theory} - \mathcal{R}_{actual}}{m+n}$ 计算偏差，沿偏好方向更新矩阵 $M_p^{\text{new}} = \text{Normalize}\big(M_p + \mathcal{W}_{task} \cdot \eta \cdot \Delta\big)$——工具实际表现优于理论预期就抬高它的边界分，反之压低。更新步长 $\eta$ 需要平衡收敛速度和稳定性，太小收敛慢、太大后期振荡，实验中 $\eta=0.13$ 在第800步左右把工具错误率压到14.2%的最优值；新加入的工具用同类工具的平均分初始化，避免一上来就被埋没。这条"理论预测→实际执行→偏差反馈→矩阵更新"的闭环让系统不依赖固定基准，越用越准。
+现有 Agent 靠"能生成与文本语义对齐的图像"这类通用描述定义工具能力，无法区分 FLUX、SD3、DALL·E3 在颜色、形状、空间关系等细粒度维度上的真实差异，工具选择只能靠猜。PASM 为每类工具建一套多维评分：图像生成工具沿用 T2I-CompBench 的 7 个维度（颜色、形状、纹理、2D 空间、3D 空间、非空间语义、数量），图像编辑工具沿用 ImgEdit-Bench 的 7 个维度（添加、移除、替换、属性变更、运动变化、风格迁移、背景替换），直接复用基准分数填入性能边界矩阵 $M_p \in \mathbb{R}^{d \times l}$（$d$ 个维度 × $l$ 个工具），省去额外评估成本。选工具时，Worker 先根据子任务特征生成偏好权重 $\mathcal{W}_{task} = \pi_{\text{Worker}}(u_t, \mathcal{B}, \mathcal{D}) \in \mathbb{R}^{1 \times d}$，再与归一化后的性能矩阵相乘得到适合度分数 $S_{tools} = \mathcal{W}_{task} \cdot \text{Normalize}(M_p)^\top$，最后 $\mathcal{R} = \text{argsort}(S_{tools})$ 降序排出工具排名。这样工具选择从"读描述猜"变成"算分排序"，是把工具错误率从七成压到三成的根本一步。
 
-**3. 能力对齐规划优化（CAPO）：把工具的真实能力反向喂给Planner，让它只拆出工具做得好的子任务。** 即使工具选得准，如果Planner拆出的子任务本身超出工具能力（或操作顺序不合理，比如先编辑背景会拖累后续步骤的成功率），整体规划仍会失败。CAPO把扩散模型里的逐步偏好优化（Step-aware Preference Optimization, SPO）迁移到Agent的自回归规划上：每步生成 $k$ 个候选子任务 $\{u_t^1, \ldots, u_t^k\}$，其中 $\beta k$ 个从历史成功序列里用CLIP相似度检索得到、$(1-\beta)k$ 个随机生成以平衡利用与探索，再由Self-Evaluator评出winning/losing样本，用DPO变体目标 $\mathcal{L}(\theta) = -\mathbb{E}\big[\log\sigma(\alpha(\log\frac{p_\theta(u_t^w | \tau^*, s^*, \mathcal{B}, h_{t-1})}{p_{\text{ref}}(u_t^w | \cdot)} - \log\frac{p_\theta(u_t^l | \cdot)}{p_{\text{ref}}(u_t^l | \cdot)}))\big]$ 优化Planner。训练后的Planner因此具备工具感知，懂得生成与工具能力边界匹配的子任务。
+**2. 自适应偏好更新（APU）：让预设的性能边界跟着真实执行结果自我校正**
 
-**4. 双粒度评估反馈：用全局加局部两个尺度判断输出是否真的对齐目标。** Self-Evaluator的反馈质量直接决定APU和CAPO的偏好信号靠不靠谱。它同时算全局语义对齐 $g^{global}$ 和逐区域的局部语义对齐 $g^{local}_i$，再加权综合——既看整张图是否符合任务意图，也看局部细节（如"绿色眼镜""螺旋星系"）有没有遗漏，避免只盯全局而漏掉局部错误，给两个优化机制提供更可信的奖励信号。
+基准分数毕竟是静态的，预设的性能边界和实际任务执行往往有偏差。APU 引入探索-利用策略：每次取 top-$m$ 个高分工具再随机采 $n$ 个工具一起执行，把理论排名 $\mathcal{R}_{theory}$ 和实际表现排名 $\mathcal{R}_{actual}$ 对比，按
+
+$$\Delta = \frac{\mathcal{R}_{theory} - \mathcal{R}_{actual}}{m+n}$$
+
+计算偏差，沿偏好方向更新矩阵 $M_p^{\text{new}} = \text{Normalize}\big(M_p + \mathcal{W}_{task} \cdot \eta \cdot \Delta\big)$——工具实际表现优于理论预期就抬高它的边界分，反之压低。更新步长 $\eta$ 需要平衡收敛速度和稳定性，太小收敛慢、太大后期振荡，实验中 $\eta=0.13$ 在第 800 步左右把工具错误率压到 14.2% 的最优值；新加入的工具用同类工具的平均分初始化，避免一上来就被埋没。这条"理论预测→实际执行→偏差反馈→矩阵更新"的闭环让系统不依赖固定基准，越用越准。
+
+**3. 能力对齐规划优化（CAPO）：把工具的真实能力反向喂给 Planner，让它只拆出工具做得好的子任务**
+
+即使工具选得准，如果 Planner 拆出的子任务本身超出工具能力（或操作顺序不合理，比如先编辑背景会拖累后续步骤的成功率），整体规划仍会失败。CAPO 把扩散模型里的逐步偏好优化（Step-aware Preference Optimization, SPO）迁移到 Agent 的自回归规划上：每步生成 $k$ 个候选子任务 $\{u_t^1, \ldots, u_t^k\}$，其中 $\beta k$ 个从历史成功序列里用 CLIP 相似度检索得到、$(1-\beta)k$ 个随机生成以平衡利用与探索，再由 Self-Evaluator 评出 winning/losing 样本，用 DPO 变体目标
+
+$$\mathcal{L}(\theta) = -\mathbb{E}\Big[\log\sigma\big(\alpha(\log\tfrac{p_\theta(u_t^w | \tau^*, s^*, \mathcal{B}, h_{t-1})}{p_{\text{ref}}(u_t^w | \cdot)} - \log\tfrac{p_\theta(u_t^l | \cdot)}{p_{\text{ref}}(u_t^l | \cdot)})\big)\Big]$$
+
+优化 Planner。训练后的 Planner 因此具备工具感知，懂得生成与工具能力边界匹配的子任务。
+
+**4. 双粒度评估反馈：用全局加局部两个尺度判断输出是否真的对齐目标**
+
+Self-Evaluator 的反馈质量直接决定 APU 和 CAPO 的偏好信号靠不靠谱。它同时算全局语义对齐 $g^{global}$ 和逐区域的局部语义对齐 $g^{local}_i$，再加权综合——既看整张图是否符合任务意图，也看局部细节（如"绿色眼镜""螺旋星系"）有没有遗漏，避免只盯全局而漏掉局部错误，给上面两个优化机制提供更可信的奖励信号。
 
 ## 实验关键数据
 

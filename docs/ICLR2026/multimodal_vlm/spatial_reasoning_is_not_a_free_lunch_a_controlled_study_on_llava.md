@@ -45,6 +45,16 @@ tags:
 
 实验设计的核心原则是严格控制变量：所有变体使用完全相同的训练数据（LLaVA 原始数据集）、相同的超参数、相同的优化器配置和相同的训练时长，确保性能差异只能归因于编码器和位置编码的改变。同时引入 7 个 2-8B 参数级别的前沿模型作为上界参照。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入图像<br/>256×256"] --> ENC["编码器替换对比<br/>CLIP / SigLIP / SigLIP2 / AIMv2<br/>四选一，其余全锁死"]
+    ENC --> PROJ["线性投影层<br/>视觉特征 → token 空间"]
+    PROJ --> LLM["Vicuna-7B 多模态融合<br/>2D-RoPE 编码 patch 行/列<br/>（对照 1D-RoPE）"]
+    LLM --> EVAL["多基准空间推理评估<br/>MMVP / CV-Bench / 计数<br/>GQA / VSR / TopViewRS"]
+    EVAL --> REF["7 个前沿模型<br/>作上界参照"]
+```
+
 ### 关键设计
 
 **1. 编码器替换对比：把空间推理的锅算到训练目标头上**

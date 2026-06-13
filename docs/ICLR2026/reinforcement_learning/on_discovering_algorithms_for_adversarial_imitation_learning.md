@@ -44,6 +44,23 @@ tags:
 
 DAIL 把"设计 AIL 算法"本身变成一个可被搜索的优化问题：外层用 LLM 引导的进化搜索去优化奖励赋值(RA)函数 $r_f$，内层则在给定 $r_f$ 后跑标准 AIL 循环（策略 rollout → 判别器训练做密度比估计 → 用 $r_f$ 赋值奖励 → 策略改进），并以训练后策略与专家的 Wasserstein 距离衡量这个 $r_f$ 好不好。整体可写成一个双层优化：$\min_f \mathcal{W}(\rho_E, \rho_{\pi^*}; f)$，约束为 $\pi^* = \arg\max_\pi r_f(\rho_E \| \rho_\pi)$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    INIT["初始种群<br/>GAIL / AIRL / FAIRL /<br/>GAIL-heuristic 四个 RA 函数"]
+    subgraph AIL["AIL 两阶段分解（设计 1）"]
+        direction TB
+        ROLL["策略 rollout<br/>采集轨迹"] --> DR["判别器估计密度比<br/>ℓ = log(ρ_E / ρ_π)"]
+        DR --> RA["RA 函数 r_f(ℓ)<br/>密度比 → 标量奖励"]
+        RA --> POL["策略改进 (PPO)"]
+    end
+    INIT -->|"候选 r_f"| AIL
+    POL -->|"训练至收敛"| FIT["适应度<br/>策略与专家的<br/>Wasserstein 距离"]
+    FIT --> EVO["LLM 引导进化搜索<br/>采样父代 → GPT 交叉变异<br/>→ 保留 Top-K"]
+    EVO -->|"下一代候选 r_f"| AIL
+    EVO -->|"搜索收敛"| OUT["发现的 RA 函数 r_disc<br/>有界 / 右移 / 低质量处饱和的 S 曲线"]
+```
+
 ### 关键设计
 
 **1. AIL 的两阶段分解：把被忽视的奖励赋值单独拎出来**

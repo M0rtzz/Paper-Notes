@@ -45,6 +45,20 @@ tags:
 
 整个方案由两个核心组件构成：ESJ 任务定义了评估的"怎么测"，INSETS 流水线解决了"测什么"。Pipeline 为：首先 INSETS 从 EmoSet 的 17,716 张图像中自动提取开放词汇情感标签（通过 9 个 MLLMs 的集成投票），然后基于标签构建四个维度的情感陈述（正确/错误各半），自动生成 462K 条标注语料（INSETS-462k），最后经人工精炼得到 3,086 条高质量 MVEI benchmark 样本。评测时，MLLMs 接收图像+陈述对，仅需输出 "Correct" 或 "Incorrect"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["EmoSet 图像<br/>17,716 张"] --> INSETS
+    subgraph INSETS["INSETS 开放词汇情感标记流水线"]
+        direction TB
+        B["Stage 1 标记<br/>9 个 MLLM 集成抽词→GPT-4 过滤<br/>→挂载 POM 层次模型→多数投票"] --> C["共识开放词汇标签<br/>+ 原型解释/场景/角色"]
+        C --> D["Stage 2 按四维度评估体系造陈述<br/>情感极性·情感诠释<br/>场景上下文·感知主观性<br/>（正确/错误各半）"]
+    end
+    INSETS --> E["INSETS-462k<br/>462K 自动标注语料"]
+    E --> F["MVEI Benchmark 构建<br/>5 名研究生人工精炼<br/>留对·改错·弃歧义 → 3,086 样本"]
+    F --> G["ESJ 评测<br/>19 个 MLLM 判 Correct/Incorrect"]
+```
+
 ### 关键设计
 
 **1. 四维度评估体系：把"认出情感"和"理解情感如何因人因境而异"分开测**

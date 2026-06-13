@@ -36,19 +36,41 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FastLSQ 把 PDE 解写成一组冻结的正弦随机特征的线性组合，只训练那一层线性系数。它的全部技巧建立在一个被长期忽视的初等事实上：正弦的导数在 $\sin\to\cos\to-\sin\to-\cos$ 之间循环，因此把任意线性微分算子作用到特征上都有闭式表达式，无需自动微分也无需搭计算图。于是线性 PDE 退化成一次最小二乘求解，非线性 PDE 退化成几步 Newton 迭代，整个流程对 PDE 算子的种类完全无感。
+FastLSQ 把 PDE 解写成一组冻结的正弦随机特征（random Fourier features）的线性组合，只解那一层线性系数。它的全部技巧建立在一个被长期忽视的初等事实上：正弦的导数在 $\sin\to\cos\to-\sin\to-\cos$ 之间循环，所以把任意线性微分算子作用到特征上都有闭式表达式，无需自动微分（automatic differentiation）也无需搭计算图。流程因此非常短：先随机采样并冻结一批正弦基，再用闭式导数把 PDE 算子组装成系数矩阵；线性 PDE 退化成一次最小二乘（least squares）直接求出系数，非线性 PDE 退化成几步 Newton 迭代，每步仍只是一次线性求解；拿到系数就得到解 $u(\mathbf{x})$。由于导数精确，同一套结构还能直接撬动 PDE 发现与逆问题。整个过程对 PDE 算子的种类完全无感。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["PDE 算子 L+N<br/>+ 边界条件 B"] --> RF["正弦随机特征逼近<br/>冻结 W,b + 1/√N 归一化"]
+    RF --> AD["精确解析导数<br/>循环闭式组装算子矩阵"]
+    AD -->|"线性 PDE"| LIN["求解模式·线性<br/>加权最小二乘一次求解<br/>QR/SVD + Tikhonov"]
+    AD -->|"非线性 PDE"| NEW["求解模式·非线性<br/>Newton 迭代<br/>warm-start + line search + continuation"]
+    LIN --> BETA["解出系数 β<br/>→ 解 u(x)"]
+    NEW --> BETA
+    BETA --> DOWN["下游应用<br/>PDE 发现 / 逆问题"]
+```
 
 ### 关键设计
 
-**1. 正弦随机特征逼近：用冻结基把求解变成解系数。** 框架用 $N$ 个随机正弦基逼近解 $u(\mathbf{x})$：$u_N(\mathbf{x}) = \frac{1}{\sqrt{N}} \sum_{j=1}^{N} \beta_j \sin(\mathbf{W}_j^\top \mathbf{x} + b_j)$，其中频率 $\mathbf{W}_j \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I}_d)$ 与相位 $b_j \sim \mathcal{U}(0, 2\pi)$ 随机采样后冻结不变，唯一待定的就是线性系数 $\boldsymbol{\beta}$。关键的 $1/\sqrt{N}$ 归一化让经验核稳定收敛到高斯 RBF 核，避免系数膨胀到 $10^6$–$10^8$ 量级把线性系统拖入病态——消融显示去掉这一项精度直接掉 4 个数量级甚至发散。为了同时抓住光滑大尺度和尖锐小尺度结构，框架还用多块架构，让 $B$ 个块各带不同带宽 $\sigma_b$。
+**1. 正弦随机特征逼近：用冻结基把"求解 PDE"变成"解系数"**
 
-**2. 正弦基的精确解析导数：一个公式吃掉所有线性算子。** 这是全文的命门。对任意多重指标 $\alpha=(\alpha_1,\dots,\alpha_d)$，特征的高阶导数有统一闭式：$D^\alpha \phi_j(\mathbf{x}) = \left(\prod_{k=1}^d W_{jk}^{\alpha_k}\right)\Phi_{|\alpha|\bmod 4}(\mathbf{W}_j^\top \mathbf{x} + b_j)$，其中 $\Phi_0=\sin,\Phi_1=\cos,\Phi_2=-\sin,\Phi_3=-\cos$。这意味着常见算子都坍缩成一次三角函数求值乘以权重单项式：Laplacian 是 $\Delta\phi_j=-\|\mathbf{W}_j\|^2\sin(\cdot)$，Biharmonic 是 $\Delta^2\phi_j=\|\mathbf{W}_j\|^4\sin(\cdot)$，Advection 是 $\mathbf{v}\cdot\nabla\phi_j=(\mathbf{v}\cdot\mathbf{W}_j)\cos(\cdot)$。组装任意线性微分算子矩阵因此只需 $\mathcal{O}(1)$，彻底绕开自动微分和符号推导——这正是它相对 PIELM 的根本优势，后者用的 $\tanh$ 没有这种循环结构（$n$ 阶导是 $n+1$ 次多项式），每换一个算子都得手推一遍。
+整体框架要先有一个可解的解空间。框架用 $N$ 个随机正弦基逼近解 $u(\mathbf{x})$：$u_N(\mathbf{x}) = \frac{1}{\sqrt{N}} \sum_{j=1}^{N} \beta_j \sin(\mathbf{W}_j^\top \mathbf{x} + b_j)$，其中频率 $\mathbf{W}_j \sim \mathcal{N}(\mathbf{0}, \sigma^2 \mathbf{I}_d)$ 与相位 $b_j \sim \mathcal{U}(0, 2\pi)$ 随机采样后冻结不变，唯一待定的就是线性系数 $\boldsymbol{\beta}$——这是把无限维 PDE 求解压成有限维线性代数的第一步。这里最不能省的是 $1/\sqrt{N}$ 归一化：它让经验核稳定收敛到高斯 RBF 核，避免系数膨胀到 $10^6$–$10^8$ 量级把线性系统拖入病态，消融显示去掉它精度直接掉 4 个数量级甚至发散。带宽 $\sigma$ 决定能抓多细的频率，单一 $\sigma$ 难以同时覆盖光滑大尺度和尖锐小尺度，于是框架用多块（multi-block）架构，把 $B$ 个各带不同带宽 $\sigma_b$ 的块拼成一个长特征向量一起求解（实验里取 3 块 × 500 共 1500 个特征）。
 
-**3. 线性 PDE：一次最小二乘直接闭式求解。** 把特征代入线性 PDE $\mathcal{L}[u]=f$ 和边界条件 $\mathcal{B}[u]=g$，由于导数都是闭式的，方程对 $\boldsymbol{\beta}$ 完全线性，于是堆成一个加权增广系统 $\begin{pmatrix}\mathbf{A}^{\text{pde}}\\ \lambda\mathbf{A}^{\text{bc}}\end{pmatrix}\boldsymbol{\beta}=\begin{pmatrix}\mathbf{f}\\ \lambda\mathbf{g}\end{pmatrix}$，用 QR 或 SVD 一次性算出 $\boldsymbol{\beta}^*=\mathbf{A}^\dagger\mathbf{b}$。没有任何迭代、没有梯度下降，这也是它能在 0.07s 内解出 5D Poisson 的原因。配合 Tikhonov 正则化压住条件数（去掉后精度掉 3 个数量级）。
+**2. 精确解析导数：一个公式吃掉所有线性算子**
 
-**4. 非线性 PDE：Newton-Raphson 复用同一套解析结构。** 面对 $\mathcal{L}[u]+\mathcal{N}[u]=f$，框架在系数空间跑 Newton 迭代 $\mathbf{J}^{(k)}\delta\boldsymbol{\beta}=-\mathbf{R}^{(k)},\ \boldsymbol{\beta}^{(k+1)}=\boldsymbol{\beta}^{(k)}+\alpha\,\delta\boldsymbol{\beta}$，其中 Jacobian 同样继承解析闭式形式，每步仍是一次线性求解。为了在对流主导问题上稳住收敛，作者叠了四个工程手段：用线性解作 warm-start 提供好初值；Armijo 型 backtracking line search 限制步长；以解级别变化 $\|\Delta u\|/\|u\|$ 而非系数变化作收敛判据；以及 continuation 同伦，把 Burgers 的粘度沿 $\nu=1.0\to0.5\to0.2\to0.1$ 逐步降下来——消融显示去掉 warm-start 或 continuation 会让精度掉一个数量级乃至直接发散。代价是 Newton 模式比线性模式慢 40–100 倍（4–9s）。
+有了基函数，还要把 PDE 算子作用上去——这是全文的命门，也是相对 PIELM 的根本优势所在。对任意多重指标 $\alpha=(\alpha_1,\dots,\alpha_d)$，特征的高阶导数有统一闭式：
 
-**5. 解析导数撬动的下游应用：PDE 发现与逆问题。** 因为导数是精确闭式而非有限差分，框架顺手解决了两类下游任务。在 PDE 发现里，解析导数字典比有限差分干净约 6000 倍（RMSE 0.4 对 2500），把 SINDy 能容忍的噪声范围大幅拉宽；在逆问题里，梯度可以通过预分解的线性求解器解析地反传，因而能从 4 个传感器反演 4 个各向异性高斯热源（24 个参数），或从 8 个稀疏磁场测量恢复隐藏线圈位置（误差 <0.02）。
+$$D^\alpha \phi_j(\mathbf{x}) = \left(\prod_{k=1}^d W_{jk}^{\alpha_k}\right)\Phi_{|\alpha|\bmod 4}(\mathbf{W}_j^\top \mathbf{x} + b_j),\quad \Phi_0=\sin,\ \Phi_1=\cos,\ \Phi_2=-\sin,\ \Phi_3=-\cos$$
+
+也就是说常见算子都坍缩成"一次三角函数求值乘以权重单项式"：Laplacian 是 $\Delta\phi_j=-\|\mathbf{W}_j\|^2\sin(\cdot)$，Biharmonic 是 $\Delta^2\phi_j=\|\mathbf{W}_j\|^4\sin(\cdot)$，Advection 是 $\mathbf{v}\cdot\nabla\phi_j=(\mathbf{v}\cdot\mathbf{W}_j)\cos(\cdot)$。组装任意线性微分算子矩阵因此只要 $\mathcal{O}(1)$，彻底绕开自动微分和符号推导。对比之下 PIELM 用的 $\tanh$ 没有这种循环结构（$n$ 阶导是 $n+1$ 次多项式），每换一个算子都得手推一遍——这正是 FastLSQ 做到"算子无关"（operator-agnostic）的来由，也是它在相同特征数下精度高 10×–1000× 的根因。
+
+**3. 两种求解模式：线性 PDE 一次最小二乘、非线性 PDE 几步 Newton**
+
+算子矩阵装好后，剩下的就是解系数 $\boldsymbol{\beta}$，分两条路。对线性 PDE $\mathcal{L}[u]=f$ 加边界条件 $\mathcal{B}[u]=g$，由于导数都是闭式、方程对 $\boldsymbol{\beta}$ 完全线性，把内部点和边界点堆成一个加权增广系统 $\begin{pmatrix}\mathbf{A}^{\text{pde}}\\ \lambda\mathbf{A}^{\text{bc}}\end{pmatrix}\boldsymbol{\beta}=\begin{pmatrix}\mathbf{f}\\ \lambda\mathbf{g}\end{pmatrix}$，用 QR 或 SVD 一次性算出 $\boldsymbol{\beta}^*=\mathbf{A}^\dagger\mathbf{b}$——没有迭代、没有梯度下降，这就是它 0.07s 解出 5D Poisson 的原因（配 Tikhonov 正则化压条件数，去掉精度掉 3 个数量级）。对非线性 PDE $\mathcal{L}[u]+\mathcal{N}[u]=f$，在系数空间跑 Newton-Raphson 迭代 $\mathbf{J}^{(k)}\delta\boldsymbol{\beta}=-\mathbf{R}^{(k)},\ \boldsymbol{\beta}^{(k+1)}=\boldsymbol{\beta}^{(k)}+\alpha\,\delta\boldsymbol{\beta}$，Jacobian 仍是闭式、每步仍是一次线性求解，复用同一套解析装配。为在对流主导问题上稳住收敛，作者叠了四个手段：用线性解作 warm-start 给好初值、backtracking line search 限步长、以解级别变化 $\|\Delta u\|/\|u\|$ 而非系数变化作收敛判据、以及 continuation 同伦（把 Burgers 粘度沿 $\nu=1.0\to0.5\to0.2\to0.1$ 逐步降）——消融显示去掉 warm-start 或 continuation 会掉一个数量级乃至发散。代价是 Newton 模式比线性慢 40–100 倍（4–9s）。
+
+**4. 解析导数撬动的下游应用：PDE 发现与逆问题**
+
+因为导数是精确闭式而非有限差分，同一套结构顺手吃下两类下游任务。PDE 发现里，解析导数字典比有限差分干净约 6000 倍（RMSE 0.4 对 2500），把 SINDy（稀疏回归发现方程）能容忍的噪声范围大幅拉宽；逆问题里，由于前向只是一次预分解的线性求解，梯度能解析地反传，于是能从 4 个传感器反演 4 个各向异性高斯热源（共 24 个参数），或从 8 个稀疏磁场测量恢复隐藏线圈位置（误差 <0.02）。这把"解一个 PDE"延伸成了"可微分数字孪生"。
 
 ## 实验关键数据
 

@@ -30,17 +30,43 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SEED 的设计灵感来自人类视觉注意力的两阶段机制：第一阶段并行处理颜色、方向、亮度等基本特征，第二阶段把这些特征绑定成连贯物体。现有指标大多只覆盖第一阶段的全局特征，缺失了物体层面的语义判断，于是 SEED 把三个互补指标——物体级的 Object F1、描述级的 Cap-Sim、全局结构级的 EffNet——做等权平均，让评估同时覆盖"看到什么物体"和"画面整体像不像"两个层面。
+SEED 的设计灵感来自人类视觉注意力的两阶段机制：第一阶段并行处理颜色、方向、亮度等基本特征，第二阶段把这些特征绑定成连贯物体。现有指标大多只覆盖第一阶段的全局特征，缺失了物体层面的语义判断，于是 SEED 把同一对真实刺激图和重建图喂给三条互补的评估支路——物体级的 Object F1、描述级的 Cap-Sim、全局结构级的 EffNet，再把三个分数做等权平均，得到一个同时覆盖"看到什么物体"和"画面整体像不像"两个层面的单一分数。除了指标本身，作者还单独采集了一套真人打分数据，用来检验 SEED 到底有没有和人类直觉对齐。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    GT["真实刺激图（GT）"] --> M1
+    GT --> M2
+    GT --> M3
+    REC["重建图（recon）"] --> M1
+    REC --> M2
+    REC --> M3
+    M1["Object F1<br/>开放词汇检测<br/>比对物体类别集合"]
+    M2["Cap-Sim<br/>生成图像描述<br/>文本余弦相似度"]
+    M3["EffNet<br/>EfficientNet 特征<br/>相关系数"]
+    M1 --> AVG["三者等权平均"]
+    M2 --> AVG
+    M3 --> AVG
+    AVG --> SEED["SEED 分数"]
+```
 
 ### 关键设计
 
-**1. Object F1：用开放词汇检测对齐关键物体。** 重建图像最致命的错误往往是物体类别变了（泰迪熊变成猫），但现有的全局特征指标对这种错误几乎不敏感。SEED 用开放词汇 grounding 模型 MM-Grounding-DINO 在真实图与重建图上各检测 82 类物体，再比较两者识别到的类别集合。给定检测阈值 $t$，召回率为共有类别数除以真实图类别数 $\text{Object Recall}_t = \frac{|\text{GT}\cap\text{recon}|}{|\text{GT}|}$，精确率为共有类别数除以重建图类别数 $\text{Object Precision}_t = \frac{|\text{GT}\cap\text{recon}|}{|\text{recon}|}$。为了避免人为选定一个检测阈值，作者让 $t$ 从 0 滑到截断值并对结果取平均，最终取两者的调和平均 $\text{Object F1} = \frac{2}{\text{Object Recall}^{-1} + \text{Object Precision}^{-1}}$，直接度量关键物体是否被正确重建出来。
+**1. Object F1：用开放词汇检测对齐关键物体**
 
-**2. Cap-Sim：用图像描述捕获物体属性与场景语义。** 只看物体类别会漏掉姿态、颜色、背景这些更细的语义，而这些恰恰是人类一眼能感知的相似度。SEED 先用图像标注模型 GIT 给真实图和重建图各生成一段文字描述，再用 Sentence Transformer 把两段描述编码后算余弦相似度 $\text{Cap-Sim} = \cos\big(e_{\text{text}}(c(I_{GT})),\, e_{\text{text}}(c(I_{recon}))\big)$，其中 $c$ 是 GIT 标注、$e_{\text{text}}$ 是文本编码器。这个"先翻译成语言再比较"的思路出奇地简单却此前无人尝试，它把图像相似度问题转到语言空间，自然吸纳了 Object F1 遗漏的属性和上下文信息。
+重建图像最致命的错误往往是物体类别变了（泰迪熊变成猫），但现有的全局特征指标对这种错误几乎不敏感。SEED 用开放词汇 grounding 模型 MM-Grounding-DINO 在真实图与重建图上各检测 82 类物体，再比较两者识别到的类别集合。给定检测阈值 $t$，召回率为共有类别数除以真实图类别数 $\text{Object Recall}_t = \frac{|\text{GT}\cap\text{recon}|}{|\text{GT}|}$，精确率为共有类别数除以重建图类别数 $\text{Object Precision}_t = \frac{|\text{GT}\cap\text{recon}|}{|\text{recon}|}$。为了避免人为选定一个检测阈值，作者让 $t$ 从 0 滑到截断值并对结果取平均，最终取两者的调和平均 $\text{Object F1} = \frac{2}{\text{Object Recall}^{-1} + \text{Object Precision}^{-1}}$，直接度量关键物体是否被正确重建出来。
 
-**3. EffNet：保留全局结构相关性。** 前两个指标偏重高层语义，但场景的整体布局、纹理结构同样影响感知。SEED 保留了现有最强的单一指标 EffNet：用 ImageNet 预训练的 EfficientNet 分别提取两图的图像特征再算相关系数 $\overline{\text{EffNet}} = \text{corr}\big(e_{\text{img}}(I_{GT}),\, e_{\text{img}}(I_{recon})\big)$，对应视觉注意力第一阶段的全局特征处理，补足语义指标之外的结构维度。三者最终等权融合成 $\text{SEED} = \frac{\text{Object F1} + \text{Cap-Sim} + \overline{\text{EffNet}}}{3}$，让单一分数同时反映关键物体存在性、高层语义细节和全局结构。
+**2. Cap-Sim：用图像描述捕获物体属性与场景语义**
 
-**4. 人类评估基准：用真人打分校准指标。** 一个评估指标好不好，最终要看它和人类直觉对不对得上，因此作者专门采集了一套人类评估数据作为校准基准。22 名评估者对 1,000 对真实图—重建图按 5 分 Likert 量表打分，组内相关系数 ICC(2, n) = 0.84（p=0）表明评估者之间高度一致，这套数据随论文开源，既用来验证 SEED 与人类判断的对齐度，也为后续研究提供了统一的对照标准。
+只看物体类别会漏掉姿态、颜色、背景这些更细的语义，而这些恰恰是人类一眼能感知的相似度。SEED 先用图像标注模型 GIT 给真实图和重建图各生成一段文字描述，再用 Sentence Transformer 把两段描述编码后算余弦相似度 $\text{Cap-Sim} = \cos\big(e_{\text{text}}(c(I_{GT})),\, e_{\text{text}}(c(I_{recon}))\big)$，其中 $c$ 是 GIT 标注、$e_{\text{text}}$ 是文本编码器。这个"先翻译成语言再比较"的思路出奇地简单却此前无人尝试，它把图像相似度问题转到语言空间，自然吸纳了 Object F1 遗漏的属性和上下文信息。
+
+**3. EffNet：保留全局结构相关性**
+
+前两个指标偏重高层语义，但场景的整体布局、纹理结构同样影响感知。SEED 保留了现有最强的单一指标 EffNet：用 ImageNet 预训练的 EfficientNet 分别提取两图的图像特征再算相关系数 $\overline{\text{EffNet}} = \text{corr}\big(e_{\text{img}}(I_{GT}),\, e_{\text{img}}(I_{recon})\big)$，对应视觉注意力第一阶段的全局特征处理，补足语义指标之外的结构维度。三者最终等权融合成 $\text{SEED} = \frac{\text{Object F1} + \text{Cap-Sim} + \overline{\text{EffNet}}}{3}$，让单一分数同时反映关键物体存在性、高层语义细节和全局结构。
+
+**4. 人类评估基准：用真人打分校准指标**
+
+一个评估指标好不好，最终要看它和人类直觉对不对得上，因此作者专门采集了一套人类评估数据作为校准基准。22 名评估者对 1,000 对真实图—重建图按 5 分 Likert 量表打分，组内相关系数 ICC(2, n) = 0.84（p=0）表明评估者之间高度一致，这套数据随论文开源，既用来验证 SEED 与人类判断的对齐度，也为后续研究提供了统一的对照标准。
 
 ## 实验关键数据
 

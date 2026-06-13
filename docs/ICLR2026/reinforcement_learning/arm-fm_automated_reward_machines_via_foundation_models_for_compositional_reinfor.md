@@ -43,7 +43,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ARM-FM要解决的是RL里"奖励该怎么来"这个老问题：稀疏奖励学不动，密集奖励又得靠专家手搓。它的思路是让基础模型（FM）把任务翻译成一台奖励机器（Reward Machine, RM），再把这台机器接到RL训练里。整条流程分两段：前半段是**LARM生成**——FM读自然语言任务描述加视觉观察，吐出三样东西：RM的自动机结构、把环境观察翻成RM事件符号的Python标签函数、以及每个RM状态配的一句自然语言指令；这些产物经过一个generator-critic的FM自我改进循环（再加可选的人工校验）逐步精炼。后半段是**RL训练**——agent的策略不只看环境状态，还看当前RM状态那句话的语言嵌入，RM则在子目标达成时给出密集的中间奖励，总回报是 $R_t^{\text{total}} = R_t + R_t^{\text{RM}}$。一句话说，RM在FM和RL之间充当了一个"FM能写、人能读、RL能学"的结构化接口。
+ARM-FM要解决的是RL里"奖励该怎么来"这个老问题：稀疏奖励学不动，密集奖励又得靠专家手搓。它的思路是让基础模型（Foundation Model, FM）把任务翻译成一台奖励机器（Reward Machine, RM），再把这台机器接到RL训练里。整条流程分两段：前半段是**LARM生成**——FM读自然语言任务描述加视觉观察，吐出三样东西：RM的自动机结构、把环境观察翻成RM事件符号的Python标签函数、以及每个RM状态配的一句自然语言指令；这些产物经过一个generator-critic的FM自我改进循环（再加可选的人工校验）逐步精炼。后半段是**RL训练**——agent的策略不只看环境状态，还看当前RM状态那句话的语言嵌入，RM则在子目标达成时给出密集的中间奖励，总回报是 $R_t^{\text{total}} = R_t + R_t^{\text{RM}}$。一句话说，RM在FM和RL之间充当了一个"FM能写、人能读、RL能学"的结构化接口。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["自然语言任务描述<br/>+ 视觉观察"]
+    subgraph GEN["语言对齐奖励机器自动生成（设计 1）"]
+        direction TB
+        LOOP["generator-critic FM<br/>自我改进循环 N 轮<br/>（可选人工校验）"]
+        COMP["LARM 三组件<br/>自动机结构 (U,δ,F)<br/>Python 标签函数 ℒ<br/>每状态指令 l_u"]
+        LOOP --> COMP
+    end
+    IN --> GEN
+    subgraph RLT["语言嵌入条件化策略（设计 2）"]
+        direction TB
+        EMB["状态指令嵌入<br/>z_u = φ(l_u)<br/>语义连续技能空间"]
+        LABEL["标签函数更新 RM 状态<br/>给密集奖励 R^RM"]
+        POLICY["策略 π(s_t, z_u_t)<br/>总回报 R_total = R + R^RM"]
+        EMB --> POLICY
+        LABEL --> POLICY
+    end
+    GEN --> RLT
+    ZERO["零样本任务组合泛化（设计 3）<br/>新任务子目标落入熟悉嵌入区<br/>→ 复用已学技能"]
+    RLT --> ZERO
+```
 
 ### 关键设计
 

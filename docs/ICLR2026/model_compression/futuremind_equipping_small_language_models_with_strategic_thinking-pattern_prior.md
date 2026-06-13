@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-四阶段流水线由Thinking Module协调：$F = \mathcal{M}\langle\mathcal{P}, \mathcal{L}, \mathcal{S}, \mathcal{R}\rangle$。先用LLM教师生成该问题的推理策略，再让SLM按策略执行检索和回答。完全无训练。
+FutureMind 要解决的问题是：让小语言模型（SLM）也能完成需要结构化推理 + 多跳检索的复杂问答，但又不付出训练代价。它的做法是把"怎么想、怎么搜"外包给一个 LLM 教师——教师在单轮内把推理-检索策略想清楚，SLM 只负责照着执行。整条 pipeline 由思维模块（Thinking Module $\mathcal{M}$）统一协调，串起四个阶段：$F = \mathcal{M}\langle\mathcal{P}, \mathcal{L}, \mathcal{S}, \mathcal{R}\rangle$——问题分析 $\mathcal{P}$ 把问题拆开、逻辑推理 $\mathcal{L}$ 推出条件、策略规划 $\mathcal{S}$ 从三种检索范式里挑最合适的一种、检索指导 $\mathcal{R}$ 把策略落成可执行的检索指令，最后 SLM 按指令检索并作答。全程无梯度更新（training-free）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["多跳问题 x"] --> P["问题分析 𝒫<br/>拆出 核心目标/固有属性/<br/>目标结果/关键维度"]
+    P --> L["逻辑推理 ℒ<br/>第一原理推出<br/>核心机制 ℳ 与条件序列 𝒦"]
+    L --> S["策略规划 𝒮<br/>按条件拓扑选检索范式 ℛ*"]
+    S -->|"链式依赖"| RA["前向逐步推理"]
+    S -->|"末端约束强"| RB["逆向约束聚焦"]
+    S -->|"独立条件多"| RC["并行交叉推理"]
+    RA --> G["检索指导 ℛ<br/>翻译成可执行检索指令 Γ"]
+    RB --> G
+    RC --> G
+    G --> E["SLM 照指令检索<br/>并生成答案"]
+```
 
 ### 关键设计
 

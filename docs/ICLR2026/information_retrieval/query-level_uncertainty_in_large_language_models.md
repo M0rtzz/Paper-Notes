@@ -34,17 +34,44 @@ tags:
 ## 方法详解
 
 ### 整体框架
-方法把"LLM能否答对这个查询"变成一个生成前就能读出的置信度：给模型一个yes/no自评提示，不让它真的生成答案，而是从其隐藏状态里读出P(Yes)。核心是把这个读数从"只看最后一层最后一个token"扩展为跨所有层、所有token位置的加权聚合，得到Internal Confidence（IC），整个过程只需一次前向传播且完全training-free。
+方法把"LLM 能否答对这个查询"变成一个**生成前**就能读出的置信度：给模型一句固定的 yes/no 自评提示，但**不让它真的生成答案**，而是从隐藏状态里读出"它觉得自己答得了吗"的概率 $P(\text{Yes})$。原始读法只看最后一层最后一个 token，本文把它扩展到**所有层、所有 token 位置**都算一遍 $P(\text{Yes})$，再用一组随"决策中心"距离衰减的权重加权聚合成 Internal Confidence（IC）。整个过程只需**一次前向传播、完全 training-free**，得到的 IC 直接拿去驱动自适应 RAG、模型级联、弃权三类前置决策。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    Q["查询 x（不生成答案）"] --> P["yes/no 自评提示 → P(Yes)<br/>末层末token 投影到 [Yes, No]"]
+    subgraph IC2["Internal Confidence（跨层跨token聚合）"]
+        direction TB
+        G["逐层逐token 读 P(Yes)<br/>每个隐状态 h 一个分数"] --> W["Attenuated Encoding 权重<br/>决策中心=末层末token，指数衰减"]
+        W --> IC["加权聚合 → IC(h)"]
+    end
+    P --> G
+    IC -->|IC 低| RAG["自适应 RAG：触发检索"]
+    IC -->|小模型 IC 低| CAS["模型级联：转发大模型"]
+    IC -->|IC 过低| ABS["弃权：拒答"]
+```
 
 ### 关键设计
 
-**1. yes/no自评提示与P(Yes)读出：把答题前的"自知之明"变成可读信号。** 现有不确定性估计大多是answer-level，要先把答案完整生成出来再评估，开销大且无法用于"要不要触发检索"这类前置决策。本文改用一句固定提示让模型自评——"Respond only with 'Yes' or 'No' to indicate whether you are capable of answering the {Query} accurately."——但并不解码这个yes/no，而是取最后一层最后token的隐状态$\mathbf{h}_N^{(L)}$，经unembedding矩阵投影到[Yes, No]两个词上做softmax，得到$P(\text{Yes})$作为置信度。这相当于一次无需训练的linear probing：模型对自己知识边界的判断本就编码在隐状态里，直接读出即可，省去了生成答案的全部代价。
+**1. yes/no 自评提示 + P(Yes) 读出：把答题前的"自知之明"变成可读信号**
 
-**2. Internal Confidence：跨层跨token聚合，挖出中间层里的知识信号。** 只看最后一个位置会丢掉中间层编码的丰富知识可达性信息。本文把P(Yes)在所有层$l$、所有token位置$n$上都算一遍，再加权平均聚合成 $\text{IC}(\mathbf{h}) = \sum_{n=1}^{N}\sum_{l=1}^{L}w_n^{(l)} P(\text{Yes}|\mathbf{h}_n^{(l)})$。这样置信度不再依赖单一最终表示，而是综合全网格的自评信号，AUROC从基础P(Yes)的59.6平均提升到64.2，且模型越大提升越明显，印证了大模型对自身知识边界感知更强。
+现有不确定性估计大多是 answer-level，要先把答案完整生成出来再评估，开销大、又无法用于"要不要触发检索"这类**生成前**的决策。本文改用一句固定提示让模型自评——"Respond only with 'Yes' or 'No' to indicate whether you are capable of answering the {Query} accurately."——但**并不解码**这个 yes/no，而是直接取最后一层最后 token 的隐状态 $\mathbf{h}_N^{(L)}$，经 unembedding 矩阵投影到 [Yes, No] 两个词上做 softmax，把分给 Yes 的概率作为置信度：
 
-**3. Attenuated Encoding与决策中心：免验证集地确定聚合权重。** 聚合权重不能乱给，否则又要靠验证集调参、破坏training-free。本文用Attenuated Encoding构造权重 $\delta_j^{(i)} = \exp(-\alpha|i-j|^2) / Z$：以一个"决策中心"为圆心，权重随到中心的距离指数衰减，$\alpha=1.0$ 控制局部性（值越大越集中在中心附近）。决策中心固定取最后层最后token——AUROC热力图显示真正最具区分力的位置并不恰好在此，但固定到这里近似效果已足够好，从而避免了为找最优位置而引入验证集。
+$$P(\text{Yes}) = \text{softmax}\!\left(\mathbf{W}^{\text{unemb}}_{[\text{Yes},\text{No}]}\,\mathbf{h}_N^{(L)}\right)_{\text{Yes}}$$
 
-**4. 三种自适应推理落地：让前置置信度直接驱动资源分配。** IC作为生成前信号，天然适合在答题前决定是否动用额外资源：自适应RAG中IC低则触发检索、IC高则直接回答，可在性能几乎不降的情况下减少50%+的RAG调用；模型级联中小模型IC低时把查询转发给大模型，换取成本-质量的更优平衡；弃权策略中对IC过低的查询直接拒答以提升可信度。
+这相当于一次无需训练的 linear probing：模型对自己知识边界的判断本就线性可分地编码在隐状态里（answerable 与 non-answerable 的查询在隐空间近似线性可分），直接读出即可，省去了生成答案的全部代价，只需一次前向传播。
+
+**2. Internal Confidence：跨层跨 token 加权聚合，用衰减权重免验证集定权**
+
+只看最后一个位置会丢掉中间层里编码的知识信号——$P(\text{Yes})$ 沿层从低到高、沿 token 从左到右普遍升高，单看末端并非最有区分力。本文于是把 $P(\text{Yes})$ 在所有层 $l$、所有 token 位置 $n$ 上都算一遍，加权聚合成 Internal Confidence：
+
+$$\text{IC}(\mathbf{h}) = \sum_{n=1}^{N}\sum_{l=1}^{L} w_n^{(l)}\, P\!\left(\text{Yes}\mid \mathbf{h}_n^{(l)}\right)$$
+
+难点在于权重 $w_n^{(l)}$ 怎么定：若靠验证集挑最优位置就破坏了 training-free。本文用 **Attenuated Encoding** 让权重随到一个"决策中心"的距离指数衰减，$\delta_j^{(i)} = \exp(-\alpha\,|i-j|^2)\,/\,\sum_j \exp(-\alpha\,|i-j|^2)$，其中 $i$ 是中心位置、$\alpha$ 控制局部性（越大越集中在中心附近）。决策中心**固定取最后层最后 token**——AUROC 热力图显示真正最具区分力的点其实在中间（如 Llama-8B 上是 $\mathbf{h}_5^{(27)}$）而非末端，但把中心钉在末端、再吸收邻域信息，近似效果已足够好，从而绕开了为找最优点而引入验证集的麻烦。聚合后 AUROC 从基础 $P(\text{Yes})$ 的 59.6 升到 64.2，且模型越大提升越明显，印证大模型对自身知识边界的感知更强。
+
+**3. 三种自适应推理落地：让前置置信度直接驱动资源分配**
+
+IC 是生成前信号，天然适合在答题前就决定要不要动用额外资源。**自适应 RAG**：IC 低则触发检索、IC 高则直接回答，可在性能几乎不降的情况下减少 50%+ 的 RAG 调用；**模型级联**：小模型 IC 低时把查询转发给大模型，换取成本-质量的更优权衡；**弃权策略**：对 IC 过低的查询直接拒答，以提升可信度。三者共用同一个 IC 阈值开关，把"先验置信度"变成了实打实的算力分配杠杆。
 
 ## 实验关键数据
 
@@ -60,7 +87,7 @@ tags:
 
 ### 与Answer-level方法对比（速度）
 
-| 方法 | GSM8K AUROC | 毛秒/样本 |
+| 方法 | GSM8K AUROC | 毫秒/样本 |
 |------|:--:|:--:|
 | IC(本文) | 66.8 | **0.3** |
 | Predictive Entropy | 61.0 | 9.8 |
@@ -70,7 +97,7 @@ tags:
 **关键发现**:
 1. IC在3个数据集3个模型上一致优于所有baseline
 2. 相比answer-level方法快32×-602×，并且精度更高
-3. RAG场景下可在性能几乎不降的情况下减屑50%+的RAG调用
+3. RAG场景下可在性能几乎不降的情况下减少50%+的RAG调用
 4. 模型越大IC效果越显著，因为更大的模型有更好的自我知识边界感知
 5. 决策中心附近的层和token信息最有区分力，与AUROC热力图观察一致
 

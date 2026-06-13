@@ -40,15 +40,44 @@ tags:
 
 ### 整体框架
 
-S²-Guidance 不引入任何外部弱模型，而是在每个去噪步把当前 DiT 随机丢掉一小撮 transformer block，得到一个"自身退化版"的子网络预测，再用完整模型与该子网络预测的差作为额外的自引导项，去抵消 CFG 的次优外推。整套流程纯推理期完成，只需在标准 CFG 之上多算一次带掩码的前向。
+S²-Guidance 想解决的是：Classifier-Free Guidance（CFG）虽能把生成拉向条件分布，却伴随分布模式偏移与坍缩，使结果偏离真实分布、丢细节。它的思路是不引入任何外部弱模型，而是在每个去噪步把当前 DiT **随机丢掉一小撮 transformer block**，得到一个"自身退化版"的子网络预测，再用完整模型与该子网络预测的差作为额外的**自引导修正项**，去抵消 CFG 的次优外推。整套流程纯推理期完成：每一步并行算出无条件预测、条件预测、子网络预测三路，前两路组成常规 CFG 外推项，后者与条件预测的差组成自引导修正项，两项合成最终去噪方向。相比标准 CFG，只多算一次带掩码的前向。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["去噪步 t<br/>输入 x_t + 条件 c"] --> B["完整模型<br/>条件预测 D(x_t|c)"]
+    A --> C["完整模型<br/>无条件预测 D(x_t|φ)"]
+    A --> D["子网络自引导<br/>随机丢 ~10% 非关键 block<br/>退化预测 D̂(x_t|c,m_t)"]
+    B --> E["CFG 外推项<br/>λ·(D(x_t|c)−D(x_t|φ))"]
+    C --> E
+    B --> F["自引导修正项<br/>−ω·(D̂(x_t|c,m_t)−D(x_t|c))"]
+    D --> F
+    E --> G["合成去噪方向 D̃<br/>抵消 CFG 次优外推"]
+    F --> G
+    G --> H["更新 x_t−1<br/>中间 ~80% 噪声水平启用"]
+```
 
 ### 关键设计
 
-**1. 子网络自引导：用模型自己的退化版当弱模型。** 出发点是 CFG 虽能把生成拉向条件分布，却伴随分布模式偏移（mode shift）与坍缩——在高斯混合 toy example 上样本会散布到非目标区域，CIFAR-10 的 t-SNE 也证实了这种坍缩。Autoguidance 一类方法靠训练一个退化弱模型来纠偏，但对大规模预训练模型不现实。本文转而利用 DiT 中不同 block 输出高度相似的冗余性：用二值掩码 $\mathbf{m}$ 随机丢弃部分 block 得到子网络预测 $\hat{D}_\theta(x_t|c,\mathbf{m})$，它与完整预测 $D_\theta(x_t|c)$ 的偏差恰好刻画了"被丢掉的能力"，反向减去这个偏差即可把结果推离次优区域。原始（naive）形式对每步采样 $N$ 个掩码取平均以稳定信号：$\tilde{D}_\theta^\lambda(x_t|c) = D_\theta(x_t|\phi) + \lambda(D_\theta(x_t|c) - D_\theta(x_t|\phi)) - \frac{\omega}{N}\sum_{i=1}^N(\hat{D}_\theta(x_t|c, \mathbf{m}_i) - D_\theta(x_t|c))$，其中 $\lambda$ 为 CFG 强度、$\omega$（S²Scale）控制自引导强度。
+**1. 子网络自引导：用模型自己的退化版当弱模型**
 
-**2. 单次随机 dropping：把 N 次前向砍成一次。** naive 形式每步要算 $N$ 个子网络，开销过大。作者发现在合理的 drop 范围内，丢哪些 block 都能一致地把模型拉向理想分布，于是把每步的多次采样简化为**仅一次**随机 block-dropping：$\tilde{D}_\theta^\lambda(x_t|c) = D_\theta(x_t|\phi) + \lambda(D_\theta(x_t|c) - D_\theta(x_t|\phi)) - \omega(\hat{D}_\theta(x_t|c, \mathbf{m}_t) - D_\theta(x_t|c))$。由于掩码 $\mathbf{m}_t$ 随时间步变化，跨步累积起来仍保留了 naive 形式的多样性，但单步只需一次额外前向，显存也不增加（子网络与完整模型顺序执行）。
+CFG 把生成拉向条件分布的同时会带来模式偏移（mode shift）与坍缩——在高斯混合 toy example 上样本会散布到非目标区域，CIFAR-10 的 t-SNE 也证实了这种坍缩。Autoguidance 一类方法靠训练一个退化弱模型来纠偏，但对大规模预训练模型不现实。本文转而利用 DiT 中不同 block 输出高度相似的冗余性：用二值掩码 $\mathbf{m}$ 随机丢弃部分 block 得到子网络预测 $\hat{D}_\theta(x_t|c,\mathbf{m})$，它与完整预测 $D_\theta(x_t|c)$ 的偏差恰好刻画了"被丢掉的能力"，反向减去这个偏差即可把结果推离次优区域。原始（naive）形式对每步采样 $N$ 个掩码取平均以稳定信号：
 
-**3. block-dropping 的工程约束：哪儿丢、丢多少、何时丢。** 随机性需要被约束才稳定：首先**保护关键 block**，排除首 block 等结构关键层，只在非关键 block 里随机丢弃，避免破坏基本生成能力；其次 **drop 比例约 10%**，实验中这一比例性能最佳，太多会让子网络退化过度、太少则引导信号过弱；最后限定**应用区间**为去噪过程中间约 80% 的噪声水平，跳过首尾极端时间步。三者叠加上"每步独立采样掩码"的动态多样性，使得方法比固定丢弃某个 block 的静态弱模型更鲁棒。
+$$\tilde{D}_\theta^\lambda(x_t|c) = D_\theta(x_t|\phi) + \lambda(D_\theta(x_t|c) - D_\theta(x_t|\phi)) - \frac{\omega}{N}\sum_{i=1}^N(\hat{D}_\theta(x_t|c, \mathbf{m}_i) - D_\theta(x_t|c))$$
+
+其中 $\lambda$ 为 CFG 强度、$\omega$（S²Scale）控制自引导强度。
+
+**2. 单次随机 dropping：把 N 次前向砍成一次**
+
+naive 形式每步要算 $N$ 个子网络，开销过大。作者发现在合理的 drop 范围内，丢哪些 block 都能一致地把模型拉向理想分布，于是把每步的多次采样简化为**仅一次**随机 block-dropping：
+
+$$\tilde{D}_\theta^\lambda(x_t|c) = D_\theta(x_t|\phi) + \lambda(D_\theta(x_t|c) - D_\theta(x_t|\phi)) - \omega(\hat{D}_\theta(x_t|c, \mathbf{m}_t) - D_\theta(x_t|c))$$
+
+由于掩码 $\mathbf{m}_t$ 随时间步变化，跨步累积起来仍保留了 naive 形式的多样性，但单步只需一次额外前向，显存也不增加（子网络与完整模型顺序执行）。
+
+**3. block-dropping 的工程约束：哪儿丢、丢多少、何时丢**
+
+随机性需要被约束才稳定。首先**保护关键 block**，排除首 block 等结构关键层，只在非关键 block 里随机丢弃，避免破坏基本生成能力；其次 **drop 比例约 10%**，实验中这一比例性能最佳，太多会让子网络退化过度、太少则引导信号过弱；最后限定**应用区间**为去噪过程中间约 80% 的噪声水平，跳过首尾极端时间步。三者叠加上"每步独立采样掩码"的动态多样性，使得方法比固定丢弃某个 block 的静态弱模型更鲁棒。
 
 ## 实验关键数据
 

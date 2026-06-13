@@ -41,7 +41,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入视频帧经 backbone 提取特征后，AGA 模块用动作预测的 EMA 作为 Query、最近 S 步的动作预测作为 Key、对应的帧特征作为 Value 做多头注意力，得到历史上下文 $\tilde{h}_t$，再通过自适应门控与当前帧特征 $e_t$ 融合，最终预测未来动作。
+这篇论文要解决的是视频动作预期里「标准自注意力在像素特征上算相似度、容易过拟合视觉线索、从验证集到测试集掉点」的问题。整体怎么转：输入视频帧先经 backbone 提取帧特征 $e_t$，模型对每一步输出一个动作预测分布；AGA 模块不再用视觉特征做注意力，而是把动作预测当成查询信号——用当前动作预测的 EMA 作 Query、最近 $S$ 步的动作预测作 Key、对应时刻的帧特征作 Value 做多头注意力，得到「语义相关的历史上下文」$\tilde{h}_t$；再通过自适应门控让模型在历史上下文和当前帧特征 $e_t$ 之间逐维分配信任，融合后预测未来动作。因为 Q/K 本身就是动作概率，训练完成后注意力矩阵可以直接读出动作之间的依赖关系，免费换来一套可解释性。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    V["输入视频帧"] --> BB["Backbone 提取<br/>帧特征 e_t"]
+    BB --> AP["逐步动作预测分布"]
+    subgraph AGA["动作引导的 Query/Key"]
+        direction TB
+        AP -->|"EMA 平滑"| Q["Query：当前动作预测"]
+        AP -->|"最近 S 步"| K["Key：历史动作预测"]
+        BB -->|"对应帧特征"| Val["Value：历史帧特征"]
+        Q --> ATT["多头注意力<br/>历史上下文 h_t"]
+        K --> ATT
+        Val --> ATT
+    end
+    ATT --> GATE["自适应门控融合<br/>历史 vs 当前帧"]
+    BB -->|"当前帧 e_t"| GATE
+    GATE --> PRED["预测未来动作"]
+    ATT -.读出.-> INTERP["训练后可解释性<br/>动作依赖矩阵"]
+```
 
 ### 关键设计
 

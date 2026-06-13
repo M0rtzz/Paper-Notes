@@ -44,17 +44,44 @@ LLM 在行为层面展现出惊人的社会交互能力，但在**表征层面**
 
 ### 整体框架
 
-让两个 LLM agent 在 Sotopia 环境里进行多轮社会交互，每轮从各自的 prompt 末位 token 抽取逐层隐藏状态作为该模型当下的"神经活动"。核心操作是用一个仿射变换去预测交互伙伴同一轮的表征：若一个模型的内部状态真的编码了对方的信息，这个跨模型的线性映射就应该预测得准，预测精度便量化为同步强度。
+这篇论文要回答的问题是：两个 LLM 在社会交互中，一方的内部表征里到底有没有编码对方的信息？整套分析像一条流水线：先让两个 LLM agent 在 Sotopia 环境里进行多轮社会交互，每轮从各自 prompt 末位 token 抽取逐层隐藏状态，当作该模型这一刻的"神经活动"；再把两个模型时间对齐的表征配成对，训练一个跨模型的仿射变换去预测伙伴的表征——若一方的内部状态真编码了对方的信息，这个线性映射就该预测得准；最后把逐层、双向的预测精度聚合成一个对称分数 $SyncR^2$，作为这一对模型的同步强度。为了证明这个分数测的是真同步而非"两个模型表征本就相似"，作者还设计了两组对照（去掉社会参与、去掉时间邻近性），把交互产生的动态同步从静态相似中剥离出来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    START["两个 LLM agent<br/>Sotopia 多轮社会交互"] --> EXTRACT["表征提取<br/>每轮 prompt 末位 token<br/>逐层隐藏状态"]
+    EXTRACT --> AFFINE["仿射变换 + Ridge 回归<br/>时间对齐表征配对<br/>跨模型层间线性映射"]
+    AFFINE --> SYNC["SyncR² 指标<br/>逐层取最佳匹配 + 截断负值<br/>双向平均对称化"]
+    SYNC --> OUT["成对同步分数<br/>SyncR²(A,B)"]
+    EXTRACT -.->|被动 agent 只读不答<br/>/ 配对延迟 k 轮| CTRL["两组对照<br/>无社会参与 / 无时间邻近性"]
+    CTRL -.-> AFFINE
+```
 
 ### 关键设计
 
-**1. 表征提取：把每轮对话压成一个可比较的向量。** 对于 $T$ 轮对话，每个 backbone $M \in \{A, B\}$ 在第 $t$ 轮产生逐层隐藏状态 $\boldsymbol{h}_t^{(M)} \in \mathbb{R}^{L_M \times D_M}$（$t = 1, \dots, T$）。作者只取 prompt 输入最后一个 token 位置的各层表征——因为自回归注意力让这个位置整合了之前所有 token 的信息，是该轮语境最浓缩的载体。这样每个模型每轮、每层都得到一个固定维度的向量，为后续跨模型回归提供了时间对齐的样本。
+**1. 表征提取：把每轮对话压成一个可比较的向量**
 
-**2. 仿射变换 + Ridge 回归：用最简单的线性映射检验可预测性。** 把同一交互里两模型时间对齐的表征配成训练对，构成数据集 $\mathcal{D}^{A \to B}_{l_A \to l_B} = \{(\boldsymbol{h}^{(A)}_{t, l_A}, \boldsymbol{h}^{(B)}_{t, l_B}) \mid t = 1, \dots, T\}$。然后用带截距的 Ridge 回归求解从 source 层 $l_A$ 到 target 层 $l_B$ 的映射 $\hat{\boldsymbol{W}}, \hat{\boldsymbol{b}} = \arg\min_{\boldsymbol{W}, \boldsymbol{b}} \|\boldsymbol{Y} - \boldsymbol{X}\boldsymbol{W} - \mathbf{1}\boldsymbol{b}\|_F^2 + \lambda \|\boldsymbol{W}\|_F^2$，正则化系数 $\lambda = 0.1$ 且截距不参与正则化。刻意选用线性而非更强的非线性预测器，是为了让结论保守可信：如果连仿射变换都能跨模型预测，说明同步信息以近乎线性的方式存在于表征中，而非靠拟合能力硬凑出来。
+测同步的前提是把"模型这一刻的状态"变成一个能跨模型对齐、可回归的向量。对于 $T$ 轮对话，每个 backbone $M \in \{A, B\}$ 在第 $t$ 轮产生逐层隐藏状态 $\boldsymbol{h}_t^{(M)} \in \mathbb{R}^{L_M \times D_M}$（$t = 1, \dots, T$）。作者只取 prompt 输入最后一个 token 位置的各层表征——因为自回归注意力让这个位置整合了之前所有 token 的信息，是该轮语境最浓缩的载体。这样每个模型每轮、每层都得到一个固定维度的向量，按轮次天然时间对齐，为后续跨模型回归提供了成对样本。
 
-**3. $SyncR^2$ 指标：把逐层、双向的预测精度聚合成一个对称分数。** 同步不该绑死在固定层上，于是对 source 模型 $A$ 的每一层 $l_A$，先在 target 模型 $B$ 的所有层里取最佳匹配 $r_A^{\star}(l_A) = \max_{l_B} R^2_{\text{test}}(l_A \to l_B)$，再把负值截断为零 $\tilde{r}_A(l_A) = \max\{0, r_A^{\star}(l_A)\}$——因为 $R^2$ 为负意味着还不如直接预测均值，等价于没有同步。把所有层的 $\tilde{r}_A$ 平均得到 $SyncR^2(A \to B)$，最后双向对称化 $SyncR^2(A, B) = \frac{1}{2}(SyncR^2(A \to B) + SyncR^2(B \to A))$，让指标不依赖谁是 source 谁是 target，得到一个干净的成对同步标量。
+**2. 仿射变换 + Ridge 回归：用最简单的线性映射检验可预测性**
 
-**4. 两组对照：把"同步"和"静态表征相似"剥离开。** 单看预测得准还不够，必须排除"两个模型本来表征就像"这种平凡解释。对照组 1（无社会参与）引入一个"被动" agent，只读对话历史、不生成回复也不角色扮演，若同步源于真实的社会推理，此时应当减弱。对照组 2（无时间邻近性）则把 source 表征与 $k$ 轮之后的 target 表征配对，数据集变为 $\mathcal{D}^{\text{lag-}k, A \to B}_{l_A \to l_B} = \{(\boldsymbol{h}^{(A)}_{t, l_A}, \boldsymbol{h}^{(B)}_{t+k, l_B}) \mid t = 1, \dots, T-k\}$（$k \geq 1$）；如果同步只是静态相似性，它就不该随时间延迟衰减，反之若迅速崩塌则证明同步是逐轮动态对齐的产物。
+有了对齐的表征，怎么判断一方"编码了"另一方？作者把同一交互里两模型时间对齐的表征配成训练对，构成数据集 $\mathcal{D}^{A \to B}_{l_A \to l_B} = \{(\boldsymbol{h}^{(A)}_{t, l_A}, \boldsymbol{h}^{(B)}_{t, l_B}) \mid t = 1, \dots, T\}$，再用带截距的 Ridge 回归求解从 source 层 $l_A$ 到 target 层 $l_B$ 的映射：
+
+$$\hat{\boldsymbol{W}}, \hat{\boldsymbol{b}} = \arg\min_{\boldsymbol{W}, \boldsymbol{b}} \|\boldsymbol{Y} - \boldsymbol{X}\boldsymbol{W} - \mathbf{1}\boldsymbol{b}\|_F^2 + \lambda \|\boldsymbol{W}\|_F^2$$
+
+正则化系数 $\lambda = 0.1$，截距项不参与正则化。刻意选线性而非更强的非线性预测器，是为了让结论保守可信：如果连一个仿射变换都能跨模型预测对方表征，说明同步信息以近乎线性的方式真实存在于表征中，而不是靠预测器的拟合能力硬凑出来。
+
+**3. $SyncR^2$ 指标：把逐层、双向的预测精度聚合成一个对称分数**
+
+单个层对层的 $R^2$ 还不是一个能比较模型对的标量，而且同步未必绑死在固定层上。于是对 source 模型 $A$ 的每一层 $l_A$，先在 target 模型 $B$ 的所有层里取最佳匹配 $r_A^{\star}(l_A) = \max_{l_B} R^2_{\text{test}}(l_A \to l_B)$，再把负值截断为零 $\tilde{r}_A(l_A) = \max\{0, r_A^{\star}(l_A)\}$——$R^2$ 为负意味着还不如直接预测均值，等价于没有同步。把所有层的 $\tilde{r}_A$ 平均得到 $SyncR^2(A \to B)$，最后双向对称化：
+
+$$SyncR^2(A, B) = \tfrac{1}{2}\big(SyncR^2(A \to B) + SyncR^2(B \to A)\big)$$
+
+这样指标不依赖谁当 source 谁当 target，得到一个干净、可在不同模型对之间横比的成对同步标量。
+
+**4. 两组对照：把"同步"和"静态表征相似"剥离开**
+
+预测得准还不够，必须排除"两个模型本来表征就像"这种平凡解释——否则测到的可能只是共享背景或相似结构，而非交互产生的动态同步。作者据此设计两组对照，都复用前面同一套仿射回归 + $SyncR^2$ 机制，只改变配对方式。对照组 1（无社会参与）引入一个"被动" agent，它只读对话历史、不接收生成指令、不角色扮演也不回复，数据集变为 $\mathcal{D}^{\text{passive}, A \to B}_{l_A \to l_B} = \{(\boldsymbol{h}^{(A,\text{read})}_{t, l_A}, \boldsymbol{h}^{(B)}_{t, l_B}) \mid t = 1, \dots, T\}$；若同步源于真实社会参与，被动 agent 的同步就该明显减弱。对照组 2（无时间邻近性）把 source 表征与 $k$ 轮之后的 target 表征配对，$\mathcal{D}^{\text{lag-}k, A \to B}_{l_A \to l_B} = \{(\boldsymbol{h}^{(A)}_{t, l_A}, \boldsymbol{h}^{(B)}_{t+k, l_B}) \mid t = 1, \dots, T-k\}$（$k \geq 1$）；若同步只是静态相似性，它不该随延迟衰减，反之若随 $k$ 增大迅速崩塌，就证明同步是逐轮实时对齐的产物。
 
 ## 实验关键数据
 

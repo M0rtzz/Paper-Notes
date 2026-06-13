@@ -37,29 +37,43 @@ tags:
 - **DPPO的局限**：DPPO将扩散过程作为内部MDP处理，适合微调但从头训练时性能退化，因为缺乏off-manifold探索能力
 - **熵正则化困难**：流式策略的动作log likelihood难以直接计算，传统熵正则化方法不适用
 
-## 关键设计
-
-1. **插值路径重要性比率近似**：不沿ODE流轨迹计算 $\delta_{\varphi_1}(\mathbf{z};\mathbf{s})$，而是沿线性插值路径 $\mathbf{x}_t = (1-t)\mathbf{z} + t\hat{\varphi}_1(\mathbf{z};\mathbf{s})$ 用速度场变化 $\delta_{v_t}$ 近似终端位移差，理论误差为 $\mathcal{O}(\epsilon)$（由PPO裁剪范围自然控制），ODE仅在采样时运行而非训练时
-2. **布朗运动熵正则器(Brownian Regularizer)**：利用布朗运动熵单调递增的性质，将速度场对齐到参考流的负score方向 $\eta_t = (1-t)v_t(\mathbf{x}_t;\mathbf{s},\theta) - (\mathbf{x}_t - t\hat{v}_t(\mathbf{x}_t;\mathbf{s}))$，惩罚 $\|\eta_t\|_2^2$ 促进轨迹扩散，完全避免log-likelihood计算
-3. **条件流策略架构**：动作 $\mathbf{a} = \varphi_1(\mathbf{z};\mathbf{s}) + \mathbf{n}$（流终端+高斯噪声），诱导出Gaussian mixture形式的策略 $\pi(\mathbf{a}|\mathbf{s}) = \int \mathcal{N}(\mathbf{a};\varphi_1(\mathbf{z};\mathbf{s}),\boldsymbol{\sigma}^2)p_z(\mathbf{z})d\mathbf{z}$，严格比高斯策略表达力更强
-
 ## 方法详解
 
 ### 整体框架
 
-PolicyFlow把一个连续归一化流当作PPO的策略：用流模型从噪声生成动作以获得多模态表达力，再用一个绕开ODE路径反向传播的近似来算重要性比率，最后用布朗运动启发的正则项隐式做熵最大化。整套框架的关键是让昂贵的ODE只在采样轨迹时跑一次，训练阶段全部退化为速度场的前向计算。
+PolicyFlow把一个连续归一化流当作PPO的策略：用流模型从噪声生成动作以获得多模态表达力，再用一个绕开ODE路径反向传播的近似来算重要性比率，最后用布朗运动启发的正则项隐式做熵最大化。整套框架的关键是让昂贵的ODE只在采样轨迹时跑一次，训练阶段全部退化为速度场的前向计算——这条「采样跑ODE、训练只前向」的分工是整篇方法能跑得快的根。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Z["噪声 z + 状态 s"] --> CF["条件流策略<br/>ODE 生成流终端<br/>再叠高斯噪声 → 多模态动作 a"]
+    CF -->|采样阶段·跑 ODE| ROLL["环境 rollout 采集轨迹<br/>→ GAE 优势估计"]
+    ROLL -->|训练阶段·不跑 ODE| T["采样时间 t~U[0,1]<br/>沿线性插值路径前向"]
+    T --> IR["插值路径近似重要性比率<br/>速度场差 → 比率 ρ"]
+    T --> BR["布朗运动熵正则器<br/>速度场对齐负 score → 残差"]
+    IR --> J["PPO 裁剪代理目标 + 正则项"]
+    BR --> J
+    J --> UP["联合更新策略 θ 与噪声方差 σ"]
+    UP -.下一轮做参考策略.-> CF
+```
 
 ### 关键设计
 
-**1. 条件流策略：用流终端加噪声换来Gaussian mixture表达力。** 高斯策略只能表示单峰动作，PolicyFlow改用条件流 $\varphi:[0,1]\times\mathbb{R}^d\times\mathbb{R}^n\to\mathbb{R}^d$ 生成动作，它由ODE $\frac{d}{dt}\varphi_t(\mathbf{z};\mathbf{s}) = v_t(\varphi_t(\mathbf{z};\mathbf{s});\mathbf{s})$、初值 $\varphi_0(\mathbf{z};\mathbf{s})=\mathbf{z}$ 支配，其中 $v$ 是神经网络参数化的时间依赖速度场。最终动作取流终端再叠一个高斯噪声 $\mathbf{a}=\varphi_1(\mathbf{z};\mathbf{s})+\mathbf{n}$，其中 $\mathbf{z}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$、$\mathbf{n}\sim\mathcal{N}(\mathbf{0},\boldsymbol{\sigma}^2)$。对 $\mathbf{z}$ 积分后策略写成 $\pi(\mathbf{a}|\mathbf{s})=\int\mathcal{N}(\mathbf{a};\varphi_1(\mathbf{z};\mathbf{s}),\boldsymbol{\sigma}^2)p_z(\mathbf{z})d\mathbf{z}$，是一个严格比单高斯更强的混合分布。末尾这个高斯噪声不只是探索手段：正因为它是高斯，重要性比率才有后面那个能解析展开的形式。
+**1. 条件流策略：用流终端加噪声换来 Gaussian mixture 表达力**
 
-**2. 插值路径近似重要性比率：把ODE路径积分换成一次速度场前向差。** PPO要算新旧策略的似然比 $\rho$，对流策略而言这本该沿整条ODE轨迹反向传播——内存密集、梯度不稳。PolicyFlow先利用高斯似然比的平移不变性，把比率化简为只依赖流终端位移差 $\delta_{\varphi_1}$ 的形式；再用一条线性插值路径 $\mathbf{x}_t=(1-t)\mathbf{z}+t\hat{\varphi}_1(\mathbf{z};\mathbf{s})$ 上的速度场差 $\delta_{v_t}=v_t(\mathbf{x}_t;\mathbf{s},\theta)-\hat{v}_t(\mathbf{x}_t;\mathbf{s})$ 去替代终端位移差，得到
+高斯策略只能表示单峰动作，PolicyFlow改用条件流 $\varphi:[0,1]\times\mathbb{R}^d\times\mathbb{R}^n\to\mathbb{R}^d$ 生成动作，它由ODE $\frac{d}{dt}\varphi_t(\mathbf{z};\mathbf{s}) = v_t(\varphi_t(\mathbf{z};\mathbf{s});\mathbf{s})$、初值 $\varphi_0(\mathbf{z};\mathbf{s})=\mathbf{z}$ 支配，其中 $v$ 是神经网络参数化的时间依赖速度场。最终动作取流终端再叠一个高斯噪声 $\mathbf{a}=\varphi_1(\mathbf{z};\mathbf{s})+\mathbf{n}$，其中 $\mathbf{z}\sim\mathcal{N}(\mathbf{0},\mathbf{I})$、$\mathbf{n}\sim\mathcal{N}(\mathbf{0},\boldsymbol{\sigma}^2)$。对 $\mathbf{z}$ 积分后策略写成 $\pi(\mathbf{a}|\mathbf{s})=\int\mathcal{N}(\mathbf{a};\varphi_1(\mathbf{z};\mathbf{s}),\boldsymbol{\sigma}^2)p_z(\mathbf{z})d\mathbf{z}$，是一个严格比单高斯更强的混合分布。末尾这个高斯噪声不只是探索手段：正因为它是高斯，重要性比率才有后面那个能解析展开的形式。
+
+**2. 插值路径近似重要性比率：把 ODE 路径积分换成一次速度场前向差**
+
+PPO要算新旧策略的似然比 $\rho$，对流策略而言这本该沿整条ODE轨迹反向传播——内存密集、梯度不稳。PolicyFlow先利用高斯似然比的平移不变性，把比率化简为只依赖流终端位移差 $\delta_{\varphi_1}$ 的形式；再用一条线性插值路径 $\mathbf{x}_t=(1-t)\mathbf{z}+t\hat{\varphi}_1(\mathbf{z};\mathbf{s})$ 上的速度场差 $\delta_{v_t}=v_t(\mathbf{x}_t;\mathbf{s},\theta)-\hat{v}_t(\mathbf{x}_t;\mathbf{s})$ 去替代终端位移差，得到
 
 $$\rho \approx \mathbb{E}_{p(t)}\left[\frac{p_n(\mathbf{a}-\hat{\varphi}_1; \delta_{v_t}(\mathbf{x}_t;\mathbf{s}), \boldsymbol{\sigma}^2)}{p_n(\mathbf{a}-\hat{\varphi}_1; \mathbf{0}, \hat{\boldsymbol{\sigma}}^2)}\right]\,.$$
 
 理论上这个近似的误差是 $\mathcal{O}(\epsilon)$，而 $\epsilon$ 恰好是PPO的裁剪范围——也就是说策略更新本来就被限制在小步长内，一阶近似在这个范围里足够精确，误差被裁剪机制天然压住。代入标准PPO目标得到裁剪代理 $J^{\text{Flow}}(\theta,\boldsymbol{\sigma})=\mathbb{E}[\min(\rho\hat{A},\text{clip}(\rho,1-\epsilon,1+\epsilon)\hat{A})]$，整个训练过程不再需要任何ODE模拟。
 
-**3. 布朗运动熵正则器：不算log-likelihood也能防模式坍缩。** 流策略的动作似然难以直接算，传统熵正则失效，FPO/DPPO因此容易模式坍缩。PolicyFlow借用一个物理直觉：布朗运动粒子自然扩散、熵单调递增，其概率路径遵循热方程 $\partial p_t/\partial t=\nabla^2 p_t$，对应速度场恰为负score $v_t=-\nabla\log p_t$。于是只要把策略速度场往参考流的负score方向对齐，就等价于让轨迹更"散开"、隐式抬高熵。利用score与速度场的显式关系 $\nabla_{\mathbf{x}}\log\hat{p}_t(\mathbf{x}_t;\mathbf{s})=\frac{1}{1-t}(t\hat{v}_t(\mathbf{x}_t;\mathbf{s})-\mathbf{x}_t)$，定义对齐残差 $\eta_t=(1-t)v_t(\mathbf{x}_t;\mathbf{s},\theta)-(\mathbf{x}_t-t\hat{v}_t(\mathbf{x}_t;\mathbf{s}))$ 并惩罚其范数，就把熵最大化变成了纯前向的speed-score对齐，完全绕开似然计算。
+**3. 布朗运动熵正则器：不算 log-likelihood 也能防模式坍缩**
+
+流策略的动作似然难以直接算，传统熵正则失效，FPO/DPPO因此容易模式坍缩。PolicyFlow借用一个物理直觉：布朗运动粒子自然扩散、熵单调递增，其概率路径遵循热方程 $\partial p_t/\partial t=\nabla^2 p_t$，对应速度场恰为负score $v_t=-\nabla\log p_t$。于是只要把策略速度场往参考流的负score方向对齐，就等价于让轨迹更"散开"、隐式抬高熵。利用score与速度场的显式关系 $\nabla_{\mathbf{x}}\log\hat{p}_t(\mathbf{x}_t;\mathbf{s})=\frac{1}{1-t}(t\hat{v}_t(\mathbf{x}_t;\mathbf{s})-\mathbf{x}_t)$，定义对齐残差 $\eta_t=(1-t)v_t(\mathbf{x}_t;\mathbf{s},\theta)-(\mathbf{x}_t-t\hat{v}_t(\mathbf{x}_t;\mathbf{s}))$ 并惩罚其范数，就把熵最大化变成了纯前向的speed-score对齐，完全绕开似然计算。
 
 ### 损失函数 / 训练策略
 

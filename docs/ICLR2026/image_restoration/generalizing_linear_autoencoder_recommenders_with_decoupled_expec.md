@@ -47,6 +47,16 @@ $$f(W) = \mathbb{E}_\Delta[\|A \odot (R - (\Delta \odot R)W)\|_F^2]$$
 
 其中 $\Delta$ 是 Bernoulli 随机矩阵（dropout），$A$ 是强调矩阵（被 dropout 掉的项权重为 $a$，未被 dropout 的权重为 $b$）。整篇方法围绕一个核心问题展开：EDLAE 只在 $b=0$ 时给出了闭式解，本文要把它推广到 $b\geq 0$ 的完整范围。为此先把这个期望目标重写成可逐列求解的形式（DEQL），再证明 $b>0$ 时解存在且唯一，最后用一个秩1更新技巧把原本不可行的 $O(n^4)$ 计算降到 $O(n^3)$，并叠加 $L_2$ 正则化与零对角约束三种变体。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    R["用户-物品交互矩阵 R<br/>期望二次损失目标 f(W)"] --> DEQL["DEQL 逐列解耦<br/>l(W)=Σ hⁱ(W*ᵢ) 独立回归"]
+    DEQL --> CF["b>0 闭式解与唯一性<br/>Hessian H⁽ⁱ⁾ 正定 → 解存在且唯一"]
+    CF -->|"逐列求逆 O(n⁴) 不可行"| MIL["Miller 秩1更新<br/>H⁽ⁱ⁾=H₀+E₁+E₂，从 H₀⁻¹ 增量更新<br/>总复杂度降至 O(n³)"]
+    MIL --> VAR["三种变体<br/>plain / +L2 / +L2 零对角"]
+    VAR --> W["物品相似矩阵 W<br/>预测 R̂ = R·W"]
+```
+
 ### 关键设计
 
 **1. 解耦期望二次损失（DEQL）：把整体目标按列拆成独立的回归问题**

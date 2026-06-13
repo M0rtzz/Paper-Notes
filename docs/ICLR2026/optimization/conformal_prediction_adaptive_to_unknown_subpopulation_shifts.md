@@ -42,12 +42,23 @@ tags:
 
 ### 整体框架
 
-测试环境是若干子群体的混合 $\mathbb{P}_{\text{test}} = \sum_{k=1}^K \lambda_k \mathbb{P}_k$，混合比例 $\lambda_k$ 未知且与校准数据不同，标准 CP 因此会在某些环境下严重欠覆盖或过覆盖。本文的共同思路是：先从测试数据估计它所属 domain 的概率分布 $\hat{\lambda}$，再用 $\hat{\lambda}$ 加权不同 domain 的校准分数，把固定阈值变成随测试分布自适应移动的阈值。
+测试环境是若干子群体的混合 $\mathbb{P}_{\text{test}} = \sum_{k=1}^K \lambda_k \mathbb{P}_k$，混合比例 $\lambda_k$ 未知且与校准数据不同，标准共形预测（conformal prediction, CP）用的是一个固定阈值，因此会在某些测试环境下严重欠覆盖或过覆盖。本文的共同思路只有一条主干：先从测试数据估计它所属 domain 的概率分布 $\hat{\lambda}$，再用 $\hat{\lambda}$ 去加权不同 domain 的校准分数，把固定阈值换成随测试分布自适应移动的阈值，从而把覆盖率重新拉回目标值。
 
-三种算法递进放松假设：
-1. **Algorithm 1**：有 domain classifier + 逐点加权（需 multicalibrated classifier）
-2. **Algorithm 2**：有 domain classifier + 批量平均加权（需 multiaccurate classifier，更弱要求）
-3. **Algorithm 3**：无 domain classifier，用嵌入相似度加权（无理论保证但实验有效）
+主干上唯一会变的环节是「怎么估计 $\hat{\lambda}$」，三种算法正是在这一步上递进放松假设：Algorithm 1 用 domain classifier 对每个测试点逐点估计（需较强的 multicalibration）；Algorithm 2 改用整个测试批次的平均（只需更弱的 multiaccuracy）；Algorithm 3 干脆丢掉 classifier、用嵌入相似度近似 domain 归属（无形式化保证但最实用）。在进入这条主干之前，Theorem 2.1 先证明了"把不完美 classifier 直接塞进 group-conditional CP"这条捷径会让覆盖崩掉，正是它把问题逼到"如何用更弱假设换回保证"上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["测试数据 X_test<br/>(子群体混合，比例 λ 未知)"] --> EST{"如何估计<br/>domain 分布 λ̂?"}
+    EST -->|"有 classifier·逐点"| A1["Algorithm 1<br/>逐点 domain 概率加权<br/>(需 multicalibration)"]
+    EST -->|"有 classifier·批量平均"| A2["Algorithm 2<br/>批量平均 domain 概率<br/>(只需 multiaccuracy)"]
+    EST -->|"无 classifier"| A3["Algorithm 3<br/>嵌入相似度加权<br/>(无形式化保证)"]
+    A1 --> W["按 λ̂ 加权各 domain<br/>的校准分数"]
+    A2 --> W
+    A3 --> W
+    W --> Q["求自适应阈值 q̂_α<br/>(Σ λ̂_k·m_k/(n_k+1) ≥ 1-α)"]
+    Q --> C["构造预测集 C_α(X_test)<br/>覆盖率重回目标"]
+```
 
 ### 关键设计
 

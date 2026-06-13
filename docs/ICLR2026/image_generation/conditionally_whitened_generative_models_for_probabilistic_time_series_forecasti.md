@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CW-Gen 想解决的是：标准扩散/流匹配把数据全部噪声化成 $\mathcal{N}(0,I)$，等于把条件均值（趋势）和变量间协方差这两份先验信息丢掉，让去噪网络从零学起。整套方法分两步走。第一步，JMCE（Joint Mean-Covariance Estimator）以 Non-stationary Transformer 为骨干，从历史窗口 $C$ 里联合估计出未来段的条件均值 $\hat{\mu}_{X|C}$ 和每个时间步的滑动窗口协方差 $\hat{\Sigma}_{t|C}$。第二步，把这两份估计通过「条件白化」注入生成模型——对扩散模型得到 CW-Diff、对流匹配得到 CW-Flow——核心动作都是把原来的终端分布 $\mathcal{N}(0,I)$ 换成贴近真实条件分布的 $\mathcal{N}(\hat{\mu}_{X|C}, \hat{\Sigma}_{X|C})$，让网络只需补完残差而非整段序列。
+CW-Gen 想解决的是：标准扩散/流匹配把数据全部噪声化成 $\mathcal{N}(0,I)$，等于把条件均值（趋势）和变量间协方差这两份先验信息丢掉，让去噪网络从零学起。整套方法分两步走。第一步，JMCE（Joint Mean-Covariance Estimator）以 Non-stationary Transformer 为骨干，从历史窗口 $C$ 里联合估计出未来段的条件均值 $\hat{\mu}_{X|C}$ 和每个时间步的滑动窗口协方差 $\hat{\Sigma}_{t|C}$；而 JMCE 的四项损失又是直接照着 Theorem 1 的「充分条件」推导出来的，理论与估计器一脉相承。第二步，把这两份估计通过「条件白化」注入生成模型——对扩散模型得到 CW-Diff、对流匹配得到 CW-Flow——核心动作都是把原来的终端分布 $\mathcal{N}(0,I)$ 换成贴近真实条件分布的 $\mathcal{N}(\hat{\mu}_{X|C}, \hat{\Sigma}_{X|C})$，让网络只需补完残差而非整段序列。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    C["历史窗口 C"] --> JMCE["JMCE 联合估计器<br/>Non-stationary Transformer 骨干"]
+    TH["Theorem 1 充分条件<br/>指明何时替换终端分布有益"] -.->|推导四项损失| JMCE
+    JMCE --> MU["条件均值 μ̂"]
+    JMCE --> SIG["Cholesky 因子 L̂<br/>合成协方差 Σ̂"]
+    MU --> TERM["终端分布替换<br/>N(0,I) → N(μ̂, Σ̂)"]
+    SIG --> TERM
+    TERM -->|扩散模型| CWD["CW-Diff<br/>白化数据→DDPM→反白化"]
+    TERM -->|流匹配| CWF["CW-Flow<br/>直接从 N(μ̂,Σ̂) 出发"]
+    CWD --> OUT["概率预测样本"]
+    CWF --> OUT
+```
 
 ### 关键设计
 

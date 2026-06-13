@@ -43,15 +43,39 @@ tags:
 
 ### 整体框架
 
-LongWriter-Zero 把超长文本生成当作一个纯 RL 问题：在 Qwen2.5-32B 上先用写作语料做持续预训练把基座能力顶高，再用 GRPO 配合长度 / 质量 / 格式三个奖励模型直接优化生成策略，全程不碰任何标注或合成长文样本。模型被引导先在 `<think>` 段规划、再在 `<answer>` 段落笔，让写作也享受「先想后写」的测试时推理红利。训练跑在 8 节点 × 8 × H800 上，每步采样 32 条轨迹，最大输出 14,000 token，温度 $T=0.8$、top-p 为 1.0。
+LongWriter-Zero 把超长文本生成当作一个纯强化学习（RL）问题来做：既不教模型怎么写、也不喂任何标注或合成长文，而是给它一把能打分的尺子，让它在自我探索里涌现出写长文的能力。整条流水线分三步走——先在 Qwen2.5-32B 上用 30B token 写作语料做持续预训练，把基座的写作底子顶高；再让模型对每条 query 采样一组轨迹（每步 32 条），每条都按「先在 `<think>` 段头脑风暴、列提纲，再在 `<answer>` 段落笔」的格式生成，享受「先想后写」的测试时推理红利；最后由长度、质量、格式三个奖励模型分别打分，经优势级归一化后融成一个标量优势，用 GRPO 更新策略。训练跑在 8 节点 × 8 × H800 上，最大输出 14,000 token，温度 $T=0.8$、top-p 为 1.0。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Qwen2.5-32B 基座"] --> B["持续预训练<br/>30B token 写作语料<br/>+1% 蒸馏长 CoT"]
+    B --> C["按 query 采样一组轨迹<br/>每条 think 规划 + answer 落笔"]
+    C --> D["长度 RM<br/>分段线性控长"]
+    C --> E["质量 RM<br/>Bradley-Terry 偏好"]
+    C --> F["格式 RM<br/>结构 + 去重"]
+    D --> G["优势级归一化<br/>三维等权融合"]
+    E --> G
+    F --> G
+    G --> H["GRPO 更新策略"]
+    H -->|"下一轮采样"| C
+    H --> I["超长高质量文本"]
+```
 
 ### 关键设计
 
-**1. 三维度复合奖励模型：给没有标准答案的写作造一把可优化的尺子。** 开放式写作不像数学题有 ground truth 可供规则判分，作者因此拆出三个互补的奖励信号。Length RM 负责精确控长，用 QwQ-32B 为每条 query 预测合理字数区间 $[L_{\text{lower}}, L_{\text{upper}}]$，再用分段线性函数 $r_{\text{length}}(o)$ 在区间内给满分、不足或超出时线性衰减——$\text{len}(o)<L_{\text{lower}}$ 时取 $\text{len}(o)/L_{\text{lower}}$，超出 $L_{\text{upper}}$ 时取 $(L_{\text{max}}-\text{len}(o))/(L_{\text{max}}-L_{\text{upper}})$，把「写够但别注水」量化成可导信号。Writing RM 评判整体质量（流畅、连贯、信息量），以 Qwen2.5-72B 为 backbone 在人工偏好数据上用 Bradley-Terry 目标 $\mathcal{L}=-\mathbb{E}[\log\sigma(r(x,y_w)-r(x,y_l))]$ 训练。Format RM 守结构与去重，检查是否严格遵守「一个 `<think>` + 一个 `<answer>`」格式，并按语义重叠度惩罚复制段落——这正是 RL 训练里模型偷长度的常见捷径。三者直接平均会被量纲大的分量主导，作者改用 advantage-level normalization：先把每个分量在 group 内归一化到 $[-1,1]$，再取优势均值 $A_{\text{final}}=\frac{1}{3}(A_{\text{length}}+A_{\text{write}}+A_{\text{format}})$，确保三个维度等权贡献，不让长度或格式淹没写作质量。
+**1. 三维度复合奖励模型：给没有标准答案的写作造一把可优化的尺子**
 
-**2. 写作中的测试时推理：让模型先打草稿提纲再落笔。** R1-Zero 在数学里靠长 CoT 实现 test-time scaling，但写作是否也需要「先想后写」是个开放问题。作者用 Think Prompt（先在 `<think>` 里头脑风暴、列提纲、选风格、适配受众、自审，再在 `<answer>` 出稿）对比 Direct-Answer（跳过思考直接写）。结果是 Base-think 初期因要先学会 think/answer 格式而落后于 Base-nothink，但随训练推进反超并触到更高天花板，Arena-Write Elo 拉开到 1221 对 668。更有意思的是写作的 think 长度会收敛到约 2000–3000 token 后趋于平稳，而非像数学推理那样无限膨胀——说明写作的规划需求存在天然饱和点，规划足够后更多思考只是白白吃掉上下文窗口。
+开放式写作不像数学题有 ground truth 可供规则判分，作者因此把「写得好」拆成三个互补的奖励信号。长度奖励（Length RM）负责精确控长，用 QwQ-32B 为每条 query 预测合理字数区间 $[L_{\text{lower}}, L_{\text{upper}}]$，再用分段线性函数 $r_{\text{length}}(o)$ 在区间内给满分、不足或超出时线性衰减——$\text{len}(o)<L_{\text{lower}}$ 时取 $\text{len}(o)/L_{\text{lower}}$，超出 $L_{\text{upper}}$ 时取 $(L_{\text{max}}-\text{len}(o))/(L_{\text{max}}-L_{\text{upper}})$，把「写够但别注水」量化成可导信号。质量奖励（Writing RM）评判整体水准（流畅、连贯、信息量），以 Qwen2.5-72B 为骨干在人工偏好数据上用 Bradley-Terry 目标 $\mathcal{L}=-\mathbb{E}[\log\sigma(r(x,y_w)-r(x,y_l))]$ 训练。格式奖励（Format RM）守结构与去重，检查是否严格遵守「一个 `<think>` + 一个 `<answer>`」格式，并按语义重叠度惩罚复制段落——这正是 RL 训练里模型偷长度的常见捷径。
 
-**3. 持续预训练抬高 RL 天花板：先把基座写作能力喂饱，RL 才探得更高。** 既有研究指出 RL 上限受基座能力约束，作者在写作任务上验证了这点同样成立。预训练用 30B token 中英文书籍、报告、学术论文（来自 Common Crawl），并混入 1% 从 Base-think 蒸馏的长 CoT 数据做格式对齐——比例压到 1% 是为了避免模型记死特定 CoT 模式；训练用 batch size 512、packed sequences、最大上下文 32K token。效果上，Continual-Pretrain-think 的初始 Writing RM 和 Length RM 就高于 Base-think，最终收敛值也更高，Arena-Write Elo 从约 1000 起步收敛到约 1400，对应对 DeepSeek-R1 接近 80% 的胜率。
+三个信号若直接相加，量纲大的分量会主导整体奖励，把模型往单一维度带偏。作者因此改用优势级归一化（advantage-level averaging）：不在原始分数上平均，而是先把每个分量在同一组采样轨迹内各自算成归一化优势，再取均值 $A_{\text{final}}=\frac{1}{3}(A_{\text{length}}+A_{\text{write}}+A_{\text{format}})$。这样三个维度等权贡献，长度或格式不会淹没写作质量。
+
+**2. 写作中的测试时推理：让模型先打草稿提纲再落笔**
+
+R1-Zero 在数学里靠长链式思维（CoT）实现测试时扩展，但写作是否也需要「先想后写」是个开放问题。作者用 Think Prompt（先在 `<think>` 里头脑风暴、列提纲、选风格、适配受众、自审，再在 `<answer>` 出稿）对比 Direct-Answer（跳过思考直接写）。结果是 Base-think 初期因要先学会 think/answer 格式而落后于 Base-nothink，但随训练推进反超并触到更高天花板，Arena-Write Elo 拉开到 1221 对 668。更有意思的是写作的 think 长度会收敛到约 2000–3000 token 后趋于平稳，而非像数学推理那样无限膨胀——说明写作的规划需求存在天然饱和点，规划足够后更多思考只是白白吃掉上下文窗口。
+
+**3. 持续预训练抬高 RL 天花板：先把基座写作能力喂饱，RL 才探得更高**
+
+既有研究指出 RL 的上限受基座能力约束，作者在写作任务上验证了这点同样成立。预训练用 30B token 中英文书籍、报告、学术论文（来自 Common Crawl），并混入 1% 从 Base-think 蒸馏的长 CoT 数据做格式对齐——比例压到 1% 是为了避免模型记死特定 CoT 模式；训练用 batch size 512、packed sequences、最大上下文 32K token。效果上，Continual-Pretrain-think 的初始质量奖励和长度奖励分数就高于 Base-think，最终收敛值也更高，Arena-Write Elo 从约 1000 起步收敛到约 1400，对应对 DeepSeek-R1 接近 80% 的胜率。
 
 ## 实验关键数据
 

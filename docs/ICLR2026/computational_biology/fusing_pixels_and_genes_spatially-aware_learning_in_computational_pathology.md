@@ -43,7 +43,28 @@ tags:
 
 ### 整体框架
 
-Stamp 采用两阶段预训练。Stage 1：在 SpaVis-6M 上预训练空间感知基因编码器，学习基因-基因共表达模式和空间依赖关系。Stage 2：在 697K 病理图像-基因表达配对数据（HEST 数据集）上，通过层次化多尺度对比对齐将基因编码器与视觉编码器（UNI, ViT-L/16）对齐。输出包含基因嵌入（Stamp_G）、视觉嵌入（Stamp_V）和融合嵌入（Stamp_F）。
+Stamp 要解决的是「怎么用空间转录组的基因表达当监督信号、训练出懂分子又懂空间的病理图像表示」，整个流程分两阶段串起来。**Stage 1（基因侧自监督）**：把每个 spot 的高维稀疏基因表达先转成 token 序列，在 575 万非配对的 SpaVis-6M 上做空间感知预训练，让一个 12 层 Transformer 基因编码器既学会 spot 内的基因共表达、又学会 spot 间的空间依赖。**Stage 2（跨模态对齐）**：拿冻结好的基因编码器，在 697K 病理图像-基因配对数据上，通过层次化多尺度对比对齐把视觉编码器（UNI, ViT-L/16）拉向基因表示。最终产出三种嵌入——基因嵌入 Stamp_G、视觉嵌入 Stamp_V、以及二者融合的 Stamp_F，供下游任务按需取用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["空间转录组 spot<br/>(高维稀疏基因表达)"]
+    subgraph S1["Stage 1：基因侧自监督（SpaVis-6M 575万）"]
+        direction TB
+        TOK["基于异常排序的<br/>基因 Tokenization"]
+        PRE["空间感知预训练<br/>(IGR spot内 + CGR 邻域上下文)"]
+        GENC["基因编码器<br/>(12 层 Transformer)"]
+        TOK --> PRE --> GENC
+    end
+    IN --> TOK
+    PAIR["病理图像-基因<br/>配对数据 (697K)"]
+    VENC["视觉编码器<br/>(UNI ViT-L/16)"]
+    ALIGN["层次化多尺度对比对齐<br/>(patch / region 双尺度)"]
+    GENC --> ALIGN
+    PAIR --> VENC --> ALIGN
+    PAIR --> ALIGN
+    ALIGN --> OUT["Stamp_G / Stamp_V / Stamp_F<br/>→ 下游 4 任务"]
+```
 
 ### 关键设计
 

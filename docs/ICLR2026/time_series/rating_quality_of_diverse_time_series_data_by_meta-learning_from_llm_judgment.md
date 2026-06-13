@@ -33,21 +33,41 @@ tags:
 
 TSRating把"让LLM判质量"和"让轻量模型大规模评分"两件事拆成一条流水线：先用滑窗把时间序列切成重叠块，让LLM从趋势、频率、幅度、模式四个维度对块做成对比较，再用Bradley-Terry模型把这些偏好转成连续的质量分数，作为监督信号去蒸馏一个以冻结MOMENT为编码器、MLP为打分头的TSRater；最后用MAML在九个领域上做元学习，让TSRater只需few-shot微调就能迁移到新域。推理阶段彻底甩开LLM，只跑一次TSRater前馈即可给任意时间序列打分。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["时间序列数据"] --> B["滑窗切成重叠块"]
+    B --> S1
+    subgraph S1["LLM成对质量判断与<br/>Bradley-Terry标量化"]
+        direction TB
+        C["LLM四维成对比较<br/>(趋势/频率/幅度/模式)"] --> D["Bradley-Terry<br/>转连续质量分数"]
+    end
+    S1 --> E["TSRater蒸馏模型<br/>(冻结MOMENT+MLP打分头)"]
+    E --> F["MAML元学习跨域训练<br/>(signSGD内循环·9领域)"]
+    F --> G["推理：TSRater单次前馈<br/>给任意序列打分"]
+```
+
 ### 关键设计
 
-**1. LLM成对质量判断与Bradley-Terry标量化：把"哪个更好"变成可监督的连续分数。** LLM不擅长直接给绝对分，但擅长二选一，所以这里对每对块 $\mathbf{B}_i, \mathbf{B}_j$ 从趋势、频率、幅度、模式四维分别做成对比较，并对同一对重复 $M$ 次取置信度 $p_{i \succ j} = \frac{1}{M} \sum_{k=1}^{M} m_{i \succ j}^{(k)}$ 来抵消随机性。为消除"先出现的块更易被选"这类位置偏差，还会交换两块在prompt里的顺序各判一次再取均值；多变量序列则逐通道评判后做通道平均 $s(\mathbf{B}_i) = \frac{1}{D} \sum_{d=1}^{D} s(\mathbf{B}_i^d)$。光有成对偏好还无法训练打分模型，于是用Bradley-Terry假设 $p_{i \succ j} = \sigma(s(\mathbf{B}_i) - s(\mathbf{B}_j))$ 把偏好概率与标量分数之差挂钩，再通过最大似然把整批比较拟合成一组自洽的连续分数：
+**1. LLM成对质量判断与Bradley-Terry标量化：把"哪个更好"变成可监督的连续分数**
+
+LLM不擅长直接给绝对分，但擅长二选一，所以这里对每对块 $\mathbf{B}_i, \mathbf{B}_j$ 从趋势、频率、幅度、模式四维分别做成对比较，并对同一对重复 $M$ 次取置信度 $p_{i \succ j} = \frac{1}{M} \sum_{k=1}^{M} m_{i \succ j}^{(k)}$ 来抵消随机性。为消除"先出现的块更易被选"这类位置偏差，还会交换两块在prompt里的顺序各判一次再取均值；多变量序列则逐通道评判后做通道平均 $s(\mathbf{B}_i) = \frac{1}{D} \sum_{d=1}^{D} s(\mathbf{B}_i^d)$。光有成对偏好还无法训练打分模型，于是用Bradley-Terry假设 $p_{i \succ j} = \sigma(s(\mathbf{B}_i) - s(\mathbf{B}_j))$ 把偏好概率与标量分数之差挂钩，再通过最大似然把整批比较拟合成一组自洽的连续分数：
 
 $$\mathcal{P} = \sum_{(\mathbf{B}_i, \mathbf{B}_j, p_{i \succ j}) \in \mathcal{J}} \left[ p_{i \succ j} \log \sigma(s(\mathbf{B}_i) - s(\mathbf{B}_j)) + (1-p_{i \succ j}) \log \sigma(s(\mathbf{B}_j) - s(\mathbf{B}_i)) \right]$$
 
 这套设计在合成数据上得到验证——趋势、频率、幅度、模式四维的识别准确率分别为94.5%、92.25%、98.75%、95.75%，说明LLM确实抓住了时间序列质量的关键属性，而非随机猜测。
 
-**2. TSRater蒸馏模型：把 $O(n^2)$ 的API调用压成一次前馈。** 直接靠LLM给大规模数据打分不现实，成对比较的代价是样本数的平方级API调用，所以TSRating把LLM的判断蒸馏进一个轻量模型。TSRater以约1.09亿参数的时间序列基础模型MOMENT作冻结编码器提取时序特征，再接一个3层MLP（隐藏维度256，配LayerNorm、ReLU与残差连接）输出标量质量分。训练时不重新定义目标，而是让模型的打分之差去复刻LLM的成对偏好，用二元交叉熵对齐：
+**2. TSRater蒸馏模型：把 $O(n^2)$ 的API调用压成一次前馈**
+
+直接靠LLM给大规模数据打分不现实，成对比较的代价是样本数的平方级API调用，所以TSRating把LLM的判断蒸馏进一个轻量模型。TSRater以约1.09亿参数的时间序列基础模型MOMENT作冻结编码器提取时序特征，再接一个3层MLP（隐藏维度256，配LayerNorm、ReLU与残差连接）输出标量质量分。训练时不重新定义目标，而是让模型的打分之差去复刻LLM的成对偏好，用二元交叉熵对齐：
 
 $$\mathcal{L}_\theta = \mathbb{E}_{(\mathbf{B}_i, \mathbf{B}_j, p_{i \succ j}) \in \mathcal{J}} \left[ -p_{i \succ j} \log \sigma(s_\theta(\mathbf{B}_i) - s_\theta(\mathbf{B}_j)) - (1-p_{i \succ j}) \log \sigma(s_\theta(\mathbf{B}_j) - s_\theta(\mathbf{B}_i)) \right]$$
 
 训练完成后，给任意数据评分只需TSRater单次前馈，把昂贵的LLM判断一次性固化进了可复用的打分器。块级分数还能自下而上聚合成更大粒度：点级分数对覆盖该点的所有块取均值 $s(x_i) = \frac{1}{|B(x)|} \sum_{\mathbf{B}_k \in B(x)} s(\mathbf{B}_k)$，样本级再对所有时间点平均 $s(\mathbf{S}) = \frac{1}{T} \sum_{i=1}^{T} s(x_i)$，于是同一套块级监督可直接服务样本筛选。
 
-**3. MAML元学习跨域训练：让一个打分器适配所有领域。** 真实时间序列横跨医疗、金融、气象、工业，逐域单独训打分器既贵又难复用，因此TSRating把"在新域上快速适配"本身当作训练目标。它从Time-300B语料中选取能源、零售、金融、医疗、交通、气象、工业、合成与其他共九个领域的22个子集构成元学习任务，优化的是经过一步内循环更新后在query集上的损失：
+**3. MAML元学习跨域训练：让一个打分器适配所有领域**
+
+真实时间序列横跨医疗、金融、气象、工业，逐域单独训打分器既贵又难复用，因此TSRating把"在新域上快速适配"本身当作训练目标。它从Time-300B语料中选取能源、零售、金融、医疗、交通、气象、工业、合成与其他共九个领域的22个子集构成元学习任务，优化的是经过一步内循环更新后在query集上的损失：
 
 $$\min_\theta \sum_{\mathcal{T}_i \sim \mathcal{T}} \mathcal{L}_{\mathcal{T}_i}^{\text{query}} \left( \theta - \alpha \cdot \text{sign}(\nabla_\theta \mathcal{L}_{\mathcal{T}_i}^{\text{support}}(\theta)) \right)$$
 

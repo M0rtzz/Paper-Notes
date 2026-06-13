@@ -33,7 +33,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-作者把信息搜索拆成一个 Collaborative Battleship 协作游戏：Captain 只看到部分棋盘，要在「提问探索」和「射击利用」之间权衡，Spotter 看到完整棋盘只负责回答 yes/no。围绕这个游戏，先用 126 局人类对局（N=42）建起 BattleshipQA 基准，再把贝叶斯实验设计套到 LM 上，分别在提问、行动、决策三个环节注入贝叶斯最优推断，最后在 Guess Who? 上验证策略能不能迁移。所有增强都发生在推断时，不涉及任何训练。
+作者把信息搜索拆成一个 Collaborative Battleship 协作游戏：Captain 只看到部分棋盘，要在「提问探索」和「射击利用」之间权衡，Spotter 看到完整棋盘只负责回答 yes/no。围绕这个游戏，先用 126 局人类对局（N=42）建起 BattleshipQA 基准，再把贝叶斯实验设计套到 LM 上，分别在提问、行动、决策三个环节注入贝叶斯最优推断，最后在 Guess Who? 上验证策略能不能迁移。整条链路是一个回环：Captain 对隐藏棋盘维护一个信念分布，每轮先由决策模块判断该问还是该打，若提问就选信息量最大的问题、让 Spotter 用程序回答、再回头更新信念，若射击就选击中概率最大的格子。所有增强都发生在推断时，不涉及任何训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["隐藏棋盘 S<br/>+ Captain 部分观测"] --> BELIEF["贝叶斯信念更新<br/>SMC 粒子近似后验 π_t"]
+    BELIEF --> D{"Bayes-D：<br/>该问还是该打？"}
+    subgraph STRAT["三种贝叶斯策略（Bayes-Q/M/D）"]
+        direction TB
+        D -->|提问| Q["Bayes-Q：<br/>选 EIG 最大的问题"]
+        D -->|射击| M["Bayes-M：<br/>选击中概率最大的格子"]
+    end
+    Q --> CODE["代码生成接地（SpotterQA）<br/>Spotter 用程序答 yes/no"]
+    CODE --> BELIEF
+    M --> OUT["命中/未命中<br/>→ 游戏胜率 / F1"]
+```
 
 ### 关键设计
 

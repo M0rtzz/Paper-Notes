@@ -53,6 +53,28 @@ AMAGF 把"有意义的人类控制"从一句口号落成一套运行时机制：
 | 国家监管机构 | 设定标准、审计合规 |
 | 国际机构 | 建立规范、促进透明度 |
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["军事 AI 代理部署"] --> P
+    subgraph P["六类可测量的失败模式（预防支柱）"]
+        direction TB
+        F["F1 解释偏差 · F2 修正吸收 · F3 信念抵制<br/>F4 承诺不可逆 · F5 状态偏离 · F6 级联断裂"] --> GATE["六个形式化指标 + 部署门槛"]
+    end
+    P --> D
+    subgraph D["控制质量分数 CQS（检测支柱）"]
+        direction TB
+        NORM["六指标归一化"] --> CQS["CQS = min(n1..n6)"]
+        PROBE["对抗性控制探测"] --> CQS
+    end
+    D --> R
+    subgraph R["分级响应协议（纠正支柱）"]
+        direction TB
+        LADDER["按 CQS 连续收紧自主权<br/>正常→升级→受限→最低→安全状态"] --> FIX["信念重置 · 集群隔离 · PIGR 事后审查"]
+    end
+    FIX -->|"更新治理参数"| P
+```
+
 ### 关键设计
 
 **1. 把"失控"拆成六类可测量的失败模式（预防支柱）：让抽象的人类控制变成部署前能验收的硬指标**

@@ -45,15 +45,42 @@ tags:
 
 ### 整体框架
 
-核心观察是 ×8 pixel-(un)shuffle 与 VAE 执行类似的空间尺度变换，因此可以把潜空间扩散超分（GenDR）整体逆转回像素空间。GenDR-Pix 通过两个蒸馏阶段把 VAE 拆解掉——先用 pixel-unshuffle 替换 encoder（得到 GenDR-Adc），再用 pixel-shuffle 替换 decoder，并配合频域损失、跨阶段判别器和随机填充来压制 ×8 上采样引入的伪影，最后用像素空间专属的 PadCFG 完成推理。
+核心观察是 ×8 pixel-(un)shuffle 与 VAE 执行类似的空间尺度变换，因此可以把潜空间扩散超分（GenDR）整体逆转回像素空间。GenDR-Pix 用「两阶段对抗蒸馏」把 VAE 一步步拆掉：Stage I 先用 pixel-unshuffle 顶掉 encoder，蒸馏出一个低质量像素→高质量 latent 的生成器 $\mathcal{G}_1$（GenDR-Adc）；Stage II 再用 pixel-shuffle 顶掉 decoder，让整条管线彻底进入像素空间，同时把上一阶段的 $\mathcal{G}_1$ 复用为判别器，并配合频域损失和随机填充压制 ×8 上采样带来的伪影；最后推理时换上像素空间专属的 PadCFG。三件事一脉相承——前一阶段的产物既是后一阶段的起点，又是它的判别器。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    LQ["低质量像素图 (LQ)"]
+    subgraph S1["1. Stage I：pixel-unshuffle 替换 Encoder"]
+        direction TB
+        A["×8 pixel-unshuffle<br/>(替代 VAE encoder)"] --> B["生成器 G1 / GenDR-Adc<br/>蒸馏：latent 匹配 + 对抗<br/>(GenDR UNet 作判别器)"]
+    end
+    subgraph S2["2. Stage II：pixel-shuffle 替换 Decoder"]
+        direction TB
+        C["生成器 G2<br/>×8 pixel-shuffle 替代 decoder<br/>全程像素空间"]
+        C --> D["MFS 频域损失<br/>压周期性伪影"]
+        C --> E["G1 作判别器<br/>+ RandPad 防坍塌"]
+    end
+    PAD["3. PadCFG 推理<br/>双 padding 分支自集成"]
+    OUT["高分辨率输出 (4K / 8K)"]
+    LQ --> S1
+    S1 -->|"高质量 latent；G1 复用为判别器"| S2
+    S2 --> PAD --> OUT
+```
 
 ### 关键设计
 
-**1. Stage I —— 用 pixel-unshuffle 替换 Encoder：先把输入侧的 VAE 拆掉。** 把 VAE encoder 直接换成无参数的 ×8 pixel-unshuffle 层，让低质量像素图直接折叠成与原 latent 同尺度的张量，再蒸馏出一个「低质量像素 → 高质量 latent」的生成器 $\mathcal{G}_1$（记作 GenDR-Adc）。蒸馏沿用对抗框架，用原 GenDR 的 UNet 作判别器特征提取器，生成器损失为 $\mathcal{L}_{\mathcal{G}_1} = \|z_{\text{tea}} - z_{\text{stu}}\|_1 + \lambda_1 \cdot \text{softplus}(-\mathcal{D}(z_{\text{stu}}))$，前一项对齐教师 latent、后一项保证生成分布逼真。这一阶段把 encoder 的开销直接清零，同时产出的 $\mathcal{G}_1$ 在 Stage II 还能复用为判别器。
+**1. Stage I：用 pixel-unshuffle 替换 Encoder**
 
-**2. Stage II —— 用 pixel-shuffle 替换 Decoder：本文的核心难点。** 把 decoder 换成 ×8 pixel-shuffle 层后，整条管线彻底进入像素空间，但 ×8 上采样会带来三个连锁问题，需要三个对应设计逐一化解。其一是**重复模式伪影**：一个不当的权重值会在所有 8×8 patch 上复制出相同的棋盘格。作者发现这类伪影在频域中表现为与 pixel-shuffle 缩放因子对齐的周期性高光点，于是设计 Masked Fourier Space（MFS）损失，用一个带通拒绝滤波器 mask $\mathcal{M}$ 只惩罚这些异常振幅：$\mathcal{L}_{\mathcal{F}} = \|\mathcal{M} \cdot (|\mathcal{F}\{y_{\text{stu}}\}| - |\mathcal{F}\{y_{\text{tea}}\}|)\|_1$，在频域精准抑制而不伤其他细节。其二是**缺乏合适判别器**——latent 空间的判别器无法处理 pixel-shuffled 特征，作者顺势把 Stage I 训好的 $\mathcal{G}_1$（GenDR-Adc）拿来当判别器，因为它天然带 pixel-unshuffle 输入接口，正好吃下像素图。其三是**判别器坍塌**：固定的 pixel-unshuffle 划分模式会诱导判别器只盯着离散的分块表示。解法是 Random Padding（RandPad）增强，随机采样 $p_h, p_w \in \{0,...,7\}$ 对 SR 和 HQ 图执行 $\text{randpad}(y) = \text{pad}(y, [p_h, 8-p_h, p_w, 8-p_w])$，打散固定分块边界，迫使判别器学习连续表示，从而避免模式坍塌。
+第一刀砍向输入侧的 VAE encoder。作者把它直接换成无参数的 ×8 pixel-unshuffle 层，让低质量像素图原地折叠成与原 latent 同尺度的张量，再蒸馏出一个「低质量像素 → 高质量 latent」的生成器 $\mathcal{G}_1$（记作 GenDR-Adc）。蒸馏沿用对抗框架，借原 GenDR 的 UNet 当判别器特征提取器，生成器损失为 $\mathcal{L}_{\mathcal{G}_1} = \|z_{\text{tea}} - z_{\text{stu}}\|_1 + \lambda_1 \cdot \text{softplus}(-\mathcal{D}(z_{\text{stu}}))$——前一项把学生 latent 对齐教师 latent，后一项保证生成分布逼真。这一步既把 encoder 的算力开销直接清零，又顺手产出一个带 pixel-unshuffle 输入接口的 $\mathcal{G}_1$，为 Stage II 埋下伏笔。
 
-**3. PadCFG —— 像素空间专属的 Classifier-Free Guidance：让 CFG 不再放大伪影。** 在像素空间直接套用标准 CFG 会进一步放大上述伪影，作者把 self-ensemble 思想与 CFG 融合，让正负分支各用一组不同的 padding：$\bar{y} = \omega \times \mathcal{G}_2(\text{pad}(x,[4,4,4,4]), c_{\text{pos}}) + (1-\omega) \times \mathcal{G}_2(\text{pad}(x,[3,5,3,5]), c_{\text{neg}})$。这样在保持标准 CFG 同样 2 次前向传播开销的前提下，额外获得了多 padding 融合的 ensemble 平滑效果，既增强引导又抑制伪影。
+**2. Stage II：用 pixel-shuffle 替换 Decoder**
+
+把 decoder 也换成 ×8 pixel-shuffle 层后，整条管线彻底进入像素空间，这是本文真正的难点——×8 上采样连带三个问题，需要三个机制逐一化解。其一是**重复模式伪影**：尾层一个不当的权重就会在所有 8×8 patch 上复制出相同棋盘格；作者发现这类伪影在频域里表现为与 pixel-shuffle 缩放因子对齐的周期性高光点，于是用 Masked Fourier Space（MFS）损失只惩罚这些异常振幅，$\mathcal{L}_{\mathcal{F}} = \|\mathcal{M} \cdot (|\mathcal{F}\{y_{\text{stu}}\}| - |\mathcal{F}\{y_{\text{tea}}\}|)\|_1$，其中 mask $\mathcal{M}$ 只在异常频段开窗，精准抑制而不伤其他细节。其二是**缺乏合适判别器**：latent 空间的判别器吃不下 pixel-shuffled 特征，作者顺势把 Stage I 训好的 $\mathcal{G}_1$ 拿来当判别器——它天然带 pixel-unshuffle 输入接口，正好接收像素图。其三是**判别器坍塌**：固定的 pixel-unshuffle 划分模式会诱导判别器只盯着离散分块表示，于是引入 Random Padding（RandPad）增强，随机采样 $p_h, p_w \in \{0,...,7\}$ 对 SR 和 HQ 图做 $\text{randpad}(y) = \text{pad}(y, [p_h, 8-p_h, p_w, 8-p_w])$，打散固定分块边界、逼判别器学连续表示，从而避免坍塌。
+
+**3. PadCFG：像素空间专属的 Classifier-Free Guidance**
+
+最后是推理。在像素空间直接套用标准 CFG 反而会放大上述伪影，作者把 self-ensemble 思想揉进 CFG，让正负两个分支各用一组不同 padding：$\bar{y} = \omega \times \mathcal{G}_2(\text{pad}(x,[4,4,4,4]), c_{\text{pos}}) + (1-\omega) \times \mathcal{G}_2(\text{pad}(x,[3,5,3,5]), c_{\text{neg}})$。这样在保持标准 CFG 同样 2 次前向开销的前提下，额外蹭到多 padding 融合的 ensemble 平滑效果——既增强引导，又顺带抹平伪影。
 
 ### 损失函数 / 训练策略
 

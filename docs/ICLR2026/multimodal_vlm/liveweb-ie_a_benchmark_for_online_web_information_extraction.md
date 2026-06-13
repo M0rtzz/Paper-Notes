@@ -43,7 +43,17 @@ tags:
 
 ### 整体框架
 
-本文要解决的是「现有网页信息抽取（WIE）基准全是静态 HTML 快照、跟不上真实网页变化」这件事，给出两个配套贡献：一个面向在线网页的评估基准 LiveWeb-IE，和一个无需训练的抽取方法 VGS。LiveWeb-IE 把评估搬到线上——系统拿到 URL 后必须访问当前时刻的真实网页再作答；VGS 则模拟人在网页上找信息的认知过程，从「整页截图 → 锁定区域 → 精确定位元素 → 合成 XPath」一步步把观察空间收窄，最后产出可复用的 XPath wrapper。
+本文要解决的是「现有网页信息抽取（WIE）基准全是静态 HTML 快照、跟不上真实网页变化」这件事，给出两个配套贡献：一个面向在线网页的评估基准 LiveWeb-IE，和一个无需训练的抽取方法 VGS。LiveWeb-IE 把评估搬到线上——系统拿到 URL 后必须访问当前时刻的真实网页再作答；VGS 则模拟人在网页上找信息的认知过程，从「整页截图 → 锁定区域 → 精确定位元素 → 合成 XPath」一步步把观察空间收窄，最后产出可复用的 XPath wrapper。下图是 VGS 这条抽取流水线的整体走向（基准 LiveWeb-IE 提供它在线作答的评估场景）：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["URL → 访问当前网页<br/>渲染整页截图 + 查询 Q"] --> B["属性识别<br/>LLM 把 Q 拆成目标属性集 Â"]
+    B --> C["视觉定位<br/>VLM 在垂直区域序列里<br/>为每个属性挑出相关区域"]
+    C --> D["元素精确定位<br/>生成候选框 + Set-of-Mark 标号<br/>VLM 选出目标元素集 B*"]
+    D --> E["XPath 合成<br/>取邻近局部 HTML，VLM 融合<br/>视觉+结构生成可复用 XPath"]
+    E --> F["XPath wrapper<br/>套用同组同类页面批量抽取"]
+```
 
 ### 关键设计
 

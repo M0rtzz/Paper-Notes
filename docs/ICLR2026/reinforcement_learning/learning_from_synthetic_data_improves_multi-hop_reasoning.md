@@ -39,7 +39,16 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文要回答的问题很直接：如果只拿完全虚构、由规则模板生成的合成题去做 RLVR，模型能不能把本事迁移到真实的多跳推理任务上？为此它的流程是「合成域训练 → 真实域评估」两段式——先在 4 个规则生成的合成数据集（PhantomWiki / GSM-∞ / RG-Family / RG-Knights）上用 GRPO 做 RLVR 训练，再把训练后的模型直接拿到 5 个真实多跳 QA 基准上测迁移效果。训练覆盖 Qwen3 与 Phi-4 两个家族、0.6B 到 4B 共 4 个模型，全程不接触任何真实标注数据。
+论文要回答的问题很直接：如果只拿完全虚构、由规则模板生成的合成题去做 RLVR，模型能不能把本事迁移到真实的多跳推理任务上？为此它的流程是「合成域训练 → 真实域评估」两段式——先在 4 个规则生成的合成数据集（PhantomWiki / GSM-∞ / RG-Family / RG-Knights）上用 GRPO 做 RLVR 训练，再把训练后的模型直接拿到 5 个真实多跳 QA 基准上测迁移效果。训练覆盖 Qwen3 与 Phi-4 两个家族、0.6B 到 4B 共 4 个模型，全程不接触任何真实标注数据。最后用一组对照实验把「迁移来自可学的知识组合技能、而非别的廉价原因」这条因果链钉牢。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["四个虚构合成数据集<br/>PhantomWiki / GSM-∞<br/>RG-Family / RG-Knights"] --> B["In-context 推理设置<br/>上下文全入 prompt<br/>用 GRPO 做 RLVR 训练"]
+    B --> C["迁移评估<br/>5 个真实多跳 QA 基准"]
+    B --> D["因果分析三连<br/>格式消融 / SFT 对比<br/>中间答案追踪"]
+    D -->|证实迁移来自<br/>可学的知识组合技能| C
+```
 
 ### 关键设计
 

@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 AR 想解决的事很具体：LLM 的激活里其实已经"藏着"很多人类概念，但这些概念是被动、零散、不会自己组合的——模型可能同时激活了"桥""旧金山""美国"，却推不出"金门大桥"。AR 的做法是把整条推理搬到 SAE 的潜在空间里显式地做一遍。整个流水线分三阶段：先离线在 SAE 空间里为每个目标概念找到它的潜表征，建成概念字典 $\mathcal{D}$；推理时检测每个 token 的激活强度，把超过阈值的概念映射成逻辑命题，拼成激活矩阵 $A$；再对 $A$ 套用用户定义的逻辑规则做前向链推理，得到补充了高阶命题的增强矩阵 $A'$。$A'$ 既可以直接读出来做可解释分析，也可以反过来回写激活、引导 LLM 的生成。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    H["LLM 隐层激活<br/>(SAE 提取的潜特征)"]
+    DICT["概念表征的三种形式（设计 1）<br/>单特征 / 多特征 / 关系特征<br/>→ 概念字典 D"]
+    H -->|离线，按概念抽特征| DICT
+
+    subgraph REASON["激活命题化与前向链推理（设计 2）"]
+        direction TB
+        AMAT["检测激活、超阈值映射为命题<br/>拼成激活矩阵 A"]
+        CHAIN["套用户逻辑规则<br/>前向链推理至不动点"]
+        AMAT --> CHAIN
+    end
+    DICT --> REASON
+    REASON --> APRIME["增强矩阵 A'<br/>补出 SAE 给不出的高阶命题"]
+
+    APRIME -->|读出| READ["可解释分析"]
+    APRIME --> STEER["激活引导控制（设计 3）<br/>取概念表征回写第 h 层激活"]
+    STEER --> OUT["受控的 LLM 生成"]
+```
+
 ### 关键设计
 
 **1. 概念表征的三种形式：让 SAE 特征真的能当命题用**

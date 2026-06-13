@@ -39,7 +39,33 @@ Stroke3D 首次实现从用户绘制的2D笔画和文本提示直接生成绑骨
 
 ### 整体框架
 
-Stroke3D 把"从一张手绘草图得到能动画的 3D 资产"拆成骨骼先行的两阶段问题。第一阶段先用一对图潜扩散模型（Sk-VAE 把 3D 骨骼图压进潜空间、Sk-DiT 在潜空间里以 2D 笔画和文本为条件生成骨骼），让用户的草图直接决定骨架拓扑；第二阶段再以这副骨骼为条件合成网格，并用 TextuRig 补足训练数据、用 SKA-DPO 把网格往骨骼上对齐。
+Stroke3D 把"从一张手绘草图得到能动画的 3D 资产"拆成骨骼先行的两阶段问题。用户先用配套的画布工具点击关节、连线成笔画，得到一张和目标 3D 骨骼拓扑同构的 2D 图。第一阶段用一对图潜扩散模型把这张草图变成 3D 骨架：Sk-VAE 把 3D 骨骼图编码进连续潜空间（解码端负责重建骨骼），Sk-DiT 则在这个潜空间里以 2D 笔画和文本为条件去噪、生成骨骼潜表示，再经 Sk-VAE 解码器还原成完整 3D 骨骼，让草图直接决定骨架拓扑。第二阶段以这副骨骼为条件合成带纹理网格：先用自建的 TextuRig 数据集增强 SKDream 做监督微调补齐纹理质感，再用 SKA-DPO 以"骨骼-网格对齐"为奖励做偏好优化把网格钉到骨骼上；最终网格交给 Blender 自动蒙皮即得可动画的绑骨资产。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    U["用户输入<br/>2D 笔画（画布工具点击关节+连线）+ 文本"]
+    subgraph S1["阶段一·可控骨骼生成"]
+        direction TB
+        VAE["1. Sk-VAE<br/>骨骼图编码进连续潜空间<br/>（解码端重建 3D 骨骼）"]
+        DIT["2. Sk-DiT<br/>潜空间内以笔画+文本为条件<br/>去噪生成骨骼潜表示"]
+        VAE --> DIT
+    end
+    SKEL["3D 骨骼"]
+    subgraph S2["阶段二·骨骼条件网格合成"]
+        direction TB
+        TR["3. TextuRig<br/>带纹理绑骨数据增强<br/>→ SKDream 监督微调"]
+        DPO["4. SKA-DPO<br/>骨骼-网格对齐偏好优化"]
+        TR --> DPO
+    end
+    MESH["带纹理网格"]
+    OUT["Blender 自动蒙皮<br/>→ 可动画绑骨 3D 资产"]
+    U --> S1
+    S1 -->|Sk-VAE 解码| SKEL
+    SKEL --> S2
+    S2 --> MESH
+    MESH --> OUT
+```
 
 ### 关键设计
 

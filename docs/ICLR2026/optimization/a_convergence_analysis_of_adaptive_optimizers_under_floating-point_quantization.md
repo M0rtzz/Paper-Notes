@@ -42,7 +42,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文构建了一个解析式低精度训练框架，把一轮 master-worker 训练拆成四处量化点来追踪：master 维护全精度权重 $\mathbf{W}_t$ 但只向 worker 传量化版本 $\mathbf{W}_t^Q$，worker 用 $\mathbf{W}_t^Q$ 做前反向、量化梯度回传，master 再反量化梯度、更新被量化的动量与二阶矩、应用优化器更新后重新量化存储。整个分析的支点是用**相对误差模型**取代以往的无偏量化假设，从而能在不引入误差反馈机制的前提下，逐个组件地刻画量化对收敛率的影响。
+本文构建了一个解析式低精度训练框架，把一轮 master-worker 训练拆成四处量化点来追踪：master 维护全精度权重 $\mathbf{W}_t$ 但只向 worker 传量化版本 $\mathbf{W}_t^Q$，worker 用 $\mathbf{W}_t^Q$ 做前反向、量化梯度回传，master 再反量化梯度、更新被量化的动量与二阶矩、应用优化器更新后重新量化存储。整个分析的支点是用**相对误差模型**取代以往的无偏量化假设，从而能在不引入误差反馈机制的前提下，逐个组件地刻画量化对收敛率的影响——四处量化点的误差系数 $q_W, q_G, q_M, q_V$ 被分别保留，最终汇入针对 Adam 与 Muon 两个优化器的收敛定理。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    REL["相对误差量化模型<br/>|x^Q − x| ≤ q·|x|，q=Θ(2^−M)"]
+    REL --> LOOP
+    subgraph LOOP["Master–Worker 训练回路（四处量化）"]
+        direction TB
+        M["Master 持全精度 W_t<br/>下发量化权重 W_t^Q"]
+        M -->|"权重量化 q_W"| WK["Worker 用 W_t^Q<br/>前向 / 反向"]
+        WK -->|"梯度量化 q_G"| UPD["Master 反量化梯度<br/>更新量化动量 q_M、二阶矩 q_V"]
+        UPD --> AP["应用更新 → 重新量化存储<br/>进入下一轮 t+1"]
+    end
+    LOOP --> TRACK["组件级分离的误差追踪<br/>q_W / q_G / q_M / q_V 各自传播进收敛界"]
+    TRACK --> ADAM["量化 Adam 收敛定理<br/>q_V,q_W 需 O(1/T^2)，q_G,q_M 需 O(1/T)"]
+    TRACK --> MUON["量化 Muon 收敛定理<br/>所有组件仅需 O(T^−1/2)"]
+```
 
 ### 关键设计
 

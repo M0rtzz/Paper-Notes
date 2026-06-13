@@ -40,7 +40,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-VIP 想解决的是「rollout 预算怎么花」的问题：group-based RL 默认给每个 prompt 平均分配固定数量的 rollout，但很多预算花在了成功率接近 0 或 1 的 prompt 上，这些 prompt 几乎不产生梯度信号。VIP 把分配做成一个闭环：每个训练 iteration 先由一个高斯过程（GP）根据历史 rollout 结果预测 mini-batch 里每个 prompt 当前的成功概率，再据此用一个闭式凸优化在总预算约束下决定每个 prompt 分配多少 rollout，然后按这个方案采样，最后用本轮的 rollout 结果同时更新 GP 后验和模型参数。整个模块即插即用地挂在 Dr.GRPO / RLOO 之上，不改原有的损失。
+VIP 想解决的是「rollout 预算怎么花」的问题：group-based RL 默认给每个 prompt 平均分配固定数量的 rollout，但很多预算花在了成功率接近 0 或 1 的 prompt 上，这些 prompt 几乎不产生梯度信号。VIP 把分配做成一个闭环：每个训练 iteration 先由一个高斯过程（Gaussian process, GP）根据历史 rollout 结果预测 mini-batch 里每个 prompt 当前的成功概率，再把这个概率通过「梯度方差 $\propto p(1-p)$」的闭式关系换算成方差贡献，据此用一个闭式凸优化在总预算约束下决定每个 prompt 分配多少 rollout，然后按这个方案采样，最后用本轮的 rollout 成败结果同时更新 GP 后验和模型参数。下一轮再从更新后的 GP 出发重复，整个模块即插即用地挂在 Dr.GRPO / RLOO 之上，不改原有的损失。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["mini-batch prompts<br/>MiniLM 384 维 embedding"] --> B["GP 预测成功概率 p<br/>(递归贝叶斯后验)"]
+    B --> C["梯度方差预测 ∝ p(1-p)<br/>(Dr.GRPO / RLOO 闭式关系)"]
+    C --> D["凸优化分配 rollout 数<br/>(二分 λ* + 贪心取整<br/>预算约束 C)"]
+    D --> E["按分配方案采样 rollout"]
+    E --> F["Dr.GRPO / RLOO<br/>更新策略参数"]
+    E -->|rollout 成败结果| G["递归更新 GP 后验"]
+    G -.->|下一 iteration| B
+```
 
 ### 关键设计
 

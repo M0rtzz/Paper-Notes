@@ -40,7 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ACE 要解决的是 context 在反复迭代中越改越短、知识被压没的问题。它把 context 当成一本会不断变厚的"策略手册"（playbook），让三个角色流水线作业来维护它：Generator 拿当前 context 去解新问题，留下完整的执行轨迹；Reflector 读这些轨迹，把哪些做法成功、哪些踩了坑提炼成具体教训；Curator 再把教训翻译成结构化的局部改动（delta），追加或修改进现有 context。整套流程既能离线跑（在训练集上反复迭代，产出一份优化好的 system prompt），也能在线跑（测试时逐样本更新，当作 test-time memory 用）。
+ACE 要解决的是 context 在反复迭代中越改越短、知识被压没的问题。它把 context 当成一本会不断变厚的"策略手册"（playbook），让三个角色流水线作业来维护它：Generator 拿当前 context 去解新问题，留下完整的执行轨迹；Reflector 读这些轨迹，把哪些做法成功、哪些踩了坑提炼成具体教训；Curator 再把教训翻译成结构化的局部改动（delta），追加或修改进现有 context；改完的手册回灌给下一轮，形成持续自我改进的闭环。整套流程既能离线跑（在训练集上反复迭代，产出一份优化好的 system prompt），也能在线跑（测试时逐样本更新，当作 test-time memory 用）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    Q["新问题 / 训练样本"] --> CTX["策略手册 Context<br/>(带 ID 与有用/有害计数器的 bullet 集合)"]
+    subgraph ROLES["三角色分工"]
+        direction TB
+        G["Generator<br/>用当前 context 解题<br/>留下执行轨迹"] --> R["Reflector<br/>复盘轨迹，提炼成功/失败教训<br/>(最多 5 轮迭代精炼)"]
+        R --> C["Curator<br/>把教训写成结构化条目"]
+    end
+    CTX --> G
+    C --> DELTA["增量式 Delta 更新<br/>只生成局部增改<br/>非 LLM 逻辑确定性 merge"]
+    DELTA --> GR["Grow-and-Refine<br/>追加新 bullet + 语义去重控冗余"]
+    GR -->|更新后的 context 回灌下一轮| CTX
+```
 
 ### 关键设计
 

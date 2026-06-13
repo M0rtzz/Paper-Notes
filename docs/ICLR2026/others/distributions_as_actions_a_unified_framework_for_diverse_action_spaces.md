@@ -42,37 +42,50 @@ DA-AC 提出将动作分布的参数（如 softmax 概率或 Gaussian 均值/方
 ## 方法详解
 
 ### 整体框架
-在经典 RL 中，Agent 的策略 $\pi_\theta$ 包含两部分：$\bar{\pi}_\theta$ (映射状态到分布参数) 和 $f$ (从分布采样得到动作)。DA 框架将 $f$ 移入环境侧，Agent 直接输出分布参数 $u = \bar{\pi}_\theta(s)$。这定义了一个新的 MDP——DA-MDP $\langle \mathcal{S}, \mathcal{U}, \bar{p}, d_0, \bar{r}, \gamma \rangle$，其中转移和奖励变为对原始动作的期望：
+这篇论文想解决的是 RL 算法和动作空间类型死死绑定的问题：离散、连续、混合各用一套互不相通的算法。它的破局点在于重新划分 Agent 与环境的边界。经典 RL 里，策略 $\pi_\theta$ 其实可以拆成两步——先由 $\bar{\pi}_\theta$ 把状态映射成一组分布参数（高斯策略的均值/方差、softmax 策略的类别概率），再由采样函数 $f$ 从这组参数定义的分布里抽出真正的动作。DA 框架把第二步 $f$ 整个挪到环境侧：Agent 不再输出动作，而是直接输出分布参数 $u=\bar{\pi}_\theta(s)$，采样变成环境随机转移的一部分。
+
+这样一来，无论底层动作空间是离散、连续还是混合，Agent 面对的动作空间都统一成了连续的参数空间 $\mathcal{U}$，从而可以用同一套连续控制算法处理所有情形。形式上这定义了一个新的 MDP——DA-MDP $\langle \mathcal{S}, \mathcal{U}, \bar{p}, d_0, \bar{r}, \gamma \rangle$，其转移和奖励是对原始动作取期望：
 
 $$\bar{p}(s'|s,u) = \mathbb{E}_{A \sim f(\cdot|u)}[p(s'|s,A)], \quad \bar{r}(s,u) = \mathbb{E}_{A \sim f(\cdot|u)}[r(s,A)]$$
 
-关键不变量：$\bar{v}_{\bar{\pi}}(s) = v_\pi(s)$——状态价值不变；$\bar{q}_{\bar{\pi}}(s,u) = \mathbb{E}_{A \sim f(\cdot|u)}[q_\pi(s,A)]$——分布参数的 Q 值等于原始 Q 值在分布下的期望。
+这个转换不改变问题本身：状态价值守恒 $\bar{v}_{\bar{\pi}}(s)=v_\pi(s)$，而分布参数的 Q 值恰好是原始 Q 值在分布下的期望 $\bar{q}_{\bar{\pi}}(s,u)=\mathbb{E}_{A\sim f(\cdot|u)}[q_\pi(s,A)]$。在此之上，论文给出梯度估计器 DA-PG、为它配套的 critic 学习方法 ICL，最后把两者装进 TD3 得到可用算法 DA-AC，整个训练循环如下图：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S["状态 s"] --> ACTOR["Actor π̄θ：输出分布参数 u<br/>边界转换——离散/连续/混合<br/>动作空间统一成连续参数空间"]
+    ACTOR --> ENV["环境内采样动作 A~f(·|u)<br/>采样过程移入环境侧"]
+    ENV --> DAPG["DA-PG 梯度：在分布参数空间<br/>做确定性梯度，方差严格更低"]
+    DAPG --> ICL["ICL：在 u 与 u_A 之间插值<br/>训练 Critic Q̄w，给出平滑梯度"]
+    ICL --> DAAC["DA-AC：装进 TD3 骨架<br/>换分布参数化适配各动作空间"]
+    DAAC -->|更新 Actor，迭代| ACTOR
+```
 
 ### 关键设计
 
-**1. DA-PG 梯度估计器：在分布参数空间上做确定性策略梯度（Theorem 4.2）**
+**1. DA-PG 梯度估计器：把确定性梯度带到任意动作空间，且方差严格更低**
 
-既然 Agent 现在直接输出连续的分布参数 $U=\bar{\pi}_\theta(S_t)$，那么不管原始动作空间是离散还是连续，都可以套用 DPG 风格的确定性梯度。DA-PG 的形式与经典 DPG 完全相同：
+边界转换把动作空间变成连续参数空间后，紧接着的问题是怎么算策略梯度——以往低方差的 DPG/RP 类估计器只能用于连续动作，离散动作只能退而用方差高的 LR（likelihood-ratio）估计器。既然 Agent 现在输出的分布参数 $U=\bar{\pi}_\theta(S_t)$ 本身就是连续的，DA-PG 就直接套用 DPG 风格的确定性梯度，形式与经典 DPG 一模一样：
 
 $$\hat{\nabla}_\theta^{\text{DA-PG}} = \nabla_\theta \bar{\pi}_\theta(S_t)^\top \nabla_U \bar{Q}_w(S_t, U)\big|_{U=\bar{\pi}_\theta(S_t)}$$
 
-区别只在语义上——这里的 $\bar{\pi}$ 吐的是分布参数而非单一动作，$\bar{Q}$ 估的是分布下的期望回报。正因为参数空间 $\mathcal{U}$ 永远是连续的，DPG 那套只能用在连续动作上的限制被绕开了，离散动作也能享受确定性梯度。经典 DPG 是它的一个特例（Prop 4.3）：当采样函数 $f(\cdot|u)$ 退化成 Dirac delta（参数直接等于动作）时，两者完全等价。
+差别只在语义——$\bar{\pi}$ 吐的是分布参数而非单一动作、$\bar{Q}$ 估的是分布下的期望回报，于是 DPG「只能用于连续动作」的限制被绕开，离散动作也能享受确定性梯度（当 $f(\cdot|u)$ 退化成 Dirac delta、参数直接等于动作时，DA-PG 完全退回经典 DPG，后者是它的特例）。它为什么更省方差，论文给出一个漂亮的结果：DA-PG 恰好是 LR 估计器对采样动作 $A$、以及 RP（reparameterization）估计器对噪声 $\epsilon$ 取条件期望的结果，
 
-**2. 方差严格降低的理论保证：DA-PG 是 LR 与 RP 估计器的条件期望（Prop 4.4 & 4.5）**
+$$\hat{\nabla}_\theta^{\text{DA-PG}} = \mathbb{E}_{A}\big[\hat{\nabla}_\theta^{\text{LR}}\big] = \mathbb{E}_{\epsilon}\big[\hat{\nabla}_\theta^{\text{RP}}\big]$$
 
-这是把"分布即动作"的转换落到方差收益上的关键一步。DA-PG 可以写成 LR（likelihood-ratio）估计器对采样动作 $A$ 取条件期望的结果，根据全方差公式，先取期望再算方差必然不大于原始方差，因此 DA-PG 方差严格低于 LR；同理它也是 RP（reparameterization）估计器对噪声 $\epsilon$ 取条件期望的结果，方差同样严格更低。代价是可能引入额外偏差——critic 的输入空间从动作扩成了分布参数，空间更大、更难学准。其意义在于：这是首个在离散动作空间上提供无偏、RP 风格低方差估计的方法，把原本只属于连续控制的低方差优势带到了离散设定。
+由全方差公式「先取期望再算方差不会变大」，DA-PG 方差严格低于 LR 和 RP。代价是 critic 的输入从动作扩成了分布参数、空间更大更难学准，可能引入偏差——这正是下一个设计要补的。其意义在于：这是首个在离散动作空间上提供无偏、RP 风格低方差估计的方法，把原本专属连续控制的低方差优势带到了离散设定。
 
-**3. ICL（Interpolated Critic Learning）：让 critic 在整个参数空间而不只是当前策略附近学准**
+**2. ICL（插值式 critic 学习）：让 critic 在整个参数空间而不只是当前策略附近学准**
 
-DA-PG 要求 critic 在分布参数空间里有可靠的梯度，但标准 TD 更新只在当前策略产生的参数 $U_t$ 处训练 critic，导致 critic 在参数空间其他位置估得很糟，策略梯度自然指错方向。ICL 的做法是在当前参数 $U_t$ 和采样动作对应的确定性参数 $U_{A_t}$ 之间做随机线性插值后再更新 critic：
+DA-PG 的确定性梯度 $\nabla_U \bar{Q}_w$ 要求 critic 在分布参数空间里到处都有可靠的梯度，但标准 TD 更新只在当前策略产生的参数 $U_t$ 处训练 critic，参数空间其他位置估得很糟，梯度自然指错方向。ICL（Interpolated Critic Learning）的做法是在当前参数 $U_t$ 与采样动作对应的确定性参数 $U_{A_t}$ 之间随机线性插值，再用插值点更新 critic：
 
-$$\hat{U}_t = \omega U_t + (1-\omega) U_{A_t}, \quad \omega \sim \text{Uniform}[0,1]$$
+$$\hat{U}_t = \omega_t U_t + (1-\omega_t) U_{A_t}, \quad \omega_t \sim \text{Uniform}[0,1]$$
 
-这相当于强迫 critic 在一段参数区间上都学习，从而捕捉到更平滑、更丰富的曲率信息，让策略梯度能指向真正高价值的区域。它的精神类似 off-policy 学习，只不过操作对象是分布参数而非策略本身。bandit 实验的可视化直接验证了这点：ICL 训出的 critic 曲率明显更丰富，而标准更新的 critic 只在当前策略附近才准。
+这等于强迫 critic 在 $U_t$ 到 $U_{A_t}$ 整段区间上都学准，从而捕捉到更平滑、更丰富的曲率，让 DA-PG 的梯度能指向真正高价值的区域，也缓和了设计 1 提到的偏差问题。其精神类似 off-policy 学习，只是操作对象是分布参数而非策略本身；bandit 设定下的可视化直接验证了这点——ICL 训出的 critic 曲率明显更丰富，标准更新的 critic 只在当前策略附近才准。
 
-**4. DA-AC 算法：把上述三件事装进 TD3 骨架，得到一个适配所有动作空间的统一 actor-critic**
+**3. DA-AC 算法：把 DA-PG 与 ICL 装进 TD3，得到适配所有动作空间的统一 actor-critic**
 
-DA-AC 直接以 TD3 为底座，沿用双 critic、延迟策略更新、目标噪声这些稳定化技巧，只把两处换掉：用 DA-PG 替换 DPG 来更新 actor，用 ICL 替换标准 TD 更新来训 critic；消融发现 actor 目标网络此时已无必要，索性移除。面对不同动作空间，只需换分布参数化即可——连续用 Gaussian（输出均值/方差）、离散用 Softmax（输出类别概率）、混合则用 Gaussian+Softmax 拼接，算法主体一行不改。
+前两个设计要落成一个能跑的深度 RL 算法，需要稳定的训练骨架。DA-AC 直接以 TD3 为底座，沿用双 critic、延迟策略更新、目标噪声这些稳定化技巧，只换掉两处：用 DA-PG 替换 DPG 来更新 actor，用 ICL 替换标准 TD 更新来训 critic；消融发现此时 actor 的目标网络已无必要，索性移除。面对不同动作空间只需换分布参数化——连续用 Gaussian（输出均值/方差）、离散用 Softmax（输出类别概率）、混合则把 Gaussian 与 Softmax 拼接——算法主体一行不改，这正是「一套算法通吃离散/连续/混合」的来处。
 
 ## 实验关键数据
 

@@ -40,7 +40,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文把"缓存淘汰"和"查询路由"这两条原本各自为政的线放进同一个数学模型里：$M$ 个 worker（LLM）各带一块大小为 $B_i$ 的 KV 缓存，在线接收查询序列 $Q=\{q_j\}$，每个查询既要选一个 worker 落地、又会改变该 worker 的缓存内容和队列负载。系统优化目标是最小化所有 worker 的 makespan（最大累计负载），由此自然拆出两个子问题——单 worker 内"该淘汰谁"的随机化算法 RLT，和跨 worker"该发给谁"的学习路由 LBGR。
+论文把"缓存淘汰"和"查询路由"这两条原本各自为政的线放进同一个数学模型里：$M$ 个 worker（LLM）各带一块大小为 $B_i$ 的 KV 缓存，在线接收查询序列 $Q=\{q_j\}$，每个查询既要选一个 worker 落地、又会改变该 worker 的缓存内容和队列负载。系统优化目标是最小化所有 worker 的 makespan（最大累计负载）。这套统一模型不只是记账工具——它直接把 SGLang 沿用的叶节点 LRU（L-LRU）算出 $O(n)$ 的最坏竞争比，把现有系统的脆弱性量化出来；由此拆出两个相互耦合的算法：单 worker 内"该淘汰谁"的随机化淘汰 RLT，把竞争比压到 $O(\log n)$；跨 worker"该发给谁"的学习路由 LBGR，用各 worker 的缓存与负载状态贪心分流。两者再被观测到的真实延迟在线校准，形成闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["在线查询序列 q_j"] --> MODEL["统一代价模型<br/>服务时间 Cost_ij + 队列负载 P_i<br/>目标：最小化 makespan"]
+    MODEL -->|揭示 L-LRU 竞争比退化到 O(n)| RLT["RLT 随机化叶节点淘汰<br/>标记集满 B_i+1 即清空<br/>未标记叶节点均匀随机淘汰 → O(log n)（已达下界）"]
+    RLT -->|每个 worker 缓存命中更稳健| LBGR["LBGR 学习贪心路由<br/>估 Ê_ij = Cost + 衰减负载 + 回归残差<br/>选预测延迟最低的 worker"]
+    LBGR --> OUT["分配查询 → 服务 → 写回 Radix 树<br/>逼近最小 makespan / 端到端延迟"]
+    OUT -.观测真实延迟 E_ij.-> UPD["在线更新回归参数 θ_i<br/>+ 队列负载指数衰减 ρ"]
+    UPD -.持续校准估计.-> LBGR
+```
 
 ### 关键设计
 

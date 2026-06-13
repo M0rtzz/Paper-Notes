@@ -41,45 +41,68 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文想回答两个问题：奖励过优化的根源在哪，以及怎么构造一个不会被 hack 的奖励。它先用理论把根源定位到"高奖励尾部"——证明只要奖励模型在最高分那一小撮回复上排序正确，整体性能就接近最优；反之尾部排错，训练后期必然崩。这个结论直接决定了方法的目标：不要花力气区分"好 vs 坏"，要专门把"优秀 vs 更优秀"分清楚。据此设计了一条 rubric 构造工作流——拿 off-policy 的高质量回复，反复做"取当前最高分的两条 → 让 LLM 找出它们的差异 → 把差异写成新评分标准"的迭代精化。最终得到的 rubric 交给 verifier LLM 逐条二值打分、加权求和，作为 RL 阶段的奖励。
+这篇论文想回答两个问题：奖励过优化的根源在哪，以及怎么构造一个不会被 hack 的奖励。它先用一条理论（Theorem 1）把根源精确定位到"高奖励尾部"——证明只要奖励模型在最高分那一小撮回复上排序正确，整体性能就接近最优；反之尾部排错，训练后期必然崩。这直接决定了方法目标：不要花力气区分"好 vs 坏"，要专门把"优秀 vs 更优秀"分清楚。据此设计了一条以 off-policy 优秀回复为原料的 rubric 构造工作流，核心是一个叫 **RTD（Refinement-through-Differentiation，差异化精化）** 的步骤——让 proposer LLM 对比两条高分回复、找出区分特征、编码成新的评分标准；再把这一步放进 Algorithm 1 的迭代循环反复跑，每轮用当前 rubric 重新打分、取新的 top-2 继续精化。最终得到的 rubric 是一组带权重的标准，交给 verifier LLM 逐条二值打分、加权求和，作为 GRPO 强化微调阶段的奖励。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    T["高奖励尾部理论 (Theorem 1)<br/>只需把尾部排序排对"]
+    P["对比优秀且多样的回复<br/>off-policy 优秀回复池 (great + diverse)"]
+    T --> P
+    subgraph RTD["RTD 迭代精化 (Algorithm 1)"]
+        direction TB
+        S["用当前 rubric 给候选打分"] --> TOP["取 top-2 组成对比对"]
+        TOP --> PR["proposer LLM 找区分特征<br/>编码成新评分标准"]
+        PR -->|"重新打分, 换新 top-2"| S
+    end
+    P --> RTD
+    RTD --> R["最终 rubric<br/>(一组带权重标准)"]
+    R --> V["verifier LLM 逐条二值判断<br/>加权求和 = 奖励"]
+    V --> G["GRPO 强化微调<br/>Qwen3-8B-Base"]
+```
 
 ### 关键设计
 
-**1. 高奖励尾部理论（Theorem 1）：把过优化的根源精确定位到尾部**
+**1. 高奖励尾部理论：把过优化的根源精确定位到尾部**
 
 奖励模型终归是真实奖励 $r^*$ 的一个有偏代理 $r$，问题是"偏在哪里最致命"。本文把这层偏差形式化为一个错误规范映射 $f: r^* \to r$，推导出在 Pareto 最优后训练下，策略能拿到的期望真实奖励为
 
 $$\frac{\int_0^1 f^{-1}(u)\, e^{u/\beta}\, \mathrm{d}u}{\beta\,(e^{1/\beta}-1)}$$
 
-关键在指数权重 $e^{u/\beta}$：当 $u \to 1$（高奖励区域）时它指数级放大，意味着尾部的排序错误会被成倍计入最终性能，而低奖励区域错了几乎无所谓。更妙的是 KL 散度对 $f$ 不变——无论奖励怎么错，相对参考策略的"偏离预算"是一样的，所以同样的 KL 下，把预算花在尾部排错上就会让 win rate 崩盘。这条公式也顺带解释了为什么过优化总在训练后期出现：随着 $\beta$ 减小（策略越压越偏向高分区），指数项对尾部的放大越狠。结论很 actionable——构造 rubric 时只需保证高奖励区域排对，其余可以全错。
+关键在指数权重 $e^{u/\beta}$：当 $u \to 1$（高奖励区域）时它指数级放大，意味着尾部的排序错误会被成倍计入最终性能，而低奖励区域错了几乎无所谓。更妙的是 KL 散度对 $f$ 不变——无论奖励怎么错，相对参考策略的"偏离预算"是一样的，所以同样的 KL 下，把预算花在尾部排错上就会让 win rate 崩盘。这条公式也顺带解释了为什么过优化总在训练后期出现：随着 $\beta$ 减小（策略越压越偏向高分区），指数项对尾部的放大越狠。结论很 actionable——构造 rubric 时只需保证高奖励区域排对，其余可以全错。它把后面所有设计的目标钉死成一句话：去陪尾部（chase the tail）。
 
-**2. Principle 1：对比"优秀 vs 更优秀"来精化 rubric**
+**2. RTD 迭代精化：用少量对比把标准磨向尾部**
 
-既然根源在尾部，那构造 rubric 时就不该拿"好回复 vs 差回复"做对比——那样学到的标准只能惩罚明显错误，对尾部毫无分辨力。本文的做法是取当前 rubric 下得分最高的两条回复组成 comparison pair，交给 proposer LLM 分析"为什么这条比那条更好",再把发现的区分特征编码成一条带权重的新评分标准。因为两条都是高质量回复，LLM 被迫去捕捉那些细微但决定优劣的维度，新增的标准自然落在高奖励尾部，正好补上 Theorem 1 指出的薄弱区。
+理论说了"只要尾部排对就行"，但怎么让 rubric 真的在尾部变准？难点在于 rubric 天生是把双刃剑——它只关心与质量相关的维度，这压住了 off-policy 数据的表面特征，却也让它容易把两条都很优秀的回复判成平手，对尾部毫无分辨力。RTD（Refinement-through-Differentiation）就是来打破平手的：把一对候选回复连同当前 rubric 一起喂给 proposer LLM，让它分析"这条到底比那条好在哪"，再把发现的区分特征编码成一条新标准、或对已有标准的细化。单次 RTD 只锐化一个维度，于是 Algorithm 1 把它套进迭代循环——从某 prompt 的全部 off-policy 回复出发，每轮用当前 rubric 给所有候选打分、取 top-2 做一次 RTD、再用更新后的 rubric 重新打分筛出新的 top-2，如此往复。因为排名随 rubric 演化而变，被选中对比的回复也在不断换人，整个过程只用很少几次对比就把 rubric 的"发现力"持续集中在质量前沿（performance frontier），正好补在 Theorem 1 指出的薄弱区。
 
-**3. Principle 2：用多样化的优秀回复，避免 rubric 过拟合单一风格**
+**3. 喂"优秀且多样"的回复：让精化对准尾部又不过拟合单一风格**
 
-只盯着同质化的回复对比，rubric 只能在有限几个维度上越磨越细，容易过拟合到某种文体。Principle 2 通过 Algorithm 1 的迭代流程解决这点：每轮用当前 rubric 给所有回复重新评分，取 top-2 对比、精化出新标准、再用更新后的 rubric 重新评分并筛出新的 top 候选，如此循环。由于评分排名会随 rubric 演化而变，被选中对比的回复也在不断换人，加上 off-policy 回复本身来源多样（强模型、带 extended thinking 的回复等），rubric 得以覆盖更广的质量维度而非锁死在单一风格上。这也是 rubric 天然适配 off-policy 数据的地方——它刻画的是"回复该具备什么特征",对"谁生成的"不敏感，绕开了 BT 模型会去学文体偏好的坑。
+RTD 循环好不好，取决于喂给它的是什么回复——这正是两条原则（Principle 1、Principle 2）要管的事。Principle 1 要求对比对取自"优秀 vs 更优秀"而非"好 vs 差"：拿明显有高下的回复做对比，学到的标准只能惩罚低级错误，对尾部没用；只有两条都已经很好、proposer 被迫去抠那些细微却决定优劣的维度，新增标准才会落在高奖励尾部（实验里 great pair 用 Gemini 2.5 Pro 生成、good pair 用 Gemini 2.5 Flash-Lite，前者精化出的标准明显更"高级"，多是"拆分复杂标准""增强验证标准"这类）。Principle 2 进一步要求这些优秀回复要多样：只盯同质回复，rubric 会在有限几个维度上越磨越窄、过拟合某种文体；把候选池扩到更多优秀模型采样的 16 条回复，rubric 才能覆盖更广的质量维度。两条原则合起来正好发挥 rubric 适配 off-policy 数据的长处——它刻画的是"回复该具备什么特征"，对"谁生成的"不敏感，绕开了 BT 偏好模型会去学文体偏好的坑。
 
 ### 损失函数 / 训练策略
 最终的 rubric 奖励是各条标准的加权二值平均：
 
 $$r(x,y) = \frac{\sum_i w_i\, V(x,y,c_i)}{\sum_i w_i}$$
 
-其中 $V$ 是 verifier LLM 对第 $i$ 条标准 $c_i$ 的二值判断（满足/不满足），$w_i$ 是该标准的权重。RL 阶段沿用标准 GRPO/RLHF 框架，只是把传统偏好奖励换成上面的 rubric 奖励。基础策略模型用 Qwen3-8B-Base；off-policy 高质量回复来自更强的模型（如 GPT-4）或带 extended thinking 的回复。
+其中 $V$ 是 verifier LLM（实验用 GPT-4.1-mini）对第 $i$ 条标准 $c_i$ 的二值判断（满足/不满足），$w_i$ 是该标准的权重；作者特意只用最简单的加权平均聚合，以隔离 rubric 质量本身的影响（非线性聚合留作 future work）。RL 阶段沿用标准 GRPO 框架，只是把传统偏好奖励换成上面的 rubric 奖励，基础策略模型为 Qwen3-8B-Base。rubric 由 GPT-4.1 作为 proposer 生成与迭代精化，off-policy 优秀回复来自更强的外部模型（如 Gemini 2.5 Pro）以及多样化优秀模型的采样。
 
 ## 实验关键数据
 
 ### 主实验
 
-| 方法 | Generalist 域 Win Rate | Health 域 Win Rate |
-|------|----------------------|-------------------|
-| 初始 rubric（不精化） | ~51% | ~51% |
-| 对比 good 回复精化 | ~53% | ~53% |
-| 对比 great 回复精化 | ~55% | ~56% |
-| + 多样 great 回复精化 | **~57%** | **~58%** |
+跨 Generalist / Health / Finance 三个域，基础策略 Qwen3-8B-Base，win rate 对比 Qwen3-8B（数字越大越好）：
 
-（Win rate 对比 Qwen3-8B，由 LLM judge 评判）
+| 方法 | Generalist<br/>Filtered / LMArena Win% | Health<br/>Medical-o1 Win% | Finance<br/>Win% |
+|------|----------------------------------------|----------------------------|------------------|
+| Base Policy | 5.2 / 4.1 | 10.8 | 5.8 |
+| SFT | 35.9 / 29.6 | 25.8 | 26.0 |
+| 初始 rubric（仅 prompt） | 31.3 / 29.7 | 21.7 | 37.2 |
+| 1 good pair 精化 | 33.5 / 32.8 | 22.4 | 39.1 |
+| 1 great pair 精化 | 36.8 / 33.1 | 26.5 | 42.2 |
+| 4 great pairs 精化 | 38.7 / 34.7 | 31.4 | 48.9 |
+| **4 great & diverse pairs** | **39.7 / 35.1** | **34.4** | **49.6** |
+
+两条趋势清晰：对比 great pair 比对比 good pair 好（验证 Principle 1）；用多样的 great pair 迭代精化再进一步（验证 Principle 2）。
 
 ### 消融实验
 
@@ -104,7 +127,7 @@ $$r(x,y) = \frac{\sum_i w_i\, V(x,y,c_i)}{\sum_i w_i}$$
 ## 局限与展望
 - **Rubric 评分聚合方式**：目前用加权平均，作者承认非最优，标准间可能存在非线性依赖
 - **Verifier 质量依赖**：二值判断的 verifier LLM 本身可能有偏差，尤其在边界情况
-- **仅在 Qwen3-8B 上验证**：更大规模模型或不同 RL 算法（如 DPO/KTO）下效果待确认
+- **仅在 Qwen3-8B 上验证**：实验跨 Generalist/Health/Finance 三个域，但都基于 Qwen3-8B-Base，更大规模模型或不同 RL 算法（如 DPO/KTO）下效果待确认
 - **Proposer LLM 的质量上限**：rubric 精化的质量受限于 proposer 的辨别能力
 
 ## 相关工作与启发

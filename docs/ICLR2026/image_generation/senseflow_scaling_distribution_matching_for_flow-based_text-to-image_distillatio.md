@@ -43,19 +43,41 @@ tags:
 
 ### 整体框架
 
-SenseFlow 沿用 DMD2 的 min-max 蒸馏骨架：生成器 $G$ 吃文本 prompt 和噪声直接出图，由 DMD 梯度（real score 与 fake score 之差）、VFM 判别器的对抗损失和段内引导损失三路联合优化。关键改动在于每次更新生成器之后，都用一次廉价的参数插值把 fake model 拉回与生成器对齐，并配合重新设计的时间步采样和判别器，让原本在大模型上发散的训练稳定下来（完整流程见 Algorithm 1）。
+SenseFlow 要解决的是：怎么把分布匹配蒸馏（DMD）从 SD 1.5/SDXL 这种小模型，可靠地搬到 SD 3.5 Large（8B）、FLUX.1 dev（12B）这种大 flow 模型上，让它们也能 4 步出图。它沿用 DMD2 的 min-max 蒸馏骨架：生成器 $G$ 吃文本 prompt 和噪声直接生成图像 $\hat{x}_0$，再由三路监督联合优化——DMD 梯度（教师给的 real score 减 fake model 给的 fake score）、VFM 判别器的对抗损失、以及段内引导损失。三路信号加权汇成总损失去更新 $G$；而每次更新完 $G$ 之后，都用一次廉价的参数插值把 fake model 软拉回与新生成器对齐，保证 DMD 梯度方向始终可靠。正是「IDA 维稳 + ISG 补细粒度 + VFM 判别器稳对抗」这三件事配合，让原本在大模型上发散的训练稳定下来（完整流程见 Algorithm 1）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["文本 prompt + 噪声"] --> G["生成器 G<br/>（4 步直接出图）"]
+    G --> IMG["生成图 x̂₀"]
+    IMG --> DMD["DMD 梯度<br/>real score − fake score"]
+    IMG --> ISG["段内引导 ISG<br/>对齐教师细粒度去噪轨迹"]
+    IMG --> DISC["VFM 判别器<br/>冻结 DINOv2+CLIP<br/>时间步加权对抗"]
+    DMD --> LOSS["联合损失<br/>L_DMD + λ·L_adv + λ·L_ISG"]
+    ISG --> LOSS
+    DISC --> LOSS
+    LOSS --> UPD["更新生成器 G"]
+    UPD -->|"每次 G 更新后"| IDA["隐式分布对齐 IDA<br/>φ ← λφ + (1−λ)θ<br/>软拉 fake model"]
+    IDA -.->|"维持 p_f ≈ p_g"| DMD
+```
 
 ### 关键设计
 
-**1. 隐式分布对齐（IDA）：让 fake model 始终追上生成器。** DMD 的 min-max 框架有个隐含前提——内层的 fake model 必须给出最优响应，即对所有时间步满足 $p_f(X_t) = p_g(X_t)$，否则 real/fake score 之差就不再指向正确的梯度方向。小模型上靠 TTUR（两时间尺度更新，多更新几次 fake model）勉强能维持，但在 SD 3.5 Large 这种 8B 模型上，要么训练成本爆炸，要么干脆振荡不收敛。IDA 的做法极简：每次生成器从 $\theta$ 更新后，对 fake model 参数做一次 EMA 式近端插值 $\phi \leftarrow \lambda\phi + (1-\lambda)\theta$，$\lambda$ 取接近 1 的值。这相当于把 fake model 持续往生成器方向"软拉拢"，从而以一次参数插值的代价维持住 $E_t D_{KL}(p_g(X_t) \,\|\, p_f(X_t)) \leq \varepsilon$ 的 ε-best response 条件。正是这一步让 DMD 在 SD 3.5 Large 上首次稳定收敛，且只需 5:1 的小 TTUR 比例即可。
+**1. 隐式分布对齐（IDA）：让 fake model 始终追上生成器**
 
-**2. 段内引导（ISG）：用教师的细粒度去噪能力补强粗步生成器。** 4 步生成意味着只有几个粗时间步锚点，而教师模型各时间步的重建误差 $\xi(t)$ 并非单调、还存在局部振荡，均匀挑几个时间步会浪费掉段内大量去噪信息。ISG 在每个粗时间步的"段"内再插一个中间点：对锚点 $\tau_i$，采样 $t_{mid} \in (\tau_{i-1}, \tau_i)$，让教师从 $\tau_i$ 去噪到 $t_{mid}$、再由生成器接力到 $\tau_{i-1}$ 得到目标 $x_{tar}$；同时让生成器直接从 $\tau_i$ 一步跨到 $\tau_{i-1}$，用 L2 损失把这条"直达"轨迹对齐到经过中间点的"引导"轨迹。这样段内的细粒度转换信息被聚合到了粗锚点上，生成器得以逼近教师那条更曲折的去噪路径——消融显示，这正是 FLUX.1 dev（12B）能收敛的额外必要条件。
+DMD 的 min-max 框架有个隐含前提——内层的 fake model 必须给出最优响应，即对所有时间步满足 $p_f(X_t) = p_g(X_t)$，否则 real/fake score 之差就不再指向正确的梯度方向。小模型上靠 TTUR（两时间尺度更新，多更新几次 fake model）勉强能维持，但在 SD 3.5 Large 这种 8B 模型上，把 TTUR 比例堆到 20:1 仍会剧烈振荡，既贵又不收敛。IDA 的做法极简：每次生成器从 $\theta$ 更新后，对 fake model 参数 $\phi$ 做一次 EMA 式近端插值 $\phi \leftarrow \lambda\phi + (1-\lambda)\theta$，$\lambda$ 取接近 1 的值。这相当于把 fake model 持续往生成器方向"软拉拢"，从而以一次参数插值的代价维持住 $\mathbb{E}_t D_{KL}(p_g(X_t) \,\|\, p_f(X_t)) \leq \varepsilon$ 的 ε-best response 条件。正是这一步让 DMD 在 SD 3.5 Large 上首次稳定收敛，且只需 5:1 的小 TTUR 比例即可。
 
-**3. 基于 VFM 的判别器：用视觉基础模型的语义先验稳住对抗信号。** 朴素判别器很难同时适配 2.6B 到 12B、架构各异的多种教师。SenseFlow 改用冻结的视觉基础模型（DINOv2 + CLIP）当骨干提取多层语义特征，只训练轻量的 head blocks 预测 real/fake logits，并以 hinge loss 优化判别器。生成器侧的对抗损失再按时间步信号功率 $\omega(t) = (1-\sigma_t)^2$ 加权：高噪声步信号弱、权重小，更依赖 DMD 梯度；低噪声步信号强、权重大，更依赖 GAN 反馈。预训练 VFM 带来的丰富语义先验让判别器更擅长抓图像质量和细粒度结构，时间步加权则把两类监督信号在各噪声水平上做了合理分工。
+**2. 段内引导（ISG）：用教师的细粒度去噪能力补强粗步生成器**
+
+4 步生成意味着只有几个粗时间步锚点，而教师模型各时间步的归一化重建误差 $\xi(t)$ 并非单调、还存在局部振荡，均匀挑几个时间步会浪费掉每个区段 $(\tau_{i-1}, \tau_i]$ 内大量去噪信息。ISG 在每个粗时间步的"段"内再插一个中间点：对锚点 $\tau_i$，采样 $t_{mid} \in (\tau_{i-1}, \tau_i)$，让教师从 $\tau_i$ 去噪到 $t_{mid}$ 得到 $x_{t_{mid}}$、再由生成器接力到 $\tau_{i-1}$ 得到目标 $x_{tar}$；同时让生成器直接从 $\tau_i$ 一步跨到 $\tau_{i-1}$，用 L2 损失把这条"直达"轨迹对齐到经过中间点的"引导"轨迹。这样段内的细粒度转换信息被重新定位、聚合到了粗锚点上，生成器得以逼近教师那条更曲折的去噪路径——消融显示，这正是 FLUX.1 dev（12B）能收敛的额外必要条件。
+
+**3. 基于 VFM 的判别器：用视觉基础模型的语义先验稳住对抗信号**
+
+朴素判别器很难同时适配 2.6B 到 12B、架构各异的多种教师。SenseFlow 改用冻结的视觉基础模型（VFM，骨干为 DINOv2 + CLIP）提取多层语义特征 $z = f_{VFM}(\hat{x}_0)$，并以真实图像的 VFM 特征作参考，只训练轻量的 head blocks $h$ 预测 real/fake logits $D(x,c,r) = h(f_{VFM}(x), c, r)$，判别器本身用标准 hinge loss 优化。生成器侧的对抗损失再按时间步信号功率 $\omega(t) = (1-\sigma_t)^2 = \alpha_t^2$ 加权（前向过程为 $x_t = \alpha_t x_0 + \sigma_t \epsilon$）：高噪声步 $\hat{x}_0$ 预测不可靠、权重小，更依赖 DMD 梯度；低噪声步信号干净、权重大，更依赖 GAN 反馈。预训练 VFM 带来的丰富语义先验让判别器更擅长抓图像质量和细粒度结构，时间步加权则把两类监督信号在各噪声水平上做了合理分工，避免对抗信号在高噪声处盖过 DMD。
 
 ### 损失函数 / 训练策略
 
-生成器总损失把三路信号加权相加：$\mathcal{L}_G = \mathcal{L}_{DMD} + \lambda_G \cdot \mathcal{L}_{adv} + \lambda_{ISG} \cdot \mathcal{L}_{ISG}$，其中 $\mathcal{L}_{DMD}$ 是 fake score 与 real score 之差，$\mathcal{L}_{adv}$ 是 VFM 判别器的对抗损失（按 $\alpha_t^2$ 加权），$\mathcal{L}_{ISG}$ 是段内引导的 L2 损失。训练时数据取 LAION-5B 中 aesthetic score ≥ 5.0 的子集，TTUR 比例固定 5:1 配合 IDA 即可稳定，构造输入时以 50% 概率在 backward simulation 与 forward diffusion 之间切换，时间步用 logit-normal 采样。
+生成器总损失把三路信号加权相加：$\mathcal{L}_G = \mathcal{L}_{DMD} + \lambda_G \cdot \mathcal{L}_{adv} + \lambda_{ISG} \cdot \mathcal{L}_{ISG}$，其中 $\mathcal{L}_{DMD}$ 是 fake score 与 real score 之差，$\mathcal{L}_{adv}$ 是 VFM 判别器的对抗损失（按 $\omega(t) = (1-\sigma_t)^2$ 加权），$\mathcal{L}_{ISG}$ 是段内引导的 L2 损失。训练时数据取 LAION 中高 aesthetic score 子集，TTUR 比例固定 5:1 配合 IDA 即可稳定，构造输入时按粗时间步 $\tau_i$ 以一定概率在 backward simulation（从噪声）与 forward diffusion（从真实数据）之间切换；每 $f$ 次迭代更新一次生成器，更新后立即执行 IDA 把 fake model 软锚定到新生成器，最后再各自更新 fake model 与判别器。
 
 ## 实验关键数据
 

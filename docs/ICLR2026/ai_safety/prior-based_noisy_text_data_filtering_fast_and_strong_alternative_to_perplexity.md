@@ -50,17 +50,34 @@ tags:
 
 ### 整体框架
 
-整个方法把 PPL 过滤里"训练参考模型 + 全量推理"的重活全部砍掉，只保留一张词频表。核心观察是 PPL 可经贝叶斯分解为 likelihood 与 prior 两项，而 prior 项完全由 token 词频决定、无需任何模型推理；于是论文用文档内 token 先验的均值和标准差直接逼近 PPL，再以"偏离语料中位数最远"为准则丢弃异常文档，把过滤成本从数百 GPU 小时压到不到一小时。
+整个方法把 PPL 过滤里"训练参考模型 + 全量推理"的重活全部砍掉，只保留一张词频表。核心观察是 PPL 可经贝叶斯分解为 likelihood 与 prior 两项，而 prior 项完全由 token 词频决定、无需任何模型推理；于是论文用文档内 token 先验的均值和标准差直接逼近 PPL，再以"偏离语料中位数最远"为准则丢弃异常文档，把过滤成本从数百 GPU 小时压到不到一小时。落到流程上只有三步：先扫一遍语料把 token 先验估计成一张词频表，再用先验均值、标准差两个指标刻画每篇文档，最后做中位数异常检测、丢掉偏离语料典型值最远的文档；而把 μ、σ 两个统计量和 PPL 对应起来的，是贯穿全程的 PPL 近似理论联系。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["噪声 web 语料 D"] --> B["Token 先验估计<br/>扫一遍语料统计词频<br/>得 token 先验概率表"]
+    B --> C["双指标刻画文档<br/>每篇文档算先验均值 μ<br/>与先验标准差 σ"]
+    C --> D["中位数异常检测<br/>算 μ、σ 对语料中位数的偏离<br/>从偏离最大者起等量丢弃"]
+    D --> E["过滤后的干净语料<br/>用于预训练"]
+```
 
 ### 关键设计
 
-**1. Token 先验估计：用词频把 prior 项变成一次性查表。** PPL 过滤慢的根源在于它要为每个 token 算条件概率，必须跑模型前向。论文先把语料层面的 token 先验一次性统计出来：给定语料 $D$ 和词表 $V$，token $x$ 的先验概率取其归一化词频 $p_{\text{prior}}(x) = f_D(x) / \sum_{x' \in V} f_D(x')$，其中 $f_D(x)$ 是 $x$ 在语料中的出现次数。这张表只需扫一遍语料即可得到，之后所有文档打分都退化为查表求和，彻底避开了模型推理。语言学上它也有据可依——词频本身就是 token 角色的一维表示，高频对应 "the/is" 这类功能词，低频对应 "president/algorithm" 这类内容词。
+**1. Token 先验估计：用词频把 prior 项变成一次性查表**
 
-**2. 双指标刻画文档：均值看组成，标准差看结构。** 单看词频无法判断一篇文档是否规范，论文为每个文档 $\texttt{d}$ 同时算两个统计量。先验均值 $\mu_{\texttt{d}} = \mathbb{E}_{x_i \in \texttt{d}}[\log p_{\text{prior}}(x_i)]$ 反映文档里高/低先验 token 的平衡程度，捕捉 token 的整体组成；先验标准差 $\sigma_{\texttt{d}} = \text{std}_{x_i \in \texttt{d}}[p_{\text{prior}}(x_i)]$ 反映先验在文档内的分布结构，即用词的多样性与均匀性。两者互补：$\mu_{\texttt{d}}$ 异常的多是极端高/低先验堆积的文档（如换行符灌水、非英语文本），$\sigma_{\texttt{d}}$ 异常的多是"有内容词却没句法"的名词罗列，单一指标都漏掉一类噪声。
+PPL 过滤慢的根源在于它要为每个 token 算条件概率，必须跑模型前向。论文先把语料层面的 token 先验一次性统计出来：给定语料 $D$ 和词表 $V$，token $x$ 的先验概率取其归一化词频 $p_{\text{prior}}(x) = f_D(x) / \sum_{x' \in V} f_D(x')$，其中 $f_D(x)$ 是 $x$ 在语料中的出现次数。这张表只需扫一遍语料即可得到，之后所有文档打分都退化为查表求和，彻底避开了模型推理。语言学上它也有据可依——词频本身就是 token 角色的一维表示，高频对应 "the/is" 这类功能词，低频对应 "president/algorithm" 这类内容词。
 
-**3. 中位数异常检测：把"远离规范"量化成可丢弃的距离。** 规范句子的词汇密度在不同文档间相对稳定，因此偏离语料典型值越远越可疑。论文取语料级中位数作参考中心 $M_\mu = \text{median}(\mu_{\texttt{d}})$、$M_\sigma = \text{median}(\sigma_{\texttt{d}})$，用绝对偏离 $\delta_\mu(\texttt{d}) = |\mu_{\texttt{d}} - M_\mu|$、$\delta_\sigma(\texttt{d}) = |\sigma_{\texttt{d}} - M_\sigma|$ 度量异常程度，从 $\delta$ 最大的样本开始丢弃，并约束两个指标各自剔除等量 $|F_\mu| = |F_\sigma|$，直到剩余子集达到目标规模。用中位数而非均值作中心，是为了让参考点本身不被极端噪声拉偏。
+**2. 双指标刻画文档：均值看组成，标准差看结构**
 
-**4. PPL 近似的理论联系：解释为何两个统计量就够。** 把 PPL 按贝叶斯展开，$\log \text{PPL}(\texttt{d}) \propto \underbrace{\sum_i \log p_\theta(x_{<i}\mid x_i)}_{\pi_{\text{likelihood}}} + \underbrace{\sum_i \log p_\theta(x_i)}_{\pi_{\text{prior}}}$，其中 $\mu_{\texttt{d}}$ 恰好精确等价于 $\pi_{\text{prior}}$ 项，而 $\sigma_{\texttt{d}}$ 近似捕捉 $\pi_{\text{likelihood}}$ 所反映的 token 间关系规律性，两者合起来就是 PPL 的合理代理。更关键的是先验在几处甚至比 PPL 更可靠：小模型难以学准 likelihood、对 OOD 噪声的 likelihood 估计也不靠谱，常把重复/模式化噪声误判成高质量文本，而词频统计简单稳定、不受这些失真影响——这正是先验过滤平均性能反超 PPL 的原因。
+单看词频无法判断一篇文档是否规范，论文为每个文档 $\texttt{d}$ 同时算两个统计量。先验均值 $\mu_{\texttt{d}} = \mathbb{E}_{x_i \in \texttt{d}}[\log p_{\text{prior}}(x_i)]$ 反映文档里高/低先验 token 的平衡程度，捕捉 token 的整体组成；先验标准差 $\sigma_{\texttt{d}} = \text{std}_{x_i \in \texttt{d}}[p_{\text{prior}}(x_i)]$ 反映先验在文档内的分布结构，即用词的多样性与均匀性。两者互补：$\mu_{\texttt{d}}$ 异常的多是极端高/低先验堆积的文档（如换行符灌水、非英语文本），$\sigma_{\texttt{d}}$ 异常的多是"有内容词却没句法"的名词罗列，单一指标都漏掉一类噪声。
+
+**3. 中位数异常检测：把"远离规范"量化成可丢弃的距离**
+
+规范句子的词汇密度在不同文档间相对稳定，因此偏离语料典型值越远越可疑。论文取语料级中位数作参考中心 $M_\mu = \text{median}(\mu_{\texttt{d}})$、$M_\sigma = \text{median}(\sigma_{\texttt{d}})$，用绝对偏离 $\delta_\mu(\texttt{d}) = |\mu_{\texttt{d}} - M_\mu|$、$\delta_\sigma(\texttt{d}) = |\sigma_{\texttt{d}} - M_\sigma|$ 度量异常程度，从 $\delta$ 最大的样本开始丢弃，并约束两个指标各自剔除等量 $|F_\mu| = |F_\sigma|$，直到剩余子集达到目标规模。用中位数而非均值作中心，是为了让参考点本身不被极端噪声拉偏。
+
+**4. PPL 近似的理论联系：解释为何两个统计量就够**
+
+把 PPL 按贝叶斯展开，$\log \text{PPL}(\texttt{d}) \propto \underbrace{\sum_i \log p_\theta(x_{<i}\mid x_i)}_{\pi_{\text{likelihood}}} + \underbrace{\sum_i \log p_\theta(x_i)}_{\pi_{\text{prior}}}$，其中 $\mu_{\texttt{d}}$ 恰好精确等价于 $\pi_{\text{prior}}$ 项，而 $\sigma_{\texttt{d}}$ 近似捕捉 $\pi_{\text{likelihood}}$ 所反映的 token 间关系规律性，两者合起来就是 PPL 的合理代理。更关键的是先验在几处甚至比 PPL 更可靠：小模型难以学准 likelihood、对 OOD 噪声的 likelihood 估计也不靠谱，常把重复/模式化噪声误判成高质量文本，而词频统计简单稳定、不受这些失真影响——这正是先验过滤平均性能反超 PPL 的原因。
 
 ## 实验关键数据
 

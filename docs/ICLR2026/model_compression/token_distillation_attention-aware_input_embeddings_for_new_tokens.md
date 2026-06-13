@@ -38,21 +38,42 @@ tags:
 
 ### 整体框架
 
-给定新 token $t^{\star}$ 及其在原始 tokenizer 下的子词序列 $[t_1, \dots, t_n]$，Token Distillation 不去拼凑子词 embedding，而是把"原始模型读完整子词序列后产生的隐状态"当作教师信号，直接梯度优化单个新嵌入 $\mathbf{e}^{\star}$，让模型只看一个新 token 时的隐状态去逼近它。这样新嵌入承接的不只是 embedding 矩阵的信息，而是 Transformer 各层在 neural detokenization 过程中逐步构建出的完整语义。
+论文要解决的是给词表里新加的 token 一个好的输入嵌入。它的核心想法是：一个新 token $t^{\star}$ 的语义，原本是模型读完它对应的子词序列 $[t_1,\dots,t_n]$ 后，由 Transformer 各层在上下文里逐层"算"出来的（neural detokenization）；子词均值法只取 embedding 矩阵那一层，自然丢掉了这部分语义。于是 Token Distillation 把"原始模型读完整子词序列后产生的隐状态"当作教师信号，直接梯度优化单个新嵌入 $\mathbf{e}^{\star}$，让模型只看一个新 token 时的隐状态去逼近它。
+
+整条流水线分三步：先从语料里**检索/生成**包含目标词的少量真实上下文；再让**教师（多子词序列）和学生（单个新嵌入）各跑一遍前向**，在"会注意到新 token"的位置上做隐状态 MSE 蒸馏、梯度优化 $\mathbf{e}^{\star}$；最后**补上输出侧嵌入并稳住范数**，得到可直接插回冻结模型使用的新嵌入。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["新 token t*<br/>原始子词序列 [t1…tn]"] --> B["上下文检索与轻量数据<br/>Aho-Corasick 匹配 / 模型生成补足"]
+    B --> DIST
+    subgraph DIST["注意力感知的隐状态蒸馏"]
+        direction TB
+        C["教师：多子词序列前向<br/>各层隐状态 H(l)"] --> E["注意力感知对齐 M<br/>只取会 attend 到新 token 的位置"]
+        D["学生：单个新嵌入 e* 前向<br/>隐状态 H_e*(l)"] --> E
+        E --> F["对齐位置隐状态 MSE<br/>梯度优化 e*"]
+    end
+    DIST --> G["输出嵌入与 αNTP<br/>补预测侧 / 稳住范数"]
+    G --> H["可插回冻结模型的新 token 嵌入"]
+```
 
 ### 关键设计
 
-**1. 隐状态蒸馏目标：把多子词交互压进单个嵌入。** 子词均值法之所以差，是因为 `<_pal><at><able>` 三个子词的 embedding 里根本不含 `<_palatable>` 的语义——那个语义是注意力层在上下文里现算出来的。Token Distillation 把这件事变成一个回归问题：对采样自语料的句子 $s$，分别用原始多子词序列（教师）和单个新 token（学生）跑前向，最小化两者在指定层 $l$ 上、对齐位置处的隐状态 MSE：
+**1. 上下文检索与轻量数据：让蒸馏有真实语境又足够便宜**
+
+蒸馏需要包含目标 token 的真实句子，否则学到的嵌入会脱离实际用法。论文给两条路：主方法用 Aho-Corasick 多模式串匹配算法，从领域或通用语料里一次性高效检索出所有包含目标词的片段，并把每段截断到目标词周围的小窗口；当语料里某些词找不到样本时（如完全无关语料场景），备选用新 token 直接做 prompt 让因果模型自己生成包含该词的文本补足。两条路都只为每个新 token 凑少量高质量上下文，因此数据极省：每个新 token 只取约 25 个片段、每段截到约 50 个 token。配合"每个 token 相互独立、且全程复用目标模型自身"，2500 个新 token 在单张 GPU 上 10 分钟内即可全部初始化完——相比 ZeTT 那种要预训练超网络的方法，这里没有任何额外训练成本，是它实用性上的关键。
+
+**2. 注意力感知的隐状态蒸馏：把多子词交互压进单个嵌入**
+
+子词均值法之所以差，是因为 `<_pal><at><able>` 三个子词的 embedding 里根本不含 `<_palatable>` 的语义——那个语义是注意力层在上下文里现算出来的。Token Distillation 把这件事变成一个回归问题：对采样自语料的句子 $s$，分别用原始多子词序列（教师）和单个新 token（学生）跑前向，最小化两者在指定层 $l$ 上、对齐位置处的隐状态 MSE：
 
 $$\min_{\mathbf{e}^{\star} \in \mathbb{R}^d} \mathbb{E}_{s \sim S} \left[ \frac{1}{|\mathcal{M}(s_\tau, s_{\tau^{\star}})|} \sum_{(i,j) \in \mathcal{M}(s_\tau, s_{\tau^{\star}})} \left\| \mathcal{H}_{\mathbf{e}^{\star}}^{(l)}(s_{\tau^{\star}})_i - \mathcal{H}^{(l)}(s_\tau)_j \right\|_2^2 \right]$$
 
-其中 $\mathcal{H}^{(l)}(s_\tau)$ 是教师在原始 tokenization 下第 $l$ 层的隐状态，$\mathcal{H}_{\mathbf{e}^{\star}}^{(l)}(s_{\tau^{\star}})$ 是学生用新嵌入时的隐状态。关键在对齐映射 $\mathcal{M}$ 只保留那些会 attend 到新 token 的位置——只有这些位置才真正受新嵌入影响，约束它们就足以把多子词交互信息逼进 $\mathbf{e}^{\star}$。实践中取最后一层隐状态做监督，因为它聚合了所有层的信息。
+其中 $\mathcal{H}^{(l)}(s_\tau)$ 是教师在原始 tokenization 下第 $l$ 层的隐状态，$\mathcal{H}_{\mathbf{e}^{\star}}^{(l)}(s_{\tau^{\star}})$ 是学生用新嵌入时的隐状态。"注意力感知"体现在对齐映射 $\mathcal{M}$：它只保留 $s_{\tau^{\star}}$ 中那些会 attend 到新 token 的位置 $i$——只有这些位置才真正受新嵌入影响，约束它们就足以把多子词交互信息逼进 $\mathbf{e}^{\star}$。这样无需像 Token-to-Words 那样先定位语义被统一表示的层，蒸馏自动把分散在所有 Transformer 层里的信息抽进单个嵌入。实践中取最后一层隐状态做监督（消融显示换更早的层还能再省算力且略好）。
 
-**2. 上下文检索：让蒸馏有真实语境可学。** 蒸馏需要包含目标 token 的真实句子，否则学到的嵌入会脱离实际用法。论文给两条路：主方法用 Aho-Corasick 多模式串匹配算法，从大语料里一次性高效检索出所有包含目标词的片段；当语料里某些罕见词找不到足够样本时，备选用新 token 直接做 prompt 让模型自己生成包含该词的文本补足。两者都只为给每个新 token 凑够少量高质量上下文。
+**3. 输出嵌入与 αNTP：补上预测侧并稳住范数**
 
-**3. 输出嵌入与 αNTP：补上预测侧并稳住范数。** 蒸馏目标只约束输入侧隐状态，所以它只学输入嵌入——新 token 本就不在教师的预测词表里，没法直接蒸馏输出嵌入。输出嵌入要么置零，要么额外挂一个 NTP（next-token prediction）目标训练。对于 tied embedding 模型（输入输出共享一张矩阵），直接训练易出现 norm 爆炸，论文用 $\alpha$NTP——动态降低 NTP 损失权重，避免它干扰蒸馏学到的输入嵌入，从而稳住范数。
-
-**4. 轻量化设定：单 GPU 十分钟搞定上千 token。** 因为优化目标直接且每个 token 独立，所需数据极少：每个新 token 只取 25 个上下文片段、每段截断到 50 个 token，2500 个新 token 在单张 GPU 上 10 分钟内即可全部初始化完。相比 ZeTT 这类需要预训练超网络的方法，这里完全复用目标模型自身、无额外训练成本，是该方法在实用性上的核心优势。
+蒸馏目标只约束输入侧隐状态，所以它只学输入嵌入——新 token 本就不在教师的预测词表里，没法直接蒸馏输出嵌入。输出嵌入因此要么置零，要么额外挂一个 NTP（next-token prediction，下一 token 预测）目标来训练。对 tied embedding（输入输出共享一张矩阵）的模型，直接这么训会触发一个失效模式：新嵌入 norm 无界增长直至爆炸。论文用 $\alpha$NTP 缓解——给 NTP 损失动态乘一个缩放系数 $\alpha$ 并对其做 stop-gradient，让 NTP 隐式约束输出嵌入范数、又不至于干扰蒸馏学到的输入嵌入。
 
 ## 实验
 

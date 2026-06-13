@@ -46,6 +46,18 @@ tags:
 
 MASS 把"推理时该用什么数据自适应"建模成一个双层优化问题：底层是一个 Generator $\pi_\theta$ 和一个 Scorer $s_\eta$，前者面对目标任务 $T$ 生成 $m$ 个辅助问题-答案对 $(p_i, a_i)$，后者给每条样例打一个相关性权重 $s_i = s_\eta(T, p_i, a_i)$；上层则在这批加权数据上做一次内循环 SFT（LoRA）得到临时参数 $\theta'$，再用 $\theta'$ 在目标任务上的表现去反推数据该怎么生成、该怎么打分。每一步训练就是"生成 → 打分 → 内循环更新 → 在 $T$ 上算外损失 → meta-gradient 回流更新 $\theta$ 和 $\eta$"这样一个闭环，让模型逐渐学会为自己合成最有用的训练材料。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["目标任务 T"] --> G["Generator π_θ<br/>生成 m 个<br/>辅助问答对 (p_i,a_i)"]
+    G --> S["Scorer s_η<br/>给每条样例<br/>打权重 s_i"]
+    S --> IN["内循环 SFT (LoRA)<br/>在加权数据上<br/>更新得 θ′"]
+    IN --> L["双模式外损失<br/>在 T 上评估<br/>(CE / GRPO)"]
+    L -->|"高效双层微分<br/>meta-gradient<br/>穿过内循环"| M["Meta-gradient 数据归因信号<br/>∂L_outer/∂s_i"]
+    M -->|"二阶梯度更新 Scorer"| S
+    M -->|"-∂L/∂s_i 作 RL 奖励更新 Generator"| G
+```
+
 ### 关键设计
 
 **1. Meta-gradient 数据归因信号：判断每条自生成样例到底有没有用**

@@ -44,7 +44,26 @@ RMOD 想解决的是：推理时对齐多个可能冲突的目标，但又不知
 
 $$\max_\pi \min_{w \in \Delta^{G-1}} \lambda \sum_g w_g V_g(x,y^t;\pi) - D_{KL}(\pi \| \pi_{\text{ref}})$$
 
-内层的 $\min_w$ 在概率单纯形 $\Delta^{G-1}$ 上挑出"当前最难满足"的目标组合，外层的 $\max_\pi$ 再针对这组最坏权重选出最优续写策略。整条 pipeline 落地为块级解码：每步从参考策略采一批候选块、算值函数、迭代更新权重、选加权值最高的块输出。
+内层的 $\min_w$ 在概率单纯形 $\Delta^{G-1}$ 上挑出"当前最难满足"的目标组合，外层的 $\max_\pi$ 再针对这组最坏权重选出最优续写策略。整条 pipeline 落地为块级（block-wise）解码：每步从参考策略采一批候选块、算各目标值函数、在最小最大博弈里迭代更新权重、选加权值最高的块输出，逐块续写直到 EOS。
+
+下图是单个解码步内的循环：外圈是 Block-wise 解码实现（采样→打分→选块→续写），内圈虚框是该步要解的最小最大博弈，由"最优策略解析解"与"凸优化求最坏权重"两步交替逼近 Nash 均衡。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["提示 x + 已解码前缀 y^t"] --> B["Block-wise 解码：<br/>从 π_ref 采 K 个候选块 z"]
+    B --> C["对每个候选算<br/>各目标值函数 V_g"]
+    subgraph NE["最小最大博弈（Nash 均衡）"]
+        direction TB
+        C --> D["最优策略解析解：在 π_ref 上<br/>按加权值做指数倾斜"]
+        D --> E["凸优化求最坏权重 w*：<br/>指数加权梯度下降 ×I 轮"]
+        E -->|权重未收敛| D
+    end
+    NE --> F["按 w* 选加权值最高的候选块"]
+    F --> G{"遇到 EOS？"}
+    G -->|否，续写下一块| A
+    G -->|是| H["鲁棒对齐响应 y"]
+```
 
 ### 关键设计
 

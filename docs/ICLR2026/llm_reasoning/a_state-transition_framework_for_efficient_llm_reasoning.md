@@ -40,24 +40,44 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文想在**不缩短 CoT** 的前提下，把长推理链的注意力计算和显存开销压下来。关键观察是：一个推理步里真正有用的"结论性"信息很少，绝大部分 token 承担的是语法和措辞。于是作者把每个 LLM 层里的 softmax attention 换成一个 Mixed Attention Module (MAM)，让"当前正在写的这一步"和"已经写完的历史步"走两条不同的注意力通路。当前步内部仍用精确的 softmax 注意力，而所有已完成步的信息被线性注意力压进一个固定大小的状态矩阵 $S_t$ 里——当前步的每个 token 只要用查询向量做一次 $\mathbf{o} = \mathbf{q} \cdot S_t$ 就能取回历史推理信息，不必再回头逐个注意成千上万的历史 token。整条 CoT 可以无限延长，而状态矩阵大小不变。
+这篇论文想在**不缩短 CoT** 的前提下，把长推理链的注意力计算和显存开销压下来。出发点是一个观察：一个推理步里真正有用的"结论性"信息很少，绝大部分 token 承担的是语法和措辞，因此完全没必要让当前步去逐个注意成千上万的历史 token。
+
+具体做法是先把一条长 CoT 按高熵转折 token（如 "Alternatively"、"Wait"）切成一串**推理步**，再把每个 LLM 层里的 softmax 注意力替换成一个**混合注意力模块 MAM**，让"当前正在写的这一步"和"已经写完的历史步"走两条不同通路：当前步内部仍用精确 softmax 注意力，而所有已完成步的信息被线性注意力压进一个固定大小的**状态矩阵** $S_t$。当前步的每个 token 只要做一次 $\mathbf{o}=\mathbf{q}\cdot S_t$ 就能取回历史推理信息。每写完一步，再用一个**状态推理策略**把这一步的状态更新做动量纠偏后才并入 $S_t$，作为下一步的初始状态。整条 CoT 可以无限延长，而状态矩阵大小恒定不变。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入：query prompt<br/>+ 当前推理步已生成 token"] --> MAM
+    SP["历史状态矩阵 S(t-1)"] -->|提供历史推理信息| MAM
+    subgraph MAM["混合注意力模块 MAM（设计 1）"]
+        direction TB
+        SA["SA 子模块：softmax 精确注意力<br/>只看 prompt + 当前步，步完即清 KV"]
+        LA["LA 子模块：o = q·S 从状态矩阵<br/>检索历史 + gating 门控取用量"]
+    end
+    MAM --> GEN["合并双路 → FFN → 预测并生成下一 token"]
+    GEN -->|步内尚未结束| IN
+    GEN -->|生成步结束 token| MOM["状态推理策略（设计 2）<br/>用全局平均方向动量纠偏当前步"]
+    MOM --> UPD["更新状态 S(t)，作为下一步初始状态"]
+    UPD -.->|开启下一推理步| SP
+    GEN -->|全部步完成| ANS["生成最终答案"]
+```
 
 ### 关键设计
 
-**1. Mixed Attention Module (MAM)：用 SA+LA 双路注意力替代原始 softmax attention**
+**1. 混合注意力模块 MAM：用 SA+LA 双路替代 softmax 注意力**
 
-矛盾在于：当前步内部需要精确注意力才能写对这一步，但回看所有历史步又太贵。MAM 把这两件事拆开。SA 子模块沿用原始 LLM 的 softmax attention，但限定每个 token 只注意 query prompt 和当前推理步的 token——一旦某个推理步完成，它的 KV 就被清除，所以 softmax 计算永远只发生在一步的范围内。历史信息则交给 LA 子模块：它维护一个线性注意力的状态矩阵 $S_t = \sum_{i=1}^{t} k_i^\top v_i$，把每个已完成步的 key/value 外积累加进去，当前 token 用查询向量 $q$ 从中检索，并用一个 gating 机制控制实际取用多少历史信息。两路一合，当前步内的精确注意力不丢，历史访问又变得廉价：注意力复杂度从 $O(C^2)$ 降到 $O(C)$，KV cache 从 $O(C)$ 降到 $O(1)$（$C$ 为 CoT 长度）。
+矛盾在于：当前步内部需要精确注意力才能写对这一步，但回看所有历史步又太贵。MAM 把这两件事拆开走两条通路。SA 子模块沿用原始 LLM 的 softmax 注意力，但限定每个 token 只注意 query prompt 和当前推理步的 token——一旦某个推理步完成，它在 KV cache 里的向量就被清除，所以精确注意力永远只发生在一步范围内。历史信息则交给 LA 子模块：它维护状态矩阵 $S_t=\sum_{i=1}^{t}\mathbf{k}_i^\top \mathbf{v}_i$，把每个已完成步的 key/value 外积累加进去，当前 token 用查询向量做 $\mathbf{o}=\mathbf{q}\cdot S_t$ 检索历史推理信息，再经一个 sigmoid **gating** $\sigma(W_g h)$ 控制实际取用多少（早期 token 更依赖历史、越往后越少）。两路输出相加后过线性层和 FFN。结果是：当前步内的精确注意力不丢，历史访问又变廉价，注意力复杂度从 $O(C^2)$ 降到 $O(C)$、KV cache 从 $O(C)$ 降到 $O(1)$（$C$ 为 CoT 长度）。选线性注意力而非 CNN/Q-Former，是因为它作为 softmax 的变体天然兼容、压缩时不易丢关键信息，且其状态更新本身等价于一次梯度下降，为下一个设计埋了伏笔。
 
-**2. State-based Reasoning Strategy：用动量积累的全局方向纠正噪声推理步**
+**2. 状态推理策略：用动量积累的全局方向纠正噪声推理步**
 
-长 CoT 里难免出现跑偏或冗余的推理步，若直接把它们的状态变化累进 $S_t$，会污染后续检索、加剧 overthinking。作者借了 linear attention 与 Test-Time Training (TTT) 的等价关系——状态矩阵的每一步更新本质上等价于一次梯度下降，于是把第 $t$ 步带来的状态变化 $\nabla_t = S_t - S_{t-1}$ 当作"梯度"看待。既然是梯度，就能用动量来压噪声：先维护历史平均方向 $\bar{\nabla}_{t-1} = \frac{1}{t-1}\sum_{i<t} \nabla_i$，在完成第 $t$ 步后用它把当前更新拉回全局趋势，$\hat{\nabla}_t = (1-\alpha)\nabla_t + \alpha\bar{\nabla}_{t-1}$。这正是经典的梯度噪声缓解手段，迁移到推理状态上既有理论依据，又在 AIME 这类难题上实测有效。
+长 CoT 里难免出现跑偏或冗余的推理步，若直接把它们的状态变化累进 $S_t$，会把后续检索带偏、加剧 overthinking。作者利用 LA 与 Test-Time Training 的等价关系——状态矩阵每步更新本质等价于一次梯度下降，于是把第 $t$ 步带来的状态变化 $\nabla_t=S_t-S_{t-1}$ 看作该步的"推理方向（梯度）"。噪声步的方向往往明显偏离其他步，因此先用动量累积出历史平均方向 $\bar{\nabla}_{t-1}=\frac{1}{t-1}\sum_{i<t}\nabla_i$，再在完成第 $t$ 步后把当前方向拉回全局趋势：
 
-**3. 训练策略：冻结主干，只微调线性注意力分支**
+$$\hat{\nabla}_t=(1-\alpha)\nabla_t+\alpha\bar{\nabla}_{t-1},\qquad \alpha=\max\{\alpha_{\max},\tfrac{t}{|T|}\}$$
 
-为了不破坏 base model 已有的推理能力，训练时只更新 LA 子模块的参数（用 LoRA）以及标注思考模式的特殊 token，其余权重冻结。训练目标是双损失：自回归损失 $\mathcal{L}_{AR}$ 保证生成质量，知识蒸馏损失 $\mathcal{L}_{KD}$ 让改造后的模型对齐原 base model 的行为，避免双路替换带来的能力漂移。CoT 的切分用高熵 token 作为推理步边界，每一步再用特殊 token 标注它属于哪种思考模式。
+随后用 $\hat{\nabla}_t$ 而非原始 $\nabla_t$ 更新状态 $S_t=S_{t-1}+\hat{\nabla}_t$。纠偏系数 $\alpha$ 随推理步推进线性增大到阈值 $\alpha_{\max}$——早期步少、全局方向不可靠时少纠偏、鼓励探索，后期步多、方向可信时逐渐收敛到全局趋势。这把经典的梯度噪声缓解手段迁移到推理状态上，既有 TTT 理论依据，又在 AIME 这类难题上实测有效。
 
 ### 损失函数 / 训练策略
-总损失为 $\mathcal{L} = \mathcal{L}_{AR} + \beta \mathcal{L}_{KD}$，用 95K 高质量数学 CoT 样本训练，骨干为 Qwen2.5 系列、覆盖 1.5B 到 14B。
+为不破坏 base model 已有的推理能力，训练时**只更新 LA 子模块（用 LoRA 实现以控制参数量）和标注思考模式的特殊 token**，其余权重全部冻结。CoT 用高熵转折 token 切成推理步、再聚类成若干思考模式，每步用一对特殊 token 包裹以便追踪和控制。训练用双损失 $\mathcal{L}=\mathcal{L}_{AR}+\beta\mathcal{L}_{KD}$：自回归损失 $\mathcal{L}_{AR}=-\log P(A,T\mid Q)$ 保证生成质量；知识蒸馏损失 $\mathcal{L}_{KD}=\mathrm{KL}(\hat{P}\,\|\,P)$ 用原始全注意力 base model 的分布 $\hat{P}$ 约束改造后模型 $P$，让 LA 子模块学到全局推理信息、避免双路替换带来的能力漂移。数据为从 OpenR1-Math-220K 抽出的 95K 高质量数学 CoT 样本，骨干为 Qwen2.5 系列（先用对应的 DeepSeek-R1 蒸馏版初始化），覆盖 1.5B 到 14B。
 
 ## 实验关键数据
 

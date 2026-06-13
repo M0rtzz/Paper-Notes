@@ -47,19 +47,39 @@ tags:
 
 ### 整体框架
 
-Semantic Regex 本质上是一套结构化的"特征描述语言"：它用 grounded theory 的方式从数千个真实 LLM 特征里归纳出一组原语和修饰符，让一个特征的语义可以像写正则表达式一样被精确拼出来。整套语言不需要改动现有自动可解释性流水线的结构，只是把流水线里原本生成自然语言的那一步换成生成 semantic regex——SAE 照常提取特征，解释器读激活数据吐描述，评估器再核对描述与特征行为是否吻合。
+本文要解决的是自动可解释性里"特征描述"的表达问题：稀疏自编码器（SAE）能从 LLM 抽出单义特征，但目前都用自然语言去描述这些特征，结果冗长、不一致、还有歧义。Semantic Regex 把这一步换成一套结构化的"特征描述语言"——用 grounded theory 从数千个真实特征里归纳出一组**原语**（管匹配粒度）和**修饰符**（管组合方式），让一个特征的语义能像写正则表达式一样被精确拼出来。整套语言不改动既有流水线的骨架：SAE 照常提取特征，解释器读激活数据、按这套语法吐出 semantic regex 描述，评估器再用一组指标核对描述与特征行为是否吻合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["SAE 潜在特征<br/>(GPT-2-Small / Gemma-2-2B)"] --> EXP
+    subgraph GRAM["语义正则语法"]
+        direction TB
+        P["三种原语<br/>symbol / lexeme / field"] --> M["三种修饰符<br/>context / composition / quantification"]
+    end
+    GRAM --> EXP["即插即用嵌入流水线<br/>解释器 (GPT-4o-mini)"]
+    EXP --> R["Semantic Regex 描述"]
+    R --> EV["三类评估指标<br/>评估器 (GPT-4o-mini)"]
+    EV --> Q["描述质量评分<br/>Clarity / Detection / Faithfulness"]
+```
 
 ### 关键设计
 
-**1. 三种原语：用不同粒度兜住"特征到底匹配什么"。** 自然语言描述的第一个毛病是粒度含糊——一个特征到底是认死某个字符串，还是认一类词，描述里说不清。Semantic Regex 把匹配粒度显式拆成三档原语。`[:symbol X:]` 精确匹配字符串 X，对应那些只在特定 token 上激活的特征，比如 `[:symbol color:]` 只命中文本里的 "color"；`[:lexeme X:]` 放宽到 X 的句法变体（时态、单复数等），`[:lexeme color:]` 会把 "color"、"colors"、"coloring" 一并收进来，对应捕捉词义而非词形的特征；`[:field X:]` 进一步放宽到同一概念域的语义变体，`[:field color:]` 匹配 "red"、"blue"、"green" 这类共属"颜色"概念的词，对应激活于一整个概念类别的特征。三档由严到松层层递进，写描述时选哪一档本身就回答了"特征抽象到什么程度"。
+**1. 三种原语：用不同粒度兜住"特征到底匹配什么"**
 
-**2. 三种修饰符：让简单匹配能精确组合成复杂行为。** 光有原语只能描述孤立的匹配点，但很多特征要靠上下文、组合或可选成分才能讲清楚，于是再叠三种修饰符。`@{:context X:}(regex)` 给括号内的匹配加一个上下文限定，`@{:context politics:}([:symbol color:])` 表示只在政治语境里命中 "color"，把"在某种话题下才激活"的特征精确框住；Composition 用序列拼接和交替符 `|` 把原语连起来，`[:field color:]([:symbol and:]|[:symbol or:])[:field color:]` 描述"两个颜色词被 and/or 连接"的句式；Quantification 借用正则的量词 `?`（零或一次）表达可选成分，`[:symbol a:][:field color:]?[:field flower:]` 说明颜色词在这里出现不出现都算命中。这三种修饰符与三种原语自由组合，就能从一个 token 一路精确表达到带语境约束的复杂句式，而且复杂度是显式写在描述里的。
+自然语言描述的第一个毛病是粒度含糊——一个特征到底是认死某个字符串，还是认一类词，描述里说不清。Semantic Regex 把匹配粒度显式拆成三档原语，由严到松层层递进。`[:symbol X:]` 精确匹配字符串 X，对应只在特定 token 上激活的特征，比如 `[:symbol color:]` 只命中文本里的 "color"；`[:lexeme X:]` 放宽到 X 的句法变体（时态、单复数等），`[:lexeme color:]` 会把 "color"、"colors"、"coloring" 一并收进来，对应捕捉词义而非词形的特征；`[:field X:]` 进一步放宽到同一概念域的语义变体，`[:field color:]` 匹配 "red"、"blue"、"green" 这类共属"颜色"概念的词，对应激活于一整个概念类别的特征。三档之间选哪一档，本身就回答了"特征抽象到什么程度"，让原本含糊的粒度变成描述里的显式信息。
 
-**3. 即插即用地嵌入标准流水线：只换语言，不动架构。** 这套语言要有用，前提是不能逼研究者重搭一套系统。本文把它直接挂进既有的 explainer + evaluator 流水线：主体模型用 GPT-2-Small 和 Gemma-2-2B，特征来自它们的 SAE 潜在向量（GPT-2-RES-25k、Gemma-2-2B-RES-16k/65k），解释器和评估器都用 GPT-4o-mini。改动只发生在 prompt 一层——在原本的 max-acts prompt 里注入 semantic regex 的语法规则和少量 few-shot 示例，让解释器学会吐结构化描述，评估器再据此判定描述与激活样例是否匹配。因为只换了描述语言、没碰流水线骨架，任何已经在跑自动可解释性的系统都能低成本接入。
+**2. 三种修饰符：让简单匹配精确组合成复杂行为**
 
-### 评估指标
+光有原语只能描述孤立的匹配点，但很多特征要靠上下文、组合或可选成分才能讲清楚，于是在原语之上再叠三种修饰符。Context 用 `@{:context X:}(regex)` 给括号内的匹配加上语境限定，`@{:context politics:}([:symbol color:])` 表示只在政治语境里命中 "color"，把"在某种话题下才激活"的特征精确框住；Composition 用序列拼接和交替符 `|` 把原语连起来，`[:field color:]([:symbol and:]|[:symbol or:])[:field color:]` 描述"两个颜色词被 and/or 连接"的句式；Quantification 借用正则量词 `?`（零或一次）表达可选成分，`[:symbol a:][:field color:]?[:field flower:]` 说明颜色词出现与否都算命中。三种修饰符与三种原语自由组合，就能从单个 token 一路精确表达到带语境约束的复杂句式，而且这份复杂度是显式写在描述里、可被直接读取和统计的。
 
-评估不用模型训练，而是从三个维度核对"描述准不准"。**生成类（Clarity）**看描述能否反过来生成出高激活样例，类似 precision；**判别类（Detection / Fuzzing / Responsiveness / Purity）**看描述能否把已知的激活样例认出来，类似 recall；**忠实类（Faithfulness）**则更进一步，看描述是否反映因果干预下特征行为的真实变化。这三档指标分别从"生成得出""认得出""经得起干预"三个角度交叉验证，避免单一指标被钻空子。特征本身由预训练 SAE 提供，全程不涉及任何参数训练。
+**3. 即插即用嵌入流水线：只换语言，不动架构**
+
+这套语言要有用，前提是不能逼研究者重搭一套系统。本文把它直接挂进既有的解释器（explainer）+ 评估器（evaluator）流水线：主体模型用 GPT-2-Small 和 Gemma-2-2B，特征来自它们的 SAE 潜在向量（GPT-2-RES-25k、Gemma-2-2B-RES-16k/65k），解释器和评估器都用 GPT-4o-mini。改动只发生在 prompt 一层——在原本的 max-acts prompt 里注入 semantic regex 的语法规则和少量 few-shot 示例，让解释器学会吐结构化描述，评估器再据此判定描述与激活样例是否匹配。因为只换了描述语言、没碰流水线骨架，任何已经在跑自动可解释性的系统都能低成本接入，全程不涉及任何参数训练。
+
+**4. 三类评估指标：从生成、判别、因果三面交叉验证描述准不准**
+
+要证明结构化描述不比自然语言差，得有一套不依赖训练、能量化"描述好坏"的指标，本文把它们归成三类。**生成类（Clarity）**测描述能否反推出高激活样例，类似 precision：用 Clarity 指标比较"按描述生成的样例"与随机样例的激活，取 Gini 指数（即 ROC AUC 的一个重标度）。**判别类（Detection / Fuzzing / Responsiveness / Purity）**测描述能否把已知激活样例认出来，类似 recall：Detection 在样例级算平衡准确率，Fuzzing 把判定细化到"描述是否命中样例里真正激活的那些 token"再算平衡准确率，Responsiveness 取 Gini 指数，Purity 取平均精度。**忠实类（Faithfulness）**最严，测描述是否反映因果干预——让评估器判断在该特征被 steer（放大）与被 ablate（消融）两种条件下，描述与文本续写的吻合程度差异。三类从"生成得出""认得出""经得起干预"三个角度交叉验证，避免单一指标被钻空子。
 
 ## 实验关键数据
 

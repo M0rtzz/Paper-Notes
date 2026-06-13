@@ -47,6 +47,22 @@ tags:
 
 整条pipeline分三步走：先用自编码器把训练样本压到一个紧凑的潜空间；再在潜空间里求解半离散OT，找出传输方向突变最剧烈的奇异边界，并在那附近插值生成代理OOD样本（OTIS）；最后把OTIS和正常训练数据按比例混合，用一个置信度抑制损失训练分类器。输入是训练集图像，输出是一个在语义模糊区域校准得更好的分类模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["训练集图像"] --> ENC["自编码器编码<br/>潜空间表示"]
+    subgraph OTBLK["半离散OT分区与奇异边界识别"]
+        direction TB
+        OT["Brenier势<br/>→ Laguerre cells"] --> SING["角度偏差 score<br/>取最高 → 奇异边界"]
+    end
+    ENC --> OTBLK
+    OTBLK --> GEN["OTIS生成与逆距离插值<br/>边界附近合成 → 解码"]
+    GEN --> MIX["OTIS 与 ID 样本<br/>50/50 混合"]
+    X --> MIX
+    MIX --> LOSS["置信度抑制损失训练<br/>OTIS → 均匀预测"]
+    LOSS --> OUT["语义模糊区<br/>校准的分类模型"]
+```
+
 ### 关键设计
 
 **1. 潜空间表示：把OT计算搬到低维做**

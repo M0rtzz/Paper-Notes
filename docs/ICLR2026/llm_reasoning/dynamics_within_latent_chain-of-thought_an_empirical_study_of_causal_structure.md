@@ -40,17 +40,46 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文不提出新模型，而是把隐式CoT的隐状态轨迹当作一个可以被"做手术"的因果系统来研究：将每一步隐状态视为结构因果模型(SCM)中的因果变量，用 do-干预切断某一步与上游的关联，再用统一的读出协议观察下游计算和最终答案如何变化。整套分析围绕三个递进的研究问题展开——RQ1 问哪些步骤因果上必要、RQ2 问信息如何在步骤间传播、RQ3 问竞争答案在内部何时坍缩为承诺。
+本文不提出新模型，而是把隐式CoT的隐状态轨迹当作一个可以被"做手术"的因果系统来研究：将每一步隐状态视为结构因果模型(SCM)中的因果变量，用 do-干预切断某一步与上游的关联，再用统一的读出协议观察下游计算和最终答案如何变化。所有分析共享同一个"SCM 建模 + do-干预"接口，之后兵分三路、各配一种读出方式来回答三个递进的研究问题——步骤必要性度量回答 RQ1(哪些步骤因果上必要)、步间影响矩阵回答 RQ2(信息如何在步骤间传播)、叠加分数回答 RQ3(竞争答案在内部何时坍缩为承诺)。因为接口与架构解耦，结构迥异的 Coconut 和 CODI 能放在同一套协议下对比。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["隐式CoT隐状态轨迹 H(1:T)<br/>(Coconut / CODI)"]
+    SCM["SCM 因果建模与 do-干预接口<br/>do(h_t ← 替换) 切断与上游关联"]
+    R1["步骤必要性度量<br/>零干预 flip rate + 早停解码"]
+    R2["步间影响矩阵<br/>KL 散度 + Locality/Span/Early-out/Late-in"]
+    R3["叠加分数 SS(t)<br/>teacher-forced 读出 vs probe 读出"]
+    Q1["RQ1 哪些步骤<br/>因果上必要"]
+    Q2["RQ2 信息如何<br/>在步骤间传播"]
+    Q3["RQ3 竞争答案<br/>何时坍缩为承诺"]
+    X --> SCM
+    SCM --> R1 --> Q1
+    SCM --> R2 --> Q2
+    SCM --> R3 --> Q3
+```
 
 ### 关键设计
 
-**1. SCM 因果建模与 do-干预接口：让"隐式"推理变得可手术。** 隐式CoT把中间计算压进连续表征，没有离散可编辑的文字步骤，传统的步骤消融无从下手。本文对输入$x$把模型写成转移机制$H_t = f_t(H_{<t}, x, \epsilon_t; \theta)$与解码机制$Y = g(H_{1:T}, x, \epsilon_y; \theta)$，于是每个隐状态都成了因果图上的一个节点。干预通过算子$\mathrm{do}(h_t \leftarrow \tilde{h}_t)$替换第$t$步状态来切断它与上游的因果关联，被干预后的反事实轨迹再按$\tilde{h}_{t'} := f_{t'}(\tilde{h}_{<t'}, x, \tilde{\epsilon}_{t'}; \theta)$($t' > t$)向下递推。这个统一接口的好处是与具体架构解耦——Coconut(循环隐token)和CODI(自蒸馏压缩CoT)结构迥异，却共享同一套干预读出协议，从而可比。
+**1. SCM 因果建模与 do-干预接口：让"隐式"推理变得可手术**
 
-**2. 步骤必要性度量：用零干预 flip rate 找出高杠杆步骤。** 要判断哪些步骤不可或缺，本文把目标步骤隐状态置零$\mathrm{do}(h_t \leftarrow \mathbf{0})$，统计 flip rate 即干预后最终预测翻转的样本比例：$\mathrm{Flip}(t) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}[\tilde{y}_i^{(t)} \neq y_i]$。选零干预而非加噪或换均值，是因为它确定性、无参数、跨架构公平，对比6种干预方式(zero/mean/mean_step/gaussian_h/gaussian_mu/gaussian_mu_step)后定性结论一致。与必要性互补的是充分性：早停解码在第$k$步后直接截断解码，用最早可解码步$k_i = \min(\{k : \hat{y}_i^{(\leq k)} = y_i^*\} \cup \{\infty\})$和累计解决率$S(k) = \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\{k_i \leq k\}$刻画答案"什么时候已经够用"。
+隐式CoT把中间计算压进连续表征，没有离散可编辑的文字步骤，传统的步骤消融无从下手。本文对输入$x$把模型写成转移机制$H_t = f_t(H_{<t}, x, \epsilon_t; \theta)$与解码机制$Y = g(H_{1:T}, x, \epsilon_y; \theta)$，于是每个隐状态都成了因果图上的一个节点。干预通过算子$\mathrm{do}(h_t \leftarrow \tilde{h}_t)$替换第$t$步状态来切断它与上游的因果关联，被干预后的反事实轨迹再按$\tilde{h}_{t'} := f_{t'}(\tilde{h}_{<t'}, x, \tilde{\epsilon}_{t'}; \theta)$($t' > t$)向下递推。这个统一接口的好处是与具体架构解耦——Coconut(循环隐token)和CODI(自蒸馏压缩CoT)结构迥异，却共享同一套干预读出协议，从而可比。下面三个设计都是在这个接口上换不同的读出方式。
 
-**3. 步间影响矩阵：用 KL 散度画出信息传播图。** 仅知道单步重不重要还不够，本文要看信息怎么在步骤间流动。把单步干预与下游 teacher-forced 读出结合，用输出分布的 KL 散度量化步$t$到步$s$的定向传播强度$\mathrm{KL}_{t \to s}^{(i)} = \frac{1}{|y_i^*|}\sum_{u=1}^{|y_i^*|}\mathrm{KL}(p_{\text{base}}^{(s)}(\cdot \mid y_{i,<u}^*) \| p_{\mathrm{do}(t)}^{(s)}(\cdot \mid y_{i,<u}^*))$，再聚合成影响矩阵$W_{t,s} = \mathbb{E}_i[\mathrm{KL}_{t \to s}^{(i)}]$。可视化时只保留边权$> 0.1 \cdot \max(W)$的 top-1 出边构成主导影响图，并配四个归一化结构指标——Locality(影响质量在对角线附近的集中度)、Span(期望跳跃距离)、Early-out(来自早期步骤的影响占比)、Late-in(汇聚到晚期步骤的影响占比)。正是这组指标揭示了隐式CoT 的非局部跳跃传播，与显式CoT 的近链式局部传播形成对照。
+**2. 步骤必要性度量：用零干预 flip rate 找出高杠杆步骤**
 
-**4. 叠加分数：分离"输出提交"与"表征提交"。** 最后一个问题是：模型内部何时真正"想清楚"了答案。本文在二元标签的 StrategyQA 上随机采样得到两模式 prompt，每个 prompt 采$K$次 rollout 分到$\mathcal{C}_Y$和$\mathcal{C}_N$，并用两种读出在每步测两个答案的支持度——teacher-forced readout 在固定答案模板上算 token 级 log 概率，probe readout 用固定探针把$h_t$映射到下一 token 概率。叠加分数定义为$\mathrm{SS}(t) = \min(p_Y(t), p_N(t))$，分数高说明两个候选答案在中间步骤仍在竞争。两种读出的反差正是核心发现的来源：输出层早早锁定(SS 低)，表征层却把竞争假设保留到最后一步才坍缩(SS 高)，说明"可解码"并不等于"已承诺"。
+要判断哪些步骤不可或缺，本文把目标步骤隐状态置零$\mathrm{do}(h_t \leftarrow \mathbf{0})$，统计 flip rate 即干预后最终预测翻转的样本比例：
+
+$$\mathrm{Flip}(t) = \frac{1}{N}\sum_{i=1}^{N}\mathbb{I}[\tilde{y}_i^{(t)} \neq y_i]$$
+
+选零干预而非加噪或换均值，是因为它确定性、无参数、跨架构公平，对比6种干预方式(zero/mean/mean_step/gaussian_h/gaussian_mu/gaussian_mu_step)后定性结论一致。与必要性互补的是充分性：早停解码在第$k$步后直接截断解码，用最早可解码步$k_i = \min(\{k : \hat{y}_i^{(\leq k)} = y_i^*\} \cup \{\infty\})$和累计解决率$S(k) = \frac{1}{N}\sum_{i=1}^{N}\mathbf{1}\{k_i \leq k\}$刻画答案"什么时候已经够用"。flip rate 高的步骤就是高杠杆步骤，正是它揭示了步骤间因果杠杆的异质分布。
+
+**3. 步间影响矩阵：用 KL 散度画出信息传播图**
+
+仅知道单步重不重要还不够，本文要看信息怎么在步骤间流动。把单步干预与下游 teacher-forced 读出结合，用输出分布的 KL 散度量化步$t$到步$s$的定向传播强度$\mathrm{KL}_{t \to s}^{(i)} = \frac{1}{|y_i^*|}\sum_{u=1}^{|y_i^*|}\mathrm{KL}(p_{\text{base}}^{(s)}(\cdot \mid y_{i,<u}^*) \| p_{\mathrm{do}(t)}^{(s)}(\cdot \mid y_{i,<u}^*))$，再聚合成影响矩阵$W_{t,s} = \mathbb{E}_i[\mathrm{KL}_{t \to s}^{(i)}]$。可视化时只保留边权$> 0.1 \cdot \max(W)$的 top-1 出边构成主导影响图，并配四个归一化结构指标——Locality(影响质量在对角线附近的集中度)、Span(期望跳跃距离)、Early-out(来自早期步骤的影响占比)、Late-in(汇聚到晚期步骤的影响占比)。正是这组指标揭示了隐式CoT 的非局部跳跃传播，与显式CoT 的近链式局部传播形成对照。
+
+**4. 叠加分数：分离"输出提交"与"表征提交"**
+
+最后一个问题是：模型内部何时真正"想清楚"了答案。本文在二元标签的 StrategyQA 上随机采样得到两模式 prompt，每个 prompt 采$K$次 rollout 分到$\mathcal{C}_Y$和$\mathcal{C}_N$，并用两种读出在每步测两个答案的支持度——teacher-forced readout 在固定答案模板上算 token 级 log 概率，probe readout 用固定探针把$h_t$映射到下一 token 概率。叠加分数定义为$\mathrm{SS}(t) = \min(p_Y(t), p_N(t))$，分数高说明两个候选答案在中间步骤仍在竞争。两种读出的反差正是核心发现的来源：输出层早早锁定(SS 低)，表征层却把竞争假设保留到最后一步才坍缩(SS 高)，说明"可解码"并不等于"已承诺"。
 
 ### 一个完整示例
 以 GSM8K 上一个 Coconut 样本($T=6$)为例：先跑无干预基线得到隐轨迹$H_{1:6}$和正确答案；RQ1 逐个把$h_t$置零重跑，发现中间步(如$t=3,4$)置零后 flip 远高于首尾步，定位出高杠杆步骤；RQ2 对$h_3$做干预后逐步读出 KL，发现影响并未顺着$3\to4\to5$链式衰减，而是出现$3\to6$的跳跃强边，反映非局部路由；若换到 StrategyQA，RQ3 会看到 teacher-forced 的 SS 全程很低(输出早提交)，而 probe 的 SS 中段偏高、末步才骤降(表征晚提交)。同一套干预读出接口贯穿三步，逐层从"哪步重要"走到"竞争如何收敛"。

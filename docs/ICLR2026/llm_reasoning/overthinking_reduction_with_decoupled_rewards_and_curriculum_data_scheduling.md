@@ -43,15 +43,25 @@ tags:
 
 ### 整体框架
 
-DeCS 先用一个轻量判别模型 $\mathcal{M}_{\text{judge}}$ 找出每条正确轨迹中"足以得出正确答案的最短前缀"（NRP）边界，然后把 token 级奖励在这个边界处解耦——前缀内 token 拿满奖励、之后的冗余 token 拿与位置成反比的递减奖励——再叠加一个课程调度器，按当前批次的 NRP 比例动态调节简单样本的占比。三者合起来既精准压制冗余、又不伤探索能力。
+DeCS 先用一个轻量判别模型 $\mathcal{M}_{\text{judge}}$ 找出每条正确轨迹中"足以得出正确答案的最短前缀"（NRP）边界，然后把 token 级奖励在这个边界处解耦——前缀内 token 拿满奖励、之后的冗余 token 拿与位置成反比的递减奖励——再叠加一个课程调度器，按当前批次的 NRP 比例动态调节简单样本的占比。整条流水线挂在 GRPO 之上：采样得到的正确轨迹经判别器定位 NRP、按边界发放解耦奖励、算出 token 级 advantage 更新策略，调度器再据当前批的冗余水平回流调整下一轮的样本配比，三者合起来既精准压制冗余、又不伤探索能力。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["策略采样<br/>每个prompt采16个rollout"] --> B["NRP边界检测<br/>切chunk + 判别器M_judge<br/>定位首个含正确答案的前缀K*"]
+    B --> C["解耦token级奖励<br/>前缀内token给满奖r+<br/>前缀后冗余token给递减奖励"]
+    C --> D["token级advantage归一化<br/>GRPO策略更新"]
+    D --> E["课程批次调度<br/>按当前批NRP比例R_m<br/>更新简单样本占比κ"]
+    E -->|"回流下一轮采样"| A
+```
 
 ### 关键设计
 
-**1. NRP 边界检测：把模糊的"想多了"变成可操作的 token 标签。** overthinking 难处理的根源在于"哪些 token 是冗余"本身缺乏定义。本文把它精确化为"必要推理前缀（NRP）"——首次得出正确答案所需的最短 chunk 序列。具体做法是微调一个轻量语言模型 $\mathcal{M}_{\text{judge}}$，把推理过程按分隔符切成 chunk $\{s_1, \ldots, s_{|S|}\}$，对每个 chunk 在给定问题 $q$、前缀 $s_c$ 和标准答案 $y^*$ 下判断是否已包含正确答案 $j_{s_c} \sim \mathcal{M}_{\text{judge}}(\cdot \mid q, s_c, y^*)$，首个判为"是"的 chunk 及其之前的全部 chunk 即构成 NRP，边界位置记为 $K_{o_i}^*$。这一步把训练信号从轨迹级粗粒度细化到 token 级，为后续差异化奖励提供了支点。
+**1. NRP 边界检测：把模糊的"想多了"变成可操作的 token 标签** overthinking 难处理的根源在于"哪些 token 是冗余"本身缺乏定义。本文把它精确化为"必要推理前缀（NRP）"——首次得出正确答案所需的最短 chunk 序列。具体做法是微调一个轻量语言模型 $\mathcal{M}_{\text{judge}}$，把推理过程按分隔符切成 chunk $\{s_1, \ldots, s_{|S|}\}$，对每个 chunk 在给定问题 $q$、前缀 $s_c$ 和标准答案 $y^*$ 下判断是否已包含正确答案 $j_{s_c} \sim \mathcal{M}_{\text{judge}}(\cdot \mid q, s_c, y^*)$，首个判为"是"的 chunk 及其之前的全部 chunk 即构成 NRP，边界位置记为 $K_{o_i}^*$。这一步把训练信号从轨迹级粗粒度细化到 token 级，为后续差异化奖励提供了支点。
 
-**2. 解耦 token 级奖励：让冗余的第一个 token 就被否定。** 现有长度惩罚之所以伤性能，是因为它把奖励作用在整条轨迹上。本文的 Theorem 2 证明了一个更致命的问题：在序列级长度奖励下，NRP 后第一个冗余 token 的梯度信号 $\mathcal{J}(A; j=K^*+1) > 0$，也就是模型反而被鼓励继续往下写而非及时停笔。DeCS 在 NRP 边界处把奖励拆开：前缀内 token（$j \leq K_{o_i}^*$）给最大奖励 $r_{i,j} = r_+ \cdot \mathbf{1}_{\text{correct}}$；前缀后的思考 token（$j > K_{o_i}^*$）给随轨迹长度衰减的奖励 $r_{i,j} = (r_0 - (r_+ - r_0)L_i/L_{\max}) \cdot \mathbf{1}_{\text{correct}}$。这样 NRP 后任何前导冗余 token 都拿到负 advantage，再借自回归特性把"提前停止"的压力传导到整段冗余上，从源头掐断啰嗦。
+**2. 解耦 token 级奖励：让冗余的第一个 token 就被否定** 现有长度惩罚之所以伤性能，是因为它把奖励作用在整条轨迹上。本文的 Theorem 2 证明了一个更致命的问题：在序列级长度奖励下，NRP 后第一个冗余 token 的梯度信号 $\mathcal{J}(A; j=K^*+1) > 0$，也就是模型反而被鼓励继续往下写而非及时停笔。DeCS 在 NRP 边界处把奖励拆开：前缀内 token（$j \leq K_{o_i}^*$）给最大奖励 $r_{i,j} = r_+ \cdot \mathbf{1}_{\text{correct}}$；前缀后的思考 token（$j > K_{o_i}^*$）给随轨迹长度衰减的奖励 $r_{i,j} = (r_0 - (r_+ - r_0)L_i/L_{\max}) \cdot \mathbf{1}_{\text{correct}}$。这样 NRP 后任何前导冗余 token 都拿到负 advantage，再借自回归特性把"提前停止"的压力传导到整段冗余上，从源头掐断啰嗦。
 
-**3. 课程批次调度：按需放简单样本，保住高熵探索 token。** 简单样本（所有 rollout 都答对的 prompt）是效率优化的主力，因为此时长度成了唯一可区分的信号；但简单样本一多，高熵探索 token（如"wait""however"）的 logit 下降会主导整个批次梯度，把模型的探索能力压垮。本文用 Lemma 2 证明长度惩罚会让高熵 token 的期望 logit 变化严格为负，并用 Theorem 1 给出维持其生成概率的充要条件 $\kappa \sigma_L < C$。据此调度器按 $\kappa_m = \text{clip}(\kappa_{m-1} + \beta(\mathcal{R}_m - \mathcal{R}_{m-1}), 0, \kappa_m^0)$ 更新简单样本占比，其中 $\mathcal{R}_m$ 是当前批次正确序列的 NRP 比例：冗余越少（NRP 比例越高）就放进越多简单样本继续压缩，否则收紧占比保护探索，实现压缩与探索的动态平衡。整套设计的理论地基由 Lemma 1 给出——它建立了 policy gradient 下 logit 变化与 advantage 的线性关系，使上述两个定理得以推导。
+**3. 课程批次调度：按需放简单样本，保住高熵探索 token** 简单样本（所有 rollout 都答对的 prompt）是效率优化的主力，因为此时长度成了唯一可区分的信号；但简单样本一多，高熵探索 token（如"wait""however"）的 logit 下降会主导整个批次梯度，把模型的探索能力压垮。本文用 Lemma 2 证明长度惩罚会让高熵 token 的期望 logit 变化严格为负，并用 Theorem 1 给出维持其生成概率的充要条件 $\kappa \sigma_L < C$。据此调度器按 $\kappa_m = \text{clip}(\kappa_{m-1} + \beta(\mathcal{R}_m - \mathcal{R}_{m-1}), 0, \kappa_m^0)$ 更新简单样本占比，其中 $\mathcal{R}_m$ 是当前批次正确序列的 NRP 比例：冗余越少（NRP 比例越高）就放进越多简单样本继续压缩，否则收紧占比保护探索，实现压缩与探索的动态平衡。整套设计的理论地基由 Lemma 1 给出——它建立了 policy gradient 下 logit 变化与 advantage 的线性关系，使上述两个定理得以推导。
 
 ### 损失函数 / 训练策略
 

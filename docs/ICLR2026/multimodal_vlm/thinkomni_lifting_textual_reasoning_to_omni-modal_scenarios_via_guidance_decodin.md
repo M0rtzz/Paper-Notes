@@ -45,21 +45,45 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ThinkOmni 把纯文本大推理模型(LRM) $M_R$ 当作全模态模型(OLLM) $M_O$ 的解码时"顾问"：每生成一个 token，都在 logits 层把 OLLM 的全模态感知信号和 LRM 的文本推理信号对比融合成一个增强分布，再从中采样。整个过程不动任何参数，靠的是逐步对比缩放在每一步自动判断当前该多听感知还是多听推理，从而无须手动调参就能适配数学、音频、通用全模态等不同任务。
+ThinkOmni 把纯文本大推理模型(LRM) $M_R$ 当作全模态模型(OLLM) $M_O$ 的解码时"顾问"：每生成一个 token，都在 logits 层把 OLLM 的全模态感知信号和 LRM 的文本推理信号对比融合成一个增强分布，按它采样下一个 token、追加进前缀，逐步生成。整个过程不动任何参数，只靠两个组件协作——**LRM-as-a-Guide** 把推理模型的文本推理增量"嫁接"进全模态解码，**Stepwise Contrastive Scaling** 在每一步自动判断当前该多听感知还是多听推理并分配权重，从而无须手动调参就能适配数学、音频、通用全模态等不同任务。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["全模态输入 O ＋<br/>已生成文本前缀 x（&lt;t）"]
+    subgraph GUIDE["LRM-as-a-Guide：三路 logits"]
+        direction LR
+        ZB["OLLM 全模态<br/>z_base = M_O(x, O)"]
+        ZN["OLLM 仅文本<br/>z⁻ = M_O(x)"]
+        ZP["LRM 仅文本<br/>z⁺ = M_R(x)"]
+    end
+    subgraph SCALE["Stepwise Contrastive Scaling：逐步自适应配权"]
+        direction TB
+        JS["JS 散度量推理/感知贡献<br/>D_R、D_P → α_r、α_p（含 warmup）"]
+        FUSE["双对比项融合<br/>P̂ = Softmax[ z_base<br/>+ α_r·(z⁺−z⁻) + α_p·(z_base−z⁻) ]"]
+    end
+    OUT["按 P̂ 采样下一个 token<br/>追加进前缀"]
+
+    IN --> GUIDE
+    GUIDE --> JS
+    JS --> FUSE
+    FUSE --> OUT
+    OUT -->|"每个解码步重复"| IN
+```
 
 ### 关键设计
 
 **1. LRM-as-a-Guide：让看不见图像的推理模型也能贡献推理信号**
 
-OLLM 能看图听音但推理弱，LRM 推理强却只吃文本，难点在于如何让一个感知不到多模态输入的模型去引导多模态解码。ThinkOmni 在每个解码步取三组 logits：OLLM 带全模态输入的基础项 $z^{base}=M_O(x_{<t},O)$、OLLM 去掉多模态输入的纯文本负项 $z^{-}=M_O(x_{<t})$、以及 LRM 仅看文本前缀的正项 $z^{+}=M_R(x_{<t})$，融合为 $\hat{P}=\mathrm{Softmax}[z^{base}+\alpha\cdot(z^{+}-z^{-})]$。关键在对比项 $z^{+}-z^{-}$——它像差分放大器，把 LRM 相对 OLLM 纯文本模式的推理偏好增量放大出来，同时抵消两个模型共有的语言噪声。LRM 虽看不到原始图像音频，但随着解码推进，已生成的文本前缀里已经隐含了 OLLM 写下的多模态信息，于是 LRM 仍能基于这些线索给出有效的推理引导。
+OLLM 能看图听音但推理弱，LRM 推理强却只吃文本，难点在于如何让一个感知不到多模态输入的模型去引导多模态解码。ThinkOmni 在每个解码步取三组 logits：OLLM 带全模态输入的基础项 $z^{base}=M_O(x_{<t},O)$、OLLM 去掉多模态输入的纯文本负项 $z^{-}=M_O(x_{<t})$、以及 LRM 仅看文本前缀的正项 $z^{+}=M_R(x_{<t})$，先按单一对比项融合 $\hat{P}=\mathrm{Softmax}[z^{base}+\alpha\cdot(z^{+}-z^{-})]$。关键在对比项 $z^{+}-z^{-}$——它像差分放大器，把 LRM 相对 OLLM 纯文本模式的推理偏好增量放大出来，同时抵消两个模型共有的语言噪声。LRM 虽看不到原始图像音频，但随着解码推进，已生成的文本前缀里已经隐含了 OLLM 写下的多模态信息，于是 LRM 仍能基于这些线索给出有效的推理引导。
 
-**2. Stepwise Contrastive Scaling：让融合权重随任务和解码步自适应**
+**2. Stepwise Contrastive Scaling：让推理/感知权重随任务和解码步自适应**
 
-固定的 $\alpha$ 适配不了所有场景——数学题需要更强推理、音频感知题需要更强感知，实验也表明各任务最优 $\alpha$ 差异很大。ThinkOmni 因此在每一步用 Jensen-Shannon 散度度量各分布与融合分布的偏离：推理贡献 $D_R=\mathrm{JS}(P_R\,\|\,P)$、感知贡献 $D_P=\mathrm{JS}(P_O\,\|\,P)$，再按二者相对大小把权重分配给约束 $\alpha_r+\alpha_p=1$ 的推理权重 $\alpha_r$ 与感知权重 $\alpha_p$，谁的分布偏离更大就说明谁此刻更该被信任。此外引入 warmup 机制压低初始解码阶段的推理介入，避免前缀尚短、信息不足时 LRM 过早主导导致跑偏。
+固定的引导权重 $\alpha$ 适配不了所有场景——数学题需要更强推理、音频感知题需要更强感知；$\alpha$ 偏大时 $z^{+}/z^{-}$ 缺乏全模态内容会诱发幻觉，偏小又削弱引导，实验也表明各任务最优 $\alpha$ 差异很大。ThinkOmni 因此在每个解码步先用 Jensen-Shannon 散度在线度量推理与感知的相对贡献：推理项 $D_R=\mathrm{JS}(P_R\,\|\,P)$、感知项 $D_P=\mathrm{JS}(P_O\,\|\,P)$，其中 $P_O,P_R,P$ 分别是 $M_O(x_{<t},O)$、$M_R(x_{<t})$、$M_O(x_{<t})$ 的 softmax 分布，谁的分布偏离更大就说明谁此刻更该被信任。基于这把"标尺"，方法把原来的单一对比项展开成两路独立的对比信号：
 
-**3. 双对比项融合：把推理增强和感知增强解耦成两路独立信号**
+$$\hat{P}=\mathrm{Softmax}\big[M_O(x_{<t},O)+\alpha^{r}_{t}\cdot(M_R(x_{<t})-M_O(x_{<t}))+\alpha^{p}_{t}\cdot(M_O(x_{<t},O)-M_O(x_{<t}))\big]$$
 
-把单一对比项进一步展开，完整融合写成 $\hat{P}=\mathrm{Softmax}[M_O(x_{<t},O)+\alpha_r\cdot(M_R(x_{<t})-M_O(x_{<t}))+\alpha_p\cdot(M_O(x_{<t},O)-M_O(x_{<t}))]$。其中第一个对比项注入 LRM 推理增量，第二个对比项是一种较激进的视觉对比解码——直接用"有多模态输入减去无多模态输入"的差值来强化感知。两路对比项各自带独立权重，使推理增强与感知增强可以同时但互不干扰地施加，让模型在保持感知锐度的同时获得更强的逻辑链。
+第一个对比项注入 LRM 的推理增量、由推理权重 $\alpha^{r}_{t}$ 控制；第二个对比项是一种较激进的视觉对比解码——直接用"有多模态输入减去无多模态输入"的差值来强化感知、由感知权重 $\alpha^{p}_{t}$ 控制。两个权重按 $D_R,D_P$ 的相对大小分配并归一化到 $\alpha^{r}_{t}+\alpha^{p}_{t}=1$，于是推理增强与感知增强能同时施加而互不挤占。此外在初始解码阶段对 $\alpha^{r}_{t}$ 做 warmup 压制，避免前缀尚短、信息不足时 LRM 过早主导导致跑偏。
 
 ### 损失函数 / 训练策略
 完全无训练，不需任何额外数据或微调。唯一约束是 OLLM 与 LRM 共享词表（如同属 Qwen 家族），以便 logits 在同一词表空间对齐。代价是每个解码步需 3 次前向传播，推理开销约为原始模型的 2.88×。

@@ -43,7 +43,24 @@ tags:
 
 ### 整体框架
 
-GTP是一个actor-critic框架：actor是生成轨迹策略 $\Phi_\theta(s, a_t, t, \tau)$，学习把任意时刻 $t$ 的噪声动作 $a_t$ 沿动作空间的概率流ODE映射到目标时刻 $\tau$ 的干净动作；critic是标准双Q网络 $Q_\varphi$。训练时用瞬时流损失保证局部动力学正确、用轨迹一致性损失保证整段映射自洽，再用优势权重把模仿偏向高价值动作；推理时从高斯噪声出发只需几步迭代即可解出动作。
+GTP是一个actor-critic框架：actor是生成轨迹策略 $\Phi_\theta(s, a_t, t, \tau)$，学习把任意时刻 $t$ 的噪声动作 $a_t$ 沿动作空间的概率流ODE映射到目标时刻 $\tau$ 的干净动作；critic是标准双Q网络 $Q_\varphi$。训练时用瞬时流损失保证局部动力学正确、用轨迹一致性损失保证整段映射自洽，二者都乘上来自critic的优势权重把模仿偏向高价值动作；推理时从高斯噪声出发只需几步迭代即可解出动作。三个核心设计分别管「映射怎么学」「监督信号怎么来」「价值怎么注入」。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据集 (s, a)"] --> N["加噪动作 a_t"]
+    D --> C["双 Q 网络 Q_φ<br/>(critic)"]
+    N --> PHI["统一ODE轨迹框架<br/>流映射 Φθ(s, a_t, t, τ)"]
+    PHI --> CONS["轨迹一致性损失<br/>半群自洽·目标网络 θ⁻"]
+    PHI --> FLOW["瞬时流损失<br/>局部动力学还原"]
+    SCORE["高效稳定的分数近似<br/>封闭代理 (a_t−a)/t"] --> FLOW
+    C --> ADV["优势加权的价值引导<br/>A(s,a)=Q−V → 权重 w(s,a)"]
+    ADV -->|"乘 w(s,a)"| CONS
+    ADV -->|"乘 w(s,a)"| FLOW
+    CONS --> ACT["Actor 总损失<br/>L_Consistency + λ·L_Flow"]
+    FLOW --> ACT
+    ACT --> INF["推理：高斯噪声<br/>→ Φθ 几步迭代 → 动作"]
+```
 
 ### 关键设计
 

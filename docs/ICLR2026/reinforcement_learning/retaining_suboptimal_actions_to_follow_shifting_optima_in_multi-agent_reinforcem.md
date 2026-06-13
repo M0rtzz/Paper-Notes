@@ -44,15 +44,40 @@ tags:
 
 ### 整体框架
 
-S2Q 建在 WQMIX 之上，思路是不再只盯住单一最优联合动作，而是同时维护一组 sub-value 函数：$Q_0^{\text{sub}} := Q^{\text{tot}}$ 追踪当前最优，$Q_1^{\text{sub}}, \dots, Q_K^{\text{sub}}$ 依次追踪第 1 到第 $K$ 个次优联合动作，再配一个无约束的 $Q^*$（同 WQMIX）作为参照值。所有 sub-value 函数共享 QMIX 的单调混合架构以满足 IGM 条件，并通过一个 Encoder-Decoder 在训练时估计 Softmax 采样分布、协调各 agent 选择同一候选。这样当最优点漂移时，先前的次优函数已经把替代高价值动作的信息保存好了，可以立刻接管引导 $Q^{\text{tot}}$ 适应。
+合作 MARL 里值分解方法（如 QMIX/WQMIX）只盯住单一最优联合动作，一旦训练中值景观变化、原来的最优点漂移，先前被丢弃的替代高价值动作就找不回来了。S2Q 建在 WQMIX 之上，核心思路是把"最优动作"扩成一组按价值排序的候选：每个 agent 的局部历史先送进**逐步次优 Q-learning** 模块，同时学一组 sub-value 函数——$Q_0^{\text{sub}} := Q^{\text{tot}}$ 追踪当前最优，$Q_1^{\text{sub}}, \dots, Q_K^{\text{sub}}$ 依次锁定第 1 到第 $K$ 个次优联合动作，外加一个无约束的参照值 $Q^*$（同 WQMIX）；接着 **Softmax 行为策略** 用 $Q^*$ 给这 $K{+}1$ 个候选打分、得到优先级分布 $\mathbf{P}_t$；由于分布依赖全局信息、且各 agent 必须选中同一个候选才能联合执行，**训练时通信协调** 用一个 Encoder-Decoder 重建出近似分布 $\hat{\mathbf{P}}_t$ 让所有 agent 同步采样到相同的索引 $k$，再各自按 $\epsilon$-greedy 执行 $Q_k^{\text{sub}}$ 形成联合动作。训练时这些经验回灌更新所有 sub-value 与 $Q^*$，最优点漂移时对应的次优函数已把替代动作存好、可立刻接管引导 $Q^{\text{tot}}$ 适应；测试时则完全去中心化，每个 agent 取 $Q_0^{\text{sub}}$ 的贪心动作即可，无需通信。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["局部历史 τ<br/>各 agent 局部观测序列"] --> B["逐步次优 Q-learning<br/>抑制前序动作逐级学<br/>Q₀…Q_K 个 sub-value + 参照值 Q*"]
+    B --> C["Softmax 行为策略<br/>用 Q* 给 K+1 候选打分<br/>得优先级分布 Pₜ"]
+    C --> D["训练时通信协调<br/>Encoder-Decoder 重建 P̂ₜ<br/>各 agent 同步选同一个 k"]
+    D --> E["按 P̂ₜ 采样 k 后<br/>ε-greedy 执行 Q_kˢᵘᵇ → 联合动作"]
+    E -->|训练| F["回放更新各 sub-value 与 Q*<br/>最优漂移时 Q₀ 即时接管"]
+    E -->|"测试·去中心化"| G["每 agent 取 Q₀ˢᵘᵇ 贪心动作<br/>无需通信"]
+```
 
 ### 关键设计
 
-**1. 逐步次优 Q-learning：让每个 sub-value 锁定一个被前序"屏蔽"后剩下的最优动作。** 问题在于如何让 $K$ 个函数互不重叠地各自学到一个次优动作。S2Q 的做法是顺序构造 TD 目标：学 $Q_k^{\text{sub}}$ 时，在目标里对前 $k-1$ 个已识别动作施加一个负的抑制项，使它们的估值被压低，于是 $Q_k^{\text{sub}}$ 的 argmax 自然落到"排除已识别动作后"的下一个最优上。损失为 $\mathcal{L}_k = \mathbb{E}\left[w_k \left(Q_k^{\text{sub}} - \left(y_t - \alpha \cdot \mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t}) \cdot \max(Q_{\text{targ}}^*, C)\right)\right)^2\right]$，其中 $\mathcal{A}_{k,t} = \{\mathbf{a}_{0,t}^*, \dots, \mathbf{a}_{k,t}^*\}$ 是前 $k$ 个已识别动作集合，指示函数 $\mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t})$ 保证抑制只作用于这些动作，$\alpha$ 控制抑制强度。论文用 Theorem 4.1 给出正确性保证：只要奖励有界且 $\alpha$ 足够大，$\mathbf{a}_{k,t}^* = \arg\max_{\mathbf{a}} Q_k^{\text{sub}}(s_t, \boldsymbol{\tau}_t, \mathbf{a}_t)$ 就准确对应 $Q^*$ 的第 $k$ 个次优联合动作——即抑制足够强时，逐级"剥洋葱"得到的确实是真正的次优序列。
+**1. 逐步次优 Q-learning：让每个 sub-value 锁定被前序"屏蔽"后剩下的最优动作**
 
-**2. Softmax 行为策略：把探索预算花在有前途的候选上，而非均匀乱撞。** $\epsilon$-greedy 在大联合动作空间里联合探索概率 $\propto \epsilon^N$ 指数衰减，等于把次优函数辛苦保留的信息浪费掉。S2Q 改用 $Q^*$ 的估值给 $K+1$ 个候选打分并构造 Softmax 分布 $\mathbf{P}_t = \text{Softmax}\left(\frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{0,t}^*)}{T}, \dots, \frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{K,t}^*)}{T}\right)$，执行时先按 $\mathbf{P}_t$ 采样一个 $k$，再用 $\epsilon$-greedy 执行 $Q_k^{\text{sub}}$ 对应的动作。温度 $T$ 调节探索-利用权衡，论文取 $T=0.1$ 最优。这样探索是围绕高潜力次优动作定向展开的，候选估值越高被选中概率越大，在联合动作空间里的有效探索效率远高于均匀随机。
+要让 $K$ 个函数互不重叠地各自学到一个次优动作，难点是怎么把"已经被别的函数占走"的动作排除掉。S2Q 的做法是顺序构造 TD 目标：学 $Q_k^{\text{sub}}$ 时，在目标里对前 $k-1$ 个已识别动作施加一个负的抑制项，把它们的估值压低，于是 $Q_k^{\text{sub}}$ 的 argmax 自然落到"排除已识别动作后"的下一个最优上。损失为
 
-**3. 训练时通信协调：保证各 agent 同步选中同一个候选。** Softmax 分布 $\mathbf{P}_t$ 依赖全局信息，且只有当所有 agent 选同一个 $k$ 时联合执行才一致，分散执行下各自采样会错位。S2Q 用一个 Encoder $E$ 把每个 agent 的局部历史压成隐表示 $z_t = E(\boldsymbol{\tau}_t)$，再用 Decoder $D$ 从中重建全局状态与近似分布 $(\hat{s}_t, \hat{\mathbf{P}}_t) = D(z_t)$，各 agent 从同一份 $\hat{\mathbf{P}}_t$ 同步采样得到相同的 $k$。这套通信只在训练时用于协调探索；测试时完全去中心化，直接取 $Q_0^{\text{sub}} = Q^{\text{tot}}$ 的贪心动作即可，无需通信。对 SMAC-Comm 这类通信关键场景，则用 S2Q-Comm 变体在测试时也保留 $z_t$。
+$$\mathcal{L}_k = \mathbb{E}\left[w_k \left(Q_k^{\text{sub}} - \left(y_t - \alpha \cdot \mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t}) \cdot \max(Q_{\text{targ}}^*, C)\right)\right)^2\right]$$
+
+其中 $\mathcal{A}_{k,t} = \{\mathbf{a}_{0,t}^*, \dots, \mathbf{a}_{k,t}^*\}$ 是前 $k$ 个已识别动作集合，指示函数 $\mathbb{I}(\mathbf{a}_t \in \mathcal{A}_{k-1,t})$ 保证抑制只作用于这些动作，$\alpha$ 控制抑制强度，$\max(\cdot, C)$（$C>0$）用来处理 $Q_{\text{targ}}^*$ 可能为负的情况。所有 sub-value 函数共享 QMIX 的单调混合架构以满足 IGM 条件。论文用 Theorem 4.1 给出正确性保证：只要奖励有界且 $\alpha$ 足够大，$\mathbf{a}_{k,t}^* = \arg\max_{\mathbf{a}} Q_k^{\text{sub}}(s_t, \boldsymbol{\tau}_t, \mathbf{a}_t)$ 就准确对应 $Q^*$ 的第 $k$ 个次优联合动作——即抑制足够强时，逐级"剥洋葱"得到的确实是真正的次优序列，而非随便挑的动作。这一步把"用后即丢"的次优信息显式留了下来，是后面快速适应漂移的前提。
+
+**2. Softmax 行为策略：把探索预算花在有前途的候选上而非均匀乱撞**
+
+光把次优动作存下来还不够——还得真去执行它们，$Q^*$ 才能向全局收敛。但 $\epsilon$-greedy 在大联合动作空间里联合探索概率 $\propto \epsilon^N$ 指数衰减（$N$ 个 agent 各自随机，凑齐一次联合探索的概率极低），等于把次优函数辛苦保留的信息浪费掉。S2Q 改用 $Q^*$ 的估值给 $K+1$ 个候选打分并构造 Softmax 分布
+
+$$\mathbf{P}_t = \text{Softmax}\left(\frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{0,t}^*)}{T}, \dots, \frac{Q^*(s_t, \boldsymbol{\tau}_t, \mathbf{a}_{K,t}^*)}{T}\right)$$
+
+执行时先按 $\mathbf{P}_t$ 采样一个索引 $k$，再用 $\epsilon$-greedy 执行 $Q_k^{\text{sub}}$ 对应的动作。温度 $T$ 调节探索-利用权衡，论文取 $T=0.1$ 最优。这样探索是围绕高潜力次优动作定向展开的——候选估值越高被选中概率越大，比起均匀随机能更频繁地造访那些"快要变成最优"的动作，从而让 $Q^*$ 更快发现更好的最优/次优解。
+
+**3. 训练时通信协调：保证各 agent 同步选中同一个候选**
+
+前面的 Softmax 分布 $\mathbf{P}_t$ 依赖全局信息，而分散执行下每个 agent 只看得到自己的局部历史，且只有当所有 agent 选同一个索引 $k$ 时联合执行 $Q_k^{\text{sub}}$ 才一致，各自独立采样会错位。S2Q 借鉴 MASIA 的 Encoder-Decoder：Encoder $E$ 把每个 agent 的局部历史压成隐表示 $z_t = E(\boldsymbol{\tau}_t)$，Decoder $D$ 从中重建全局状态与近似分布 $(\hat{s}_t, \hat{\mathbf{P}}_t) = D(z_t)$，各 agent 从同一份 $\hat{\mathbf{P}}_t$ 同步采样得到相同的 $k$。这套通信只在训练时用于协调探索；测试时完全去中心化，每个 agent 直接取 $Q_0^{\text{sub}} = Q^{\text{tot}}$ 的局部贪心动作即可，无需任何消息传递——这相比那些训练和测试都要通信的方法是个实用优势。对 SMAC-Comm 这类通信本身就关键的场景，则用 S2Q-Comm 变体，在测试时也把 $z_t$ 喂给每个 $Q_k^i$。
 
 ## 实验结果
 

@@ -42,17 +42,44 @@ tags:
 
 ### 整体框架
 
-Echo 用 SFT+RL 两阶段把一个纯文本推理的 LALM 改造成会"主动重听"的模型：第一阶段用音频锚定的 CoT 数据冷启动，教模型在推理时引用具体时间区间；第二阶段通过推理格式适配把这些时间区间真正裁剪成音频 token 插回序列，再用强化学习激发音频交错推理。所有训练数据来自一条"音频→多视角文本→LLM 合成 QA-CoT"的自动流水线。
+Echo 想解决的核心矛盾是：现有 LALM 把音频一次性编码成上下文嵌入后，推理就完全在文本里进行，注意力很快不再回看音频，丰富的声学细节被白白丢掉。Echo 的思路是让音频成为推理过程中的"主动组件"——模型在思考时能动态定位并**重新聆听**关键片段。
+
+整条 pipeline 从 Qwen2.5-Omni (7B) 这个 base model 出发，分两阶段改造。第一阶段（SFT 冷启动）用音频锚定的 CoT 数据微调，教模型在推理文本里用 `<seg>start, end</seg>` 标签指认要回看的时间区间，得到一个会"标区间"但推理仍困在文本里的冷启动模型。第二阶段先做**推理格式适配**——每当解码出一对 `<seg>` 标签就暂停，把对应音频片段裁剪成 token 插回序列，让推理真正变成文本与音频交替的多模态过程——再用强化学习激励模型学会有意义地反复回听。两阶段所需的高质量训练数据全部由一条"音频→多视角文本→LLM 合成 QA-CoT"的自动流水线产出，分流成 SFT 集与 RL 集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    subgraph DATA["结构化数据生成流水线"]
+        direction TB
+        D1["带时间元数据的音频<br/>(AudioSet-Strong / MusicBench)"] --> D2["Qwen2.5-Omni 转三种文本视角<br/>描述 / 语音转录 / 音乐元素"]
+        D2 --> D3["DeepSeek-R1 合成<br/>QA-CoT 三元组"]
+        D3 --> D4{"双阶段质量过滤"}
+        D4 -->|"QA+CoT 达标"| D5["EAQA-SFT (75.9k)"]
+        D4 -->|"仅 QA 达标"| D6["EAQA-RL (21.9k)"]
+    end
+    BASE["base model<br/>Qwen2.5-Omni (7B)"] --> SFT["音频锚定推理 (SFT 冷启动)<br/>学会用 &lt;seg&gt; 标签指认时间区间"]
+    D5 --> SFT
+    SFT --> COLD["cold-start 模型<br/>会标区间但仍纯文本推理"]
+    COLD --> RL["音频交错推理 (RL 阶段)<br/>推理格式适配 + GRPO 复合奖励"]
+    D6 --> RL
+    RL --> ECHO["Echo<br/>推理中主动重听音频片段"]
+```
 
 ### 关键设计
 
-**1. 音频锚定推理（SFT 冷启动）：让模型先学会在文本里指认音频片段。** 基于 Qwen2.5-Omni (7B) 初始化的模型天然倾向纯文本推理，不会主动回看音频，因此第一步只解决"指认"问题。每个 SFT 样本由多模态输入 $(A, q)$（音频加问题）和标准答案 $(c, a)$（CoT 加最终答案）组成，关键在于 CoT 中密集嵌入 `<seg>start, end</seg>` 标签对来引用音频片段——每个引用前给出调用理由、后接基于该片段的细粒度分析，从而把"何时该回看、回看哪段、看出什么"显式写进监督信号。训练用标准交叉熵 $\mathcal{L}_\text{SFT}(\theta) = -\frac{1}{n}\sum_{t=1}^n \log \pi_\theta(y_{i,t}^*|x_i, y_{i,<t}^*)$，产出一个能准确标注时间区间、但推理仍停留在文本模态的"冷启动模型"。
+**1. 音频锚定推理（SFT 冷启动）：让模型先学会在文本里指认音频片段**
 
-**2. 音频交错推理（RL 阶段）：把时间标签真正变成回听动作。** 冷启动模型只会"说"要看哪段，却没真的重新听，信息瓶颈依旧。推理格式适配解决这一断层：每当模型生成一对 `<seg>` 标签就暂停解码，从原始音频中裁剪对应片段 $A_{s:e}$，把它的 token 插入当前推理序列形成增强输入再继续生成，如此循环直到 `<eos>`——推理因此从单模态文本变成文本与音频交替的多模态过程，且损失计算时忽略所有插入的音频 token。在此之上用复合奖励 $\mathcal{R}(\tau) = \mathcal{R}_\text{format} + \mathcal{R}_\text{consist} + \mathcal{R}_\text{acc} + \mathcal{R}_\text{seg}$ 引导行为：格式奖励 $\mathcal{R}_\text{format}=0.5$ 要求正确使用封装标签，一致性惩罚 $\mathcal{R}_\text{consist}$ 对 `</seg>` 后语义断裂（如大写字母开头或 `<`）每次扣 0.1、最多 -0.5，准确性奖励 $\mathcal{R}_\text{acc}=0.5$ 给答对，片段奖励 $\mathcal{R}_\text{seg}=0.5$ 仅在答对且至少引用一个片段时发放、否则为 0——后两者联手保证模型不是靠猜对而是靠真回听拿分。优化用 GRPO，每个 query 采样 $G=8$ 个候选、组内归一化奖励算优势，配 PPO 风格裁剪与 KL 约束：
+基于 Qwen2.5-Omni (7B) 初始化的模型天然倾向纯文本推理，不会主动回看音频，因此第一步只解决"指认"问题。每个 SFT 样本由多模态输入 $(A, q)$（音频加问题）和标准答案 $(c, a)$（CoT 加最终答案）组成，关键在于 CoT 中密集嵌入 `<seg>start, end</seg>` 标签对来引用音频片段——每个引用前给出调用理由、后接基于该片段的细粒度分析，从而把"何时该回看、回看哪段、看出什么"显式写进监督信号。训练用标准交叉熵 $\mathcal{L}_\text{SFT}(\theta) = -\frac{1}{n}\sum_{t=1}^n \log \pi_\theta(y_{i,t}^*|x_i, y_{i,<t}^*)$，产出一个能准确标注时间区间、但推理仍停留在文本模态的冷启动模型（论文称这种中间形态为音频锚定推理 audio-grounded reasoning）。
+
+**2. 音频交错推理（RL 阶段）：把时间标签真正变成回听动作**
+
+冷启动模型只会"说"要看哪段，却没真的重新听，信息瓶颈依旧。推理格式适配解决这一断层：每当模型生成一对 `<seg>` 标签就暂停解码，从原始音频中裁剪对应片段 $A_{s:e}$，把它的 token 拼到当前文本输出之后形成增强输入 $x_i' = (x_i \oplus o \oplus A_{s:e})$ 再喂回模型继续生成，如此循环直到 `<eos>`——推理因此从单模态文本变成文本与音频交替的多模态过程，且损失计算时忽略所有插入的音频 token。但仅靠格式适配，冷启动模型还不擅长处理交错的音频-文本序列，于是用复合奖励 $\mathcal{R}(\tau) = \mathcal{R}_\text{format} + \mathcal{R}_\text{consist} + \mathcal{R}_\text{acc} + \mathcal{R}_\text{seg}$ 引导行为：格式奖励 $\mathcal{R}_\text{format}=0.5$ 要求正确使用封装标签，一致性惩罚 $\mathcal{R}_\text{consist}$ 对 `</seg>` 后语义断裂（下一个 token 是大写字母或 `<`）每次扣 0.1、最多累计 -0.5，准确性奖励 $\mathcal{R}_\text{acc}=0.5$ 给答对，片段奖励 $\mathcal{R}_\text{seg}=0.5$ 仅在答对**且**至少引用一个片段时发放、否则为 0——后两者联手保证模型不是靠猜对而是靠真回听拿分。优化用 GRPO，每个 query 采样 $G=8$ 个候选、用组内归一化奖励 $A_g = (\mathcal{R}(\tau_g) - \text{mean}(\mathcal{R}))/\text{std}(\mathcal{R})$ 算优势，配 PPO 风格裁剪与 KL 约束：
 
 $$\mathcal{L}_\text{RL}(\theta) = -\frac{1}{G}\sum_{g=1}^G \frac{1}{|\tau_g|}\sum_{t=1}^{|\tau_g|} [\min(\rho_{g,t} A_g, \text{clip}(\rho_{g,t}, 1\pm\epsilon) A_g) - \beta D_\text{KL}(\pi_\theta||\pi_\text{ref})]$$
 
-**3. 结构化数据生成流水线：用时间元数据自动批量造带 `<seg>` 标注的 CoT。** 音频交错推理依赖大量"引用前有理由、引用后有分析"的高质量 CoT，人工标注不现实，于是从 AudioSet-Strong、MusicBench 等自带时间元数据的数据集出发自动合成：先用 Qwen2.5-Omni 把每段音频转成全面描述、语音转录、音乐元素三种文本视角，再把这些文本连同时间元数据喂给 DeepSeek-R1 合成 QA-CoT 三元组，最后做双阶段质量过滤——QA 与 CoT 都达标的进 SFT 集、只有 QA 达标的进 RL 集，最终得到 EAQA-SFT（75.9k 含 CoT）和 EAQA-RL（21.9k 不含 CoT）两套数据，分别喂给上述两个阶段。
+**3. 结构化数据生成流水线：用时间元数据自动批量造带 `<seg>` 标注的 CoT**
+
+音频交错推理依赖大量"引用前有理由、引用后有分析"的高质量 CoT，而现有 Audio-QA 数据集普遍难度不足、又缺含细粒度音频引用的标准 CoT，人工标注更不现实，于是从 AudioSet-Strong、MusicBench 等自带时间元数据的数据集出发自动合成：先用 Qwen2.5-Omni 把每段音频转成全面描述、语音转录、音乐元素三种文本视角（连同时间元数据构成对原音频的文本化模拟），再把这些文本喂给 DeepSeek-R1 合成需要细粒度时间分析的 QA-CoT 三元组，最后做双阶段质量过滤——QA 与 CoT 都达标的进 SFT 集、只有 QA 达标的进 RL 集，最终得到 EAQA-SFT（75.9k 含 CoT）和 EAQA-RL（21.9k 不含 CoT）两套数据，分别喂给上述两个阶段。
 
 ## 实验关键数据
 

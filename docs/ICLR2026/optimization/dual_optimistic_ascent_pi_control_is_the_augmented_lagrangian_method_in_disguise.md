@@ -48,19 +48,31 @@ tags:
 
 ### 关键设计
 
-**1. 三种算法的统一写法：把乐观项和增广惩罚摆到同一张桌子上。** 三种方法的差别全在对偶侧。标准 Lag-GDA 直接累加约束违反量 $\boldsymbol{\mu}_{t+1} \leftarrow \boldsymbol{\mu}_t + \eta_{\text{dual}} \boldsymbol{h}(\boldsymbol{x}_t)$、$\boldsymbol{\lambda}_{t+1} \leftarrow [\boldsymbol{\lambda}_t + \eta_{\text{dual}} \boldsymbol{g}(\boldsymbol{x}_t)]_+$，这正是它在非凸下振荡、迭代反复进出可行域的根源。Dual optimistic ascent 在此基础上多加一个乐观项 $\omega[\boldsymbol{h}(\boldsymbol{x}_t) - \boldsymbol{h}(\boldsymbol{x}_{t-1})]$，让对偶更新提前预判约束的变化趋势：
+**1. 把三种算法摆到同一张桌子上：统一记号**
+
+要看出 PI 控制和 ALM 是同一个东西，第一步得让它们说同一种语言。三者的差别全在对偶侧。标准 Lag-GDA 直接累加约束违反量 $\boldsymbol{\mu}_{t+1} \leftarrow \boldsymbol{\mu}_t + \eta_{\text{dual}} \boldsymbol{h}(\boldsymbol{x}_t)$、$\boldsymbol{\lambda}_{t+1} \leftarrow [\boldsymbol{\lambda}_t + \eta_{\text{dual}} \boldsymbol{g}(\boldsymbol{x}_t)]_+$，这正是它在非凸下振荡、迭代反复进出可行域的根源。Dual optimistic ascent（PI 控制）在此基础上多加一个乐观项 $\omega[\boldsymbol{h}(\boldsymbol{x}_t) - \boldsymbol{h}(\boldsymbol{x}_{t-1})]$，让对偶更新提前预判约束的变化趋势：
 
 $$\boldsymbol{\mu}_{t+1} \leftarrow \boldsymbol{\mu}_t + \eta_{\text{dual}} \boldsymbol{h}(\boldsymbol{x}_t) + \omega[\boldsymbol{h}(\boldsymbol{x}_t) - \boldsymbol{h}(\boldsymbol{x}_{t-1})]$$
 
-ALM-GDA 则换一条路，对增广拉格朗日 $\mathcal{L}_c$ 做 primal-first GDA $\boldsymbol{x}_{t+1} \leftarrow \boldsymbol{x}_t - \eta_{\boldsymbol{x}} \nabla_{\boldsymbol{x}} \mathcal{L}_c$，靠二次惩罚项把目标在所有正则局部解处掰成严格凸。把三者放在统一记号下，等价性的线索才浮出水面——其中增广拉格朗日为 $\mathcal{L}_c(\boldsymbol{x},\boldsymbol{\lambda},\boldsymbol{\mu}) = f(\boldsymbol{x}) + \frac{1}{2c}[\|\boldsymbol{\mu} + c\boldsymbol{h}(\boldsymbol{x})\|^2 - \|\boldsymbol{\mu}\|^2 + \|[\boldsymbol{\lambda} + c\boldsymbol{g}(\boldsymbol{x})]_+\|^2 - \|\boldsymbol{\lambda}\|^2]$。
+ALM-GDA 则换一条路，对增广拉格朗日 $\mathcal{L}_c$ 做 primal-first GDA $\boldsymbol{x}_{t+1} \leftarrow \boldsymbol{x}_t - \eta_{\boldsymbol{x}} \nabla_{\boldsymbol{x}} \mathcal{L}_c$，靠二次惩罚项把目标在所有正则局部解处掰成严格凸，其中
 
-**2. 等式约束下的精确等价（Theorem 1）：前瞻乘子就是乐观项。** 这是全文的核心。定理证明，只要取 $\omega = c > 0$、并让两套算法的对偶初值满足 $\boldsymbol{\mu}_0^{\text{OGA}} = \boldsymbol{\mu}_0^{\text{ALM}} + (c - \eta_{\text{dual}})\boldsymbol{h}(\boldsymbol{x}_0)$，ALM-GDA 和 Lag-GD-OA 就会逐步产生**完全相同**的原始迭代序列 $\{\boldsymbol{x}_t\}$。机制看穿了其实很朴素：ALM 在算原始梯度时用的不是当前乘子 $\boldsymbol{\mu}_t$，而是"前瞻"乘子 $\boldsymbol{\mu}_t + c\boldsymbol{h}(\boldsymbol{x}_t)$，而 dual optimistic ascent 里乐观项累积出来的有效乘子恰好是同一个量——两边只是把同一个修正塞进了不同位置。因为等价发生在原始梯度层面，它对任意一阶原始优化器都成立，包括深度学习里实际用的 Adam。
+$$\mathcal{L}_c(\boldsymbol{x},\boldsymbol{\lambda},\boldsymbol{\mu}) = f(\boldsymbol{x}) + \frac{1}{2c}\big[\|\boldsymbol{\mu} + c\boldsymbol{h}(\boldsymbol{x})\|^2 - \|\boldsymbol{\mu}\|^2 + \|[\boldsymbol{\lambda} + c\boldsymbol{g}(\boldsymbol{x})]_+\|^2 - \|\boldsymbol{\lambda}\|^2\big]$$
 
-**3. 不等式约束下的稳定性等价（Theorem 2）：从逐步匹配退到同一个驻点集。** 有了投影 $[\cdot]_+$，逐迭代精确匹配不再可能，于是把等价降一档到局部稳定性。定理证明在严格互补松弛下，ALM-GDA（惩罚 $c$）局部收敛到 $(\boldsymbol{x}^*, \boldsymbol{\lambda}^*)$ 当且仅当 Lag-GD-OA（$\omega = c$）也收敛到同一点，两者拥有相同的局部稳定驻点（LSSP）集合。量化关系落在两算法 Jacobian 的谱半径上：$\rho(\mathcal{J}_{\text{AL}}) = \max\{\rho(\mathcal{J}_{\text{OG}}), 1 - \eta_{\text{dual}}/c\}$。差异只来自投影位置——Lag-GD-OA 投影一次、ALM-GDA 投影两次，但在驻点附近这点差别不影响收敛归宿。
+表面看一个加乐观项、一个加二次惩罚，毫不相干；但摆进统一记号后，两条更新规则里藏着同一个量的线索就浮出水面，这正是后面所有定理的起点。
 
-**4. 把 ALM 的强保证搬过来：恢复所有局部解 + 线性收敛。** 等价一旦成立，ALM 的好处就自动转嫁给 PI 控制。Theorem 3 给出最关键的一条：$\boldsymbol{x}^*$ 是问题的严格局部约束最小值，当且仅当存在阈值 $\bar{\omega} \geq 0$ 使得对所有 $\omega \geq \bar{\omega}$，$\boldsymbol{x}^*$ 都是 Lag-GD-OA 的 LSSP——这意味着只要乐观系数够大，PI 控制能到达**每一个**严格局部解，严格优于只能收敛到拉格朗日局部 min-max 点、会漏掉非凸可达解的标准 Lag-GDA。收敛速度上，Corollary 2 保证它对所有正则严格局部最小值都有局部线性收敛，且当 $\eta_{\text{dual}}$ 足够接近 $\omega = c$ 时速率与 ALM-GDA 完全一致；Corollary 3 进一步在凸光滑目标加仿射等式约束下给出全局线性收敛。
+**2. 等价的两个层次：等式约束精确、不等式约束稳定**
 
-**5. 乐观系数 $\omega$ 的权衡与原则性调参。** 把 $\omega$ 调大不是免费午餐，论文刻画了它的三重权衡：可达解集合随 $\omega$ 单调非递减地扩大（Corollary 4），最终覆盖所有局部解；振荡随之被抑制——Proposition 5 证明存在有限阈值 $\bar{\omega}$，当 $\omega \geq \bar{\omega}$ 时 Jacobian 本征值全部变为实数（彻底无振荡），而 $\omega \to \bar{\omega}^-$ 时最大虚部以 $\mathcal{O}(\sqrt{\bar{\omega} - \omega})$ 的速度衰减；代价则是 $\omega$ 过大时条件数趋向 $\infty$（Corollary 5），拖慢实际收敛。
+这是全文的核心结果，分两档讲。第一档是等式约束下的**逐迭代精确等价**（Theorem 1）：只要取 $\omega = c > 0$、并让两套算法的对偶初值满足 $\boldsymbol{\mu}_0^{\text{OGA}} = \boldsymbol{\mu}_0^{\text{ALM}} + (c - \eta_{\text{dual}})\boldsymbol{h}(\boldsymbol{x}_0)$，ALM-GDA 和 Lag-GD-OA 会逐步产生**完全相同**的原始迭代序列 $\{\boldsymbol{x}_t\}$。机制看穿后其实很朴素：ALM 算原始梯度时用的不是当前乘子 $\boldsymbol{\mu}_t$，而是"前瞻"乘子 $\boldsymbol{\mu}_t + c\boldsymbol{h}(\boldsymbol{x}_t)$，而 dual optimistic ascent 里乐观项累积出来的有效乘子恰好是同一个量——两边只是把同一个修正塞进了不同位置。因为等价发生在原始梯度层面，它对任意一阶原始优化器都成立，包括深度学习里实际用的 Adam。
+
+第二档退到不等式约束。有了投影 $[\cdot]_+$，逐迭代精确匹配不再可能，于是把等价降一档到**局部稳定性等价**（Theorem 2）：严格互补松弛下，ALM-GDA（惩罚 $c$）局部收敛到 $(\boldsymbol{x}^*, \boldsymbol{\lambda}^*)$ 当且仅当 Lag-GD-OA（$\omega = c$）也收敛到同一点，两者拥有相同的局部稳定驻点（local stable stationary point, LSSP）集合。量化关系落在两算法 Jacobian 的谱半径上：$\rho(\mathcal{J}_{\text{AL}}) = \max\{\rho(\mathcal{J}_{\text{OG}}), 1 - \eta_{\text{dual}}/c\}$。差异只来自投影位置——Lag-GD-OA 投影一次、ALM-GDA 投影两次，但在驻点附近这点差别不影响收敛归宿。
+
+**3. 把 ALM 的强保证整套搬过来：恢复所有局部解 + 线性收敛**
+
+等价一旦成立，ALM 几十年积累的好处就自动转嫁给 PI 控制——这才是"伪装"视角真正值钱的地方。最关键的一条是 Theorem 3：$\boldsymbol{x}^*$ 是问题的严格局部约束最小值，当且仅当存在阈值 $\bar{\omega} \geq 0$，使得对所有 $\omega \geq \bar{\omega}$，$\boldsymbol{x}^*$ 都是 Lag-GD-OA 的 LSSP。这意味着只要乐观系数够大，PI 控制能到达**每一个**严格局部解，严格优于只能收敛到拉格朗日局部 min-max 点、会漏掉非凸可达解的标准 Lag-GDA。收敛速度上，Corollary 2 保证它对所有正则严格局部最小值都有局部线性收敛，且当 $\eta_{\text{dual}}$ 足够接近 $\omega = c$ 时速率与 ALM-GDA 完全一致；Corollary 3 进一步在凸光滑目标加仿射等式约束下给出全局线性收敛。
+
+**4. 乐观系数 $\omega$ 的权衡与原则性调参**
+
+把 $\omega$ 调大不是免费午餐。既然 $\omega$ 与 ALM 惩罚系数 $c$ 在等价关系下是同一个量，论文顺势刻画了它的三重权衡：可达解集合随 $\omega$ 单调非递减地扩大（Corollary 4），最终覆盖所有局部解；振荡随之被抑制——Proposition 5 证明存在有限阈值 $\bar{\omega}$，当 $\omega \geq \bar{\omega}$ 时 Jacobian 本征值全部变为实数（彻底无振荡），而 $\omega \to \bar{\omega}^-$ 时最大虚部以 $\mathcal{O}(\sqrt{\bar{\omega} - \omega})$ 的速度衰减；代价则是 $\omega$ 过大时条件数趋向 $\infty$（Corollary 5），拖慢实际收敛。
 
 | 效果 | $\omega$ 增大 | $\omega$ 过大 |
 |------|:---:|:---:|
@@ -68,7 +80,7 @@ ALM-GDA 则换一条路，对增广拉格朗日 $\mathcal{L}_c$ 做 primal-first
 | 振荡抑制 | 本征值趋向纯实数（Proposition 5） | 完全消除振荡 |
 | 条件数 | — | 趋向 $\infty$（Corollary 5） |
 
-既然 $\omega$ 与 ALM 惩罚系数 $c$ 在等价关系下是同一个量，作者建议干脆把 ALM 经典的惩罚递增策略直接搬来动态调 $\omega$：当约束违反不降反升、即 $\|h(\boldsymbol{x}_t)\| > \beta \|h(\boldsymbol{x}_{t-1})\|$ 时令 $\omega_{t+1} = \gamma \omega_t$，把几十年的 ALM 调参直觉无缝迁移到 PI 控制上。
+因为 $\omega$ 就是 $c$，作者建议干脆把 ALM 经典的惩罚递增策略直接搬来动态调 $\omega$：当约束违反不降反升、即 $\|h(\boldsymbol{x}_t)\| > \beta \|h(\boldsymbol{x}_{t-1})\|$ 时令 $\omega_{t+1} = \gamma \omega_t$，把几十年的 ALM 调参直觉无缝迁移到 PI 控制上。
 
 ## 实验关键数据
 

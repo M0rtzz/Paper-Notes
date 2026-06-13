@@ -41,17 +41,25 @@ CSD 把蒸馏目标从「对齐概率」改成「对齐 logit 残差」：对每
 
 ### 关键设计
 
-**1. 对数变换的 concrete score 匹配：把概率比换成稳定的 logit 差。** concrete score 本身是概率比 $q_\theta(x)/q_\theta(y_t)$，当分母 $q_\theta(y_t)$ 趋近零时直接匹配会让损失爆炸、训练发散。CSD 的做法是对概率比取对数，于是匹配对象从「比值」变成「差值」，得到一个干净的 logit 级二次损失：
+**1. 对数变换的 concrete score 匹配：把概率比换成稳定的 logit 差**
+
+concrete score 本身是概率比 $q_\theta(x)/q_\theta(y_t)$，当分母 $q_\theta(y_t)$ 趋近零时直接匹配会让损失爆炸、训练发散。CSD 的做法是对概率比取对数，于是匹配对象从「比值」变成「差值」，得到一个干净的 logit 级二次损失：
 
 $$\mathcal{L}_{\text{CSD}} = \frac{1}{2} \sum_{y_t \in \mathcal{V}} \sum_{x \in \mathcal{V}} w(y_t, x) \left( f_\theta[x] - f_\theta[y_t] - f_T[x] + f_T[y_t] \right)^2$$
 
 对数变换一举两得：不再需要计算容易数值溢出的概率比，训练更稳；同时损失天然落在 logit 空间，完全跳过了 softmax，避免大词表下绝大多数 token 概率被压成零、teacher 知识被抹平的问题。
 
-**2. 更大的最优解空间：差分结构天然容忍 logit 偏移。** DLD 用 MSE 直接对齐 logit，但 softmax 只关心 logit 之间的相对差，当 $f_\theta[y_t] = f_T[y_t] + C$（所有 token 同时平移一个常数 $C$）时两者概率完全相同，DLD 的损失却不为零，等于人为缩小了 student 可达的最优解集。CSD 的损失只看差分 $f[x]-f[y_t]$，平移项 $C$ 会在差分里相消、损失归零，因此其最优解集严格包含 DLD 的解集（论文 Theorem 2，$\Theta_{\text{CSD}}^* \supsetneq \Theta_{\text{DLD}}^*$）。student 容量越受限、与 teacher 差距越大，这份「多出来的搜索自由度」越值钱。
+**2. 更大的最优解空间：差分结构天然容忍 logit 偏移**
 
-**3. 把 $O(|\mathcal{V}|^2)$ 的双重求和压回 $O(|\mathcal{V}|)$。** 损失里对词表的双重求和在 128K 词表下直接算是不可行的。CSD 假设权重函数可分解为 $w(y_t, x) = w_1(y_t)\cdot w_2(x)$，在这个分解下梯度可以解析展开：先对 logit 做一次加权中心化归一化，再求残差的加权和，整个梯度就能在 $O(|\mathcal{V}|)$ 时间内算完（论文 Theorem 3）。这一步是 CSD 从「理论上好看」变成「能真上手训」的关键。
+DLD 用 MSE 直接对齐 logit，但 softmax 只关心 logit 之间的相对差，当 $f_\theta[y_t] = f_T[y_t] + C$（所有 token 同时平移一个常数 $C$）时两者概率完全相同，DLD 的损失却不为零，等于人为缩小了 student 可达的最优解集。CSD 的损失只看差分 $f[x]-f[y_t]$，平移项 $C$ 会在差分里相消、损失归零，因此其最优解集严格包含 DLD 的解集（论文 Theorem 2，$\Theta_{\text{CSD}}^* \supsetneq \Theta_{\text{DLD}}^*$）。student 容量越受限、与 teacher 差距越大，这份「多出来的搜索自由度」越值钱。
 
-**4. 可调权重在保真与多样之间切换。** $w_1, w_2$ 各自可取 teacher 概率（T）、student 概率（S）或均匀分布（U），不同组合让 CSD 在 mode-seeking 与 mode-covering 之间滑动：$(S,S)$ 最贴 teacher、保真度最高，$(U,S)$、$(T,S)$ 则引入更多分布质量、提升多样性与概率校准。这给了一个统一旋钮，用同一套损失覆盖以往要靠 KL/RKL/SKL 等不同散度才能表达的偏好。
+**3. 把 $O(|\mathcal{V}|^2)$ 的双重求和压回 $O(|\mathcal{V}|)$**
+
+损失里对词表的双重求和在 128K 词表下直接算是不可行的。CSD 假设权重函数可分解为 $w(y_t, x) = w_1(y_t)\cdot w_2(x)$，在这个分解下梯度可以解析展开：先对 logit 做一次加权中心化归一化，再求残差的加权和，整个梯度就能在 $O(|\mathcal{V}|)$ 时间内算完（论文 Theorem 3）。这一步是 CSD 从「理论上好看」变成「能真上手训」的关键。
+
+**4. 可调权重在保真与多样之间切换**
+
+$w_1, w_2$ 各自可取 teacher 概率（T）、student 概率（S）或均匀分布（U），不同组合让 CSD 在 mode-seeking 与 mode-covering 之间滑动：$(S,S)$ 最贴 teacher、保真度最高，$(U,S)$、$(T,S)$ 则引入更多分布质量、提升多样性与概率校准。这给了一个统一旋钮，用同一套损失覆盖以往要靠 KL/RKL/SKL 等不同散度才能表达的偏好。
 
 ### 损失函数 / 训练策略
 

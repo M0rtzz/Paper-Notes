@@ -44,6 +44,24 @@ tags:
 ### 整体框架
 LST 把语音离散 token 序列 $\{s_0,\ldots,s_T\}$ 先用一个轻量 Patch Encoder 聚合成数量少得多的"潜在语音 patch" $\{z_0,\ldots,z_{T'}\}$（$T'\ll T$），让主力的全局 Transformer 在 patch 与文本 token 这两种粒度相当的单元上做统一自回归，再用一个轻量 Patch Decoder 把每个 patch 还原回语音 token 并算标准 NTP 损失。整套结构沿用 Byte Latent Transformer 的"细粒度 token → 高层 patch → 全局建模 → 解码展开"思路，只是把对象从 byte 换成了语音 token，从而把语音相对文本 20× 的长度差压回到接近 1:1。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["语音离散 token 序列<br/>HuBERT 25Hz · 501 码本"] --> PA
+    subgraph PAT["Curriculum Patching（设计 1）"]
+        direction TB
+        PA["按对齐/静态切边界<br/>P(u) 从 1 线性衰减到 0"] --> PB["聚合成潜在语音 patch<br/>序列长度 ≈ 原来 1/p"]
+    end
+    PB --> ENC
+    subgraph ARCH["轻量 Encoder/Decoder + 重型全局 Transformer（设计 2）"]
+        direction TB
+        ENC["轻量 Patch Encoder<br/>滑窗自注意力 + 交叉注意力"] --> GT["全局 Transformer<br/>patch 级自回归主力"]
+        GT --> DEC["轻量 Patch Decoder<br/>展开 patch 回语音 token"]
+    end
+    TX["交错文本 token<br/>Llama 2 tokenizer"] -->|patch 级跨模态对齐 · 设计 3| GT
+    DEC --> L["token 级 NTP 损失"]
+```
+
 ### 关键设计
 
 **1. 三种 Patching 策略与 Curriculum 过渡：在"语义对齐"和"推理无依赖"之间拿全**

@@ -40,7 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-预训练大教师 + 小学生 → 获取教师预测分数 $\mathbf{r}_u^T$ → 将教师 top-K $\mathcal{Q}_u^T$ 分裂为 $(\mathcal{Q}_u^T)_1 = \mathcal{Q}_u^T \cap \mathcal{Q}_u^S$ 和 $(\mathcal{Q}_u^T)_2 = \mathcal{Q}_u^T \setminus (\mathcal{Q}_u^T)_1$ → 分别计算 $\mathcal{L}_1$（精确）和 $\mathcal{L}_2$（采样近似）→ 自适应融合 → 联合 base loss 训练学生
+RCE-KD 想解决的核心困惑是：为什么直接把 CE 损失搬到推荐 KD 里，反而一致打不过各种基线。它先从理论上说清 CE 只有在子集满足"闭合性"时才真的在优化 NDCG，然后围绕"怎么构造满足闭合性的子集"把整条流程搭起来。给定预训练好的教师和待训练的学生，先各自取 top-K 项目，把教师 top-K $\mathcal{Q}_u^T$ 按项目是否也落在学生 top-K $\mathcal{Q}_u^S$ 里分裂成交集、差集两组：交集 $(\mathcal{Q}_u^T)_1$ 天然闭合，直接在学生 top-K 上算精确 CE 损失 $\mathcal{L}_1$；差集 $(\mathcal{Q}_u^T)_2$ 不闭合，用自适应采样补足"排在它上面的项目"来近似闭合，再在采样集上算 $\mathcal{L}_2$。最后用一个随师生 top-K 重叠度动态调整的权重把两路损失融合，叠加 base loss 一起训练学生。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["预训练教师<br/>取 top-K 项目 Q_T"]
+    S["学生模型<br/>取 top-K 项目 Q_S"]
+    T --> SPLIT["分裂策略<br/>按是否在学生 top-K 拆两组"]
+    S --> SPLIT
+    SPLIT -->|"交集 (Q_T)1：师生都认重要"| L1["精确 CE 损失 L1<br/>直接在学生 top-K 上算<br/>天然满足闭合性"]
+    SPLIT -->|"差集 (Q_T)2：教师重视、学生排名低"| SAMP["自适应采样<br/>补足排在其上的项目<br/>近似满足闭合性"]
+    SAMP --> L2["近似 CE 损失 L2<br/>在采样集 A_u 上算"]
+    L1 --> FUSE["自适应损失融合<br/>权重 γ 随师生交集占比更新"]
+    L2 --> FUSE
+    FUSE --> TRAIN["叠加 base loss<br/>联合训练学生"]
+```
 
 ### 关键设计
 

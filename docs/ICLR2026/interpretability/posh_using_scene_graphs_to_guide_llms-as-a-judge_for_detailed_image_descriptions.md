@@ -48,6 +48,20 @@ tags:
 
 PoSh要解决的是"如何在不调用闭源大模型的前提下，给上百词的详细图像描述打出一个可解释、可复现的分数"。它的思路是先把描述压成场景图、再用场景图当作逐项 checklist 让一个开源 LLM 去核对。具体分三步：先用依存句法分析（spaCy）配合共指消解（Maverick），从生成描述和参考描述各自抽出句级场景图并合并成完整场景图；再把图里的每个组件（实体、属性、关系）转成模板化问题，交给 Qwen3-14B 逐项 QA，判断它在对方文本里是否存在；最后把这些 per-component 分数分别取平均，得到 mistakes（生成→参考方向，衡量幻觉）和 omissions（参考→生成方向，衡量遗漏）两个维度。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["生成描述 d_gen + 参考描述 d_ref"]
+    SG["保持附着关系的场景图提取<br/>依存句法 + 共指消解 → G(d)=⟨O,E,K⟩"]
+    QA["基于唯一标识符的三轮 QA 验证<br/>Qwen3-14B 逐组件问存在性"]
+    AGG["可解释的粗粒度聚合<br/>per-component 分数取平均"]
+    OUT["Mistakes ρ / Omissions ρ<br/>可回溯到 span 级错误"]
+    IN --> SG --> QA
+    QA -->|"gen→ref 查幻觉"| AGG
+    QA -->|"ref→gen 查遗漏"| AGG
+    AGG --> OUT
+```
+
 ### 关键设计
 
 **1. 保持附着关系的场景图提取：把"属性/关系挂在谁身上"也算进评估**

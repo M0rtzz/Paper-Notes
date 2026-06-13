@@ -42,6 +42,24 @@ tags:
 ### 整体框架
 BNNP 把贝叶斯神经网络的推断重新写成一个 neural process：隐变量就是网络各层的权重，解码器就是这些权重参数化的网络本身。具体来说，对 BNN 的每一层，一个推断网络把数据点映射成该层的"伪似然"参数（伪观测值 + 噪声水平），再与该层的高斯先验做一次闭式贝叶斯线性回归，得到这一层的条件后验。推断时从第一层采样权重、前向传到下一层、再算下一层后验，逐层往下走完整个网络。先验参数和推断网络参数则在多个相关数据集上联合优化——这样既学到了 BNN 的先验，又得到了能一次前向就出后验的 amortised 推断器。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    D["多个相关数据集<br/>(元学习任务)"] --> G
+    subgraph ALL["Amortised Linear Layer（逐层重复）"]
+        direction TB
+        G["推断网络 g_θl<br/>数据点 → 伪观测 + 噪声"] --> BLR["贝叶斯线性回归<br/>伪观测 + 可调高斯先验"]
+        BLR --> POST["该层闭式条件后验"]
+        POST --> SMP["采样权重<br/>前向传到下一层"]
+    end
+    SMP -->|逐层往下走完网络| G
+    SMP --> PRED["后验预测分布"]
+    PRED --> LOSS["PP-AVI 训练目标<br/>后验预测项 + ELBO"]
+    LOSS -->|联合学先验 Ψ 与推断网络 Θ| G
+    D -.大数据集分批.-> MB["Within-Task<br/>Minibatching"]
+    MB -.省内存喂入.-> G
+```
+
 ### 关键设计
 
 **1. Amortised Linear Layer：让中间层的后验有闭式解**

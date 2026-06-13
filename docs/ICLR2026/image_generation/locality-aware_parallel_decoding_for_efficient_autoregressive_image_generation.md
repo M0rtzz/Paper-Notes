@@ -33,7 +33,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LPD 把一张图的生成拆成若干"组"，每组内的多个 patch 同步并行生成，组与组之间仍保持自回归条件依赖。它由两块拼成：一个能支持任意生成顺序、任意并行度的自回归架构，以及一个根据空间局部性来排生成顺序的调度器，让每组并行的 token 既能拿到足够多的上下文、组内彼此又尽量不互相依赖。
+LPD 把一张图的生成拆成若干"组"，每组内的多个 patch 同步并行生成，组与组之间仍保持自回归条件依赖。它由两块拼成：一个能支持任意生成顺序、任意并行度的自回归架构，以及一个根据空间局部性来排生成顺序的调度器，让每组并行的 token 既能拿到足够多的上下文、组内彼此又尽量不互相依赖。推理时调度器先离线算好每组该生成哪些位置、按什么顺序，架构则逐组循环——把已生成的 token 编码进 KV cache 作上下文、用 position query token 一步并行解出该组的所有 patch，循环到整图填满。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["输入：类别条件 c"] --> B
+    subgraph ARCH["灵活并行化的自回归建模"]
+        direction TB
+        B["已生成 token 编码进<br/>KV cache 提供上下文"] --> C["目标位置插入<br/>position query token"]
+        C --> D["两套掩码<br/>Context + Query Attention"]
+        D --> E["一步并行解出<br/>一整组 patch"]
+    end
+    F["局部性分析（PTA）<br/>注意力随空间距离衰减"] --> G["局部性感知生成顺序调度<br/>proximity 筛选 + repulsion 排斥 + FPS"]
+    G -->|预计算每组成员与顺序| C
+    E -->|组间自回归·逐组循环| B
+    E --> H["输出：生成图像"]
+```
 
 ### 关键设计
 

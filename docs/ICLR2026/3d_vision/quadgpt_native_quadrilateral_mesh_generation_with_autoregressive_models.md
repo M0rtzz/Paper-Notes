@@ -41,7 +41,19 @@ tags:
 
 ### 整体框架
 
-QuadGPT 以点云 ($N_p = 40960$ 点 + 法线) 为输入，端到端输出四边形主导的面序列。Pipeline 分三个阶段：(1) 将混合拓扑网格序列化为统一长度 token 块；(2) 使用 Hourglass Transformer 进行自回归预训练学习基础几何和连接性分布；(3) 用截断 DPO (tDPO) 进行 RL 微调优化全局拓扑质量。推理时支持 36,864 token 的上下文窗口，使用 top-k=10, top-p=0.95, T=0.5 的采样策略，在单 A100 上达到约 230 tokens/s。
+QuadGPT 想解决的是"生成式方法只会出三角形、四边形得靠后处理"这个割裂：让自回归模型**直接**吐出四边形主导的面序列，端到端学到边环、边密度这些全局拓扑结构。整条 pipeline 围绕三个核心支柱（serialization / pretraining / tDPO）展开。训练侧，先把 artist 网格（四边形为主、夹少量三角形）用统一序列化压成定长 token 序列，喂给 Hourglass Transformer 做条件预训练（点云经 Michelangelo 编码器转成全局形状嵌入、用 cross-attention 注入），再用截断 DPO（tDPO）做 RL 微调把全局拓扑质量逼上去。推理侧，输入点云 ($N_p = 40960$ 点 + 法线) 条件下自回归逐 token 生成面序列，再解码回原生四边形网格；上下文窗口 36,864 token，用 top-k=10、top-p=0.95、$T=0.5$ 采样，单 A100 约 230 tokens/s。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["点云输入<br/>40960 点+法线"] --> B["Michelangelo 编码器<br/>→ 全局形状嵌入"]
+    C["artist 网格<br/>四边形为主+少量三角"] --> D["统一混合拓扑序列化<br/>每面定长 12-token 块"]
+    B --> E["Hourglass Transformer<br/>+ 课程学习预训练"]
+    D --> E
+    E --> F["tDPO 拓扑微调<br/>截断窗口偏好优化"]
+    F --> G["自回归生成面序列"]
+    G --> H["原生四边形网格"]
+```
 
 ### 关键设计
 
@@ -55,7 +67,7 @@ QuadGPT 以点云 ($N_p = 40960$ 点 + 法线) 为输入，端到端输出四边
 
 高精度网格的 token 数可达数万，普通 Transformer 直接吃全长序列代价过高，因此架构采用多层级沙漏（Hourglass）结构。初始 token 嵌入 $\mathbf{E}^{(0)} \in \mathbb{R}^{L \times D_0}$ 先过一组 Transformer Block，然后经因果保持的缩短层按因子 3 压到 $\mathbb{R}^{(L/3) \times D_1}$、再按因子 4 压到 $\mathbb{R}^{(L/12) \times D_2}$，在瓶颈层用很低的代价捕获全局上下文，最后上采样回原始长度。整个模型为 1.1B 参数、24 层 Transformer，点云经预训练的 Michelangelo 编码器转成全局形状嵌入，通过 cross-attention 注入解码器。
 
-训练上不直接硬学四边形——预测一个四边形面其实相当于同时预测两个相关的三角形，从零训练很不稳定。于是先用纯三角形网格预训练的权重初始化，再用一个 quad-dominance 参数 $r \in [0, 1]$ 逐步退火训练数据分布：从纯三角形（$r=0$）平滑过渡到 quad-dominant（$r \to 1$）。模型因此先掌握基础几何语法，再学更复杂的四边形拓扑规则，沙漏的分层压缩则保证这一切在长序列上仍算得动。
+训练上不直接硬学四边形——预测一个四边形面其实相当于同时预测两个相关的三角形，从零训练很不稳定。于是先用纯三角形网格预训练的权重初始化，再用一个 quad-dominance 参数 $r \in [0, 1]$ 逐步退火训练数据分布：从纯三角形（$r=0$）平滑过渡到 quad-dominant（$r \to 1$）。模型因此先掌握基础几何语法，再学更复杂的四边形拓扑规则，沙漏的分层压缩则保证这一切在长序列上仍算得动。预训练数据来自大规模策划的 130 万高质量四边形模型（ShapeNetV2、3D-FUTURE、Objaverse、Objaverse-XL 加专业授权资产，经自动三角→四边形转换和多阶段质量筛选），为退火课程提供了从简单到复杂的充足语料。
 
 **3. 截断 DPO（tDPO）拓扑微调：在局部窗口上做偏好优化，逼出全局边流**
 
@@ -66,10 +78,6 @@ QuadGPT 以点云 ($N_p = 40960$ 点 + 法线) 为输入，端到端输出四边
 $$\mathcal{L}_{\text{tDPO}}(\theta) = -\mathbb{E}_{\mathcal{D}}\mathbb{E}_m\left[\log\sigma\left(\beta\left[\log\frac{\pi_\theta(y_{w,m:m+\tau}|x)}{\pi_{\text{ref}}(y_{w,m:m+\tau}|x)} - \log\frac{\pi_\theta(y_{l,m:m+\tau}|x)}{\pi_{\text{ref}}(y_{l,m:m+\tau}|x)}\right]\right)\right]$$
 
 在局部窗口上做最优决策，换来的是全局更连贯的拓扑——这也让 DPO 第一次能扩展到高面数网格。偏好数据基于 500 个来自 Hunyuan3D 2.5 的高质量密集网格构建出约 2000 个偏好对，RL 微调在 64 张 A100 上仅需 4 小时。
-
-### 数据策略
-
-通过大规模数据策划构建了 130 万高质量四边形模型的预训练数据集，来源包括 ShapeNetV2、3D-FUTURE、Objaverse、Objaverse-XL 和专业授权资产，经过自动三角形→四边形转换和多阶段质量筛选。
 
 ## 实验关键数据
 

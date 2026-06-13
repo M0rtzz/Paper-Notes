@@ -44,7 +44,34 @@ tags:
 
 ### 整体框架
 
-SEAL 走的是「无标注域适应（AF-DA）」路线：训练时只喂时间同步的事件-图像对 $(I^{evt}, I^{img})$，借配对图像把图像域大模型的语义知识蒸馏给事件分支，全程不碰任何密集事件标注；推理时图像分支退场，只把事件嵌入 $I^{evt}$ 送进网络，根据用户点/框提示输出实例 mask 和类别。整套系统拆成两块——MHSG 模块负责把配对图像加工成多粒度的语义监督信号，多模态融合网络则是一个轻量 mask 分类器，把这些监督学进事件特征里。
+SEAL 走的是「无标注域适应（AF-DA）」路线：训练时只喂时间同步的事件-图像对 $(I^{evt}, I^{img})$，借配对图像把图像域大模型的语义知识蒸馏给事件分支，全程不碰任何密集事件标注；推理时图像分支退场，只把事件嵌入 $I^{evt}$ 送进网络，根据用户点/框提示输出实例 mask 和类别。整套系统拆成两块——MHSG 模块负责把配对图像加工成多粒度的语义监督信号，多模态融合网络则是一个轻量 mask 分类器，它内部又串起骨干特征增强、空间编码、mask 特征增强三步，把这些监督学进事件特征里。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    PAIR["事件-图像对<br/>(I_evt, I_img)"] --> IMG["配对图像 I_img"]
+    PAIR --> EVT["事件嵌入 I_evt"]
+
+    subgraph MHSG["1. 多模态层次语义引导 MHSG"]
+        direction TB
+        IMG --> SAM["SAM 切三层粒度<br/>语义 / 实例 / 部件 mask"]
+        SAM --> CLIPV["CLIP 视觉编码<br/>+ RoI 池化 → 视觉引导"]
+        SAM --> MLLM["MLLM 生成描述<br/>→ CLIP 文本 → 文本引导"]
+    end
+
+    subgraph FUSE["2. 多模态融合网络"]
+        direction TB
+        EVT --> BB["EventSAM 骨干<br/>(冻结)"]
+        BB --> BFE["骨干特征增强<br/>6 层融合 · 文本注入"]
+        BFE --> SE["空间编码<br/>SAM mask token 补先验"]
+        SE --> MFE["mask 特征增强<br/>masked cross-attn"]
+    end
+
+    MLLM -->|训练时作 key/value 注入| BFE
+    CLIPV -.蒸馏对齐.-> MFE
+    MLLM -.蒸馏对齐.-> MFE
+    MFE --> OUT["实例 mask + 类别"]
+```
 
 ### 关键设计
 

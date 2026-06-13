@@ -39,13 +39,44 @@ tags:
 
 ### 整体框架
 
-DiME 的核心思路是绕开"先验得分/密度不可得"这一拦路虎，把对数证据 $\log p(\boldsymbol{y})$ 拆成只依赖后验样本就能算的两项：一项是后验下的平均对数似然 $\mathbb{E}_{\boldsymbol{x}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{y})}[\log p(\boldsymbol{y}|\boldsymbol{x}_0)]$，另一项是后验与先验之间的 KL 散度 $D_{\text{KL}}(p(\boldsymbol{x}_0|\boldsymbol{y}) \| p(\boldsymbol{x}_0))$。关键观察是后一项并不需要先验本身——它可以沿逆向扩散的时间边缘积分写成 $D_{\text{KL}} \approx \sum_{i=1}^N c_{t_i} \Delta t_i \mathbb{E}_{\boldsymbol{x}_{t_i} \sim p(\boldsymbol{x}_{t_i}|\boldsymbol{y})} \|\nabla_{\boldsymbol{x}_{t_i}} \log p(\boldsymbol{y}|\boldsymbol{x}_{t_i})\|^2$（系数 $c_{t_i} = \sigma_{t_i}' \sigma_{t_i} - \sigma_{t_i}^2 \frac{a_{t_i}'}{a_{t_i}}$），从而把证据估计转化为对"逐时间步的似然得分平方"的积分。整套估计器与 DAPS 后验采样器协同运行，复用采样轨迹上自然产生的中间样本 $\boldsymbol{x}_{t_i}$，几乎不增加额外计算。
+DiME 要解决的问题是：在贝叶斯逆问题里想用模型证据 $p(\boldsymbol{y}|M)$ 来比较不同的扩散先验，但证据 $\log p(\boldsymbol{y}) = \log \int p(\boldsymbol{y}|\boldsymbol{x})p(\boldsymbol{x})d\boldsymbol{x}$ 直接算不出来——传统估计器（SMC、AIS、嵌套采样）都要"干净先验的得分或密度"，而扩散模型只学到了各噪声层的中间得分，干净先验得分既不准又病态。DiME 的破局点是绕开先验得分：把对数证据恒等地拆成两项，一项是后验下的平均对数似然，另一项是"后验到先验"的 KL 散度，而 KL 项又能沿逆向扩散的时间边缘积分，改写成"逐时间步的似然得分平方"的积分。这样一来，整个证据估计只需要后验样本，而这些样本恰好是 DAPS 后验采样器在跑采样时自然产生的——复用它的采样轨迹，几乎不增加额外计算，仅约 20 条样本路径就够。
+
+整套流程是：输入测量值 $\boldsymbol{y}$ 和一个候选扩散先验，先用 DAPS 采出后验样本路径 $\{\boldsymbol{x}_{t_i}\}$ 及每个噪声层的干净样本 $\tilde{\boldsymbol{x}}_0$，再按证据分解分别估计两项（平均似然项直接平均、KL 项靠时间边缘积分），合并得到 $\log p(\boldsymbol{y})$，最后用证据值在多个候选先验间做选择或验证。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入：测量 y + 候选扩散先验 M"] --> B["DAPS 后验采样<br/>采出样本路径与各层干净样本"]
+    B --> C["1. 沿时间边缘的证据分解<br/>log p(y)=平均对数似然 − KL"]
+    C -->|似然项| D["平均对数似然<br/>后验样本直接平均"]
+    C -->|"KL 项 = 时间边缘积分"| E["2. 平方似然得分的无偏估计<br/>高/低噪声双估计器 + 两样本去偏"]
+    E --> F["3. 改进的后验协方差<br/>先验信息修高噪声方差高估"]
+    D --> G["合并 → log p(y)"]
+    F --> G
+    G --> H["模型证据 → 先验选择 / 模型验证"]
+```
 
 ### 关键设计
 
-**1. 无偏似然得分估计：用后验回采的干净样本绕开不可算的得分项。** 时间边缘积分里要的 $\nabla_{\boldsymbol{x}_t} \log p(\boldsymbol{y}|\boldsymbol{x}_t)$ 无法直接求值。DiME 转而利用 DAPS 在每个噪声层自然采出的后验干净样本 $\tilde{\boldsymbol{x}}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{x}_t, \boldsymbol{y})$，构造两个互补的无偏估计器：高噪声端方差更低的 $\Theta_{\text{high}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}(\tilde{\boldsymbol{x}}_0 - \mathbb{E}[\boldsymbol{x}_0|\boldsymbol{x}_t])$，以及低噪声端方差更低的 $\Theta_{\text{low}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} \nabla_{\tilde{\boldsymbol{x}}_0} \log p(\boldsymbol{y}|\tilde{\boldsymbol{x}}_0)$，按噪声水平自动切换以始终保持低方差。由于积分里要的是得分的平方，直接用单个样本的平方会引入偏差，因此对每个 $\boldsymbol{x}_t$ 独立采样两份 $\tilde{\boldsymbol{x}}_0^{(1)}, \tilde{\boldsymbol{x}}_0^{(2)}$ 再相乘，得到对平方得分的无偏估计。
+**1. 沿时间边缘的证据分解：把不可算的证据拆成只靠后验样本的两项**
 
-**2. 改进的后验协方差：修掉高噪声端的方差高估。** 上述低噪声估计器依赖条件协方差 $\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t}$，而 DAPS 原本用的启发式 $\sigma_t^2$ 在高噪声时会把方差严重高估，导致估计偏差。DiME 引入一个带先验信息的近似 $\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} = \left[\boldsymbol{\Sigma}_0^{-1} + \frac{a_t^2}{\sigma_t^2}\mathbf{I}\right]^{-1}$，其中先验协方差 $\boldsymbol{\Sigma}_0$ 从训练数据经验估计。这相当于在高噪声端用先验把过宽的协方差"收紧"，从而在不增加样本的前提下显著压低偏差。
+证据 $\log p(\boldsymbol{y})$ 之所以难算，是因为它要对整个先验积分，而扩散先验的密度/得分都不可靠。DiME 给出一个恒等分解：$\log p(\boldsymbol{y}) = \mathbb{E}_{\boldsymbol{x}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{y})}[\log p(\boldsymbol{y}|\boldsymbol{x}_0)] - D_{\text{KL}}(p(\boldsymbol{x}_0|\boldsymbol{y}) \| p(\boldsymbol{x}_0))$。前一项是后验下的平均对数似然，拿后验样本一平均就有了。后一项是"后验到先验"的 KL，看似又要碰到先验，但关键观察是：它可以沿逆向扩散的时间边缘积分，重写成只含**似然得分**的形式
+
+$$D_{\text{KL}}(p(\boldsymbol{x}_0|\boldsymbol{y}) \| p(\boldsymbol{x}_0)) \approx \sum_{i=1}^N c_{t_i} \Delta t_i\, \mathbb{E}_{\boldsymbol{x}_{t_i} \sim p(\boldsymbol{x}_{t_i}|\boldsymbol{y})} \|\nabla_{\boldsymbol{x}_{t_i}} \log p(\boldsymbol{y}|\boldsymbol{x}_{t_i})\|^2$$
+
+其中系数 $c_{t_i} = \sigma_{t_i}' \sigma_{t_i} - \sigma_{t_i}^2 \frac{a_{t_i}'}{a_{t_i}}$ 只取决于扩散调度、$\Delta t_i = t_i - t_{i-1}$。这一步是全文的支点：它把"对先验积分"换成了"沿时间步对似然得分平方积分"，而似然 $p(\boldsymbol{y}|\boldsymbol{x}_t)$ 是已知的前向模型，再不需要先验得分。直觉上，这一项度量的就是采得的后验样本 $\boldsymbol{x}_0$ 离先验有多远——测量越是分布外，KL 越大，证据越低。
+
+**2. 平方似然得分的无偏估计：高/低噪声双估计器加两样本去偏**
+
+分解式里要的 $\nabla_{\boldsymbol{x}_t} \log p(\boldsymbol{y}|\boldsymbol{x}_t)$ 本身仍无法直接求值，但积分只需要它的**无偏估计**。若用 $\boldsymbol{x}_0|\boldsymbol{x}_t$ 的无条件样本去估，这些样本似然普遍很低、得分极不稳定，方差爆炸。DiME 改用 DAPS 在每个噪声层顺手采出的后验干净样本 $\tilde{\boldsymbol{x}}_0 \sim p(\boldsymbol{x}_0|\boldsymbol{x}_t, \boldsymbol{y})$，构造两个互补的无偏估计器：高噪声端方差趋零的 $\Theta_{\text{high}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}(\tilde{\boldsymbol{x}}_0 - \mathbb{E}[\boldsymbol{x}_0|\boldsymbol{x}_t])$（靠样本到后验均值的距离），低噪声端方差趋零的 $\Theta_{\text{low}}(\tilde{\boldsymbol{x}}_0) = \frac{a_t}{\sigma_t^2}\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} \nabla_{\tilde{\boldsymbol{x}}_0} \log p(\boldsymbol{y}|\tilde{\boldsymbol{x}}_0)$（靠 $\tilde{\boldsymbol{x}}_0$ 处的似然得分）。两者都便宜，每个时间步都算一遍、挑方差更小的那个用，于是采样早期用 $\Theta_{\text{high}}$、后期用 $\Theta_{\text{low}}$。还有一个微妙的偏差：积分要的是得分的**平方**，而 $\mathbb{E}\|\Theta\|^2 = \|\mathbb{E}\Theta\|^2 + \text{Tr}(\text{Cov}(\Theta))$，直接平方单个样本会多出一个协方差迹的偏差项。DiME 的处理是对每个 $\boldsymbol{x}_t$ 独立采两份 $\tilde{\boldsymbol{x}}_0^{(1)}, \tilde{\boldsymbol{x}}_0^{(2)}$，用内积 $\Theta(\tilde{\boldsymbol{x}}_0^{(1)})^T\Theta(\tilde{\boldsymbol{x}}_0^{(2)})$ 替代平方，得到对平方得分的无偏估计。
+
+**3. 改进的后验协方差：用先验信息修掉高噪声端的方差高估**
+
+上面的低噪声估计器和 DAPS 的高斯近似采样都依赖条件协方差 $\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t}$。DAPS 原本用启发式 $\sigma_t^2$，它只考虑了 $p(\boldsymbol{x}_t|\boldsymbol{x}_0)$、忽略了先验 $p(\boldsymbol{x}_0)$：低噪声时还算准，但高噪声时会严重高估方差——在终端 $t=T$ 本应 $\text{Cov}(\boldsymbol{x}_0|\boldsymbol{x}_T)\approx\text{Cov}(\boldsymbol{x}_0)$，启发式却给出 $\sigma_T^2 \gg \text{Cov}(\boldsymbol{x}_0)$，把后验样本推向错误的模态、造成大偏差。由于 DiME 用到**所有**时间边缘，每一层的协方差都得准。它把先验近似成高斯 $\mathcal{N}(\boldsymbol{\mu}_0, \boldsymbol{\Sigma}_0)$（$\boldsymbol{\Sigma}_0$ 由训练数据经验估计），两个高斯相乘得到收紧后的协方差
+
+$$\boldsymbol{\Sigma}_{\boldsymbol{x}_0|\boldsymbol{x}_t} = \left[\boldsymbol{\Sigma}_0^{-1} + \frac{a_t^2}{\sigma_t^2}\mathbf{I}\right]^{-1}$$
+
+相当于在高噪声端用先验信息把过宽的协方差拉回先验尺度，从而在不增加样本的前提下显著压低偏差。因为 DAPS 每个退火步都重新采样，这些高斯近似误差不会逐步累积。
 
 ## 实验
 

@@ -50,17 +50,41 @@ tags:
 
 ### 整体框架
 
-VTA 把金融时序预测拆成"先用语言推理、再用时序模型预测、最后让推理反过来条件化预测"三步，正好对应三块组件：让 LLM 对时序文本标注做语言推理（Time-Series Reasoning）、用 GPT-2 backbone 捕捉底层价格模式（Time-Series Forecasting）、把推理提炼出的属性注入 backbone 的联合条件训练（Joint Conditional Training）。形式上，给定历史 $T$ 个交易日的输入 $\mathbf{X} = \{\mathbf{x}_{t-T+1}, \ldots, \mathbf{x}_t\}$（其中 $\mathbf{x}_t = [o_t, h_t, l_t, v_t, c_t, p_t]$ 为开高低量收加调整收盘价），模型同时产出语言推理轨迹 $\mathbf{v}$ 与未来 $T'$ 日价格 $\mathbf{y} = \{p_{t+1}, \ldots, p_{t+T'}\}$，实验中取 $T = T' = 10$ 的短期场景。
+VTA（Verbal Technical Analysis，语言化技术分析）把金融时序预测拆成"先用语言推理、再用时序模型预测、最后让推理反过来条件化预测"三步，正好对应三块组件：让 LLM 对时序的文本标注做语言推理（Time-Series Reasoning）、用 GPT-2 backbone 捕捉底层价格模式（Time-Series Forecasting）、把推理提炼出的属性注入 backbone 的联合条件训练（Joint Conditional Training）。形式上，给定历史 $T$ 个交易日的输入 $\mathbf{X} = \{\mathbf{x}_{t-T+1}, \ldots, \mathbf{x}_t\}$（其中 $\mathbf{x}_t = [o_t, h_t, l_t, v_t, c_t, p_t]$ 为开高低量收加调整收盘价），模型同时产出语言推理轨迹 $\mathbf{v}$ 与未来 $T'$ 日价格 $\mathbf{y} = \{p_{t+1}, \ldots, p_{t+T'}\}$，实验中取 $T = T' = 10$ 的短期场景。整条流水线的数据流如下：历史价格先被文本标注器转写成技术指标语言，交给时序推理 LLM 推理；同一份历史价格另走一路进 GPT-2 backbone；最后把推理提炼出的属性与 backbone 特征在联合条件训练里融合，吐出未来价格。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["历史价格序列 X<br/>开高低量收 + 调整收盘价"] --> ANN["文本标注器<br/>转写均线 / 动量 / MACD / RSI / 布林带"]
+    subgraph REASON["时序推理 LLM"]
+        direction TB
+        G["Time-GRPO + 逆 MSE 奖励<br/>预测越准奖励越高"] --> P["多阶段训练流水线<br/>Cold-Start → 拒绝采样 SFT → RL"]
+    end
+    ANN --> REASON
+    REASON --> C["推理属性 c<br/>预测区间 max / min / mean"]
+    X --> BB["跨模态 backbone<br/>GPT-2 + PCA 词嵌入 + 交叉注意力"]
+    C --> JOINT["联合条件训练<br/>CFG 融合条件 / 无条件预测"]
+    BB --> JOINT
+    JOINT --> Y["未来 T'=10 日价格 ŷ"]
+```
 
 ### 关键设计
 
-**1. Time-GRPO 与逆 MSE 奖励：用预测精度直接驱动推理链优化。** LLM 直接吃原始时序数字推理效果很差，VTA 先把序列转成文本标注 $\mathbf{X'} = \mathbf{f}(\mathbf{X})$，把均值、最值等统计量和均线、动量、MACD、RSI、布林带等金融技术指标写成自然语言喂给模型，让推理有可抓的语义抓手。训练上它在 GRPO 基础上改出 Time-GRPO，目标为 $\mathcal{L}_{\text{time-grpo}}(\theta) = \mathbb{E}_{\mathbf{q} \sim \mathcal{Q}} \frac{1}{G} \sum_{i=1}^{G} \left( \min\left(\frac{\pi_\theta(\mathbf{o_i}|\mathbf{q})}{\pi_{\theta_{\text{old}}}(\mathbf{o_i}|\mathbf{q})} A_i, \text{clip}(\cdot, 1{-}\epsilon, 1{+}\epsilon) A_i \right) - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}}) \right)$。关键在于奖励无需人工标注推理过程，而是直接用逆 MSE $r_{\text{MSE}}(\theta) = \frac{1}{\lambda \cdot \|\hat{\mathbf{y}}_\theta - \mathbf{y}\|_2^2}$——因为 RL 要最大化奖励，而 MSE 越小预测越准，取倒数后"准"就等价于"奖励高"，于是推理链被自动逼着朝着能改善预测精度的方向走。
+**1. Time-GRPO 与逆 MSE 奖励：用预测精度直接驱动推理链优化**
 
-**2. 多阶段训练流水线：让推理能力从无到有稳定爬升。** 直接对基座模型跑 RL 收益很小，VTA 用三段递进把训练做稳：先在 Cold-Start 阶段用 Time-GRPO 生成一批初始推理样本，此时性能提升有限，主要目的是产出后续可用的数据；再做拒绝采样加 SFT，只保留 MSE 落在各 bucket 前 10% 的高质量推理链做监督微调，把"好的推理长什么样"先教会；最后在已经会推理的模型上再跑一轮 Time-GRPO 搜索更优策略。这样分段后，单纯 Cold-Start RL 只提升约 1.6%，而补上拒绝采样 SFT 再 RL 后提升达 20.3%，说明先有像样的推理数据打底，RL 才能真正发挥作用。
+LLM 直接吃原始时序数字推理效果很差，所以图最上方先有一个文本标注器：VTA 把序列转成文本标注 $\mathbf{X'} = \mathbf{f}(\mathbf{X})$，把均值、最值等统计量和均线、动量、MACD、RSI、布林带等金融技术指标写成自然语言喂给模型，让推理有可抓的语义抓手。难点在于没有"标准推理过程"可以监督，VTA 在 GRPO（Group Relative Policy Optimization，组相对策略优化）基础上改出 Time-GRPO，目标为 $\mathcal{L}_{\text{time-grpo}}(\theta) = \mathbb{E}_{\mathbf{q} \sim \mathcal{Q}} \frac{1}{G} \sum_{i=1}^{G} \left( \min\left(\frac{\pi_\theta(\mathbf{o_i}|\mathbf{q})}{\pi_{\theta_{\text{old}}}(\mathbf{o_i}|\mathbf{q})} A_i, \text{clip}(\cdot, 1{-}\epsilon, 1{+}\epsilon) A_i \right) - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}}) \right)$。关键改动是奖励不靠人工标注推理过程，而是直接用逆 MSE $r_{\text{MSE}}(\theta) = \frac{1}{\lambda \cdot \|\hat{\mathbf{y}}_\theta - \mathbf{y}\|_2^2}$——RL 要最大化奖励，而 MSE 越小预测越准，取倒数后"准"就等价于"奖励高"，于是推理链被自动逼着朝能改善预测精度的方向走，不需要任何人工标注的金标准推理。
 
-**3. 跨模态 backbone：用 GPT-2 把时序对齐到语言空间再预测。** 预测分支基于 GPT-2 做跨模态微调，时序输入先经 Embedding 和 Multi-head Attention 投影成时间 token $\mathbf{X}_{\text{time}}$，再对 LLM 词嵌入做 PCA 取主成分得到 $\hat{\mathbf{D}}$，通过 Multi-head Cross-Attention $\mathbf{X}_{\text{text}} = \text{Softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{C}}\right)\mathbf{V}$ 把时间 token 对齐到词嵌入空间，从而复用预训练 LLM 的表征能力。为防止两个分支表征漂移，它还逐层做特征正则 $\mathcal{L}_{\text{feature}} = \sum_{n=1}^{N} \gamma^{(N-n)} \text{sim}\left(\phi_{\text{text}}^n(\mathbf{F}_{\text{text}}^n), \phi_{\text{time}}^n(\mathbf{F}_{\text{time}}^n)\right)$，其中 $\gamma$ 的指数衰减让深层对齐权重更高、浅层更宽松。
+**2. 多阶段训练流水线：让推理能力从无到有稳定爬升**
 
-**4. 联合条件训练：借 Classifier-Free Guidance 把推理注入预测。** 要让外部推理真正帮到内部预测，VTA 从推理输出里抽出描述性属性 $\mathbf{c}$（如预测区间的最大值、最小值、均值）作为条件，预测目标为 $\mathcal{L}_{\text{forecast}}(\phi) = \mathbb{E}_{\mathbf{X}, \mathbf{y}, \mathbf{c}} \left[\|\hat{\mathbf{y}}_\psi(\mathbf{X}, \tilde{\mathbf{c}}) - \mathbf{y}\|^2\right]$。它照搬扩散模型里的 Classifier-Free Guidance 思路，以概率 $p_{\text{uncond}}=0.3$ 随机把 $\mathbf{c}$ 置空，同一个网络同时学会条件和无条件两条路径；推理时再用 $\hat{\mathbf{y}} = s \cdot \hat{\mathbf{y}}_\psi(\mathbf{X}, \mathbf{c}) + (1-s) \cdot \hat{\mathbf{y}}_\theta(\mathbf{X})$ 把两者按引导尺度 $s=0.1$ 融合，好处是即便某次推理不可靠，模型也能退回主要依赖时序 backbone，不至于被坏推理带偏。
+光有 Time-GRPO 目标还不够——直接对基座模型跑 RL 收益很小（仅约 1.6%），因为基座一开始根本不会像样地推理。VTA 用三段递进把训练做稳：先在 Cold-Start 阶段用 Time-GRPO 跑一轮，此时性能几乎不涨，目的只是产出一批初始推理样本；再做拒绝采样加 SFT，把样本按股票和时段分 bucket，只保留各 bucket 里 MSE 落在前 10%（最低十分位）的高质量推理链做监督微调，先把"好的推理长什么样"教会；最后在已经会推理的模型上再跑一轮 Time-GRPO，搜索更优策略。补上拒绝采样 SFT 再 RL 后总提升达 20.3%，远高于纯 Cold-Start RL 的 1.6%，说明先用 SFT 喂入像样的推理数据打底，RL 才能真正发挥作用。
+
+**3. 跨模态 backbone：用 GPT-2 把时序对齐到语言空间再预测**
+
+这是图里与推理 LLM 并行的另一路：预测分支基于 GPT-2 做跨模态微调，让时序也能复用预训练语言模型的表征能力。时序输入先经 Embedding 和 Multi-head Attention 投影成时间 token $\mathbf{X}_{\text{time}}$；又因为 LLM 词嵌入里相近词本就聚在一起，VTA 对词嵌入做 PCA（主成分分析）只取主成分得到 $\hat{\mathbf{D}}$ 以省算力；再通过 Multi-head Cross-Attention $\mathbf{X}_{\text{text}} = \text{Softmax}\left(\frac{\mathbf{Q}\mathbf{K}^\top}{\sqrt{C}}\right)\mathbf{V}$ 把时间 token 对齐到词嵌入空间。为防止两路表征漂移，它逐层做特征正则 $\mathcal{L}_{\text{feature}} = \sum_{n=1}^{N} \gamma^{(N-n)} \text{sim}\left(\phi_{\text{text}}^n(\mathbf{F}_{\text{text}}^n), \phi_{\text{time}}^n(\mathbf{F}_{\text{time}}^n)\right)$，其中 $\gamma$ 的指数衰减让深层对齐权重更高、浅层更宽松。
+
+**4. 联合条件训练：借 Classifier-Free Guidance 把推理注入预测**
+
+前两路各自产出推理与时序特征后，最后这步负责把它们汇到一起、让外部推理真正帮到内部预测。VTA 从推理输出里抽出描述性属性 $\mathbf{c}$（如预测区间的最大值、最小值、均值）作为条件，预测目标为 $\mathcal{L}_{\text{forecast}}(\phi) = \mathbb{E}_{\mathbf{X}, \mathbf{y}, \mathbf{c}} \left[\|\hat{\mathbf{y}}_\psi(\mathbf{X}, \tilde{\mathbf{c}}) - \mathbf{y}\|^2\right]$。它照搬扩散模型里的 Classifier-Free Guidance（CFG，无分类器引导）思路：用同一个网络参数化条件和无条件两条路径，训练时以概率 $p_{\text{uncond}}=0.3$ 随机把 $\mathbf{c}$ 置空，两条路径并行学；推理时再用 $\hat{\mathbf{y}} = s \cdot \hat{\mathbf{y}}_\psi(\mathbf{X}, \mathbf{c}) + (1-s) \cdot \hat{\mathbf{y}}_\theta(\mathbf{X})$ 按引导尺度 $s=0.1$ 融合两路输出。这样即便某次推理不可靠，模型也能退回主要依赖时序 backbone，不至于被坏推理带偏。
 
 ---
 

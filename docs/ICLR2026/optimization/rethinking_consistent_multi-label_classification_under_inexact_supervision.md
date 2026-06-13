@@ -47,15 +47,21 @@ COMES（COnsistent Multi-label classification under inExact Supervision）先用
 
 ### 关键设计
 
-**1. 逐类查询的数据生成假设：用更弱的条件等价替换均匀分布假设。** 以往要么去估计难以可靠拟合的转移矩阵，要么粗暴假设候选标签服从均匀分布，无法应对类别不平衡。COMES 改为假设标注是逐类独立进行的：若第 $j$ 类与实例 $\boldsymbol{x}$ 无关，则以常数概率 $p_j$ 把它标为非候选标签，即 $p(j \notin S \mid \boldsymbol{x}, j \notin Y) = p_j$。这个假设的价值在于它直接推出 Lemma 1——非候选标签实例的条件密度恰好等于该类无关样本的条件密度 $p(\boldsymbol{x} \mid s_j = 0) = p(\boldsymbol{x} \mid y_j = 0)$。有了这个等价，弱监督下观测到的"非候选"样本就能当作干净的负类样本来用，后续风险改写才得以成立；而且不同标签可以有不同的 $p_j$，比均匀分布假设宽松得多。
+**1. 逐类查询的数据生成假设：用更弱的条件等价替换均匀分布假设**
 
-**2. COMES-HL：把多标签风险逐类拆成可估计的二分类风险。** 一阶策略将 MLC 视作 $q$ 个独立的二分类问题，目标是 Hamming loss 一致。借助 Theorem 1，Hamming 风险被改写成只含可观测分布的形式：
+以往要么去估计难以可靠拟合的转移矩阵，要么粗暴假设候选标签服从均匀分布，无法应对类别不平衡。COMES 改为假设标注是逐类独立进行的：若第 $j$ 类与实例 $\boldsymbol{x}$ 无关，则以常数概率 $p_j$ 把它标为非候选标签，即 $p(j \notin S \mid \boldsymbol{x}, j \notin Y) = p_j$。这个假设的价值在于它直接推出 Lemma 1——非候选标签实例的条件密度恰好等于该类无关样本的条件密度 $p(\boldsymbol{x} \mid s_j = 0) = p(\boldsymbol{x} \mid y_j = 0)$。有了这个等价，弱监督下观测到的"非候选"样本就能当作干净的负类样本来用，后续风险改写才得以成立；而且不同标签可以有不同的 $p_j$，比均匀分布假设宽松得多。
+
+**2. COMES-HL：把多标签风险逐类拆成可估计的二分类风险**
+
+一阶策略将 MLC 视作 $q$ 个独立的二分类问题，目标是 Hamming loss 一致。借助 Theorem 1，Hamming 风险被改写成只含可观测分布的形式：
 
 $$R_H^\ell(\boldsymbol{g}) = \mathbb{E}_{p(\boldsymbol{x})}\left[\frac{1}{q}\sum_{j=1}^q \ell(g_j(\boldsymbol{x}), 1)\right] + \sum_{j=1}^q \mathbb{E}_{p(\boldsymbol{x}|s_j=0)}\left[\frac{1-\pi_j}{q}\big(\ell(g_j(\boldsymbol{x}), 0) - \ell(g_j(\boldsymbol{x}), 1)\big)\right]$$
 
 第一项在全体（无标签）数据集 $\mathcal{D}_U$ 上估计，第二项在各类的非候选条件数据集 $\mathcal{D}_j$ 上估计，类先验 $\pi_j$ 充当权重，由此得到无偏风险估计器。但负权项 $1-\pi_j$ 会让深度网络把经验风险推到负值而过拟合，因此用绝对值把负项包住，得到修正估计器 $\tilde{R}_H^\ell$，在不破坏一致性的前提下把风险约束在合理区间。
 
-**3. COMES-RL：用排序关系把标签关联引入二阶风险。** Hamming 策略逐类独立、忽略标签间语义关联，二阶策略转而优化 Ranking loss，建模标签对 $(j,k)$ 的相对顺序。它要求代理损失满足对称条件 $\ell(z, \cdot) + \ell(-z, \cdot) = M$，从而把 Ranking 风险同样改写成只依赖非候选条件分布的形式：
+**3. COMES-RL：用排序关系把标签关联引入二阶风险**
+
+Hamming 策略逐类独立、忽略标签间语义关联，二阶策略转而优化 Ranking loss，建模标签对 $(j,k)$ 的相对顺序。它要求代理损失满足对称条件 $\ell(z, \cdot) + \ell(-z, \cdot) = M$，从而把 Ranking 风险同样改写成只依赖非候选条件分布的形式：
 
 $$R_R^\ell(\boldsymbol{g}) = \sum_{1 \leq j < k \leq q}\Big((1-\pi_j)\mathbb{E}_{p(\boldsymbol{x}|s_j=0)}[\ell(g_j - g_k, 0)] + (1-\pi_k)\mathbb{E}_{p(\boldsymbol{x}|s_k=0)}[\ell(g_j - g_k, 1)]\Big)$$
 

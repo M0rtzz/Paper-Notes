@@ -40,6 +40,26 @@ tags:
 
 机制分析这一步走的是"错误中心"路线：不直接盯着整条长链 CoT，而是先把它拆成一跳一跳、找出最常犯的错误类型和出错的具体 token 位置，再用 Logit Lens、Knockout、电路分析这套机制工具去看那个位置上模型内部到底发生了什么。结论是 LLM 内部其实同时跑着一条正确推理轨迹和一条错误推理轨迹，由不同的注意力头驱动，谁赢谁输决定了最终答案。TCR 则是把这个洞察落地：在生成时用熵检测出可疑的出错位置，再用一个训练好的头选择器挑出该停掉哪个"错误处理头"，把答案掰回正确轨道。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["n-跳推理问题<br/>长链 CoT 输出"] --> D1["逐跳分解定位错误<br/>连乘条件概率<br/>→首个出错 token"]
+    D1 --> MECH
+    subgraph MECH["注意力头竞争机制分析（设计 2）"]
+        direction TB
+        TOOL["机制工具<br/>Logit Lens/Knockout/电路分析"] --> AW["aw heads 写答案<br/>正确/错误共享约 60%"]
+        AW --> COMP["cp heads vs ep heads<br/>在出错位置抢答"]
+    end
+    COMP --> EP["定位共享 ep heads<br/>构建紧凑候选集 H（8-10 个）"]
+    EP --> TCR
+    subgraph TCR["TCR 测试时纠正（设计 3）"]
+        direction TB
+        DET["熵检测器<br/>熵 &gt; τ 触发干预"] --> SEL["头选择器 fθ<br/>选 top-3 ep head"]
+        SEL --> VOTE["分别 knockout<br/>+ 多数投票"]
+    end
+    TCR --> OUT["纠正后答案<br/>恢复被压制的正确轨迹"]
+```
+
 ### 关键设计
 
 **1. 推理错误的系统性分解：把长链 CoT 拆到可分析的粒度**

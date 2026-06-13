@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 DATPRL-IR 在一个编解码器骨干网络上挂了两个提示池：编码器的中间特征去查询任务提示池得到任务表征 $\mathbf{PR}_t$，浅层特征去查询域提示池得到域表征 $\mathbf{PR}_d$，两者跨注意力融合成域感知任务提示表征 $\mathbf{PR}_{dt}$，再经自适应门控逐层注入骨干网络指导复原。关键在于任务知识和域知识被拆成两套可检索的"知识库"分别学习，再在实例级动态组合，而不是塞进一个笼统的提示里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["退化图像"] --> ENC["编解码骨干<br/>编码器提特征"]
+    ENC -->|中间特征| TP["任务提示池 + PCM<br/>top-k 软组合得 PRt"]
+    ENC -->|浅层特征| DP["域提示池<br/>查询组合得 PRd"]
+    MLLM["LLaVA 多角度描述<br/>+ CLIP 文本（仅训练）"] -.跨模态对齐蒸馏.-> DP
+    TP --> FUSE["跨注意力融合<br/>得 PRdt"]
+    DP --> FUSE
+    FUSE --> AGF["自适应门控融合 AGF<br/>逐层门控注入骨干"]
+    AGF --> DEC["解码器复原"]
+    DEC --> OUT["复原图像"]
+```
+
 ### 关键设计
 
 **1. 任务提示池与提示组合机制（PCM）：让不同任务共享知识又各有侧重**

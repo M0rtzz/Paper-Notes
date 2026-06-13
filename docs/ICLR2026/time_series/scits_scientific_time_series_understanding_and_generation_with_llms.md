@@ -30,17 +30,44 @@ tags:
 
 ### 整体框架
 
-TimeOmni把"显式时序编码"嫁接到通用LLM上，串起三个部件：时序编码器（路由器+Patch专家族+Patch重编程）、LLM骨干（Qwen3-8B 配 DoRA 微调）、以及任务特定输出头（理解任务用softmax出文本，生成任务用线性回归头）。给定输入信号$\mathbf{X} \in \mathbb{R}^{T' \times N}$，先沿时间维展平成单变量长序列$\mathbf{X}' \in \mathbb{R}^{NT' \times 1}$，由编码器压成$\mathbf{X}_{\text{enc}} \in \mathbb{R}^{T_{\text{enc}} \times D_{\text{llm}}}$（$T_{\text{enc}}$通常落在100-200），再与文本提示嵌入拼起来喂给LLM。
+TimeOmni 要解决的核心难题是：让一个通用 LLM 既能"读懂"又能"生成"频率跨 12 个数量级、长度从几个点到百万级的科学时序。它的做法不是把数值硬转成文本或图像，而是把一个"显式时序编码器"嫁接到通用 LLM 上，让数值序列以原始精度被编码、再对齐进 LLM 的语义空间。整条流水线串起三个部件：时序编码器（路由器 + Patch 专家族 + Patch 重编程）、LLM 骨干（Qwen3-8B 配 DoRA 微调）、任务特定输出头（理解任务用 softmax 出文本，生成任务用线性回归头）。
+
+数据怎么流：给定输入信号 $\mathbf{X} \in \mathbb{R}^{T' \times N}$，先沿时间维展平成单变量长序列 $\mathbf{X}' \in \mathbb{R}^{NT' \times 1}$；路由器按展平后的总长度挑一个合适的 patch 专家，把信号切成 100-200 个 patch；这些 patch 经重编程模块借 LLM 词表对齐到语义空间，得到 $\mathbf{X}_{\text{enc}} \in \mathbb{R}^{T_{\text{enc}} \times D_{\text{llm}}}$（$T_{\text{enc}}$ 落在 100-200）；最后按任务类型与文本提示嵌入按不同顺序拼接，喂给 LLM，再由对应输出头给出文本答案或时序。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入信号<br/>X ∈ R^(T'×N)"] --> FLAT["多变量展平<br/>沿时间拼成单变量长序列<br/>NT'×1"]
+    FLAT --> ROUTE["多Patch专家路由<br/>按总长选patch大小→1D卷积<br/>切成100-200个patch"]
+    ROUTE --> REPROG["Patch重编程<br/>与LLM词表做交叉注意力<br/>对齐到语义空间"]
+    REPROG --> BR{"任务类型?"}
+    BR -->|"理解：信号在前 [X;P]"| LLM["LLM骨干<br/>Qwen3-8B + DoRA微调"]
+    BR -->|"生成：指令在前 [P;X]"| LLM
+    LLM --> HEAD["双输出头<br/>softmax出文本 / 线性回归出时序"]
+    HEAD --> OUT["理解答案 / 生成序列"]
+```
 
 ### 关键设计
 
-**1. 多Patch专家路由：让任意长度信号都落到100-200个token。** 科学时序的长度跨度极大，从$10^0$到$10^7$，固定patch大小根本兜不住——patch太小时长序列的patch数会爆炸吃光内存，patch太大时短序列又会坍缩成单个patch丢光信息。TimeOmni用一个路由器按展平后的总长度$T = NT'$挑选patch大小$D_{\text{patch}}$，约束它落在$\frac{T}{200} < D_{\text{patch}} < \frac{T}{100}$之间，这样无论原始信号多长，切出来的patch数都被压在100到200之间。被选中的Patch专家把信号从$\mathbb{R}^{T \times 1}$重塑为$\mathbb{R}^{\lceil T/D_{\text{patch}} \rceil \times D_{\text{patch}}}$，再用1D卷积映射到$\mathbf{X}_{\text{patch}} \in \mathbb{R}^{\lceil T/D_{\text{patch}} \rceil \times D_{\text{enc}}}$。这种scale-adaptive patching把"序列过长"和"信息坍缩"这对矛盾一次性化解，也是后面消融里固定patch大小会让极端长度序列性能严重退化的原因。
+**1. 多Patch专家路由：让任意长度信号都落到 100-200 个 token**
 
-**2. Patch重编程：借LLM自己的词表把时序对齐到语义空间。** 直接把时序嵌入塞进LLM会撞上模态不对齐的墙，因为LLM从没在数值patch上训练过。TimeOmni的做法是拿LLM已有的词嵌入$\mathbf{E} \in \mathbb{R}^{\text{vocab\_size} \times D_{\text{llm}}}$当桥梁，先用线性层把它压缩到$\mathbb{R}^{1000 \times D_{\text{llm}}}$的一组语义原型，再让patch表示以query身份、词嵌入以key/value身份做多头交叉注意力：$\mathbf{X}_{\text{enc}} = \text{Linear}(\text{CrossAttn}(\mathbf{X}_{\text{patch}}, \mathbf{E}, \mathbf{E}))$。换句话说，每个时序patch被重写成LLM词表语义的加权组合，落进LLM本就熟悉的表示空间。消融里把这个模块换成简单MLP后性能一致下降，说明"借词表对齐"确实比硬投影更能消除模态鸿沟。
+科学时序的长度跨度极大，从 $10^0$ 到 $10^7$，固定 patch 大小根本兜不住——patch 太小时长序列的 patch 数会爆炸吃光内存，patch 太大时短序列又会坍缩成单个 patch 丢光信息。TimeOmni 用一个路由器按展平后的总长度 $T = NT'$ 挑选 patch 大小 $D_{\text{patch}}$，约束它落在 $\frac{T}{200} < D_{\text{patch}} < \frac{T}{100}$ 之间，这样无论原始信号多长，切出来的 patch 数都被压在 100 到 200 之间。被选中的 Patch 专家把信号从 $\mathbb{R}^{T \times 1}$ 重塑为 $\mathbb{R}^{\lceil T/D_{\text{patch}} \rceil \times D_{\text{patch}}}$，再用 1D 卷积映射到 $\mathbf{X}_{\text{patch}} \in \mathbb{R}^{\lceil T/D_{\text{patch}} \rceil \times D_{\text{enc}}}$。这种 scale-adaptive patching 把"序列过长"和"信息坍缩"这对矛盾一次性化解，也是后面消融里固定 patch 大小会让极端长度序列性能严重退化的原因。
 
-**3. Prompt策略与双输出头：理解先看数据、生成先看指令。** 理解和生成两类任务的认知流程是反的，所以拼接顺序和输出方式也分开设计。理解任务（分类/异常检测/QA）走Prompt-as-suffix，把信号放前、问题放后拼成$[\mathbf{X}_{\text{enc}}; \mathbf{P}]$，模拟人先观察数据再回答，输出经softmax生成文本token；生成任务（预测/填补/合成）走Prompt-as-prefix，把指令放前、信号放后拼成$[\mathbf{P}; \mathbf{X}_{\text{enc}}]$，先理解任务要求再处理信号，输出经展平加线性层映射回目标时序长度。由于生成长度各异，框架预定义了一组覆盖不同输出长度的回归头，运行时按最近长度匹配选头并做必要截断。
+**2. Patch重编程：借 LLM 自己的词表把时序对齐到语义空间**
 
-**4. 多变量信号处理：展平成单序列，让patch专家顺手吃掉跨通道依赖。** 科学信号维度从1到58不等，若给每个通道单配编码器会让架构复杂度失控。TimeOmni索性把$\mathbf{X} \in \mathbb{R}^{T' \times N}$沿时间维展平为$\mathbf{X}' \in \mathbb{R}^{NT' \times 1}$，统一当一条单变量长序列处理，再交给上面的路由器按展平后的总长度自动选patch大小。这样既复用了同一套scale-adaptive patching，又让卷积patch专家在展平序列上自然捕捉跨通道的时间依赖；代价是丢掉一部分通道间的结构信息（如EEG的空间拓扑），这一点也在局限里被点名。
+直接把时序嵌入塞进 LLM 会撞上模态不对齐的墙，因为 LLM 从没在数值 patch 上训练过。TimeOmni 的做法（沿用 Time-LLM 的 reprogramming 思路）是拿 LLM 已有的词嵌入 $\mathbf{E} \in \mathbb{R}^{\text{vocab\_size} \times D_{\text{llm}}}$ 当桥梁，先用线性层把它压缩到 $\mathbb{R}^{1000 \times D_{\text{llm}}}$ 的一组语义原型，再让 patch 表示以 query 身份、词嵌入以 key/value 身份做多头交叉注意力：
+
+$$\mathbf{X}_{\text{enc}} = \text{Linear}(\text{CrossAttn}(\mathbf{X}_{\text{patch}}, \mathbf{E}, \mathbf{E}))$$
+
+换句话说，每个时序 patch 被重写成 LLM 词表语义的加权组合，落进 LLM 本就熟悉的表示空间。消融里把这个模块换成简单 MLP 后性能一致下降，说明"借词表对齐"确实比硬投影更能消除模态鸿沟。
+
+**3. Prompt策略与双输出头：理解先看数据、生成先看指令**
+
+理解和生成两类任务的认知流程是反的，所以拼接顺序和输出方式也分开设计。理解任务（分类/异常检测/QA）走 Prompt-as-suffix，把信号放前、问题放后拼成 $[\mathbf{X}_{\text{enc}}; \mathbf{P}]$，模拟人先观察数据再回答，输出经 softmax 生成文本 token；生成任务（预测/填补/合成）走 Prompt-as-prefix，把指令放前、信号放后拼成 $[\mathbf{P}; \mathbf{X}_{\text{enc}}]$，先理解任务要求再处理信号，输出经展平加线性层映射回目标时序长度。由于生成长度各异，框架预定义了一组覆盖不同输出长度的回归头，运行时按最近长度匹配选头并做必要截断。
+
+**4. 多变量信号处理：展平成单序列，让 patch 专家顺手吃掉跨通道依赖**
+
+科学信号维度从 1 到 58 不等，若给每个通道单配编码器会让架构复杂度失控。TimeOmni 索性把 $\mathbf{X} \in \mathbb{R}^{T' \times N}$ 沿时间维展平为 $\mathbf{X}' \in \mathbb{R}^{NT' \times 1}$，统一当一条单变量长序列处理，再交给上面的路由器按展平后的总长度自动选 patch 大小。这样既复用了同一套 scale-adaptive patching，又让卷积 patch 专家在展平序列上自然捕捉跨通道的时间依赖；代价是丢掉一部分通道间的结构信息（如 EEG 的空间拓扑），这一点也在局限里被点名。
 
 ## 实验关键数据
 

@@ -40,33 +40,42 @@ tags:
 
 ### 整体框架
 
-DSHN 的核心是为有向超图重新定义一个合格的谱卷积算子。它先把方向信息以复数相位编码进 sheaf 的 restriction map，由此构造出一个 Hermitian 且正半定的 Directed Sheaf Hypergraph Laplacian，再以该 Laplacian 为基础搭建多项式滤波的扩散卷积网络。整个设计的关键在于让"方向"与"sheaf 的异质性建模"在同一个复值算子里相容，并保证它仍满足谱卷积所需的全部性质。
+DSHN 要解决的问题是：现有 Sheaf 超图网络只能处理无向超边，把"反应物→产物"这类方向角色直接丢掉，而少数有向方法又没有 sheaf 缓解异质性的能力。DSHN 把两者拼到同一个复值算子里。整条流水线是这样转的：先对输入的有向超图，用一个 MLP 为每个节点-超边对学一个无向 restriction map；再用一个由相位参数 $q$ 控制的方向性矩阵 $\mathcal{S}^{(q)}$ 给它"上色"（头节点不变、尾节点乘上一个复相位），让 map 变成复值；这些复值 map 组装成一个 Hermitian 的 Directed Sheaf Hypergraph Laplacian，论文证明它正半定、谱有界，因而是一个合格的谱卷积核；以它做多项式滤波的扩散卷积、堆叠若干层后，把复值特征 unwind 成实向量送进分类头输出节点类别。关键就在于让"方向"和"sheaf 的异质性建模"在这一个算子里相容，同时仍满足谱卷积所需的全部数学性质。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["有向超图 + 节点特征<br/>(已区分头集/尾集)"] --> MLP["MLP Φ 学习<br/>无向 restriction map F"]
+    MLP --> DIR["方向性矩阵 S^(q)<br/>头节点×1，尾节点×e^(-2πiq)"]
+    DIR --> LAP["有向 Sheaf 超图 Laplacian<br/>Hermitian，修正对角项 (1-1/δ_e)<br/>正半定·谱有界·统一已有算子"]
+    LAP --> CONV["多项式滤波扩散卷积<br/>(可堆叠多层)"]
+    CONV --> UNW["unwind<br/>实部 ‖ 虚部 → 实向量"]
+    UNW --> CLS["分类头<br/>输出节点类别"]
+    LAP -.->|"detach 梯度<br/>固定 Φ 参数"| LIGHT["DSHNLight<br/>可扩展变体"]
+    LIGHT -.-> CONV
+```
 
 ### 关键设计
 
 **1. 方向性矩阵 $\mathcal{S}^{(q)}$：用复数相位区分头尾节点**
 
-无向超图里节点对超边是对称的，无法表达"谁是反应物、谁是产物"这类方向角色。DSHN 借鉴 Magnetic Laplacian 的思路，为每个节点-超边对赋一个复值系数：头节点取 $1$，尾节点取 $e^{-2\pi i q}$，由参数 $q$ 统一控制方向信息的强度。当 $q=0$ 时所有系数退化为实数 $1$，模型回到无向情形；当 $q=1/4$ 时尾节点系数变为纯虚数 $e^{-\pi i/2}$，方向差异被编码进虚部，恰好与有向图上的 Magnetic Laplacian 对齐。这样一个标量参数就把方向性以可控、可退化的方式注入了整套算子，既保留了对无向数据的兼容，又给有向数据提供了相位上的判别能力。
+无向超图里节点对超边是对称的，无法表达"谁是反应物、谁是产物"这类方向角色。DSHN 借鉴 Magnetic Laplacian 的思路，把一个无向 restriction map $\mathcal{F}_{u\trianglelefteq e}$ 左乘一个复值系数变成有向 map $\vec{\mathcal{F}}_{u\trianglelefteq e}=\mathcal{S}^{(q)}_{u\trianglelefteq e}\mathcal{F}_{u\trianglelefteq e}$：头节点取 $1$，尾节点取 $e^{-2\pi i q}$，由单一相位（charge）参数 $q$ 统一控制方向信息的强度。当 $q=0$ 时所有系数退化为实数 $1$，模型回到无向 sheaf 情形（即 Duta et al. 2023 的定义）；当 $q=1/4$ 时尾节点系数变为纯虚数 $e^{-\pi i/2}$，方向差异被编码进虚部，恰好与有向图上的 Magnetic Laplacian 对齐。这样一个标量参数就把方向性以可控、可退化的方式注入了整套算子，既保留了对无向数据的兼容，又给有向数据提供了相位上的判别能力。
 
-**2. Directed Sheaf Hypergraph Laplacian：修正对角项得到合格算子**
+**2. 有向 Sheaf 超图 Laplacian：修正对角项才得到合格算子**
 
-有了方向编码后，DSHN 把它和 sheaf 的 restriction map 一起组装成 Laplacian $\mathbf{L}^{\vec{\mathcal{F}}} = \mathbf{D}_V - \mathbf{B}^{(q)\dagger}\mathbf{D}_E^{-1}\mathbf{B}^{(q)}$，其中 $\mathbf{B}^{(q)}$ 是带方向相位的关联块矩阵、$\mathbf{D}_V$ 与 $\mathbf{D}_E$ 分别为节点和超边的度矩阵。该算子的对角块为实值，承载节点自身信息；非对角块在超边有向时取复值，承载带方向的邻居耦合。值得强调的是，本文专门修正了 Duta et al. (2023) Sheaf Hypergraph Laplacian 中对角项系数的设置——正是那个系数导致其原算子不满足正半定，无法作为合格卷积核。修正之后，$\mathbf{L}^{\vec{\mathcal{F}}}$ 成为一个 Hermitian 算子，为后续谱性质打下基础。
+有了方向编码后，DSHN 把复值 map 和超边结构一起组装成 Laplacian $\mathbf{L}^{\vec{\mathcal{F}}} = \mathbf{D}_V - \mathbf{B}^{(q)\dagger}\mathbf{D}_E^{-1}\mathbf{B}^{(q)}$，其中 $\mathbf{B}^{(q)}$ 是带方向相位的关联块矩阵、$\mathbf{D}_V$ 与 $\mathbf{D}_E$ 分别为节点和超边的度矩阵。对角块为实值，承载节点自身信息；非对角块在超边有向时取复值，承载带方向的邻居耦合。本文的关键修正在对角项系数上：Duta et al. (2023) 用的是 $\tfrac{1}{\delta_e}$，而 DSHN 改成 $(1-\tfrac{1}{\delta_e})$（$\delta_e$ 为超边大小）。正是这个差别——前者只在 2-uniform 超图（即普通图）上才成立——会让一般超图上的算子产生负特征值、不再正半定，从而无法当作扩散算子。改成 $(1-\tfrac{1}{\delta_e})$ 后，$\mathbf{L}^{\vec{\mathcal{F}}}$ 成为一个真正 Hermitian 的算子，为后续谱性质打下基础。
 
-**3. 谱性质保证：让 Fourier 变换与多项式滤波良定义**
+**3. 谱性质与统一泛化：既是合格卷积核，又是已有算子的母框架**
 
-谱卷积要成立，Laplacian 必须可对角化、特征值实且非负、整体正半定，并有有界谱。DSHN 证明 $\mathbf{L}^{\vec{\mathcal{F}}}$ 满足全部这些条件：因为它 Hermitian 所以可酉对角化、特征值为实数；通过把二次型写成 Dirichlet 能量并证其非负，得到正半定与非负特征值；进一步给出谱上界为 $1$。这组性质确保了图 Fourier 变换有良好定义、多项式滤波器在谱域稳定，从而 DSHN 的扩散卷积可以安全地堆叠多层而不发散。
+光是 Hermitian 还不够，要支撑谱卷积，Laplacian 还得可对角化、特征值实且非负、整体正半定、谱有界。DSHN 证明 $\mathbf{L}^{\vec{\mathcal{F}}}$ 全部满足：Hermitian 保证可酉对角化、特征值为实；把二次型写成 Dirichlet 能量并证其非负，得到正半定与非负特征值；进一步给出谱上界。只有这组性质齐了，图 Fourier 变换才有良好定义、多项式滤波器才在谱域稳定，扩散卷积才能安全堆叠多层而不发散——这正是 Duta et al. (2023) 因负特征值而做不到的。同一个算子还具有强普适性：恰当取特殊参数时它能退化为多种已有定义——取平凡 sheaf 得标准超图 Laplacian、限制为图结构得 Graph Sheaf Laplacian、去掉 sheaf 保留方向相位得 Magnetic Laplacian，并涵盖 Zhou 超图 Laplacian、GeDi Laplacian 等。这说明它不是又一个孤立定义，而是把"方向 / sheaf / 超图"三条线统一在同一个复值 Hermitian 算子之下。
 
-**4. 统一泛化：一个框架退化出多种已有 Laplacian**
+**4. DSHNLight：detach 梯度换取可扩展性**
 
-DSHN 的另一价值在于它的普适性。论文证明，在恰当取特殊参数时，$\mathbf{L}^{\vec{\mathcal{F}}}$ 可退化为多种已有算子：取平凡 sheaf 退化为标准超图 Laplacian，限制为图结构时退化为 Graph Sheaf Laplacian，去掉 sheaf 而保留方向相位时退化为 Magnetic Laplacian，此外还涵盖 Zhou 超图 Laplacian、GeDi Laplacian 等。这说明它不是又一个孤立定义，而是把"方向 / sheaf / 超图"三个维度的已有工作统一在同一个复值 Hermitian 算子之下。
-
-**5. DSHNLight：detach 梯度换取可扩展性**
-
-完整 DSHN 中 restriction map 需要随训练学习，每步都要重建 Laplacian，开销不小。DSHNLight 把 Laplacian 构建过程的梯度 detach、固定 restriction map 参数（相当于一次随机投影），只训练后续卷积与分类部分。这样大幅降低了计算成本，而实验上它在多个数据集上的性能与完整版相当、个别情况甚至更好，呼应了极限学习机里"随机特征也能很有效"的观察。
+完整 DSHN 的瓶颈在于：从 $d\times d$ 的 restriction map 拼出的 Laplacian 规模是 $nd\times nd$，而 map 随训练更新就要每步重建它，开销很大。DSHNLight 在构建 Laplacian 时 detach 梯度、把预测 restriction map 的 MLP $\Phi$ 参数全程固定（相当于一次随机投影），模型的适应性改由前端那层投影承担。这样大幅降低了计算成本，而实验上它在多个数据集上的性能与完整版相当、个别情况甚至更好，呼应了极限学习机里"随机特征也能很有效"的观察。
 
 ### 损失函数 / 训练策略
 
-训练用标准交叉熵节点分类损失。restriction map 由一个 MLP 学习，输入是节点特征与超边特征的拼接。由于 Laplacian 与中间表示为复值，最终送入分类头前会先做 unwind，即把实部和虚部拼接还原成实向量，再接全连接层输出类别。
+训练用标准交叉熵节点分类损失。restriction map 由 MLP $\Phi$ 学习，输入是节点特征与超边特征的拼接 $\mathcal{F}_{v\trianglelefteq e}=\Phi(\mathbf{x}_v\,\|\,\mathbf{x}_e)$（超边特征缺失时由其节点特征 mean/sum 聚合得到）。由于第一层之后特征已是复值，无论是送入 $\Phi$ 还是送入最终分类头，都先做 unwind 操作 $\mathrm{unwind}(\mathbf{X})=\Re(\mathbf{X})\,\|\,\Im(\mathbf{X})$ 把实部虚部拼接还原成实向量，再接全连接层输出类别。
 
 ## 实验关键数据
 

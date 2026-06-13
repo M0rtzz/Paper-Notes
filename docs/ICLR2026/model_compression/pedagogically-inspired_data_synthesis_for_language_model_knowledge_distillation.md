@@ -43,6 +43,18 @@ tags:
 
 IOA 把蒸馏当成一堂为特定学生量身定制的课：先由 Identifier 诊断这个学生模型到底哪些知识没掌握、按什么顺序补，再由 Organizer 把这些知识排成一条由易到难、有先决关系的课程，最后由 Adapter 把每个知识点改写成学生当前认知水平能消化的表达，逐阶段合成数据、微调、考核，达标才放行进入下一阶段。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["种子数据 + 目标能力域"] --> B["Knowledge Identifier<br/>拆分层次化知识模块<br/>量化师生差距 Δ(k) + 建依赖图<br/>按 Severity 排序选靶"]
+    B --> C["Knowledge Organizer<br/>拓扑排序成渐进课程<br/>ZPD 控制难度增量<br/>Bloom 掌握门槛"]
+    C --> D["Knowledge Adapter<br/>按学生认知改写表达<br/>具象化 + 步骤分解 + 降负载"]
+    D --> E["合成数据 → 微调学生模型 → 评估"]
+    E --> F{"掌握度<br/>min Ps/Pt ≥ 0.9 ?"}
+    F -->|"未达标 → 补救数据 / 达标 → 进入下一阶段"| D
+    F -->|"全部阶段完成"| G["蒸馏后的小模型"]
+```
+
 ### 关键设计
 
 **1. Knowledge Identifier：诊断该教什么，而不是漫无目标地灌数据**

@@ -46,7 +46,20 @@ tags:
 
 ### 整体框架
 
-这篇论文要解决的问题是：异构 frontier 模型各有专长（GPT-5 擅长代码、Gemini 擅长科学推理），但要把它们组合成一套针对具体问题的最优工作流，目前只能靠人工 prompt 工程或受限于预定义拓扑的路由分类器。Conductor 的做法是训练一个 7B 小模型来"指挥"这群大模型：它接收问题 $q_i$，在 `<think>` 标签内推理后，直接输出三个 Python list——`subtasks`（每一步的自然语言子任务指令）、`model_ids`（这一步派给哪个 worker）、`access_lists`（这个 worker 能看到哪些前序步骤的输出）。三个 list 合起来就是一张完整的协调拓扑图。工作流按步骤顺序执行，前序 worker 的响应按 access_list 注入到后续 worker 的上下文里，最后一步 worker 的输出即最终答案。整套系统的关键在于：协调策略不是人写死的，而是这个小模型用 RL 从结果正确性里学出来的。
+这篇论文要解决的问题是：异构 frontier 模型各有专长（GPT-5 擅长代码、Gemini 擅长科学推理），但要把它们组合成一套针对具体问题的最优工作流，目前只能靠人工 prompt 工程或受限于预定义拓扑的路由分类器。Conductor 的做法是训练一个 7B 小模型来"指挥"这群大模型：它接收问题 $q_i$，在 `<think>` 标签内推理后，直接输出三个 Python list——`subtasks`（每一步的自然语言子任务指令）、`model_ids`（这一步派给哪个 worker）、`access_lists`（这个 worker 能看到哪些前序步骤的输出）。三个 list 合起来就是一张完整的协调拓扑图，也就是后文说的"自然语言工作流规范"。工作流按步骤顺序执行，前序 worker 的响应按 access_list 注入到后续 worker 的上下文里，最后一步 worker 的输出即最终答案。若 access_list 里指定了 Conductor 自己，工作流就进入递归——它能看着上一轮结果再修订下一轮策略。整套系统的关键在于：协调策略不是人写死的，而是这个小模型用 GRPO 从结果正确性里学出来的。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 q_i"] --> C["Conductor (7B)<br/>think 标签内推理"]
+    C --> W["自然语言工作流规范<br/>输出 subtasks / model_ids / access_lists"]
+    W --> E["工作流按步执行<br/>worker(GPT-5/Gemini/Claude)<br/>按 access_list 路由前序输出"]
+    E -->|"access 指定 Conductor 自身"| R["递归拓扑与自适应 Worker 池<br/>看结果→修订下一轮策略"]
+    R --> C
+    E --> A["最终答案<br/>(末步 worker 输出)"]
+    A --> G["GRPO 端到端训练<br/>奖励 格式0 / 对1 / 错0.5"]
+    G -.更新协调策略.-> C
+```
 
 ### 关键设计
 

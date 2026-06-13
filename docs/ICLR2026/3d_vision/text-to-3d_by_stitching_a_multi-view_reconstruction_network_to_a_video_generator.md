@@ -41,7 +41,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-VIST3A要解决的是端到端文生3D里"解码器从头学、与生成器又对不齐"的双重困境。它不再自训3D解码器，而是把预训练视频LDM的前半段编码器，与一个现成的前馈3D重建模型(MVDUSt3R/VGGT/AnySplat)的后半段，在某个中间层"缝"成一个新的3D VAE；随后再用直接奖励微调，把视频生成器产出的latent校准到这个缝合解码器的有效输入域内，从而无需任何3D标注就能生成3DGS或点云图。
+VIST3A要解决的是端到端文生3D里"解码器从头学、与生成器又对不齐"的双重困境。它不再自训3D解码器，而是分两步走：第一步把预训练视频LDM的前半段编码器，与一个现成的前馈3D重建模型(MVDUSt3R/VGGT/AnySplat)的后半段，在某个最优中间层 $k^\star$ 用一个线性拼接层"缝"成一个新的3D VAE；第二步再用直接奖励微调，把视频生成器从噪声去噪出来的latent校准到这个缝合解码器的有效输入域内。两步都不碰任何3D标注：拼接阶段拿原3D模型自身输出当伪标签自监督，对齐阶段只靠可微评分器与渲染算奖励，最终就能从纯文本端到端生成3DGS或点云图。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    subgraph STITCH["模型拼接构建3D VAE（设计 1）"]
+        direction TB
+        IMG["多视角图像"] --> ENC["视频LDM编码器<br/>得 latent"]
+        ENC --> SCAN["逐层最小二乘<br/>选最优拼接层 k*"]
+        SCAN --> LIN["线性拼接层 S<br/>+ 下游3D层 LoRA微调"]
+        LIN --> VAE["缝合3D VAE<br/>(3DGS / 点云图)"]
+    end
+    subgraph REWARD["直接奖励微调对齐（设计 2）"]
+        direction TB
+        TXT["文本 prompt"] --> GEN["视频LDM去噪循环<br/>得干净 latent z0"]
+        GEN -->|"视频解码器D 解多视角图"| R2D["CLIP + HPSv2<br/>2D外观分"]
+        GEN -->|"缝合解码器解3D再渲染"| R3D["CLIP + HPSv2<br/>3D几何分"]
+        GEN --> RCON["两路渲染同视角<br/>l1 + LPIPS 一致性"]
+    end
+    VAE --> GEN
+    R2D --> REW["合成奖励 r"]
+    R3D --> REW
+    RCON --> REW
+    REW -->|"沿完整去噪轨迹回传<br/>更新生成器"| GEN
+    GEN --> OUT["端到端文生3D<br/>3DGS / 点云图"]
+```
 
 ### 关键设计
 

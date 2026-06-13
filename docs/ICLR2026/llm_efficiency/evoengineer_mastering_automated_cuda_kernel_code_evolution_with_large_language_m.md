@@ -44,7 +44,33 @@ tags:
 
 EvoEngineer 想回答一个被领域长期回避的问题：在用 LLM 自动演化 CUDA kernel 时，到底"喂给模型什么信息、怎么组织 prompt、怎么维护候选解"才能同时兼顾加速比和正确性？为此它把整套代码演化拆成两个正交组件——**Traverse Techniques**（决定如何在代码空间里导航搜索）和 **Population Management**（决定如何维护和选择候选解），让二者可以独立分析、自由组合。
 
-落到运行流程上是三步闭环：先做 Task Configuration，指定 GPU 类型、CUDA 版本、评估指标等约束；再做 Solution Generation，由配置好的 traverse technique 和 population management 共同产出一批新 kernel 候选；最后做 Solution Evaluation，对每个候选跑编译检查、功能测试和性能测量，把结果回灌进种群，进入下一轮迭代。整个过程被形式化为带约束的优化问题 $p^* = \arg\min_{p \in \mathcal{S}} f(p)$，其中 $f(p)$ 是执行时间，约束 $g(p) = 0$ 要求候选既能编译通过又功能正确；每个 kernel 最多分配 45 次优化试验。
+落到运行流程上是三步闭环：先做任务配置（Task Configuration），指定 GPU 类型、CUDA 版本、评估指标等约束；再做解生成（Solution Generation），由配置好的 traverse technique 和 population management 共同产出一批新 kernel 候选；最后做解评估（Solution Evaluation），对每个候选跑编译检查、功能测试和性能测量，把结果回灌进种群，进入下一轮迭代。整个过程被形式化为带约束的优化问题 $p^* = \arg\min_{p \in \mathcal{S}} f(p)$，其中 $f(p)$ 是执行时间，约束 $g(p) = 0$ 要求候选既能编译通过又功能正确；每个 kernel 最多分配 45 次优化试验。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["任务配置<br/>GPU / CUDA / 评估指标 + 初始 kernel"] --> SG
+
+    subgraph TT["两层 Traverse Technique"]
+        direction TB
+        SG["解引导层：选信息<br/>I1 任务上下文 / I2 历史解 / I3 优化洞察"] --> PE["Prompt 工程层<br/>把信息组织成 prompt"]
+    end
+
+    CFG["三种配置<br/>Free=I1 · Insight=I1+I3 · Full=I1+I2+I3"] -.选定信息组合.-> SG
+    PM["Population Management<br/>单解 / 精英保持 / 多样性"] -.维护候选池.-> SG
+
+    PE --> LLM["LLM 生成新 kernel 候选"]
+    LLM --> C1
+
+    subgraph EVAL["两阶段评估"]
+        direction TB
+        C1["编译检查（语法有效）"] -->|通过| C2["功能测试<br/>5 个 test case 对比 PyTorch"]
+        C2 -->|通过| C3["性能测量<br/>100 次平均执行时间"]
+    end
+
+    C3 -->|结果回灌 · 最多 45 次试验| PM
+    C3 --> OUT["最优 kernel p*"]
+```
 
 ### 关键设计
 

@@ -41,11 +41,17 @@ T-SAE 把标准稀疏自编码器的特征维度切成两段——前 $h$ 维当
 
 ### 关键设计
 
-**1. 数据生成模型：把"语义慢、句法快"写成可优化的先验。** 现有 SAE 把每个 token 当独立样本，丢掉了语言里"语义在一段话内基本不变、句法逐 token 跳变"这条最朴素的结构。T-SAE 先把语言生成建模成 $\tau_t = \phi(\tau^{t-1}, \mathbf{h}_t, \mathbf{l}_t)$，其中高层变量 $\mathbf{h}_t$（语义、意图）在序列内近似时间不变、低层变量 $\mathbf{l}_t$（句法、词汇选择）随 token 变化。在此之上立两条假设：时间一致性假设要求同一序列中 $\mathbf{h}_t \approx \mathbf{h}_{t'}$，层级表示假设要求 $\mathbf{h}_t$ 单独就能把激活 $\mathbf{x}_t$ 重构到 $\epsilon$ 精度、$\mathbf{l}_t$ 只补残差。正是这两条假设把"什么该慢、什么该快"翻译成了后面损失里的两个可优化目标，让解耦有了明确的归纳偏置而非靠运气。
+**1. 数据生成模型：把"语义慢、句法快"写成可优化的先验**
 
-**2. 分层 Matryoshka 重构：让高层特征单独扛起重构主干。** 为了落实层级表示假设，T-SAE 不允许高层特征只做无关紧要的点缀，而是用 Matryoshka 损失同时约束"只用前 $h$ 维"和"用全部 $m$ 维"两种重构：$\mathcal{L}_{\text{matr}}(\mathbf{x}_t) = \underbrace{\|\mathbf{x}_t - \mathbf{W}_{0:h}^{\text{dec}} \mathbf{f}_{0:h}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_H} + \underbrace{\|\mathbf{x}_t - \mathbf{W}^{\text{dec}} \mathbf{f}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_L}$。$\mathcal{L}_H$ 逼着前 $h$ 维独立完成大部分重构（对应语义主干），$\mathcal{L}_L$ 再让全体特征补齐细节（对应句法残差）。默认按 20:80 切分高低层维度，于是高层负责"这段话在讲什么"、低层负责"这个 token 长什么样"，分工被损失结构钉死。
+现有 SAE 把每个 token 当独立样本，丢掉了语言里"语义在一段话内基本不变、句法逐 token 跳变"这条最朴素的结构。T-SAE 先把语言生成建模成 $\tau_t = \phi(\tau^{t-1}, \mathbf{h}_t, \mathbf{l}_t)$，其中高层变量 $\mathbf{h}_t$（语义、意图）在序列内近似时间不变、低层变量 $\mathbf{l}_t$（句法、词汇选择）随 token 变化。在此之上立两条假设：时间一致性假设要求同一序列中 $\mathbf{h}_t \approx \mathbf{h}_{t'}$，层级表示假设要求 $\mathbf{h}_t$ 单独就能把激活 $\mathbf{x}_t$ 重构到 $\epsilon$ 精度、$\mathbf{l}_t$ 只补残差。正是这两条假设把"什么该慢、什么该快"翻译成了后面损失里的两个可优化目标，让解耦有了明确的归纳偏置而非靠运气。
 
-**3. 时间对比损失：只管高层、把语义拉成平滑曲线。** 光有重构约束还不能保证高层特征随时间一致，T-SAE 因此在高层特征 $\mathbf{z}_t$ 上加一项 InfoNCE 式的双向对比损失，把同一序列里相邻 token 的高层激活当正样本、把同一 batch 内别的序列当负样本：$\mathcal{L}_{\text{contr}} = -\frac{1}{N}\sum_{i=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(i)}))}{\sum_j \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))} - \frac{1}{N}\sum_{j=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(j)}, \mathbf{z}_{t-1}^{(j)}))}{\sum_i \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))}$。它鼓励高层特征"邻 token 相似、跨样本相异"，等价于强行让语义在序列内连续漂移；而由于这项只作用在高层，低层特征反而被解放出来自由拟合波动的句法信号——快慢分工就此自然成立。总损失把两者相加 $\mathcal{L} = \sum_i \mathcal{L}_{\text{matr}}(\mathbf{x}_t^{(i)}) + \alpha \mathcal{L}_{\text{contr}}$，$\alpha$ 调节语义平滑性与重构精度之间的权衡，全程无需任何显式语义标签。
+**2. 分层 Matryoshka 重构：让高层特征单独扛起重构主干**
+
+为了落实层级表示假设，T-SAE 不允许高层特征只做无关紧要的点缀，而是用 Matryoshka 损失同时约束"只用前 $h$ 维"和"用全部 $m$ 维"两种重构：$\mathcal{L}_{\text{matr}}(\mathbf{x}_t) = \underbrace{\|\mathbf{x}_t - \mathbf{W}_{0:h}^{\text{dec}} \mathbf{f}_{0:h}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_H} + \underbrace{\|\mathbf{x}_t - \mathbf{W}^{\text{dec}} \mathbf{f}(\mathbf{x}_t) + \mathbf{b}^{\text{dec}}\|_2^2}_{\mathcal{L}_L}$。$\mathcal{L}_H$ 逼着前 $h$ 维独立完成大部分重构（对应语义主干），$\mathcal{L}_L$ 再让全体特征补齐细节（对应句法残差）。默认按 20:80 切分高低层维度，于是高层负责"这段话在讲什么"、低层负责"这个 token 长什么样"，分工被损失结构钉死。
+
+**3. 时间对比损失：只管高层、把语义拉成平滑曲线**
+
+光有重构约束还不能保证高层特征随时间一致，T-SAE 因此在高层特征 $\mathbf{z}_t$ 上加一项 InfoNCE 式的双向对比损失，把同一序列里相邻 token 的高层激活当正样本、把同一 batch 内别的序列当负样本：$\mathcal{L}_{\text{contr}} = -\frac{1}{N}\sum_{i=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(i)}))}{\sum_j \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))} - \frac{1}{N}\sum_{j=1}^N \log \frac{\exp(s(\mathbf{z}_t^{(j)}, \mathbf{z}_{t-1}^{(j)}))}{\sum_i \exp(s(\mathbf{z}_t^{(i)}, \mathbf{z}_{t-1}^{(j)}))}$。它鼓励高层特征"邻 token 相似、跨样本相异"，等价于强行让语义在序列内连续漂移；而由于这项只作用在高层，低层特征反而被解放出来自由拟合波动的句法信号——快慢分工就此自然成立。总损失把两者相加 $\mathcal{L} = \sum_i \mathcal{L}_{\text{matr}}(\mathbf{x}_t^{(i)}) + \alpha \mathcal{L}_{\text{contr}}$，$\alpha$ 调节语义平滑性与重构精度之间的权衡，全程无需任何显式语义标签。
 
 ## 实验关键数据
 

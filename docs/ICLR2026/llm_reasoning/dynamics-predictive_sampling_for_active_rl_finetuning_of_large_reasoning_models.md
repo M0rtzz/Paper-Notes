@@ -47,6 +47,23 @@ DPS 想解决的问题是：在不为每个候选 prompt 真正跑一遍昂贵 r
 
 每个训练步 $t$ 走两个阶段。先是**预测与选择**：用上一步推断出的先验 $\mu_t^{\tau,\text{prior}}$，按每个 prompt 落在"部分求解"（State 2）的概率从高到低排序，取 Top-$B$ 个组成训练批次 $\mathcal{B}_t$。再是**推断与更新**：只对这 $B$ 个被选中的 prompt 执行 rollout 拿到真实观测，据此更新它们的状态后验和转移矩阵后验，最后把后验向前传播一步，得到下一训练步要用的先验预测。这样一来，rollout 只发生在真正进入批次的 prompt 上，而非 DS 那样先对 3-4 倍候选集全部 rollout 再过滤。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["输入：prompt 池 + 上一步先验 μ_prior"] --> B["三状态隐马尔可夫建模<br/>按 P(部分求解=State 2) 排序取 Top-B"]
+    B --> C["仅对选中的 B 个 prompt rollout<br/>得到真实状态观测"]
+    subgraph INFER["在线贝叶斯推断三步流水线"]
+        direction TB
+        D["① 观测更新<br/>μ_prior → μ_post 坍缩到观测态"]
+        E["② 转移更新（非平稳指数衰减）<br/>Dirichlet 伪计数 + λ 遗忘旧统计"]
+        F["③ 下一步预测<br/>μ_next = Φ · μ_post"]
+        D --> E --> F
+    end
+    C --> D
+    F -->|"先验回传下一训练步"| B
+    B --> G["GRPO 用批次更新策略<br/>每 prompt 各生成 k 个响应"]
+```
+
 ### 关键设计
 
 **1. 三状态隐马尔可夫建模：把"该不该采样"翻译成"现在处于哪个状态"**

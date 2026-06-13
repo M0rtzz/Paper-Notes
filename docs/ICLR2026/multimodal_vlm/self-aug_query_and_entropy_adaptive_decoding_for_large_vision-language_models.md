@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Self-Aug 的工作流程：给定图像 $v$ 和文本查询 $x$，首先通过 SAS Prompt 让 LVLM 推理并选择最优的视觉增强方式 $c$（如裁剪、遮挡、噪声、颜色反转、水平/垂直翻转），然后在每个解码时间步：(1) 计算原图的专家 logit $l$ 和增强图的业余 logit $l'$；(2) 执行对比解码 $l_{CD} = (1+\alpha) \cdot l - \alpha \cdot l'$；(3) 通过 SAT 算法根据输出熵动态设置阈值，截断候选词集；(4) 从截断后的分布中采样下一个 token。整个流程无需架构修改或训练。
+Self-Aug 要解决的是视觉对比解码（visual contrastive decoding, VCD）的两处脱节：视觉增强和查询语义对不上、候选词截断对模型不确定性无感知。它把整条解码链路拆成"先选增强、再逐步对比、动态截断"三段。给定图像 $v$ 和文本查询 $x$，先用一次 SAS Prompt 让 LVLM 自己推理并选出最能扰动当前查询的视觉增强方式 $c$（裁剪、遮挡、噪声、颜色反转、水平/垂直翻转之一），用增强函数 $\mathcal{A}(c,v)$ 生成对比图像 $v'$。随后进入逐 token 的解码循环：每一步同时算原图的专家 logit $l$ 和增强图的业余 logit $l'$，由 SAT 根据当前输出分布的熵动态定一个截断阈值得到候选集 $\mathcal{V}_{SAT}$，再做对比解码 $l_{CD}=(1+\alpha)\cdot l-\alpha\cdot l'$ 并只在候选集内采样下一个 token。整个流程无需任何架构修改或训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["图像 v + 文本查询 x"] --> SAS["自增强选择 SAS<br/>SAS Prompt 让模型<br/>推理并选增强方式 c"]
+    SAS --> AUG["增强函数 A(c,v)<br/>生成对比图像 v'"]
+    AUG --> STEP["逐 token 解码循环<br/>专家 logit l(原图)<br/>+ 业余 logit l'(对比图)"]
+    STEP --> SAT["稀疏度自适应截断 SAT<br/>由输出熵定动态阈值<br/>得候选集 V_SAT"]
+    SAT --> CD["对比解码整合<br/>l_CD = (1+α)l − αl'<br/>仅在 V_SAT 内采样"]
+    CD --> STEP
+    CD --> OUT["生成 token<br/>→ 完整回答"]
+```
 
 ### 关键设计
 

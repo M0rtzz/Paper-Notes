@@ -46,6 +46,20 @@ tags:
 
 算法把注意力 $\text{Att}(Q,K,V)=D^{-1}AV$ 拆成三个可以分别近似的组件——指数核矩阵 $A$、归一化因子 $D$、值矩阵 $V$——并对每个组件套一层 $\sqrt{n}$ 量子加速。三部分的近似产物组装成一个量子数据结构 `QAttention`：预处理阶段一次性建好压缩表示，之后任意一行注意力都能在与 $n$ 无关的时间里查询出来。下面三点对应三个组件，第四点把它们拼回端到端的精度与复杂度保证。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入<br/>查询 Q、键 K、值 V"]
+    IN --> KER["构造 PSD 指数核 E<br/>(把 exp(QKᵀ) 借壳进 Q∪K)"]
+    KER --> NYS["量子 Nyström 核近似<br/>QSample 采样 → 近似 Ã = U₁U₂ᵀ"]
+    NYS --> MEAN["量子均值估计<br/>由 U₂ 隐式算归一化 D̃"]
+    IN --> LEV["量子杠杆分数采样<br/>行畸变度 α → 近似 Ṽ"]
+    NYS --> ASM["端到端拼装与 λ 权衡<br/>建 QAttention 数据结构"]
+    MEAN --> ASM
+    LEV --> ASM
+    ASM --> OUT["行查询<br/>取第 i 行 (D̃⁻¹ÃṼ)<br/>时间与 n 无关"]
+```
+
 ### 关键设计
 
 **1. 量子 Nyström 核近似：让非对称指数核也能做谱压缩**

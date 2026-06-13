@@ -40,19 +40,41 @@ tags:
 ## 方法详解
 
 ### 整体框架
-本文把经典影响函数从"单点估计"问题改写成"分布"问题：不再在唯一的最优参数 $\boldsymbol{w}^*$ 上计算梯度与 Hessian 逆，而是在以 $\boldsymbol{w}^*$ 为中心的局部后验分布上估计协方差。影响被定义为训练损失 $\ell_i$ 与目标可观测量 $\phi$ 在该后验下的负协方差 $-\text{Cov}_\gamma(\ell_i, \phi)$，再用 SGLD 采样把这个协方差估计出来，从而彻底绕开 Hessian。
+本文把经典影响函数（Influence Function, IF）从"单点估计"问题改写成"分布"问题：不再在唯一的最优参数 $\boldsymbol{w}^*$ 上计算梯度和 Hessian 逆，而是在以 $\boldsymbol{w}^*$ 为中心的局部后验分布上估计协方差。整条流程是——拿到一个训练好的模型 $\boldsymbol{w}^*$，围绕它构造一个局部后验，跑若干条 SGLD 链在这个后验上采样；每个采样点只做一次前向传播、把训练样本损失 $\ell_i$ 和目标可观测量 $\phi$ 的值记下来；最后在这些损失轨迹上算样本协方差，归因结果就定义为负协方差 $-\text{Cov}_\gamma(\ell_i, \phi)$。整个过程不出现任何 Hessian，也不需要反向传播，这正是它能扩展到数十亿参数的关键。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["已训练模型 w*<br/>+ 训练集 / 查询集"] --> B["用局部后验上的协方差<br/>替代不可逆 Hessian<br/>BIF = −Cov_γ(ℓ_i, φ)"]
+    B --> C["SGLD 采样估计<br/>C 条链 × T 步<br/>每步前向记录损失轨迹"]
+    C --> D["在损失轨迹上<br/>算样本协方差<br/>得到影响分数"]
+    D --> E["Per-token 归因<br/>一次并行出<br/>token-token 影响矩阵"]
+    D --> F["归一化 BIF<br/>Pearson 相关<br/>→ 后验相关"]
+```
 
 ### 关键设计
 
-**1. 从 IF 到 BIF 的协方差改写：消去不可逆的 Hessian。** 经典影响函数写成 $\text{IF}(z_i, \phi) = -\nabla\phi(\boldsymbol{w}^*)^\top \boldsymbol{H}^{-1} \nabla\ell_i(\boldsymbol{w}^*)$，其中 Hessian 逆 $\boldsymbol{H}^{-1}$ 既要求模型非退化（深度网络常常不满足），又在大模型上根本算不动。BIF 转而采用统计物理里的标准结果 $\text{BIF}(z_i, \phi) = -\text{Cov}(\ell_i(\boldsymbol{w}), \phi(\boldsymbol{w}))$：影响等于损失与可观测量在后验下的负协方差，完全不出现 Hessian。两者并非互相替代——文中证明在非退化模型上对 BIF 做一阶 Taylor 展开恰好回到经典 IF（Appendix A），所以 BIF 是 IF 的高阶、且对退化情形仍然成立的推广。
+**1. 用局部后验上的协方差替代不可逆的 Hessian**
 
-**2. 局部化机制（Local BIF）：用先验精度 $\gamma$ 替代 Hessian dampening。** 若直接在全局后验上算协方差，远离 $\boldsymbol{w}^*$ 的采样点会污染估计。为此引入一个以 $\boldsymbol{w}^*$ 为中心的各向同性高斯先验，得到局部后验 $p_\gamma \propto \exp\!\big(-\sum_i \ell_i - \tfrac{\gamma}{2}\|\boldsymbol{w}-\boldsymbol{w}^*\|^2\big)$。精度参数 $\gamma$ 控制采样被约束在 $\boldsymbol{w}^*$ 附近的程度，作用与经典 IF 里把 $\boldsymbol{H}$ 换成 $(\boldsymbol{H} + \gamma\boldsymbol{I})$ 的 dampening 完全对应，因此 Local BIF 可以看作 dampened IF 的高阶版本。
+经典影响函数写成 $\text{IF}(z_i, \phi) = -\nabla\phi(\boldsymbol{w}^*)^\top \boldsymbol{H}^{-1} \nabla\ell_i(\boldsymbol{w}^*)$，痛点全卡在 Hessian 逆 $\boldsymbol{H}^{-1}$ 上：它既要求模型非退化（深度网络的损失景观往往是奇异的、$\boldsymbol{H}$ 不可逆），又在大模型上根本算不动。BIF 改用统计物理里的标准结果，把影响重新定义为损失与可观测量在贝叶斯后验下的负协方差 $\text{BIF}(z_i, \phi) = -\text{Cov}(\ell_i(\boldsymbol{w}), \phi(\boldsymbol{w}))$，公式里完全没有 Hessian。这不是把 IF 换了个近似——文中证明在非退化模型上对 BIF 做一阶 Taylor 展开恰好回到经典 IF（Appendix A），所以 BIF 是 IF 的高阶推广，且对退化情形仍然成立。
 
-**3. SGLD 采样估计：把协方差变成只需前向传播的统计量。** 局部后验上的协方差用随机梯度 Langevin 动力学（SGLD）采样来估计，并行跑多条独立的 SGLD 链以提升对后验的覆盖，总采样点数 $N_{\text{draws}} = C \times T$（$C$ 条链各采 $T$ 步）。关键在于每个采样点只需对训练集和查询集做一次前向传播、记录损失值 $\ell_i(\boldsymbol{w})$ 和 $\phi(\boldsymbol{w})$，再在这些损失轨迹上算样本协方差即可——归因本身不需要反向传播求梯度，这正是它能扩展到数十亿参数的原因。
+直接在全局后验上算协方差还有个问题：远离 $\boldsymbol{w}^*$ 的采样点会污染估计，而我们关心的恰恰是这个训练终点附近的局部影响。于是引入一个以 $\boldsymbol{w}^*$ 为中心的各向同性高斯先验，得到局部后验（Local BIF）
 
-**4. Per-token 归因：一次采样并行算出整张 token-token 影响矩阵。** 自回归模型的损失可按 token 分解为 $\ell_i = \sum_s \ell_{i,s}$，而协方差对求和天然线性，于是 token 级影响直接写成 $\text{BIF}(z_{i,s}, z_{j,s'}) = -\text{Cov}_\gamma(\ell_{i,s}, \ell_{j,s'})$。由于所有 token 的损失在同一次采样里已经记下，整张 token-token 影响矩阵可以一次性并行算出；相比之下经典方法需要逐 token 串行计算 Hessian-向量积，在 LLM 上不可行。
+$$p_\gamma(\boldsymbol{w}) \propto \exp\!\Big(-\textstyle\sum_i \ell_i(\boldsymbol{w}) - \tfrac{\gamma}{2}\|\boldsymbol{w}-\boldsymbol{w}^*\|^2\Big).$$
 
-**5. 归一化 BIF（Posterior Correlation）：抑制高方差数据点的主导。** 原始协方差的绝对值会被自身损失方差大的数据点放大，使排序失真。把协方差归一化为 Pearson 相关系数后，取值落在 $[-1, 1]$ 区间，不同数据点之间更可比、估计也更稳定，可作为后验相关性（posterior correlation）解读 token 之间的语义关联。
+精度参数 $\gamma$ 控制采样被约束在 $\boldsymbol{w}^*$ 附近的程度，作用恰好对应经典 IF 里把 $\boldsymbol{H}$ 换成 $(\boldsymbol{H} + \gamma\boldsymbol{I})$ 的阻尼（dampening）——Laplace 近似下 Local BIF 的领头项就是阻尼 IF，所以 $\gamma$ 既是数值正则、也是"在多大尺度上看影响"的分析旋钮。
+
+**2. SGLD 采样估计：把协方差变成只需前向传播的统计量**
+
+定义有了，剩下的问题是局部后验上的协方差怎么算。本文用随机梯度 Langevin 动力学（Stochastic Gradient Langevin Dynamics, SGLD）采样：从 $\boldsymbol{w}^*$ 出发，按训练损失的小批量梯度加上局部化势 $\gamma(\boldsymbol{w}-\boldsymbol{w}^*)$ 的梯度做带噪更新，并行跑 $C$ 条独立的链、每条采 $T$ 步以提升对后验的覆盖，总采样点数 $N_{\text{draws}} = C \times T$（实验里如 $C{=}4,\,T{=}500$）。关键一步是：每个采样点只对训练集和查询集做一次前向传播，把损失值 $\ell_i(\boldsymbol{w})$ 和 $\phi(\boldsymbol{w})$ 记下来，归因就是在这些损失轨迹上算样本协方差——全程不需要反向传播求参数梯度，也不需要存任何 Hessian 因子，这是它相对 EK-FAC 能省下昂贵 fit 阶段、扩展到大模型的根本原因。
+
+**3. Per-token 归因：一次采样并行算出整张 token-token 影响矩阵**
+
+自回归模型的损失天然按 token 分解为 $\ell_i = \sum_s \ell_{i,s}$，而协方差对求和是线性的，于是 token 级影响直接写成 $\text{BIF}(z_{i,s}, z_{j,s'}) = -\text{Cov}_\gamma(\ell_{i,s}, \ell_{j,s'})$。由于所有 token 的逐位置损失在同一次采样里已经记下，整张 $S|\mathcal{D}_{\text{train}}| \times S|\mathcal{D}_{\text{query}}|$ 的 token-token 影响矩阵可以一次性并行算出。这正好戳中经典方法的软肋：用 EK-FAC 这类方法做同等粒度的归因，需要把每个训练 token 的梯度贡献分别反传，显存随序列长度线性膨胀、且要逐 token 串行打分，在 LLM 上不可行。
+
+**4. 归一化 BIF（后验相关）：抑制高方差数据点的主导**
+
+原始协方差的绝对值会被自身损失方差大的数据点放大，让排序失真——一个"敏感"但未必相关的样本可能排到前面。把协方差归一化为 Pearson 相关系数（即除以两者各自的损失标准差），取值落进 $[-1, 1]$，就把"关系强弱"和"单点敏感度"解耦开，不同数据点之间更可比、估计也更稳定。本文所有定性分析和可视化都用这个量，称为后验相关（posterior correlation），用来解读 token 之间的翻译、同义、数字-拼写等语义关联。
 
 ## 实验关键数据
 

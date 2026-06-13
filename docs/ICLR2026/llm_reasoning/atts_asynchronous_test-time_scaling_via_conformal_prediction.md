@@ -40,23 +40,46 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ATTS 要解决的问题是：把 speculative decoding 搬进 test-time scaling 后，rejection sampling 的全局排名/归一化让所有候选必须互相等待，同步开销随采样轮数爆炸。它的破局点是把"哪些候选该接受"从一次全局排名，改成每个候选各自独立做的一次假设检验。
+ATTS 要解决的问题是：把 speculative decoding 搬进 test-time scaling 后，rejection sampling 的全局排名/归一化让所有候选必须互相等待，同步开销随采样轮数指数增长。它的破局点是把"哪些候选该被拒"从一次全局排名，改成每个候选各自独立做的一次假设检验。
 
-整条 pipeline 分三步走：Draft 模型先并行生成 $m$ 个候选推理链；接着对每个候选独立算一个 conformal p-value，与阈值 $\alpha$ 一比就能立刻决定接受还是拒绝，不必等其他候选算完；被接受的候选再交给 Target 模型继续往下生成。多跑几轮就是顺序缩放，每轮多放几个候选就是并行缩放——两个维度都能放大，而放大时不再积累同步等待。
+整条 pipeline 是一个三阶段、可多轮迭代的拒绝采样循环。每一轮里，Draft 模型先并行生成 $m$ 个候选推理链；Target 模型给每个候选打一个分（conformity score），再换算成 conformal p-value，只需和阈值 $\alpha$ 一比就能独立判断它该留还是该拒，不必等其他候选算完；落入 prediction set $C_\alpha$ 的候选被判为低置信度、交给 Target 模型以 draft 前缀为基础续写，集合外的高置信度候选则直接留用 draft 的输出。一轮结束若还没检测到答案，就带着已生成的内容进入下一轮。多跑几轮就是顺序缩放，每轮多放几个候选就是并行缩放——两个维度都能放大，而放大时不再积累同步等待。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["推理问题输入"] --> D["Draft 模型并行采样<br/>每轮生成 m 个候选推理链<br/>(并行缩放轴)"]
+    D --> V["Target 模型打分<br/>logits→conformity score"]
+    V --> P["在线校准算 conformal p-value<br/>对比 calibration set 历史分数<br/>(无需全局归一化)"]
+    P --> C["与阈值 α 比较构造<br/>prediction set Cα<br/>(集合大小=预算 B)"]
+    C -->|"集合外·高置信度"| K["直接留用 draft 候选输出"]
+    C -->|"落入 Cα·被拒"| T["Target 模型接管<br/>以 draft 前缀续写 Kt token"]
+    K --> E{"检测到答案 /<br/>达到轮数或 token 上限?"}
+    T --> E
+    E -->|"否·进入下一轮<br/>(顺序缩放轴)"| D
+    E -->|"是"| O["输出最终推理链/答案"]
+```
 
 ### 关键设计
 
-**1. 异步算术强度：把"同步开销"摆到台面上量化**
+**1. 异步算术强度：先证明同步才是真正的瓶颈**
 
-要论证异步有必要，先得说清同步到底有多贵。传统的算术强度只权衡计算量和内存访问，但在 test-time scaling 里真正卡脖子的是同步等待。ATTS 因此定义异步算术强度 $r = T_c / (T_m + T_s) \approx T_c / T_s$，其中 $T_c$ 是计算时间、$T_m$ 是内存访问时间、$T_s$ 是同步开销；之所以能近似掉 $T_m$，正是因为这里 $T_s \gg T_m$。随着采样数增多，$r$ 持续下降，定量地说明瓶颈不在算力也不在显存带宽，而在"等别人算完"这件事上——这就为后面的异步改造提供了量化依据和优化目标。
+要论证异步有必要，先得说清同步到底有多贵。传统的算术强度只权衡计算量和内存访问，但在 test-time scaling 里真正卡脖子的是同步等待——论文实测同步开销随采样轮数**指数增长**、随并发样本数线性增长。ATTS 因此定义异步算术强度
 
-**2. 基于 conformal prediction 的序数分类：用 p-value 替掉全局排名**
+$$r = \frac{T_c}{T_m + T_s} = \frac{t_c \times f}{t_m \times b + T_s} \approx \frac{T_c}{T_s},$$
 
-同步的根源是 rejection sampling 要对所有候选做 softmax 归一化或全局排名，这两件事都得"凑齐所有候选"才能算。ATTS 把它重写成一个假设检验：对每个候选 $k$ 先算一个**非归一化**的 conformity score $s_\xi^k = -\ell(X_\xi, \hat{Y}_\xi^k)$（$\ell$ 为损失，score 越高代表候选越可信），再算出它的 conformal p-value $p_\xi^k$，与阈值 $\alpha$ 比较即可判定是否落入 prediction set。关键在于 p-value 不依赖全局归一化——它只把当前候选的 score 和 calibration set 里的历史 scores 比一比就能得到，于是每个候选都能独立、异步地评估，彻底拆掉了"必须等齐"的约束。这套构造还自带统计保证，能给出边际覆盖与条件覆盖两种形式，即 $\mathbb{P}(y \in C_\alpha(Y)) \geq 1 - \alpha$，保证高质量候选不会被误丢。
+其中 $T_c$ 是计算时间、$T_m$ 是内存访问时间、$T_s$ 是同步开销；之所以能近似掉 $T_m$，正是因为采样规模一大、$T_s$ 就远超 $T_m$。随着采样数增多 $r$ 持续下降，定量地说明瓶颈不在算力也不在显存带宽，而在"等别人算完"这件事上——这就把后续的异步改造从直觉变成了有量化依据的优化目标。
 
-**3. 在线校准与 budget 控制：没有验证集也能动态维护 calibration set**
+**2. conformal p-value 序数分类 + 在线校准：拆掉"必须等齐"的全局归一化**
 
-conformal p-value 要靠一份 calibration set 做参照，但 test-time scaling 现场并没有预留的 held-out 数据。ATTS 用一个 memory bank 在线积累历史采样的 scores，随着测试推进持续更新这份 calibration set。更妙的是，阈值 $\alpha$ 直接控制 rejection rate，从而让 prediction set 的大小恰好等于预先设定的 budget $B$——这相当于给并发采样上了一个硬闸门，把 KV cache 占用钉在预算内，避免高并发时 GPU OOM。
+同步的根源是 rejection sampling 要对所有候选做 softmax 归一化或全局排名，这两件事都得"凑齐所有候选"才能算。ATTS 把它重写成一个序数分类（ordinal classification）下的假设检验：对每个候选 $k$ 先用 Target 模型的 logits 算一个**非归一化**的 conformity score $s_\xi^k = -\ell(X_\xi, \hat{Y}_\xi^k)$（$\ell$ 为损失，score 越高代表候选越可信），再算它的 conformal p-value
+
+$$p_\xi^k = \frac{\sum_{i=1}^{n}\sum_{j=1}^{m}\mathbf{1}(s_\xi^k \le s_i^j) + 1}{nm + 1}.$$
+
+直观上这就是把当前候选的 score 和 calibration set 里 $n\times m$ 个历史 scores 比一比、数出它的排名——只用到本候选自己和历史数据，不依赖同批其他候选，于是每个候选都能独立、异步地评估，彻底拆掉了"必须等齐"的约束。比较范围用整个 calibration set 给的是边际覆盖（marginal coverage）、只用当前输入的样本给的是更严格的条件覆盖（conditional coverage），两者都带统计保证 $\mathbb{P}(y \in C_\alpha(Y)) \geq 1 - \alpha$，确保高质量候选不会被误丢。而 calibration set 本身又没有现成的：test-time scaling 现场没有预留的 held-out 数据，ATTS 就为每个测试输入预采样 $m$ 个输出、在线积累这些 scores 当作动态校准集，边测边更新。
+
+**3. 三阶段拒绝采样流水线：draft 提议、target 验证与接管，双轴缩放**
+
+把上面的判别装进可运行的采样循环，就是论文的三阶段流水线，每一轮依次做三件事。**Draft Model Sampling**：draft 模型 $q_d$ 并行提议 $m$ 条长度 $K_d$ 的候选续写——并发样本数就是并行缩放轴。**Verification**：用 target 模型 $q_t$ 给每条候选打 conformity score、算 p-value，与 $\alpha$ 比较后构造 prediction set $C_\alpha$。这里阈值 $\alpha$ 直接决定 rejection rate，从而让 $C_\alpha$ 的大小恰好等于预设的 budget $B$（要拒绝的候选数）——相当于给并发采样上了硬闸门，把 KV cache 占用钉在预算内、避免高并发时 GPU OOM。**Target Model Sampling**：落入 $C_\alpha$ 的低置信度候选交给 target 模型，以 draft 已生成的内容为前缀继续写至多 $K_t$ 个 token（而非像经典 rejection sampling 那样整条重采，省 token 预算）；集合外的高置信度候选直接留用 draft 输出。三阶段跑完检查是否终止（出答案 / 到轮数或 token 上限），否则进入下一轮——轮数就是顺序缩放轴。两条缩放轴都能放大，而每一步判别都是异步的，放大时不再积累同步等待。
 
 ### 损失函数 / 训练策略
 无需训练（training-free, lossless）。ATTS 完全工作在推理时，不修改模型权重，对 draft / target 模型组合也无侵入。

@@ -46,13 +46,41 @@ tags:
 
 DeCoST把OPTWVP建模为约束马尔可夫决策过程(CMDP)，并将原本耦合的优化拆成两个阶段：第一阶段用并行解码器一次性吐出离散路线和初始服务时间，第二阶段固定路线后用线性规划把连续的服务时间分配推到全局最优，再用一个跨阶段反馈信号把第二阶段的最优结果回灌给第一阶段，避免它做出短视的路线决策。每一步的动作同时包含选哪个节点和归一化的服务时间比 $a_i = (v^{(i)}, d_{v^{(i)}}/d_{v^{(i)}\max})$，整体目标是最大化期望总奖励 $\max_{\pi_\theta} J_r(\pi_\theta) = \mathbb{E}_{(\tau,\mathbf{d})\sim\pi_\theta}[R(\tau, \mathbf{d}|\mathcal{G})]$，其中 $R(\tau, \mathbf{d}|\mathcal{G}) = \sum_{i=1}^{l-1} p_{v^{(i)}} d_{v^{(i)}}$，并受时间预算、服务时间上限和时间窗约束。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["OPTWVP 实例<br/>图 G / 时间窗 / 可变利润"]
+    subgraph S1["并行解码的第一阶段"]
+        direction TB
+        ENC["空间编码<br/>+ 可行性掩码"]
+        RD["路线解码器<br/>选下一访问节点"]
+        STD["服务时间解码器 STD<br/>预测初始服务时间"]
+        ENC --> RD
+        ENC --> STD
+    end
+    LP["LP 全局最优的第二阶段<br/>STO 精确分配服务时间"]
+    PTAR["pTAR 跨阶段监督反馈<br/>把最优回灌第一阶段"]
+    OUT["路线 τ + 最优服务时间<br/>最大化总奖励"]
+    IN --> S1
+    S1 -->|"路线 τ + 初始服务时间"| LP
+    LP --> OUT
+    LP --> PTAR
+    PTAR -.->|"排斥性监督"| STD
+```
+
 ### 关键设计
 
-**1. 并行解码的第一阶段：让路线决策提前感知服务时间。** 纯路线导向的构造式求解器在选节点时看不到后续服务时间的收益，容易选出结构上无法分配好时间的路径。DeCoST在第一阶段并排放两个解码器：基于注意力的路线解码器负责选下一个访问节点，服务时间解码器(STD)同步预测对应的初始服务时间，于是路线决策在生成的当下就已经把服务时间的影响考虑进去。为了让模型更懂图结构，空间编码(Spatial Encoding)把边特征(节点间距离)编成注意力偏置注入；可行性掩码(Feasibility Masking)则在每一步动态剔除违反约束的候选节点——既排除那些选了之后无法在时间预算内返回起点的节点，也排除到达时间会超出自身时间窗的节点，保证生成的路径始终合法。
+**1. 并行解码的第一阶段：让路线决策提前感知服务时间**
 
-**2. LP 全局最优的第二阶段：固定路线后精确分配服务时间。** 一旦路线 $\tau$ 固定，剩下的连续服务时间分配恰好退化成一个线性规划 $\max_{\mathbf{s},\mathbf{d}} \mathbf{p}^T \mathbf{d}$，约束为 $\mathbf{s}^- \leq \mathbf{s} \leq \mathbf{s}^+$、$\mathbf{0} \leq \mathbf{d} \leq \mathbf{d}_{\max}$ 以及 $(I-U)\mathbf{s} + \mathbf{d} + \mathbf{t} \leq \mathbf{0}$。作者没有调用通用 LP 求解器，而是提出 STO 算法用贪心策略求解：把节点按单位利润从高到低排序，依次给每个节点分配最大可行服务时间，再更新后续节点的起始时间。论文严格证明了这一贪心解就是该 LP 的全局最优(Theorem 4.1)，而且整个过程支持并行计算，因此第二阶段既精确又快。
+纯路线导向的构造式求解器在选节点时看不到后续服务时间的收益，容易选出结构上无法分配好时间的路径。DeCoST在第一阶段并排放两个解码器：基于注意力的路线解码器负责选下一个访问节点，服务时间解码器(Service Time Decoder, STD)同步预测对应的初始服务时间，于是路线决策在生成的当下就已经把服务时间的影响考虑进去。为了让模型更懂图结构，空间编码(Spatial Encoding)把边特征(节点间距离)编成注意力偏置注入；可行性掩码(Feasibility Masking)则在每一步动态剔除违反约束的候选节点——既排除那些选了之后无法在时间预算内返回起点的节点，也排除到达时间会超出自身时间窗的节点，保证生成的路径始终合法、并大幅压缩搜索空间。
 
-**3. pTAR 跨阶段监督反馈：把第二阶段的最优回灌给第一阶段。** 解耦的风险是第一阶段意识不到第二阶段会怎么重新分配时间，做出看似合理却注定低效的路线。为此作者定义利润加权时间分配比(profit-weighted Time Allocation Ratio) $pTAR(\mathbf{d}) = \sum_{i \in \tau} \frac{p_i d_i}{t_i}$ 来衡量一条解的利润效率，并加一个排斥性监督损失 $\mathcal{L}_{pTAR} = -(pTAR(\hat{\mathbf{d}}) - pTAR(\mathbf{d}^*))^2$，刻意拉开 STD 预测 $\hat{\mathbf{d}}$ 与某条路线下 LP 条件最优 $\mathbf{d}^*$ 的距离。这样做是因为不同路线对应不同的条件最优，若让 STD 早早收敛到某个条件最优反而会锁死探索；排斥项促使第一阶段去"预见"第二阶段的后果而非简单复制它。最终训练目标把 REINFORCE 损失和 pTAR 损失加权组合：$\mathcal{L}_{total} = \beta_1 \mathcal{L} + \beta_2 \mathcal{L}_{pTAR}$。
+**2. LP 全局最优的第二阶段：固定路线后精确分配服务时间**
+
+一旦路线 $\tau$ 固定，剩下的连续服务时间分配恰好退化成一个线性规划 $\max_{\mathbf{s},\mathbf{d}} \mathbf{p}^T \mathbf{d}$，约束为 $\mathbf{s}^- \leq \mathbf{s} \leq \mathbf{s}^+$、$\mathbf{0} \leq \mathbf{d} \leq \mathbf{d}_{\max}$ 以及 $(I-U)\mathbf{s} + \mathbf{d} + \mathbf{t} \leq \mathbf{0}$。作者没有调用通用 LP 求解器，而是提出服务时间优化(Service Time Optimization, STO)算法用贪心策略求解：把节点按单位利润从高到低排序，依次给每个节点分配最大可行服务时间，再更新后续节点的起始时间。论文严格证明了这一贪心解就是该 LP 的全局最优(Theorem 4.1)，而且整个过程支持并行计算，因此第二阶段既精确又快——这也是消融里把 Gap 从 23.0% 锐降到 2.28% 的关键组件。
+
+**3. pTAR 跨阶段监督反馈：把第二阶段的最优回灌给第一阶段**
+
+解耦的风险是第一阶段意识不到第二阶段会怎么重新分配时间，做出看似合理却注定低效的路线。为此作者定义利润加权时间分配比(profit-weighted Time Allocation Ratio, pTAR) $pTAR(\mathbf{d}) = \sum_{i \in \tau} \frac{p_i d_i}{t_i}$ 来衡量一条解的利润效率——它度量单位旅行成本能换回多少奖励，越高代表越偏向"低旅行代价、高回报"的区域。基于它，作者加一个排斥性监督损失 $\mathcal{L}_{pTAR} = -(pTAR(\hat{\mathbf{d}}) - pTAR(\mathbf{d}^*))^2$，刻意拉开 STD 预测 $\hat{\mathbf{d}}$ 与某条路线下 LP 条件最优 $\mathbf{d}^*$ 的距离。这样做是因为不同路线对应不同的条件最优，若让 STD 早早收敛到某个条件最优反而会锁死探索；排斥项促使第一阶段去"预见"第二阶段的后果、广泛探索策略，而非简单复制某个条件最优。最终训练目标把 REINFORCE 损失和 pTAR 损失加权组合：$\mathcal{L}_{total} = \beta_1 \mathcal{L} + \beta_2 \mathcal{L}_{pTAR}$。
 
 ## 实验关键数据
 

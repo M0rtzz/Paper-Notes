@@ -17,7 +17,7 @@ tags:
 **会议**: ICLR 2026  
 **arXiv**: [2506.15751](https://arxiv.org/abs/2506.15751)  
 **代码**: [GitHub](https://github.com/Ksartik/sysformer)  
-**领域**: 机器人  
+**领域**: LLM对齐  
 **关键词**: system prompt, LLM safety, jailbreak defense, frozen model, adaptive prompting
 
 ## 一句话总结
@@ -42,7 +42,26 @@ tags:
 
 ### 整体框架
 
-Sysformer的流程为：给定系统提示 $\mathcal{S}$ 和用户提示 $\mathcal{P}$，先通过LLM的token嵌入矩阵 $\mathbf{E}$ 将两者分别编码为嵌入序列 $\mathbf{S} = \mathbf{E}[\mathcal{S}]$ 和 $\mathbf{P} = \mathbf{E}[\mathcal{P}]$。Sysformer模块接收 $\mathbf{S}$ 和 $\mathbf{P}$，通过交替的自注意力和交叉注意力层变换系统提示嵌入，输出自适应系统提示 $\widehat{\mathbf{S}}$。最终将 $\widehat{\mathbf{S}} \oplus \mathbf{E}[\mathcal{P}]$ 送入冻结的LLM生成响应。整个过程中LLM参数不变、用户提示原封不动、只有Sysformer的参数被训练。
+Sysformer 要解决的是：在不动 LLM 一根参数、也不改用户输入的前提下，让模型对有害请求更会拒、对安全请求别误拒。它的做法是把「系统提示」从一块固定的指令板，换成一个**随用户输入即时改写**的自适应前端。整体怎么转：给定系统提示 $\mathcal{S}$ 和用户提示 $\mathcal{P}$，先用 LLM 自带的 token 嵌入矩阵 $\mathbf{E}$ 把两者分别编码为嵌入序列 $\mathbf{S} = \mathbf{E}[\mathcal{S}]$ 和 $\mathbf{P} = \mathbf{E}[\mathcal{P}]$；Sysformer 这个轻量变换器接收这两串嵌入，靠交替的自注意力 / 交叉注意力让系统提示「看一眼」用户意图，输出一串 token 数不变的自适应系统提示 $\widehat{\mathbf{S}}$；最后把 $\widehat{\mathbf{S}} \oplus \mathbf{E}[\mathcal{P}]$ 拼起来喂给冻结的 LLM 生成回复。训练时 LLM 全程冻结、用户提示原封不动，只有 Sysformer 的参数在多目标损失和越狱增强样本的监督下更新。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    S["系统提示 𝒮"] --> ES["嵌入 E[𝒮]"]
+    P["用户提示 𝒫"] --> EP["嵌入 E[𝒫]"]
+    subgraph SF["自注意力+交叉注意力的双模态变换（L=2 层）"]
+        direction TB
+        SA["自注意力<br/>增强系统提示自身上下文"] --> CA["交叉注意力<br/>系统提示看用户意图"]
+    end
+    ES --> SA
+    EP -->|"作为另一模态"| CA
+    CA --> SH["自适应系统提示 Ŝ<br/>token 数与原系统提示一致"]
+    SH --> CC["拼接 Ŝ ⊕ E[𝒫]"]
+    EP --> CC
+    CC --> LLM["冻结 LLM（参数不变）"]
+    LLM --> OUT["响应<br/>有害则拒绝 / 安全则正常回应"]
+    TR["多目标联合损失 + 越狱攻击增强训练<br/>仅更新 Sysformer 参数"] -.->|监督| SF
+```
 
 ### 关键设计
 

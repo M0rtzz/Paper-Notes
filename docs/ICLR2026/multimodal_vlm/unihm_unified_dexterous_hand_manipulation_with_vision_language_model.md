@@ -42,6 +42,18 @@ tags:
 
 UniHM 把"图像+开放词汇指令→动态灵巧手操控序列"拆成三段串起来的流水线：先用一个跨手型共享的 VQ-VAE 把异构机械手的姿态压成统一离散 token，再让一个小型 VLM 在感知线索的条件下自回归生成这串 token，最后用物理优化逐帧把生成结果掰回可行域。三段各自训练、推理时首尾相接，既复用了人类视频数据，又避免了对遥操作数据的依赖。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["RGB-D 图像<br/>+ 开放词汇指令"]
+    IN --> PERC["感知前端（脚手架）<br/>CLIPort 推目标轨迹<br/>Point-SAM 分割物体点云"]
+    IN --> TOK["形态无关的统一 tokenizer<br/>共享 VQ codebook<br/>把异构手姿编为统一 token"]
+    PERC --> VLM
+    TOK --> VLM["感知解耦的 VLM 操控生成<br/>Qwen3-0.6B 自回归吐 token<br/>再经 codebook 解码为关节序列"]
+    VLM --> REFINE["物理引导的动态优化<br/>逐帧 Gauss-Newton 掰回可行域"]
+    REFINE --> OUT["物理可行的<br/>灵巧手操控序列"]
+```
+
 ### 关键设计
 
 **1. 形态无关的统一 tokenizer：让一套 codebook 装下五种手。** 不同机械手（MANO、Shadow、Allegro 等 5 种）自由度和结构都不一样，直接学一个跨手型模型几乎不可能。UniHM 给每种手型配一对专用编码器 $E_h$ 和解码器 $D_h$，但让它们共享同一本 VQ-VAE codebook $\mathcal{Z} = \{\mathbf{e}_k\}_{k=1}^K$，量化时把编码结果就近映射到最接近的码字 $c = \arg\min_k \|E_h(\mathbf{x}^{(h)}) - \mathbf{e}_k\|_2^2$。这样异构手型就被投影进同一个离散空间，跨手型翻译只是"编码-量化-解码"三步：$\hat{\mathbf{x}}^{(j)} = D_j(\mathbf{e}_{Q(E_i(\mathbf{x}^{(i)}))})$，即插即用。接入新手型时不必重训整本 codebook——量化是不可微的，梯度传不回去，于是改用知识蒸馏把新编码器对齐到参考手型 $\mathcal{L}_{\text{distill}} = \|E_{\text{new}}(\mathbf{x}_{\text{new}}) - E_{\text{ref}}(\mathbf{x}_{\text{ref}})\|_2^2$，绕过不可微的量化步骤，只训新的编解码器即可。

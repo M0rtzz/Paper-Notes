@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR 2026  
 **arXiv**: [2502.02533](https://arxiv.org/abs/2502.02533)  
 **代码**: 无  
-**领域**: 信号通信  
+**领域**: 多智能体系统  
 **关键词**: 多智能体系统, 提示优化, 拓扑搜索, LLM Agent, 自动化设计
 
 ## 一句话总结
@@ -43,7 +43,27 @@ tags:
 
 ### 整体框架
 
-MASS把"提示词"和"拓扑结构"这两个纠缠在一起的设计维度，拆成由局部到全局、先提示后拓扑的三阶段流水线：Stage 1（1PO）逐个优化每类拓扑构建块在最小配置下的提示词，Stage 2（2TO）拿着这些优化好的提示词、在剪枝后的拓扑空间里搜最佳编排，Stage 3（3PO）再对选定拓扑做一次全局联合提示优化。可选的构建块包括Aggregate、Reflect、Debate、Summarize和Tool-use五类。
+MASS要解决的问题是：一个多智能体系统（Multi-Agent System，MAS）的好坏同时取决于每个 Agent 的提示词（prompt）和 Agent 之间的拓扑编排（topology），两者联合起来的搜索空间大到没法直接暴力搜。MASS 的破解办法是把这两个纠缠在一起的维度拆成「由局部到全局、先提示后拓扑」的三阶段流水线。输入是一个任务验证集和五类可选构建块（Aggregate、Reflect、Debate、Summarize、Tool-use）：Stage 1（1PO）先把单 Agent 的提示词热身好，再以它为锚点逐个优化每类构建块在最小配置下的提示词，顺带记录每个块的验证性能；Stage 2（2TO）拿着这些优化好的提示词，先按"影响力"把负收益的块剪掉，只在剪枝后的拓扑空间里采样、评估、搜最佳编排；Stage 3（3PO）再对选定拓扑做一次全局联合提示优化，把前两阶段为解耦而忽略的 Agent 间依赖补回来。整套流程无梯度，三阶段层层收窄，每步只面对一个可控子问题，最终吐出一个高性能 MAS。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["任务验证集 + 五类构建块<br/>Aggregate / Reflect / Debate<br/>/ Summarize / Tool-use"]
+    OPT["即插即用提示优化器<br/>默认接 MIPRO，可随技术替换"]
+    subgraph PIPE["交错三阶段优化"]
+        direction TB
+        S1["Stage 1·1PO<br/>逐块局部提示优化<br/>热身单Agent后独立优化每个块"]
+        S2["Stage 2·2TO<br/>剪枝空间内拓扑搜索<br/>固定提示只搜结构"]
+        S3["Stage 3·3PO<br/>全局联合提示优化<br/>补回Agent间依赖"]
+        S1 --> S2 --> S3
+    end
+    PRUNE["基于影响力的搜索空间剪枝<br/>增量影响力→Softmax概率→拒绝采样"]
+    IN --> S1
+    OPT -.驱动.-> S1
+    OPT -.驱动.-> S3
+    S1 -.影响力打分.-> PRUNE -.剪枝后空间.-> S2
+    S3 --> OUT["高性能MAS"]
+```
 
 ### 关键设计
 

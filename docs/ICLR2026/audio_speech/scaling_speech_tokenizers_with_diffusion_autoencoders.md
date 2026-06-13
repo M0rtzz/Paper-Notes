@@ -41,7 +41,19 @@ tags:
 
 ### 整体框架
 
-SiTok 以 mel 频谱图为输入和重建目标（非原始波形），避免直接处理超长波形序列和不稳定的对抗训练。Pipeline 为：（1）下采样到 12.5Hz；（2）Llama-style 因果 Transformer 编码器（16 层）提取潜在特征 $\mathbf{z}$；（3）向量量化（65,536 entries，32 维，EMA 更新）得到离散 token $\mathbf{q}$；（4）非因果 Llama Transformer 扩散解码器（16 层）以量化嵌入 $\mathbf{z}_q$ 为条件，用 flow-matching 目标重建 mel 谱图；（5）外部 Vocos 声码器将 mel 谱图转为 24kHz 波形。同时有辅助 CTC 解码器（4 层）在量化后潜空间上预测文本转录。
+SiTok 以 mel 频谱图为输入和重建目标（非原始波形），避免直接处理超长波形序列和不稳定的对抗训练。整条链路是一个端到端联合训练的自编码器：mel 谱图先下采样到 12.5Hz，经 Llama-style 因果 Transformer 编码器（16 层）得到潜在特征 $\mathbf{z}$，再向量量化（65,536 码本、32 维、EMA 更新）成离散 token $\mathbf{q}$。量化后的嵌入 $\mathbf{z}_q$ 分两路使用：主路送进非因果 Llama Transformer 扩散解码器（16 层），用 flow-matching 目标把噪声还原成 mel 谱图，再交给外部 Vocos 声码器转成 24kHz 波形；辅路接一个轻量 CTC 解码器（4 层）直接预测文本转录，把语义信息逼回到离散 token 上。部署时再对扩散解码器做 shortcut 微调，把多步采样压到 2-4 步。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["mel 频谱图输入"] --> B["下采样 12.5Hz"]
+    B --> C["因果 Transformer 编码器<br/>（16 层）→ 潜在特征 z"]
+    C --> D["向量量化 VQ<br/>（65536×32，EMA）→ 离散 token"]
+    D -->|量化嵌入 z_q| E["扩散解码器替代对抗式训练<br/>flow-matching 重建 mel"]
+    D -->|量化嵌入 z_q| F["CTC 语义正则化<br/>预测文本转录"]
+    E --> S["高效扩散解码<br/>Shortcut 微调（2-4 步）"]
+    S --> G["Vocos 声码器 → 24kHz 波形"]
+```
 
 ### 关键设计
 

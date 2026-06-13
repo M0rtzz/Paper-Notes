@@ -42,7 +42,23 @@ tags:
 
 ### 整体框架
 
-方法分两步落地。训练时用一个 label-conditional 的高斯混合 VAE（L-GMVAE）把数据编码进潜空间，使每个类别都对应一簇专属的高斯聚类，聚类中心解码回去就是该类别的"原型追索点"。推理时的 LAPACE 算法把待解释样本编码到潜空间，再朝目标类别的某个聚类中心做线性插值并逐点解码，得到一条从"贴近原样本"到"落在类别原型上"的反事实路径。
+方法分两步落地。训练时用一个 label-conditional 的高斯混合 VAE（L-GMVAE）把数据编码进潜空间，使每个类别都对应一簇专属的高斯聚类，聚类中心解码回去就是该类别的"原型追索点"。推理时的 LAPACE 算法把待解释样本编码到潜空间，再朝目标类别的某个聚类中心做线性插值并逐点解码，得到一条从"贴近原样本"到"落在类别原型上"的反事实路径；插值途中还会就地修正违反现实约束的潜向量。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    subgraph TRAIN["L-GMVAE：潜空间按标签切簇"]
+        direction TB
+        D["训练数据"] --> GMM["标签条件 GMM<br/>每类 K/L 个高斯聚类"]
+        GMM --> CTR["解码聚类中心<br/>= 各类原型追索点"]
+    end
+
+    X["待解释样本 x<br/>+ 分类器预测标签 y"] --> ENC["编码得潜表征 z_x"]
+    CTR --> INTERP["LAPACE 线性插值<br/>z_τ 从 z_x 走向中心 z_cj"]
+    ENC --> INTERP
+    INTERP --> CONS["可操作性约束修正<br/>违反则梯度拉回可行域"]
+    CONS --> OUT["反事实路径<br/>近原样本 → 类别原型"]
+```
 
 ### 关键设计
 

@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-PERL（Partially Equivariant RL）的整体流程是：维护两套并行的值函数/策略网络——一套是满足群等变约束的 $(Q_E, \pi_E)$，一套是无约束的标准网络 $(Q_N, \pi_N)$；同时训练一个门控函数 $\lambda_\omega(s,a) \in \{0,1\}$ 来判断每个状态-动作对是否处于对称性破缺区域。最终的Q值和策略通过 $\lambda$ 在两套网络之间做硬切换：对称区域用等变网络，破缺区域用标准网络。整个训练在真实环境 $\mathcal{M}_N$ 中进行，门控函数通过两个one-step预测器的分歧来提供监督信号。
+PERL（Partially Equivariant RL）的整体流程是：维护两套并行的值函数/策略网络——一套是满足群等变约束的 $(Q_E, \pi_E)$，一套是无约束的标准网络 $(Q_N, \pi_N)$；同时训练一个门控函数 $\lambda_\omega(s,a) \in \{0,1\}$ 来判断每个状态-动作对是否处于对称性破缺区域。最终的Q值和策略通过 $\lambda$ 在两套网络之间做硬切换：对称区域用等变网络，破缺区域用标准网络。整个训练在真实环境 $\mathcal{M}_N$ 中进行，门控函数通过两个one-step预测器的分歧来提供监督信号。运行时数据流是：先由两个预测器的分歧训出门控 $\lambda_\omega$（对称性破缺检测），再用 $\lambda_\omega$ 把等变/标准两套网络逐点混合（部分群不变MDP），最后在真实环境里做TD/Actor更新；而误差传播分析是支撑这套"逐点切换"路由的理论依据，本身不是运行时的一个模块。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    ENV["真实环境 M_N<br/>采集转移 (s,a,r,s')"] --> DET
+    subgraph DET["基于预测器分歧的对称性破缺检测"]
+        direction TB
+        PE["等变 one-step 预测器<br/>受群约束 P_E"] --> DIS["分歧分数<br/>d(s,a)=D(P_E, P_N)"]
+        PN["标准 one-step 预测器<br/>无约束 P_N"] --> DIS
+        DIS --> GATE["门控网络 λ_ω(s,a)<br/>上尾异常→伪标签→BCE"]
+    end
+    GATE -->|"逐点硬切换 λ∈{0,1}"| PIMDP
+    subgraph PIMDP["部分群不变MDP (PI-MDP)"]
+        direction TB
+        QE["等变网络 Q_E, π_E"] -->|"λ=0 对称区"| BLEND["混合值/策略<br/>(1-λ)·等变 + λ·标准"]
+        QN["标准网络 Q_N, π_N"] -->|"λ=1 破缺区"| BLEND
+    end
+    BLEND --> UPD["在 M_N 中 TD / PoE Actor 更新"]
+```
 
 ### 关键设计
 

@@ -39,7 +39,30 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文要解决两个互为镜像的问题：在不访问 victim 策略内部的前提下，如何把它"诱导"成执行某个指定行为；以及反过来，如何训练一个既挡得住这种诱导、又不把原任务能力丢光的策略。攻击侧叫 BIA——adversary 构造一个辅助 MDP，把 victim 当成环境的一部分，再用标准模仿学习（GAIL/ILfO）学一个篡改观测的策略，让 victim 的实际行为去逼近目标行为。防御侧叫 TDRT——在 PPO 训练里加一项时间折扣加权的最坏情况 KL 正则，优先把早期决策"焊死"在不容易被扰动的地方。两侧由同一套理论串起来：攻击的可行性分析（Theorem 5.1）直接推导出防御该约束什么（Theorem 6.1）。
+这篇论文要解决两个互为镜像的问题：在不访问 victim 策略内部的前提下，如何把它"诱导"成执行某个指定行为；以及反过来，如何训练一个既挡得住这种诱导、又不把原任务能力丢光的策略。攻击侧叫行为模仿攻击 BIA——adversary 构造一个辅助 MDP，把 victim 当成环境的一部分，再用标准模仿学习（GAIL/ILfO）学一个篡改观测的策略 $\nu$，让 victim 的实际行为去逼近目标行为。防御侧叫时间折扣鲁棒训练 TDRT——在 PPO 训练里加一项时间折扣加权的最坏情况 KL 正则，优先把早期决策"焊死"在不容易被扰动的地方。两侧由同一套理论串起来：攻击的可行性分析（Theorem 5.1）直接推导出防御该约束什么（Theorem 6.1）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    D["目标行为演示<br/>(4–20 条轨迹)"]
+    subgraph BIA["行为模仿攻击 BIA"]
+        direction TB
+        M["重构辅助 MDP M̂<br/>victim 策略 π 吸收进转移动力学"]
+        IL["模仿学习<br/>GAIL(黑盒) / ILfO(无盒)"]
+        NU["篡改策略 ν<br/>真实状态→喂给 victim 的虚假状态"]
+        M --> IL --> NU
+    end
+    subgraph TDRT["时间折扣鲁棒训练 TDRT"]
+        direction TB
+        REG["时间折扣最坏情况 KL 正则<br/>按 γ^t 加权、优先约束早期决策"]
+        PPO["PPO 训练"]
+        REG --> PPO
+    end
+    D --> M
+    NU -->|"复合策略 π∘ν 逼近目标策略 π_tgt"| OUT["攻击成功<br/>victim 被诱导执行指定行为"]
+    NU -.->|"Thm 6.1 给收益上界<br/>→ 该约束哪里"| REG
+    PPO --> ROB["鲁棒 victim 策略<br/>挡住诱导、保住任务性能"]
+```
 
 ### 关键设计
 

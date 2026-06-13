@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ExGRPO要解决的是标准on-policy RLVR的一个浪费：每批rollout只用一次梯度更新就被丢掉，而其中真正有学习价值的成功轨迹没被复用。它的做法是在GRPO之上挂一个replay buffer存历史成功轨迹，并把"什么经验最有价值"拆成三步显式管理——先把成功轨迹**收集**进buffer并按问题难度**分桶**，再从buffer里**选择**中等难度问题下的低熵轨迹，最后把这些off-policy经验和当批on-policy新样本**混合优化**。整个流程的核心判断是：经验不等价，要让训练信号集中在中等难度、推理可靠的那部分轨迹上。
+ExGRPO要解决的是标准on-policy RLVR的一个浪费：每批rollout只用一次梯度更新就被丢掉，而其中真正有学习价值的成功轨迹没被复用。它的做法是在GRPO之上挂一个replay buffer存历史成功轨迹，并把"什么经验最有价值"拆成三步显式管理——先把成功轨迹**收集**进buffer并按问题难度**分桶**，再从buffer里**选择**中等难度问题下的低熵轨迹，最后把这些off-policy经验和当批on-policy新样本**混合优化**。更新后的策略产生下一批rollout，又有新的成功轨迹回流进buffer，形成闭环。整个流程的核心判断是：经验不等价，要让训练信号集中在中等难度、推理可靠的那部分轨迹上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前批次 rollout<br/>(on-policy 新样本)"] --> B["经验收集与分桶<br/>成功轨迹入 buffer<br/>按正确率分三桶"]
+    B -->|"全对的题移出"| R["Retired Set<br/>防过拟合简单题"]
+    B --> C["经验选择<br/>高斯采样选中等难度<br/>再挑最低熵轨迹"]
+    C --> D["混合策略优化<br/>on/off-policy 加权混合<br/>重要性权重校正偏移"]
+    A --> D
+    D --> E["更新策略 πθ"]
+    E -->|"下一轮"| A
+```
 
 ### 关键设计
 

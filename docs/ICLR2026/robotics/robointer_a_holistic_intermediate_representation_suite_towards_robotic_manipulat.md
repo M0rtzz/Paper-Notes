@@ -44,15 +44,38 @@ tags:
 
 ### 整体框架
 
-RoboInter 是围绕中间表示搭建的一整套基础设施，由四个相互衔接的组件构成：标注工具 RoboInter-Tool 负责高效产出标注，RoboInter-Data 沉淀出 23 万+ episode、571 场景、10+ 类中间表示的密集逐帧标注，RoboInter-VQA 把这些标注重组为评估 VLM 具身推理能力的基准，RoboInter-VLA 则用 Planner + Executor 的 plan-then-execute 框架把中间表示真正用进策略学习。换句话说，前两者解决"数据从哪来"，后两者解决"数据怎么用来评估和提升 VLA"。
+RoboInter 是围绕"中间表示"搭建的一整套基础设施，目标是补上 plan-then-execute 范式最缺的那块——大规模、多类型、密集对齐的中间表示监督。整套套件像一条从"造数据"到"用数据"的流水线：标注工具 RoboInter-Tool 在原始操作视频（Droid / RH20T / OXE）上做半自动逐帧标注，沉淀出 RoboInter-Data（23 万+ episode、571 场景、10+ 类中间表示的密集逐帧标注）；这些标注再被重组成 RoboInter-VQA（29 类具身 VQA 基准），既能体检现有 VLM 的具身推理能力，又能 co-training 出一个具身 Planner；最后 RoboInter-VLA 用 Planner + Executor 的 plan-then-execute 框架，把中间表示以 F-CoT 的形式真正喂进策略学习。前两块解决"数据从哪来"，后两块解决"数据怎么用来评估和提升 VLA"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["原始操作视频<br/>(Droid / RH20T / OXE)"] --> B["RoboInter-Tool<br/>半自动逐帧标注 GUI"]
+    B --> C["RoboInter-Data<br/>23万 episode·571 场景<br/>10+ 类密集逐帧中间表示"]
+    C --> D["RoboInter-VQA<br/>29 类具身 VQA 基准<br/>(空间×时序 × 理解×生成)"]
+    D -->|co-training| E["Planner (VLM)<br/>产出中间表示"]
+    C -->|F-CoT 监督| E
+    E -->|"F-CoT 中间表示"| F["RoboInter-VLA<br/>IC-E2E / EC-E2E / Modular"]
+    C -->|动作对齐监督| F
+    F --> G["低层动作"]
+```
 
 ### 关键设计
 
-**1. 多层次中间表示标注体系：把一段操作拆成可监督的细粒度信号。** Plan-then-execute 的瓶颈在于缺少密集且多类型的监督，单一类型（如只有 trace）的标注无法支撑完整的规划链路。RoboInter 把标注组织成由粗到细的三个层次：任务层将任务分解为子任务，并归并到 15 种预定义原始技能（Pick、Place、Push、Pull 等），再配上片段级和视频级语言描述；物体层借助 SAM2 跟踪加人工审查，产出 6100 万帧物体 grounding 标注，以及 19 万 affordance box 和 placement proposal；执行层标注末端执行器的 2D 轨迹（共 7000 万帧 trace）、接触点、6D 抓取位姿和夹爪 bounding box。关键在于所有标注都在时间轴上与动作、状态、第三视角和腕部视角观测严格对齐，因此同一帧可以同时取出技能标签、物体框、affordance 和 trace，供下游按需组合，而不会出现错位。
+**1. RoboInter-Tool 与多层次中间表示标注：把一段操作拆成可监督的细粒度信号**
 
-**2. F-CoT 灵活思维链：用可裁剪的中间表示串起 Planner 与 Executor。** 不同任务对中间表示的需求并不相同——精确抓取更依赖 affordance 和接触点，长程搬运更依赖 subtask 和 trace——固定一套思维链既冗余又不够。为此引入 Flexible Chain-of-Thought（F-CoT），它由多种中间表示自由组合而成：对 Planner，F-CoT 充当 VQA 形式的监督信号；对 Executor，它充当与动作对齐的条件指导。F-CoT 既可以是纯文本形式（对应 Te-Modular），也可以是叠加在图像上的视觉提示形式（对应 Im-Modular），用户可按任务挑选子集（如 subtask + trace、或 affordance + skill）。这种"按需取用"的设计让同一份多层次标注能适配不同操作场景，避免被单一固定链路束缚。
+Plan-then-execute 的瓶颈在于缺少密集且多类型的监督，单一类型（如只有 trace）的标注撑不起完整的规划链路，而纯自动标注又质量不可控。RoboInter-Tool 走 human-in-the-loop 的半自动路线，把标注组织成由粗到细的三个层次：任务层把视频按 15 种预定义原始技能（Pick、Place、Push、Pull 等）切成片段，用 ChatGPT 先给语言描述初稿、再由人工修订片段级和视频级描述，并记录机械臂接触物体的接触帧；物体层在标好交互物体后自动调 SAM2 做分割与跟踪、异步返回供人工复核，产出约 6100 万帧物体 grounding 标注；执行层则因许多原始录像缺相机参数，先估一个标定矩阵、再用夹爪检测加点跟踪补全，重建末端执行器的 2D 轨迹（约 7000 万帧 trace），并由接触帧反推 affordance box、接触点、6D 抓取位姿和夹爪 bounding box（共约 19 万 affordance box 与 placement proposal）。关键在于所有标注都在时间轴上与动作、机器人状态、第三视角与腕部视角观测严格对齐，因此同一帧能同时取出技能标签、物体框、affordance 和 trace，供下游按需组合而不会错位。
 
-**3. 三种 Plan-then-Execute VLA 变体：在统一框架下对比中间表示的使用方式。** 中间表示到底是隐式喂给策略好，还是显式生成出来再约束动作好，此前缺乏同框架的公平比较。RoboInter-VLA 在同一套数据和骨干下给出三种变体：IC-E2E 把 VLM 当作 Executor 的特征提取器，中间表示仅以预训练权重的形式隐式存在；EC-E2E 让 VLM 同时生成中间表示和动作，联合优化 CoT 与 action，属于显式但端到端；Modular 则把 Planner 与 Executor 彻底分离，由 Planner 输出中间表示再作为 Executor 的条件，是显式且解耦的形式。三者共享同一个 Executor 实现——Qwen2.5-VL 骨干接 DiT action head，并通过一个信息聚合器把所有 token 的隐藏状态压缩成可控长度的条件特征——从而把性能差异干净地归因到中间表示的使用方式，而非骨干或动作头的差别。
+**2. RoboInter-VQA：把标注重组成可体检也可训练的具身推理基准**
+
+有了密集标注，光当监督信号还不够——现有 VLM 在具身场景里的空间/时序推理能力到底强不强，缺一把统一的尺子。RoboInter-VQA 沿两个轴把标注重组成 29 类任务：一轴是中间表示的空间 vs 时序（9 类空间 + 20 类时序），另一轴是目标能力的理解 vs 生成。空间侧用选择/判断题考"选对物体框、选对抓取位姿、判断是否接触"，并用预测题要求模型生成物体框、抓取位姿、placement、关键点、夹爪框；时序侧考夹爪运动方向、trace 与描述匹配、子任务/技能区分、执行阶段识别，以及 trace 生成与多步规划（按给定的历史信息量预测后续步骤）。这套基准既能横向暴露各家 VLM 的具身短板，又能反过来 co-training 出 RoboInter-VLA 的高层 Planner，让"评估"和"训练"复用同一份标注。
+
+**3. F-CoT 灵活思维链：用可裁剪的中间表示串起 Planner 与 Executor**
+
+不同任务对中间表示的需求并不相同——精确抓取更依赖 affordance 和接触点，长程搬运更依赖 subtask 和 trace——固定一套思维链既冗余又不够。为此引入 Flexible Chain-of-Thought（F-CoT），它由多种中间表示（subtask、skill、object box、affordance box、trace 等）自由组合而成，扮演两个角色：对 Planner 它是 VQA 形式的训练监督，对 Executor 它是与动作对齐的条件指导。F-CoT 既可以是纯文本（对应 Te-Modular），也可以是叠加在图像上的视觉提示（对应 Im-Modular），用户能按任务挑子集（如 subtask + trace、或 affordance + skill）。这种"按需取用"让同一份多层次标注适配不同操作场景，而不被单一固定链路束缚。
+
+**4. 三种 Plan-then-Execute VLA 变体：在统一框架下对比中间表示的使用方式**
+
+中间表示到底是隐式喂给策略好，还是显式生成出来再约束动作好，此前缺乏同框架的公平比较。RoboInter-VLA 在同一套数据和骨干下给出三种变体：IC-E2E（Implicitly-Conditioned）把预训练 Planner 的 VLM 当作 Executor 的特征提取器，中间表示仅以预训练权重的形式隐式存在；EC-E2E（Explicitly-Conditioned）让 Executor 用 Planner 的 VLM 初始化，联合优化中间表示推理与动作生成，属于显式但端到端；Modular 则把 Planner 与 Executor 彻底分离，训练时 Executor 用真值中间表示作条件、推理时改用 Planner 预测的中间表示，是显式且解耦的形式。三者共享同一个 Executor 实现——Qwen2.5-VL 骨干接 DiT（Diffusion Transformer）action head，并通过一个信息聚合器把所有输入/输出 token 及中间表示的隐藏状态压缩成可控长度的条件特征——从而把性能差异干净地归因到中间表示的使用方式，而非骨干或动作头的差别。
 
 ## 实验与结果
 

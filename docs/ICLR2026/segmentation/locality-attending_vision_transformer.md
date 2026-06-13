@@ -40,15 +40,34 @@ tags:
 
 ### 整体框架
 
-LocAt 不替换 ViT，而是给标准 ViT 挂上两个互补的轻量插件：GAug 在每层自注意力的 logits 上叠加一个可学习的高斯核，把 token 的注意力从全局拉回局部邻域；PRR 在分类头前插入一个无参数自注意力，让本来不受监督的 patch 位置也能拿到梯度。前者在 backbone 内部改善空间特征交互，后者在输出端把梯度回传到 GAug 的参数，二者合在一起才让局部性偏置真正学得起来。
+LocAt 不替换 ViT，而是给标准 ViT 挂上两个互补的轻量插件，整条数据流仍是「输入图像 → ViT backbone → 分类头 / 分割解码器」，只在两处下钩子。第一处在 backbone 内部：每层自注意力计算 logits 时，GAug（高斯增强注意力）叠加一个可学习的高斯核，把每个 token 的注意力从全局软性拉回局部邻域，改善空间特征交互。第二处在输出端：分类头前插入 PRR（patch 表示精炼），一层无参数自注意力让本来不受监督的 patch 位置也能拿到梯度。关键是这两处并非各管各的——PRR 这条梯度通路会一路回传到最后一层的 GAug 参数，没有它 GAug 在输出层附近几乎学不动，二者合在一起局部性偏置才真正学得起来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入图像<br/>patch + [CLS] token"] --> ENC
+    subgraph ENC["ViT Backbone（逐层注意力）"]
+        direction TB
+        ATTN["原始全局注意力<br/>qk^T/√d"] --> GAUG["高斯增强注意力 GAug<br/>叠加可学习高斯核 S"]
+    end
+    ENC --> TOK["输出 patch + [CLS] 表示"]
+    TOK --> PRR["Patch 表示精炼 PRR<br/>无参数自注意力 → 非均匀梯度"]
+    PRR --> CLS["[CLS] → 分类头"]
+    TOK --> SEG["patch → 分割解码器"]
+    PRR -.->|梯度回传| GAUG
+```
 
 ### 关键设计
 
-**1. 高斯增强注意力 GAug：用数据自适应的高斯核把注意力软性聚焦到局部。** ViT 的全局注意力会稀释局部线索，但硬性的窗口注意力又破坏了架构通用性。GAug 的做法是在原始注意力 logits 上加一个补充矩阵 $\mathbf{S}$，即 $\mathbf{Z} = \text{softmax}\left(\frac{\mathbf{q}\mathbf{k}^\top}{\sqrt{d}} + \mathbf{S}\right)\mathbf{v}$，而 $\mathbf{S}$ 完全由高斯核生成。关键在于这个核的"宽窄"是网络自己预测的：从空间 query 出发预测每个 patch 的各向异性 2D 方差 $\mathbf{\Sigma} = f(\mathbf{q}_{sp}\mathbf{W}^\sigma) \in \mathbb{R}_+^{hw \times 2}$，方差小则核锐利、注意力强烈聚焦在邻域，方差大则核趋于平坦、退回近似全局注意。据此算出高斯权重 $\mathbf{G}_{pt} = \exp\left(-\frac{1}{2}\sum_{m=1}^{2}\frac{\mathbf{D}_{ptm}}{\mathbf{\Sigma}_{pm}}\right)$，其中 $\mathbf{D}$ 是 patch 间的逐坐标平方距离；再用 $\bm{\alpha} = \text{softplus}(\mathbf{q}_{sp}\mathbf{W}^\alpha)$ 为每个 query 预测一个缩放系数，平衡原始 logits 与高斯偏置的相对强弱。因为宽窄和强度都是 query 决定的，网络可以逐 patch、逐层地选择"该局部还是该全局"，比固定窗口灵活得多。[CLS] token 没有空间坐标，不参与高斯偏置，对应的行列直接填零。
+**1. 高斯增强注意力 GAug：用数据自适应的高斯核把注意力软性聚焦到局部**
 
-**2. Patch 表示精炼 PRR：用无参数自注意力把分类梯度不均匀地洒到每个 patch。** 标准 ViT 只拿 [CLS] 输出算损失，patch 位置得不到直接监督，训练后期 patch token 逐渐向 [CLS] 对齐、丢掉各自的局部结构，分割自然受损；而常见的 GAP 替代又对所有 patch 施加完全均匀的梯度，连背景也被硬拉向分类目标，反而更差。PRR 在分类头前加一层无参数自注意力 $\mathbf{x}_i^+ = \text{softmax}\left(\frac{\mathbf{x}_i \mathbf{x}_i^\top}{\sqrt{d}}\right)\mathbf{x}_i$，再取精炼后的 [CLS] 位置 $\mathbf{x}_0^+$ 送进分类头。这样 [CLS] 对不同 patch 形成了**内容相关、非均匀**的注意力权重，于是分类梯度也按内容不均匀地回流到各 patch，鼓励每个 patch 保持独特且有区分力的表示。更关键的是，这条梯度通路同时把信号送到了最后一个 block 的 GAug 参数上——没有 PRR，GAug 在输出层附近几乎学不动，这也是消融里两者必须合用的原因。
+它要解决的是整体框架里 backbone 内部的那个矛盾：ViT 的全局注意力会稀释局部线索，但硬性的窗口注意力又破坏了架构通用性。GAug 的做法是在原始注意力 logits 上加一个补充矩阵 $\mathbf{S}$，即 $\mathbf{Z} = \text{softmax}\left(\frac{\mathbf{q}\mathbf{k}^\top}{\sqrt{d}} + \mathbf{S}\right)\mathbf{v}$，而 $\mathbf{S}$ 完全由高斯核生成。关键在于这个核的"宽窄"是网络自己预测的：从空间 query 出发预测每个 patch 的各向异性 2D 方差 $\mathbf{\Sigma} = f(\mathbf{q}_{sp}\mathbf{W}^\sigma) \in \mathbb{R}_+^{hw \times 2}$，方差小则核锐利、注意力强烈聚焦在邻域，方差大则核趋于平坦、退回近似全局注意。据此算出高斯权重 $\mathbf{G}_{pt} = \exp\left(-\frac{1}{2}\sum_{m=1}^{2}\frac{\mathbf{D}_{ptm}}{\mathbf{\Sigma}_{pm}}\right)$，其中 $\mathbf{D}$ 是 patch 间的逐坐标平方距离；再用 $\bm{\alpha} = \text{softplus}(\mathbf{q}_{sp}\mathbf{W}^\alpha)$ 为每个 query 预测一个缩放系数，平衡原始 logits 与高斯偏置的相对强弱。因为宽窄和强度都由 query 决定，网络可以逐 patch、逐层地选择"该局部还是该全局"，比固定窗口灵活得多。[CLS] token 没有空间坐标，不参与高斯偏置，对应的行列直接填零。
 
-整套插件的开销极小：每层只多 $\mathbf{W}^\sigma \in \mathbb{R}^{d \times 2}$ 和 $\mathbf{W}^\alpha \in \mathbb{R}^{d \times 1}$ 两个小矩阵，PRR 完全无参数。以 Base 模型为例新增参数仅 2,340 个（0.003%），FLOPs 几乎不变（17.58G → 17.64G）。
+**2. Patch 表示精炼 PRR：用无参数自注意力把分类梯度不均匀地洒到每个 patch**
+
+这一步对应框架里输出端的钩子，解决的是监督缺失：标准 ViT 只拿 [CLS] 输出算损失，patch 位置得不到直接监督，训练后期 patch token 逐渐向 [CLS] 对齐、丢掉各自的局部结构，分割自然受损；而常见的 GAP 替代又对所有 patch 施加完全均匀的梯度，连背景也被硬拉向分类目标，反而更差。PRR 在分类头前加一层无参数自注意力 $\mathbf{x}_i^+ = \text{softmax}\left(\frac{\mathbf{x}_i \mathbf{x}_i^\top}{\sqrt{d}}\right)\mathbf{x}_i$，再取精炼后的 [CLS] 位置 $\mathbf{x}_0^+$ 送进分类头。这样 [CLS] 对不同 patch 形成了**内容相关、非均匀**的注意力权重，于是分类梯度也按内容不均匀地回流到各 patch，鼓励每个 patch 保持独特且有区分力的表示。更关键的是，这条梯度通路同时把信号送到了最后一个 block 的 GAug 参数上——没有 PRR，GAug 在输出层附近几乎学不动，这也是消融里两者必须合用的原因。
+
+两个插件叠加的开销极小：每层只多 $\mathbf{W}^\sigma \in \mathbb{R}^{d \times 2}$ 和 $\mathbf{W}^\alpha \in \mathbb{R}^{d \times 1}$ 两个小矩阵，PRR 完全无参数。以 Base 模型为例新增参数仅 2,340 个（0.003%），FLOPs 几乎不变（17.58G → 17.64G）。
 
 ## 实验
 

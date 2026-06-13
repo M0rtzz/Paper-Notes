@@ -40,17 +40,38 @@ tags:
 
 ### 整体框架
 
-SemHiTok 把一张图的离散表示拆成两条互补的分支：语义分支用 VQKD 对齐冻结的 SigLIP，学出一个只管高层语义的语义 codebook $C_\text{sem}$；像素分支用 ViT 编码器在语义结果之上学出负责低层重建的像素 codebook $C_\text{pix}$。两路 token 沿 channel 维拼接，得到一份既能喂给 MLLM 做理解、又能解码回图像做生成的统一离散表示。关键不在于堆两个 tokenizer，而在于让像素 codebook 寄生在语义 codebook 的层次之下，从而结构上和训练上都把"语义"和"像素"两个目标解耦开。
+统一 MLLM 需要一份 tokenizer 同时喂得了"理解"（高层语义）和"生成"（低层像素）两类任务，但这两个目标在以往方法里总是互相拖累：CLIP 族保语义却丢像素，VQGAN 族保像素却缺语义，硬把两者塞进一个扁平 codebook 又会让语义和像素互相争抢码字。SemHiTok 的思路是把一张图的离散表示拆成两条互补分支、并让它们**层次嵌套**：语义分支先用 VQKD 蒸馏冻结的 SigLIP，学出一个只管高层语义的语义 codebook $C_\text{sem}$；像素分支再在每个语义 code 之下挂一组子 codebook，专门刻画该语义簇内部的像素细节。量化时一个 patch 先拿到它的语义 index，再到对应的像素子 codebook 里查像素 code，两路 token 沿 channel 维拼接成统一表示——既能解码回图像做生成，也能展平成词表 id 接进 LLM 做理解。整套设计的精髓在于让像素 codebook 寄生在语义 codebook 的层次之下，并配合分阶段训练，从结构和训练两条线上都把语义、像素两个目标解耦开。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IMG["输入图像"] --> SGHC
+    subgraph SGHC["语义引导的层次 codebook SGHC（设计 1）"]
+        direction TB
+        SEM["语义分支：ViT 编码 → VQKD 量化<br/>蒸馏冻结 SigLIP，得语义 code（Stage1 后冻结）"]
+        SEM -->|语义 index k| PIX["像素分支：只在第 k 个<br/>子 codebook C_pix^k 内查最近像素 code"]
+    end
+    SGHC --> CAT["语义 token ⊕ 像素 token<br/>沿 channel 拼接成统一表示"]
+    CAT --> FLAT["展平索引 h = i·m + j<br/>（总码 K·m = 196,608，设计 3）"]
+    FLAT -->|生成分支| DEC["像素解码器<br/>重建图像"]
+    FLAT -->|理解分支| ADP["Dual-MLP adapter<br/>→ LLM"]
+```
+
+> 分阶段训练（设计 2）是贯穿上图的训练调度：先单独训语义分支并冻结 $C_\text{sem}$，再在冻结骨架上只训像素分支。
 
 ### 关键设计
 
-**1. 语义 codebook：先把"图像该被怎么理解"固化下来。** 统一 tokenizer 最难的是语义信号容易被重建目标冲垮，所以 SemHiTok 把语义层单独先训练并冻结。语义分支以冻结的 SigLIP 特征为蒸馏目标，编码器输出经 EMA 更新的向量量化得到语义 code，再用 cosine 相似度加 $L_1$ 损失把量化后的特征对齐回 SigLIP。这一阶段训完后 $C_\text{sem}$ 不再被任何后续梯度修改，等于先给整套 tokenizer 钉死了一个语义骨架，后面无论怎么优化像素都动不了它，理解能力因此不会在重建训练中退化。
+**1. 语义引导的层次 codebook（SGHC）：用"同语义 patch 像素也相近"细分像素空间**
 
-**2. 语义引导的层次 codebook（SGHC）：用"同语义 patch 像素也相近"这个观察细分像素空间。** 作者观察到被分到同一个语义 code 的 patch，其像素分布也高度相似，于是不再用一个扁平的像素 codebook 去硬扛全图的像素多样性，而是把像素 codebook 拆成一组子 codebook $C_\text{pix}=\{C_\text{pix}^1,\dots,C_\text{pix}^K\}$，对应 $K$ 个语义 code、每个语义 code 下挂 $m$ 个子 code。量化一个 patch $i$ 时，先由语义分支得到它的语义 index $k$，再只在第 $k$ 个子 codebook $C_\text{pix}^k$ 里查最近的像素 code。这样每个子 codebook 只需刻画一个语义簇内部的像素细节，建模任务被天然切小，重建更精细，同时像素 code 的选择被语义结构约束，避免了扁平 codebook 里语义和像素互相争抢码字的问题。
+这一步要解决的是扁平 codebook 里语义和像素互相争抢码字的核心矛盾。语义分支先以冻结的 SigLIP 特征为蒸馏目标，编码器输出经 EMA 更新的向量量化得到语义 code，再用 cosine 相似度加 $L_1$ 损失把量化后的特征对齐回 SigLIP，从而钉死一份只管"图像该被怎么理解"的语义骨架。作者进一步观察到：被分到同一个语义 code 的 patch，其像素分布也高度相似——于是不再用一个扁平像素 codebook 硬扛全图的像素多样性，而是把它拆成一组子 codebook $C_\text{pix}=\{C_\text{pix}^1,\dots,C_\text{pix}^K\}$，对应 $K$ 个语义 code、每个语义 code 下挂 $m$ 个子 code。量化 patch $i$ 时先由语义分支拿到语义 index $k$，再只在第 $k$ 个子 codebook $C_\text{pix}^k$ 里查最近的像素 code。这样每个子 codebook 只需刻画一个语义簇内部的像素细节，建模任务被天然切小、重建更精细，同时像素 code 的选择被语义结构约束，语义与像素不再争抢同一份码字。
 
-**3. 分阶段训练：从训练流程上彻底拆开语义与像素两个目标。** 即便结构上层次化了，若联合优化，重建 loss 仍会反传去扰动语义层。SemHiTok 干脆分两阶段：Stage 1 只训语义分支（VQKD 蒸馏 SigLIP），训完冻结 $C_\text{sem}$；Stage 2 在冻结的语义骨架上只训像素分支，用 $L_1$、perceptual 与 GAN 损失驱动重建。因为两阶段的优化目标不在同一时刻竞争，语义-像素冲突被从源头消除，这也是它相比 VILA-U（混合 loss 子最优）、TokenFlow（共享映射但联合训练仍互相影响）的核心区别。
+**2. 分阶段训练：从训练流程上彻底拆开语义与像素两个目标**
 
-**4. 统一 MLLM 集成：把层次 index 展平成普通词表，无缝接进 LLM。** 层次 codebook 若直接用会让 token 数翻倍或词汇爆炸，SemHiTok 用展平索引 $h=i\cdot m+j$ 把"第 $i$ 个语义 code、其下第 $j$ 个像素子 code"映射成单一整数 id，总词表大小为 $K\cdot m=196{,}608$，与 Qwen2 约 150K 的文本词表量级相当，不会膨胀。接入时用一个 Dual-MLP adapter 分别投影语义 token 和像素 token，再拼接送进 LLM，使理解侧吃语义、生成侧吃像素，一份 tokenizer 同时服务两类任务。
+即便结构上已经层次化，若两条分支联合优化，重建 loss 仍会反传去扰动语义层、把好不容易学到的语义信号冲垮。SemHiTok 干脆分两阶段：Stage 1 只训语义分支（VQKD 蒸馏 SigLIP），训完即冻结 $C_\text{sem}$，后续任何梯度都动不了它；Stage 2 在这副冻结的语义骨架上只训像素分支，用 $L_1$、perceptual 与 GAN 损失驱动重建。因为两阶段的优化目标不在同一时刻竞争，语义-像素冲突被从源头消除，理解能力也不会在重建训练中退化。这正是它相比 VILA-U（混合 loss 导致子最优）、TokenFlow（共享映射但联合训练仍互相影响）的关键区别——别人是在一个时刻里权衡两个目标，它把两个目标错开到两个时刻。
+
+**3. 统一 MLLM 集成：把层次 index 展平成普通词表，无缝接进 LLM**
+
+层次 codebook 若直接用，会让 token 数翻倍或词汇爆炸（双编码器路线如 Janus 就栽在这里）。SemHiTok 用展平索引 $h=i\cdot m+j$ 把"第 $i$ 个语义 code、其下第 $j$ 个像素子 code"映射成单一整数 id，总词表大小 $K\cdot m=196{,}608$，与 Qwen2 约 150K 的文本词表量级相当，不会膨胀。接入时用一个 Dual-MLP adapter 分别投影语义 token 与像素 token 再拼接送进 LLM，使理解侧吃语义、生成侧吃像素，一份 tokenizer 同时服务两类任务。
 
 ### 损失函数 / 训练策略
 

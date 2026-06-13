@@ -48,6 +48,18 @@ LVLM 在面对困难、分布偏移或对抗性输入时，会产生四类典型
 
 EUQ 把 LVLM 单次前向得到的 output head pre-logits 特征当作"证据"，套用 Dempster-Shafer 证据理论拆出两种认识不确定性：支持与反对相互打架的**冲突 CF**，以及证据普遍稀薄的**无知 IG**。整个过程都是闭式计算，不需要训练、采样或多次推理，每个 token 都能近乎零成本地拿到一对不确定性读数，再聚合成句子级度量去判定错误行为。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["LVLM 单次前向<br/>output head pre-logits 特征 Z"] --> B["证据权重的闭式估计<br/>LCP 把权重矩阵逐列去均值<br/>→ 证据矩阵 E"]
+    B --> C["正负证据分解与两阶段融合<br/>E⁺/E⁻ 同号相加 → Dempster 规则融合"]
+    C -->|正负证据相互打架| D["冲突 CF<br/>逐 token"]
+    C -->|证据普遍稀薄| E["无知 IG<br/>逐 token"]
+    D --> F["句子级不确定性聚合<br/>整句 token 取均值"]
+    E --> F
+    F --> G["判定错误行为<br/>幻觉 / 越狱 / 对抗 / OOD"]
+```
+
 ### 关键设计
 
 **1. 证据权重的闭式估计：把线性投影层的每个特征解读为一份证据**

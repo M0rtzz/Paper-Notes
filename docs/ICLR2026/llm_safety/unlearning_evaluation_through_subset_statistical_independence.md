@@ -43,6 +43,23 @@ SDE（Split-half Dependence Evaluation）想解决的是一个很别扭的评估
 
 具体怎么转：拿到待评估子集后，先把它随机劈成两半，用 HSIC 度量这两半模型输出之间的统计依赖性，得到一个依赖性数值；再把这个数值放到"训练内参考集"和"训练外参考集"两条依赖性分布上去比对，靠近哪一边就判断它属于哪一类。遗忘成功，意味着原本属于训练内的目标子集，遗忘后其依赖性已经塌向训练外那一侧。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["遗忘后模型 h^un + 三个子集<br/>目标 S_tar、训练内参考 S_IT、<br/>训练外参考 S_OOT"]
+    subgraph DEP["Split-half 依赖性度量 H(S,h)（设计 1、2）"]
+        direction TB
+        A["每个子集随机劈成两半 S1, S2"]
+        B["HSIC 估计两半输出的依赖性<br/>洗牌 S2 共 200 次得到分布"]
+        A --> B
+    end
+    IN --> DEP
+    DEP --> C["得到三条依赖性分布<br/>H(S_tar)、H(S_IT)、H(S_OOT)"]
+    C --> D["遗忘评估协议（设计 3）<br/>用 JSD 比对 D(S_tar,S_OOT) 与 D(S_tar,S_IT)"]
+    D -->|"离 S_OOT 更近"| E["判定遗忘成功"]
+    D -->|"离 S_IT 更近"| F["判定仍属训练内"]
+```
+
 ### 关键设计
 
 **1. Split-half 依赖性度量 $H(\mathcal{S}, h)$：把样本级线索升格为子集级信号**

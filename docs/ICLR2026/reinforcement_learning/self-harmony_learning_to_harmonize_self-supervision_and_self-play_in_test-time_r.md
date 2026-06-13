@@ -39,7 +39,22 @@ tags:
 
 ### 整体框架
 
-Self-Harmony 让单一模型 $M_\theta$ 在两个角色间切换：扮演 Solver $\pi_\theta$ 时对问题生成答案，扮演 Reframer $\rho_\theta$ 时把问题改述成语义等价但措辞不同的新问题。系统先求解原始问题、再改述、再求解改述版本，从而为同一个问题拿到两套相互独立的答案分布，最后用调和平均挑出跨视角都稳定的答案当伪标签，喂给强化学习更新模型。
+Self-Harmony 让单一模型 $M_\theta$ 在两个角色间切换：扮演 Solver $\pi_\theta$ 时对问题生成答案，扮演 Reframer $\rho_\theta$ 时把问题改述成语义等价但措辞不同的新问题。系统先求解原始问题、再改述、再求解改述版本，从而为同一个问题拿到两套相互独立的答案分布，最后用调和平均挑出跨视角都稳定的答案当伪标签，喂给强化学习更新模型。整条流程没有任何外部验证器或教师模型，全靠单模型自我对弈闭环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["无标注测试问题 x<br/>(无真标签可用)"] --> DV
+    subgraph DV["双视角答案生成"]
+        direction TB
+        S0["Solver 求解原问题 x<br/>采样得答案频率分布（原视角）"]
+        RS["融合式 Reframe-and-Solve<br/>一次生成内先改述 x→x'<br/>再求解改述版<br/>得答案频率分布（改述视角）"]
+    end
+    DV --> HMS["调和平均伪标签选择 HMS<br/>取两视角都高频的答案为 y*"]
+    HMS --> R["规则验证器按 y* 给奖励<br/>R_solve / R_fused"]
+    R --> U["强化学习更新单一模型 Mθ"]
+    U -.->|下一轮迭代| X
+```
 
 ### 关键设计
 

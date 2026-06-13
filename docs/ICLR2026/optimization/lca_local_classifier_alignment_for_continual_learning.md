@@ -45,15 +45,30 @@ tags:
 
 LCA 把类增量学习拆成"逐任务训练—合并 backbone—重对齐分类器"三步：每个新任务只微调一组 PEFT (LoRA) 参数并按元素增量合并进统一 backbone，再为该任务挂一个独立的 MLP 分类头；由于合并改变了特征空间、冻结的旧分类头随之失配，最后用每类存下的高斯原型采样合成特征，跑一遍 LCA 损失把所有分类头重新对齐到新 backbone 上。整套设计由一条测试误差分解定理统领，把 CIL 性能拆成"特征分布偏移 + 训练误差 + 局部鲁棒性"三项，分别由增量合并与 LCA 损失的两项各自负责控制。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["新任务 t 数据"] --> B["PEFT(LoRA) 微调<br/>+ 新增独立 MLP 分类头"]
+    B --> C["增量合并 IM<br/>逐元素保留绝对值更大者<br/>→ 统一 backbone"]
+    C --> D["每类高斯原型采样<br/>合成特征 (存 μ, Σ)"]
+    D --> E["LCA 损失重对齐<br/>全部冻结分类头"]
+    E --> F["推理: 拼接各头输出"]
+    C -->|"下一任务从合并结果初始化"| B
+```
+
 ### 关键设计
 
-**1. 增量合并 (Incremental Merging, IM)：在不存历史参数的前提下整合多任务知识**
+**1. 独立分类头 + 高斯原型：每任务一个头、每类一个高斯，既防改写旧头又给"无数据对齐"提供样本源**
 
-逐任务训练若各自独立微调再统一合并，既要存所有历史 PEFT 参数，又因参数空间相距过远而难以稳定合并。IM 让每个新任务都从上一次合并结果初始化训练，使相邻任务的参数保持邻近 (Li et al., 2025)；训练后算出任务向量 $\tau_{\text{curr}} = \theta_{\text{peft}_i} - \theta_{\text{peft}_0}$，再与累积向量 $\tau$ 逐元素比较，只保留绝对值更大的那一维：$\tau^{(k)} \leftarrow \tau_{\text{curr}}^{(k)}$ 当 $|\tau_{\text{curr}}^{(k)}| \geq |\tau^{(k)}|$，否则保持 $\tau^{(k)}$ 不变，最终 backbone 为 $\theta_{\text{merged}} = \theta_{\text{peft}_0} + \alpha \cdot \tau$。这样内存里始终只有一份累积向量和当前任务向量，存储开销极低，而保留绝对值大者等价于保留最显著的任务特定更新，避免互相抵消。
+为避免新任务训练时改写旧分类器而加剧遗忘，每来一个任务就在特征提取器上新增一个独立 MLP 分类头，输出维度等于该任务的类数，推理时把各头输出拼接 $h(x) = \text{concat}(h(x;\theta_1^{\text{cls}}), \ldots, h(x;\theta_t^{\text{cls}}))$；旧头始终冻结、不被后续任务改写。与此配套，每个类在特征空间里用一个高斯分布 $\mathcal{N}_i$（均值 + 协方差）描述——预训练 backbone 产生的特征足够结构化，单高斯就能近似类分布。这套设计的关键价值在于：后续的对齐阶段无需回放任何原始数据，只要从各类高斯采样合成特征即可重训分类头，每类仅额外存均值与协方差、存储复杂度 $\mathcal{O}(n)$，远低于保留 exemplar，也回避了隐私问题。
 
-**2. LCA 损失：在原型邻域内同时压低分类误差和损失灵敏度**
+**2. 增量合并 (Incremental Merging, IM)：在不存历史参数的前提下整合多任务知识**
 
-backbone 合并后特征空间偏移，旧分类头失配，但旧数据已不可回访，只能靠每类存下的高斯原型 $\mathcal{N}_i$ 采样合成特征来重训。朴素做法只最小化合成样本上的交叉熵，问题在于高斯采样会产生一些远离原型、贴近其他类的"有害样本"，逼分类器去拟合它们反而损害泛化。LCA 对每个类 $i$ 在分类损失之外加一个损失灵敏度正则项：
+逐任务训练若各自独立微调再统一合并，既要存所有历史 PEFT 参数，又因参数空间相距过远而难以稳定合并。IM 让每个新任务都从上一次合并结果初始化训练，使相邻任务的参数保持邻近 (Li et al., 2025)；训练后算出任务向量 $\tau_{\text{curr}} = \theta_{\text{peft}_i} - \theta_{\text{peft}_0}$，再与累积向量 $\tau$ 逐元素比较，只保留绝对值更大的那一维：$\tau^{(k)} \leftarrow \tau_{\text{curr}}^{(k)}$ 当 $|\tau_{\text{curr}}^{(k)}| \geq |\tau^{(k)}|$，否则保持 $\tau^{(k)}$ 不变，最终 backbone 为 $\theta_{\text{merged}} = \theta_{\text{peft}_0} + \alpha \cdot \tau$。这样内存里始终只有一份累积向量和当前任务向量，存储开销极低，而保留绝对值大者等价于保留最显著的任务特定更新，避免互相抵消。论文还发现：仅合并 PEFT 参数（而非整个 backbone）让合并显著更稳，连合并系数 $\alpha$ 都可固定为 1.0 无需调参。
+
+**3. LCA 损失：在原型邻域内同时压低分类误差和损失灵敏度**
+
+backbone 合并后特征空间偏移，旧分类头失配，但旧数据已不可回访，只能靠设计 1 留下的高斯原型 $\mathcal{N}_i$ 采样合成特征来重训。朴素做法只最小化合成样本上的交叉熵，问题在于高斯采样会产生一些远离原型、贴近其他类的"有害样本"，逼分类器去拟合它们反而损害泛化、加剧类间重叠。LCA 对每个类 $i$ 在分类损失之外加一个损失灵敏度正则项：
 
 $$
 L_i = \underbrace{\mathbb{E}_{\boldsymbol{z} \sim \boldsymbol{D}_i}[\ell(h_t, \boldsymbol{z})]}_{\text{分类损失}} + \lambda \underbrace{\mathbb{E}_{\boldsymbol{z}, \boldsymbol{z}' \sim \boldsymbol{D}_i}[|\ell(h_t, \boldsymbol{z}) - \ell(h_t, \boldsymbol{z}')|]}_{\text{损失灵敏度正则项}}
@@ -61,7 +76,7 @@ $$
 
 总损失取所有已见类的均值 $L(\boldsymbol{D}, h_t) = \frac{1}{C_t} \sum_{i=1}^{C_t} L_i$。第二项衡量同类分布中两个随机样本的损失差异，惩罚损失对输入扰动的敏感度，把损失面在原型邻域内"压平"，从而削弱有害样本的影响——思路与 Sharpness-Aware Minimization 一脉相承，但落点在分类器对齐而非权重优化。强度由 $\lambda$ 控制，实验中 $\lambda = 0.1$ 在全部数据集上稳定，过大则因过度正则化掉点。
 
-**3. 理论误差分解：用一条定理把方法的两个组件各自对位**
+**4. 理论误差分解：用一条定理把 IM 与 LCA 的两项各自对位**
 
 为给对齐策略提供依据，论文证明了测试误差的上界分解。backbone 固定时（定理 3.1），对有界损失 $\ell$ 有 $L(P, h_t) \leq L(\boldsymbol{D}, h_t) + \sum_{i=1}^{C_t} \frac{n_i}{n} \bar{\epsilon}_i(h_t) + \ell_{\max} \sqrt{\frac{C_t \ln 4 + 2\ln(1/\delta)}{n}}$，其中 $\bar{\epsilon}_i(h_t)$ 是类 $i$ 局部区域内的损失鲁棒性项。考虑 backbone 更新带来的特征分布偏移时（定理 3.2），界中再多出一项总变差距离：
 
@@ -69,11 +84,7 @@ $$
 L(P_t, h_t) \leq 2\ell_{\max} \text{TV}(P_t, \hat{P}_t) + L(\hat{\boldsymbol{D}}, h_t) + \sum_{i=1}^{C_t} \frac{n_i}{n} \bar{\epsilon}_i(h_t) + \ell_{\max} \sqrt{\frac{C_t \ln 4 + 2\ln(1/\delta)}{n}}
 $$
 
-这三项恰好被方法的不同部件各自控制：分布偏移项 $\text{TV}(P_t, \hat{P}_t)$ 靠 IM 的增量合并压住，训练误差项 $L(\hat{\boldsymbol{D}}, h_t)$ 对应 LCA 第一项，鲁棒性项 $\bar{\epsilon}_i$ 对应 LCA 第二项，使得 IM+LCA 的双组件设计有了直接的理论落点。
-
-**4. 独立分类头架构：每个任务一个头，推理时拼接**
-
-为避免新任务训练时改写旧分类器而加剧遗忘，每来一个任务就新增一个独立 MLP 分类头，推理时把各头输出拼起来 $h(x) = \text{concat}(h(x;\theta_1^{\text{cls}}), \ldots, h(x;\theta_t^{\text{cls}}))$。每个类在特征空间中用一个高斯分布 $\mathcal{N}_i$ 描述，对齐时即从各类高斯采样生成合成特征喂给 LCA。这套设计无需回放原始数据，每类只额外存均值与协方差，存储复杂度 $\mathcal{O}(n)$，远低于保留 exemplar，也回避了隐私问题。
+这三项恰好被方法的不同部件各自控制：分布偏移项 $\text{TV}(P_t, \hat{P}_t)$ 靠 IM 的增量合并压住，训练误差项 $L(\hat{\boldsymbol{D}}, h_t)$ 对应 LCA 第一项，鲁棒性项 $\bar{\epsilon}_i$ 对应 LCA 第二项，使得 IM+LCA 的双组件设计有了直接的理论落点。这条定理并非事后追认，而是先有"训练误差 + 鲁棒性可控误差"的目标，才反推出 LCA 第二项该长什么样。
 
 ## 实验关键数据
 

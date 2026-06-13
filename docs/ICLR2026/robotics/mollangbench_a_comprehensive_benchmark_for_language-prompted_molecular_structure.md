@@ -33,12 +33,33 @@ tags:
 
 ### 整体框架
 
-MolLangBench 评估三类核心能力，难度递增：
-1. **分子结构识别 (Recognition)**：给定分子，用自然语言回答结构问题（邻居原子、键类型、官能团、环结构、立体化学）
-2. **分子编辑 (Editing)**：根据语言指令修改给定分子结构
-3. **分子生成 (Generation)**：仅根据文本描述从头生成分子
+MolLangBench 想回答一个被现有化学基准跳过的前提问题：AI 到底能不能稳定地识别、编辑、生成分子结构。它把这件事拆成三类难度递增的任务——分子结构识别（recognition，给定分子用自然语言回答结构问题：邻居原子、键类型、官能团、环结构、立体化学）、分子编辑（editing，按语言指令改结构）、分子生成（generation，仅凭文本描述从头生成分子），每类都支持 SMILES 字符串、分子图像（2D 结构图）、分子图三种表示。
 
-支持三种分子表示：SMILES 字符串、分子图像（2D 结构图）、分子图。
+基准真正的难点不在任务定义，而在怎么造出一份答案唯一、没有歧义的题。识别题靠 RDKit 自动算标准答案；编辑／生成题机器写不出，只能走化学专家三阶段标注；两条路造出的题再统一过一遍防泄漏与鲁棒性校验，最后用来评测 16 个商业 LLM 和 5 个化学模型。整体流程如下：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    POOL["UniChem 候选分子库<br/>(每任务采样 10000)"]
+    EXPERT["化学专家标注者"]
+
+    subgraph REC["识别任务的自动构建流程"]
+        direction TB
+        R1["RDKit 算 ground truth<br/>(拓扑/官能团/立体化学)"] --> R2["标签均衡 + 挑难样例<br/>(SMILES 上不相邻的键)"]
+    end
+
+    subgraph EDIT["编辑和生成任务的专家标注流程"]
+        direction TB
+        E1["专家写指令/描述"] --> E2["同行评审迭代至一致"] --> E3["双人独立仅凭文本重构<br/>(都对才收)"]
+    end
+
+    POOL --> REC
+    EXPERT --> EDIT
+    REC --> ROB["防泄漏与鲁棒性设计<br/>(canary hash + SMILES 枚举)"]
+    EDIT --> ROB
+    ROB --> BENCH["MolLangBench 题库<br/>(识别/编辑/生成 × SMILES/图像/图)"]
+    BENCH --> EVAL["评测 16 商业 LLM + 5 化学模型"]
+```
 
 ### 关键设计
 

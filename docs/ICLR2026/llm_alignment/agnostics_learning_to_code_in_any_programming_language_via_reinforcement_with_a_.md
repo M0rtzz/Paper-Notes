@@ -42,7 +42,24 @@ tags:
 ### 整体框架
 Agnostics要解决的核心难题是：为一种新的低资源语言搭一套能跑RL的环境，最重的活就是"验证代码对不对"，而传统做法把验证器和语言绑死，每换一种语言都得重写一遍测试框架。它的破局点是把验证从语言里彻底剥离出来——只要程序读stdin、算一算、写stdout，那"输出对不对"和它用什么语言写的毫无关系，一个验证器就能给所有语言打分。
 
-整条pipeline分两段：先是**数据准备**，用LLM把MBPP、Codeforces等现有数据集里语言特定的格式（Python函数+assert）改写成纯I/O行为描述，再配一份几行的语言配置把它落到目标语言上；然后是**训练**，用GRPO在一个语言无关的代码执行沙箱里做RLVR，沙箱跑出来的正确性就是奖励。
+整条pipeline分两段：先是**数据准备**，用LLM把MBPP、Codeforces等现有数据集里语言特定的格式（Python函数+assert）改写成纯I/O行为描述，再配一份几行的语言配置把它落到目标语言上；然后是**训练**，模型对每个任务采样一组候选程序，丢进语言无关的代码执行沙箱跑出二值正确性当奖励，再用GRPO按组内相对优势更新——更新后的策略继续采样，如此循环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["现有数据集<br/>(MBPP / Codeforces<br/>语言特定格式)"]
+    D1["I/O格式统一<br/>LLM改写成<br/>stdin→stdout行为规范<br/>+ I/O样例对"]
+    CFG["极简语言配置<br/>4-5行YAML<br/>install / compile<br/>execute / prompt"]
+    TASK["语言无关任务实例"]
+    GEN["LLM采样 G=32 候选程序"]
+    BOX["语言无关代码执行沙箱<br/>OCI容器编译运行<br/>逐条比对输出"]
+    R["二值奖励<br/>全对=1 否则=0"]
+    GRPO["GRPO训练<br/>组内相对优势更新"]
+    IN --> D1 --> TASK
+    CFG --> TASK
+    TASK --> GEN --> BOX --> R --> GRPO
+    GRPO -->|更新策略后继续采样| GEN
+```
 
 ### 关键设计
 

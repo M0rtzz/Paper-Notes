@@ -41,7 +41,21 @@ FlyThinker 的核心洞察：通过将推理与生成解耦到两个独立模型
 
 ### 整体框架
 
-FlyThinker 把"边想边写"拆成两个并行运转的模型：一个推理模型 Reasoner $R$ 在每个生成步骤吐出一个潜在推理 token，输入是用户历史 $h$、查询 $x$ 和已经写出的响应前缀；一个生成模型 Generator $G$ 则是被改造过的 LLM，把这些推理信号融进自己的 token 预测里。关键的解耦点在于第 $t$ 步的推理只看已生成的文本 $\hat{y}_{<t}$、不看之前的推理 $r_{<t}$，于是生成链 $(h,x;\hat{y}_{<t}+r_{<t})\to\hat{y}_t$ 和推理链 $(h,x,\hat{y}_{<t})\to r_t$ 之间不再有逐 token 的串行依赖，留出了真正并行化的空间。
+FlyThinker 把"边想边写"拆成两个并行运转的模型：一个推理模型 Reasoner $R$ 在每个生成步骤吐出一个潜在推理 token，输入是用户历史 $h$、查询 $x$ 和已经写出的响应前缀；一个生成模型 Generator $G$ 则是被改造过的 LLM，把这些推理信号融进自己的 token 预测里。关键的解耦点在于第 $t$ 步的推理只看已生成的文本 $\hat{y}_{<t}$、不看之前的推理 $r_{<t}$，于是生成链 $(h,x;\hat{y}_{<t}+r_{<t})\to\hat{y}_t$ 和推理链 $(h,x,\hat{y}_{<t})\to r_t$ 之间不再有逐 token 的串行依赖，留出了真正并行化的空间。正因为这条解耦，同一套架构在训练时可以单次前向把所有位置的推理一并算出、在推理时让两个模型错峰并行——这构成了下面四个关键设计：Reasoner 怎么产出无依赖的推理、推理信号怎么注入 Generator、以及这套结构在训练与推理两种模式下如何各自并行。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["用户历史 h + 查询 x<br/>+ 已生成响应前缀"] --> R["1. 潜在推理 token 生成<br/>Reasoner 取末层隐状态<br/>只依赖已生成文本"]
+    R --> F["2. 推理信号融合<br/>嵌入层加法注入 λ·r"]
+    F --> G["Generator 预测下一 token"]
+    G -->|响应前缀增长，逐步推进| IN
+    G --> MODE{运行模式}
+    MODE -->|训练| TR["3. 并行训练<br/>喂完整响应单次前向<br/>teacher forcing 算全部位置"]
+    MODE -->|推理| INF["4. 并行推理<br/>交错调度抹掉等待"]
+    TR --> OUT["个性化长文本"]
+    INF --> OUT["个性化长文本"]
+```
 
 ### 关键设计
 

@@ -40,27 +40,53 @@ tags:
 ## 方法详解
 
 ### 整体框架
-记忆增强 Agent 维护四个语义角色不同的存储，构成存储集合 $\mathcal{S} = \{\text{STM}, \text{Sum}, \text{LTM}, \text{Epi}\}$。大多数系统对每个查询都把这四个口袋全翻一遍，本文的核心转变是：在检索之前先决定"该查哪几个口袋"。给定查询 $q$，路由策略 $\pi$ 先选出一个存储子集 $\hat{G} = \pi(q) \subseteq \mathcal{S}$，系统只从这几个被选中的存储里取内容、拼接后送入 LLM 生成答案——存储选择与存储内排序被显式解耦。
+记忆增强 Agent 维护四个语义角色不同的存储，构成存储集合 $\mathcal{S} = \{\text{STM}, \text{Sum}, \text{LTM}, \text{Epi}\}$——短期记忆装当前对话、摘要存储压缩用户事实、长期记忆存历史会话摘要、情景记忆保留原始转录。大多数系统对每个查询都把这四个口袋全翻一遍，靠 LLM 在生成时自己过滤；本文的核心转变是把"该查哪几个口袋"提前到检索之前来决定。给定查询 $q$，路由策略 $\pi$ 先选出存储子集 $\hat{G} = \pi(q) \subseteq \mathcal{S}$，系统只从被选中的存储取内容、拼接后送入 LLM 生成答案——存储选择与存储内排序被显式解耦。
 
-为了把"选得好不好"和"答得对不对"拆开看，论文用两个阶段评估：先做**合成路由评估**，拿带 ground-truth 存储标签的查询验证路由本身的选择质量；再做 **LLM QA 评估**，把路由结果接上真实模型看下游答题准确率。被评估的策略排成一条从简到强的谱系——Uniform（$\lambda=0$ 的全量检索）→ Fixed Subset（如固定查 STM+Sum+LTM）→ Hybrid Heuristic（规则+fallback）→ Oracle（理论上界），论文跑遍了其中 12 种策略。
+整套方法围绕三件事展开：一把理论尺子（代价敏感目标 $\pi^*$ 定义什么叫"选得最优"）、一个可部署的近似（混合启发式路由器靠查询语义信号收窄范围），以及一套度量（指标体系把路由质量拆成"漏"与"多"来量化）。为了把"选得好不好"和"答得对不对"分开看，论文用两阶段评估：先做**合成路由评估**，拿带 ground-truth 存储标签的查询验证路由本身的选择质量；再做 **LLM QA 评估**，把路由结果接上真实模型看下游答题准确率。被评估的策略排成一条从简到强的谱系——Uniform（$\lambda=0$ 的全量检索）→ Fixed Subset（如固定查 STM+Sum+LTM）→ Hybrid Heuristic（规则+fallback）→ Oracle（理论上界），论文跑遍其中 12 种。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    Q["用户查询 q"]
+    OBJ["代价敏感决策框架<br/>π*：max E[Acc(q,G)] − λ·Σ c_s"]
+    subgraph R["混合启发式路由器"]
+        direction TB
+        SIG["抽取语义信号<br/>数量 / 时间 / 多跳 / 当前会话 / 事实"]
+        RULE{"有可辨信号?"}
+        FB["fallback → {Sum, LTM}<br/>覆盖率最高的两存储组合 89%"]
+        EMB["embedding 相似度 tiebreaker<br/>+4% coverage"]
+        SIG --> RULE
+        RULE -->|无信号| FB
+        RULE -->|有信号| EMB
+        FB --> EMB
+    end
+    SEL["选中存储子集<br/>Ĝ ⊆ {STM, Sum, LTM, Epi}"]
+    RET["只检索选中存储 → 拼接上下文 → LLM 生成答案"]
+    EVAL["路由评估指标体系<br/>Coverage（不漏） / Exact Match（不多） / Waste"]
+    Q --> SIG
+    OBJ -.->|路由器近似此目标| R
+    EMB --> SEL
+    SEL --> RET
+    SEL -->|两阶段评估| EVAL
+```
 
 ### 关键设计
 
-**1. 路由评估指标体系：把"漏"和"多"拆成两件事来量**
+**1. 代价敏感决策框架：给"选哪几个口袋"一个最优性定义**
 
-要让 accuracy-cost tradeoff 可度量，先得回答两个不同的问题：有没有漏掉必须查的存储，以及有没有多查了无关的存储。论文用三个指标分别盯这两件事。Coverage $= \frac{1}{N}\sum_i \mathbf{1}[G_i \subseteq \hat{G}_i]$ 衡量是否包含了所有必要存储——这是硬约束，因为一旦漏掉含答案的存储，问题就根本不可回答。Exact Match $= \frac{1}{N}\sum_i \mathbf{1}[G_i = \hat{G}_i]$ 衡量是否恰好选中了必要存储、一个不多一个不少。Waste $= \frac{1}{N}\sum_i |\hat{G}_i \setminus G_i|$ 则把"多查了几个无关存储"量化成软代价。把覆盖率（不漏）和精确度（不多）分开度量，路由质量才不会被一个笼统的准确率掩盖。
-
-**2. 混合启发式路由器（Hybrid Heuristic）：靠查询里的语义信号收窄口袋范围**
-
-这是论文给出的可部署路由基线，思路是从查询语言本身读出"答案该在哪个语义角色的存储里"。它用一组规则把信号映射到存储：数量信号（"list all"）和时间信号（"before"、"changed"）指向 {LTM, Epi}；多跳信号（"compare"、"relate"）指向 {Sum, LTM}；当前会话信号（"just said"、"today"）指向 {STM}；事实查找（"what is my"）指向 {Sum}。当查询没有任何可辨信号时，路由器 fallback 到 {Sum, LTM}——这是六种两存储组合里覆盖率最高的一组（89%）。在规则之上，再用 query-store embedding similarity 作为 tiebreaker 做细调，单这一项就再贡献 +4% coverage。整套设计的优先级很明确：先保 coverage（漏存储等于不可回答的死局），只在确有信号支撑时才敢收窄检索范围。
-
-**3. 代价敏感决策理论框架：给"选哪几个口袋"一个最优性定义**
-
-前两个设计是怎么选和怎么评，这一点回答的是"理论上最优的选择长什么样"。论文把存储路由形式化为一个代价敏感的最优化问题：
+整套方法的理论尺子，回答"理论上最优的存储选择长什么样"。论文把存储路由形式化为一个代价敏感的子集选择问题：
 
 $$\pi^*(q) = \arg\max_{G \subseteq \mathcal{S}} \left[\mathbb{E}[\text{Acc}(q,G)] - \lambda \sum_{s \in G} c_s\right]$$
 
-即在期望准确率和检索代价之间按权重 $\lambda$ 取平衡。这个式子能统一解释整条策略谱系：$\lambda=0$ 时代价项消失，退化成无脑全量检索的 Uniform；而 Oracle routing 正是 $\pi^*$ 的近似上界。它的解释力在于揭示了选择性检索为何两端都有收益——当无关存储被检索进来，有效检索代价上升，同时上下文噪声还会拉低正确抽取的概率，所以少查反而可能既省 token 又更准。这也点出了存储路由与检索门路由（retriever routing）的本质区别：存储路由是 memory-architecture level 的决策，几个存储之间语义角色差异极大（STM vs LTM vs Summary），粒度比 passage-level 的段落路由要粗得多。
+即在期望准确率 $\mathbb{E}[\text{Acc}(q,G)]$ 和检索代价 $\sum_{s\in G} c_s$（以 context token 计）之间按权重 $\lambda$ 取平衡。这个式子能统一解释整条策略谱系：$\lambda=0$ 时代价项消失，退化成无脑全量检索的 Uniform；Oracle routing 则是已知每个查询真实相关存储时对 $\pi^*$ 的近似上界。它的解释力在于揭示选择性检索为何两端都有收益——一旦无关存储被检索进来，有效检索代价上升，同时上下文噪声还会拉低正确抽取的概率，所以少查反而可能既省 token 又更准。这也点出存储路由与检索门路由（retriever routing）的本质区别：后者在同质文档集合里选索引/检索器，而存储路由是 memory-architecture level 的决策，几个存储语义角色差异极大（STM vs LTM vs Summary），直接决定了喂给 LLM 的上下文信噪比，粒度比 passage-level 的段落路由要粗得多。
+
+**2. 混合启发式路由器（Hybrid Heuristic）：靠查询里的语义信号收窄口袋范围**
+
+把上面那个理论目标落成可部署基线，思路是从查询语言本身读出"答案该在哪个语义角色的存储里"。它先从查询抽取语义信号，再用一组规则把信号映射到存储：数量信号（"list all"、"every"）和时间信号（"before"、"changed"）指向 {LTM, Epi}（穷尽召回 / 历史对比）；多跳信号（"compare"、"relate"）指向 {Sum, LTM}（交叉引用）；当前会话信号（"just said"、"today"）指向 {STM}；事实查找（"what is my"、"who is my"）指向 {Sum}。当查询没有任何可辨信号时，路由器 fallback 到 {Sum, LTM}——作者实测全部六种两存储组合后，这一组覆盖率最高（89%），故选作安全默认。在规则之上，再用 query-store embedding similarity 作为 tiebreaker，在无规则命中时细调，单这一项就再贡献 +4% coverage。整套设计的优先级很明确：先保 coverage（漏掉含答案的存储等于问题不可回答的死局），只在确有信号支撑时才敢收窄检索范围。论文也强调这只是 baseline 而非终态路由器——它和 Oracle 还差 16 点，留给后续端到端学习的路由策略。
+
+**3. 路由评估指标体系：把"漏"和"多"拆成两件事来量**
+
+要让 accuracy-cost tradeoff 可度量，得分别回答两个不同的问题：有没有漏掉必须查的存储，以及有没有多查了无关的存储。论文用三个指标分别盯这两件事。Coverage $= \frac{1}{N}\sum_i \mathbf{1}[G_i \subseteq \hat{G}_i]$ 衡量是否包含了所有必要存储——在"全存储内容拼接"的评估协议下这是硬约束，一旦漏掉含答案的存储，问题就根本不可回答。Exact Match $= \frac{1}{N}\sum_i \mathbf{1}[G_i = \hat{G}_i]$ 衡量是否恰好选中必要存储、一个不多一个不少，EM 高对应不过度检索的高效路由。Waste $= \frac{1}{N}\sum_i |\hat{G}_i \setminus G_i|$ 则把"多查了几个无关存储"量化成软代价，是 token 成本的存储级代理。把覆盖率（不漏）和精确度（不多）分开度量，路由质量才不会被一个笼统的准确率掩盖。
 
 ## 实验关键数据
 

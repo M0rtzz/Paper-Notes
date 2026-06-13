@@ -40,18 +40,58 @@ LLM-based检索器（如E5-Mistral、LLM2Vec）使用对称双编码器架构，
 ## 方法详解
 
 ### 整体框架
-LightRetriever 把检索拆成两条互补的支路：稠密支路靠缓存好的 token 嵌入查表加平均得到查询向量，稀疏支路干脆用词频当查询向量、把语义负担全压到文档端。两条支路各自用对比损失训练，推理时把两路相似度线性插值合成最终的混合检索分数。核心取舍很明确——文档端保留完整 LLM 编码，查询端则被简化到几乎不需要前向传播。
+LLM 检索器普遍用「对称双编码器」：查询和文档共享同一个深度 LLM。文档可以离线预编码、建好索引，但查询是实时到达的，必须在线跑一遍 LLM，于是这颗大模型成了在线服务的吞吐瓶颈。LightRetriever 的思路是把这种对称性彻底打破——**文档端保留完整 LLM 做深度建模，查询端则砍到几乎不需要前向传播**，把语义建模的成本整体从查询侧搬到文档侧。
+
+具体落地成两条互补的支路。稠密支路靠「可缓存的 token 嵌入」：训练时让每个 query token 独立过 LLM，从而整张词表的嵌入都能预先算好存成查找表，上线后查询编码退化成查表加平均。稀疏支路更激进，查询端直接用词频当向量、零编码器，把语义负担全压到文档端。两路各自用对比损失训练，推理时把稠密相似度与稀疏相似度线性插值，合成最终的混合检索分数。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    Q["查询 query<br/>(实时到达)"]
+    D["文档 doc<br/>(离线预编码)"]
+
+    subgraph DEN["稠密支路：可缓存 token 嵌入（设计 1）"]
+        direction TB
+        CACHE["离线缓存：每个 token<br/>独立过 LLM → 词表嵌入表 E"]
+        QD["查询：查表+平均<br/>1/n Σ E[t_i]"]
+        DD["文档：LLM + last-token pooling"]
+        CACHE --> QD
+    end
+
+    subgraph SPR["稀疏支路：查询端零编码器（设计 2）"]
+        direction TB
+        QS["查询：token 计数<br/>v_q[t]=count(t)"]
+        DS["文档：LLM → LM 头<br/>ReLU+log 饱和 → max pool"]
+    end
+
+    Q -->|查询端| QD
+    Q -->|查询端| QS
+    D -->|文档端 LLM| DD
+    D -->|文档端 LLM| DS
+
+    QD --> HYB
+    DD --> HYB
+    QS --> HYB
+    DS --> HYB
+    HYB["对比学习与混合打分（设计 3）<br/>稠密相似度 + 稀疏相似度 线性插值"] --> OUT["检索排序结果"]
+```
 
 ### 关键设计
 
-**1. 稠密支路：让 token 嵌入可缓存。** 对称双编码器的麻烦在于查询必须在线跑一遍深度 LLM，而 LightRetriever 想把这步换成查表。做法是训练时不让查询整体过编码器，而是把任务指令拼上单个查询 token 独立送进去，用 last token pooling 取出该 token 的向量 $v_{t_i}^{\text{den}} = Enc_q(Inst; t_i)$，查询向量就是各 token 向量的平均 $v_q^{\text{den}} = \frac{1}{n}\sum_i v_{t_i}^{\text{den}}$。因为每个 token 都是独立编码、彼此不交互，整张词表的嵌入就能一次性预计算成查找表 $E \in \mathbb{R}^{V \times H}$——用 Llama-8b 在 8×H800 上离线缓存不到 20 秒。上线后查询编码退化成 $v_q^{\text{den}} = \frac{1}{n}\sum_i E[t_i]$，只是查表加平均，连 GPU 都不必。代价是放弃了查询内部 token 之间的上下文交互，但作者认为查询通常很短，这点损失换来千倍提速是划算的。
+**1. 稠密支路：让 token 嵌入可缓存**
 
-**2. 稀疏支路：查询端零编码器。** 这一路把简化推到极限——查询向量直接用 token 计数 $v_q^{\text{spr}}[t] = \text{count}(t)$，完全不经过任何模型，本质上就是 BM25 式的词法信号。语义建模全部交给文档端：文档的 LLM 末层隐状态经语言模型头投影回词表空间，再过 ReLU、log 饱和与 max pooling 得到稀疏向量 $v_d^{\text{spr}} = \max\big(\ln(\max(h_{\text{last}} \cdot P, 0) + 1)\big)$，其中 log 饱和压制高频词的权重膨胀，max pooling 把整篇文档聚合成一个词表维度的稀疏表示。训练时再用 FLOPs 正则约束文档向量的非零项数量，控制稀疏度以兼顾检索效率。之所以可行，是因为稀疏检索本就靠词项匹配吃饭，查询侧的深度理解原本贡献就有限，索性省掉。
+对称双编码器的麻烦在于查询必须在线跑一遍深度 LLM，而 LightRetriever 想把这步换成查表。做法是训练时不让查询整体过编码器，而是把任务指令拼上单个查询 token 独立送进去，用 last token pooling 取出该 token 的向量 $v_{t_i}^{\text{den}} = Enc_q(Inst; t_i)$，查询向量就是各 token 向量的平均 $v_q^{\text{den}} = \frac{1}{n}\sum_i v_{t_i}^{\text{den}}$。因为每个 token 都是独立编码、彼此不交互，整张词表的嵌入就能一次性预计算成查找表 $E \in \mathbb{R}^{V \times H}$——用 Llama-8b 在 8×H800 上离线缓存不到 20 秒。上线后查询编码退化成 $v_q^{\text{den}} = \frac{1}{n}\sum_i E[t_i]$，只是查表加平均，连 GPU 都不必。代价是放弃了查询内部 token 之间的上下文交互，但作者认为查询通常很短，这点损失换来千倍提速是划算的。
 
-**3. 对比学习与混合打分。** 两条支路都用标准的 listwise 对比损失训练，$\ell^{CL} = -\log \frac{e^{v_q \cdot v_{d^+}/\tau}}{\sum_d e^{v_q \cdot v_d/\tau}}$，把正样本文档从一批 hard negative 中拉近、推开其余。稠密与稀疏分别训练各自的表示，推理时把两路相似度线性插值，让平滑的语义匹配（稠密）和精确的词项匹配（稀疏）互补，混合分数显著高于任一单路。
+**2. 稀疏支路：查询端零编码器**
+
+这一路把简化推到极限——查询向量直接用 token 计数 $v_q^{\text{spr}}[t] = \text{count}(t)$，完全不经过任何模型，本质上就是 BM25 式的词法信号。语义建模全部交给文档端：文档的 LLM 末层隐状态经语言模型头投影回词表空间，再过 ReLU、log 饱和与 max pooling 得到稀疏向量 $v_d^{\text{spr}} = \max\big(\ln(\max(h_{\text{last}} \cdot P, 0) + 1)\big)$，其中 log 饱和压制高频词的权重膨胀，max pooling 把整篇文档聚合成一个词表维度的稀疏表示。训练时再用 FLOPs 正则约束文档向量的非零项数量，控制稀疏度以兼顾检索效率。之所以可行，是因为稀疏检索本就靠词项匹配吃饭，查询侧的深度理解原本贡献就有限，索性省掉。
+
+**3. 对比学习与混合打分**
+
+两条支路都用标准的 listwise 对比损失训练，$\ell^{CL} = -\log \frac{e^{v_q \cdot v_{d^+}/\tau}}{\sum_d e^{v_q \cdot v_d/\tau}}$，把正样本文档从一批 hard negative 中拉近、推开其余。稠密与稀疏分别训练各自的表示，推理时把两路归一化后的相似度线性求和插值，让平滑的语义匹配（稠密）和精确的词项匹配（稀疏）互补，混合分数显著高于任一单路。
 
 ### 损失函数 / 训练策略
-训练目标是对比损失叠加稀疏支路的 FLOPs 正则。数据上用 20 个英文加 3 个中文数据集、共 8.38M 样本；采用 LoRA 微调，batch 大小 128、每个查询配 7 个 hard negative，训练 12k 步。
+训练目标是对比损失叠加稀疏支路的 FLOPs 正则（系数 0.001，前 4k 步二次方递增到最大值以减小初期副作用）。数据上用 20 个英文加 3 个中文数据集、共 8.38M 样本；采用 LoRA 微调（$r=16$、$\alpha=32$、dropout 0.1），batch 大小 128、每个查询配 7 个 hard negative，温度 $\tau=0.02$，训练 12k 步。
 
 ## 实验关键数据
 

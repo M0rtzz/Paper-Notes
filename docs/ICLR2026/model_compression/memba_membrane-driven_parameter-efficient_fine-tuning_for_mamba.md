@@ -37,7 +37,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Memba要解决的是：怎么给 Mamba 做参数高效微调，又不破坏它预训练时学到的 SSM 平衡动态。它的做法是只在三个地方动刀，而把承担时序建模的选择性扫描（A、B、C、Δ）完全保留不碰。具体来说，输入先经过 Mamba 原本的门控分支，Memba 在这条分支里塞进一个泄漏积分膜（LIM）神经元，让门控具备 LSTM/GRU 式的时序选择能力；可学习参数则只通过 LoRA 加在输入投影 in_proj 和输出投影 out_proj 这两个信息瓶颈上；最后把每层 LIM 累积出来的平均膜电位往下一层传递，保证时序上下文沿深度不丢。整条路径里，真正改写预训练权重的只有两处 LoRA，其余都是无额外参数的膜动态。
+Memba要解决的是：怎么给 Mamba 做参数高效微调，又不破坏它预训练时学到的 SSM 平衡动态。它的做法是只在三个地方动刀，而把承担时序建模的选择性扫描（A、B、C、Δ）完全保留不碰。具体来说，输入先经过 in_proj 投影、归一化后按通道二分成 SSM 分支和门控分支：SSM 分支照常走冻结的选择性扫描，门控分支被 Memba 塞进一个泄漏积分膜（LIM）神经元，让门控具备 LSTM/GRU 式的时序选择能力；两条分支再做乘性门控、经 out_proj 输出。可学习参数则只通过 LoRA 加在 in_proj 和 out_proj 这两个信息瓶颈上；最后把每层 LIM 累积出来的平均膜电位往下一层传递，保证时序上下文沿深度不丢。整条路径里，真正改写预训练权重的只有两处 LoRA，其余都是无额外可学习参数的膜动态。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入序列 X"] --> IN["in_proj（挂 LoRA）<br/>RMS 归一化 + 通道二分"]
+    IN -->|"X_SSM"| SSM["SSM 分支：选择性扫描<br/>(A,B,C,Δ 全程冻结)"]
+    IN -->|"X_gate"| LIM["LIM 神经元<br/>逐 chunk 累积-泄漏-重置"]
+    SSM --> MUL["乘性门控<br/>Y_SSM ⊙ Y_gate"]
+    LIM --> MUL
+    MUL --> OUT["out_proj（挂 LoRA）"]
+    OUT --> NEXT["输出 → 下一层 Memba 块"]
+    LIM -.->|"平均膜电位 ū 作初值"| NEXTLIM["下一层 LIM 首块初始膜电位"]
+```
 
 ### 关键设计
 

@@ -43,17 +43,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Shuffle-R1 沿用标准 GRPO 的策略梯度训练，但在 advantage 计算完成之后、梯度更新之前插入了一道"数据调度"工序：先用 Pairwise Trajectory Sampling (PTS) 从加倍的 rollout 池里挑出高对比度的正负轨迹对，再用 Advantage-based Batch Shuffle (ABS) 按优势值重组这批轨迹的训练批次。两个模块都只动数据、不改目标函数，合起来把 RL 训练从"对所有轨迹一视同仁"变成"动态优先更新有价值的轨迹"。
+Shuffle-R1 沿用标准 GRPO 的策略梯度训练，但在优势（advantage）计算完成之后、梯度更新之前插入了一道"数据调度"工序。先让每个 query 生成加倍的 $2N$ 条 rollout，算完组内优势后用配对轨迹采样（Pairwise Trajectory Sampling, PTS）从这个扩大的轨迹池里挑出高对比度的正负轨迹对，再用基于优势的批次重洗（Advantage-based Batch Shuffle, ABS）按优势值重组这批轨迹的训练批次，最后才送进 GRPO 做梯度更新。两个模块都只动数据、不改目标函数，合起来把 RL 训练从"对所有轨迹一视同仁"变成"动态优先更新有价值的轨迹"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["query 输入"] --> R["生成 2N 条 rollout<br/>+ 组内优势计算"]
+    R --> PTS["配对轨迹采样 PTS<br/>max-min 配成 N 对<br/>留对比度最高的前 M 对"]
+    PTS --> ABS["基于优势的批次重洗 ABS<br/>按 |A1|+|A2| 加权<br/>S 轮无放回子采样重组批次"]
+    ABS --> G["GRPO 策略梯度更新<br/>(目标函数不变)"]
+```
 
 ### 关键设计
 
-**1. Pairwise Trajectory Sampling：把高对比度的正负轨迹挑出来，对抗 Advantage Collapsing**
+**1. 配对轨迹采样 PTS：把高对比度的正负轨迹挑出来，对抗 Advantage Collapsing**
 
-一个 batch 里大多数 rollout 的 advantage 都挤在零附近，梯度信号被无信息轨迹淹没，这就是 Advantage Collapsing。PTS 的做法是先把每个 query 的 rollout 数量翻倍到 $2N$，把生成成本花在"多看几个候选"上；对这 $2N$ 个 rollout 按 advantage 降序排列后采用 max-min 配对——最大的与最小的配成一对、次大的与次小的配成一对，每对内部的 advantage 差距天然就是对比强度。配出 $N$ 对后，按采样比 $\alpha$ 只保留对比度最高的前 $M=\alpha N$ 对（实现里 $\alpha=0.5$，即 8 对里留 4 对）进入梯度计算。关键在于：虽然 rollout 生成量翻倍，但真正参与反向传播的只有筛选后的 top-k 对，梯度计算量与原来持平，等于用少量额外的前向开销换来了显著更强、更干净的训练信号。
+一个批次里大多数 rollout 的优势值都挤在零附近，梯度信号被无信息轨迹淹没，这就是优势塌缩（Advantage Collapsing）。配对轨迹采样（PTS）的做法是先把每个 query 的 rollout 数量翻倍到 $2N$，把生成成本花在"多看几个候选"上；对这 $2N$ 条 rollout 按优势值降序排列后采用 max-min 配对——最大的与最小的配成一对、次大的与次小的配成一对，每对内部的优势差距天然就是对比强度。配出 $N$ 对后，按采样比 $\alpha$ 只保留对比度最高的前 $M=\alpha N$ 对（实现里 $\alpha=0.5$，即 8 对里留 4 对）进入梯度计算。关键在于：虽然 rollout 生成量翻倍，但真正参与反向传播的只有筛选后的 top-$M$ 对，梯度计算量与原来持平，等于用少量额外的前向开销换来了显著更强、更干净的训练信号。
 
-**2. Advantage-based Batch Shuffle：让高价值轨迹获得更多更新机会，对抗 Rollout Silencing**
+**2. 基于优势的批次重洗 ABS：让高价值轨迹获得更多更新机会，对抗 Rollout Silencing**
 
-随着训练推进，能贡献非零梯度的 rollout 越来越少——简单题早已收敛、难题始终答不对，算力大量空转，这就是 Rollout Silencing。ABS 不再把 PTS 选出的轨迹对平均塞进 batch，而是给每对算一个重要性权重 $W(p)=|\hat{A}_1|+|\hat{A}_2|$（两条轨迹优势绝对值之和），归一化成采样分布 $\Phi$。然后做 $S$ 轮无放回子采样，每轮抽 $T$ 对，拼成重洗后的批次 $B'$，并保持 $|B'|=|B|$ 不改变批大小（实现里 $T=256$、$S=8$）。这样优势值高的轨迹被采到的概率更大、获得更多更新机会，低价值轨迹被自然降权，本质上是一种软优先级排序，把宝贵的更新预算倾斜到真正有信息量的样本上。
+随着训练推进，能贡献非零梯度的 rollout 越来越少——简单题早已收敛、难题始终答不对，算力大量空转，这就是 rollout 沉默（Rollout Silencing）。基于优势的批次重洗（ABS）不再把 PTS 选出的轨迹对平均塞进批次，而是给每对算一个重要性权重 $W(p)=|\hat{A}_1|+|\hat{A}_2|$（两条轨迹优势绝对值之和），归一化成采样分布 $\Phi$。然后做 $S$ 轮无放回子采样，每轮抽 $T$ 对，拼成重洗后的批次 $B'$，并保持 $|B'|=|B|$ 不改变批大小（实现里 $T=256$、$S=8$）。这样优势值高的轨迹被采到的概率更大、获得更多更新机会，低价值轨迹被自然降权，本质上是一种软优先级排序，把宝贵的更新预算倾斜到真正有信息量的样本上。
 
 ### 损失函数 / 训练策略
 基础目标沿用 GRPO 的 PPO-clip 风格策略梯度，advantage 走组内标准化，整套 PTS+ABS 不引入额外损失项。训练超参上，每个 query 生成 $2N=16$ 个 rollout，PTS 配 8 对、按 $\alpha=0.5$ 留 4 对，ABS 子采样容量 $T=256$、轮数 $S=8$；学习率 1e-6，rollout 温度 1.0，视觉编码器冻结。

@@ -40,24 +40,50 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GAR 想解决的核心矛盾是：既要细粒度地看清某个区域，又不能丢掉它所处的全局场景。它沿用标准 MLLM 的 ViT + LLM 骨架，但在视觉侧补了两步：先把用户指定的 mask 编码成 prompt 注入 ViT，再在**完整未裁剪图像**编码出的全局特征图上，用 RoI-Align 把目标区域的高保真特征"回放"出来。这样送进 LLM 的既有整图上下文，又有放大后的局部细节——区别于裁剪式方法只看局部、池化式方法只剩一个粗向量。整条链路是：图像 + mask prompt → AnyRes 编码全局特征图 → 按 mask 取 RoI 特征 → 全局特征与局部特征一起喂给 LLM 推理。
+GAR 想解决的核心矛盾是：既要细粒度地看清某个区域，又不能丢掉它所处的全局场景。它沿用标准 MLLM 的 ViT + LLM 骨架，只在视觉侧加了两个新组件。第一步，把用户指定的 mask 编码成 prompt、以不破坏原图表示的方式注入 ViT；第二步，在**完整未裁剪图像**编码出的全局特征图上，用 RoI-Align 把目标区域的高保真特征"回放"出来。这样送进 LLM 的既有整图上下文、又有放大后的局部细节——区别于裁剪式方法只看局部、池化式方法只剩一个粗向量。要让这套架构真正学会"先认得细、再讲清多区域关系"，作者另配了一套两轮迭代的数据引擎来喂训练语料。整条前向链路是：图像 + mask prompt → AnyRes 编码全局特征图 →（一路作全局上下文、一路按 mask 取 RoI 局部特征）→ 全局与局部特征一起喂给 LLM 推理。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IMG["完整未裁剪图像"]
+    MASK["用户指定 mask<br/>（任意数量）"]
+    subgraph P["Prompt 编码与融合"]
+        direction TB
+        CONV["卷积块编码<br/>→ mask embedding"] -->|"零初始化相加到 patch"| PATCH["ViT patch embedding"]
+    end
+    MASK --> CONV
+    IMG --> PATCH
+    subgraph R["RoI-Aligned Feature Replay"]
+        direction TB
+        ANYRES["AnyRes 编码全图<br/>→ 全局特征图（含上下文）"]
+        BOX["由 mask 导出<br/>bounding box"]
+        ANYRES --> ROI["RoI-Align 对齐抠取<br/>→ 高保真局部特征"]
+        BOX --> ROI
+    end
+    PATCH --> ANYRES
+    MASK --> BOX
+    ANYRES -->|"全局上下文"| LLM["LLM 推理"]
+    ROI -->|"局部细节"| LLM
+    LLM --> OUT["区域描述 /<br/>多区域关系推理"]
+```
 
 ### 关键设计
 
-**1. Prompt 编码与融合：让模型知道"要看哪儿"且不破坏原图**
+**1. Prompt 编码与融合：让模型知道"要看哪儿"又不破坏原图**
 
-用户给的是 binary mask，GAR 先用一个轻量卷积块把它变成 mask embedding，再以**零初始化**的方式加到 ViT 的 patch embedding 上。零初始化保证训练初期这一路的输出为零、不扰动已经预训练好的视觉表示，随训练逐步学到 prompt 的影响。因为 prompt 是叠加在 patch 上的，天然支持同时输入**任意数量**的 mask，为后面的多区域关系建模铺路。
+用户给的是 binary mask，怎么把它告诉一个已经预训练好的视觉骨架，而不打乱原有表示，是第一道坎。GAR 先用一个轻量卷积块把 mask 变成 mask embedding，再以**零初始化**的方式加到 ViT 的 patch embedding 上。零初始化保证训练初期这一路输出为零、完全不扰动预训练视觉特征，随训练逐步学到 prompt 的影响。又因为 prompt 是逐 patch 叠加的，天然支持同时输入**任意数量**的 mask——这正是后面多区域关系建模的前提。
 
 **2. RoI-Aligned Feature Replay：在全局特征图上取局部，鱼和熊掌兼得**
 
-这是论文最核心的技术贡献，针对的就是"全局上下文 vs 局部细节"二选一的痛点。它分三步：先把完整未裁剪图像（连同编码后的 mask prompt）通过 AnyRes 编码，得到一张携带全局上下文的特征图；再根据输入 mask 导出对应的 bounding box；最后用 RoI-Align（来自 Mask R-CNN）从这张全局特征图里把目标区域的特征向量"对齐抠出"。关键在于：抠出来的局部特征源自整图特征图，所以**天生带着上下文**，同时又是高分辨率的局部表示，等于"放大细节却没丢掉全景"。这正是裁剪式方法做不到的地方——例如一只青蛙形状的拖鞋，裁剪后只剩拖鞋本体会被误判成真青蛙，而 GAR 保留了卧室场景，能借上下文纠正。最终全局上下文特征与局部细节特征一并送入 LLM 推理。
+这是论文最核心的技术贡献，正面解决"全局上下文 vs 局部细节"二选一的痛点。它分三步：先把完整未裁剪图像（连同编码后的 mask prompt）通过 AnyRes 编码，得到一张携带全局上下文的特征图；再根据输入 mask 导出对应的 bounding box；最后用 RoI-Align（来自 Mask R-CNN）从这张全局特征图里把目标区域的特征"对齐抠出"。关键在于：抠出来的局部特征源自整图特征图，所以**天生带着上下文**，又是高分辨率的局部表示，等于"放大细节却没丢掉全景"。这正是裁剪式方法做不到的——例如一只青蛙形状的拖鞋，裁剪后只剩拖鞋本体会被误判成真青蛙，而 GAR 保留了卧室场景，能借上下文纠正。最终全局上下文特征与局部细节特征一并送入 LLM 推理。
 
-### 训练数据与基准
-GAR 用两轮迭代来逐步喂出"先认得细、再讲得清关系"的能力。**Round 1（增强识别）** 以 DAM 的 Describe Anything-1.5M 为底，补进 ImageNet-21K 的极细粒度分类子集：先用 seed captioner 生成描述、再让 LLM 验证，产出 456K 细粒度描述样本，训练出一个 fine-grained captioner。**Round 2（支持多 Prompt）** 转向带丰富关系标注的 Panoptic Scene Graph（PSG）数据集，用上一轮的 fine-grained captioner 为每个区域写描述，再用 Qwen2.5-72B 当 LLM-Merger 把区域描述融合成关系语料——144K 融合关系上下文的区域描述、144K 关系理解 QA、126K 多选题，合计 414K 关系样本。
+**3. 两轮数据引擎：从"认得细"到"讲清关系"**
 
-为系统评估区域级理解，作者还构建了 **GAR-Bench**，分两块。**GAR-Bench-Cap** 考多 prompt 关系描述，含 Simple（直接问两个 prompt 间关系）与 Detailed（生成含关系的详细描述）两种协议。**GAR-Bench-VQA** 考多维度视觉问答：Perception（198 题，颜色/形状/纹理/材质等基础属性）与 Reasoning（226 题），其中 Reasoning 又细分 Position（空间位置推理，如"第三行左起第二个"）、Non-Entity（非实体识别，如镜中倒影、屏幕中的人脸）、Relation（多 prompt 间复合推理，且故意混入干扰 prompt）。
+架构再好，没有合适语料也喂不出区域级细粒度理解与多区域关系推理这两种能力，于是作者设计了一套 captioning-judging 交替的两轮数据引擎。**Round 1（增强识别）** 以 DAM 的 Describe Anything-1.5M 为底，补进 ImageNet-21K 的极细粒度分类子集：先用 seed captioner 生成描述、再让 LLM 对照真值类别验证，筛出 456K 细粒度描述样本，由此训练出一个 fine-grained captioner。**Round 2（支持多 Prompt）** 转向带丰富关系标注的 Panoptic Scene Graph（PSG）数据集，用上一轮的 fine-grained captioner 为每个区域写描述，再让 Qwen2.5-72B 充当 LLM-Merger，结合 PSG 原始标注融合出关系语料——144K 融合关系上下文的区域描述、144K 关系理解 QA、126K 多选题，合计 414K 样本。正是这条"先把单区域看细、再把多区域的关系讲清"的数据流，把设计 1、2 给出的架构能力真正落到了关系推理上。
 
 ## 实验关键数据
+
+为系统评估区域级理解，作者还构建了 **GAR-Bench**，分两块。**GAR-Bench-Cap** 考多 prompt 关系描述，含 Simple（直接问两个 prompt 间关系）与 Detailed（生成含关系的详细描述）两种协议。**GAR-Bench-VQA** 考多维度视觉问答：Perception（198 题，颜色/形状/纹理/材质等基础属性）与 Reasoning（226 题），其中 Reasoning 又细分 Position（空间位置推理，如"第三行左起第二个"）、Non-Entity（非实体识别，如镜中倒影、屏幕中的人脸）、Relation（多 prompt 间复合推理，且故意混入干扰 prompt）。
 
 ### GAR-Bench-VQA 核心对比
 

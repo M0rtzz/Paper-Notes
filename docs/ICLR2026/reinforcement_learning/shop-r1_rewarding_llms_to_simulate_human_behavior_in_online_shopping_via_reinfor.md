@@ -29,7 +29,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Shop-R1 把"模拟人类购物"拆成两步预测：给定当前网页上下文和历史动作，模型先生成一段行为推理（rationale），再据此预测下一步动作——click、type_and_submit 或 terminate。难点在于真实推理没有 ground truth，且二值奖励会被模型钻空子反复输出 terminate，因此 Shop-R1 的核心贡献是一套层层递进、专为行为模拟设计的奖励函数。
+Shop-R1 把"模拟人类购物"拆成两步预测：给定当前网页上下文和历史动作，模型先生成一段行为推理（rationale），再据此预测下一步动作——click、type_and_submit 或 terminate。难点在于真实推理没有 ground truth，且二值奖励会被模型钻空子反复输出 terminate，因此 Shop-R1 的核心贡献是一套层层递进、专为行为模拟设计的奖励函数：先用**格式奖励**守住输出可解析这道门，对推理分支用**自确定性奖励**做无标签监督，对动作分支用**分层奖励**给粗细粒度都打分，再用**难度感知奖励缩放（DARS）**堵住 terminate 刷分的漏洞；四路信号加权汇总后，在 SFT 冷启动的基础上用 GRPO 做策略优化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["历史动作 + 当前网页观测"] --> MODEL["LLM 生成<br/>推理 r_t + 动作 a_t"]
+    MODEL --> FMT["格式奖励<br/>合法 JSON 才放行→0.5"]
+    FMT -->|"推理分支"| SC["自确定性奖励<br/>推理分布↔均匀分布 KL"]
+    FMT -->|"动作分支"| HIER["分层奖励<br/>类型→子属性→ROUGE-L 文本"]
+    HIER --> DARS["难度感知奖励缩放 DARS<br/>放大长文本子动作奖励"]
+    SC --> SUM["加权汇总<br/>v(a) + α·s(r) − β·KL"]
+    DARS --> SUM
+    SUM --> GRPO["GRPO 策略优化<br/>SFT 冷启动后训练"]
+```
 
 ### 关键设计
 

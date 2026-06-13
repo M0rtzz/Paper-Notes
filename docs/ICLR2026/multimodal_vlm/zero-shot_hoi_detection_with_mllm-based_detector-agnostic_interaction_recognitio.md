@@ -53,7 +53,24 @@ DA-HOI 将 HOI 检测解耦为两个完全独立的阶段：
 1. **目标检测阶段**：使用任意检测器（DETR / Grounding-DINO / Yolo-World）获取检测结果 $\{C^i, B^i\}_{i=1}^{N_{\text{det}}}$
 2. **交互识别阶段**：将所有人类实例与物体实例配对，对每个人-物对 $(B_h, B_o, C_o)$ 构造 VQA prompt 送入 MLLM（Qwen2.5-VL），预测交互置信度
 
-两阶段之间唯一的接口是边界框坐标和类别标签，不共享特征，因此训练后可自由更换检测器而无需重训。
+两阶段之间唯一的接口是边界框坐标和类别标签，不共享特征，因此训练后可自由更换检测器而无需重训。整条流水线是：检测器枚举出人-物对后，先经空间感知池化（SAP）把每对的外观和相对空间关系压成交互特征，再交给 MLLM 用确定性生成给候选交互打分，最后融合各路置信度输出 HOI 三元组。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IMG["输入图像"] --> DET["目标检测器(任意)<br/>DETR / Grounding-DINO<br/>/ Yolo-World"]
+    DET --> PAIR["人-物配对<br/>枚举 (B_h, B_o, C_o)"]
+    PAIR --> SAP["空间感知池化 SAP<br/>框外上下文 + 7维空间向量<br/>→ 交互特征 f_inter"]
+    SAP -->|交互性分类器<br/>先过滤非交互对| SCORE
+    subgraph SCORE["MLLM 交互打分"]
+        direction TB
+        DG["确定性生成<br/>条件似然度做多标签判别<br/>(training-free 即用)"]
+        DM["单次确定性匹配 DM<br/>全候选一次前向 + 余弦匹配"]
+        DG -. 训练后由 DM 高效实现 .-> DM
+    end
+    SCORE --> FUSE["置信度融合<br/>S_v · S_inter · S_h · S_o"]
+    FUSE --> OUT["HOI 三元组输出"]
+```
 
 ### 关键设计
 

@@ -41,28 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RCPO 的出发点是把"偏好优化"看成一个离散选择问题：标注者面对一个候选集，从中挑出最好的（single-best）或排出前 k 名（top-k），这本质上就是经济学里的离散选择行为。于是论文把 prompt $x$ 当作 context、候选 response 当作 item、候选集 $S$ 当作 assortment，把整套对齐目标写成选择模型 $g$ 的极大似然：
+RCPO 的出发点是把"偏好优化"重新解读成一个离散选择问题：标注者面对一组候选回复，要么挑出最好的一个（single-best），要么排出前 k 名（top-k），这本质上就是经济学、运筹学里研究了几十年的离散选择行为。顺着这个类比，论文把 prompt $x$ 当作 context、每个候选 response 当作 item、整个候选集 $S$ 当作 assortment，于是对齐目标可以直接写成某个选择模型 $g$ 的极大似然：
 
 $$\max_{\pi_\theta} \sum_i \log g\big(\mu_i^k, S_i, \{r_{\pi_\theta}(x_i, y)\}_{y \in S_i}\big),\quad r_{\pi_\theta}(x,y) = \beta \log \frac{\pi_\theta(y|x)}{\pi_{ref}(y|x)}$$
 
-这里 $\mu_i^k$ 是标注的 top-k 排名，$r_{\pi_\theta}$ 是和 DPO 完全一致的隐式 reward。换掉选择模型 $g$ 就得到不同的对齐算法，DPO 只是其中最简单的一个分支。论文给出两类选择模型：基于基数效用的 MNL，和基于序关系的 Mallows-RMJ。
+其中 $\mu_i^k$ 是标注给出的 top-k 排名，$r_{\pi_\theta}$ 是和 DPO 完全一致的隐式 reward（policy 相对 reference 的对数似然比）。这个写法的关键在于：选择模型 $g$ 是一个可替换的插槽——填进 Bradley-Terry 就退回 DPO，填进更强的多选/排名模型就得到能直接消化 ranked choice 的新目标。论文挑了两个有闭式解、便于 MLE 的代表模型来实例化这个框架：一个是基于基数效用的 MNL，一个是只看序关系的 Mallows-RMJ，并分别推导它们在 single-best 与 top-k 两种格式下的损失。
+
+> 这是一篇偏好建模/损失函数类工作，方法的核心是"换一个选择模型 $g$ 重写 MLE 目标"，没有多阶段数据流或模块协同的 pipeline，因此不画框架图。
 
 ### 关键设计
 
-**1. MNL（Multinomial Logit）分支：把 Bradley-Terry 从"2 选 1"推广到"多选 1 与 top-k"**
+**1. MNL（Multinomial Logit）分支：把 Bradley-Terry 从"两选一"推广到"多选一与 top-k"**
 
-DPO 背后的 Bradley-Terry 模型一次只能比较两个 response，这正是成对压缩的根源。MNL 直接放开候选集大小：在 single-best（discrete）格式下，损失变成对整个候选集做归一化，$-\log\sigma\big(-\log\sum_{y_i \in S \setminus \{y_w\}} \exp(f_\theta(x, y_i, y_w))\big)$，相比 DPO 多出的那一层 logsumexp，就是同时把所有非 preferred response 都纳入对比、而不是只挑一个负样本。在 top-k 格式下，它进一步连乘 k 个阶段的 softmax——每个阶段从尚未选中的剩余候选里挑出下一名，逐级展开整条排名链。当 $|S|=2, k=1$ 时这套退化回 DPO，说明 DPO 确实是该框架的一个特例。
+DPO 背后的 Bradley-Terry 模型一次只能比较两个 response，这正是"成对压缩"的根源——多路排名只能被拆成一对对喂进去。MNL 直接把候选集放开到任意大小：当随机效用项取 i.i.d. Gumbel 噪声时，选中某项的概率就是对整个候选集做 softmax 归一化。在 single-best 格式下，损失写成 $-\log\sigma\big(-\log\sum_{y_i \in S \setminus \{y_w\}} \exp(f_\theta(x, y_i, y_w))\big)$，相比 DPO 多出来的那一层 logsumexp，意思就是把候选集里**所有**非 preferred response 一起拿来和 preferred 对比，而不是只随机挑一个负样本。在 top-k 格式下，它进一步把 k 个阶段的 softmax 连乘起来——每个阶段都从"尚未被选中"的剩余候选里挑出下一名，逐级展开整条排名链。当 $|S|=2,\,k=1$ 时这套目标恰好退化回 DPO，这也从形式上证明了 DPO 只是 RCPO 框架的一个最简特例。
 
-**2. Mallows-RMJ 分支：用纯序关系建模，绕开对精确 reward 数值的依赖**
+**2. Mallows-RMJ 分支：丢掉 reward 的数值大小、只用序关系建模，并解决它落地训练的两道坎**
 
-MNL 仍然吃 reward 的基数大小，对 reward model 的噪声敏感。Mallows-RMJ 改成只看排名：某个 response 被选中的概率正比于 $\phi(x)^{d(y_i, S)}$，其中 $d(y_i, S)$ 是 $y_i$ 在候选集 $S$ 中的相对排名位置，dispersion 参数 $\phi(x)$ 越小、概率越向高名次集中。在 discrete 格式下，它的损失实质是去数有多少个 non-preferred 项的 reward 反超了 preferred 项；在 top-k 格式下则扩展为沿排名链的逐对比较，再补上"未入选项与第 k 名"之间的比较。由于全程只用到 ordinal 信息（谁排在谁前面），它天然对 reward 的数值抖动更鲁棒，这也是后面实验里 Mallows-RMJ 大幅领先的原因。
+MNL 虽然放开了候选集，却仍然吃 reward 的基数大小，因此对 reward model 的数值噪声敏感。Mallows-RMJ 走另一条路：它假设排名 $\mu$ 出现的概率随它与中心排名 $\mu_0$ 的距离指数衰减，落到选择概率上，某个 response 被选中的概率正比于 $\phi(x)^{d(y_i, S)}$——其中 $d(y_i, S)$ 是 $y_i$ 在候选集 $S$ 里的相对名次（越靠前越小），dispersion 参数 $\phi(x)\in(0,1)$ 越小、概率就越往高名次集中。在 discrete 格式下，这个损失实质是在数"有多少个 non-preferred 项的 reward 反超了 preferred 项"；在 top-k 格式下则扩展成沿排名链的逐对比较，再补上"所有未入选项 vs 第 k 名"的那一组比较。因为全程只用到 ordinal 信息（谁排在谁前面、不管差多少分），它对 reward 的数值抖动天然更鲁棒，这正是后面实验里 Mallows-RMJ 即便在 pairwise 设置下也能领先的原因。
 
-**3. Sigmoid 平滑：让 rank-based 目标可微、能跑 SGD**
-
-Mallows-RMJ 的损失里含有指示函数 $\mathbb{I}\{\cdot\}$（判断某项 reward 是否超过另一项），它在 0/1 之间跳变、不可微。论文用 sigmoid 把这个硬判断近似成平滑过渡，从而让整个 rank-based 目标对梯度下降友好，可以直接接进现有训练流程。
+但纯序关系也带来两个工程难题，论文一并解决了，否则这套目标没法接进 SGD：其一，dispersion $\phi(x)$ 事先未知，论文沿用 Chen et al.(2025) 的做法、用 $-\log\phi(x)$ 的 entropy proxy 来估计；其二，"某项 reward 是否反超另一项"是一个指示函数 $\mathbb{I}\{\cdot\}$，在 0/1 之间硬跳变、不可微，论文用 sigmoid 把它近似成平滑过渡，既保住了"按偏好结构比较"的语义，又给出更平滑、信息更丰富的梯度。
 
 ### 训练策略
-在 UltraFeedback 数据集上为每个 prompt 生成多个 response，用 Skywork-Reward-V2 reward model 打分后构建排名，再据此切出 pairwise / single-best / top-k 三种反馈格式来训练，对应不同的选择模型分支。
+在 UltraFeedback 数据集上，对每个 prompt 采样多个 response，用 Skywork-Reward-V2 reward model 打分后构建排名，再据此切出 pairwise / single-best / top-k 三种反馈格式分别训练，对应上面不同的选择模型分支；$\beta$ 和 DPO 一样控制 policy 相对 reference 的偏离程度，候选集大小 $|S|$ 允许逐 prompt 变化，从而对部分 prompt 采更多 response、获得更细粒度的偏好。
 
 ## 实验关键数据
 
@@ -73,8 +73,9 @@ Mallows-RMJ 的损失里含有指示函数 $\mathbb{I}\{\cdot\}$（判断某项 
 | DPO | 41.24 | 40.24 | 32.6 | 62.36 |
 | SimPO | 44.15 | 38.84 | 33.5 | 50.17 |
 | DPO-AllPairs | 33.02 | 38.47 | 29.6 | 51.95 |
-| **Mallows-RMJ-Pairwise** | **39.33** | **48.71** | - | - |
-| **MNL-Top-k** | - | - | - | - |
+| **Mallows-RMJ-Pairwise** | 39.33 | **48.71** | — | — |
+
+> 论文报告：表现最强的 **Mallows-RMJ-PO-Top-2** 相比最强的非 RCPO 基线 IPO，在 AlpacaEval LC / WR、Arena-Hard WR、UltraFeedback WR 上分别领先 **4.00 / 19.5 / 6.2 / 9.47** 个百分点。
 
 ### 多模型验证
 RCPO 在 Llama-3-8B, Gemma-2-9B, Mistral-7B 上均一致优于或持平 DPO 和 SimPO。

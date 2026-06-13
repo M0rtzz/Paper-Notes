@@ -41,7 +41,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MoE 推理时，router 为每个 token 选择 top-k 专家。Capacity-Aware Inference 在 router 之后加入两步处理：(1) Token Drop 阶段——检查每个专家的负载是否超过容量限制 $C = \gamma \bar{N}$，超过的用 gating score 排序丢弃低分 token；(2) Expanded Drop 阶段——被丢弃的 token 扩展候选集到同一 GPU 上的其他低负载专家，利用空闲容量。整个过程在 All-to-All 通信之前完成，零额外通信开销。
+MoE 推理时，router 为每个 token 选择 top-k 专家。Capacity-Aware Inference 不改模型权重，只在 router 之后、All-to-All 通信之前插入一段容量调度：先给每个专家设容量上限 $C = \gamma \bar{N}$，**Token Drop** 让过载专家按 gating score 保留 top-$C$、其余标为溢出 token；**Expanded Drop** 把这些溢出 token 重路由到同一张 GPU 上的低负载专家接住，而不是直接丢掉；当多个专家共卡时，**Device-Level Capacity** 把上限从「每个专家」放宽到「整张卡的总负载」，允许同卡专家互相借负载。三步都发生在通信之前，所以零额外跨设备开销，调度后的 token 再走正常的 All-to-All → 专家计算 → 加权求和。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    R["输入 token 序列 → Router G(x)<br/>为每个 token 选 top-k 专家"]
+    DL["Device-Level Capacity<br/>上限从单专家放宽到整卡总负载"]
+    C["每专家容量上限<br/>C = γ × 平均负载 N̄"]
+    TD["Capacity-Aware Token Drop<br/>过载专家按 gating score<br/>保留 top-C、其余为溢出 token"]
+    ED["Capacity-Aware Expanded Drop<br/>溢出 token 扩候选集到<br/>同卡 m 个低负载专家接住"]
+    OUT["All-to-All 通信 → 各专家并行计算<br/>→ 按 gating 加权求和 → MoE 层输出"]
+    R --> C
+    DL -.放宽粒度.-> C
+    C --> TD --> ED --> OUT
+```
 
 ### 关键设计
 

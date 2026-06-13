@@ -42,7 +42,23 @@ tags:
 
 ### 整体框架
 
-本文不训练新模型，而是搭建一套量化"图像→敏感位置"隐私泄露的评估体系：先用三级风险框架界定哪些场景算隐私威胁，再用 DoxBench 数据集和信息论度量 Glare 把泄露程度压成单一可比数字，最后用 ClueMiner 拆解模型靠什么线索推断、用 GeoMiner 验证协作攻击能把威胁放大到什么程度。
+本文不训练新模型，而是搭建一套量化"图像→敏感位置"隐私泄露的评估体系：先用三级风险框架界定哪些场景算隐私威胁，再用 DoxBench 数据集喂给多模态大推理模型、用信息论度量 Glare 把泄露程度压成单一可比数字，最后用 ClueMiner 拆解模型靠什么线索推断、用 GeoMiner 验证协作攻击能把威胁放大到什么程度。整条链路从"高清照片+GPS真值"出发，依次经过分级、评估、度量、诊断四个环节，输出每个模型的隐私威胁排名。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["iPhone 高清照片<br/>(含 EXIF GPS 真值)"] --> RISK["三级隐私风险框架<br/>按隐私空间×个人影像<br/>分 Level 1/2/3"]
+    RISK --> DATA["DoxBench 数据集<br/>500 张高清图+Mirror 反射类"]
+    DATA --> EVAL["MLRM 评估<br/>最小提示 Where is it?"]
+    EVAL --> RAW["原始指标<br/>VRR / AED / MED"]
+    RAW --> GLARE["Glare 度量<br/>合成单一比特数"]
+    GLARE --> DIAG
+    subgraph DIAG["ClueMiner 诊断 + GeoMiner 放大"]
+        direction TB
+        CLUE["ClueMiner<br/>拆解推理链视觉线索"] --> GEO["GeoMiner<br/>线索提取+推理两阶段协作"]
+    end
+    DIAG --> OUT["各模型隐私威胁量化排名"]
+```
 
 ### 关键设计
 

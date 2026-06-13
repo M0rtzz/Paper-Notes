@@ -43,35 +43,49 @@ tags:
 
 ### 整体框架
 
-MATA是一个层次Mealy机 $\mathcal{M}_\theta = (S, S_0, \Sigma, \Lambda, \delta_\theta, \Gamma)$，包含两层结构：
-- **顶层（Hyper Automaton）**：状态是各个Agent，转移函数 $\delta_\theta$ 由可训练的LLM控制器学习
-- **底层（Sub-Automaton）**：每个Agent内部是规则化的小型状态机，确保可靠的微控制
+MATA 要解决的是「一个视觉推理查询进来，系统该派哪个 Agent、什么时候换人、什么时候收尾输出」这个调度问题。它把整套推理组织成一台**层次 Mealy 机** $\mathcal{M}_\theta = (S, S_0, \Sigma, \Lambda, \delta_\theta, \Gamma)$：顶层（hyper automaton）把每个 Agent 当成一个状态，由一个可训练的 hyper agent（基于 LLM 的状态控制器）学习状态之间的转移 $\delta_\theta$；底层每个 Agent 内部是一台规则化的子自动机（sub-automaton），负责可靠的微观执行。运行时 hyper agent 每一步都读一份共享内存快照、决定下一个状态，被选中的 Agent 跑完自己的子自动机、把中间结果追加回共享内存、再交还控制权，如此循环直到进入 Final 状态输出答案。论文之所以把「跨 Agent 该不该转」交给学习、把「Agent 内部怎么走」留给规则，正是因为前者判据模糊、随 Agent 增多越来越难手写，后者步骤清晰、容易定义。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入：图像 v + 查询 q<br/>Initial 状态 + 初始化共享内存 m₀"] --> HA
+    SFT["转移轨迹数据生成<br/>轨迹树 → 自底向上评分 → MATA-SFT-90K"] -. SFT 训练 .-> HA
+    HA["可训练 Hyper Agent<br/>(LLM State Controller)：读内存快照、选下一状态 δθ"]
+    HA -->|路由| AG
+    subgraph AG["层次自动机与状态定义（三 Agent，各跑规则化子自动机）"]
+        direction TB
+        ON["Oneshot Reasoner<br/>一次性生成并执行程序"]
+        ST["Stepwise Reasoner<br/>分步 Python 多步推理"]
+        SP["Specialized Agent<br/>快速感知专家"]
+    end
+    AG -->|追加中间结果与反馈| MEM["共享内存（append-only）"]
+    MEM -->|失败则临时移除该 Agent 后重选| HA
+    HA -->|确信答案| OUT["Final：输出 y"]
+```
 
 ### 关键设计
 
-**1. 状态定义：把"调哪个 Agent"变成自动机里的状态选择**
+**1. 层次自动机与状态定义：把"调哪个 Agent"变成自动机的状态选择**
 
-整个系统的状态集 $S = S_{\text{agent}} \cup S_{\text{life}}$ 分两类。第一类是三个 Agent，各自代表一条不同的推理路径：Oneshot Reasoner 一次性生成并执行程序，适合能直接求解的查询；Stepwise Reasoner 逐步生成 Python 程序做多步推理，应对复杂查询；Specialized Agent 是快速感知专家，负责目标检测、简单问答这类轻任务。第二类是生命周期状态——Initial 起点、Final 终止并输出、Failure 表示遇到不可恢复错误。把 Agent 放进状态集后，"何时调用哪个 Agent"就自然转化为自动机的状态转移问题。这三个 Agent 被刻意设计成**既协作又竞争**：协作体现在后续 Agent 会读取前序 Agent 写进共享内存的中间结果；竞争则体现在功能重叠的 Agent 可以接替失败的 Agent，而不是像传统多 Agent 流水线那样各管一段、出错就卡死。
+系统的状态集 $S = S_{\text{agent}} \cup S_{\text{life}}$ 分两类。$S_{\text{agent}} = \{\text{Oneshot}, \text{Stepwise}, \text{Specialized}\}$ 是三个 Agent，各自代表一条推理路径，并刻意构成「感知—快思考—慢思考」的连续谱：Specialized Agent 是 System-1 式的快速感知专家（目标检测、简单问答），Oneshot Reasoner 一次性生成并执行程序、适合能直接求解的查询，Stepwise Reasoner 逐步生成 Python 程序做多步推理、应对复杂查询。$S_{\text{life}} = \{\text{Initial}, \text{Final}, \text{Failure}\}$ 是生命周期状态，负责起步、收尾输出与异常协调，初始状态 $S_0 = \text{Initial}$。把 Agent 装进状态集后，"何时调用哪个 Agent"就自然变成自动机的状态转移问题，而每个 Agent 内部只跑一台规则化子自动机（LLM/VLM 提示、验证器检查、工具 I/O 这些步骤流程清晰），由它独立处理微观控制后再返回顶层——这就是"跨 Agent 学、Agent 内规则化"的层次分工。
 
-**2. 共享内存：让协作和审计都有载体**
+这三个 Agent 被设计成**既协作又竞争**。协作指控制权转交时，后继 Agent 会读取共享内存里前序 Agent 留下的历史与反馈、在此基础上继续；竞争指功能重叠的 Agent 可以争抢同一个任务——所有 Agent 原则上都能回答所有查询，但各有所长，于是当某个 Agent 卡住或报告不可恢复错误时，系统把它从当前候选状态里**临时移除**、逼 hyper agent 在剩余 Agent 中重选，让另一个顶替完成。正是这套"失败即重路由"的竞争机制，把传统多 Agent 流水线"各管一段、出错就卡死"的单点失败，转化成了可恢复的路径切换。
 
-所有 Agent 都读写同一份结构化共享内存 $m_t$，里面累积中间变量、感知结果、程序历史和验证反馈。这块内存**仅追加**（append-only），既保证后来的 Agent 能拿到前面所有上下文以实现协作，又让整条推理轨迹可回溯、可审计。每一步执行时，hyper agent 观察当前内存 $m_t$，据此选出下一个状态 $s_{t+1} = \delta_\theta(s_t, m_t)$——内存是它做决策的唯一依据。
+**2. 共享内存：让协作和审计共用一份可追溯的载体**
+
+所有 Agent 都读写同一份结构化共享内存 $m_t$，累积中间变量、感知结果、程序历史、验证反馈和任务元数据。它**仅追加**（append-only）：某个 Agent 跑完一轮就把新增内容 $\Delta m_t$ 接上去，$m_{t+1} = m_t \cup \Delta m_t$。这一处设计同时喂饱了两件事——后来的 Agent 能拿到此前全部上下文从而实现协作，整条推理轨迹也因只增不改而完全可回溯、可审计。更关键的是，这份内存是 hyper agent 做决策时**唯一**的观测输入：每一步它都基于当前 $m_t$ 选出下一个状态 $s_{t+1} = \delta_\theta(s_t, m_t)$。
 
 **3. 可训练的 Hyper Agent：用 LLM 学转移函数，取代手写规则**
 
-顶层转移函数 $\delta_\theta$ 不再是手写的 if-else 规则，而是一个经 SFT 微调的 LLM。具体做法是从共享内存 $m_t$ 构建文本提示 $x_t$，LLM 把它映射到所有可用状态上的一个分布，再从中选出下一状态。这正是论文要解决的核心痛点——手写规则转移函数会随状态数增长而变得无法定义，改成学习后，调度策略可以从数据里自动归纳出来。
+顶层转移函数 $\delta_\theta$ 不再是手写的 if-else，而是一个可训练的、基于 LLM 的 hyper agent $\mathcal{F}_\theta$，扮演状态转移控制器。由于 LLM 吃文本，做法是先从共享内存 $m_t$ 按固定模板构造提示 $x_t$，再让 $\mathcal{F}_\theta$ 把它映射到**当前可用候选状态**上的一个分布，最后用贪心解码或随机采样选出下一状态 $s_{t+1}$。这正对着论文的核心痛点：手写转移规则会随状态/Agent 数量增长而难以定义，尤其是在功能重叠的竞争 Agent 之间，"哪个更合适"本就判据含糊、依赖任务；改成从数据里学，调度策略就能自动归纳出来，同时还能在不确定时继续推进、确信时才转入 Final 输出。
 
 **4. 转移轨迹数据生成（MATA-SFT-90K）：给"学转移"造监督信号**
 
-要训练 hyper agent 选状态，就得有"在某个内存状态下哪个 Agent 是最优选择"的标签，论文用一棵转移轨迹树来造这批数据。第一步构建转移轨迹树：对每个（图像, 查询）对，在每个决策点把分支铺开到所有可用 Agent 状态，执行对应的子自动机，并保存每个分支的内存检查点。第二步自底向上评分，叶节点按任务指标打分（VQA 用 Accuracy，VG 用 IoU），非叶节点取子节点最大值向上传播：
+要训练 hyper agent 选状态，就得有"在某个内存状态下哪个 Agent 是最优选择"的标签，论文用一棵转移轨迹树（transition-trajectory tree）来造这批数据。第一步在 GQA、OK-VQA、RefCOCO/+/g 训练集采样（图像, 查询）对，逐步运行自动机：在每个决策节点把分支铺开到所有可能的下一状态 $s_{t+1} \in S$，执行对应子自动机，保存每个分支的内存检查点 $m_{t+1}$，直到到达 Final 叶节点由输出函数 $\Gamma$ 给出预测 $\hat{y}$。第二步自底向上评分——叶节点按任务指标打分（VQA 用 $\text{Acc}$，VG 用 $\text{IoU}$），非叶节点取子节点最大值向上传播：
 
 $$V(s) = \begin{cases} \text{metric}(\hat{y}_s, y), & s \in \text{Leaves} \\ \max_{s' \in \text{Child}(s)} V(s'), & \text{otherwise} \end{cases}$$
 
-这样每个决策点都知道往哪个子节点走能拿到最高回报。第三步生成 SFT 数据：把每个决策点的文本提示配上其最优子节点对应的状态标签，构成一条训练样本，最终收集到 90,854 个样本（即 MATA-SFT-90K）。
-
-**5. 失败处理机制：用"临时移除"避免无限重试**
-
-当某个 Agent 报告不可恢复错误时，系统不会让它反复重试，而是把这个失败 Agent 从当前候选状态里**临时移除**，逼 hyper agent 在剩下的 Agent 中重新选择。这正是前面"竞争"设计的落地方式——功能重叠的另一个 Agent 顶上去接替，从而把单点失败转化为可恢复的路径切换。
+这样每个决策点都知道往哪个子节点走能拿到最高回报。第三步把每个决策点的文本提示 $x_t$ 配上其最优子节点对应的状态标签，重排成 instruction-completion 训练样本，最终得到 $N = 90{,}854$ 条，即 MATA-SFT-90K。数据采集时对转移树做了固定深度的近穷举展开——当前三个 Agent 还算可行，但论文也承认这一代价会随 Agent 增多而快速增长。
 
 ### 损失函数 / 训练策略
 

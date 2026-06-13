@@ -35,7 +35,22 @@ tags:
 
 ### 整体框架
 
-UFO-4D 把"位姿 + 几何 + 运动"的联合估计塞进同一个前馈函数：给定两张无位姿图像 $\mathbf{I}_t, \mathbf{I}_{t+1}$ 和相机内参，网络 $f_\theta(\mathbf{I}_t, \mathbf{I}_{t+1}) \mapsto (\mathcal{G}, \mathbf{P})$ 一次性吐出一组动态 3D 高斯 $\mathcal{G}$ 和相对相机位姿 $\mathbf{P}$。每个高斯既携带静态几何（中心 $\boldsymbol{\mu} \in \mathbb{R}^3$、四元数旋转 $\mathbf{r}$、尺度 $\mathbf{s}$、球谐颜色 $\mathbf{h}$、不透明度 $o$），又额外带一个 3D 运动向量 $\mathbf{v} \in \mathbb{R}^3$——正是这一份"同时编码了形状和运动"的统一表示，让深度、光流、场景流、新视角等所有下游信号都能从它经可微渲染导出，从而相互正则化。
+UFO-4D 把"位姿 + 几何 + 运动"的联合估计塞进同一个前馈函数：给定两张无位姿图像 $\mathbf{I}_t, \mathbf{I}_{t+1}$ 和相机内参，网络 $f_\theta(\mathbf{I}_t, \mathbf{I}_{t+1}) \mapsto (\mathcal{G}, \mathbf{P})$ 一次性吐出一组动态 3D 高斯 $\mathcal{G}$ 和相对相机位姿 $\mathbf{P}$。每个高斯既携带静态几何（中心 $\boldsymbol{\mu} \in \mathbb{R}^3$、四元数旋转 $\mathbf{r}$、尺度 $\mathbf{s}$、球谐颜色 $\mathbf{h}$、不透明度 $o$），又额外带一个 3D 运动向量 $\mathbf{v} \in \mathbb{R}^3$——正是这一份"同时编码了形状和运动"的统一表示，让深度、光流、场景流、新视角等所有下游信号都能从它经可微渲染导出，从而相互正则化。整条 pipeline 分两块：先用一个**共享编码 + 多头解码的网络**把两张图回归成上面这套动态高斯与相对位姿，再用一个**可微 4D 光栅化器**把这套高斯在任意时刻、任意视角统一渲染成图像、点图和运动图，下游任务和训练监督都从这些渲染结果派生。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["两张无位姿图像<br/>I_t、I_t+1 + 相机内参 K"] --> B
+    subgraph ENC["共享编码 + 多头解码网络"]
+        direction TB
+        B["权重共享 ViT 编码器<br/>逐图出 image token"] --> C["ViT 解码器<br/>交叉注意力融合两图"]
+        C --> D["四头并行解码<br/>中心 μ·属性 r,s,h,o·速度 v·位姿 P"]
+    end
+    D --> E["动态 3D 高斯 𝒢 + 相对位姿 P"]
+    E --> F["可微 4D 光栅化<br/>μ+Δt·v 时间插值后 α-blending"]
+    F --> G["统一渲染<br/>图像 / 点图 X / 运动图 V"]
+    G --> H["下游任务<br/>深度·光流·运动分割·4D 插值"]
+```
 
 ### 关键设计
 

@@ -42,15 +42,34 @@ Trinity设计了一个轻量级coordinator（0.6B SLM + ~10K可训练参数的he
 ## 方法详解
 
 ### 整体框架
-Trinity把"用哪个LLM、让它扮演什么角色"这件事交给一个极轻量的coordinator决定，而被协调的顶级LLM本身一字不改。coordinator是Qwen3-0.6B SLM 外挂一个线性head：每一轮把到目前为止的完整对话transcript喂给SLM，从它的hidden state读出两组logits——一组在 $L$ 个候选LLM中选一个，一组在Thinker/Worker/Verifier三种角色里选一个；选定后，消息模块给该LLM注入对应角色的prompt并取回输出，进入下一轮，直到Verifier判定通过或达到轮次上限。
+Trinity 把"用哪个 LLM、让它扮演什么角色"这件事交给一个极轻量的协调器（coordinator）决定，而被协调的顶级 LLM 本身一字不改。协调器是一个 Qwen3-0.6B 小语言模型（SLM）外挂一层线性头（head）：每一轮把到目前为止的完整对话 transcript 喂给 SLM，从它倒数第二个 token 的 hidden state 读出两组 logits——一组在 $L$ 个候选 LLM 里选一个、一组在 Thinker/Worker/Verifier 三种角色里选一个；选定后消息模块给该 LLM 注入对应角色的 prompt 并取回输出，把输出接进 transcript 进入下一轮，直到 Verifier 判定 ACCEPT 或达到轮次上限 $K$ 才停。协调器那层 head 的参数则在离线阶段用 sep-CMA-ES 这种进化策略训出来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询 Q + 历史<br/>对话 transcript"] --> C["超轻量参数化<br/>0.6B SLM 读 transcript<br/>取倒数第二 token 的 hidden state"]
+    C --> H["线性 head → 两组 logits<br/>选 1 个 LLM + 选 1 个角色"]
+    OPT["sep-CMA-ES 优化<br/>仅训 head + SVD 奇异值<br/>（&lt;20K 参数）"] -. 离线训练 .-> H
+    H --> M["消息模块注入<br/>角色专属 prompt"]
+    M --> R["三角色协调<br/>选中 LLM 扮<br/>Thinker / Worker / Verifier 并推理"]
+    R --> D{"Verifier 判 ACCEPT<br/>或达轮次上限 K?"}
+    D -->|"否：输出接入 transcript"| Q
+    D -->|是| OUT["返回最终答案 O_τ"]
+```
 
 ### 关键设计
 
-**1. 超轻量参数化：让协调头只学"怎么分配"而不重学语言能力。** coordinator真正可训练的部分被压到了不到20K参数，比常规微调小几个数量级，核心是只在两处下手。一是head本身，它是一层线性映射，把hidden state $h \in \mathbb{R}^d$ 投到 $\mathbb{R}^{L+3}$ 的logits上（$L$ 个LLM加3个角色），不引入任何额外结构。二是对SLM的少数权重矩阵做SVD分解后只学习奇异值的缩放、固定住正交基，用极少的自由度给hidden state补一点任务相关的表征改善。这套设计能成立的关键洞察是：coordinator生成的文本被整个丢弃，真正用到的只有hidden state导出的logits——既然不需要它把话说完，就可以只取早期token的hidden state快速出决策，进一步压低开销。
+**1. 超轻量参数化：让协调头只学"怎么分配"而不重学语言能力**
 
-**2. 三角色协调：把复杂能力外包给底层LLM，自己只做分工。** Trinity给每轮被选中的LLM指派一个明确职责：Thinker负责策略规划，分析当前状态、给出计划/分解/批判等高层指导；Worker负责具体执行，产出代码、推导、数值结果这类可操作内容；Verifier负责质量评估，输出ACCEPT/REVISE并可附带诊断信息。当Verifier被选中且判定ACCEPT，或轮次达到上限 $K$ 时整个流程终止。这样划分的好处是把"获得复杂能力"这件难事完全offload给底层强模型，coordinator自己只需做轻量的"派谁、扮谁"决策，从而坐实了它可以只用上万参数的前提。
+协调器要有足够语义理解力把任务派对，又不该像底层 agent 那样昂贵——Trinity 把真正可训练的部分压到不到 20K 参数（比常规微调小几个数量级），核心是只在两处下手。一是 head 本身，它是一层线性映射，把 hidden state $h \in \mathbb{R}^d$ 投到 $\mathbb{R}^{L+3}$ 的 logits 上（$L$ 个 LLM 加 3 个角色），不引入任何额外结构。二是对 SLM 的权重矩阵做 SVD 分解后只学习奇异值的缩放、固定住正交基，用极少的自由度给 hidden state 补一点任务相关的表征改善。这套设计能成立的关键洞察是：协调器生成的文本被整个丢弃，真正用到的只有 hidden state 导出的 logits——既然不需要它把话说完，就可以只取早期 token（而非等到生成结束）的 hidden state 快速出决策，进一步压低开销。
 
-**3. sep-CMA-ES优化：在高维稀疏奖励下用进化策略替代RL。** 这个优化问题有几个棘手特征：参数维度高（~10K）、参数块之间耦合很弱、每走一步都要让被协调的agents真实推理一遍因而单步代价极高、而奖励只是答案对错的二值终端信号 $R(\tau) \in \{0,1\}$，整体优化目标即 $J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[R(\tau)]$。直接上RL在这里很吃亏：REINFORCE的逐参数梯度信噪比极低，弱块间耦合让梯度病态、credit assignment很差。Trinity改用sep-CMA-ES，它维护一个对角协方差矩阵，天然契合这种近似block-diagonal的优化景观，在高维且预算被严格卡死的设定下比RL和随机搜索都更稳。文中Proposition 1进一步给出理论支撑：在迭代次数 $T$ 较小的regime下，sep-CMA-ES的改进量随迭代线性增长，而随机搜索只有对数增长。
+**2. 三角色协调：把复杂能力外包给底层 LLM，自己只做分工**
+
+如果协调器自己要会规划、会解题、会校验，那它就不可能只用上万参数；Trinity 的破法是给每轮被选中的 LLM 指派一个明确职责。Thinker 负责策略规划，分析当前状态、给出计划/分解/对部分解的批判等高层指导，还可顺带指定下一轮的角色；Worker 负责具体执行，产出代码、推导、数值结果这类可操作内容；Verifier 负责质量评估，输出判断 $u_k \in \{\texttt{ACCEPT}, \texttt{REVISE}\}$ 并可附带诊断 $\delta_k$。终止时刻定义为 $\tau = \min\{k \le K : R_k = \mathrm{V}\ \text{且}\ u_k = \texttt{ACCEPT}\}$，没人 ACCEPT 就跑满 $K$ 轮、返回 $O_\tau$。这样划分把"获得复杂能力"这件难事完全外包（offload）给底层强模型，协调器只需做轻量的"派谁、扮谁"决策——这正是设计 1 能只用上万参数的前提。
+
+**3. sep-CMA-ES 优化：在高维稀疏奖励下用进化策略替代 RL**
+
+这个优化问题有几个棘手特征叠在一起：参数维度高（~10K）、参数块之间耦合很弱、每走一步都要让被协调的 agent 真实推理一遍因而单步代价极高，而奖励只是答案对错的二值终端信号 $R(\tau) \in \{0,1\}$，整体目标即 $J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}[R(\tau)]$。直接上 RL 在这里很吃亏：REINFORCE 的逐参数梯度信噪比极低，弱块间耦合让梯度病态、credit assignment 很差。Trinity 改用 sep-CMA-ES——它只维护一个对角协方差矩阵，天然契合这种近似 block-diagonal 的优化景观，在高维且评估预算被严格卡死（10K 维问题只给 1.5K–40K 次评估）的设定下比 RL、模仿学习和随机搜索都更稳。文中 Proposition 1 进一步给出理论支撑：在迭代次数 $T$ 较小的 regime 下，sep-CMA-ES 的改进量随迭代近似线性增长，而随机搜索只有对数增长。
 
 ## 实验关键数据
 

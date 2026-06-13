@@ -44,15 +44,43 @@ tags:
 
 ### 整体框架
 
-DiffBacChrom 把"从 Hi-C 重建三维基因组"重写成潜空间里的条件生成问题：先用一个 ResNet VAE 把 3D 坐标序列压成与 Hi-C bin 一一对齐的潜向量，再训练 CrossDiT 扩散模型在这个潜空间里以 Hi-C 接触图谱为条件采样构象，最后由 VAE 解码器还原显式坐标。训练数据则来自粗粒度分子动力学模拟，提供成对的合成 Hi-C 与对应构象集合。
+DiffBacChrom 把"从 Hi-C 重建三维基因组"重写成潜空间里的条件生成问题。它分三步走：先用一个 ResNet VAE 把 3D 坐标序列压成与 Hi-C bin 一一对齐的潜向量，再训练 CrossDiT 扩散模型在这个潜空间里以 Hi-C 接触图谱为条件采样构象，最后由 VAE 解码器把潜向量还原成显式坐标。训练数据来自粗粒度分子动力学（MD）模拟，提供成对的合成 Hi-C 与对应构象集合；推理时给一张新的 Hi-C，模型就能高效采样出一整组物理合理的三维构象。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    MD["粗粒度 MD 模拟构象<br/>(训练数据)"]
+    ENC["ResNet VAE 编码器<br/>逐 bin 对齐潜空间"]
+    HIC["Hi-C 接触图谱<br/>(条件输入)"]
+    subgraph CD["CrossDiT 条件注入（设计 2）"]
+        direction TB
+        COND["Hi-C Transformer 编码器<br/>逐 bin 条件嵌入"]
+        DIT["DiT 块<br/>AdaLN-Zero(全局)<br/>+ 交叉注意力(局部)"]
+        COND -->|外场约束| DIT
+    end
+    DEC["ResNet VAE 解码器<br/>还原显式 3D 坐标"]
+    OUT["三维基因组<br/>构象集合"]
+
+    MD --> ENC
+    ENC -->|潜向量| DIT
+    HIC --> COND
+    DIT -->|"flow-matching<br/>50 步采样"| DEC
+    DEC --> OUT
+```
 
 ### 关键设计
 
-**1. ResNet VAE：保持逐 bin 对齐的潜空间。** 扩散模型若直接在原始 3D 坐标上做，会丢失 Hi-C 矩阵与结构之间的位置对应关系，给条件注入带来歧义。这里用 1D ResNet18 编码 $928\times16$ 维输入——每个 Hi-C bin 对应 2 个 bead、2 条染色体，每 bead 携带 $xyz$ 坐标与一个掩码位。关键在于编码器不沿序列维度压缩，潜向量长度始终等于 Hi-C 矩阵维度，从而让潜空间的每个位置都对齐到一个 bin。为处理 DNA 复制时染色体分叉出的分支结构，模型引入一个二值复制掩码（replication mask），坐标重建损失 $\mathcal{L}_{coord}$ 只在掩码激活的位置上计算 MSE，这样不同复制阶段 bead 数量不一致也不会让重建偏差被稀释。整体 VAE 损失为 $\mathcal{L} = \mathcal{L}_{coord} + \lambda_{mask}\mathcal{L}_{mask} + \lambda_{KL}\mathcal{L}_{KL}$，实测取 $\lambda_{mask}=1.0$、$\lambda_{KL}=5\times10^{-3}$。
+**1. ResNet VAE：保持逐 bin 对齐的潜空间**
 
-**2. CrossDiT 条件注入：让 Hi-C 当"外场"单向约束结构。** Hi-C 是群体平均的间接测量，物理上应当约束结构、而不被某一条采样结构反过来改写，所以条件注入必须是单向的。模型先用一个沿行维度处理 Hi-C 矩阵（列作特征）的 Transformer 编码器，输出逐 bin 的条件嵌入 $z_c$；再分两路注入 DiT：全局一路把时间步嵌入与全局平均池化后的条件相加成 $c = t + \tilde{z}_c$，通过 AdaLN-Zero 调制每个 DiT 块；局部一路用交叉注意力，让结构特征 $x$ 作 Query、$z_c$ 作 Key/Value。这样结构始终"向条件查询"信息，而条件本身不会被结构更新，既符合 Hi-C 作为外场约束的物理直觉，也让信息流向可解释。
+扩散模型若直接在原始 3D 坐标上做，会丢失 Hi-C 矩阵与结构之间的位置对应关系，给后续的条件注入带来歧义。这里用 1D ResNet18 编码 $928\times16$ 维输入——每个 Hi-C bin 对应 2 个 bead、2 条染色体，每 bead 携带 $xyz$ 坐标与一个掩码位。关键在于编码器不沿序列维度压缩，潜向量长度始终等于 Hi-C 矩阵维度，从而让潜空间的每个位置都对齐到一个 bin，条件注入时"第几个 bin"就能精确找到"第几段结构"。为处理 DNA 复制时染色体分叉出的分支结构，模型引入一个二值复制掩码（replication mask），坐标重建损失 $\mathcal{L}_{coord}$ 只在掩码激活的位置上计算 MSE，这样不同复制阶段 bead 数量不一致也不会让重建偏差被稀释。整体 VAE 损失为 $\mathcal{L} = \mathcal{L}_{coord} + \lambda_{mask}\mathcal{L}_{mask} + \lambda_{KL}\mathcal{L}_{KL}$，实测取 $\lambda_{mask}=1.0$、$\lambda_{KL}=5\times10^{-3}$。
 
-**3. Flow-Matching 训练：稳定优化且不牺牲多样性。** 为了让潜空间扩散的优化路径更直、训练更稳，模型用 rectified flow 框架替代 DDPM，直接回归速度场。推理时只需 50 步采样，并把 classifier-free guidance 的 scale 设为 $1.0$——即不额外放大条件信号，避免过度向单一"最优"构象收敛而压垮集合多样性。潜空间在训练前按 scale $=1.335$ 做标准化，使噪声调度与数据尺度校准一致。
+**2. CrossDiT 条件注入：让 Hi-C 当"外场"单向约束结构**
+
+Hi-C 是群体平均的间接测量，物理上应当约束结构、而不被某一条采样结构反过来改写，所以条件注入必须是单向的。模型先用一个沿行维度处理 Hi-C 矩阵（列作特征）的 Transformer 编码器，输出逐 bin 的条件嵌入 $z_c$；再分两路注入 DiT：全局一路把时间步嵌入与全局平均池化后的条件相加成 $c = t + \tilde{z}_c$，通过 AdaLN-Zero 调制每个 DiT 块；局部一路用交叉注意力，让结构特征 $x$ 作 Query、$z_c$ 作 Key/Value。这样结构始终"向条件查询"信息，而条件本身不会被结构更新，既符合 Hi-C 作为外场约束的物理直觉，也让信息流向可解释。
+
+**3. Flow-Matching 训练：稳定优化且不牺牲多样性**
+
+为了让潜空间扩散的优化路径更直、训练更稳，模型用 rectified flow 框架替代 DDPM，直接回归速度场。推理时只需 50 步采样，并把 classifier-free guidance 的 scale 设为 $1.0$——即不额外放大条件信号，避免过度向单一"最优"构象收敛而压垮集合多样性。潜空间在训练前按 scale $=1.335$ 做标准化，使噪声调度与数据尺度校准一致。
 
 ### 损失函数
 

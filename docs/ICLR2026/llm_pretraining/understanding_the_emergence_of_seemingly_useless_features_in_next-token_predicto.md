@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-对 Transformer 计算图中的信息流进行三分类分解。固定某位置 $i$ 和层 $k$ 的残差流 $r_{\theta,i}^k(x)$，所有梯度路径被分为：(1) **Direct**：经过 $r_{\theta,i}^k$ 且到 $\hat{x}_{i+1}$（即时 NTP 损失）的路径；(2) **Pre-cached**：经过 $r_{\theta,i}^k$ 但到 $\hat{x}_j$（$j > i+1$，未来位置损失）的路径；(3) **Shared**：不经过 $r_{\theta,i}^k$ 的路径（通过参数共享间接影响）。三者构成梯度的完备分解（Proposition 3.1）。
+这是一篇**机制分析**论文，目标不是提出新模型，而是回答一个问题：只监督"下一个 token"的 NTP 目标，凭什么让模型学到关于全局状态、未来 token 这些"看似无用"的特征？全文的分析骨架是**先把梯度拆开、再逐条审问**。第一步固定某位置 $i$、某层 $k$ 的残差流 $r_{\theta,i}^k(x)$，把回传到参数的训练梯度精确分成 direct、pre-cached、shared 三条路径（**梯度三分解**）——direct 只和即时预测挂钩，剩下两条才是"无用"特征的潜在来源。拿到这三条路径后，论文用两套互补的工具分析它们：一是**干预**，用 myopic / m-untied 训练把 pre-caching、circuit sharing 分别"关掉"，看少了某条路径模型还能不能学到那些特征；二是**归因**，定义 feature mismatch influence 并沿训练轨迹积分，定量算出每条路径对某个特征涌现到底贡献了多少。这两套工具都要完整重训，在 Gemma 2 这种规模上跑不动，于是最后再给一个只需最终 checkpoint 的近似指标 $Q(w)$，把同样的"pre-cached 还是 direct 主导"的判断迁移到真实 LLM 上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["NTP 训练梯度 ∇θL<br/>(因果遮蔽 Transformer)"] --> D["梯度三分解<br/>direct / pre-cached / shared"]
+    D -->|消融每条路径| I["干预：Myopic + m-Untied 训练<br/>分别关掉 pre-caching / circuit sharing"]
+    D -->|量化每条路径贡献| A["归因：Feature Mismatch Influence<br/>沿训练轨迹积分"]
+    I --> R["机制角色与因果归因<br/>useful↔direct，useless↔pre-cached/shared"]
+    A --> R
+    R -->|重训太贵时近似| Q["大模型推断：影响比 Q(w)<br/>仅用最终 checkpoint"]
+```
 
 ### 关键设计
 

@@ -46,6 +46,19 @@ DenseGRPO 想解决的是：Flow-GRPO 这类方法只在轨迹末端拿到一个
 
 整体流程是：给定流匹配模型、奖励模型和文本提示，先用带时间步自适应噪声级别 $\psi(t)$ 的 SDE 采样器采出 $G$ 条轨迹；对每条轨迹的每个中间潜变量 $x_t^i$ 做 ODE rollout 得到干净图像并由奖励模型评分 $R_t^i$，相邻两步的奖励之差 $\Delta R_t^i = R_{t-1}^i - R_t^i$ 就是该步的密集奖励；最后用 $\Delta R_t^i$ 替代稀疏奖励 $R^i$ 做组归一化与策略优化。两个改进互相支撑：密集奖励既是更细的训练信号，也是探索校准赖以判断每步正负样本是否平衡的依据。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["流匹配模型 + 奖励模型<br/>+ 文本提示 c"] --> SDE["SDE 采样器<br/>逐时间步噪声 ψ(t)"]
+    SDE --> TRAJ["G 条去噪轨迹<br/>中间潜变量 x_t"]
+    TRAJ --> D1["Step-wise 密集奖励估计<br/>每个 x_t 做 ODE rollout<br/>→ 干净图像 → 评分 R_t"]
+    D1 --> GAIN["奖励增益<br/>ΔR_t = R_t-1 − R_t"]
+    GAIN --> NORM["组归一化 → advantage<br/>→ GRPO 策略更新"]
+    GAIN --> D2["探索空间校准<br/>查每步正/负奖励是否平衡<br/>→ 增减 ψ(t)"]
+    D2 -->|"回写 ψ(t)"| SDE
+    NORM --> OUT["对齐后的流匹配模型"]
+```
+
 ### 关键设计
 
 **1. Step-wise 密集奖励估计：把末端的单个奖励拆成每一步的贡献**

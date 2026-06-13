@@ -43,6 +43,22 @@ tags:
 
 CAZI-MBN把多重生物网络的交互预测拆成"先用序列与拓扑两路特征刻画每个实体、再让跨层注意力与对比学习把多层信息融成统一表示、最后用混合专家做多标签预测"这条主线，并在其上叠一层教师-学生蒸馏，把依赖邻域结构的教师知识压进只看序列的学生，从而让训练时没出现过、没有任何图结构的全新实体也能被预测。教师端由混合损失 $\mathcal{L} = \mathcal{L}_{disc} + \mathcal{L}_{reg} + \mathcal{L}_{cls} + \beta\|\Theta\|^2$ 驱动，学生端再以蒸馏损失对齐。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["实体序列<br/>SMILES / 基因 / 蛋白质"] --> DUAL
+    subgraph DUAL["双路特征表示"]
+        direction TB
+        SEQ["领域LLM序列嵌入<br/>ChemBERTa / DNABERT-2 / ESM-2"]
+        UGT["统一图分词器UGT<br/>超邻接矩阵→高阶平滑→SVD"]
+    end
+    DUAL --> CAE["上下文感知增强CAE<br/>跨层注意力+对比学习<br/>融成统一表示H"]
+    CAE --> MOE["混合专家MoE<br/>门控加权多标签预测"]
+    MOE --> TEACH["教师表示<br/>(序列+拓扑)"]
+    TEACH -->|"教师-学生蒸馏<br/>MSE对齐潜表示"| STU["学生模型<br/>(仅序列, 无拓扑)"]
+    STU --> ZS["零样本推理<br/>预测未见实体交互"]
+```
+
 ### 关键设计
 
 **1. 双路特征表示：把序列语义和多重拓扑同时喂给模型**

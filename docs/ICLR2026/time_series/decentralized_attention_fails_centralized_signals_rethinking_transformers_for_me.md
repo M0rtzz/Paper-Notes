@@ -41,27 +41,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-TeCh 想解决的是：医学信号本质由中枢统一驱动，可标准注意力却把每个通道当成平等节点彼此乱串，结果把噪声通道也直接灌进了主模式。它的破法是把"通道之间怎么通信"这件事整个换掉。输入是一段医学时间序列 $X \in \mathbb{R}^{T \times C}$（$T$ 个时间步、$C$ 个通道），先经自适应双分词切成两套 token——一套侧重时间、一套侧重通道，分别送进 $M$ 个和 $N$ 个 Transformer Encoder。这些 Encoder 的骨架不变，唯独把标准注意力换成 CoTAR 模块。两个分支各自的输出在通道维度取均值后相加，再过一个线性层投影成分类结果 $\hat{Y} \in \mathbb{R}^K$。$M$、$N$ 都是可调的，把其中一个设为 0 就等于直接砍掉对应分支，这给了模型按数据特性伸缩的余地。
+TeCh 想解决的是：医学信号本质由中枢统一驱动，可标准注意力却把每个通道当成平等节点彼此乱串，结果把噪声通道也直接灌进了主模式。它的破法是把"通道之间怎么通信"这件事整个换掉。输入是一段医学时间序列 $X \in \mathbb{R}^{T \times C}$（$T$ 个时间步、$C$ 个通道），先经**自适应双分词**切成两套 token——一套侧重时间、一套侧重通道，分别送进 $M$ 个和 $N$ 个 Transformer Encoder。这些 Encoder 的骨架不变，唯独把标准注意力换成 **CoTAR** 模块。最后**分类范式**把两个分支的输出在通道维度取均值后相加，再过一个线性层投影成分类结果 $\hat{Y} \in \mathbb{R}^K$。$M$、$N$ 都是可调的，把其中一个设为 0 就等于直接砍掉对应分支，这给了模型按数据特性伸缩的余地。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["医学时间序列<br/>X ∈ ℝ^(T×C)"] --> TOK["自适应双分词<br/>切成偏时间 / 偏通道两套 token"]
+    TOK -->|"Temporal embedding<br/>E ∈ ℝ^(P×D)"| TE["M× Transformer Encoder<br/>CoTAR 替标准注意力"]
+    TOK -->|"Channel embedding<br/>H ∈ ℝ^(C×D)"| CE["N× Transformer Encoder<br/>CoTAR 替标准注意力"]
+    TE --> FUSE["分类范式<br/>两分支沿 token 维取均值后相加"]
+    CE --> FUSE
+    FUSE --> OUT["线性投影<br/>分类结果 Ŷ ∈ ℝ^K"]
+```
 
 ### 关键设计
 
-**1. CoTAR：用一个全局核心 token 当"中央服务器"，替掉 peer-to-peer 注意力**
-
-这是全篇的核心，针对的痛点正是标准注意力的去中心化结构——$QK^T$ 让每个 token 和所有 token 直接交互，一个噪声通道可以毫无阻拦地污染其他所有通道。CoTAR 借用分布式系统里的星型拓扑思路：不让通道两两直连，而是设一个核心 token 充当中转站，所有通信都得先汇总到它、再由它分发回去。
-
-具体分两步。聚合阶段：给定输入 $O \in \mathbb{R}^{S \times D}$，先用 MLP 投影成 $\tilde{O} \in \mathbb{R}^{S \times D_c}$，沿 token 维度做 Softmax 得到一组权重 $O_w$，再加权求和把所有 token 压成单个核心 token $\tilde{C_o} \in \mathbb{R}^{D_c}$——这一步相当于"全体通道先把信息上交给中枢"。重分配阶段：把核心 token Repeat 回每个 token 位置，与原始 $O$ 拼接后过另一个 MLP，输出 $A \in \mathbb{R}^{S \times D}$——相当于"中枢再把整合后的全局状态广播回每个通道"。整个过程只有矩阵-向量乘法，没有 $S \times S$ 的注意力矩阵，复杂度因此从 $O(S^2)$ 降到 $O(S)$。
-
-这样换来的好处不止是省算力：噪声通道现在只能先进核心 token、再间接影响别人，中枢这一层天然起到了缓冲，所以 CoTAR 对加噪比标准注意力鲁棒得多。
-
-**2. 自适应双分词：同时拿到偏时间和偏通道的两套表示，按数据集自己挑**
+**1. 自适应双分词：同时备齐偏时间和偏通道两套表示，按数据集自己挑**
 
 医学数据里时间依赖和通道依赖的相对重要性差别很大，单一分词方式必然在某些数据集上吃亏，这个设计就是为了把两种视角都备齐。Temporal embedding 把连续 $L$ 个时间步跨所有通道展平后再嵌入，得到 $E \in \mathbb{R}^{P \times D}$（$P = \lceil T/L \rceil$），更擅长抓时间动态；Channel embedding 则把每个通道的整条时间序列整体嵌入成 $H \in \mathbb{R}^{C \times D}$，保留单通道的完整语义，更擅长抓通道间交互。
 
 之所以两套都要，是因为偏好确实因数据而异：TDBrain 几乎只靠时间依赖（单 Temporal 分支就到 93.21%），PTB 几乎只靠通道依赖（单 Channel 分支就到 85.96%），而 APAVA 两者缺一不可（Dual 比任一单分支高出 11% 以上）。靠调节 $M$、$N$ 的比例，模型就能自适应地贴合不同数据集的结构。
 
+**2. CoTAR：用一个全局核心 token 当"中央服务器"，替掉 peer-to-peer 注意力**
+
+这是全篇的核心，针对的痛点正是标准注意力的去中心化结构——$QK^T$ 让每个 token 和所有 token 直接交互，一个噪声通道可以毫无阻拦地污染其他所有通道。CoTAR（Core Token Aggregation-Redistribution，核心 token 聚合-重分配）借用分布式系统里的星型拓扑思路：不让通道两两直连，而是设一个核心 token 充当中转站，所有通信都得先汇总到它、再由它分发回去。它直接替换掉上面两套分词送进 Encoder 后的标准注意力层。
+
+具体分两步。聚合阶段：给定输入 $O \in \mathbb{R}^{S \times D}$，先用 MLP 投影成 $\tilde{O} \in \mathbb{R}^{S \times D_c}$，沿 token 维度做 Softmax 得到一组权重 $O_w$，再加权求和把所有 token 压成单个核心 token $\tilde{C_o} \in \mathbb{R}^{D_c}$——这一步相当于"全体通道先把信息上交给中枢"。重分配阶段：把核心 token Repeat 回每个 token 位置，与原始 $O$ 拼接后过另一个 MLP，输出 $A \in \mathbb{R}^{S \times D}$——相当于"中枢再把整合后的全局状态广播回每个通道"。整个过程只有矩阵-向量乘法，没有 $S \times S$ 的注意力矩阵，复杂度因此从 $O(S^2)$ 降到 $O(S)$。
+
+这样换来的好处不止是省算力：噪声通道现在只能先进核心 token、再间接影响别人，中枢这一层天然起到了缓冲，所以 CoTAR 对加噪比标准注意力鲁棒得多。
+
 **3. 分类范式：两分支表示直接相加再投影，融合不引入额外参数**
 
-最后要把两条分支的信息合到一起出结果。Temporal 分支输出 $O_{te}$ 沿 token 维度取均值得 $\tilde{O}_{te}$，Channel 分支同样得到 $\tilde{O}_{ch}$，两者相加后过线性层：
+最后要把两条分支经 CoTAR Encoder 处理后的信息合到一起出结果。Temporal 分支输出 $O_{te}$ 沿 token 维度取均值得 $\tilde{O}_{te}$，Channel 分支同样得到 $\tilde{O}_{ch}$，两者相加后过线性层：
 
 $$\hat{Y} = (\tilde{O}_{te} + \tilde{O}_{ch})W_y + b_y$$
 

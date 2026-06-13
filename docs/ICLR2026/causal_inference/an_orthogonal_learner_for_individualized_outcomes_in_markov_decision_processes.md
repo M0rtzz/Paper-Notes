@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-DRQQ-learner是一个两阶段元学习器。输入是行为策略 $\pi_b$ 产生的观测数据集 $\mathcal{D}_{\pi_b}$（由i.i.d.轨迹分解为一步转移 $(S, A, R, \tilde{S})$ 的集合）以及目标评估策略 $\pi_e$。第一阶段估计三个nuisance函数：行为策略 $\hat{\pi}_b$、密度比 $\hat{w}_{e/b}$、初始Q函数估计 $\hat{Q}^1_{\pi_e}$。第二阶段通过最小化一个由EIF推导出的Neyman正交损失 $\hat{L}^3_{\pi_e}$ 来精炼Q函数估计，输出最终的 $\hat{Q}^{DR}_{\pi_e}$。整个框架对第一阶段的具体模型选择不做限制——可以用神经网络、线性模型或表格方法，第二阶段的模型类 $\mathcal{G}$ 也可以灵活指定（如要求可解释性时用线性模型）。
+DRQQ-learner 把一个看似纯理论的问题落成一条清晰的流水线，整体逻辑分三步走。先把 Q 函数翻译成因果量，从而能诊断出现有方法（Q-regression / FQE）的 plug-in 偏差；再据此推导有效影响函数（EIF）、构造一个 Neyman 正交损失 $\hat{L}^3_{\pi_e}$；最后用「先粗估 nuisance、再用正交损失去偏」的两阶段元学习器把 Q 函数估出来，并附带可证明的统计保证。
+
+具体地，输入是行为策略 $\pi_b$ 产生的观测数据集 $\mathcal{D}_{\pi_b}$（由 i.i.d. 轨迹分解为一步转移 $(S, A, R, \tilde{S})$ 的集合）以及目标评估策略 $\pi_e$。第一阶段估计三个 nuisance 函数：行为策略 $\hat{\pi}_b$、密度比 $\hat{w}_{e/b}$、初始 Q 函数估计 $\hat{Q}^1_{\pi_e}$。第二阶段在给定 nuisance 后，对正交损失 $\hat{L}^3_{\pi_e}$ 做经验风险最小化来精炼 Q 估计，输出最终的 $\hat{Q}^{DR}_{\pi_e}$。整个框架对第一阶段的具体模型选择不做限制——神经网络、线性模型或表格方法都行，第二阶段的模型类 $\mathcal{G}$ 也可灵活指定（如要求可解释性时用线性模型）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["观测数据 D + 评估策略 π_e"] --> DIAG["因果识别 + plug-in 诊断<br/>Q 写成因果量<br/>揭示 Q-regression/FQE 一阶偏差"]
+    DIAG --> EIF["推导 EIF<br/>构造 Neyman 正交损失 L³"]
+    IN --> S1
+    subgraph S1["第一阶段：估三个 nuisance"]
+        direction TB
+        N1["行为策略 π_b"]
+        N2["密度比 w_e/b"]
+        N3["初始 Q 估计 Q¹"]
+    end
+    S1 --> S2["第二阶段：最小化 L³<br/>对 Q¹ 去偏精炼"]
+    EIF -->|提供正交损失| S2
+    S2 --> OUT["输出 Q^DR<br/>双重鲁棒 / 正交 / 准 oracle 高效"]
+```
 
 ### 关键设计
 

@@ -42,15 +42,35 @@ tags:
 
 ### 整体框架
 
-AtteNT先在参数空间解析注意力对梯度结构的影响，再用动态ANTK把这条参数空间的演化轨迹映射回函数空间，证明它与功能梯度下降收敛到同一个核，从而把原本只适用于MLP的非参教学理论合法地搬到注意力学习器上；最后落地为一个贪心选样算法——每轮挑预测偏差最大的样本优先训练来加速收敛。
+AtteNT 要解决的问题是注意力学习器（Transformer、ViT）训练太贵，想用"挑样本"的方式加速、又不靠拍脑袋。它的思路分三步走通一条从参数空间到函数空间、再落回训练算法的链路：先在参数空间解析注意力让梯度结构变成什么样，再用动态 ANTK 把这条参数演化轨迹映射回函数空间、证明它与功能梯度下降收敛到同一个核，从而把原本只适用于多层感知机（MLP）的非参教学（nonparametric teaching）理论合法地搬到注意力学习器上；有了这座理论桥梁，最后落地为一个贪心选样算法——每轮挑预测偏差最大的样本优先训练来加速收敛。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["注意力学习器训练<br/>(参数空间 SGD，成本高)"] --> B["重要性自适应参数梯度<br/>解析 Q/K/V 给每个序列<br/>元素赋的重要性权重 ω"]
+    B --> C["动态 ANTK 与功能梯度一致性<br/>参数演化 Taylor 展开→函数空间<br/>ANTK 收敛到重要性自适应典范核"]
+    C --> D["理论桥梁<br/>参数梯度下降 ≡ 功能梯度下降<br/>非参教学可合法用于注意力学习器"]
+    D --> E["AtteNT 贪心教学算法<br/>每轮选预测偏差最大的样本"]
+    E --> F["加速训练<br/>LLM -13% / ViT -20.58%<br/>精度不降反升"]
+```
 
 ### 关键设计
 
-**1. 注意力的重要性自适应参数梯度：解释注意力为何让梯度结构区别于MLP。** 把非参教学从MLP扩展到注意力网络的第一道坎，是注意力机制三次调用输入（Q、K、V）后参数梯度长什么样并不清楚。作者对单层单头自注意力网络 $f_\theta(\mathbf{S}) = \text{softmax}(\frac{\mathcal{Q}(\mathbf{S})\mathcal{K}(\mathbf{S})^\top}{\sqrt{d}})\mathcal{V}(\mathbf{S})$ 解析推导出参数梯度的显式形式，以对 Query 权重列的梯度为例为 $\frac{\partial f_\theta(\mathbf{S})}{\partial \mathbf{W}^Q_{(:,i)}} = [d^{-1/2}\,\mathbf{S}_{(j,:)}\cdot\omega_j]_{S\times d}$。这里的关键是梯度不只依赖序列元素特征 $\mathbf{S}_{(j,:)}$，还乘上一个元素特定的标量 $\omega_j$——它由 $\mathcal{Q},\mathcal{K},\mathcal{V}$ 共同决定，正是注意力给每个序列元素赋的重要性权重。由此推出两个干净的性质：参数梯度被序列内平均消掉了对序列长度 $S$ 的依赖、只取决于特征维度 $d$；而梯度的行序与输入元素顺序保持一致（等变性），与推理时的排列不变性天然对应。这说明注意力学习器的更新本质是一种"重要性自适应"的更新，为后续把它对齐到非参教学的重要性自适应核埋下伏笔。
+**1. 注意力的重要性自适应参数梯度：解释注意力为何让梯度结构区别于 MLP**
 
-**2. 动态ANTK与功能梯度的一致性：填平参数空间训练与函数空间理论之间的鸿沟。** 非参教学的数学基础是函数空间里的功能梯度下降（FGD），而注意力网络实际跑的是参数空间的 SGD，两者是否等价此前从未被证明。作者对参数演化做 Taylor 展开，把它改写成函数空间形式 $\frac{\partial f_{\theta^t}}{\partial t} = -\frac{\eta}{NS}[\frac{\partial \mathcal{L}}{\partial f_{\theta^t}(\mathbf{S}_1)},\ldots,\frac{\partial \mathcal{L}}{\partial f_{\theta^t}(\mathbf{S}_N)}]\cdot[K_{\theta^t}(\mathbf{S}_i,\cdot)]_N + o(\cdot)$，其中 $K_{\theta^t}(\mathbf{S}_i,\cdot)\coloneqq\langle\frac{\partial f_{\theta^t}(\mathbf{S}_i)}{\partial\theta^t},\frac{\partial f_{\theta^t}(\cdot)}{\partial\theta^t}\rangle$ 就是把 NTK 扩展到注意力网络得到的动态 Attention Neural Tangent Kernel（ANTK）。核心结论（Theorem 3）是：在凸损失 $\mathcal{L}$ 和给定训练集下，这个动态核逐点收敛到 FGD 里的重要性自适应典范核，即 $\lim_{t\to\infty}K_{\theta^t}(\mathbf{S}_i,\cdot)=K(\mathbf{S}_i,\cdot)$。这条收敛把"用参数梯度训练注意力网络"和"用功能梯度教一个重要性自适应非参学习器"画上了等号，非参教学的整套工具因此可以名正言顺地用上。
+把非参教学从 MLP 扩展到注意力网络（attention neural network, ANN）的第一道坎，是注意力机制三次调用输入（Q、K、V）后参数梯度长什么样并不清楚。作者对单层单头自注意力网络 $f_\theta(\mathbf{S}) = \text{softmax}(\frac{\mathcal{Q}(\mathbf{S})\mathcal{K}(\mathbf{S})^\top}{\sqrt{d}})\mathcal{V}(\mathbf{S})$ 解析推导出参数梯度的显式形式，以对 Query 权重列的梯度为例为 $\frac{\partial f_\theta(\mathbf{S})}{\partial \mathbf{W}^Q_{(:,i)}} = [d^{-1/2}\,\mathbf{S}_{(j,:)}\cdot\omega_j]_{S\times d}$。这里的关键是梯度不只依赖序列元素特征 $\mathbf{S}_{(j,:)}$，还乘上一个元素特定的标量 $\omega_j$——它由 $\mathcal{Q},\mathcal{K},\mathcal{V}$ 共同决定，正是注意力给每个序列元素赋的重要性权重。由此推出两个干净的性质：参数梯度被序列内平均消掉了对序列长度 $S$ 的依赖、只取决于特征维度 $d$；而梯度的行序与输入元素顺序保持一致（等变性），与推理时的排列不变性天然对应。这说明注意力学习器的更新本质是一种"重要性自适应"的更新，为后续把它对齐到非参教学的重要性自适应核埋下伏笔。
 
-**3. AtteNT贪心教学算法：把理论等价性落地为可加速训练的选样规则。** 有了上面的桥梁，加速训练就归结为在函数空间里挑能让功能梯度投影最大的样本。由于凸损失对预测的偏导范数与预测偏差正相关，选择规则可以简化成直接挑预测偏差最大的一批样本：$\{\mathbf{S}_i\}_m^* = \arg\max_{\{\mathbf{S}_i\}_m\subseteq\{\mathbf{S}_i\}_N}\|[f_\theta(\mathbf{S}_i)-f^*(\mathbf{S}_i)]_m\|_\mathcal{F}$，直觉就是"先教模型最不懂的"——这些样本梯度最陡、收敛最快，与课程学习的思路一致但有了核理论支撑。这种选法并非启发式而有保证：在 Lipschitz 光滑和有界核条件下，Proposition 4 给出损失的充分递减 $\frac{\partial \mathcal{L}}{\partial t}\leq-\frac{\eta\gamma}{2}(\frac{1}{NS}\sum_{i,j}\frac{\partial \mathcal{L}}{\partial f_{\theta^t}(\mathbf{S}_i)_{(j,:)}})^2$，因此选样在压缩数据量的同时不会牺牲收敛性。
+**2. 动态 ANTK 与功能梯度的一致性：填平参数空间训练与函数空间理论之间的鸿沟**
+
+非参教学的数学基础是函数空间里的功能梯度下降（functional gradient descent, FGD），而注意力网络实际跑的是参数空间的随机梯度下降（SGD），两者是否等价此前从未被证明。作者对参数演化做 Taylor 展开，把它改写成函数空间形式
+
+$$\frac{\partial f_{\theta^t}}{\partial t} = -\frac{\eta}{NS}\left[\frac{\partial \mathcal{L}}{\partial f_{\theta^t}(\mathbf{S}_1)},\ldots,\frac{\partial \mathcal{L}}{\partial f_{\theta^t}(\mathbf{S}_N)}\right]\cdot[K_{\theta^t}(\mathbf{S}_i,\cdot)]_N + o(\cdot)$$
+
+其中 $K_{\theta^t}(\mathbf{S}_i,\cdot)\coloneqq\langle\frac{\partial f_{\theta^t}(\mathbf{S}_i)}{\partial\theta^t},\frac{\partial f_{\theta^t}(\cdot)}{\partial\theta^t}\rangle$ 就是把神经正切核（neural tangent kernel, NTK）扩展到注意力网络得到的动态注意力神经正切核（attention neural tangent kernel, ANTK）。核心结论（Theorem 3）是：在凸损失 $\mathcal{L}$ 和给定训练集下，这个动态核逐点收敛到 FGD 里的重要性自适应典范核，即 $\lim_{t\to\infty}K_{\theta^t}(\mathbf{S}_i,\cdot)=K(\mathbf{S}_i,\cdot)$。这条收敛把"用参数梯度训练注意力网络"和"用功能梯度教一个重要性自适应非参学习器"画上了等号，非参教学的整套工具因此可以名正言顺地用上——这正是框架图里"参数梯度下降 ≡ 功能梯度下降"那座桥梁。
+
+**3. AtteNT 贪心教学算法：把理论等价性落地为可加速训练的选样规则**
+
+有了上面的桥梁，加速训练就归结为在函数空间里挑能让功能梯度投影最大的样本。由于凸损失对预测的偏导范数与预测偏差正相关，选择规则可以简化成直接挑预测偏差最大的一批样本：$\{\mathbf{S}_i\}_m^* = \arg\max_{\{\mathbf{S}_i\}_m\subseteq\{\mathbf{S}_i\}_N}\|[f_\theta(\mathbf{S}_i)-f^*(\mathbf{S}_i)]_m\|_\mathcal{F}$，直觉就是"先教模型最不懂的"——这些样本梯度最陡、收敛最快，与课程学习（curriculum learning）的思路一致但有了核理论支撑。这种选法并非启发式而有保证：在 Lipschitz 光滑和有界核条件下，Proposition 4 给出损失的充分递减 $\frac{\partial \mathcal{L}}{\partial t}\leq-\frac{\eta\gamma}{2}(\frac{1}{NS}\sum_{i,j}\frac{\partial \mathcal{L}}{\partial f_{\theta^t}(\mathbf{S}_i)_{(j,:)}})^2$，因此选样在压缩数据量的同时不会牺牲收敛性。实际落地时配合 Soft 选样（Gumbel-Top-k 概率采样）和递增式选样比例，兼顾时间与鲁棒性。
 
 ## 实验关键数据
 

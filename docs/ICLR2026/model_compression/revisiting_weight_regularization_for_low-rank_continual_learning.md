@@ -41,13 +41,29 @@ tags:
 
 ### 整体框架
 
-EWC-LoRA 抛弃"每个任务一组 LoRA"的扩张式做法，全程只维护一组共享的 LoRA 模块和一个对角 Fisher 矩阵。每个新任务在这组共享模块上更新，并用累积的 Fisher 信息把更新方向约束在不破坏旧知识的子空间里，任务训练结束后把低秩更新合并回基础权重，从而在恒定存储下完成持续学习。
+EWC-LoRA 抛弃"每个任务一组 LoRA"的扩张式做法，全程只维护一组共享的 LoRA 模块和一个对角 Fisher 矩阵。每个新任务在这组共享模块上更新，并用累积的 Fisher 信息把更新方向约束在不破坏旧知识的子空间里，任务训练结束后把低秩更新合并回基础权重，并把本任务的重要性度量叠加进累积 Fisher，留给下一个任务继续约束——整条流水线在恒定存储下完成持续学习。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["新任务 T(t) 数据<br/>+ 基础权重 W(t-1)"] --> LORA["低秩参数化<br/>共享 LoRA 分支 ΔW=AB<br/>(冻结 W，只训 A、B)"]
+    LORA --> TRAIN["全维空间 Fisher 正则训练<br/>任务损失 + λ/2 · vec(AB)ᵀ F_cum vec(AB)"]
+    TRAIN --> MERGE["合并更新<br/>W(t) = W(t-1) + AB"]
+    MERGE --> FISHER["梯度等价 Fisher 估计<br/>算本任务 F(t)，免存全维更新"]
+    FISHER --> ACC["累积对角 Fisher<br/>F_cum ← F_cum + F(t)"]
+    ACC -->|约束下一任务| TRAIN
+    MERGE --> OUT["下一任务 / 推理"]
+```
 
 ### 关键设计
 
-**1. 低秩参数化的问题形式化：把权重更新锁在低秩子空间，为正则化提供恒定大小的载体。** 对于任务 $\mathcal{T}_t$，方法不直接改动庞大的基础权重，而是把这一任务带来的改变限制在一个低秩增量上，即 $\mathbf{W}_t = \mathbf{W}_{t-1} + \Delta\mathbf{W} = \mathbf{W}_{t-1} + \mathbf{AB}$，其中 $\mathbf{A} \in \mathbb{R}^{d_O \times r}$、$\mathbf{B} \in \mathbb{R}^{r \times d_I}$，秩 $r \ll \min(d_I, d_O)$。这样每个任务只需训练 $\mathbf{A}$ 和 $\mathbf{B}$ 两个小矩阵，既继承了 LoRA 的参数高效性，又让后续要正则化的对象始终是同一组共享参数，避免了存储随任务数线性膨胀。
+**1. 低秩参数化的问题形式化：把权重更新锁在低秩子空间，为正则化提供恒定大小的载体**
 
-**2. 全维空间 Fisher 正则化：在 $\Delta\mathbf{W}$ 而非 A、B 上度量重要性，保住两者的交互信息。** 朴素地把 EWC 套到 LoRA 上，会分别给 $\mathbf{A}$ 和 $\mathbf{B}$ 各算一份 Fisher 再各自惩罚，但 $\mathbf{A}$、$\mathbf{B}$ 只有乘起来才有物理意义，拆开度量会丢掉两者的耦合、扭曲重要性估计。EWC-LoRA 因此把正则化作用在合成后的全维增量 $\Delta\mathbf{W}=\mathbf{AB}$ 上：
+对于任务 $\mathcal{T}_t$，方法不直接改动庞大的基础权重，而是把这一任务带来的改变限制在一个低秩增量上，即 $\mathbf{W}_t = \mathbf{W}_{t-1} + \Delta\mathbf{W} = \mathbf{W}_{t-1} + \mathbf{AB}$，其中 $\mathbf{A} \in \mathbb{R}^{d_O \times r}$、$\mathbf{B} \in \mathbb{R}^{r \times d_I}$，秩 $r \ll \min(d_I, d_O)$。这样每个任务只需训练 $\mathbf{A}$ 和 $\mathbf{B}$ 两个小矩阵，既继承了 LoRA 的参数高效性，又让后续要正则化的对象始终是同一组共享参数，避免了存储随任务数线性膨胀。
+
+**2. 全维空间 Fisher 正则化：在 $\Delta\mathbf{W}$ 而非 A、B 上度量重要性，保住两者的交互信息**
+
+朴素地把 EWC 套到 LoRA 上，会分别给 $\mathbf{A}$ 和 $\mathbf{B}$ 各算一份 Fisher 再各自惩罚，但 $\mathbf{A}$、$\mathbf{B}$ 只有乘起来才有物理意义，拆开度量会丢掉两者的耦合、扭曲重要性估计。EWC-LoRA 因此把正则化作用在合成后的全维增量 $\Delta\mathbf{W}=\mathbf{AB}$ 上：
 
 $$
 \mathcal{L}_t'(\mathbf{A}, \mathbf{B}) = \mathcal{L}_t(\mathbf{A}, \mathbf{B}) + \frac{\lambda}{2} \text{vec}(\mathbf{AB})^\top \mathbf{F}_{t-1}^{\text{cum}} \text{vec}(\mathbf{AB})
@@ -64,7 +80,9 @@ $$
 
 分别度量 $\mathbf{F}_{\mathbf{A}}, \mathbf{F}_{\mathbf{B}}$ 比全维方案低约 1.5%，印证了交互信息不可丢弃。
 
-**3. 借梯度等价免去全维存储的 Fisher 估计：准确度量参数重要性，又不付出三倍模型的代价。** 在任务 $\mathcal{T}_t$ 训练收敛后，方法按经典定义估计对角 Fisher：
+**3. 借梯度等价免去全维存储的 Fisher 估计：准确度量参数重要性，又不付出三倍模型的代价**
+
+在任务 $\mathcal{T}_t$ 训练收敛后，方法按经典定义估计对角 Fisher：
 
 $$
 F_t^{i,i} = \mathbb{E}_{x \sim \mathcal{D}_t}\left[\mathbb{E}_{y \sim p_{\mathbf{W}_t^*}}\left[\left(\frac{\partial \log p_{\mathbf{W}}(y|x)}{\partial w_i}\bigg|_{\mathbf{W}=\mathbf{W}_t^*}\right)^2\right]\right]

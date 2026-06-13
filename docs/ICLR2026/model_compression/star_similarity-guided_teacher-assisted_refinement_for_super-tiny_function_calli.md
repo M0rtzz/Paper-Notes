@@ -37,7 +37,17 @@ tags:
 
 ### 整体框架
 
-STAR 想把 Qwen3-8B 的 function calling 能力压进 0.6B 的端侧小模型，难点在于小模型直接 SFT 容易死记数据、直接 RL 又训不稳，而把蒸馏和 RL 串起来还会引入新的坑（top-k 截断下的崩溃、二值奖励不匹配多解任务）。它的解法是一条两阶段课程：先用「约束知识蒸馏 CKD」把教师的知识灌给学生、同时刻意保住学生后续 RL 要用的探索能力，再用「相似度引导的强化学习 Sim-RL」拿连续奖励精炼学生策略。完整流程是：教师先自适应蒸馏数据 → CKD 蒸馏到学生 → Sim-RL 精炼学生。
+STAR 想把 Qwen3-8B 的 function calling 能力压进 0.6B 的端侧小模型，难点在于小模型直接 SFT 容易死记数据、直接 RL 又训不稳，而把蒸馏和 RL 串起来还会引入新的坑（top-k 截断下的崩溃、二值奖励不匹配多解任务）。它的解法是一条三阶段课程：先用「相似度引导的强化学习 Sim-RL」让教师自适应蒸馏数据，再用「约束知识蒸馏 CKD」把校正后教师的知识灌给学生、同时刻意保住学生后续 RL 要用的探索能力，最后再用 Sim-RL 拿连续奖励精炼学生策略。CKD 在第二步保住的探索能力，正是第三步 RL 跑得动的前提，三个阶段环环相扣而非简单拼接。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["蒸馏数据 D<br/>(function calling 样本)"] --> T["教师 Qwen3-8B"]
+    T -->|"Sim-RL 自适应<br/>(teacher correction)"| TC["校正后教师<br/>生成增强数据"]
+    TC --> CKD["CKD 蒸馏<br/>top-k FKL + 尾部惩罚<br/>保住探索能力"]
+    CKD --> S["0.6B 学生<br/>(已蒸馏, 仍能探索)"]
+    S -->|"Sim-RL 精炼<br/>连续奖励 + GRPO"| OUT["端侧 function<br/>calling 模型"]
+```
 
 ### 关键设计
 

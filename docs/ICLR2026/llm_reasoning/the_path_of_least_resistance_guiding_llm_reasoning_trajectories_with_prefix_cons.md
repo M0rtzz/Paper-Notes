@@ -36,7 +36,24 @@ Self-Consistency（SC）解码是当前 LLM 推理的强力基线：采样多条
 ## 方法详解
 
 ### 整体框架
-PoLR 的核心观察是：Self-Consistency 把所有 $N$ 条推理链都跑到底太浪费，而推理链的前几百个 token 就已经透露了它要走哪条路。于是 PoLR 先只采样 $N$ 条短前缀（长度 $L_p$），把它们聚类，找出最大的"主导簇"，只把这个簇里的 $K$ 条（$K \ll N$）继续展开成完整推理链再做多数投票——计算被集中分配给最常见、也最可能正确的那条"最小阻力路径"。
+PoLR 的核心观察是：Self-Consistency 把所有 $N$ 条推理链都跑到底太浪费，而推理链的前几百个 token 就已经透露了它要走哪条路。于是 PoLR 先只采样 $N$ 条短前缀（长度 $L_p$），把它们聚类，找出最大的"主导簇"，只把这个簇里的 $K$ 条（$K \ll N$）继续展开成完整推理链再做多数投票——计算被集中分配给最常见、也最可能正确的那条"最小阻力路径"。整条管线纯推理时运行、无需训练，新增的只有几毫秒级的聚类开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["问题 x"] --> P
+    subgraph S1["前缀采样 + TF-IDF 层次聚类（设计 1）"]
+        direction TB
+        P["采样 N 条推理链<br/>各只生成到前缀长度 Lp"] --> E["TF-IDF 词袋编码<br/>+ 余弦相似度凝聚聚类"]
+    end
+    E --> S2
+    subgraph S2["主导簇展开 + 多数投票（设计 2）"]
+        direction TB
+        C["取最大簇 C*<br/>含 K 条前缀（K≪N）"] --> EX["仅把 C* 的 K 条前缀<br/>续写成完整推理链"] --> V["对 K 个答案<br/>多数投票"]
+    end
+    V --> A["最终答案"]
+    S2 -.->|"设计 3：低 NMI 保准确率<br/>高结构偏斜 κ 保效率"| C
+```
 
 ### 关键设计
 

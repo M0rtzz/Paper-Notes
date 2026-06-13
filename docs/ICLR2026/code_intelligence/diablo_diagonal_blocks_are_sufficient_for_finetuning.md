@@ -47,11 +47,17 @@ DiaBlo 把每个线性层的权重 $\mathbf{W} \in \mathbb{R}^{m_1 \times m_2}$ 
 
 ### 关键设计
 
-**1. 对角块直接更新：用结构化稀疏绕开低秩乘积的非凸优化。** LoRA 把更新写成 $\Delta\mathbf{W} = \mathbf{AB}$，目标函数对 $\mathbf{A}, \mathbf{B}$ 是非凸的，二者的梯度 $\mathbf{g}_{\mathbf{A}} = \mathbf{g}_{\mathbf{W}} \mathbf{B}^\top$ 和 $\mathbf{g}_{\mathbf{B}} = \mathbf{A}^\top \mathbf{g}_{\mathbf{W}}$ 互相缠绕，所以它对初始化极度敏感、训练初期容易出现 $\mathbf{A}$ 矩阵梯度消失，DoRA/PiSSA/MiLoRA 等变体本质都是在给这个乘积结构打补丁。DiaBlo 干脆不做乘积，直接把可训练参数放进权重的对角子块 $\mathbf{D}_i$。此时对角块的梯度 $\mathbf{g}_{\mathbf{D}_i} = \mathbf{X}_i^\top \mathbf{g}_{\mathbf{Y}_i}$ 恰好等于全量微调里对应子块 $\mathbf{W}_{ii}$ 的梯度，不经过任何中间乘积变量，因此从全零初始化出发也不会梯度消失——这正是它无需任何初始化 trick 就能稳定收敛的根源。
+**1. 对角块直接更新：用结构化稀疏绕开低秩乘积的非凸优化**
 
-**2. batched matmul 实现：让结构化稀疏在 GPU 上真正跑得快。** 早期那些靠随机 mask 或重要性选块的稀疏微调虽然也避开了低秩分解，但稀疏模式不规则、内存访问跳来跳去，GPU 利用率很低。DiaBlo 的对角块结构是规整的，前向计算 $\mathbf{X}\mathbf{D}$ 不必真的拼出稀疏矩阵 $\mathbf{D}$，只要把 $\mathbf{X}$ reshape 成 $b \times N \times d_1$，一行 `torch.einsum("bNd1,Nd1d2->bNd2", X, D)` 就完成 batched matmul，反向传播同理。同等参数量下它的计算量 $bNd^2$ 与 LoRA 的 $2bmr$ 持平，因此训练速度和 LoRA 一样快，而比解耦幅度/方向的 DoRA 快约 2.8 倍（170 vs 480 min/epoch）。
+LoRA 把更新写成 $\Delta\mathbf{W} = \mathbf{AB}$，目标函数对 $\mathbf{A}, \mathbf{B}$ 是非凸的，二者的梯度 $\mathbf{g}_{\mathbf{A}} = \mathbf{g}_{\mathbf{W}} \mathbf{B}^\top$ 和 $\mathbf{g}_{\mathbf{B}} = \mathbf{A}^\top \mathbf{g}_{\mathbf{W}}$ 互相缠绕，所以它对初始化极度敏感、训练初期容易出现 $\mathbf{A}$ 矩阵梯度消失，DoRA/PiSSA/MiLoRA 等变体本质都是在给这个乘积结构打补丁。DiaBlo 干脆不做乘积，直接把可训练参数放进权重的对角子块 $\mathbf{D}_i$。此时对角块的梯度 $\mathbf{g}_{\mathbf{D}_i} = \mathbf{X}_i^\top \mathbf{g}_{\mathbf{Y}_i}$ 恰好等于全量微调里对应子块 $\mathbf{W}_{ii}$ 的梯度，不经过任何中间乘积变量，因此从全零初始化出发也不会梯度消失——这正是它无需任何初始化 trick 就能稳定收敛的根源。
 
-**3. 表达力的理论保证：同参数预算下严格强于 LoRA。** 在线性最小二乘设定下，DiaBlo 的最优解就是全量微调的解；并且达到这一点所需的参数量为 $Nd_1d_2 = m_1 m_2 / N \geq m_2 r$，而 LoRA 至少要 $(m_1 + m_2)r$ 个参数才能表达秩为 $r$ 的更新，于是在相同参数预算下 DiaBlo 的表达力是严格更强、而非近似更强。把视角推广到非线性网络，当激活 $\mathbf{X}$ 与输出梯度 $\mathbf{g}_{\mathbf{Y}}$ 满足低秩条件（这一条件已有文献的实验支持）时，DiaBlo 的驻点同样落在全量微调的驻点上，说明这套对角块参数化在实践中也不会牺牲掉可达到的解。
+**2. batched matmul 实现：让结构化稀疏在 GPU 上真正跑得快**
+
+早期那些靠随机 mask 或重要性选块的稀疏微调虽然也避开了低秩分解，但稀疏模式不规则、内存访问跳来跳去，GPU 利用率很低。DiaBlo 的对角块结构是规整的，前向计算 $\mathbf{X}\mathbf{D}$ 不必真的拼出稀疏矩阵 $\mathbf{D}$，只要把 $\mathbf{X}$ reshape 成 $b \times N \times d_1$，一行 `torch.einsum("bNd1,Nd1d2->bNd2", X, D)` 就完成 batched matmul，反向传播同理。同等参数量下它的计算量 $bNd^2$ 与 LoRA 的 $2bmr$ 持平，因此训练速度和 LoRA 一样快，而比解耦幅度/方向的 DoRA 快约 2.8 倍（170 vs 480 min/epoch）。
+
+**3. 表达力的理论保证：同参数预算下严格强于 LoRA**
+
+在线性最小二乘设定下，DiaBlo 的最优解就是全量微调的解；并且达到这一点所需的参数量为 $Nd_1d_2 = m_1 m_2 / N \geq m_2 r$，而 LoRA 至少要 $(m_1 + m_2)r$ 个参数才能表达秩为 $r$ 的更新，于是在相同参数预算下 DiaBlo 的表达力是严格更强、而非近似更强。把视角推广到非线性网络，当激活 $\mathbf{X}$ 与输出梯度 $\mathbf{g}_{\mathbf{Y}}$ 满足低秩条件（这一条件已有文献的实验支持）时，DiaBlo 的驻点同样落在全量微调的驻点上，说明这套对角块参数化在实践中也不会牺牲掉可达到的解。
 
 ## 实验关键数据
 

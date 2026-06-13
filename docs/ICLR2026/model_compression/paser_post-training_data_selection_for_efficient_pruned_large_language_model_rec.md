@@ -51,6 +51,28 @@ tags:
 ### 整体框架
 PASER 要回答的问题是：剪枝把 LLM 砍残之后，从一大堆指令数据里挑哪些、挑多少来做恢复训练，才能既省算力又不踩到"越训越坏"的坑。它把这件事拆成一条三段流水线：先把指令数据按"它在练哪种能力"聚成 $K$ 个集群，再根据每种能力退化得有多严重去分配数据预算并在集群内挑性价比最高的样本，最后把那些会跟主体数据打架的冲突指令过滤掉。形式上，输入是剪枝模型 $M_p$、原始模型 $M_o$ 和指令数据集 $D$，三步分别是语义结构化聚类（S2RIC）、能力退化感知选择（CDAIS）、负面效应缓解（NTEM），输出一个满足预算约束 $|S| \leq B$ 的恢复训练子集 $S \subset D$。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["指令数据集 D<br/>+ 剪枝模型 Mp + 原始模型 Mo"]
+    subgraph S2RIC["语义结构化恢复指令聚类（S2RIC）"]
+        direction TB
+        A["SentenceBERT 编码"] --> B["扩散核流形降维"] --> C["NMF 谱聚类<br/>自动定 K 个能力集群"]
+    end
+    subgraph CDAIS["能力退化感知指令选择（CDAIS）"]
+        direction TB
+        D1["按 JSD 算各集群退化分 CDS"] --> D2["退化越狠<br/>分到的预算越多 nk"] --> D3["组内按效率分 IES 选样本"]
+    end
+    subgraph NTEM["负面微调效应缓解（NTEM）"]
+        direction TB
+        E1["概念一致性图 CCG"] --> E2["过滤冲突/无关指令"]
+    end
+    IN --> S2RIC
+    S2RIC --> CDAIS
+    CDAIS --> NTEM
+    NTEM --> OUT["恢复子集 S（|S|≤B）<br/>→ 指令微调恢复训练"]
+```
+
 ### 关键设计
 
 **1. 语义结构化恢复指令聚类（S2RIC）：先把指令按"练哪种能力"分组**

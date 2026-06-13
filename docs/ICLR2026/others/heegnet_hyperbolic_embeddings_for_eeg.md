@@ -41,6 +41,24 @@ tags:
 
 HEEGNet 要解决的是 EEG 跨域泛化：既要捕捉认知过程天然的层次结构，又要抹平被试/会话间的分布偏移。它的做法是把信号处理和几何表达拆给两套空间——先用一个欧几里得编码器（时间→空间→时间卷积）从原始 EEG 里抽出频谱-空间-时间特征，再用 ProjX 把这些特征投影到 Lorentz 双曲空间，在双曲空间里做卷积来精炼层次关系，中间穿插 DSMDBN 两阶段域适应消除域偏移，最后由双曲 MLR 分类器输出预测。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["原始 EEG 信号"] --> SG1
+    subgraph SG1["混合欧几里得-双曲架构（设计 1）"]
+        direction TB
+        B["欧几里得编码器<br/>时间→空间→时间卷积<br/>抽频谱-空间-时间特征"] --> C["ProjX 投影到<br/>Lorentz 双曲空间"]
+        C --> D["双曲点卷积<br/>精炼层次关系"]
+    end
+    SG1 --> SG2
+    subgraph SG2["DSMDBN 两阶段域适应（设计 2）"]
+        direction TB
+        E["DSMDBN(1) 矩对齐<br/>gyro 减/乘做 centering+scaling"] --> F["DSMDBN(2) 分布对齐<br/>最小化 HHSW 散度<br/>对齐标准双曲高斯"]
+    end
+    SG2 --> G["双曲 MLR 分类器<br/>点到超平面双曲距离打分"]
+    G --> H["跨域预测"]
+```
+
 ### 关键设计
 
 **1. 混合欧几里得-双曲架构：让信号处理和层次表达各司其职**

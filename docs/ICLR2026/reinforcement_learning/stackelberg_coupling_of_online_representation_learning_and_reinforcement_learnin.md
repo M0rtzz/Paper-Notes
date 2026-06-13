@@ -36,23 +36,41 @@ tags:
 
 ### 整体框架
 
-SCORER 不再把表征和值函数塞进同一个网络一起优化，而是把智能体内部拆成两个有主从关系的玩家：控制网络 $Q_\theta$ 作为 leader 负责值估计、慢速更新以提供稳定目标，感知网络 $f_\phi$ 作为 follower 负责表征学习、快速适应去学一个对当前 leader 策略的最优响应。两者的耦合被形式化成一个 Stackelberg 博弈，再用双时间尺度梯度下降近似求解其均衡。
+SCORER 想解决的是 Deep Q-Learning 里表征和值函数互相拖累的恶性循环：表征要追着非平稳的值目标跑，值估计又依赖不断变化的表征。它的做法是把智能体内部从"一个网络同时学表征和值"拆成两个有主从关系的玩家——控制网络 $Q_\theta$ 作为 leader（领导者）负责值估计、走慢时间尺度以提供稳定目标；感知网络 $f_\phi$ 作为 follower（跟随者）负责表征学习、走快时间尺度去学一个对当前 leader 的最优响应。每一步从 replay buffer 取样本，感知网络先编码出表征、控制网络在表征之上算 Q 值并得到 Bellman 误差；两个玩家各自盯着这个误差的不同统计量优化，再用学习率快慢之比把它们的更新组织成 Stackelberg 博弈（主从博弈）的近似均衡求解。整个改动不碰网络结构，只重排了优化方式。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S["状态 s<br/>（从 replay buffer 采样）"] --> F["感知网络 f_φ（follower）<br/>快时间尺度 α_φ"]
+    F -->|"表征 f_φ(s)"| Q["控制网络 Q_θ（leader）<br/>慢时间尺度 α_θ"]
+    Q -->|"Q 值 + 目标 Y"| D["Bellman 误差<br/>δ = Y − Q_θ(f_φ(s),a)"]
+    D --> FL["Follower 目标<br/>最小化方差 Var(δ)"]
+    D --> LL["Leader 目标<br/>最小化 MSBE E[δ²]"]
+    FL -.->|"更新 φ（快）"| F
+    LL -.->|"更新 θ（慢）"| Q
+```
 
 ### 关键设计
 
-**1. Leader 目标：在最优表征之上最小化 MSBE。** Leader 关心的是值估计准不准，它假定 follower 已经针对自己给出了最优表征 $f_{\phi^*(\theta)}$，在此之上最小化均方 Bellman 误差：
+**1. Leader 目标：在最优表征之上最小化 MSBE**
+
+针对"值估计依赖变化表征"这一半的循环，leader 只关心值估计准不准。它假定 follower 已经针对自己给出了最优表征 $f_{\phi^*(\theta)}$，并在此之上最小化均方 Bellman 误差（MSBE）：
 
 $$\min_\theta \mathcal{L}_{\text{leader}}(Q_\theta, f_{\phi^*(\theta)}) \triangleq \mathbb{E}_{(s,a,r,s') \sim \mathcal{B}} \left[(Y - Q_\theta(f_{\phi^*(\theta)}(s), a))^2\right]$$
 
-这与标准 Q-Learning 的目标一致，区别在于表征不再随值目标被动漂移，而是来自一个对 leader 做出最优响应的独立玩家，从而打破"表征追着非平稳值目标跑、值估计又依赖变化表征"的恶性循环。
+这与标准 Q-Learning 的目标形式一致，区别在于表征不再随值目标被动漂移，而是来自一个专门对 leader 做出最优响应的独立玩家，从而把"表征追着非平稳值目标跑"的那一头给摘了出去。
 
-**2. Follower 目标：最小化 Bellman 误差方差而非 MSBE。** Follower 学表征时不去直接压低 Bellman 误差的均值，而是压低它在一个 batch 内的方差：
+**2. Follower 目标：最小化 Bellman 误差方差而非 MSBE**
+
+针对"表征追着非平稳值目标跑"这一半的循环，follower 学表征时不去直接压低 Bellman 误差的均值，而是压低它在一个 batch 内的方差：
 
 $$\phi^*(\theta) \in \arg\min_\phi \mathcal{L}_{\text{follower}}(f_\phi, Q_\theta) \triangleq \text{Var}_{j \in B}[\delta_j(\phi, \theta)]$$
 
-其中 $\delta_j(\phi, \theta) = Y_j - Q_\theta(f_\phi(s_j), a_j)$ 是第 $j$ 个样本的 Bellman 误差。这是全文最反直觉也最核心的一步：最小化方差等于逼着表征在不同样本上产生更一致的 Bellman 误差，让表征对 TD 学习里那些自举出来的噪声目标更鲁棒，直接对抗致命三要素的根源——而不是像最小化 MSBE 那样和 leader 抢同一个目标、引发梯度冲突。消融也证实了方差目标稳定优于直接最小化 MSBE。
+其中 $\delta_j(\phi, \theta) = Y_j - Q_\theta(f_\phi(s_j), a_j)$ 是第 $j$ 个样本的 Bellman 误差。这是全文最反直觉也最核心的一步：最小化方差等于逼着表征在不同样本上产生更一致的 Bellman 误差，让表征对 TD 学习里那些自举（bootstrapping）出来的噪声目标更鲁棒，直接对抗致命三要素的根源——而不像最小化 MSBE 那样和 leader 抢同一个目标、引发梯度冲突。消融也证实了方差目标稳定优于直接最小化 MSBE。
 
-**3. 双时间尺度近似 Stackelberg 均衡：用学习率比值实现主从顺序。** 上述两个目标合起来是一个双层优化，leader 在外、follower 的最优响应作为约束在内：
+**3. 双时间尺度近似 Stackelberg 均衡：用学习率快慢之比实现主从顺序**
+
+上述两个目标合起来是一个双层优化，leader 在外、follower 的最优响应作为约束在内：
 
 $$\min_\theta \mathcal{L}_{\text{leader}}(Q_\theta, f_{\phi^*(\theta)}) \quad \text{s.t.} \quad \phi^*(\theta) \in \arg\min_\phi \mathcal{L}_{\text{follower}}(f_\phi, Q_\theta)$$
 
@@ -64,7 +82,9 @@ $$\theta_{k+1} \leftarrow \theta_k - \alpha_{\theta,k} \nabla_\theta \mathcal{L}
 
 注意 leader 和 follower 可以从 replay buffer 各采各的 batch（$B_{\text{leader}}$、$B_{\text{follower}}$），消融显示独立采样效果更好。
 
-**4. 即插即用：只动学习率，不动架构。** 上面这套博弈论重构落到代码里出人意料地轻——不新增任何网络模块、不改原有架构，唯一要做的就是把网络切成感知/控制两段、给它们配两条不同的衰减学习率。正因如此 SCORER 能直接挂到 DQN、DDQN、Dueling DQN、R2D2、PQN 等一票现成方法上，且几乎不带来额外计算开销（实测速度 0.99–1.01x）。
+**4. 即插即用：只动学习率，不动架构**
+
+上面这套博弈论重构落到代码里出人意料地轻——不新增任何网络模块、不改原有架构，唯一要做的就是把现成网络切成感知/控制两段、给它们配两条不同的衰减学习率。正因如此 SCORER 能直接挂到 DQN、DDQN、Dueling DQN、R2D2、PQN 等一票现成方法上，且几乎不带来额外计算开销（实测速度 0.99–1.01x）。
 
 ## 实验结果
 

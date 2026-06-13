@@ -41,6 +41,30 @@ tags:
 ### 整体框架
 AlignTok 想解决的问题是：扩散模型需要一个语义丰富的潜空间，但 VAE 从头学语义既间接又不稳定。它的做法是直接复用一个已经具备语义的预训练编码器（DINOv2），通过三个阶段把它逐步"对齐"成一个能重建图像的 tokenizer。整条流程是：先冻住编码器、只训练后面的 adapter 和 decoder 把语义潜空间立起来；再解冻编码器、让它补回低级细节但用一条损失拴住语义不让它跑掉；最后锁死潜空间、单独打磨 decoder 把重建保真度拉满。三个阶段各自只解决一件事，避免语义、细节、重建三个目标同时挤在一起互相拆台。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    X["输入图像 x"] --> S1
+
+    subgraph S1["1. Stage 1 潜空间对齐"]
+        direction TB
+        E1["冻结 DINOv2 编码器"] --> A1["只训 adapter+decoder<br/>无 KL 正则"]
+    end
+    S1 -->|"得到语义锚点 z0*"| S2
+
+    subgraph S2["2. Stage 2 感知对齐"]
+        direction TB
+        E2["解冻编码器<br/>联合训练 E+A+D"] --> L2["语义保持损失<br/>拴住 z0* 不遗忘"]
+    end
+    S2 -->|"潜空间锁定"| S3
+
+    subgraph S3["3. Stage 3 解码器精炼"]
+        direction TB
+        E3["冻结编码器+adapter"] --> D3["只微调 decoder<br/>榨满重建保真度"]
+    end
+    S3 --> OUT["语义丰富的 tokenizer<br/>→ 扩散模型潜空间"]
+```
+
 ### 关键设计
 
 **1. Stage 1 — 潜空间对齐：先用冻结编码器把语义结构立起来**

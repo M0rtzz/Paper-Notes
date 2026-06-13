@@ -44,13 +44,45 @@ tags:
 
 ### 整体框架
 
-NH-GCAT 包含三大层次化模块，分别对应三个空间尺度：
+NH-GCAT 要解决的是：怎么把神经科学里"抑郁症在不同空间尺度上各有异常"的先验，显式塞进一个端到端可训练的 GNN，既提分类又能解释。它的做法是把脑区→环路→全脑三个尺度串成三级层次模块，每一级的输出喂给下一级：
 
-1. **RG-Fusion（残差门控融合）**：局部脑区层面——融合时序 BOLD 动态与静态 FC
-2. **HC-Pooling（层次化环路编码）**：多区域环路层面——按照 DMN/SN/FPN/LN/RN 五大抑郁环路聚合节点
-3. **VLCA（变分潜因果注意力）**：多环路网络层面——推断环路间有向信息流并支持反事实推理
+1. **RG-Fusion（残差门控融合）**：局部脑区尺度——融合时序 BOLD 动态与静态功能连接（FC），产出节点表示
+2. **HC-Pooling（层次化环路编码）**：多区域环路尺度——把节点按 DMN/SN/FPN/LN/RN 五大抑郁环路聚合成环路嵌入
+3. **VLCA（变分潜因果注意力）**：多环路网络尺度——推断环路间有向信息流，用反事实对照量化因果效应，最后给出分类
 
 **问题形式化**：给定 N 个受试者的 rs-fMRI，提取静态特征 $\mathbf{X}^{(1)} \in \mathbb{R}^{n \times m}$（FC + 人口学变量）和 BOLD 时序 $\mathbf{X}^{(2)} \in \mathbb{R}^{n \times T}$，构建图 $\mathcal{G} = (\mathcal{V}, \mathcal{E}, \mathbf{X}^{(1)}, \mathbf{X}^{(2)})$，学习 $f: \mathcal{G} \to \{0, 1\}$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["rs-fMRI 输入<br/>静态特征 X¹（FC+人口学）<br/>+ BOLD 时序 X²"]
+    subgraph RG["RG-Fusion：残差门控融合（脑区尺度）"]
+        direction TB
+        T["时序路径<br/>BOLD→Transformer→双路图卷积"]
+        S["静态路径<br/>静态特征→MLP→GATConv"]
+        T --> G["门控自适应配比<br/>+ Feature/Node 注意力 + 残差"]
+        S --> G
+        G --> VE["变分编码器<br/>→ 节点表示 Z_ve"]
+    end
+    subgraph HC["HC-Pooling：层次化环路编码（环路尺度）"]
+        direction TB
+        P["按神经解剖划进 5 大环路<br/>+ 门控重构环路邻接（个体/MDD/HC 先验）"]
+        P --> TD["top-down Gumbel-Softmax<br/>软分配到三层次"]
+        TD --> BU["bottom-up ChildSumTreeLSTM<br/>逐级聚合 → 环路嵌入 H_DMN…H_RN"]
+    end
+    subgraph VL["VLCA：变分潜因果注意力（网络尺度）"]
+        direction TB
+        AT["5 环路注意力 → 真实潜表示 z_real"]
+        CF["单位矩阵切断交互 → 反事实 z_cf"]
+        AT --> EF["相减估计因果效应<br/>y_effect = f(z_real) − f(z_cf)"]
+        CF --> EF
+    end
+    OUT["MDD/HC 分类<br/>+ 因果环路可解释性"]
+    IN --> RG
+    VE --> HC
+    BU --> VL
+    EF --> OUT
+```
 
 ### 关键设计
 

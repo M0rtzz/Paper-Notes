@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-DROCO 的完整 pipeline 分四步：(1) 在目标域数据 $\mathcal{D}_{\text{tar}}$ 上用 MLE 训练集成动力学模型 $\hat{P}_\psi = \{\hat{P}_{\psi_i}\}_{i=1}^N$；(2) 对源域数据 $(s,a,s')$，用集成模型生成 $N$ 个预测的下一状态 $\{s'_1, \ldots, s'_N\}$，取其中 Q 值最小的作为鲁棒 Bellman target；(3) 对目标域数据使用标准 in-sample Bellman target；(4) 加入动态值惩罚和 Huber loss 稳定训练，最终用 IQL 优化策略。输入是源域和目标域的离线数据集，输出是在目标域部署鲁棒的策略。
+DROCO 要解决的是：目标域真实数据极少、只能借源域大量数据来训练，但既不能被源域那些"目标域里其实到不了"的动力学带偏（训练时鲁棒），又要让最终策略扛得住部署环境的动力学偏移（测试时鲁棒）。它的做法是给 Q 函数更新按数据来源分两条路：源域数据走"取最差情况"的鲁棒 Bellman 更新，目标域数据走老实利用真实动力学的标准 in-sample 更新。难点在于源域那条"取最差"原本要遍历无穷多个可能的转移动力学、根本算不动，于是先用 Wasserstein 对偶把它等价改写成"在观测到的下一状态附近找一个让 Q 最小的状态"，再直接用目标域训出的集成动力学模型生成的若干预测状态来近似这个邻域。最后给集成近似带来的估计偏差打两块补丁——动态值惩罚和 Huber loss，整体在 IQL 框架下优化。输入是源域、目标域两份离线数据集，输出是一个在目标域部署也鲁棒的策略。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["源域数据<br/>(充足)"] --> RCB{"RCB 算子<br/>按数据来源分治"}
+    TAR["目标域数据<br/>(稀少)"] --> RCB
+    TAR --> ENS["集成动力学模型<br/>(MLE, N=7)"]
+    RCB -->|目标域分支| TB["标准 in-sample<br/>Bellman target"]
+    RCB -->|源域分支| DUAL["Wasserstein 对偶重构<br/>动力学不确定集 → 状态 ε 邻域"]
+    ENS --> DUAL
+    DUAL --> RT["取 min Q 的预测状态<br/>鲁棒 Bellman target"]
+    TB --> LOSS["Q 损失<br/>动态值惩罚 β + Huber loss"]
+    RT --> LOSS
+    LOSS --> IQL["IQL 策略优化<br/>→ 双重鲁棒策略"]
+```
 
 ### 关键设计
 

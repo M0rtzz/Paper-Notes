@@ -47,7 +47,22 @@ CoT2 提出用连续值 token（词表 embedding 的凸组合）替代离散 tok
 ## 方法详解
 
 ### 整体框架
-CoT2 想解决的是离散 CoT「一步只能走一条路」的问题：标准模型每步从词表里采样一个 token，等于在推理树上提前承诺了某条分支，之后无法回头。CoT2 的做法是干脆不采样——把模型每步 softmax 输出的概率分布 $\bm{\alpha}_t$ 直接和 embedding 矩阵相乘，得到一个连续 token $\bm{z}_t = \bm{E}^\top \bm{\alpha}_t$ 送进下一步。这个连续 token 是所有词表 embedding 的凸组合，本质上是把多条候选路径叠在一个向量里同时往前推。给定输入 $\bm{X}$，模型自回归生成 $m$ 个 token，前 $m-1$ 步都是这样的连续 token，只有最后一步才采样出离散的答案 token。整个训练分两阶段：先用 CSFT（连续监督微调）让模型学会拟合「多轨迹叠加」的软标签，再用基于 MTS 的 GRPO 强化学习进一步压缩无关路径、提升准确率。
+CoT2 想解决的是离散 CoT「一步只能走一条路」的问题：标准模型每步从词表里采样一个 token，等于在推理树上提前承诺了某条分支，之后无法回头。CoT2 的做法是干脆不采样——把模型每步 softmax 输出的概率分布 $\bm{\alpha}_t$ 直接和 embedding 矩阵相乘，得到一个连续 token $\bm{z}_t = \bm{E}^\top \bm{\alpha}_t$ 送进下一步。这个连续 token 是所有词表 embedding 的凸组合，本质上是把多条候选路径叠在一个向量里同时往前推。给定输入 $\bm{X}$，模型自回归生成 $m$ 个 token，前 $m-1$ 步都是这样的连续 token（每步把当前叠加态回灌、并行追踪多条路径），只有最后一步才采样出离散的答案 token。模型本身的能力由两条理论结果托底：维度足够时单层 Transformer 就能用连续 token 并行解题，而能并行追踪几条路则受 embedding 维度上界约束。整个训练分两阶段：先用 CSFT（连续监督微调）让模型学会拟合「多轨迹叠加」的软标签，再用基于 MTS 的 GRPO 强化学习进一步压缩无关路径、提升准确率。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["输入 X（问题）"] --> FWD
+    subgraph FWD["连续 token 前向（叠加态并行追踪）"]
+        direction TB
+        LM["LM 第 t 步：输出 softmax 分布 α_t<br/>（单层 Transformer 即可构造解 MNNS）"]
+        LM --> Z["连续 token z_t = Eᵀα_t<br/>词表 embedding 凸组合·叠加多条路径<br/>并行度受 d=Ω(B·log(v/B)) 约束"]
+        Z -->|"中间步：回灌下一步"| LM
+    end
+    FWD -->|"末步：采样离散答案"| ANS["离散答案 token"]
+    CSFT["阶段1 · CSFT：以 Top-B 轨迹叠加的<br/>软标签 α*_t 监督中间步"] --> GRPO["阶段2 · MTS-GRPO：采样平均 K 个<br/>离散 token 注入可控噪声做 RL 微调"]
+    GRPO -. 训练 LM .-> LM
+```
 
 ### 关键设计
 

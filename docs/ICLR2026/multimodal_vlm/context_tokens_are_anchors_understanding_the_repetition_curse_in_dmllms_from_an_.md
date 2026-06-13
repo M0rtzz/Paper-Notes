@@ -42,13 +42,33 @@ tags:
 
 ### 整体框架
 
-CoTA 是一套免训练、即插即用的推理期方法，专门修复缓存给 dMLLMs 带来的"重复诅咒"。它的出发点是前面诊断出的病灶：缓存让 context token（目标 token 及其最近邻）失去了锚点作用，注意力分配被随机化、深层熵不再收敛。CoTA 因此从两个角度对症下药——一个在前向计算时把注意力重新拉回 context token，另一个在解码投票时惩罚那些熵居高不下的不确定 context，二者一前一后形成闭环。
+CoTA 是一套免训练、即插即用的推理期方法，专门修复缓存给 dMLLMs 带来的"重复诅咒"。它的出发点是前面诊断出的病灶：缓存让 context token（目标 token 及其最近邻）失去了锚点作用，注意力分配被随机化、深层熵不再收敛。CoTA 因此在 dMLLMs 的迭代去噪解码回环里插了两道修正——前向计算时，CTAE 在注意力矩阵上施一道随距离衰减的门控，把被稀释的注意力重新拉回 context token；解码投票时，CTEV 把 context 在深层的累积熵当作惩罚项接进置信度评分，压低那些熵居高不下、最可能引发重复的候选。两者一前一后，每一步去噪都先恢复信息流模式、再过滤不确定预测，循环往复直到全部 token 解码完成。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["多模态输入序列<br/>图像 + 指令 + 全掩码响应"] --> B["双向注意力<br/>(缓存复用前缀/后缀 token)"]
+    B --> C["CTAE：高斯距离衰减门控<br/>把注意力重新锚回 context"]
+    C --> D["前向传播<br/>得候选 token 置信度 + 深层熵"]
+    D --> E["CTEV：深层累积熵惩罚投票<br/>压低不确定 context 的得分"]
+    E --> F{"全部 token 解码完成?"}
+    F -->|否：解出得分最高的 k 个 token| B
+    F -->|是| G["输出文本响应"]
+```
 
 ### 关键设计
 
-**1. CTAE（Context-token Attention Enhancement）：用距离衰减把注意力重新锚回 context。** 缓存破坏信息流的直接表现是 context token 的注意力被稀释，于是 CTAE 直接在注意力矩阵上乘一个随相对距离衰减的高斯门控，让每个 token 更多地关注自己附近的 context。门控项写作 $\mathcal{G}_{i,j} = \gamma_{\min} + (1-\gamma_{\min}) \exp\!\left(-\left(\frac{|i-j|}{\tau}\right)^2\right)$，修正后的注意力为 $\tilde{A}_{i,j} = A_{i,j} \cdot \mathcal{G}_{i,j}$。其中温度因子 $\tau=5$ 控制有效窗口宽度——$\tau$ 太小（如 3）窗口偏窄会漏掉相关 context，太大（如 10）又退化回被稀释的状态，实验中 $\tau=5$ 最优；下限 $\gamma_{\min}\in(0,1]$ 保证远距离 token 的注意力不会被压到零，维持数值稳定。这一步几乎不增加计算量，却能把被缓存打乱的信息流模式拉回到接近正常解码的形态。
+**1. CTAE（Context-token Attention Enhancement）：用距离衰减把注意力重新锚回 context**
 
-**2. CTEV（Context-token Entropy-Guided Voting）：用深层累积熵给不确定的预测降权。** 光恢复注意力还不够，模型在重复出错时往往是 context 的熵在深层迟迟不收敛。CTEV 把这个信号直接接进解码的置信度评分：对候选 token $i$，在原置信度 $c_{(i)}$ 上加一个熵惩罚项，得到 $\text{Score}(i) = c_{(i)} + \alpha \cdot E_{sum}^{ctx}(i)$，其中 $E_{sum}^{ctx}(i) = \sum_{j \in \mathcal{C}(i)} \sum_{l=26}^{30} E^{(l)}(j)$ 是把目标 token 及其两个最近邻 $\mathcal{C}(i)$ 在深层（26–30 层）上的逐层信息熵累加起来。熵越高说明这块 context 越不确定、越可能引发重复，对应分数被抬高、在投票中被压制。CTAE 负责保住正确的信息流模式，CTEV 负责在投票阶段把残余的不确定预测过滤掉，两者互补才把重复率压到接近无缓存基线。
+缓存破坏信息流的直接表现是 context token 的注意力被稀释，于是 CTAE 直接在注意力矩阵上乘一个随相对距离衰减的高斯门控，让每个 token 更多地关注自己附近的 context。论文的假设是相对距离越近的 token 语义相关性越强，所以加强对邻近 context 的注意力有利于维持局部语义连贯。门控项写作 $\mathcal{G}_{i,j} = \gamma_{\min} + (1-\gamma_{\min}) \exp\!\left(-\left(\frac{|i-j|}{\tau}\right)^2\right)$，修正后的注意力为 $\tilde{A}_{i,j} = A_{i,j} \cdot \mathcal{G}_{i,j}$（对每层每个注意力头逐元素相乘）。其中温度因子 $\tau=5$ 控制有效窗口宽度——$\tau$ 太小（如 3）窗口偏窄会漏掉相关 context，太大（如 10）又退化回被稀释的状态，实验中 $\tau=5$ 最优；下限 $\gamma_{\min}\in(0,1]$ 保证远距离 token 的注意力不会被压到零，维持数值稳定。这一步几乎不增加计算量，却能把被缓存打乱的信息流模式拉回到接近正常解码的形态。
+
+**2. CTEV（Context-token Entropy-Guided Voting）：用深层累积熵给不确定的预测降权**
+
+光恢复注意力还不够，模型在重复出错时往往是 context 的熵在深层迟迟不收敛，而原始 dMLLMs 只用置信度投票、完全忽略了这个不确定信号。CTEV 把它直接接进解码的置信度评分：先对每个候选 token 按 softmax 分布算归一化信息熵 $E = -\frac{1}{\log V}\sum_{v} p_v \log p_v$，再把目标 token 及其两个最近邻 $\mathcal{C}(i)$ 在深层（26–30 层）上的熵逐层累加成 $E_{sum}^{ctx}(i) = \sum_{j \in \mathcal{C}(i)} \sum_{l=26}^{30} E^{(l)}(j)$，最后以系数 $\alpha$ 加进原置信度：
+
+$$\text{Score}(i) = c_{(i)} + \alpha \cdot E_{sum}^{ctx}(i)$$
+
+熵越高说明这块 context 越不确定、越可能引发重复——CTEV 把这个累积熵作为惩罚项接入投票得分，压低来自高熵 context 的候选，使解码每一步选出的 token 更倾向于来自确定性高的 context，从而抑制重复。CTAE 负责保住正确的信息流模式，CTEV 负责在投票阶段把残余的不确定预测过滤掉，两者互补才把重复率压到接近无缓存基线。
 
 ## 实验关键数据
 

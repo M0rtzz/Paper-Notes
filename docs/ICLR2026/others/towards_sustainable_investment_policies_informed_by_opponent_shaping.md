@@ -43,15 +43,33 @@ tags:
 
 ### 关键设计
 
-**1. 社会困境的形式化：用价格无政府量化合作缺口。** 要判断一个多智能体环境是否值得用对抗塑形去"救"，先得说清它有没有困境。本文借用价格无政府（price of anarchy）$\mathcal{P}_a = \frac{\max_{\pi \in \Pi} \mathcal{W}(\pi; \mu)}{\min_{\pi \in \mathcal{N}} \mathcal{W}(\pi; \mu)}$，即全局最优社会福利与最差纳什均衡福利之比。当 $\mathcal{P}_a > 1$ 时，理性个体各自最优的结果严格劣于可达的社会最优，社会困境成立。这个标量把"自私会不会导致集体次优"变成一个可验证的判据，为后续分析提供了靶子。
+**1. 社会困境的形式化与 α 困境带：先说清这环境到底值不值得"救"**
 
-**2. 缓解有效性 $\alpha$ 决定困境是否真实存在：找出问题的开关。** 困境并非凭空假设，而是由一个具体参数控制。气候事件概率写成 $P_t^e = \frac{\mu_e t}{1 + \lambda_e U_t} + P_0^e$，其中 $\lambda_e = \alpha \times \tilde{\lambda}_e$，$\alpha$ 刻画气候风险对累计缓解投资 $U_t$ 的响应度。沿 $\lambda$ 扫描会切出三个区域：当 $\lambda < \lambda_{\text{low}}$ 时缓解投入始终净负、谁都不会做，无困境；当 $\lambda > \lambda_{\text{critical}}$ 时缓解收益足够高、连自利智能体也愿意投入，同样没有强困境；只有在中间带 $\lambda_{\text{low}} \leq \lambda \leq \lambda_{\text{critical}}$，个体梯度与社会梯度符号相反，才落入真正需要干预的社会困境区。这解释了实验为何固定在 $\alpha=70$——它正好把环境钉在困境带内。
+要判断一个多智能体环境是否值得动用对抗塑形，先得证明它真有困境，并找到困境的"开关"。本文借用价格无政府（price of anarchy）$\mathcal{P}_a = \frac{\max_{\pi \in \Pi} \mathcal{W}(\pi; \mu)}{\min_{\pi \in \mathcal{N}} \mathcal{W}(\pi; \mu)}$，即全局最优社会福利与最差纳什均衡福利之比，把"自私会不会导致集体次优"压成一个可验证的标量判据：当 $\mathcal{P}_a > 1$ 时理性个体各自最优的结果严格劣于可达的社会最优，困境成立。
 
-**3. 私有梯度与社会梯度的错位：困境的微观根源。** 为什么中间带会出现符号冲突？本文直接算单个公司对自身资本期望的私有边际梯度 $\frac{d}{du_t^i}\mathbb{E}[K_{t+1}^i] = -\frac{\mathbb{E}[K_{t+1}^i]}{1-u_t^i} + \mathbb{E}\left[\frac{(K_{t+1}^i)^2}{(1-X_t L_i)^2(1-u_t^i)(1+\gamma)} \sum_e \frac{\lambda_e \mu_e t}{(1+\lambda_e U_t)^2}\right]$：第一项是把资本投向缓解的即时损失，第二项是降低气候风险带来的资本回收。引理 1 证明社会边际梯度严格大于私有边际梯度——个体只看到自己承担的成本却忽略了缓解给所有人带来的外部收益，于是在困境带里集体投资不足。这条不等式正是 Advantage Alignment 要去填平的缺口。
+困境是否真实出现，则由一个具体参数控制。气候事件概率写成 $P_t^e = \frac{\mu_e t}{1 + \lambda_e U_t} + P_0^e$，其中 $\lambda_e = \alpha \times \tilde{\lambda}_e$，$\alpha$ 刻画气候风险对累计缓解投资 $U_t$ 的响应度（缓解有效性）。沿 $\lambda$ 扫描会切出三段：$\lambda < \lambda_{\text{low}}$ 时缓解投入始终净负、谁都不做，无困境；$\lambda > \lambda_{\text{critical}}$ 时缓解收益足够高、连自利智能体也愿投入，同样没有强困境；只有中间带 $\lambda_{\text{low}} \leq \lambda \leq \lambda_{\text{critical}}$ 里个体梯度与社会梯度符号相反，才落入真正需要干预的困境区。这正解释了实验为何把 $\alpha$ 固定在 $70$——它把完整环境恰好钉在困境带内，对抗塑形才有用武之地。
 
-**4. Advantage Alignment：把利他写进优势函数。** 处方落在策略梯度上。算法把标准优势 $A^i$ 改造为 $A^{*,i}(s_t, \mathbf{a}_t) = A^i(s_t, \mathbf{a}_t) + \beta\gamma \sum_{j \neq i}\left(\sum_{k<t} \gamma^{t-k} A^i(s_k, \mathbf{a}_k)\right) A^j(s_t, \mathbf{a}_t)$，额外项把智能体 $i$ 过去自身优势的折扣累积与他人当前优势 $A^j$ 相乘——当一个行动同时对自己历史有利、又对他人当前有利时，它的有效优势被放大，从而鼓励对集体都好的行为。$\beta$ 调节塑形强度，整项是对优势的纯加性修正，可以原封不动插进 PPO，无需额外的高阶梯度或对手模型，正好绕开 LOLA/M-FOS 在连续动作和大规模下的扩展性瓶颈。
+**2. 私有梯度与社会梯度的错位：困境的微观根源**
 
-**5. 为何有效：合作偏置随训练自然衰减。** 把修改后的优势拆开 $A_t^{*,i} = \underbrace{A_t^i + \beta\gamma b^i \sum_{j \neq i} A_t^j}_{\text{合作偏置}} + \beta\gamma \sum_{j \neq i} \underbrace{(\sum_{k<t} \gamma^{t-k} A_k^i - b^i)}_{\text{零均值}} A_t^j$，可以看清机制：第一项是显式的合作偏置，当 $\beta\gamma b^i = 1$ 时它恰好等价于累加奖励学习；第二项均值为零，只在过去优势偏离基线时起塑形作用。训练初期评论家网络滞后导致基线 $b^i > 0$，产生一个推动智能体走出自私均衡的初始合作偏置；随着评论家逐渐准确、$b^i$ 收敛，偏置自动消退，策略最终稳定在合作而非被持续外力扭曲的状态。这正是它比固定累加奖励更稳健的原因。
+为什么困境带里会出现符号冲突？本文直接算单个公司对自身资本期望的私有边际梯度
+
+$$\frac{d}{du_t^i}\mathbb{E}[K_{t+1}^i] = -\frac{\mathbb{E}[K_{t+1}^i]}{1-u_t^i} + \mathbb{E}\left[\frac{(K_{t+1}^i)^2}{(1-X_t L_i)^2(1-u_t^i)(1+\gamma)} \sum_e \frac{\lambda_e \mu_e t}{(1+\lambda_e U_t)^2}\right]$$
+
+第一项是把资本投向缓解的即时损失，第二项是降低气候风险换回的资本。引理 1 证明社会边际梯度严格大于私有边际梯度——个体只看到自己承担的成本，却忽略了缓解给所有人带来的外部收益，于是在困境带里集体投资不足。这条不等式正是后面 Advantage Alignment 要去填平的缺口：它给出了"该往哪个方向塑形"的精确靶子，而不是泛泛地鼓励合作。
+
+**3. Advantage Alignment：把利他写进优势函数，且塑形强度随训练自然退场**
+
+处方直接落在策略梯度上。算法把标准优势 $A^i$ 改造为
+
+$$A^{*,i}(s_t, \mathbf{a}_t) = A^i(s_t, \mathbf{a}_t) + \beta\gamma \sum_{j \neq i}\left(\sum_{k<t} \gamma^{t-k} A^i(s_k, \mathbf{a}_k)\right) A^j(s_t, \mathbf{a}_t)$$
+
+额外项把智能体 $i$ 过去自身优势的折扣累积与他人当前优势 $A^j$ 相乘：当一个行动既对自己历史有利、又对他人当前有利时，其有效优势被放大，从而鼓励对集体都好的行为。$\beta$ 调节塑形强度。关键在于整项是对优势的**纯加性修正**，可原封不动插进 PPO，无需高阶梯度或对手模型，正好绕开 LOLA/M-FOS 在连续动作和大规模智能体下的扩展性瓶颈。
+
+为何它比简单"累加奖励"更稳健？把修改后的优势拆开
+
+$$A_t^{*,i} = \underbrace{A_t^i + \beta\gamma b^i \sum_{j \neq i} A_t^j}_{\text{合作偏置}} + \beta\gamma \sum_{j \neq i} \underbrace{\left(\sum_{k<t} \gamma^{t-k} A_k^i - b^i\right)}_{\text{零均值}} A_t^j$$
+
+第一项是显式的合作偏置，当 $\beta\gamma b^i = 1$ 时恰好退化为累加奖励学习；第二项均值为零，只在过去优势偏离基线 $b^i$ 时起塑形作用。训练初期评论家（critic）网络滞后导致 $b^i > 0$，产生一个把智能体推出自私均衡的初始合作偏置；随着评论家逐渐准确、$b^i$ 收敛，偏置自动消退，策略最终稳定在合作均衡，而不是被一个固定外力持续扭曲——这正是它优于固定累加奖励的根源。
 
 ## 实验
 

@@ -41,7 +41,28 @@ tags:
 ## 方法详解
 
 ### 整体框架
-在线 RL 循环中：(1) Agent 执行策略，收集状态序列；(2) 周期性渲染多视角视频；(3) 用冻结的 ViCLIP 计算视频-文本相似度，更新数据集 $\mathcal{D}$ 和参考集 $\mathcal{D}^{\text{ref}}$（保留 top-k 最优轨迹）；(4) 从 $\mathcal{D}$ 更新状态相关性模型 $f^{\text{MVR}}$；(5) 用 $f^{\text{MVR}}$ 和 $\mathcal{D}^{\text{ref}}$ 计算视觉反馈 $r^{\text{VLM}}$，与任务奖励 $r^{\text{task}}$ 结合。
+MVR 要解决的是"怎么让一个冻结的视觉语言模型（VLM）在线指导 RL，既能纠正动态运动又不会长期跑偏"。它把这件事拆成一个边训练边自我改进的在线循环：agent 一边按当前策略与环境交互、积累状态序列，MVR 一边周期性地把这些轨迹渲染成多视角视频，用冻结的 ViCLIP 打出视频-文本相似度，再据此学一个**状态相关性函数** $f^{\text{MVR}}$，最后用它产生一份"早期强、后期自动归零"的视觉反馈奖励送回 agent。
+
+整条 pipeline 的关键是相似度分数不直接拿来当奖励，而是先沉淀成两份东西：一份完整数据集 $\mathcal{D}$ 用来训练 $f^{\text{MVR}}$，一份只留最优轨迹的参考集 $\mathcal{D}^{\text{ref}}$ 用来当"最优策略"的替身；奖励塑形再拿 $f^{\text{MVR}}$ 和 $\mathcal{D}^{\text{ref}}$ 一比，比出当前行为离最佳还差多少，差得越少反馈越弱，直到归零退场。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["在线 RL agent<br/>按策略 rollout 收状态序列"] --> B["渲染多视角视频<br/>(4 个视角)"]
+    B --> C["冻结 ViCLIP 算<br/>视频-文本相似度"]
+    C --> D["更新数据集 D"]
+    C --> R["参考集维护<br/>D_ref 留 top-k 最优轨迹"]
+    subgraph F["训练状态相关性函数 f_MVR"]
+        direction TB
+        K1["配对比较匹配<br/>排序一致 L_matching"]
+        K2["多视角正则化<br/>表示对齐 L_reg"]
+    end
+    D --> F
+    F --> S["状态依赖奖励塑形<br/>算 r_VLM 并自动衰减"]
+    R --> S
+    S --> O["r_MVR = r_task + w·r_VLM"]
+    O -->|下一轮| A
+```
 
 ### 关键设计
 
@@ -51,19 +72,19 @@ tags:
 
 **2. 多视角正则化：消除摄像头角度带来的系统性偏差**
 
-单一视角会让某些肢体被遮挡，从而把视角依赖的偏差混进相关性评分里。MVR 把相关性函数显式拆成两部分 $f^{\text{MVR}}(s) = \langle g^{\text{rel}}, g^{\text{state}}(s) \rangle$——一个状态编码器 $g^{\text{state}}$ 和一个可学习的相关方向 $g^{\text{rel}}$，再加一个正则项 $L_{\text{reg}} = |\psi^{\text{VLM}}(\mathbf{o}_i, \mathbf{o}_j) - \langle \bar{g}^{\text{state}}(\mathbf{s}_i), \bar{g}^{\text{state}}(\mathbf{s}_j) \rangle|$，强行让状态表示之间的相似度结构对齐到视频表示。这样做把"学好表示"（交给 $L_{\text{reg}}$）和"打好相关分"（交给 $L_{\text{matching}}$）解耦开，多视角信息得以被有效聚合而不是相互干扰。
+只从一个视角看，某些肢体会被遮挡，正面视角又往往因为可见性好而虚高，于是视角依赖的偏差被混进相关性评分里。MVR 把相关性函数显式拆成两部分 $f^{\text{MVR}}(s) = \langle g^{\text{rel}}, g^{\text{state}}(s) \rangle$——一个状态编码器 $g^{\text{state}}$ 和一个可学习的相关方向 $g^{\text{rel}}$，再加一个正则项 $L_{\text{reg}} = |\psi^{\text{VLM}}(\mathbf{o}_i, \mathbf{o}_j) - \langle \bar{g}^{\text{state}}(\mathbf{s}_i), \bar{g}^{\text{state}}(\mathbf{s}_j) \rangle|$，强行让状态表示之间的相似度结构对齐到（跨视角平均后的）视频表示。这样做把"学好表示"（交给 $L_{\text{reg}}$ 锚定共享表示）和"打好相关分"（交给 $L_{\text{matching}}$ 挑出相关方向 $g^{\text{rel}}$）解耦开，多视角信息得以被有效聚合而不是相互干扰。
 
-**3. 状态依赖奖励塑形：让 VLM 引导早期强、后期自动归零**
+**3. 参考集维护：用历史最佳轨迹现成地近似最优策略 $\pi^\ell$**
+
+下面的衰减机制需要一个最优策略 $\pi^\ell$ 当对照，而单独训练一个策略去近似它代价不小，更没有它的样本可采。MVR 直接复用在线经验：$\mathcal{D}^{\text{ref}}$ 只保留跨视角聚合相似度最高的 $k=10$ 条状态序列，相当于"回忆自己最好的那几次尝试"，无需专家演示也无需额外训练，就把参考策略的获取成本压到几乎为零。这份参考集和训练 $f^{\text{MVR}}$ 用的数据集 $\mathcal{D}$ 出自同一次 ViCLIP 打分，只是按相似度 top-k 截了个尖。
+
+**4. 状态依赖奖励塑形：让 VLM 引导早期强、后期自动归零**
 
 现有方法把 VLM 分数和任务奖励固定权重一叠了事，引导会持续存在并可能改变最优策略。MVR 把目标写成"让当前策略变得和最优策略 $\pi^\ell$ 难以区分"：定义策略相关性 $h^\pi = \sum_s f^{\text{MVR}}(s) d^\pi(s)$，优化 $\max_\pi v^\pi + w \log(\sigma(h^\pi - h^{\pi^\ell}))$，再用 Jensen 不等式把它展开成逐状态的塑形信号
 
-$$r^{\text{VLM}}(s) = \mathbb{E}_{s' \sim \pi^\ell}[\log(\sigma(f^{\text{MVR}}(s) - f^{\text{MVR}}(s')))].$$
+$$r^{\text{VLM}}(s) = \mathbb{E}_{s' \sim \pi^\ell}[\log(\sigma(f^{\text{MVR}}(s) - f^{\text{MVR}}(s')))],$$
 
-关键在于这个信号会自己衰减：当 agent 的行为已经和参考集 $\mathcal{D}^{\text{ref}}$ 对齐时，$f^{\text{MVR}}(s) \approx f^{\text{MVR}}(s')$，于是 $r^{\text{VLM}} \to 0$，VLM 引导自然退场，不再和任务奖励 $r^{\text{task}}$ 持续打架——相当于把"先用后放"写进了奖励本身，而不靠手调衰减曲线。
-
-**4. 参考集维护：用历史最佳轨迹现成地近似最优策略 $\pi^\ell$**
-
-上面的衰减机制需要一个 $\pi^\ell$ 当对照，而单独训练一个策略去近似它代价不小。MVR 直接复用在线经验：$\mathcal{D}^{\text{ref}}$ 只保留跨视角聚合相似度最高的 $k=10$ 条状态序列，相当于"回忆自己最好的那几次尝试"，无需专家演示也无需额外训练，把参考策略的获取成本压到几乎为零。
+其中对 $\pi^\ell$ 的期望就用上一步的参考集 $\mathcal{D}^{\text{ref}}$ 采样近似。关键在于这个信号会自己衰减：当 agent 的行为已经和 $\mathcal{D}^{\text{ref}}$ 对齐时，$f^{\text{MVR}}(s) \approx f^{\text{MVR}}(s')$，于是 $r^{\text{VLM}} \to 0$，VLM 引导自然退场，不再和任务奖励 $r^{\text{task}}$ 持续打架——相当于把"先用后放"写进了奖励本身，而不靠手调衰减曲线。
 
 ### 损失函数 / 训练策略
 

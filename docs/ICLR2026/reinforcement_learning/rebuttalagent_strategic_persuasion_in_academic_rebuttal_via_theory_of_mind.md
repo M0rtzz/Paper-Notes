@@ -36,15 +36,46 @@ tags:
 
 ### 整体框架
 
-RebuttalAgent 把"写 rebuttal"建模成 ToM-Strategy-Response (TSR) 的三阶段推理链：给定原始手稿 $M$、审稿意见 $R_i$ 和目标评论 $c_{target}$，模型先揣摩审稿人的心理状态，再据此定下说服策略，最后检索手稿证据生成回复 $r_{target} = \mathcal{G}(M, R_i, c_{target})$。整条链路先在 RebuttalBench 上做 SFT 冷启动学会结构化推理，再用带自奖励的 GRPO 强化想说服力，配套训练专门的 Rebuttal-RM 充当评估器。
+RebuttalAgent 把"写 rebuttal"建模成 ToM-Strategy-Response (TSR) 的三阶段推理链：给定原始手稿 $M$、审稿意见 $R_i$ 和目标评论 $c_{target}$，模型先揣摩审稿人的心理状态，再据此定下说服策略，最后检索手稿证据生成回复 $r_{target} = \mathcal{G}(M, R_i, c_{target})$。具体地，动笔前先有一个证据检索模块（脚手架）：把手稿分段、用预训练嵌入模型编码后按 cosine 相似度取 top-$k$ 证据块 $C_E$，给每条评论圈出最相关的原文。随后进入 TSR：ToM 阶段沿宏观/微观两层构建审稿人画像 $\mathcal{P}$，策略阶段把画像翻译成可执行的高层策略 $S$，回复阶段融合 $\mathcal{P}$、$S$、$C_E$ 生成最终回复。整条链路先在 RebuttalBench 上做 SFT 冷启动学会结构化推理，再用带自奖励的 GRPO 强化说服力；评估侧另训一个专门的 Rebuttal-RM 充当裁判。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["手稿 M + 审稿意见 R_i<br/>+ 目标评论 c_target"]
+    RET["证据检索（脚手架）<br/>分段→嵌入→cosine<br/>取 top-k 证据块 C_E"]
+    PROF["层次化审稿人画像 𝒫<br/>宏观4维 + 微观4维"]
+    subgraph SR["how-before-what 策略 + 证据接地回复"]
+        direction TB
+        STR["策略 S：先定怎么回<br/>再定回什么"]
+        RESP["回复生成 𝒢<br/>融合 𝒫 / S / C_E / r_orig"]
+        STR --> RESP
+    end
+    OUT["最终 rebuttal r_target"]
+    TRAIN["SFT 冷启动<br/>→ GRPO + 四维自奖励"]
+    RM["Rebuttal-RM 评估器<br/>多维打分 + 解释"]
+
+    IN --> RET
+    IN --> PROF
+    PROF --> STR
+    RET --> RESP
+    SR --> OUT
+    TRAIN -.训练.-> SR
+    OUT -.评估.-> RM
+```
 
 ### 关键设计
 
-**1. 层次化审稿人画像：把"换位思考"拆成可推理的结构。** rebuttal 的难点在于作者看不到审稿人的知识背景和真实顾虑，只能盲猜。本文让模型在动笔前先做两层 ToM 分析：宏观层从 Overall Stance、Overall Attitude、Dominant Concern、Reviewer Expertise 四个维度推断审稿人的整体意图，用来定全局语气；微观层则沿 Significance、Methodology、Experimental Rigor、Presentation 四个维度拆解每条具体评论，用来定针对性回应。两层画像合起来构成审稿人心理状态 $\mathcal{P}$，把抽象的"理解他人"落成了一组结构化的可推理字段，后续策略生成才有据可依。
+**1. 层次化审稿人画像：把"换位思考"拆成可推理的结构**
 
-**2. ToM 驱动的策略生成 + 证据融合：先想清楚怎么回，再保证有据可查。** 有了画像 $\mathcal{P}$ 和目标评论后，模型先输出一份简洁的高层战略计划 $S$——关键是顺序上先决定"如何回复"（how，是让步、坚持还是重新框架叙事）再决定"回复什么"（what），从而对齐审稿人的深层关切而非被动应付表面问题。为了避免空谈，回复生成挂上一个三阶段检索模块：把手稿分段后嵌入编码，按 cosine 相似度排序取 top-$k$ 证据块 $C_E$。最终回复同时条件化于画像 $\mathcal{P}$、策略 $S$、检索块 $C_E$ 和原始草稿 $r_{orig}$，既战略对齐又有手稿证据支撑。
+rebuttal 的难点在于作者看不到审稿人的知识背景和真实顾虑，只能盲猜。本文让模型在动笔前先做两层 ToM 分析：宏观层从整体立场（Overall Stance）、整体态度（Overall Attitude）、核心顾虑（Dominant Concern）、审稿人专长（Reviewer Expertise）四个维度推断审稿人的整体意图，用来定全局语气；微观层则沿重要性（Significance）、方法论（Methodology）、实验严谨性（Experimental Rigor）、表达（Presentation）四个维度把每条具体评论归类，用来定针对性回应。两层画像合起来构成审稿人心理状态 $\mathcal{P}$，把抽象的"理解他人"落成一组结构化、可被后续阶段直接条件化的字段——有了它，策略生成才不再是对着评论字面瞎猜，而是对齐审稿人的真实意图。
 
-**3. Rebuttal-RM 专用评估器：通用 judge 打不准 rebuttal。** rebuttal 质量（态度、清晰度、说服力、建设性）很难用通用 LLM judge 可靠衡量。本文基于 Qwen3-8B 微调出专门的 Rebuttal-RM，训练数据来自 102K 样本三源混合——原始作者回复、GPT-4.1 精修回复、多模型生成回复，输出多维打分并附解释。它与人类标注的平均一致性达 0.812，明显高于 GPT-4.1 的 0.745，既用作主实验的裁判，本身也能独立复用。
+**2. how-before-what 策略生成 + 证据接地回复：先想清楚怎么回，再保证有据可查**
+
+直接让模型读完评论就写回复，往往只会被动应付表面问题。本文在画像 $\mathcal{P}$ 和目标评论之后插入一步显式的策略生成：模型先综合二者输出一份简洁的高层策略 $S$，关键在于这一步**强迫模型先决定"如何回复"（how，让步、坚持还是重新框架叙事）再决定"回复什么"（what）**，从而把回复锚定在审稿人的深层关切上。有了策略还要避免空谈，所以回复阶段的生成器 $\mathcal{G}$ 同时条件化于画像 $\mathcal{P}$、策略 $S$、检索证据块 $C_E$ 以及原始草稿 $r_{orig}$（$r_{orig}$ 只在数据合成阶段当作行文参考，推理时不用），让最终回复既战略对齐又句句有手稿证据支撑。
+
+**3. Rebuttal-RM 专用评估器：通用 judge 打不准 rebuttal**
+
+rebuttal 质量（态度、清晰度、说服力、建设性）很难用通用 LLM judge 可靠衡量。本文基于 Qwen3-8B 微调出专门的 Rebuttal-RM，训练数据来自 102K 样本三源混合——1.2 万条原始作者回复（真实人类基线）、GPT-4.1 精修回复（高标准参照）、多模型生成回复（覆盖风格），标签则用"审稿人后续抬分则视为高质量并人工打分 + Gemini 2.5 Pro 自动标注"的混合策略获得，输出多维打分并附解释。它与人类标注的平均一致性达 0.812，比 GPT-4.1 的 0.745 高 9.0%，既用作主实验的裁判，本身也能独立复用。
 
 ### 损失函数 / 训练策略
 
@@ -87,8 +118,8 @@ $$R(o) = w_1 R_{format} + w_2 R_{think} + w_3 R_{resp} + w_4 R_{div}$$
 
 ## 亮点
 - 首次将 Theory of Mind 引入学术 rebuttal，从博弈论视角重新定义问题
-- TSR 三阶段框架优雅地将复杂任务分解为可训练的子任务
-- 自奖励机制避免了额外 reward model 的训练开销
+- "先定 how 再定 what" 的显式策略中间步是点睛之笔：把回复从被动应付表面评论，扭成对齐审稿人深层关切
+- 自奖励机制避免了额外 reward model 的训练开销，其中多样性奖励 $R_{div}$ 专门抗 reward hacking
 - Rebuttal-RM 评估器本身具有独立应用价值
 - 开源代码和模型
 

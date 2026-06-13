@@ -43,7 +43,9 @@ tags:
 
 ### 整体框架
 
-问题定义为三元组 $(\mathcal{A}, \mathcal{D}, \mu)$：$\mathcal{A}$ 是紧致倍增度量空间，$\mathcal{D}$ 为度量，$\mu: \mathcal{A} \to [0,1]$ 是 1-Lipschitz 未知奖励函数。每轮 $t$ 选臂 $x_t$，生成奖励 $y_t = \mu(x_t) + \epsilon_t$（$\epsilon_t$ 为 sub-Gaussian 噪声），但奖励在随机延迟 $\tau_t$ 后才被观测到。延迟 $\tau_t \sim f_\tau$ 独立于臂和奖励。累积遗憾为 $R(T) = \sum_{t=1}^T (\mu^* - \mu(x_t))$。针对有界和无界延迟分别提出两种算法。
+这篇论文要解决的问题是：在连续臂空间上做 Lipschitz bandit，但奖励不再即时返回、而要等一个随机延迟才到手，甚至可能永远不到。问题形式化为三元组 $(\mathcal{A}, \mathcal{D}, \mu)$——$\mathcal{A}$ 是紧致倍增度量空间，$\mathcal{D}$ 为度量，$\mu: \mathcal{A} \to [0,1]$ 是 1-Lipschitz 未知奖励函数。每轮 $t$ 选臂 $x_t$，生成奖励 $y_t = \mu(x_t) + \epsilon_t$（$\epsilon_t$ 为 sub-Gaussian 噪声），但这条奖励要在随机延迟 $\tau_t \sim f_\tau$（独立于臂和奖励）之后才被观测到；目标是压低累积遗憾 $R(T) = \sum_{t=1}^T (\mu^* - \mu(x_t))$。
+
+整篇工作按延迟「严不严重」切成两条算法线、再配一个下界封口，三块正好对应下面三个关键设计。延迟有界（$\tau_t \leq \tau_{\max}$）时，沿用经典 Zooming 的自适应离散化骨架，但用 **Delayed Zooming** 的 lazy update 机制把被延迟反馈拖快的置信半径重新锁住，恢复无延迟时的最优遗憾率。延迟无界、甚至有反馈永久缺失时，实时维护置信半径已不可行，于是换成 **DLPP** 的「分阶段攒够可靠反馈再剪枝」策略，把遗憾和延迟的分位数 $Q(p)$ 而非最坏情况挂钩。最后用一个匹配的**实例相关下界**证明 DLPP 已近最优。
 
 ### 关键设计
 

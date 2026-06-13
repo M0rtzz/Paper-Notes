@@ -42,21 +42,47 @@ tags:
 
 ### 整体框架
 
-DiffGDA把"从源图迁移到目标图"重新表述成一段连续时间的随机演化：先用前向SDE把带标注的源图逐步加噪到高斯分布，再用反向SDE从噪声采样回来，但反向过程不复原源图、而是被一个域感知引导网络牵引着朝目标域分布演化，落点是一张自带伪标签的中间图 $\mathbf{G}'$。最后在这张中间图上训练GNN分类器（交叉熵 + MMD对齐），并联合优化扩散与分类参数，从而把适应到的知识用于无标注目标图的节点分类。
+DiffGDA把"从源图迁移到目标图"重新表述成一段连续时间的随机演化：先用前向SDE把带标注的源图逐步加噪到高斯分布，再用反向SDE从噪声采样回来，但反向过程不复原源图、而是被一个域感知引导网络牵引着朝目标域分布演化，落点是一张自带伪标签的中间图 $\mathbf{G}'$。最后在这张中间图上训练GNN分类器（交叉熵 + MMD对齐），并联合优化扩散与分类参数，从而把适应到的知识用于无标注目标图的节点分类。整条流水线可拆成「前向加噪 → 引导反向采样 → 中间图分类」三段，其中反向采样被密度比引导网络牵引、由分解后的 score 网络落地：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["带标注源图<br/>+ 无标注目标图"]
+    D1["标签注入的<br/>前向扩散"]
+    NOISE["高斯噪声分布"]
+    D2["密度比引导的<br/>反向扩散"]
+    D3["无需标注的<br/>密度比估计<br/>(域判别器)"]
+    D4["特征/结构分解<br/>与选择性扩散"]
+    GP["中间图 G'<br/>(自带伪标签)"]
+    GNN["GNN 分类器<br/>(交叉熵 + MMD 对齐)"]
+    OUT["目标图节点分类"]
+
+    IN --> D1 --> NOISE --> D2 --> GP --> GNN --> OUT
+    D3 -->|引导力梯度| D2
+    D4 -->|score 网络落地| D2
+```
 
 ### 关键设计
 
-**1. 标签注入的前向扩散：让中间图天生带标签。** 普通图扩散只对特征/结构加噪，源域的标注在采样后就丢了，还得额外做标签传播。DiffGDA把节点特征 $\mathbf{X}^{\mathcal{S}}$ 与标签 $\mathbf{Y}^{\mathcal{S}}$ 沿通道维拼成增广特征 $\tilde{\mathbf{X}}^{\mathcal{S}} = [\mathbf{X}^{\mathcal{S}} \,\|\, \mathbf{Y}^{\mathcal{S}}] \in \mathbb{R}^{N_{\mathcal{S}} \times (F+C)}$，让标签和特征一起参与前向SDE $\mathrm{d}\mathbf{G}^{\mathcal{S}}_t = \mathbf{f}_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}t + g_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}\mathbf{w}$ 的加噪与反向恢复。这样反向采样出的中间图 $\mathbf{G}'=(\mathbf{X}',\mathbf{A}',\mathbf{Y}')$ 直接携带标签维度，省去单独的标签传播，也让后续监督有了现成的锚点。
+**1. 标签注入的前向扩散：让中间图天生带标签**
 
-**2. 密度比引导的反向扩散：把"生成目标图"改成"被牵引着演化"。** 难点在于目标域无标注、缺乏对齐锚点，单纯反向恢复只会退回源图分布。DiffGDA的反向SDE在标准 score 项外，额外注入一个朝目标域的引导力。其理论依据是定理1：目标图的最优扩散网络满足
+普通图扩散只对特征/结构加噪，源域的标注在采样后就丢了，还得额外做标签传播。DiffGDA把节点特征 $\mathbf{X}^{\mathcal{S}}$ 与标签 $\mathbf{Y}^{\mathcal{S}}$ 沿通道维拼成增广特征 $\tilde{\mathbf{X}}^{\mathcal{S}} = [\mathbf{X}^{\mathcal{S}} \,\|\, \mathbf{Y}^{\mathcal{S}}] \in \mathbb{R}^{N_{\mathcal{S}} \times (F+C)}$，让标签和特征一起参与前向SDE $\mathrm{d}\mathbf{G}^{\mathcal{S}}_t = \mathbf{f}_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}t + g_t(\mathbf{G}^{\mathcal{S}}_t)\mathrm{d}\mathbf{w}$ 的加噪与反向恢复。这样反向采样出的中间图 $\mathbf{G}'=(\mathbf{X}',\mathbf{A}',\mathbf{Y}')$ 直接携带标签维度，省去单独的标签传播，也让后续监督有了现成的锚点。
+
+**2. 密度比引导的反向扩散：把"生成目标图"改成"被牵引着演化"**
+
+难点在于目标域无标注、缺乏对齐锚点，单纯反向恢复只会退回源图分布。DiffGDA的反向SDE在标准 score 项外，额外注入一个朝目标域的引导力。其理论依据是定理1：目标图的最优扩散网络满足
 
 $$\mathbb{P}(\boldsymbol{\ell}^{\star}) = \nabla_{\mathbf{G}_t^{\mathcal{S}}} \log p_t(\mathbf{G}_t^{\mathcal{S}}) + \nabla_{\mathbf{G}_t^{\mathcal{S}}} \log \mathbb{E}_{p(\mathbf{G}_0^{\mathcal{S}}|\mathbf{G}_t^{\mathcal{S}})} \frac{q(\mathbf{G}_0^{\mathcal{T}})}{p(\mathbf{G}_0^{\mathcal{S}})}$$
 
 第一项是源图自身的 score function（由 score 网络 $\mathbb{P}(\boldsymbol{\ell})$ 估计 $\nabla\log p_t$），第二项是目标/源分布密度比 $q/p$ 的对数梯度——它正是把轨迹推向目标域的引导信号，由引导网络 $\mathbb{Q}(\boldsymbol{\delta})$ 学习。这个分解的好处是：从源图出发、保留源域标注，又能凭密度比梯度连续地朝目标域演化，而不是凭空生成目标图。
 
-**3. 无需标注的密度比估计：用域判别器替代未知的真实密度。** 密度比 $q/p$ 涉及目标域真实分布，本不可直接计算。DiffGDA转而训练一个GNN分类器 $\mathcal{C}_{\text{gnn}}$ 去区分节点来自源域还是目标域，再用其输出概率 $\mathbf{y}(\mathbf{x})$ 把密度比近似为 $q/p \approx (1-\mathbf{y}(\mathbf{x}))/\mathbf{y}(\mathbf{x})$。这把"估计两个高维分布之比"这个硬问题，化简成了一个只需无标注样本就能训练的二分类问题，让引导信号可落地。
+**3. 无需标注的密度比估计：用域判别器替代未知的真实密度**
 
-**4. 特征/结构分解与选择性扩散：兼顾建模精度和算力。** 图同时含连续节点特征和离散邻接结构，单一网络难以兼顾。DiffGDA把 score 网络拆为 $\mathbb{P}(\boldsymbol{\ell}_1)$（节点特征 score，用 MLP+GNN）和 $\mathbb{P}(\boldsymbol{\ell}_2)$（邻接结构 score，用 MLP+图多头注意力 GMH），引导网络同样拆为特征域估计 $\mathbb{Q}(\boldsymbol{\delta}_1)$ 与结构域估计 $\mathbb{Q}(\boldsymbol{\delta}_2)$（均为轻量 MLP），各管一摊。同时用超参 $\alpha$ 控制扩散比例，只对一部分节点施加扩散，在保留原始信息和控制显存/时间开销之间取平衡——这也是它能比同类图生成方法省一半运行时间的来源。
+密度比 $q/p$ 涉及目标域真实分布，本不可直接计算。DiffGDA转而训练一个GNN分类器 $\mathcal{C}_{\text{gnn}}$ 去区分节点来自源域还是目标域，再用其输出概率 $\mathbf{y}(\mathbf{x})$ 把密度比近似为 $q/p \approx (1-\mathbf{y}(\mathbf{x}))/\mathbf{y}(\mathbf{x})$。这把"估计两个高维分布之比"这个硬问题，化简成了一个只需无标注样本就能训练的二分类问题，让引导信号可落地。
+
+**4. 特征/结构分解与选择性扩散：兼顾建模精度和算力**
+
+图同时含连续节点特征和离散邻接结构，单一网络难以兼顾。DiffGDA把 score 网络拆为 $\mathbb{P}(\boldsymbol{\ell}_1)$（节点特征 score，用 MLP+GNN）和 $\mathbb{P}(\boldsymbol{\ell}_2)$（邻接结构 score，用 MLP+图多头注意力 GMH），引导网络同样拆为特征域估计 $\mathbb{Q}(\boldsymbol{\delta}_1)$ 与结构域估计 $\mathbb{Q}(\boldsymbol{\delta}_2)$（均为轻量 MLP），各管一摊。同时用超参 $\alpha$ 控制扩散比例，只对一部分节点施加扩散，在保留原始信息和控制显存/时间开销之间取平衡——这也是它能比同类图生成方法省一半运行时间的来源。
 
 ### 损失函数 / 训练策略
 

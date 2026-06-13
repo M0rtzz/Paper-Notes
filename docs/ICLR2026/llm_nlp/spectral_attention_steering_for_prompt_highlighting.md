@@ -43,17 +43,41 @@ tags:
 
 ### 整体框架
 
-SEKA 把 prompt highlighting 拆成"离线学谱、在线编辑"两步：先用合成对比 prompt 在每个 layer/head 上谱分解出一个"相关性子空间"投影矩阵，再在推理时对要高亮的 token 把它的 key 向量沿这个子空间方向放大。因为全程只动 key、从不碰注意力矩阵，所以能直接套在 FlashAttention 上跑。
+SEKA 想解决的问题是 prompt highlighting——精确放大模型对 prompt 中指定 token 的关注——同时不破坏 FlashAttention 这类 IO 高效实现。它的核心思路是"离线学谱、在线编辑"：先用合成的对比 prompt 在每个 layer/head 上谱分解出一个"相关性子空间"，把它固化成投影矩阵；同时挑出真正能区分相关性的少数 head；推理时只在这些 head 上、对要高亮的 token 把它的 key 向量沿相关性子空间方向放大。因为全程只动 key、从不显式取出 $T\times T$ 注意力矩阵做后处理，所以天然能套在 FlashAttention 上跑。基础版用一组固定增益的投影；进阶版 AdaSEKA 则离线备好多个领域专家投影，推理时按 query 动态混合，省去跨任务反复调参。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["对比 prompt 三元组<br/>neutral / positive / negative"] --> B["谱学习相关性投影<br/>交叉协方差 Ω → SVD → P⁺/P⁻"]
+    B --> C["KV Head 筛选<br/>只保留 ℓ₂ 区分度 D≥δ_min 的 head"]
+    C --> D{推理时用哪种投影}
+    D -->|固定增益| E["推理时 Key 编辑<br/>k′=k+(g⁺P⁺k+g⁻P⁻k)/2"]
+    D -->|query 自适应| F["AdaSEKA 自适应路由<br/>按 query 混合 M 个专家投影"]
+    F --> E
+    E --> G["注意力计算（兼容 FlashAttention）<br/>高亮 token 被放大关注"]
+```
 
 ### 关键设计
 
-**1. 谱学习相关性投影：把"相关性"提炼成一个可复用的子空间。** 痛点在于，PASTA 这类方法需要针对任务在线搜哪些 head 该 steer，部署成本高；SEKA 想把这件事一次性离线学好。作者构造三类 prompt——neutral（仅上下文）、positive（上下文 + 相关问题）、negative（上下文 + 无关问题），抽取同一 token span 在三种条件下的 key embedding $\boldsymbol{h}, \boldsymbol{h}^+, \boldsymbol{h}^-$，然后用 neutral 与 positive 的交叉协方差 $\boldsymbol{\Omega}_{\ell,h}^{+} = \boldsymbol{h}^\top \boldsymbol{h}^+ / n$ 做 SVD 得到 $\boldsymbol{\Omega}_{\ell,h}^{+} = \boldsymbol{U}_{\ell,h}^{+} \boldsymbol{S}_{\ell,h}^{+} \boldsymbol{V}_{\ell,h}^{+\top}$。正投影取前 $k^+$ 个最大奇异值对应的左奇异向量、负投影取最小的 $k^-$ 个，构成两个投影算子 $\boldsymbol{P}_{\ell,h}^{+} = \boldsymbol{U}_{:,:k^+}^{+}(\boldsymbol{U}_{:,:k^+}^{+})^\top$ 与 $\boldsymbol{P}_{\ell,h}^{-} = \boldsymbol{U}_{:,k^-:}^{-}(\boldsymbol{U}_{:,k^-:}^{-})^\top$；$k^+, k^-$ 由累积奇异值比例阈值 $\gamma$ 控制（$\sum_{i\le k^+} S_i^+ / \sum_i S_i^+ \ge \gamma$）。这样"哪个方向代表相关"就被固化成一个矩阵，推理时直接调用，不必再做 head search。
+**1. 谱学习相关性投影：把"相关性"提炼成一个可离线复用的子空间**
 
-**2. 推理时 Key 编辑：在注意力之前把 key 推向相关方向。** 注意力分数 $\text{Attn}(i,j) = \boldsymbol{q}_i^\top\boldsymbol{k}_j / \sqrt{d_k}$ 只取决于 query-key 内积，而 key 又恰好按 token position 索引，所以编辑某个 token 的 key 就能精确控制它被关注的程度。对每个高亮 token，SEKA 施加 $\boldsymbol{k}_j' = \boldsymbol{k}_j + (g^+ \boldsymbol{P}_{\ell,h}^+ \boldsymbol{k}_j + g^- \boldsymbol{P}_{\ell,h}^- \boldsymbol{k}_j)/2$，其中 $g^+, g^-$ 是放大/抑制强度。代入注意力公式后，这等价于在原分数 $A_{ij} = \boldsymbol{q}_i^\top\boldsymbol{k}_j/\sqrt{d_k}$ 上叠加一个低秩偏置 $B_{ij} = \boldsymbol{q}_i^\top(g^+\boldsymbol{P}^+\boldsymbol{k}_j + g^-\boldsymbol{P}^-\boldsymbol{k}_j)/2\sqrt{d_k}$。关键在于这个偏置是通过改 key 实现的，全程不需要把 $T\times T$ 注意力矩阵显式拿出来后处理，因此天然兼容 FlashAttention，几何上也很直观——就是把 key 沿相关性子空间拉长一点。
+PASTA 这类方法需要针对任务在线搜哪些 head 该 steer，部署成本高；SEKA 想把这件事一次性离线学好。作者构造三类 prompt——neutral（仅上下文）、positive（上下文 + 相关问题）、negative（上下文 + 无关问题），抽取同一 token span 在三种条件下的 key embedding $\boldsymbol{h}, \boldsymbol{h}^+, \boldsymbol{h}^-$，然后用 neutral 与 positive 的交叉协方差 $\boldsymbol{\Omega}_{\ell,h}^{+} = \boldsymbol{h}^\top \boldsymbol{h}^+ / n$ 做 SVD 得到 $\boldsymbol{\Omega}_{\ell,h}^{+} = \boldsymbol{U}_{\ell,h}^{+} \boldsymbol{S}_{\ell,h}^{+} \boldsymbol{V}_{\ell,h}^{+\top}$。正投影取前 $k^+$ 个最大奇异值对应的左奇异向量（这些方向最能解释"相关"特征）、负投影取最小的 $k^-$ 个（对应与相关性最无关的方向），构成两个投影算子 $\boldsymbol{P}_{\ell,h}^{+} = \boldsymbol{U}_{:,:k^+}^{+}(\boldsymbol{U}_{:,:k^+}^{+})^\top$ 与 $\boldsymbol{P}_{\ell,h}^{-} = \boldsymbol{U}_{:,k^-:}^{-}(\boldsymbol{U}_{:,k^-:}^{-})^\top$；保留几个奇异向量由累积奇异值比例阈值 $\gamma$ 控制（$\sum_{i\le k^+} S_i^+ / \sum_i S_i^+ \ge \gamma$）。这样"哪个方向代表相关"就被固化成一个矩阵，推理时直接调用，不必再做 head search。
 
-**3. AdaSEKA 自适应路由：让一组专家投影按 query 自动配比。** 单一投影在多任务/多模型间需要反复调参，AdaSEKA 改为离线学 $M$ 个领域专家投影，推理时按当前输入动态混合。它取 prompt 最后一个 token 的 query 向量 $\boldsymbol{q}_{\ell,h}$，用它与各专家主方向的对齐度（奇异值加权内积，再除以最大值归一化）算出路由权重 $\alpha_{m,\ell,h}(\boldsymbol{q}) = \sum_k (\boldsymbol{q}^\top \boldsymbol{u}_m^{+(k)})\sigma_m^{+(k)} \big/ \max_{m'}|\sum_k (\boldsymbol{q}^\top \boldsymbol{u}_{m'}^{+(k)})\sigma_{m'}^{+(k)}|$，最终投影是各专家的加权组合 $\boldsymbol{P}_{\text{dynamic}} = \sum_m \alpha_m \boldsymbol{U}_m^{+}(\boldsymbol{U}_m^{+})^\top$。好处是新领域加一个专家即插即用、跨任务少调参，且路由权重本身可解释——能看出当前 prompt 更像哪个领域。
+**2. KV Head 筛选：只在真正区分相关性的 head 上动手**
 
-**4. KV Head 筛选：只在真正区分相关性的 head 上动手。** 实验发现并非所有 head 都对相关性敏感，对不敏感的 head 强行投影反而会注入噪声。SEKA 用正/负 key embedding 的平均 $\ell_2$ 距离 $D_{\ell,h} = \frac{1}{N}\sum_i \|\boldsymbol{h}_{\ell,h,i}^+ - \boldsymbol{h}_{\ell,h,i}^-\|_2$ 衡量每个 head 的区分度，只有 $D_{\ell,h} \ge \delta_{\min}$ 时才对该 head 施加投影。可视化显示中后层 head 区分度明显更高，这与 retrieval head 主要集中在中后层的研究相互印证；消融也证实去掉这一步会带来灾难性退化。
+并非所有 head 都对相关性敏感，对不敏感的 head 强行投影反而会注入噪声，因此在动 key 之前要先选好作用对象。SEKA 用正/负 key embedding 的平均 $\ell_2$ 距离 $D_{\ell,h} = \frac{1}{N}\sum_i \|\boldsymbol{h}_{\ell,h,i}^+ - \boldsymbol{h}_{\ell,h,i}^-\|_2$ 衡量每个 $(\text{layer}, \text{head})$ 对的区分度——这个距离越大，说明该 head 的 key 表示对"问题相关与否"越敏感。只有 $D_{\ell,h} \ge \delta_{\min}$（$\delta_{\min}$ 在验证集上 grid search，通常落在 $[0, 0.6]$）的 head 才被施加投影。可视化显示中后层 head 区分度明显更高，这与"retrieval head 主要集中在中后层"的研究相互印证；消融也证实去掉这一步会带来灾难性退化（见实验）。
+
+**3. 推理时 Key 编辑：在注意力之前把 key 推向相关方向**
+
+注意力分数 $\text{Attn}(i,j) = \boldsymbol{q}_i^\top\boldsymbol{k}_j / \sqrt{d_k}$ 只取决于 query-key 内积，而 key 又恰好按 token position 索引，所以编辑某个 token 的 key 就能精确控制它被关注的程度。对每个高亮 token，SEKA 在选中的 head 上施加 $\boldsymbol{k}_j' = \boldsymbol{k}_j + (g^+ \boldsymbol{P}_{\ell,h}^+ \boldsymbol{k}_j + g^- \boldsymbol{P}_{\ell,h}^- \boldsymbol{k}_j)/2$，其中 $g^+, g^-$ 是两个独立可调的放大/抑制增益。代入注意力公式后，这等价于在原分数 $A_{ij} = \boldsymbol{q}_i^\top\boldsymbol{k}_j/\sqrt{d_k}$ 上叠加一个 key 相关的偏置 $B_{ij} = \boldsymbol{q}_i^\top(g^+\boldsymbol{P}^+\boldsymbol{k}_j + g^-\boldsymbol{P}^-\boldsymbol{k}_j)/2\sqrt{d_k}$。关键在于这个偏置是通过改 key 实现的，全程不需要把 $T\times T$ 注意力矩阵显式拿出来后处理，因此天然兼容 FlashAttention，几何上也很直观——就是把 key 沿相关性子空间拉长一点。
+
+**4. AdaSEKA 自适应路由：让一组专家投影按 query 自动配比**
+
+固定投影在多任务/多模型间需要反复调参，AdaSEKA 改为离线学 $M$ 个领域专家投影（论文从 4 个不同数据集各学一个），推理时按当前输入动态混合。它取 prompt 最后一个 token 的 query 向量 $\boldsymbol{q}_{\ell,h}$，用它与各专家主方向的对齐度（奇异值加权内积，再除以最大值归一化）算出路由权重
+
+$$\alpha_{m,\ell,h}(\boldsymbol{q}) = \frac{\sum_k (\boldsymbol{q}^\top \boldsymbol{u}_m^{+(k)})\,\sigma_m^{+(k)}}{\max_{m'}\left|\sum_k (\boldsymbol{q}^\top \boldsymbol{u}_{m'}^{+(k)})\,\sigma_{m'}^{+(k)}\right|},$$
+
+最终投影是各专家的加权组合 $\boldsymbol{P}_{\text{dynamic}} = \sum_m \alpha_m \boldsymbol{U}_m^{+}(\boldsymbol{U}_m^{+})^\top$，随后照样按 $\boldsymbol{k}_j' = \boldsymbol{k}_j + g\,\boldsymbol{P}_{\text{dynamic}}\boldsymbol{k}_j$ 编辑 key。好处有三：新领域加一个专家即插即用、不必重算已有专家；跨任务少调参；路由权重本身可解释——能看出当前 prompt 更像哪个领域。
 
 ## 实验
 

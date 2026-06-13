@@ -33,15 +33,35 @@ tags:
 ## 方法详解
 
 ### 整体框架
-LDDM 在标准离散扩散模型原有的随机采样路径之外，额外开辟一条确定性潜在路径：每个去噪步除了输出采样得到的 one-hot token，还输出一份连续表示 $\mathbf{h}_s$，把 backbone 内部丰富的分布信息直接传给下一步，从而绕过采样壁。为了不必沿整条轨迹反传，训练改用自条件化策略只展开相邻两步。
+LDDM 要解决的是离散扩散的"采样壁"：每个去噪步把 backbone 算出的分类分布坍塌成 one-hot token 后，候选概率里的细微差异（$[0.49, 0.51]$ 与 $[0.20, 0.80]$）被一并抹平，下一步只能从贫瘠的 one-hot 重建上下文。它的整体思路是在标准的**随机采样路径**之外，额外开一条**确定性潜在路径**：每个去噪步除了照常采样出 one-hot token，还把 backbone 内部的连续潜在表示 $\mathbf{h}_s$ 直接传给下一步，让未经采样压缩的分布信息跨步累积，从而绕过采样壁。这条潜在路径让相邻去噪步产生了递归依赖，按理训练要沿整条轨迹反传；LDDM 用**自条件化训练**把它简化成每步只展开两次前向。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    subgraph LOOP["Loopholing 机制"]
+        direction TB
+        Z["采样 token z_t<br/>(one-hot)"] --> EMB["嵌入相加<br/>e_t = E(z_t) + LN(h_t)"]
+        HPREV["上一步潜在表示 h_t"] -->|确定性潜在路径| EMB
+        EMB --> BB["backbone f_theta<br/>→ 潜在表示 h_s"]
+        BB --> PROJ["投影+softmax<br/>→ token 分布 x_theta"]
+        PROJ -->|随机采样路径| SMP["采样得 one-hot z_s"]
+    end
+    BB -->|确定性潜在路径| HNEXT["传给下一步的 h_t"]
+    SMP --> NEXT["进入下一去噪步"]
+    HNEXT --> NEXT
+    NEXT -->|重复 T 步| OUT["生成完整序列"]
+    TRAIN["自条件化训练<br/>两次前向近似潜在递推"] -.仅训练阶段.-> LOOP
+```
 
 ### 关键设计
 
-**1. Loopholing 机制：让分布信息绕过 one-hot 坍塌。** 采样壁的根源在于每步把分类分布坍塌成 one-hot 后，$[0.49, 0.51]$ 与 $[0.20, 0.80]$ 这样的细微差异被一并抹平，后续步只能从贫瘠的 one-hot 重建上下文。Loopholing 的做法是让每个去噪步同时吐出两个东西——采样路径上的随机 one-hot 向量，和潜在路径上的确定性连续向量，记为 $(\mathbf{x}_\theta(\mathbf{z}_t, \mathbf{h}_t, t), \mathbf{h}_s) = f_{\text{Loopholing}}(\mathbf{z}_t, \mathbf{h}_t, t)$。具体计算时，当前 token 的嵌入 $E_\theta(\mathbf{z}_t)$ 与上一步潜在表示经 Layer Norm 后相加 $\mathbf{e}_t = E_\theta(\mathbf{z}_t) + \text{LN}(\mathbf{h}_t)$，送入 backbone 得到新的潜在表示 $\mathbf{h}_s = f_\theta(\mathbf{e}_t, t)$，再由 $\mathbf{x}_\theta = \text{softmax}(g_\theta(\mathbf{h}_s))$ 读出 token 分布。这条确定性通道相当于在离散扩散里嵌入了一个 RNN 式的隐状态：未经采样压缩的连续上下文跨步累积传播，分布信息不再因 one-hot 化而丢失。
+**1. Loopholing 机制：在采样路径旁加一条确定性潜在路径，绕过 one-hot 坍塌**
 
-**2. 自条件化训练：用两次前向模拟推理时的上下文传播。** 潜在路径在推理时是逐步递推的，若训练时照搬就得展开整条轨迹、付出高昂的反向传播代价。LDDM 改为每个样本只跑两次前向：第一次令 $\mathbf{h}_t = \mathbf{0}$ 生成一份伪上下文 $\mathbf{h}^0$，第二次把它截断梯度后作为条件 $\mathbf{h}_t = \text{sg}[\mathbf{h}^0]$ 再预测一次。这样第二次前向就近似了推理时"拿着上一步潜在表示做预测"的情形，却无需跨步反传。训练中以概率 $p$ 采用这种自条件化损失、以 $1-p$ 退回标准损失，实测 $p \in [0.5, 0.9]$ 区间最优。
+采样壁的根源在于每步把分类分布坍塌成 one-hot 后，候选概率的细微差异被全部丢弃，后续步只能从贫瘠的 one-hot 重建上下文。Loopholing 的做法是让每个去噪步同时吐出两个东西——采样路径上的随机 one-hot 向量，和潜在路径上的确定性连续向量，记为 $(\mathbf{x}_\theta(\mathbf{z}_t, \mathbf{h}_t, t), \mathbf{h}_s) = f_{\text{Loopholing}}(\mathbf{z}_t, \mathbf{h}_t, t)$。具体计算时，当前 token 的嵌入 $E_\theta(\mathbf{z}_t)$ 与上一步潜在表示经 Layer Norm 后相加得 $\mathbf{e}_t = E_\theta(\mathbf{z}_t) + \text{LN}(\mathbf{h}_t)$，送入 backbone 得到新的潜在表示 $\mathbf{h}_s = f_\theta(\mathbf{e}_t, t)$，再由 $\mathbf{x}_\theta = \text{softmax}(g_\theta(\mathbf{h}_s))$ 读出 token 分布。这条确定性通道相当于在离散扩散里嵌入了一个 RNN 式的隐状态：未经采样压缩的连续上下文跨步累积传播，分布信息不再因 one-hot 化而丢失。它顺带压住了离散扩散此前的两大低效——即便某步采样结果与上一步相同（空闲步），潜在表示 $\mathbf{h}_t$ 仍在更新、每步都在积累进展；确定性路径维持着对目标的上下文记忆，token 也不再在候选间反复横跳（过度振荡）。机制分析印证了这点：LDDM 早期 Temporal KL 更高（探索更快）、后期更低（更稳定），且 Token-Prediction Entropy 全程低于基线。
 
-**3. 同时压住空闲步与过度振荡。** 离散扩散此前的两大低效在 Loopholing 下都被缓解：即便某步采样结果 $\mathbf{z}_t$ 与上一步相同（空闲步），潜在表示 $\mathbf{h}_t$ 仍在更新，每一步都在积累进展；而确定性路径维持着对目标 $\mathbf{x}$ 的上下文记忆，token 不再在候选间反复横跳（过度振荡）。机制分析也印证了这点——LDDM 早期 Temporal KL 更高（探索更快）、后期更低（更稳定），且 Token-Prediction Entropy 全程低于基线。
+**2. 自条件化训练：用两次前向模拟推理时的潜在递推，避免展开整条轨迹**
+
+潜在路径在推理时是逐步递推的（这一步的 $\mathbf{h}_t$ 来自上一步），若训练时照搬就得展开整条去噪轨迹、付出沿轨迹反传的高昂代价。LDDM 改为在每个随机采样的时间步只跑两次前向：第一次令 $\mathbf{h}_t = \mathbf{0}$ 生成一份伪上下文 $\mathbf{h}^0$，第二次把它截断梯度后作为条件 $\mathbf{h}_t = \text{sg}[\mathbf{h}^0]$ 再预测一次。第二次前向就近似了推理时"拿着上一步潜在表示做预测"的情形，却无需跨步反传。训练中以概率 $p$ 采用这种自条件化损失、以 $1-p$ 退回标准损失，实测 $p \in [0.5, 0.9]$ 区间最优；代价是两次前向使训练时间增加约 30%。
 
 ### 损失函数 / 训练策略
 训练目标在原 NELBO 上做自条件化改写，对处于 mask 状态 $\mathbf{m}$ 的位置施加对数似然约束：

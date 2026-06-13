@@ -33,7 +33,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-rCM 把连续时间一致性蒸馏（sCM，最小化前向 KL）和分布匹配蒸馏（DMD，最小化反向 KL）拼成一个目标，前者负责覆盖全部模态保多样性、后者负责锐化细节保质量，再配一套让 JVP 能在 14B 模型上跑起来的基础设施。训练时交替更新两套网络：学生用组合后的 rCM 目标更新，一个 fake score 网络则用 flow matching loss 在学生当前生成的数据上跟训，为 DMD 项提供反向 score 估计。
+rCM 要解决的问题是：让理论优雅的连续时间一致性蒸馏（sCM）真正在 14B 级文生图/视频模型上跑起来，并补上它在精细画质上的短板。整体怎么转——以冻结的教师模型为监督源，学生网络同时吃两路互补的监督信号：一路是 sCM 的前向 KL（mode-covering，负责覆盖全部模态、保住多样性），另一路是 DMD 的反向 KL（mode-seeking，负责把分布往高密度区收、锐化细节保质量），二者加权成统一的 rCM 目标。这两路都各有工程前提：sCM 路依赖一个能在大模型上算梯度的 JVP 内核加一套数值稳定化，DMD 路依赖把学生当前生成的样本喂给一个 fake score 网络来估反向 score。训练时两套网络交替更新——学生用组合后的 rCM 目标更新，fake score 网络则用 flow matching loss 在学生最新生成的数据上跟训。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    T["教师模型<br/>(冻结·蒸馏 CFG)"] --> S["学生 F_θ<br/>少步生成器"]
+    S -->|"沿 PF-ODE 求切向"| JVP["FlashAttention-2<br/>JVP 内核 (兼容 FSDP/CP)"]
+    JVP --> ST["稳定时间导数<br/>半连续 / 时间嵌入 FP32"]
+    ST --> LSCM["sCM 损失·前向 KL<br/>mode-covering 保多样性"]
+    S -->|"Rollout 多步采样"| X0["学生样本 x_0 ~ p_θ"]
+    X0 --> FAKE["fake score 网络<br/>flow matching 跟训"]
+    FAKE --> LDMD["DMD 损失·反向 KL<br/>mode-seeking 提质量"]
+    LSCM --> RCM["Score 正则化<br/>L_rCM = L_sCM + λ·L_DMD"]
+    LDMD --> RCM
+    RCM -->|"反传更新学生 θ"| S
+```
 
 ### 关键设计
 

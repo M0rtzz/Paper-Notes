@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是文本 $x$，经语言模型 $\mathcal{M}_t$ 生成 embedding $z_t = f_{\theta_t}(x) \in \mathbb{R}^d$，安全分类器 $g_\phi$ 对 embedding 做二分类（toxic/safe）。本文的核心实验框架是：在 checkpoint 0 上训练分类器，然后在后续 checkpoint 的 drifted embedding 上评估，模拟生产中"分类器固定、模型更新"的场景。
+这篇论文不提新模型，而是设计一套受控实验去拷问一个被默认成立的假设：基于 frozen embedding 的安全分类器，在底层模型更新后还靠不靠得住。整条 pipeline 是：文本 $x$ 经语言模型 $\mathcal{M}_t$ 生成 embedding $z_t = f_{\theta_t}(x) \in \mathbb{R}^d$，安全分类器 $g_\phi$ 在 embedding 上做 toxic/safe 二分类。关键动作是把分类器**只在 checkpoint 0 上训练一次然后冻结**，再人为给后续 checkpoint 的 embedding 注入可控漂移、让冻结分类器去评估，从而精确复现生产里"模型更新、分类器不动"的场景。围绕这条主线，本文做了三件事：怎么建模漂移、怎么度量被均值监控漏掉的"无声失效"、以及对齐（RLHF）到底帮了还是害了分类。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["文本 x"] --> B["语言模型 M_t<br/>抽取 embedding z"]
+    B --> C["checkpoint 0<br/>训练并冻结分类器 g"]
+    C --> D["Embedding Drift 建模<br/>高斯 / 方向性 / 子空间旋转<br/>z_c = Normalize(z_0 + ε_c)"]
+    D --> E["冻结分类器在<br/>drifted embedding 上评估"]
+    E --> F["Silent Failure 度量<br/>高置信度下的错分"]
+    E --> G["Alignment 影响分析<br/>Silhouette / Fisher 可分性<br/>base vs instruct"]
+```
 
 ### 关键设计
 

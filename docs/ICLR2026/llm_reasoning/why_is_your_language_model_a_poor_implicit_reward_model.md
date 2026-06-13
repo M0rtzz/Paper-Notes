@@ -58,11 +58,11 @@ tags:
 
 $$\Delta r_{\theta_{\text{EX}}}(\bar{\mathbf{x}}, \bar{\mathbf{y}}) = \langle \mathbf{h}_{\bar{\mathbf{x}},\bar{\mathbf{y}}}, \mathbf{h}_{\mathbf{x},\mathbf{y}^+} - \mathbf{h}_{\mathbf{x},\mathbf{y}^-} \rangle \cdot \eta g(\theta_{\text{EX}})$$
 
-它完全取决于隐藏表示之间的内积：只要 $\bar{\mathbf{y}}$ 与正样本 $\mathbf{y}^+$ 语义相近（表示对齐），奖励就增加，和用的是哪些具体 token 无关。由于预训练表示本身已经编码了语义，EX-RM 天然能把"换了 token 但意思一样"的回答泛化对。
+右边的 $\eta$ 是学习率、$g(\theta_{\text{EX}})>0$ 是一个正标量（等于 $\sigma$ 作用在当前奖励间隔上，刻画模型在这对训练样本上还有多"错"），两者都恒为正、不改变方向。真正决定奖励涨还是跌的，是隐藏表示之间的内积：只要未见样本 $\bar{\mathbf{y}}$ 与正样本 $\mathbf{y}^+$ 语义相近（表示对齐），奖励就增加，和用的是哪些具体 token 无关。由于预训练表示本身已经编码了语义，EX-RM 天然能把"换了 token 但意思一样"的回答泛化对。
 
 **3. IM-RM 的学习动力学：token 不匹配时，奖励可能被反向推**
 
-同样看奖励变化，IM-RM 的表达式里多出一个系数 $\rho_{k,l}(\mathbf{v})$。当 $\bar{\mathbf{y}}_k = \mathbf{v}_l$（token 对得上）时系数为正，起的作用和 EX-RM 类似；可一旦 $\bar{\mathbf{y}}_k \neq \mathbf{v}_l$（token 对不上），系数就可能变负——这时哪怕两个回答的隐藏表示语义对齐，奖励也可能被往**反方向**推。于是出现一个反直觉的局面：语义相同但 token 不同的 response，会被 IM-RM 判成相反的奖励方向。这正解释了为什么把回答做一次 paraphrase，IM-RM 的准确率能从 1.0 直接掉到 0.02。
+同样看奖励变化，IM-RM 的表达式里给每对位置都乘上一个系数 $\rho_{k,l}(\mathbf{v})\in[-2,2]$，它由两段回答在第 $k$、$l$ 位的 token 及其 next-token 分布共同决定。当 $\bar{\mathbf{y}}_k = \mathbf{v}_l$（token 对得上）时系数为正，起的作用和 EX-RM 类似；可一旦 $\bar{\mathbf{y}}_k \neq \mathbf{v}_l$（token 对不上），系数就可能变负——这时哪怕两个回答的隐藏表示语义对齐，奖励也可能被往**反方向**推。于是出现一个反直觉的局面：语义相同但 token 不同的 response，会被 IM-RM 判成相反的奖励方向。这正解释了为什么把回答做一次 paraphrase，IM-RM 的准确率能从 1.0 直接掉到 0.02。
 
 **4. 理论泛化差距（Theorem 2）：IM-RM 对没见过的 token 只能瞎猜**
 

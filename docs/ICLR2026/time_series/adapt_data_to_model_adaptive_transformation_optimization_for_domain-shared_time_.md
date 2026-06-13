@@ -47,6 +47,21 @@ $$h^* = \arg\min_{h \in \mathcal{H}} \mathcal{L}(M, D_{\text{history}}, h)$$
 
 其中 $M$ 是冻结的 LTM，$h^*$ 就是最终交付的最优变换配置，推理时直接套用即可。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["历史时序 D_history"] --> B["数据增强准备<br/>(8 种增强撑大样本)"]
+    B --> C["变换管线搜索空间<br/>(9 算子 3 类 · TPE 贝叶斯搜索)"]
+    C --> D["数百个候选管线"]
+    subgraph RANK["两阶段 Pareto 排序"]
+        direction TB
+        E["阶段 1 · 增强样本<br/>Pareto 过滤 → 16 候选"] --> F["阶段 2 · 原始样本<br/>5 指标加权打分"]
+    end
+    D --> RANK
+    RANK --> G["最优变换 h*"]
+    G --> H["冻结 LTM 推理<br/>(FrozenForecasting)"]
+```
+
 ### 关键设计
 
 **1. 数据增强准备：让搜出来的管线扛得住分布偏移**

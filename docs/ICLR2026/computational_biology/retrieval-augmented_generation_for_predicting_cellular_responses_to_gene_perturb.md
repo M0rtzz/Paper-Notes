@@ -51,17 +51,35 @@ tags:
 
 ### 整体框架
 
-PT-RAG 把"为一个扰动预测细胞响应"拆成一条两阶段流水线：先用 GenePT 语义嵌入从约 2009 个扰动里粗筛出 $K$ 个候选，再用一个可微、且条件于当前细胞状态的选择器决定到底借用哪几个候选作参考，最后把选中的上下文喂给 Transformer 生成器吐出扰动后的表达谱。粗筛保证检索空间足够小，可微选择保证"借谁"这件事能随生成误差一起被反向传播优化。
+PT-RAG 把"为一个扰动预测细胞响应"拆成一条两阶段流水线：先用 GenePT 语义嵌入从约 2009 个扰动里**粗筛**出 $K$ 个候选，再用一个可微、且条件于当前细胞状态的**选择器**决定到底借用哪几个候选作参考，最后把选中的上下文**聚合**成一个条件向量喂给 Transformer 生成器，吐出扰动后的高维表达谱。粗筛保证检索空间足够小，可微选择保证"借谁"这件事能随生成误差一起被反向传播优化——这正是它区别于固定检索的朴素 RAG 的地方。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["目标扰动 + 控制细胞状态<br/>(目标细胞 few-shot 样本)"] --> S1
+    subgraph S1["GenePT 语义粗筛"]
+        direction TB
+        B["GenePT 嵌入数据库<br/>2009 个扰动"] --> C["余弦相似度取 top-K<br/>(K=32 候选)"]
+    end
+    S1 --> D["细胞类型感知的可微选择<br/>三元组评分 + Gumbel-Softmax"]
+    A -.条件于细胞状态.-> D
+    D --> E["上下文聚合 + Transformer 生成<br/>加权求和 z → 生成器"]
+    E --> F["扰动后高维表达谱"]
+```
 
 ### 关键设计
 
-**1. GenePT 语义嵌入：让"功能相似"在向量空间里可度量。** 先前方法用 one-hot 表示扰动身份，两个功能相近的基因在向量空间里却彼此正交，模型无从知道哪些扰动可以互相参考。PT-RAG 改用 GenePT 嵌入 $h_g^{gpt} \in \mathbb{R}^d$——它由 GPT-3.5 编码基因的 NCBI 文本描述得到，于是 aminoacyl-tRNA 合成酶这类功能同族的基因天然在嵌入空间里靠拢。所有扰动的嵌入预先构成数据库 $\mathcal{D} = \{h_p^{gpt}; \forall p \in \mathcal{P}\}$（$|\mathcal{P}| \approx 2009$），为后续检索提供一把现成的"相似性尺子"。
+**1. GenePT 语义粗筛：把两千个扰动压成 K 个语义相关候选**
 
-**2. 第一阶段语义检索：把搜索空间从两千压到 K。** 直接在两千个扰动上做可微选择既慢又容易引入噪声，所以先做一次不可微的粗筛。对目标扰动 $h_{pert}^{gpt}$ 按余弦相似度取 top-$K$ 候选 $\mathcal{R}_{p^{pert}} = \text{TOP}_K(h_{pert}^{gpt}, \mathcal{P}) = \{p_{(1)}, \ldots, p_{(K)}\}$，把候选集合一次性收敛到 $K$ 个（实验取 $K=32$）语义相关的扰动。这一步只缩范围、不做决策，把"该不该用"的判断留给下一阶段。
+可微地在两千个扰动上直接挑选既慢又容易引入噪声，所以第一阶段先做一次不可微的语义粗筛，难点在于"功能相似"本身要可度量。先前方法用 one-hot 表示扰动身份，两个功能相近的基因在向量空间里却彼此正交，模型无从知道哪些扰动可以互相参考。PT-RAG 改用 GenePT 嵌入 $h_g^{gpt} \in \mathbb{R}^d$——它由 GPT-3.5 编码基因的 NCBI 文本描述得到，于是 aminoacyl-tRNA 合成酶这类功能同族的基因天然在嵌入空间里靠拢。所有扰动的嵌入预先构成数据库 $\mathcal{D} = \{h_p^{gpt}; \forall p \in \mathcal{P}\}$（$|\mathcal{P}| \approx 2009$），对目标扰动 $h_{pert}^{gpt}$ 按余弦相似度取 top-$K$ 即得候选集 $\mathcal{R}_{p^{pert}} = \text{TOP}_K(h_{pert}^{gpt}, \mathcal{P}) = \{p_{(1)}, \ldots, p_{(K)}\}$（实验取 $K=32$）。这一步只缩范围、不做"该不该用"的决策，把后者留给下一阶段。
 
-**3. 可微的细胞类型感知选择：用三元组评分 + Gumbel-Softmax 把"借谁"变成可学习的硬决策。** 这是全文的核心创新，要解决的痛点是：同一个扰动在不同细胞里效应可能完全不同，因此检索必须看当前细胞状态，而"该选谁"又没有现成标签、只能让模型自己学。具体做法是把每个候选 $k$ 先编码成 $h_k^{cxt} = \text{PertEncoder}(h_{p_{(k)}}^{gpt}) \in \mathbb{R}^{d_h}$，再拼成三元组 $c_k = [h^{ctrl}; h_{pert}; h_k^{cxt}]$，同时容纳"控制细胞状态、目标扰动、候选上下文"三方信息；经一个打分头 $s_k = \text{MLP}_{\text{score}}(\text{LayerNorm}(c_k)) \in \mathbb{R}^2$ 输出"排除/包含"两个 logit。为了既能输出 0/1 的硬选择又能让梯度流回打分头，用 Straight-Through Gumbel-Softmax 得到 $w_k = \text{GumbelSoftmax}(s_k, \tau)[\texttt{include}] \in \{0, 1\}$：前向用 $\arg\max$ 拿硬决策，反向用软概率算梯度。由于评分条件于 $h^{ctrl}$，同一个候选在不同细胞类型下会被给出不同的取舍，这正是细胞类型感知的来源。相比之下，Vanilla RAG 只按扰动嵌入做固定 top-$K$、检索步骤梯度被截断、再用 cross-attention 硬塞上下文，既看不到细胞状态也无法端到端调整检索目标——后文实验里它的 Pearson 仅 0.396，反而把基线拖垮。
+**2. 细胞类型感知的可微选择：用三元组评分 + Gumbel-Softmax 把"借谁"变成可学习的硬决策**
 
-**4. 上下文聚合与 Transformer 生成：把选中的参考压成一个条件向量。** 选完之后还要把被选中的候选汇成生成器能用的输入。每个三元组先经投影 $h_k' = \text{MLP}_{\text{proj}}(c_k)$，再用选择权重做加权求和 $z = \sum_{k=1}^{K} w_k \cdot h_k'$——被 Gumbel-Softmax 判为"排除"的候选权重为 0、自动不贡献，于是 $z$ 只携带模型认可的参考信息。最后 $\hat{x}^{pert} = \text{TransformerGenerator}(z)$ 生成扰动后的高维表达谱。这样检索的"选谁"和生成的"长什么样"被串到同一条计算图上，可以一起优化。
+这是全文的核心创新，要解决的痛点是：同一个扰动在不同细胞里效应可能完全不同，因此检索必须看当前细胞状态，而"该选谁"又没有现成标签、只能让模型自己学。具体做法是把每个候选 $k$ 先编码成 $h_k^{cxt} = \text{PertEncoder}(h_{p_{(k)}}^{gpt}) \in \mathbb{R}^{d_h}$，再拼成三元组 $c_k = [h^{ctrl}; h_{pert}; h_k^{cxt}]$，同时容纳"控制细胞状态、目标扰动、候选上下文"三方信息；经一个打分头 $s_k = \text{MLP}_{\text{score}}(\text{LayerNorm}(c_k)) \in \mathbb{R}^2$ 输出"排除/包含"两个 logit。为了既能输出 0/1 的硬选择又能让梯度流回打分头，用 Straight-Through Gumbel-Softmax 得到 $w_k = \text{GumbelSoftmax}(s_k, \tau)[\texttt{include}] \in \{0, 1\}$：前向用 $\arg\max$ 拿硬决策，反向用软概率算梯度。由于评分条件于 $h^{ctrl}$，同一个候选在不同细胞类型下会被给出不同的取舍，这正是细胞类型感知的来源。相比之下，Vanilla RAG 只按扰动嵌入做固定 top-$K$、检索步骤梯度被截断、再用 cross-attention 硬塞上下文，既看不到细胞状态也无法端到端调整检索目标——后文实验里它的 Pearson 仅 0.396，反而把基线拖垮。
+
+**3. 上下文聚合与生成：把选中的参考压成一个条件向量喂给生成器**
+
+选完之后还要把被选中的候选汇成生成器能用的输入。每个三元组先经投影 $h_k' = \text{MLP}_{\text{proj}}(c_k)$，再用选择权重做加权求和 $z = \sum_{k=1}^{K} w_k \cdot h_k'$——被 Gumbel-Softmax 判为"排除"的候选权重为 0、自动不贡献，于是 $z$ 只携带模型认可的参考信息。最后 $\hat{x}^{pert} = \text{TransformerGenerator}(z)$ 生成扰动后的高维表达谱。这样检索的"选谁"和生成的"长什么样"被串到同一条计算图上，可以一起优化。
 
 ### 损失函数 / 训练策略
 

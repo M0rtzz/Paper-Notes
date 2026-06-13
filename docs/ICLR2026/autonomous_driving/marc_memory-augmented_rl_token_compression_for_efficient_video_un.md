@@ -45,7 +45,21 @@ tags:
 
 MARC 要解决的是一个很实际的矛盾：视频 token 一多，VLM 推理就贵，但简单粗暴地砍 token 又会丢关键信息、掉性能。它的思路是「先检索、再压缩」（retrieve then compress）——不去盲目压整段视频，而是先把和问题真正相关的片段挑出来，再在这一小块里做有意义的压缩。
 
-整个流程是这样转的：原始视频先经 **Visual Memory Retriever (VMR)** 切成事件级片段并检索出与 query 最相关的 top-k 片段，这些片段进入 **Memory-Aware Temporal Compression Layer** 做两阶段时序压缩，把帧数压到目标预算，压缩后的少量 token 喂给 LLM；训练阶段则用 **C-GRPO** 以 64 帧输入的教师网络为参照，通过强化学习把推理能力蒸馏进只用 1 帧 token 的学生网络。
+整个流程是这样转的：原始视频先经 **Visual Memory Retriever (VMR)** 切成事件级片段并检索出与 query 最相关的 top-k 片段，这些片段进入 **Memory-Aware Temporal Compression Layer** 做两阶段时序压缩，把帧数压到目标预算，压缩后的少量 token 喂给 LLM；训练阶段则用 **Compression GRPO (C-GRPO)** 以 64 帧输入的教师网络为参照，通过强化学习把推理能力蒸馏进只用 1 帧 token 的学生网络。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["用户 query"] --> VMR
+    V["原始视频<br/>(高帧率 / 长时长)"] --> VMR
+    VMR["Visual Memory Retriever<br/>事件级切段 + top-k 检索"] --> COMP
+    COMP["Memory-Aware 时序压缩层<br/>段内合并 → 跨段合并"] --> TOK["压缩后 token<br/>(≈1 帧, ~122 个)"]
+    TOK --> LLM["LLM 生成答案"]
+    LLM --> ANS["输出答案"]
+    ANS -.训练期对齐.-> CGRPO["Compression GRPO<br/>正确性门控 + 保持奖励"]
+    TEA["教师网络<br/>64 帧输入"] -.性能参照.-> CGRPO
+    CGRPO -.RL 蒸馏更新.-> COMP
+```
 
 ### 关键设计
 

@@ -46,6 +46,19 @@ tags:
 
 整条管线这样转：查询坐标 $(\mathbf{x}, t)$ 进来后，空间分量 $\mathbf{x}$ 在一张可学习特征网格上做双线性插值，取出连续的空间特征 $\mathbf{f}_s(\mathbf{x})$；时间分量 $t$ 经过一个 SIREN 网络编码成 $\mathbf{f}_t(t)$；两段特征拼接后送进 MLP，输出 $J$ 组半包裹高斯混合（SWGMM）参数 $\{w_j, \bm{\mu}_j, \bm{\Sigma}_j\}$，描述该时空点上速度-方向的多模态分布。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询坐标 (x, y, t)"] --> X["空间坐标 x"]
+    Q --> T["时间 t"]
+    X -->|"特征网格<br/>双线性插值"| FS["可学习空间特征网格<br/>连续空间特征 f_s(x)"]
+    T -->|"周期正弦激活"| FT["SIREN 时间编码<br/>时间特征 f_t(t)"]
+    FS --> CAT["拼接 f_s ⊕ f_t"]
+    FT --> CAT
+    CAT -->|"MLP"| OUT["SWGMM 参数化输出<br/>{w_j, μ_j, Σ_j}"]
+    OUT --> DIST["速度-方向多模态分布<br/>p(v | x, t)"]
+```
+
 ### 关键设计
 
 **1. 可学习空间特征网格：让空间连续又不丢局部细节**

@@ -46,17 +46,39 @@ tags:
 
 ### 整体框架
 
-SBM 的出发点是一个看似纯理论的观察：当特征空间满足零内在 Bellman 误差 (IBE) 时，函数空间在 Bellman 算子下封闭，此时 Bellman 算子作用于一组 Q 函数所得到的变换矩阵，其奇异值分解 (SVD) 恰好与特征协方差矩阵对齐。SBM 把这个谱关系翻译成一个可微的代理目标——用类似幂迭代的交替优化逼近这组谱结构——再让同一个特征协方差顺势充当 Thompson Sampling 的探索后验，于是表示学习与探索被同一个量统一了起来。
+SBM 要同时解决强化学习里两个常被分开处理的问题：**学一个适合值估计的表示**和**高效探索**，并让这两件事由同一个量驱动。它的出发点是一个看似纯理论的观察：当特征空间满足零内在 Bellman 误差 (IBE) 时，函数空间在 Bellman 算子下封闭，此时 Bellman 算子作用于一组 Q 函数所得到的变换矩阵，其奇异值分解 (SVD) 恰好与特征协方差矩阵对齐。SBM 把这个谱关系翻译成一个可微的代理目标——用类似幂迭代的交替优化逼近这组谱结构——训练出的特征协方差再顺势充当 Thompson Sampling 的探索后验。整个算法是一个三阶段交替的回环：从协方差驱动的 Thompson Sampling 采集数据，用标准 Q-learning 更新值参数，再用 SBM 损失更新特征，循环往复让表示与探索协同进化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    B["Bellman 谱分解定理<br/>零 IBE 下谱结构<br/>对齐特征协方差 Λ"] --> C["SBM 损失<br/>幂迭代交替更新<br/>特征 φ 与参数 θ̃"]
+    A["环境交互数据 D"] --> C
+    C --> D["特征协方差 Λ<br/>精度矩阵 Σ"]
+    D --> E["Thompson Sampling 探索<br/>θ ~ N(θ_LS, σ_exp·Σ⁻¹)<br/>贪婪 rollout 采集轨迹"]
+    D --> F["Q-learning 值估计<br/>更新参数 θ"]
+    E -->|新轨迹| A
+    F --> C
+```
 
 ### 关键设计
 
-**1. Bellman 谱分解定理：把零 IBE 的隐藏结构显式化。** 直接最小化 IBE 会陷入 min-max-min 优化，根源在于 Bellman 算子关于 $Q_\theta$ 高度非线性，难以提供清晰的学习信号。SBM 的突破在于证明：在零 IBE 条件下，定义加权特征矩阵 $\Phi_P$ 与加权后 Bellman 参数矩阵 $\tilde{\Theta}_P$，则 Bellman 变换矩阵可分解为 $\mathcal{T}\bar{Q} = \Phi_P \tilde{\Theta}_P$，而它的 SVD 与特征协方差矩阵 $\Lambda = \mathbb{E}[\phi(s,a)\phi(s,a)^\top]$ 直接挂钩——非零奇异值恰好是 $\Lambda$ 的特征值，左奇异向量对应加权特征、右奇异向量对应加权参数。一个关键推论是 $\Lambda_1 = \Lambda_2 = \Lambda$，即特征协方差与后 Bellman 参数协方差对齐。这条定理之所以重要，是因为它把"特征对值估计是否合适"这个抽象判据，等价转换成了一个有现成数值算法（SVD/幂迭代）可逼近的谱问题。
+**1. Bellman 谱分解定理：把零 IBE 的隐藏结构显式化**
 
-**2. SBM 损失函数：用幂迭代把谱目标变成可训练的交替优化。** 知道目标是逼近一组奇异向量后，SBM 借鉴求 SVD 的幂迭代思想，把问题拆成交替更新特征 $\phi$ 与参数 $\tilde{\theta}$ 的目标 $\mathcal{L}(\phi, \tilde{\theta}) = \mathcal{L}_1(\phi) + \mathcal{L}_2(\tilde{\theta}) + \mathcal{L}_{orth}(\phi, \tilde{\theta})$。其中表示损失 $\mathcal{L}_1(\phi)$ 更新 $\phi$ 使其与 Bellman 变换后的 Q 值对齐，并用当前参数协方差 $\Lambda_{2,t}$ 做正则化；参数损失 $\mathcal{L}_2(\tilde{\theta})$ 反向更新 $\tilde{\theta}$ 使其最佳表示 Bellman 变换结果，并用当前特征协方差 $\Lambda_{1,t}$ 正则化；正交正则化 $\mathcal{L}_{orth}$ 则约束不同维度的特征彼此正交，对应 SVD 中奇异向量的正交性。Proposition 2 进一步保证：最小化这个 SBM Loss 等价于执行一步幂迭代更新，因此随着训练推进，特征会沿着谱结构的主方向收敛。
+零 IBE 是判断"特征对值估计是否合适"的理论判据，但直接最小化 IBE 会陷入 min-max-min 优化，根源在于 Bellman 算子关于 $Q_\theta$ 高度非线性，提供不了清晰的学习信号。SBM 的突破在于证明：在零 IBE 条件下，定义加权特征矩阵 $\Phi_P$ 与加权后 Bellman 参数矩阵 $\tilde{\Theta}_P$，则 Bellman 变换矩阵可分解为 $\mathcal{T}\bar{Q} = \Phi_P \tilde{\Theta}_P$，而它的 SVD 与特征协方差矩阵 $\Lambda = \mathbb{E}[\phi(s,a)\phi(s,a)^\top]$ 直接挂钩——非零奇异值恰好是 $\Lambda$ 的特征值，左奇异向量对应加权特征、右奇异向量对应加权参数。一个关键推论是 $\Lambda_1 = \Lambda_2 = \Lambda$，即特征协方差与后 Bellman 参数协方差对齐。这条定理的意义在于把那个难解的抽象判据，等价转换成了一个有现成数值算法（SVD / 幂迭代）可逼近的谱问题，为后续设计可训练目标铺了路。
 
-**3. 相比 Bellman MSE 的稳健性优势：用移动平均协方差替换单样本噪声估计。** 把 SBM Loss 与朴素的 Bellman MSE 逐项展开对比，差异集中在二次项：MSE 目标里的 $\|\phi(s,a)\|_{\hat{\Lambda}}^2$ 用的是单样本噪声估计 $\hat{\Lambda}$，方差大、信号噪，而 SBM 的二次项用的是移动平均协方差 $\Lambda_{2,t}$，相当于把整批统计量做了稳健正则化。此外 SBM 把目标拆成 $\mathcal{L}_1 + \mathcal{L}_2$ 的分离结构，天然契合幂迭代的交替更新，比同时优化一个 MSE 更稳定，且显式带有正交正则化。这解释了为什么从同一理论目标出发，SBM 的实现比直接最小化 Bellman 残差更不易发散。
+**2. SBM 损失：用幂迭代把谱目标变成可训练的交替优化**
 
-**4. Thompson Sampling 探索：让特征协方差顺势驱动采样。** 既然学到的特征协方差既刻画了表示结构、又编码了值估计的不确定性，SBM 直接复用它来探索，无需额外的探索模块。具体做法是构建精度矩阵 $\Sigma = \lambda I + \sum_{(s,a) \in \mathcal{D}} \phi(s,a)\phi(s,a)^\top$，每次 rollout 前从后验 $\hat{\theta}_{TS} \sim \mathcal{N}(\hat{\theta}_{LS}, \sigma_{exp} \Sigma^{-1})$ 采样一组参数再贪婪执行。由于低 IBE 特征的协方差结构同时编码了不确定性方向，采样自然偏向信息量大的状态-动作；同一个 $\Sigma$ 也可无缝替换成 UCB 方法。至此表示与探索共享同一个量，"学好表示"与"探索得好"成了一回事。
+知道目标是逼近这组奇异向量后，SBM 借鉴求 SVD 的幂迭代思想，把问题拆成交替更新特征 $\phi$ 与参数 $\tilde{\theta}$ 的目标
+
+$$\mathcal{L}(\phi, \tilde{\theta}) = \mathcal{L}_1(\phi) + \mathcal{L}_2(\tilde{\theta}) + \mathcal{L}_{orth}(\phi, \tilde{\theta})$$
+
+其中表示损失 $\mathcal{L}_1(\phi)$ 更新 $\phi$ 使其与 Bellman 变换后的 Q 值对齐，并用当前参数协方差 $\Lambda_{2,t}$ 做正则化；参数损失 $\mathcal{L}_2(\tilde{\theta})$ 反向更新 $\tilde{\theta}$ 使其最佳表示 Bellman 变换结果，并用当前特征协方差 $\Lambda_{1,t}$ 正则化；正交正则化 $\mathcal{L}_{orth}$ 约束不同维度的特征彼此正交，对应 SVD 中奇异向量的正交性。Proposition 2 保证：最小化这个目标等价于执行一步幂迭代更新，因此随训练推进，特征会沿谱结构的主方向收敛。
+
+它之所以比直接最小化 Bellman 残差更稳，关键差异藏在二次项里：朴素 Bellman MSE 中的 $\|\phi(s,a)\|_{\hat{\Lambda}}^2$ 用的是单样本噪声估计 $\hat{\Lambda}$，方差大、信号噪；而 SBM 的二次项用移动平均协方差 $\Lambda_{2,t}$，相当于对整批统计量做了稳健正则化。再加上 $\mathcal{L}_1 + \mathcal{L}_2$ 的分离结构天然契合幂迭代的交替更新、且显式带正交正则化，SBM 从同一理论目标出发却更不易发散。
+
+**3. Thompson Sampling 探索：让特征协方差顺势驱动采样**
+
+既然学到的特征协方差既刻画了表示结构、又编码了值估计的不确定性，SBM 直接复用它来探索，无需额外的探索模块。具体做法是构建精度矩阵 $\Sigma = \lambda I + \sum_{(s,a) \in \mathcal{D}} \phi(s,a)\phi(s,a)^\top$，每次 rollout 前从后验 $\hat{\theta}_{TS} \sim \mathcal{N}(\hat{\theta}_{LS}, \sigma_{exp} \Sigma^{-1})$ 采样一组参数再贪婪执行。由于低 IBE 特征的协方差结构同时编码了不确定性方向，采样自然偏向信息量大的状态-动作；同一个 $\Sigma$ 也可无缝替换成 UCB 方法。至此表示与探索共享同一个量，"学好表示"与"探索得好"成了一回事，这也是 SBM 标题里"统一表示与探索"的落点。
 
 ### 损失函数 / 训练策略
 

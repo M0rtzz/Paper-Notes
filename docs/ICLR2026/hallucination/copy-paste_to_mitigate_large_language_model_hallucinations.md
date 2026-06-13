@@ -44,6 +44,16 @@ tags:
 
 整套流程分两阶段：先用 Copy-Paste-Prompting 把一个普通 LLM 引导出大量"高复制率"的候选回答，再用一套多维度筛选 + Elo 排序的流水线挑出最优劣对，喂给 DPO 把"优先复制"的偏好固化进模型权重。换句话说，前半段靠提示工程造数据，后半段靠偏好训练让模型把复制变成默认习惯，最终得到的 CopyPasteLLM 在推理时无需任何特殊提示就会主动嵌入上下文原文。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["检索上下文 + 查询"] --> B["三种复制策略<br/>CP-Order / CP-Link / CP-Refine"]
+    B -->|生成高复制候选| C["复制强度量化 κ/δ<br/>多维筛选 + Elo 排序"]
+    C --> D["365 个优劣偏好对"]
+    D --> E["高复制偏好 DPO 训练<br/>+ Answer Stamping"]
+    E --> F["CopyPasteLLM<br/>推理时无提示主动复制"]
+```
+
 ### 关键设计
 
 **1. 三种复制策略：在忠实与流畅之间铺出梯度**

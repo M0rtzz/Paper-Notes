@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：特殊 token 是 VGGT 多任务推理的关键设计，但其与常规图像 token 的分布差异导致量化时大量 bit 被浪费在极端值上。
 
-**本文目标** 设计 VGGT 专用的 PTQ 方案，在低 bit 量化下保持重建精度。
+**本文目标**：设计 VGGT 专用的 PTQ 方案，在低 bit 量化下保持重建精度。
 
 **切入角度**：从分布分析入手，发现特殊 token 是重尾根源，多视图帧间关系是校准的关键结构。
 
@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-QuantVGGT 要解决的是：把 1.2B 参数的 VGGT 量化到 4-bit 而几乎不掉精度，难点在于 camera/register 这些特殊 token 制造的重尾激活，以及多视图校准样本难选。它用两个组件分头处理这两件事。前一个是 **DSFQ**（Dual-Smoothed Fine-Grained Quantization）：激活进来先做一次全局 Hadamard 旋转把尖峰摊平，再在旋转后的空间里做一次局部通道缩放压掉残余方差，最后配上细粒度的量化粒度，三步串成一条平滑链路。后一个是 **NFDS**（Noise-Filtered Diverse Sampling）：在喂校准数据之前，先用深层激活统计把异常样本过滤掉，再按 VGGT 的帧间相关性聚类、均匀采样，凑出一个既干净又多样的校准集。
+QuantVGGT 要解决的是：把 1.2B 参数的 VGGT 量化到 4-bit 而几乎不掉精度，难点在于 camera/register 这些特殊 token 制造的重尾激活，以及多视图校准样本难选。它用两个组件分头处理这两件事。前一个是 **DSFQ**（Dual-Smoothed Fine-Grained Quantization）：激活进来先做一次全局 Hadamard 旋转把尖峰摊平，再在旋转后的空间里做一次局部通道缩放压掉残余方差，最后配上细粒度的量化粒度，三步串成一条平滑链路。后一个是 **NFDS**（Noise-Filtered Diverse Sampling）：在喂校准数据之前，先用深层激活统计把异常样本过滤掉，再按 VGGT 的帧间相关性聚类、均匀采样，凑出一个既干净又多样的校准集。NFDS 选出的校准集喂给 DSFQ，用来估计每层的量化参数，两者协同完成 4-bit 量化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IMG["多视图图像"] --> VGGT["VGGT 1.2B<br/>逐线性层激活 X / 权重 W"]
+    subgraph DSFQ["双重平滑细粒度量化 DSFQ"]
+        direction TB
+        ROT["全局 Hadamard 旋转<br/>摊平特殊 token 尖峰"] --> SMOOTH["局部通道平滑<br/>压残余方差（融入 LayerNorm）"]
+        SMOOTH --> FGQ["细粒度量化<br/>权重沿 d_out、激活沿 token"]
+    end
+    VGGT --> ROT
+    CALIB["校准数据"] --> NFDS["噪声过滤多样化采样 NFDS<br/>z-score 剔异常 + 帧间聚类采样"]
+    NFDS --> FGQ
+    FGQ --> OUT["4-bit QuantVGGT<br/>3.7× 压缩 / 2.5× 加速"]
+```
 
 ### 关键设计
 

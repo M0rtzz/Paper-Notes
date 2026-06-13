@@ -40,15 +40,23 @@ tags:
 
 ### 整体框架
 
-本文不提出新模型，而是搭建一套覆盖训练与推理两端的 scaling law 测量管线：在统一的数据、tokenizer 和精确算力口径下，把 Llama-2 风格 dense Transformer 与 xLSTM 7B 架构（纯 mLSTM 层 + MLP）放到 80M–7B 参数、2B–2T tokens 的同一坐标系里大规模扫描，再用拟合好的 scaling law 外推 compute-optimal 配置并联动分析上下文长度对推理时延的影响。整个研究跑了 672 次训练（292 个 Transformer + 380 个 xLSTM），数据全部来自 DCLM-Baseline 高质量过滤网页文档、用 GPT-NeoX tokenizer、默认序列长度 8192，总算力达 $3.2 \times 10^{23}$ FLOPs。
+本文不提出新模型，而是搭建一套覆盖训练与推理两端的 scaling law 测量管线，回答"线性复杂度的 xLSTM 在 scaling 上到底能不能、什么时候打过 Transformer"。整条管线分三步：先在统一的数据、tokenizer 和**精确算力口径**下，把 Llama-2 风格 dense Transformer 与 xLSTM 7B 架构（纯 mLSTM 层 + MLP）放到 80M–7B 参数、2B–2T tokens 的同一坐标系里大规模扫描；再用**带自由指数的 scaling law 拟合 + IsoFLOP 外推**定位每个算力预算下的 compute-optimal 配置，读出并对比两类架构的 power-law 指数；最后用**基于 roofline 的推理时延建模**把上下文长度对 TTFT 和 step time 的影响纳入同一比较框架。整个研究跑了 672 次训练（292 个 Transformer + 380 个 xLSTM），数据全部来自 DCLM-Baseline 高质量过滤网页文档、用 GPT-NeoX tokenizer、默认序列长度 8192，总算力达 $3.2 \times 10^{23}$ FLOPs。
+
+> 这是一篇 scaling-law/分析型论文，方法是"测量 + 拟合 + 外推"三件分析工具而非可串联的模型流水线，按 skill 规范**跳过框架图**；下面三个关键设计与上面整体框架点名的三步同序对应（精确 FLOP 口径 → scaling law 拟合与外推 → roofline 推理建模）。
 
 ### 关键设计
 
-**1. 精确 FLOP 口径：让线性与二次复杂度模型能被公平比较。** 传统 scaling 研究用 $C(N,D)=6ND$ 近似算力，这个公式把模型当成纯前馈、完全忽略注意力的二次项。对 Transformer 和 xLSTM 的对比来说这是致命的——前者算力随上下文长度二次增长、后者线性增长，$6ND$ 会系统性低估 Transformer 的真实开销，让比较失真。本文改用逐算子的精确 FLOP 公式，把注意力的二次计算与前馈分开统计，并对 xLSTM 的递归更新、mLSTM 矩阵运算单独建模，从而给两类架构提供一个真正同口径的算力横轴，后续所有 Pareto 前沿和 compute-optimal 结论才站得住。
+**1. 精确 FLOP 口径：让线性与二次复杂度模型能被公平比较**
 
-**2. 带自由指数的 scaling law 拟合与 IsoFLOP 外推：定位每个算力预算下的最优模型。** 损失拟合采用 $\hat{L}(N,D) = E + (A N^{-\alpha} + B D^{-\beta})^{\gamma}$，其中 $E$ 是不可约损失、$N$ 是参数量、$D$ 是 token 数，相比 Chinchilla 的固定形式额外引入自由指数 $\gamma$ 来提升对两种架构的拟合质量。在此之上用 IsoFLOP 方法：固定算力预算 $H$，沿不同 $N$/$D$ 组合采样并拟合二阶多项式，找到该预算下的最优 $N^*(H)$、$D^*(H)$，再以幂律 $\hat{N}^*(H)=A'\cdot H^{a}$、$\hat{D}^*(H)=B'\cdot H^{b}$ 外推到更大算力。这套流程让"给定预算该把算力分给更大模型还是更多数据"的问题对两种架构都有可比答案，也使得过训练（高 token/parameter 比）regime 下的 power-law 指数能被直接读出并对比。
+传统 scaling 研究用 $C(N,D)=6ND$ 近似算力，这个公式把模型当成纯前馈、完全忽略注意力的二次项。对 Transformer 和 xLSTM 的对比来说这是致命的——前者算力随上下文长度二次增长、后者线性增长，$6ND$ 会系统性低估 Transformer 的真实开销，让比较失真。本文改用逐算子的精确 FLOP 公式，把注意力的二次计算与前馈分开统计，并对 xLSTM 的递归更新、mLSTM 矩阵运算单独建模，从而给两类架构提供一个真正同口径的算力横轴，后续所有 Pareto 前沿和 compute-optimal 结论才站得住。
 
-**3. 基于 roofline 的推理时延建模：把上下文长度的影响纳入比较。** 训练 scaling 之外，推理时延被建模为算力受限或访存受限两种极限：$\tau = \text{FLOPs}_{\text{algo}} / \alpha_{\text{eff}} + \epsilon$ 或 $\tau = \text{Bytes}_{\text{mem}} / \beta_{\text{eff}} + \epsilon$，其中 $\alpha_{\text{eff}}$、$\beta_{\text{eff}}$ 是实测的有效算力/带宽、$\epsilon$ 是固定开销，用 roofline model 判断当前到底卡在计算还是内存上。prefill 与 generation 两阶段分开分析，正是为了刻画 Transformer 的 KV cache 随上下文线性膨胀、而 xLSTM 状态恒定这一结构差异——这让 TTFT 和 step time 对上下文长度的依赖能被理论预测并与实测对照。
+**2. 带自由指数的 scaling law 拟合与 IsoFLOP 外推：定位每个算力预算下的最优模型**
+
+损失拟合采用 $\hat{L}(N,D) = E + (A N^{-\alpha} + B D^{-\beta})^{\gamma}$，其中 $E$ 是不可约损失、$N$ 是参数量、$D$ 是 token 数，相比 Chinchilla 的固定形式额外引入自由指数 $\gamma$ 来提升对两种架构的拟合质量。在此之上用 IsoFLOP 方法：固定算力预算 $H$，沿不同 $N$/$D$ 组合采样并拟合二阶多项式，找到该预算下的最优 $N^*(H)$、$D^*(H)$，再以幂律 $\hat{N}^*(H)=A'\cdot H^{a}$、$\hat{D}^*(H)=B'\cdot H^{b}$ 外推到更大算力。这套流程让"给定预算该把算力分给更大模型还是更多数据"的问题对两种架构都有可比答案，也使得过训练（高 token/parameter 比）regime 下的 power-law 指数能被直接读出并对比。
+
+**3. 基于 roofline 的推理时延建模：把上下文长度的影响纳入比较**
+
+训练 scaling 之外，推理时延被建模为算力受限或访存受限两种极限：$\tau = \text{FLOPs}_{\text{algo}} / \alpha_{\text{eff}} + \epsilon$ 或 $\tau = \text{Bytes}_{\text{mem}} / \beta_{\text{eff}} + \epsilon$，其中 $\alpha_{\text{eff}}$、$\beta_{\text{eff}}$ 是实测的有效算力/带宽、$\epsilon$ 是固定开销，用 roofline model 判断当前到底卡在计算还是内存上。prefill 与 generation 两阶段分开分析，正是为了刻画 Transformer 的 KV cache 随上下文线性膨胀、而 xLSTM 状态恒定这一结构差异——这让 TTFT 和 step time 对上下文长度的依赖能被理论预测并与实测对照。
 
 ## 实验关键数据
 

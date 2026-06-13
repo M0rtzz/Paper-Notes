@@ -39,6 +39,22 @@ tags:
 
 TiTok 想把源模型上训好的 LoRA「移植」到另一个基础模型，但既拿不到原始训练数据，也不想像 TransLoRA 那样额外训一个判别器。它的做法是：先让源模型生成一批合成数据，再用源模型自身「带 LoRA」与「不带 LoRA」时的 token 级输出差异作为任务知识的信号，据此在样本和 token 两个层面筛选出最有价值的监督，最后用这些被筛过的数据以标准 NLL 损失训练目标模型上的新 LoRA。整套流程不引入任何外部模型，所有信号都来自源模型自带的有/无 LoRA 对比。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["种子提示 (seed prompts)"] --> B["源专家 = 源骨干 + 源 LoRA<br/>生成合成数据"]
+    B --> C["Token 级对比超额分数<br/>S(y) = 有 LoRA − 无 LoRA 的对数似然差"]
+    C --> D
+    subgraph D["两级过滤训练"]
+        direction TB
+        D1["样本过滤：按均值超额分数<br/>保留 top-M 条样本"] --> D2["Token 选择：保留 top-k% 高分 token"]
+    end
+    D -->|"源/目标 tokenizer 不一致"| E["Tokenizer 对齐<br/>双指针匹配 span、传播 mask"]
+    D -->|"一致"| F["训练目标 LoRA<br/>冻结目标骨干，被选 token 算 NLL"]
+    E --> F
+    F --> G["可迁移的目标模型 + 新 LoRA"]
+```
+
 ### 关键设计
 
 **1. Token 级对比超额分数：从 LoRA 自身差异里读出任务知识。** 跨模型迁移最缺的是「哪些 token 才承载了 LoRA 注入的任务能力」这一信号，TiTok 用源模型有无 LoRA 时的预测差异直接度量它。对每个生成 token $y_i$，定义超额分数 $S(y_i) = L_e(y_i) - L_a(y_i)$，其中 $L_a(y_i) = \log P_{\mathcal{M}_s}(y_i \mid \mathbf{q}, \mathbf{y}_{<i})$ 是裸基础模型的对数似然、$L_e(y_i) = \log P_{\mathcal{M}_s + \mathcal{A}_s}(y_i \mid \mathbf{q}, \mathbf{y}_{<i})$ 是叠加源 LoRA 后的对数似然。当基础模型对某个 token 把握不大、而加上 LoRA 后却高置信地预测出来时，这个 token 就拿到高分——正是 LoRA 真正改变了模型行为的地方。这个量本质是 token 级对数似然比（LLR），由 Neyman-Pearson 引理可知它是区分「有 LoRA」与「无 LoRA」两个分布的最优统计量，因此用它筛选 token 在理论上有最优区分性的支撑。

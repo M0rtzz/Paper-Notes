@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文想解决的，是现有自然语言编程系统里 prompt 与程序之间那道"隔离墙"——prompt 在独立环境执行，开发者得手写一堆 schema、序列化/反序列化代码才能把程序数据递进 prompt、再把结果取回来。Nightjar 的做法是把 prompt 当成 Python 程序里的一等代码：开发者用 `@nightjar.fn` 装饰一个函数，在函数体里直接用三引号字符串写 prompt。这个 prompt 能用 `<variable>` 读当前作用域里的局部变量、用 `<:variable>` 把 LLM 的输出写回变量、就地操作 Python 堆对象，甚至触发 break/continue 控制流。整条链路被形式化为 effects & handlers：prompt 想做的每一类操作都是一个"效应（effect）"，由宿主 Python 实现的"处理器（handler）"真正落地，于是 prompt 与程序共享同一份状态，而不是各跑各的。
+这篇论文想解决的，是现有自然语言编程系统里 prompt 与程序之间那道"隔离墙"——prompt 在独立环境执行，开发者得手写一堆 schema、序列化/反序列化代码才能把程序数据递进 prompt、再把结果取回来。Nightjar 的做法是把 prompt 当成 Python 程序里的一等代码：开发者用 `@nightjar.fn` 装饰一个函数，在函数体里直接用三引号字符串写 prompt。这个 prompt 能用 `<variable>` 读当前作用域里的局部变量、用 `<:variable>` 把 LLM 的输出写回变量、就地操作 Python 堆对象，甚至触发 break/continue 控制流。整条链路被形式化为 effects & handlers：prompt 想做的每一类操作都是一个"效应（effect）"，由宿主 Python 实现的"处理器（handler）"真正落地，于是 prompt 与程序共享同一份状态，而不是各跑各的。下面这张图把"prompt 发效应 → handler 落地到三种共享状态"这条主链路画出来，三种共享能力又统一在一套接口规范之下。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    P["@nightjar.fn 函数体内的 prompt<br/>(含 &lt;var&gt; / &lt;:var&gt; / 标签)"]
+    P --> E["LLM 推理<br/>产生一串效应 effects"]
+    subgraph IF["Natural Function Interface Schema（设计 4·语言无关接口）"]
+        direction TB
+        E --> H["宿主 Python 处理器 handlers"]
+    end
+    H -->|读/写变量效应| S["共享作用域<br/>快照+绑定回变量"]
+    H -->|引用/解引用效应| HP["共享堆<br/>就地改对象"]
+    H -->|break/continue 效应| C["共享控制流<br/>执行宿主跳转"]
+    S --> O["函数返回：变量已更新、<br/>对象已原地修改、循环已按语义跳转"]
+    HP --> O
+    C --> O
+```
 
 ### 关键设计
 

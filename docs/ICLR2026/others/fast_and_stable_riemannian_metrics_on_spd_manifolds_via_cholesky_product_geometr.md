@@ -52,7 +52,22 @@ LCM所对应的Cholesky度量（diagonal log metric）实际上具有一个**乘
 
 ### 整体框架
 
-这篇论文要解决的是 SPD 流形上"既快又稳"的黎曼度量难题：现有度量要么慢（AIM 要 SVD），要么在对角元素逼近 0 时数值爆炸（LCM 的对数映射）。作者的破局点是先做一次 Cholesky 分解，把 SPD 流形搬到 Cholesky 流形上，再观察到这个 Cholesky 流形其实是一个**乘积空间**——严格下三角部分是平凡的欧氏空间，对角部分是 $n$ 个一维正实数流形 $\mathbb{R}_{++}$ 的乘积。整条 pipeline 因此变成：把 SPD 矩阵分解到 Cholesky 流形，只在对角的 $\mathbb{R}_{++}$ 因子上换一个更稳的度量（幂度量得到 θ-DPM，BW 度量得到 M-DBWM），再把新度量沿 Cholesky 映射拉回 SPD 流形，得到 θ-PCM 与 (θ,M)-BWCM 两族新度量。因为只改了对角这一个一维因子，所有黎曼算子都能继承闭式表达式。
+这篇论文要解决的是 SPD 流形上"既快又稳"的黎曼度量难题：现有度量要么慢（AIM 要 SVD），要么在对角元素逼近 0 时数值爆炸（LCM 的对数映射）。作者的破局点是先做一次 Cholesky 分解，把 SPD 流形搬到 Cholesky 流形上，再观察到这个 Cholesky 流形其实是一个**乘积空间**——严格下三角部分是平凡的欧氏空间，对角部分是 $n$ 个一维正实数流形 $\mathbb{R}_{++}$ 的乘积。整条 pipeline 因此变成：把 SPD 矩阵分解到 Cholesky 流形，只在对角的 $\mathbb{R}_{++}$ 因子上换一个更稳的度量（幂度量得到 θ-DPM，BW 度量得到 M-DBWM），再把新度量沿 Cholesky 映射拉回 SPD 流形，得到 θ-PCM 与 (θ,M)-BWCM 两族新度量。因为只改了对角这一个一维因子，所有黎曼算子都能继承闭式表达式，并进一步补上一套陀螺代数结构供 SPD 网络调用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S["SPD 矩阵 S"] --> CHOL["Cholesky 分解<br/>S = L·Lᵀ，搬到 Cholesky 流形"]
+    CHOL --> PROD["乘积结构的揭示<br/>严格下三角(欧氏) × n 个 ℝ₊₊"]
+    PROD --> SWAP{"换对角度量<br/>只改 ℝ₊₊ 因子"}
+    SWAP -->|"幂度量 θ-EM"| DPM["θ-DPM"]
+    SWAP -->|"BW 度量"| DBWM["M-DBWM"]
+    DPOW["对角幂变形 DPowθ<br/>θ→0 退回 LCM"] -.调节.-> DPM
+    DPM --> PULL["沿 Cholesky 拉回 SPD<br/>θ-PCM / (θ,M)-BWCM<br/>全部闭式黎曼算子"]
+    DBWM --> PULL
+    PULL --> GYRO["陀螺向量空间结构<br/>陀螺加法 / 乘法（闭式）"]
+    GYRO --> NET["SPD MLR 分类器 / 残差块"]
+```
 
 ### 关键设计
 
@@ -64,7 +79,7 @@ $$\{\mathcal{L}_{++}^n, g^{\text{DL}}\} = \{\mathcal{SL}^n, g^E\} \times \underb
 
 其中 $\mathcal{SL}^n$ 是严格下三角矩阵空间（配欧氏度量 $g^E$），每个 $\mathbb{R}_{++}$ 对应一个对角元素。LCM 在对角上用的度量是 $g_p(v,w) = p^{-2}vw$，正好是 AIM/LEM/LCM 在一维 $\mathcal{S}_{++}^1$ 上退化后的统一形式。这个拆分之所以关键，是因为它把"设计一个全新 SPD 度量"这种高维难题，降维成了"在 $\mathbb{R}_{++}$ 上挑一个一维度量"——只要换掉对角因子的度量，就自动得到一族新的 Cholesky 度量进而得到新的 SPD 度量。
 
-**2. 两种新的 Cholesky 度量：把对角的对数换成幂或 BW**
+**2. 换对角度量：两族快速稳定的新度量，且算子全闭式**
 
 顺着上面的乘积结构，作者把对角 $\mathbb{R}_{++}$ 上的度量分别换成两种更友好的选择。第一种是 θ-DPM（Diagonal Power Metric），对角改用幂欧氏度量（$\theta$-EM）：
 
@@ -76,19 +91,17 @@ $$g_L^{\mathbb{M}\text{-DBW}}(X,Y) = \langle \lfloor X \rfloor, \lfloor Y \rfloo
 
 式中 $\lfloor\cdot\rfloor$ 取严格下三角部分、$\mathbb{L}/\mathbb{X}$ 取对角部分。两个式子的下三角项都保持欧氏内积不变，区别只在对角项——这正是乘积结构带来的模块化好处：换度量是局部手术，不牵动整体。
 
-**3. 全部闭式黎曼算子：换度量不丢可计算性**
-
-由于只动了对角这一个一维因子，θ-DPM 与 M-DBWM 拉回 SPD 流形后，测地线、对数映射、指数映射、平行移动、距离、加权 Fréchet 均值全部保留闭式表达式，无需迭代求解。以 θ-DPM 下的距离为例：
+因为只动了对角这一个一维因子，θ-DPM 与 M-DBWM 拉回 SPD 流形后得到的 θ-PCM 与 (θ,M)-BWCM，测地线、对数映射、指数映射、平行移动、距离、加权 Fréchet 均值全部保留闭式表达式，无需迭代求解——这就是"换度量不丢可计算性"。以 θ-DPM 下的距离为例：
 
 $$d^2(L,K) = \|\lfloor K \rfloor - \lfloor L \rfloor\|_F^2 + \frac{1}{\theta^2}\|\mathbb{K}^\theta - \mathbb{L}^\theta\|_F^2$$
 
-把它和 LCM 对照能看出数值稳定性的来源：LCM 的对角项用 $\log(\mathbb{K}) - \log(\mathbb{L})$，而 θ-DPM 用 $\mathbb{K}^\theta - \mathbb{L}^\theta$。当对角元素 $x \to 0^+$ 时，$\log(x)$ 直冲 $-\infty$（如 $\log(10^{-15})$ 直接溢出），而 $x^\theta$ 只是温和地趋向 0——用幂函数替代对数/指数函数，正是整套方法又稳又快的根本。
+把它和 LCM 对照就能看出数值稳定性的来源：LCM 的对角项用 $\log(\mathbb{K}) - \log(\mathbb{L})$，而 θ-DPM 用 $\mathbb{K}^\theta - \mathbb{L}^\theta$。当对角元素 $x \to 0^+$ 时，$\log(x)$ 直冲 $-\infty$（如 $\log(10^{-15})$ 直接溢出），而 $x^\theta$ 只是温和地趋向 0——用幂函数替代对数/指数函数，正是整套方法又稳（小特征值不溢出）又快（无需 SVD）的根本。
 
-**4. 对角幂变形：一个旋钮连续插值新旧度量**
+**3. 对角幂变形：一个旋钮连续插值新旧度量**
 
 为了把新度量和已有度量统一在一个框架里，作者定义了对角幂变形 $\text{DPow}_\theta$，用参数 $\theta$ 在两端之间连续插值：$\theta \to 0$ 时变形后的度量趋向对数 Cholesky 度量（即退回 LCM），$\theta = 1$ 时恢复本文提出的度量。这样 $\theta$ 就成了一个可调旋钮，让使用者按数据特性（对角元素是否均衡）在"接近 LCM"和"本文新度量"之间权衡，而不必在两套互不相通的度量里二选一。
 
-**5. 陀螺向量空间结构：给 SPD 网络补上代数基础**
+**4. 陀螺向量空间结构：给 SPD 网络补上代数基础**
 
 要把这些度量真正用进 SPD 神经网络，还需要一套能做"加法/乘法"的代数结构。作者在新度量下给出了陀螺加法与陀螺乘法的闭式表达式，例如陀螺加法：
 

@@ -44,13 +44,21 @@ tags:
 
 ### 关键设计
 
-**1. recourse 的度量：用投影矩阵的 Frobenius 距离。** 一致性问题的第一步是选对"变化量"的度量。如果直接比较两步因子矩阵 $\mathbf{V}^{(t)}$ 与 $\mathbf{V}^{(t-1)}$ 的差，一次无意义的基旋转就会被错算成巨大变化。本文转而用子空间投影矩阵的 Frobenius 距离 $\|\mathbf{P}_{\mathbf{V}^{(t)}} - \mathbf{P}_{\mathbf{V}^{(t-1)}}\|_F^2$ 来度量 recourse——它只关心张成的子空间是否改变，对基的旋转不敏感，因此是一个自然且鲁棒的度量，也让后续的奇异值分析能直接落到子空间层面。
+**1. recourse 的度量：用投影矩阵的 Frobenius 距离**
 
-**2. 加性误差算法：靠范数增长触发重算。** 加性误差下（Theorem 1.1）只需维护当前矩阵的 Frobenius 范数：每当 $\|\mathbf{A}^{(t)}\|_F^2$ 相比上次重算增长了 $(1+\varepsilon)$ 倍，就重新算一次 SVD，否则沿用旧因子。两次重算之间所有新行的总贡献被范数增长门限卡死在 $\leq \varepsilon \cdot \|\mathbf{A}^{(t)}\|_F^2$，因此加性误差始终受控。由于范数最多翻 $O(1/\varepsilon \cdot \log(ndM))$ 次（$M$ 为元素上界），而每次重算的 recourse 不超过 $k$，总 recourse 就是 $O(k/\varepsilon \cdot \log(ndM))$。
+一致性问题的第一步是选对"变化量"的度量。如果直接比较相邻两步因子矩阵 $\mathbf{V}^{(t)}$ 与 $\mathbf{V}^{(t-1)}$ 的差，一次无意义的基旋转（同一子空间换一组正交基）就会被错算成巨大的变化。本文转而用子空间投影矩阵的 Frobenius 距离 $\|\mathbf{P}_{\mathbf{V}^{(t)}} - \mathbf{P}_{\mathbf{V}^{(t-1)}}\|_F^2$ 来度量 recourse——它只关心张成的子空间是否真的改变，对基的旋转不敏感。这让 recourse 成为一个自然且鲁棒的度量，也让后续所有分析能直接落到子空间层面，而不被坐标系选择干扰。
 
-**3. 乘性误差算法：先压流长，再按奇异值尾部分情况更新。** 这是本文的核心贡献（Theorem 1.3）。第一步用 online ridge leverage score 采样把有效流长从 $n$ 压缩到 $k/\varepsilon \cdot \text{polylog}$，让后续昂贵的更新只发生在少量"重要"行上。第二步对压缩后的流做精细更新，关键是对 top-$k$ 奇异值里最弱的后 $\sqrt{k}$ 个做 case work：当尾部能量小（$\sum_{i=k-\sqrt{k}}^{k} \sigma_i^2$ 很小）时，这些方向无足轻重，可以直接用新到达的行替换掉尾部奇异向量，攒够 $\sqrt{k}$ 步再统一重算，平均每 $\sqrt{k}$ 步只花 $O(k)$ recourse；当尾部能量大时，意味着最优子空间本身很稳定、不会被新行剧烈扰动，于是直接重算顶部 SVD，单次 recourse 不超过 $\sqrt{k}$。两种情况合起来，总 recourse 为 $k^{3/2}/\varepsilon^2 \cdot \text{polylog}$，而 $\sqrt{k}$ 正是平衡"替换 $r$ 个因子每步花 $k\cdot r$"与"$k^2/r$ 步重算"两侧代价的最优阈值。一个特殊情形是 anti-Hadamard 型整数矩阵——其最优低秩代价可能指数级地小，需要在低秩时单独做精细分析才能保住乘性保证。
+**2. 加性误差算法：靠范数增长触发重算**
 
-**4. 下界：交替子空间构造逼出 $\Omega(k/\varepsilon \cdot \log(n/k))$。** 为说明上述 recourse 不能再大幅压低，本文构造了一个硬实例（Theorem 1.4）：把流分成 $\Theta(1/\varepsilon \cdot \log(n/k))$ 个阶段，每个阶段都强迫最优子空间在两组正交基之间来回切换。任何近最优算法都必须跟着切换，于是 recourse 至少为 $\Omega(k/\varepsilon \cdot \log(n/k))$，与加性上界仅差一个 $\sqrt{k}$ 因子。
+加性误差下（Theorem 1.1）算法极简：只维护当前矩阵的 Frobenius 范数，每当 $\|\mathbf{A}^{(t)}\|_F^2$ 相比上次重算增长了 $(1+\varepsilon)$ 倍，才重新算一次 SVD，否则沿用旧因子。这样设计是因为两次重算之间所有新行的总能量被范数增长门限卡死在 $\leq \varepsilon \cdot \|\mathbf{A}^{(t)}\|_F^2$，加性误差自然受控。而范数从初始到最终最多翻 $O(1/\varepsilon \cdot \log(ndM))$ 次（$M$ 为元素上界），每次重算的 recourse 又不超过 $k$，两者相乘就得到总 recourse $O(k/\varepsilon \cdot \log(ndM))$——这也几乎贴住了下界。
+
+**3. 乘性误差算法：先压流长，再按尾部奇异值分情况更新**
+
+这是本文的核心贡献，也是难度所在：要把误差保证从加性收紧成乘性 $(1+\varepsilon)$（Theorem 1.3）。直接重算每步的代价是 $k^2/\varepsilon^2 \cdot \text{polylog}$，本文把它压到次二次，靠两步。第一步用在线 ridge leverage score 采样把有效流长从 $n$ 压缩到 $k/\varepsilon \cdot \text{polylog}$，让后续昂贵的更新只发生在少量"重要"行上。第二步对压缩后的流做精细更新，关键是对 top-$k$ 奇异值里最弱的后 $\sqrt{k}$ 个做分情况处理（case work）：当这段尾部能量小（$\sum_{i=k-\sqrt{k}}^{k} \sigma_i^2$ 很小）时，这些方向无足轻重，可以直接用新到达的行替换掉尾部奇异向量、攒够 $\sqrt{k}$ 步再统一重算，平均每 $\sqrt{k}$ 步只花 $O(k)$ recourse；当尾部能量大时，意味着最优子空间本身很稳定、不会被新行剧烈扰动，于是直接重算顶部 SVD，单次 recourse 不超过 $\sqrt{k}$。两种情况合起来，对整数元素上界（integer-bounded）的矩阵给出 $k^{3/2}/\varepsilon^2 \cdot \text{polylog}$ 的总 recourse，而 $\sqrt{k}$ 这个阈值正是平衡"替换 $r$ 个因子每步花 $k\cdot r$"与"每 $k^2/r$ 步重算一次"两侧代价的最优点。需要单独花力气的边界情形是 anti-Hadamard 型整数矩阵——它的最优低秩代价可能指数级地小，乘性保证最脆弱，得在低秩时做精细分析才能守住。对在线条件数（online condition number）为多项式的数据流，bound 还能进一步降到 $k/\varepsilon^2 \cdot \text{polylog}$。
+
+**4. 下界：交替子空间构造逼出 $\Omega(k/\varepsilon \cdot \log(n/k))$**
+
+为说明上述 recourse 已经接近极限、不能再大幅压低，本文构造了一个硬实例（Theorem 1.4）：把流切成 $\Theta(1/\varepsilon \cdot \log(n/k))$ 个阶段，每个阶段都强迫最优子空间在两组正交基之间来回切换。即使整条流提前已知，任何维持乘性 $(1+\varepsilon)$ 近似的算法都必须跟着切换子空间，于是总 recourse 至少为 $\Omega(k/\varepsilon \cdot \log(n/k))$，与加性上界仅差一个 $\sqrt{k}$ 因子——这也框定了乘性上界还能改进的空间。
 
 ## 实验关键数据
 

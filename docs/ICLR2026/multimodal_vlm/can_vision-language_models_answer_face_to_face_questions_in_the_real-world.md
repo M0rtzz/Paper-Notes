@@ -43,6 +43,16 @@ tags:
 ### 整体框架
 这篇工作要回答的问题是：当 VLM 像人一样连着摄像头和麦克风、需要边看边听边在合适的时机开口时，它到底行不行。为此作者把"数据集 + 评估 benchmark + 流式 baseline"打包成一套东西 QIVD。整条 pipeline 从一段众包工人用手机录的 ~5 秒短视频出发：录制者一边展示场景一边口头提问（"这是什么颜色？""我手里有几个苹果？"），系统实时转录音频、判断问题何时说完、把截止当前的视频帧连同问题喂给 Video-LMM 生成答案，再用 LLM judge 对照标注的标准答案打分。关键在于每个视频都标了三样东西——问题转录、答案、以及"最佳回答时间戳"，后者让评估同时覆盖了"答得对不对"和"开口时机准不准"两个维度。评估又分流式（streaming，问题和时机都由 ASR 现场提取）和离线（offline，直接给模型 ground truth 问题和时间戳）两套设置。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}%%
+flowchart TD
+    A["QIVD 数据集<br/>手机边展示边口头提问<br/>2900 段 ~5 秒视频，13 类"] --> B["When-to-Answer 时间戳标注<br/>问题转录 + 答案<br/>+ 最佳回答时刻（均值 81% 处）"]
+    B -->|"流式：现场从音频提取问题与时机"| C["Streaming baseline<br/>Whisper-Streaming 0.25s chunk<br/>转录并检测回答时机"]
+    B -->|"离线：喂 ground truth 问题与时间戳"| D["Video-LMM<br/>截止该时刻视频+音频<br/>+ 问题 → 开放式答案"]
+    C --> D
+    D --> E["评估体系<br/>LLM judge（Qwen3-8B）判正确率<br/>+ BERT/METEOR/BLEU/ROUGE 参考"]
+```
+
 ### 关键设计
 
 **1. QIVD 数据集：把问题嵌进视频音频里，而不是事后补一个问题**

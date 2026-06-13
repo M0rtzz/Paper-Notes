@@ -41,21 +41,41 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BiasFreeBench 不是提出新的去偏方法，而是搭一个能把现有方法放在同一张考卷上比较的统一基准。它把三件事拼到一起：先收集 8 种主流去偏技术（4 种 prompting + 4 种 training）并用一致的方式实现；再把两个偏差数据集统一重写成 query-response 格式——BBQ 是单轮 QA、FairMT-Bench 是多轮对话，这样所有方法都在"用户提问、模型作答"这个真实使用场景下受测；最后用一个响应级指标 Bias-Free Score（BFS）打分。一条完整的测评流水线是：给定查询 → 被测 LLM 生成响应 → 用 GPT-4o-mini + LlamaGuard + Moderation API 三方投票判断这条响应是否有偏 → 汇总成 BFS。
+BiasFreeBench 不提出新的去偏方法，而是搭一张能把现有方法放在同一份考卷上比较的统一基准。它把三件事拼到一起：先收集 8 种主流去偏技术（4 种 prompting + 4 种 training）并用一致的方式实现；再把两个偏差数据集统一重写成 query-response 格式——BBQ 是单轮 QA、FairMT-Bench 是多轮对话，这样所有方法都在"用户提问、模型作答"这个真实使用场景下受测；最后用一个响应级指标 Bias-Free Score（BFS）打分。一条完整的测评流水线是：给定偏差查询 → 经某种去偏方法处理后由被测 LLM 生成响应 → 用 GPT-4o-mini、LlamaGuard、Moderation API 等判官投票给这条响应贴上"有偏/无偏"标签 → 汇总成 BFS。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    Q["偏差查询<br/>BBQ 单轮 / FairMT 多轮"]
+    subgraph M["八种待测去偏方法"]
+        direction TB
+        P["四种 Prompting 去偏方法<br/>改输入·零训练"]
+        T["四种 Training 去偏方法<br/>改参数"]
+    end
+    Q --> M
+    M --> R["被测 LLM 生成响应"]
+    R --> J["三方投票评估<br/>GPT-4o-mini / LlamaGuard / Moderation"]
+    J --> L["有偏 / 无偏标签"]
+    L --> B["Bias-Free Score (BFS)<br/>无偏响应占比"]
+```
 
 ### 关键设计
 
 **1. 四种 Prompting 去偏方法：在不改参数的前提下用上下文压制偏见**
 
-这一类方法都靠在输入端做文章，零训练成本。Self-Awareness 最轻量，只在查询末尾加一句偏差类型提示（如"注意避免性别偏见"），让模型作答时主动意识到该回避哪类偏差，没有任何额外前向开销。Self-Reflection 借用 agent 里的反思机制，先让 LLM 生成初始回答，再用一条指令要求它检查并去除其中的偏差、重新作答。Self-Help 更彻底，先让 LLM 把可能带偏的查询本身改写干净，再拿净化后的查询在一个新 session 里重新提问，因此需要两次前向传播。CoT 则指示模型逐步推理后再回答，通过把推理过程显式暴露出来削弱偏差倾向。
+这一类方法都在输入端做文章，零训练成本，对应框架里改输入的那条支路。Self-Awareness 最轻量，只在查询末尾加一句偏差类型提示（如"注意避免性别偏见"），让模型作答时主动意识到该回避哪类偏差，没有任何额外前向开销。Self-Reflection 借用 agent 里的反思机制，先让 LLM 生成初始回答，再用一条指令要求它检查并去除其中的偏差、重新作答。Self-Help 更彻底，先让 LLM 把可能带偏的查询本身改写干净，再拿净化后的查询在一个新会话里重新提问，因此需要两次前向传播。CoT 则指示模型逐步推理后再回答，通过把推理过程显式暴露出来削弱偏差倾向。
 
 **2. 四种 Training 去偏方法：通过改参数把无偏行为固化进模型**
 
-这一类需要真正训练模型。SFT 直接在反刻板印象数据上微调，让模型模仿无偏的响应模式。DPO 在 SFT 之上多了一层对比信号：把反刻板印象回答当正例、刻板印象回答当负例构造偏好对，让模型学会区分安全与不安全行为。Safe RLHF 走两阶段——先分别训出衡量有用性的 reward model 和衡量无害性的 cost model，再用约束优化让 LLM 同时满足"有用"和"无害"两个目标。Task Vector 则是参数空间里的"减法"：先用 SFT 故意训出一个有偏模型 $\theta_{\text{biased}}$，算出偏差方向 $\tau = \theta_{\text{biased}} - \theta_{\text{pre}}$，再从预训练权重里反向减掉这个方向得到 $\theta_{\text{biasfree}} = \theta_{\text{pre}} - \tau$，相当于把偏差当作一个可分离的向量直接抹去。
+这一类需要真正训练模型，对应框架里改参数的那条支路。SFT 直接在反刻板印象数据上微调，让模型模仿无偏的响应模式。DPO 在 SFT 之上多了一层对比信号：把反刻板印象回答当正例、刻板印象回答当负例构造偏好对，让模型学会区分安全与不安全行为。Safe RLHF 走两阶段——先分别训出衡量有用性的奖励模型（reward model）和衡量无害性的代价模型（cost model），再用约束优化让 LLM 同时满足"有用"和"无害"两个目标。Task Vector 则是参数空间里的"减法"：先用 SFT 故意训出一个有偏模型 $\theta_{\text{biased}}$，算出偏差方向 $\tau = \theta_{\text{biased}} - \theta_{\text{pre}}$，再从预训练权重里反向减掉这个方向得到 $\theta_{\text{biasfree}} = \theta_{\text{pre}} - \tau$，相当于把偏差当作一个可分离的向量直接抹去。这三种偏好/微调类方法（SFT、DPO、Task Vector）共用 StereoSet 的 intersentence 部分作训练数据——每个样本自带"上下文 + 刻板印象回答 + 反刻板印象回答"三要素，正好满足偏好对构造的需要；Safe RLHF 因为要同时学有用性与无害性，另配专门的 helpfulness/harmlessness 数据集。
 
-**3. Bias-Free Score（BFS）：直接量化用户真正看到的那条回答是否无偏**
+**3. 三方投票评估：用多个判官交叉裁定一条响应是否有偏**
 
-这是本文衡量去偏效果的核心指标，刻意区别于 StereoSet 那类概率级评估——它不去比有偏/无偏上下文的 likelihood，而是直接统计模型响应里无偏、安全、反刻板印象回答所占的比例，因为用户实际接触的是输出文本而非概率分布。在 BBQ 上，安全回答既包括明确给出反刻板印象答案，也包括"信息不足无法判断"这类拒绝臆断的回答：
+要算 BFS 就得先给每条响应贴上"有偏/无偏"标签，本文不靠单一判官以降低判官自身偏差带来的误判。两个数据集的裁定方式略有不同：BBQ 有 gold 标注，用 GPT-4o-mini 连判 3 次、多数投票决定响应最贴近哪一类标注（有偏 / 反刻板印象 / UNKNOWN）；FairMT-Bench 没有 gold 标注，则让 GPT-4o-mini（有偏 vs. UNKNOWN）、LlamaGuard-3-8B（安全 vs. 不安全）、Moderation API（有毒 vs. 无毒）三方各判一次再多数投票。这套流程经过人工核对：BBQ 上与人类判断完全一致（Cohen's kappa = 1.0），更复杂的 FairMT-Bench 上一致率 94%（kappa = 0.7），说明自动评估足够可靠。
+
+**4. Bias-Free Score（BFS）：直接量化用户真正看到的那条回答是否无偏**
+
+这是本文衡量去偏效果的核心指标，刻意区别于 StereoSet 那类概率级评估——它不比有偏/无偏上下文的 likelihood，而是直接统计上一步贴好标签的响应里无偏、安全、反刻板印象回答所占的比例，因为用户实际接触的是输出文本而非概率分布。在 BBQ 上，安全回答既包括明确给出反刻板印象答案，也包括"信息不足无法判断"这类拒绝臆断的回答：
 
 $$\text{BFS}_{\text{BBQ}} = \frac{N_{\text{anti-stereo}} + N_{\text{unknown}}}{N_{\text{total}}}$$
 
@@ -64,13 +84,6 @@ $$\text{BFS}_{\text{BBQ}} = \frac{N_{\text{anti-stereo}} + N_{\text{unknown}}}{N
 $$\text{BFS}_{\text{FairMT}} = \frac{N_{\text{unbiased}}}{N_{\text{total}}}$$
 
 BFS 越高代表去偏越成功，且因为是响应级度量，它能直接反映方法在真实部署中的表现。
-
-**4. 三方投票的评估流程：用多个判官交叉裁定一条响应是否有偏**
-
-要算 BFS 就得先给每条响应贴上"有偏/无偏"标签，本文不靠单一判官，而是让 GPT-4o-mini（投票 3 次取多数）、LlamaGuard-3-8B 和 OpenAI Moderation API 三方共同裁定，降低单个判官自身偏差带来的误判。这套流程经过人工核对：在 BBQ 上与人类判断完全一致（Cohen's kappa=1.0），在更复杂的 FairMT-Bench 上一致率 94%（kappa=0.7），说明自动评估足够可靠。
-
-### 训练数据
-SFT、DPO、Task Vector 三种 training 方法都用 StereoSet 的 intersentence 部分作训练数据，每个样本含三要素：作为查询的上下文、刻板印象回答、反刻板印象回答——正好满足偏好对构造的需要。Safe RLHF 因为要同时学有用性和无害性，另外使用专门的 helpfulness/harmlessness 数据集。
 
 ## 实验关键数据
 

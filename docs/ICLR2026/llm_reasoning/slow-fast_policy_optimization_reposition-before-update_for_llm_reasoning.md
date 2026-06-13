@@ -38,17 +38,39 @@ tags:
 
 ### 整体框架
 
-SFPO 不动 GRPO 的目标函数和 rollout 过程，只把原本"一批 rollout 走一步梯度"的更新方式换成"快走几步—拉回来—再慢走一步"的三段结构。对同一批数据先做 $K$ 步内循环快速更新攒出一个方向，再把终点沿这个方向插值回起点附近控制漂移，最后在插值点做一步校正更新，从而在不引入额外采样的前提下榨干每批 rollout 的梯度信息。
+SFPO 不动 GRPO 的目标函数和 rollout 过程，只把原本"一批 rollout 走一步梯度"的更新方式换成"快走几步—拉回来—再慢走一步"的三段结构。对同一批数据先做 $K$ 步内循环快速更新攒出一个稳定方向（快速轨迹），再把终点沿这个方向插值回起点附近控制漂移（重定位），最后在插值点做一步校正更新（慢速校正），从而在不引入额外采样的前提下榨干每批 rollout 的梯度信息。三段之外还有一个旁路的自适应 $\alpha$ 调度，靠监控策略熵在训练后期把插值强度关掉、退化回纯 GRPO。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["当前策略 θ_s,0<br/>生成一批 rollouts"] --> B["快速轨迹<br/>K 步内循环攒稳定方向 → θ_s,K"]
+    B --> C["重定位<br/>沿方向插值回起点附近 → θ̃_s,K"]
+    C --> D["慢速校正<br/>插值点再走一步 → θ_s+1"]
+    D --> E["下一轮 θ_s+1,0"]
+    F["自适应 α 调度<br/>熵 z-score |Z_s|≥τ 触发 α→0"] -->|"控制插值强度"| C
+```
 
 ### 关键设计
 
-**1. 快速轨迹：用多步内循环把高方差梯度滤成稳定方向。** GRPO 每批 rollout 只更新一步，训练早期随机奖励带来的高方差梯度会直接污染这一步。SFPO 从参数 $\theta^{s,0}$ 出发做 $K$ 步内循环更新 $\theta^{s,k+1} = \theta^{s,k} - \eta \nabla_\theta \mathcal{L}(\theta^{s,k})$（$k=0,\ldots,K-1$），最终位移 $\theta^{s,K} - \theta^{s,0} = -\eta \sum_{k=0}^{K-1} \nabla_\theta \mathcal{L}(\theta^{s,k})$ 累积了 $K$ 个梯度。在二阶近似下这等价于一个曲率感知的低通滤波器：沿平坦方向稳步前进，沿高曲率方向自动抑制振荡，相当于把单次噪声梯度替换成一段轨迹的平滑趋势。
+**1. 快速轨迹：用多步内循环把高方差梯度滤成稳定方向**
 
-**2. 重定位：用插值系数当隐式信赖域，控住 off-policy 漂移。** 快速轨迹走得越远，参数离生成 rollout 的策略越远，直接拿来更新会引入 off-policy 偏差、后期反而掉点。受 Lookahead Optimizer 启发，SFPO 把终点插值回起点 $\widetilde{\theta}^{s,K} = \theta^{s,0} + \alpha(\theta^{s,K} - \theta^{s,0})$，其中 $\alpha \in [0,1]$。这一步等价于求解以 $\theta^{s,0}$ 为中心的线性化近端子问题，$\alpha$ 充当隐式信赖域半径——$\alpha$ 越小近端正则越强、越贴近 on-policy，越大越激进，于是用一个标量就把"利用多步收益"和"控制分布偏移"之间的张力调成可控。
+GRPO 每批 rollout 只更新一步，训练早期随机奖励带来的高方差梯度会直接污染这一步。SFPO 从参数 $\theta^{s,0}$ 出发做 $K$ 步内循环更新 $\theta^{s,k+1} = \theta^{s,k} - \eta \nabla_\theta \mathcal{L}(\theta^{s,k})$（$k=0,\ldots,K-1$），最终位移 $\theta^{s,K} - \theta^{s,0} = -\eta \sum_{k=0}^{K-1} \nabla_\theta \mathcal{L}(\theta^{s,k})$ 累积了 $K$ 个梯度。在二阶近似下这等价于一个曲率感知的低通滤波器：沿某个曲率为 $\lambda$ 的特征方向，增益为 $(1-(1-\eta\lambda)^K)/\lambda$——平坦方向（$\lambda$ 小）按 $K\eta$ 稳步累积前进，高曲率方向（$\lambda$ 大）自动饱和、抑制振荡，相当于把单次噪声梯度替换成一段轨迹的平滑趋势。
 
-**3. 慢速校正：在插值点再走一步，对齐局部曲率。** 插值点本身只是快速轨迹的一个缩放，并不保证落在当前曲率下的好位置。SFPO 在该点再做一步梯度更新 $\theta^{s+1} = \widetilde{\theta}^{s,K} - \eta \nabla_\theta \mathcal{L}(\widetilde{\theta}^{s,K})$，与前两段构成 predictor-corrector（预测—校正）结构：快速轨迹负责预测大致方向，这一步负责按局部曲率修正落点。把三段合起来，单次迭代的整体更新可写成 $\theta^{s+1} = \theta^{s,0} - \eta \left[\alpha \sum_{k=0}^{K-1} \nabla_\theta \mathcal{L}(\theta^{s,k}) + \nabla_\theta \mathcal{L}(\widetilde{\theta}^{s,K})\right]$，即"$\alpha$ 加权的累积快梯度"加"一步校正梯度"。
+**2. 重定位：用插值系数当隐式信赖域，控住 off-policy 漂移**
 
-**4. 自适应 $\alpha$ 调度：靠熵的异常信号在收敛期退化回纯 GRPO。** 三段结构在早期加速明显，但训练后期策略接近收敛时，多步内循环反而容易过度偏移。SFPO 监控策略熵 $H_s$ 的滚动 z-score $Z_s = (H_s - \mu_s) / \sigma_s$，一旦 $|Z_s| \geq \tau$（熵出现显著异常波动）就触发 $\alpha \to 0$，此后更新退化为标准 GRPO 的单步 on-policy 形式。这样早期用快速轨迹抢收敛速度，后期自动切回纯 on-policy 保稳定性，整个切换由数据驱动、无需手工指定时间点。
+快速轨迹的 $K$ 步内循环全程复用 $\theta^{s,0}$ 生成的 rollout，走得越远参数离采样策略越远，更新就从 on-policy 变成 off-policy、后期反而掉点。受 Lookahead Optimizer 启发，SFPO 把终点插值回起点 $\widetilde{\theta}^{s,K} = \theta^{s,0} + \alpha(\theta^{s,K} - \theta^{s,0})$，其中 $\alpha \in [0,1]$。这一步等价于求解以 $\theta^{s,0}$ 为中心的线性化近端子问题，$\alpha$ 充当隐式信赖域半径——$\alpha$ 越小近端正则越强、越贴近 on-policy，越大越激进，于是用一个标量就把"利用多步收益"和"控制分布偏移"之间的张力调成可控。
+
+**3. 慢速校正：在插值点再走一步，对齐局部曲率**
+
+插值点 $\widetilde{\theta}^{s,K}$ 只是快速轨迹的一个缩放，并不保证落在当前曲率下的好位置。SFPO 在该点再做一步梯度更新 $\theta^{s+1} = \widetilde{\theta}^{s,K} - \eta \nabla_\theta \mathcal{L}(\widetilde{\theta}^{s,K})$，与前两段构成 predictor-corrector（预测—校正）结构：快速轨迹负责预测大致方向，这一步负责按局部曲率修正落点。把三段合起来，单次迭代的整体更新可写成
+
+$$\theta^{s+1} = \theta^{s,0} - \eta \left[\alpha \sum_{k=0}^{K-1} \nabla_\theta \mathcal{L}(\theta^{s,k}) + \nabla_\theta \mathcal{L}(\widetilde{\theta}^{s,K})\right]$$
+
+即"$\alpha$ 加权的累积快梯度"加"一步校正梯度"。
+
+**4. 自适应 $\alpha$ 调度：靠熵的异常信号在收敛期退化回纯 GRPO**
+
+三段结构在早期梯度信号强时加速明显，但训练后期策略接近最优时信号变弱、曲率与噪声主导，激进插值反而放大漂移。SFPO 在线监控策略熵 $H_s$，维护最近 $\omega$ 步的滚动缓冲并算单边 z-score $Z_s = (H_s - \mu_s) / \sigma_s$，一旦 $|Z_s| \geq \tau$（熵出现显著异常波动、暗示已逼近局部最优）就标记该步 $s^\star$ 并对之后所有步置 $\alpha \to 0$，此后更新退化为标准 GRPO 的单步 on-policy 形式。这样早期用快速轨迹抢收敛速度，后期自动切回纯 on-policy 保稳定性，整个切换由数据驱动、无需手工指定时间点。
 
 ### 损失函数 / 训练策略
 

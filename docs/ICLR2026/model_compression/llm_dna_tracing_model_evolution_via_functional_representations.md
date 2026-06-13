@@ -42,7 +42,22 @@ Hugging Face 上有数百万个 LLM，它们通过微调、蒸馏、适配等方
 ## 方法详解
 
 ### 整体框架
-论文要回答的是：能不能给每个 LLM 算一个内在的、低维的"DNA"向量，使得功能相近的模型 DNA 也相近、微调这类小改动又不会让 DNA 漂走。整套方案分两层：理论层先把"DNA"形式化成功能空间到低维空间的双 Lipschitz 映射，并用 JL 引理证明这样的映射一定存在；实现层则把这个映射落地成一条无需训练的 RepTrace 管道——给一组采样输入，让每个 LLM 生成文本响应，用句子嵌入模型把响应编码成语义向量并拼接，最后用一个随机高斯矩阵投影到低维 DNA 空间。
+论文要回答的是：能不能给每个 LLM 算一个内在的、低维的"DNA"向量，使得功能相近的模型 DNA 也相近、微调这类小改动又不会让 DNA 漂走。整套方案分两层：理论层先把"DNA"形式化成功能空间到低维空间的双 Lipschitz（bi-Lipschitz）映射，并用 JL 引理证明这样的映射一定存在、并顺带导出"随机线性投影"就是合法构造；实现层则把这个构造落地成一条无需训练的 RepTrace 管道——给一组采样输入，让每个 LLM 生成文本响应，用句子嵌入模型把响应编码成语义向量并拼接，最后用一个随机高斯矩阵投影到低维 DNA 空间，得到的 DNA 再喂给下游的关系检测与进化树重建。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    DEF["LLM DNA 数学定义<br/>双 Lipschitz 编码<br/>遗传 + 基因决定性"] --> PROOF["存在性证明与构造<br/>升 Hilbert 空间 + JL 引理<br/>→ 随机高斯投影合法"]
+    PROOF --> RT
+    subgraph RT["RepTrace 实用管道"]
+        direction TB
+        IN["采样输入集<br/>6 数据集 × 100 样本"] --> RESP["每个 LLM 生成<br/>文本响应"]
+        RESP --> EMB["句子嵌入模型<br/>响应 → 语义向量"]
+        EMB --> CONCAT["拼接 t 个向量<br/>→ 高维表示 E_f"]
+        CONCAT --> PROJ["乘随机高斯矩阵 A<br/>→ 低维 DNA"]
+    end
+    RT --> OUT["下游应用<br/>关系检测 · t-SNE · 进化树"]
+```
 
 ### 关键设计
 

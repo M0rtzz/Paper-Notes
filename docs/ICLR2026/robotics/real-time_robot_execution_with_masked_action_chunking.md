@@ -44,17 +44,59 @@ tags:
 
 ### 整体框架
 
-REMAC建立在流匹配（flow matching）策略之上：给定一个预训练策略 $\mathbf{v}_\pi(\mathbf{A}_t|\mathbf{o}_t)$，目标是学到一个把推理延迟 $d$ 显式作为条件的延迟感知策略 $\hat{\mathbf{v}}_\pi(\mathbf{A}_t|\mathbf{o}_t, d)$。它把"段内不一致"形式化为动作块前缀被旧块占据的部分掩码问题，用三个训练组件（前缀掩码、自条件课程、残差对齐）教模型在观测与部分动作不对齐时做修正，再用一个前缀保持的采样组件让相邻块在边界处自然衔接。整套适配通过LoRA完成，只增加约1.5%参数，推理时不引入任何额外计算。
+REMAC建立在流匹配（flow matching）策略之上：给定一个预训练策略 $\mathbf{v}_\pi(\mathbf{A}_t|\mathbf{o}_t)$，目标是学到一个把推理延迟 $d$ 显式作为条件的延迟感知策略 $\hat{\mathbf{v}}_\pi(\mathbf{A}_t|\mathbf{o}_t, d)$。整套方法分两段：训练时用LoRA微调，把"段内不一致"形式化为动作块前缀被旧块占据的部分掩码问题，再叠三个组件——**前缀掩码**让模型只对真正会执行的后缀负责、**自条件课程**把训练输入逐步切换成模型自己的预测以对齐测试条件、**残差对齐**显式约束相对预训练策略的修正量；推理时换上**前缀保持采样**，把上一块的末尾动作当作冻住的先验、只生成后缀，让相邻块在边界处自然衔接。整套适配仅增加约1.5%参数，推理时不引入任何额外计算。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["预训练流匹配策略<br/>v_π(A_t|o_t) + 当前观测 o_t"]
+    subgraph TRAIN["LoRA 训练：学延迟感知策略 v̂_π(A_t|o_t,d)"]
+        direction TB
+        M["前缀掩码<br/>采样延迟 d，只监督 τ≥d 的可执行后缀"]
+        C["自条件课程<br/>真值与策略自身预测按 σ 退火混合"]
+        R["残差对齐<br/>Δ-matching 约束相对预训练策略的修正量"]
+        M --> C --> R
+    end
+    SAMP["前缀保持采样<br/>上一块末尾填入前缀并冻住，只生成后缀"]
+    OUT["边界连贯的可执行动作块"]
+    IN --> TRAIN
+    TRAIN --> SAMP
+    SAMP --> OUT
+```
 
 ### 关键设计
 
-**1. 前缀掩码：让模型只为真正可执行的动作负责。** 在延迟 $d$ 下，新块的前 $d$ 个动作其实早已被上一块占据、无法被执行，但它们仍基于旧观测生成，构成感知-动作错配的源头。REMAC对每个动作块采样一个延迟条件掩码 $\mathbf{m}_d = \{m_d^\tau\}_{\tau=0}^{P-1} = \mathbf{1}[\tau \geq d]$，仅在 $\tau \geq d$ 的可执行后缀上施加监督，掩码损失写为 $\mathcal{L}_\mathrm{m} = \sum_d \frac{\sum_{\tau} m_d^\tau \|\hat{\mathbf{u}}_\tau - \mathbf{u}_\tau\|_2^2}{\max(1, \sum_{\tau} m_d^\tau)}$。训练时 $d \sim \mathcal{U}\{0,\dots,P-1\}$ 在全谱延迟上随机采样，模型因此被暴露在从无掩码到极端掩码的所有情形下，单个模型就能覆盖任意延迟设置，无需为不同延迟分别训练。
+**1. 前缀掩码：让模型只为真正可执行的动作负责**
 
-**2. 自条件课程调度：用模型自己的预测对齐测试条件。** 纯真实标签训练会造成曝光偏差——推理时喂给模型的前缀是它自己生成的而非真值，而一上来就用自条件输入又会在早期不稳定。REMAC把预训练策略的预测 $\tilde{\mathbf{A}}_t$ 与真实动作 $\mathbf{A}_t$ 按 $\hat{\mathbf{A}}_t = \gamma \mathbf{A}_t + \text{sg}((1-\gamma)\tilde{\mathbf{A}}_t)$（$\gamma \sim \mathrm{Bernoulli}(\sigma)$，$\text{sg}(\cdot)$ 为梯度截断）随机混合，并让混合系数 $\sigma$ 从1线性退火到0。训练早期以真值为主稳定收敛，后期逐渐切换到自身预测，迫使模型学会修正自己引入的偏差，从而把训练分布拉向真实的异步执行条件。
+在延迟 $d$ 下，新块的前 $d$ 个动作其实早已被上一块占据、无法被执行，但它们仍基于旧观测生成，构成感知-动作错配的源头。REMAC对每个动作块采样一个延迟条件掩码 $\mathbf{m}_d = \{m_d^\tau\}_{\tau=0}^{P-1} = \mathbf{1}[\tau \geq d]$，仅在 $\tau \geq d$ 的可执行后缀上施加监督，掩码损失写为
 
-**3. 残差对齐：显式建模相对预训练策略的修正量。** 仅对齐真值还不够，REMAC额外引入一个 $\Delta$-matching 项，专门约束"目标策略相对预训练策略的改动量"。令 $\tilde{\mathbf{u}}$ 为关闭LoRA时预训练策略的流估计、$\hat{\mathbf{u}}$ 为开启LoRA后的估计，残差对齐损失为 $\mathcal{L}_\Delta = \sum_d \frac{\sum_{\tau} \|m_d^\tau(\mathbf{u}_\tau - \tilde{\mathbf{u}}_\tau) - m_d^\tau(\hat{\mathbf{u}}_\tau - \tilde{\mathbf{u}}_\tau)\|_2^2}{\max(1, \sum_{\tau} m_d^\tau)}$，总损失 $\mathcal{L} = \lambda_m \mathcal{L}_m + \lambda_\Delta \mathcal{L}_\Delta$（取 $\lambda_m = \lambda_\Delta = 0.01$）。虽然它与 $\mathcal{L}_m$ 数学上相关，但强调点不同：$\mathcal{L}_m$ 直接逼近真值，$\mathcal{L}_\Delta$ 则把学习目标聚焦在"在预训练策略基础上该补多少修正"，消融实验显示加入它带来明显增益。
+$$\mathcal{L}_\mathrm{m} = \sum_d \frac{\sum_{\tau} m_d^\tau \|\hat{\mathbf{u}}_\tau - \mathbf{u}_\tau\|_2^2}{\max(1, \sum_{\tau} m_d^\tau)}.$$
 
-**4. 前缀保持采样：让相邻块在边界处不跳变。** 前三项解决段内不一致，这一项收拾段间不连续。推理时，新块的初始状态 $\mathbf{A}_t^0$ 不再从高斯先验整段采样，而是把前 $P-h$ 维填入上一块的末尾动作、其余置零；流匹配积分时再把这段前缀冻住，每一步只更新可生成部分：$\mathbf{A}_t^{\tau+\frac{1}{n}} = \mathbf{m} \odot \big(\mathbf{A}_t^\tau + \frac{1}{n}\hat{\mathbf{v}}_\pi(\mathbf{A}_t^\tau, \mathbf{o}_t, \tau)\big) + (1-\mathbf{m}) \odot \mathbf{A}_t^\mathrm{p}$。已执行动作因此成为先验，新生成的后缀自然续接，块边界的跳跃被直接消除，且这一采样行为正好与训练时的掩码假设一致。
+训练时 $d \sim \mathcal{U}\{0,\dots,P-1\}$ 在全谱延迟上随机采样，模型因此被暴露在从无掩码（$d=0$）到极端掩码（$d=h$）的所有情形下，单个模型就能覆盖任意延迟设置，无需为不同延迟分别训练。
+
+**2. 自条件课程：用模型自己的预测对齐测试条件**
+
+光在真值上施加掩码监督还不够：推理时喂给模型的前缀是它自己生成的、而非真值，这造成训练-推理的曝光偏差；但若一上来就用自条件输入，训练早期又会不稳定。理想做法是在训练里复现"用已执行动作当先验"的测试条件，可逐样本把当前策略 rollout 一遍代价太高。REMAC转而用预训练策略的预测 $\tilde{\mathbf{A}}_t$ 近似，把它与真实动作 $\mathbf{A}_t$ 随机混合后再做流匹配插值：
+
+$$\hat{\mathbf{A}}_t = \gamma \mathbf{A}_t + \text{sg}((1-\gamma)\tilde{\mathbf{A}}_t),\quad \gamma \sim \mathrm{Bernoulli}(\sigma),$$
+
+其中 $\text{sg}(\cdot)$ 为梯度截断、混合系数 $\sigma$ 随训练进度从1线性退火到0。训练早期以真值为锚稳定收敛，后期逐渐切换到自身预测，迫使模型学会修正自己引入的偏差，把训练分布拉向真实的异步执行条件。
+
+**3. 残差对齐：显式建模相对预训练策略的修正量**
+
+REMAC的目标是在预训练策略上"学修正"而非重新学动作，所以除了逼近真值，还额外引入一个 $\Delta$-matching 项，专门约束"目标策略相对预训练策略改动了多少"。令 $\tilde{\mathbf{u}}$ 为关闭LoRA时预训练骨干的流估计、$\hat{\mathbf{u}}$ 为开启LoRA后的估计，残差对齐损失把"开LoRA带来的修正量"对齐到"真值相对预训练策略的残差"：
+
+$$\mathcal{L}_\Delta = \sum_d \frac{\sum_{\tau} \|m_d^\tau(\mathbf{u}_\tau - \tilde{\mathbf{u}}_\tau) - m_d^\tau(\hat{\mathbf{u}}_\tau - \tilde{\mathbf{u}}_\tau)\|_2^2}{\max(1, \sum_{\tau} m_d^\tau)}.$$
+
+总损失 $\mathcal{L} = \lambda_m \mathcal{L}_m + \lambda_\Delta \mathcal{L}_\Delta$（取 $\lambda_m = \lambda_\Delta = 0.01$）。它与 $\mathcal{L}_m$ 数学上相关，但强调点不同：$\mathcal{L}_m$ 直接逼近真值，$\mathcal{L}_\Delta$ 把学习目标聚焦在"在预训练策略基础上该补多少修正"，消融实验显示加入它能带来明显增益。
+
+**4. 前缀保持采样：让相邻块在边界处不跳变**
+
+前三项在训练侧解决段内不一致，这一项在推理侧收拾段间不连续，并与掩码训练的假设保持一致。推理时新块的初始状态 $\mathbf{A}_t^0$ 不再从高斯先验整段采样，而是用可执行先验 $\mathbf{A}_t^\mathrm{p}$ 初始化——把前 $P-h$ 维填入上一块的末尾动作、其余置零；流匹配积分时再把这段前缀冻住，每一步只更新可生成部分：
+
+$$\mathbf{A}_t^{\tau+\frac{1}{n}} = \mathbf{m} \odot \Big(\mathbf{A}_t^\tau + \tfrac{1}{n}\hat{\mathbf{v}}_\pi(\mathbf{A}_t^\tau, \mathbf{o}_t, \tau)\Big) + (1-\mathbf{m}) \odot \mathbf{A}_t^\mathrm{p}.$$
+
+已执行动作因此成为先验，新生成的后缀沿它自然续接，块边界的跳跃被直接消除。
 
 ## 实验关键数据
 

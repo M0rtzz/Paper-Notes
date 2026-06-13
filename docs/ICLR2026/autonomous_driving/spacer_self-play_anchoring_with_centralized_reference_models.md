@@ -43,6 +43,20 @@ SPACeR 提出"类人自博弈"框架，用预训练的 tokenized 自回归运动
 ### 整体框架
 SPACeR 想解决的是仿真交通智能体"快"与"像人"难以兼得的问题：自博弈 RL 推理快但容易学出不自然的开法，模仿学习像人但模型大、闭环反应差。它的做法是把两者拆成两个角色——真正上路决策的是一个轻量的去中心化策略 $\pi_\theta$（65K 参数 MLP），只看局部观测；预训练好的 tokenized 自回归运动模型 $\pi_{\text{ref}}$ 则退居幕后，看全局场景、只负责给出"人类会怎么开"的动作分布信号。训练时用 PPO 跑自博弈，但在奖励里掺入参考模型的对数似然、在目标里加上对参考模型的 KL 约束，让策略一边自博弈一边被往人类分布上拽；推理时彻底丢掉大模型，只跑那个小 MLP。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SCENE["全局场景 s_t<br/>(上帝视角)"] --> REF["集中式参考模型 π_ref<br/>tokenized 自回归"]
+    OBS["局部观测 o_t"] --> POLICY["去中心化策略 π_θ<br/>65K MLP"]
+    REF -->|动作分布| ANCHOR["参考模型作为奖励提供者<br/>似然奖励 + KL 锚定"]
+    POLICY --> ANCHOR
+    ANCHOR --> ALIGN["对齐的离散动作空间<br/>共享 K=200 词表 → KL 闭式可算"]
+    ALIGN --> REWARD["奖励 r<br/>真实性 + 碰撞/越界惩罚"]
+    GOAL["目标丢弃<br/>撤除显式目标奖励"] --> REWARD
+    REWARD --> PPO["PPO 自博弈更新 π_θ"]
+    PPO -->|推理丢弃 π_ref| DEPLOY["部署: 仅跑 65K MLP · 10× 吞吐"]
+```
+
 ### 关键设计
 
 **1. 集中式参考模型作为奖励提供者：用概率分布而非轨迹真值来锚定自博弈**

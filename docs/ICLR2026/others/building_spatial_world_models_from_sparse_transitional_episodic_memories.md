@@ -40,9 +40,27 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ESWM 的输入是一个**记忆库 $M$**（由多个不相连的 one-step transition $(s_s, a, s_e)$ 组成的无序集合）和一个**部分掩码的查询 transition $q$**（随机掩掉起始状态/动作/终止状态之一）。模型的目标是预测被掩码的元素。这实质上是一个集合到值的推理问题：从碎片化记忆中推断未观测的空间关系。
+ESWM 要回答的问题是：能不能不靠连续轨迹、只凭一堆碎片化的情景记忆，就推断出环境的完整空间结构。它的输入是一个**记忆库 $M$**（由多个不相连的 one-step transition $(s_s, a, s_e)$ 组成的无序集合）和一个**部分掩码的查询 transition $q$**（随机掩掉起始状态、动作、终止状态之一），目标是补全 $q$ 里被掩掉的那个分量。整条流水线很短：记忆库里每个 transition 的三个分量各自投影后平均成一个 token，所有记忆 token 连同查询 token 一起送进 Transformer 编码器，最后由三个线性头读出预测；当查询落在记忆没覆盖的区域时，模型还会输出一个 "I don't know"。这本质上是把世界建模从序列学习改写成**集合到值的推理**——从碎片记忆里推断未观测的空间关系——训练好的模型可直接零样本用于探索和导航。
 
 训练采用**元学习**策略：每个样本随机采样一个环境、一个记忆库、一个查询和一种掩码方式，使模型无法记忆特定环境，必须学会通用的空间推理能力。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    M["记忆库构建<br/>不相连·覆盖·极小的<br/>transition 集合 M"]
+    Q["掩码查询 q<br/>随机掩掉 s_s / a / s_e 之一"]
+    subgraph PRED["掩码预测任务"]
+        direction TB
+        TOK["token 嵌入<br/>三分量各自投影→平均→单 token"]
+        ENC["架构选择：Transformer 编码器<br/>内容寻址记忆，胜过 LSTM / Mamba"]
+        HEAD["三个线性头<br/>分别预测 s_s / a / s_e"]
+        TOK --> ENC --> HEAD
+    end
+    M --> TOK
+    Q --> TOK
+    HEAD --> OUT["输出预测值<br/>或 I don't know 不确定性分类"]
+    OUT --> DOWN["zero-shot 下游<br/>探索（挑不确定方向）+ 导航"]
+```
 
 ### 关键设计
 

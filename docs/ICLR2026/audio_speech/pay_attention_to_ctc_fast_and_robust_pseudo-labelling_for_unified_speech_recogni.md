@@ -39,11 +39,24 @@ tags:
 
 ### 整体框架
 
-USR 2.0 延续 student-teacher 架构：
-- 共享 Transformer 编码器 + 模态特定 ResNet-18 前端
-- CTC 头 + 注意力解码器双分支
-- Teacher 为 student 的 EMA（$\tau$: 0.998→1 余弦调度）
-- 半监督：标注数据用真实标签，未标注数据用伪标签
+USR 2.0 要修的是统一语音识别（USR）半监督训练里的两个老毛病：注意力分支生成伪标签必须逐 token 自回归，慢得离谱（CTC 解码比自回归快约 40×）；而 CTC 头和注意力解码器各练各的（解耦监督），让注意力解码器在长序列、噪声、新域下级联出错，错误又通过 EMA 自我强化。它沿用 USR 的 student-teacher 框架——模态特定 ResNet-18 前端接共享 Transformer 编码器，下游分出 CTC 头与注意力解码器双分支，teacher 是 student 的 EMA（$\tau$ 按 0.998→1 余弦调度），标注数据用真实标签、未标注数据用伪标签。
+
+真正的改动集中在「伪标签怎么生成」和「两条分支怎么耦合」。对每条未标注输入，teacher 先做 CTC 贪心解码并合并去重，得到一条 CTC 伪标签序列；随后每个训练步以 0.5 概率在两种模式间切换：**CTC 驱动模式**把这条 CTC 序列整体喂进解码器做教师强制，一次前向就算出注意力伪标签，student 解码器在同一次前向里同时拟合 CTC 与注意力两套伪标签；**AR 模式**退回标准自回归解码，补回被砍掉的训练-推理一致性。两种模式里总有一条分支给另一条提供监督，把原本解耦的 CTC 与注意力绑成耦合，这正是鲁棒性提升的来源。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    ENC["未标注音频 / 视频<br/>→ ResNet-18 前端 + 共享 Transformer 编码器"] --> TEA["Teacher（student 的 EMA）"]
+    TEA -->|"CTC 头贪心解码 + 合并去重"| YC["CTC 伪标签序列"]
+    YC --> SW{"混合采样<br/>每步 0.5 概率"}
+    SW -->|"CTC 驱动模式"| D1["CTC 驱动的教师强制<br/>CTC 序列喂进解码器<br/>一次前向得注意力伪标签"]
+    SW -->|"AR 模式"| AR["标准自回归解码<br/>补回训练-推理一致性"]
+    D1 --> D3["联合 CTC-注意力预测<br/>单次前向拟合两套伪标签"]
+    D3 --> STU["Student 双分支<br/>CTC 头 + 注意力解码器"]
+    AR --> STU
+    STU -->|"EMA 更新 teacher"| TEA
+    STU --> OUT["统一 ASR / VSR / AVSR"]
+```
 
 ### 关键设计
 

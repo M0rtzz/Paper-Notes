@@ -45,6 +45,17 @@ tags:
 
 VAREdit基于预训练Infinity模型，把指令编辑重写成条件多尺度预测：给定源图像 $\mathbf{I}^{(src)}$ 与文本指令 $\mathbf{t}$，模型自回归地生成目标图像的K层残差图 $\mathbf{R}_{1:K}^{(tgt)}$，逐尺度由粗到细补出编辑结果。源图像信息以最细尺度特征 $\mathbf{F}_K^{(src)}$ 为主要条件注入，并只在第一个自注意力层额外补一份尺度对齐的参考特征来纠正失配。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["源图像 I_src + 文本指令 t"] --> TOK["共享VQ tokenizer<br/>多尺度残差 + 文本token"]
+    TOK --> D1["自回归多尺度编辑建模<br/>逐尺度由粗到细预测目标残差"]
+    D1 --> D2["最细尺度条件化策略<br/>仅前置最细尺度源特征 F_K(src)"]
+    D2 --> D3["Scale-Aligned Reference (SAR) 模块<br/>第一层注入尺度对齐参考<br/>后续层用最细尺度条件"]
+    D3 --> AGG["聚合残差 → 最细尺度目标特征 F_K(tgt)"]
+    AGG --> DEC["decoder → 编辑图像"]
+```
+
 ### 关键设计
 
 **1. 自回归多尺度编辑建模：把"局部改、全局留"交给因果生成**

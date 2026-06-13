@@ -47,6 +47,19 @@ HiDrop 的出发点是：视觉 token 在 LLM 的不同深度根本不是"一直
 
 具体来说，视觉 token 在浅层（约 Layer 1~8）压根不进入序列（Late Injection），到中层（约 Layer 9~24）才注入并在几个选定的 filtering layer 上用可微 Top-K 前快后慢地渐进剪枝（Concave Pyramid Pruning），进入深层（约 Layer 25~32）后剩余视觉 token 被一次性全部丢弃（Early Exit）。三段拼起来等于给视觉 token 开了一个只覆盖大约一半层数的"处理窗口"，窗口外的层完全不为视觉信息买单。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["输入图像"] --> ENC["视觉编码器<br/>576 个视觉 token"]
+    TXT["输入文本"] --> SHALLOW["浅层 L1~8<br/>纯文本前向<br/>视觉 token 不注入"]
+    ENC -.->|"并行编码<br/>(工程优化)"| INJ
+    SHALLOW --> INJ["Late Injection<br/>L_inj=9 注入全部视觉 token"]
+    INJ --> PRUNE["Concave Pyramid Pruning + ILVAS<br/>中层 L9~24 前快后慢渐进剪枝<br/>ILVAS 选 filtering layer + DTop-K"]
+    PRUNE --> EXIT["Early Exit<br/>L_exit=25 丢弃全部视觉 token"]
+    EXIT --> DEEP["深层 L25~32<br/>纯语言推理"]
+    DEEP --> OUT["输出答案"]
+```
+
 ### 关键设计
 
 **1. Late Injection：浅层根本不该处理视觉 token，所以干脆不注入**

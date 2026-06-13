@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR 2026  
 **arXiv**: [2506.10133](https://arxiv.org/abs/2506.10133)  
 **代码**: 无  
-**领域**: 音频语音  
+**领域**: 机器人  
 **关键词**: 域随机化, sim-to-real迁移, 最大似然估计, 一致性, 离线RL
 
 ## 一句话总结
@@ -51,7 +51,18 @@ tags:
 
 这篇论文不提新算法，而是为已经在用的 ODR 范式补一份"它为什么会收敛"的证明。要论证的对象其实很朴素：手上有一批从真实环境$\mathcal{M}^*$采来的离线转移三元组$\mathcal{D} = \{(s_i, a_i, s_i')\}_{i=1}^N$（假定 i.i.d.），有一族共享状态/动作空间、但转移概率被物理参数$\xi$控制的仿真器$\mathcal{U} = \{\mathcal{M}_\xi : \xi \in \Xi \subset \mathbb{R}^d\}$，我们想用这批数据去拟合一个参数分布$p_\phi(\xi) = \mathcal{N}(\mu, \Sigma)$，让仿真器族尽量贴近真实动力学。
 
-拟合的方式是最大化混合似然$\phi^* = \arg\max_\phi \sum_i \log \mathbb{E}_{\xi \sim p_\phi}[P_\xi(s_i' \mid s_i, a_i)]$，再把学到的分布$p^*(\xi)$喂给下游策略训练$\pi_{\text{ODR}}^* = \arg\max_\pi \mathbb{E}_{\xi \sim p^*}[V_{\mathcal{M}_\xi}^\pi(s_1)]$。整套理论要回答的就是：随着数据$N$增长，这个$\phi^*$是不是真的会收敛到真实参数？下面的关键设计，本质上是把这个问题翻译成 MLE，然后一步步把收敛性证出来。
+拟合的方式是最大化混合似然$\phi^* = \arg\max_\phi \sum_i \log \mathbb{E}_{\xi \sim p_\phi}[P_\xi(s_i' \mid s_i, a_i)]$，再把学到的分布$p^*(\xi)$喂给下游策略训练$\pi_{\text{ODR}}^* = \arg\max_\pi \mathbb{E}_{\xi \sim p^*}[V_{\mathcal{M}_\xi}^\pi(s_1)]$。整套理论要回答的就是：随着数据$N$增长，这个$\phi^*$是不是真的会收敛到真实参数？下面的关键设计，本质上是把这个问题翻译成 MLE，然后顺着一条「形式化 → 弱一致性 → 强一致性 → 信息性度量」的证明链一步步把收敛性证出来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["离线转移数据 D<br/>{(s,a,s′)} + 仿真器族 U_ξ"] --> B["ODR 的 MLE 形式化<br/>经验对数似然 L_N(φ)"]
+    B --> C["KL 散度分解<br/>唯一最大点 φ*=(ξ*,0)"]
+    C -->|"A1–A4 + ULLN(L2)<br/>+ 唯一分离(L3)"| D["弱一致性 Thm 1<br/>依概率收敛 φ̂_N →P φ*"]
+    D -->|"加均匀 Lipschitz A5<br/>Hoeffding + Borel-Cantelli"| E["强一致性 Thm 2<br/>几乎必然收敛 φ̂_N →a.s. φ*"]
+    E --> F["α-信息性<br/>模型无关的浓缩度量"]
+    F --> G["拟合分布 p*(ξ)<br/>→ 下游 ODR 策略训练"]
+```
 
 ### 关键设计
 

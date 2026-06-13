@@ -44,6 +44,20 @@ tags:
 
 SAFE 想回答的不是"如何集成"，而是"何时集成"：在一条长生成序列里，绝大多数 token 上各模型本就高度一致，强行逐 token 对齐既冒分词污染的风险又浪费算力。为此 SAFE 借用 speculative decoding 的 drafter-verifier 结构，把最强的那个模型设为 drafter（负责真正往下生成），其余模型设为 verifiers（只负责验证）。整个生成在一个三步循环里推进：**Generate** 阶段 drafter 一口气生成 n 个 token 的前瞻序列；**Verify** 阶段所有 verifier 在单次前向传播里同时检查这 n 个 token，逐个判断该位置是否值得集成（要同时过 OOV-like 检查和共识检查）；**Ensemble** 阶段只在被选中的少数 token 上真正构建集成分布、必要时做概率锐化，drafter 再从被替换的 token 处接着往下生成。因为前瞻加单次验证，verifier 的前向传播次数被大幅压下来，端到端延迟接近单模型。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["k 个异构分词器 LLM + prompt<br/>最强者设为 drafter、其余为 verifiers"] --> B["Generate：drafter 生成 n 个前瞻 token"]
+    B --> C["OOV-like Token 检测<br/>前缀分词边界是否合法对齐"]
+    C -->|前缀非法| B
+    C -->|分词安全| D["集成分布验证<br/>各模型是否已达共识"]
+    D -->|已共识 / 均概率 >0.5：跳过| B
+    D -->|有分歧：需集成| E["Ensemble + 概率锐化<br/>构建集成分布、聚拢被子词打散的概率"]
+    E --> F["KV Cache 管理<br/>按集成后输出修剪各模型缓存"]
+    F -->|drafter 从被替换 token 续写| B
+    B -->|EOS| G["输出长序列"]
+```
+
 ### 关键设计
 
 **1. OOV-like Token 检测：在出错之前就避开不安全的分词位置**

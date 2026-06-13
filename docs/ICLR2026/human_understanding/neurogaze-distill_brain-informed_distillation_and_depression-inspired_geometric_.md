@@ -38,7 +38,23 @@ tags:
 
 ### 整体框架
 
-NeuroGaze-Distill 把 EEG 脑电里编码的情感结构，离线压缩成一组静态的 Valence-Arousal 原型，再当作"软标签锚点"蒸馏给一个纯视觉的表情识别学生。整套流程分两段：先在 DREAMER + MAHNOB-HCI 上训练一个回归 V/A 的 EEG 教师，把它验证集的特征聚成 25 个原型并冻结；再在 FERPlus 上训练 ResNet-18/50 学生，用 CE + KD + Proto-KD + D-Geo 四项联合优化。部署时 EEG 教师和原型都不参与，只跑视觉模型，因此从头到尾都不需要 EEG-人脸的配对数据。
+NeuroGaze-Distill 把 EEG 脑电里编码的情感结构，离线压缩成一组静态的 Valence-Arousal 原型，再当作"软标签锚点"蒸馏给一个纯视觉的表情识别学生。整套流程分两段：先在 DREAMER + MAHNOB-HCI 上训练一个回归 V/A 的 EEG 教师，把它验证集的特征聚成 25 个原型并冻结；再在 FERPlus 上训练 ResNet-18/50 学生，用 CE + KD + Proto-KD + D-Geo 四项联合优化。部署时 EEG 教师和原型都不参与，只跑视觉模型，因此从头到尾都不需要 EEG-人脸的配对数据。下图把这两段（离线造原型 / 在线训学生）以及三项贡献串起来看：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["DREAMER + MAHNOB-HCI<br/>EEG 数据"] --> B["EEG 教师<br/>回归 V/A 空间"]
+    B --> C["静态神经信息原型<br/>5×5 网格 → 25 个冻结原型"]
+    D["FERPlus 人脸图像"] --> E["ResNet-18/50 学生<br/>提取特征 f(x)"]
+    E --> F["CE + KD<br/>标签平滑 / logit 蒸馏"]
+    C --> G["原型蒸馏 Proto-KD<br/>余弦软对齐原型场"]
+    E --> G
+    E --> H["抑郁启发几何先验 D-Geo<br/>高效价类内收缩"]
+    F --> I["四项损失联合优化学生"]
+    G --> I
+    H --> I
+    I -->|部署：丢弃 EEG 与原型| J["纯视觉表情识别"]
+```
 
 ### 关键设计
 

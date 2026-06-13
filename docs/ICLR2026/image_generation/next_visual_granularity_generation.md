@@ -37,7 +37,24 @@ tags:
 
 ### 整体框架
 
-NVG 把一张图像在**固定空间分辨率**下拆成一串由粗到细的粒度级别：每个阶段都覆盖整张图，只是允许使用的唯一 token 数量不同——从少数 token 勾勒全局布局，逐级增加 token 还原精细细节。形式上图像表示为结构化序列 $\mathcal{T} = \{(\boldsymbol{c}_i, \boldsymbol{s}_i)\}_{i=0}^K$，其中 $\boldsymbol{c}_i$ 是阶段 $i$ 的内容 token（含 $|c_i| = n_i$ 个来自共享码本 $\mathcal{V}$ 的唯一 token），$\boldsymbol{s}_i$ 是 $h \times w$ 的结构图，标识每个空间位置该用哪个 token。生成时把"预测下一个 token"换成"预测下一个粒度级别"，每阶段先补结构、再填内容。
+NVG 要解决的是：自回归图像生成把图像拍平成一维 token 序列、丢掉了 2D 空间结构，而 VAR 那套空间金字塔在早期阶段又让一个 token 代表一大片语义混杂的区域、表示有歧义。它的思路是把一张图像在**固定空间分辨率**下拆成一串由粗到细的粒度级别：每个阶段都覆盖整张图，只是允许使用的唯一 token 数量不同——从少数 token 勾勒全局布局，逐级增加 token 还原精细细节。
+
+整条 pipeline 分两步走。**先离线建序列**：用一个多粒度量化自编码器把图像编码进 $16\times16$ 潜空间，再自底向上聚类码本 token，得到结构化序列 $\mathcal{T} = \{(\boldsymbol{c}_i, \boldsymbol{s}_i)\}_{i=0}^K$——$\boldsymbol{c}_i$ 是阶段 $i$ 的内容 token（含 $|c_i| = n_i$ 个来自共享码本 $\mathcal{V}$ 的唯一 token），$\boldsymbol{s}_i$ 是 $h \times w$ 的结构图，标识每个空间位置该用哪个 token。**再在线生成**：把"预测下一个 token"换成"预测下一个粒度级别"，从空画布出发，每阶段先用结构生成器补全本级结构图、再用内容生成器填内容并细化画布，循环到最细粒度即得到最终图像；其间用 Structure-Aware RoPE 把"谁和谁同簇"写进注意力位置编码，让结构控制内建于生成过程。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["训练图像"] --> B["视觉粒度序列构建<br/>自底向上聚类码本 token<br/>→ 结构图 s_i + 内容 token c_i 序列"]
+    B --> C["类别条件 + 空画布"]
+    subgraph S["结构-内容两段式生成（逐粒度级别迭代）"]
+        direction TB
+        D["结构生成器<br/>rectified flow + Gumbel-top-k<br/>补全本级结构图"] --> E["内容生成器<br/>预测最终画布 + 残差取本级 token"]
+    end
+    C --> S
+    F["Structure-Aware RoPE<br/>同簇=同结构位置"] -. 注意力位置编码 .-> S
+    S -->|未到最细粒度| C
+    S -->|抵达最细粒度| G["生成图像"]
+```
 
 ### 关键设计
 

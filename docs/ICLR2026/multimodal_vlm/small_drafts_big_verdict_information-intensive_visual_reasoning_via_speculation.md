@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定输入图像问题对 $(x, q)$，SV 分两阶段：(1) Draft 阶段——从 $k=5$ 个候选 VLM 池中，通过共识评分机制选出 $m=3$ 个共识最强的 draft 专家，每个专家用 CoT 提示生成详细推理路径 $r_i$；(2) Verdict 阶段——大模型（GPT-4o 或 Qwen2.5-VL-72B）接收原始图像、问题和所有推理路径 $\{r_i\}_{i=1}^{m}$，在单次推理中验证、解决矛盾并综合出最终答案 $y = J(x, q, \{r_i\}_{i=1}^{m})$。
+SV（Speculative Verdict）要解决的是信息密集型 VQA 里"单个模型既要看全证据、又要每步不出错"的两难。它把推理拆成两阶段流水：先让一池小 VLM 各自把图读一遍、产出互补的推理草稿（draft），再让一个大模型把这些草稿综合成最终答案（verdict）。具体地，给定输入图像-问题对 $(x, q)$，Draft 阶段先用 $k=5$ 个候选 VLM 各出一个候选答案，靠共识评分挑出 $m=3$ 个最可靠的当 draft 专家，每个专家用 CoT 提示生成一条详细推理路径 $r_i$；Verdict 阶段把原始图像、问题和全部路径 $\{r_i\}_{i=1}^{m}$ 喂给大模型（GPT-4o 或 Qwen2.5-VL-72B），在单次推理里验证、消解矛盾并综合出最终答案 $y = J(x, q, \{r_i\}_{i=1}^{m})$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["输入：图像-问题对 (x, q)"] --> B
+    subgraph DRAFT["Draft 阶段：多 VLM 生成互补推理路径"]
+        direction TB
+        B["k=5 候选 VLM 池<br/>各出一个候选答案 yᵢ"]
+        D["选中的 m=3 专家 CoT 推理<br/>全局扫描 → 证据提取 → 分析推理"]
+    end
+    B --> C["共识专家选择<br/>算 s(yᵢ) 选共识最强的 m=3 个"]
+    C --> D
+    D -->|"互补推理路径 {rᵢ}"| E["Verdict 阶段：大模型一次推理<br/>验证·消解矛盾·综合证据"]
+    E --> F["最终答案 y"]
+```
 
 ### 关键设计
 

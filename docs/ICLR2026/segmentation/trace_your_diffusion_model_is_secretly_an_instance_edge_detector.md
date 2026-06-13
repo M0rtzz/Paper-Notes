@@ -43,7 +43,19 @@ tags:
 
 ### 整体框架
 
-TRACE分为三个阶段：(1) **IEP（Instance Emergence Point）**：在去噪轨迹上扫描连续自注意力图间的KL散度，找到散度峰值对应的时间步 $t^*$，获取实例感知的自注意力 $SA_{\text{inst}}$；(2) **ABDiv（Attention Boundary Divergence）**：对 $SA_{\text{inst}}$ 计算相对邻居间的注意力散度，生成伪边缘图 $E$；(3) **单步自蒸馏**：用LoRA微调扩散backbone + 训练边缘解码器 $\mathcal{G}_\phi$，在 $t=0$ 时单步前向即可预测边缘，推理加速81×。生成的边缘通过Background-Guided Propagation集成到下游分割。
+TRACE 要解决的问题是：在完全没有实例标注的前提下，从预训练的文本到图像扩散模型里"读出"实例边界，用来补足语义特征"知道是什么、却分不清谁和谁"的短板。整条流水线这样转：先让一张图走一遍扩散前向去噪，沿去噪轨迹监控自注意力图的逐步变化，在实例结构最显著的那一刻——实例涌现点（Instance Emergence Point, IEP）——取出实例感知的自注意力 $SA_{\text{inst}}$；接着用注意力边界散度（Attention Boundary Divergence, ABDiv）把这张注意力图就地转成伪边缘图 $E$，整个过程不训练也不聚类；最后把这套"扫一遍去噪轨迹"的多步流程蒸馏成单步前向——训练时拿 $E$ 当监督标签，用 LoRA 微调扩散 backbone 并训练一个边缘解码器 $\mathcal{G}_\phi$，推理时在 $t=0$ 单步前向就能直接输出连续边缘。产出的实例边缘最后作为边界先验，通过背景引导传播（Background-Guided Propagation, BGP）集成进下游的实例/全景分割。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["扩散前向去噪轨迹<br/>逐时步自注意力图"]
+    B -->|"相邻时步 KL 散度取峰值"| C["实例涌现点 IEP<br/>定位 t* → 取实例感知<br/>自注意力 SA_inst"]
+    C --> D["注意力边界散度 ABDiv<br/>相向邻居散度求和<br/>→ 伪边缘图 E"]
+    D -->|"E 作监督标签"| E["单步自蒸馏边缘解码器<br/>LoRA 微调 + 解码器 G_φ（t=0 单步）"]
+    E --> F["连续边缘 Ê<br/>45ms/图（81× 加速）"]
+    F --> G["背景引导传播 BGP<br/>边缘作分隔 → 传播+合并掩码"]
+    G --> H["实例/全景分割结果"]
+```
 
 ### 关键设计
 

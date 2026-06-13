@@ -37,7 +37,19 @@ tags:
 
 ### 整体框架
 
-EPI 要解决的是「连续时间、多智能体、还要满足安全约束」这三件事撞在一起时 PINN 逼近会崩的问题。它先把安全 CT-MARL 形式化成连续时间约束 MDP（CT-CMDP），目标是最小化累积代价、同时让状态约束（如碰撞惩罚）始终满足。麻烦在于约束会让值函数变得不连续，而 HJB-PINN 只能逼近光滑函数。EPI 的破局点是用 Epigraph 重构引入一个辅助状态 $z$，把不连续的约束值函数抬升成一个连续的辅助值函数 $V(x,z)$，PINN 就能稳定逼近了。围绕这个表示，它搭了一套 inner-outer 优化的 actor-critic：critic 用 PINN 学 $V(x,z)$，outer 层直接解出最优 $z^*$，actor 则在 CTDE 框架下按本地观测学分散策略。
+EPI 要解决的是「连续时间、多智能体、还要满足安全约束」这三件事撞在一起时 PINN 逼近会崩的问题。它先把安全 CT-MARL 形式化成连续时间约束 MDP（CT-CMDP），目标是最小化累积代价、同时让状态约束（如碰撞惩罚）始终满足。麻烦在于约束会让值函数变得不连续，而 HJB-PINN 只能逼近光滑函数。EPI 的破局点是用 Epigraph 重构引入一个辅助状态 $z$，把不连续的约束值函数抬升成一个连续的辅助值函数 $V(x,z)$，PINN 就能稳定逼近了。围绕这个表示，它搭了一套 inner-outer 优化的 actor-critic 训练回环：每轮先把各 agent 的 rollout 汇成中心化轨迹，outer 层在轨迹上闭式解出最优阈值 $z^*$，inner 层用 PINN 训练 critic（return 网络 + constraint 网络）逼近 $V(x,z^*)$，actor 再在 CTDE（集中训练、分散执行）框架下按本地观测学分散策略，更新后的策略又驱动下一轮 rollout。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["安全 CT-MARL 问题<br/>(连续时间约束 MDP)"] --> B["Epigraph 重构<br/>引入辅助状态 z<br/>不连续约束值 → 连续 V(x,z)"]
+    B --> C["数据收集<br/>各 agent rollout<br/>汇成中心化轨迹 X_R"]
+    C --> D["Outer 优化<br/>闭式解出最优阈值 z*<br/>(免随机采样/根查找)"]
+    D --> E["PINN Critic 学习<br/>return 网 + constraint 网<br/>三重损失: Residual/Target/VGI"]
+    E --> F["分散式 Actor 学习<br/>按 epigraph 优势函数<br/>CTDE 更新本地策略"]
+    F -->|下一轮 rollout| C
+    F --> G["安全连续时间<br/>多智能体策略"]
+```
 
 ### 关键设计
 

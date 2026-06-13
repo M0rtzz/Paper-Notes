@@ -47,15 +47,49 @@ tags:
 
 ### 整体框架
 
-SwiftTS 把"选模型"重新表述成一个在历史性能上做监督的匹配问题：在 meta 数据集 $\mathcal{D}_{\text{meta}} = \{D^i, Z, H^i, \boldsymbol{r}^i\}_{i=1}^N$ 上训练一个评分函数 $\hat{r}_k = f(\phi_k, D, H)$，输入下游数据集 $D$、模型池 $Z$ 中的候选 $\phi_k$ 和目标 horizon $H$，输出该组合的预期排名分数 $\boldsymbol{r}^i$。落地为三块：一个数据编码器和一个模型编码器各自把数据与模型嵌到同一空间，一层 patch 级交叉注意力算两者的兼容性，再加一个 horizon 路由的专家头和跨任务元学习来保证对新数据集、新 horizon 的泛化。
+SwiftTS 把"选模型"重新表述成一个在历史性能上做监督的匹配问题：在 meta 数据集 $\mathcal{D}_{\text{meta}} = \{D^i, Z, H^i, \boldsymbol{r}^i\}_{i=1}^N$ 上训练一个评分函数 $\hat{r}_k = f(\phi_k, D, H)$，输入下游数据集 $D$、模型池 $Z$ 中的候选 $\phi_k$ 和目标 horizon（预测步长）$H$，输出该组合的预期排名分数。整条流水线分四步走：先用一个**数据编码器**和一个**模型编码器**各自把数据与候选模型嵌到同一空间——关键在于两者互不依赖，候选模型从不需要在目标数据上跑前向；再用一层 **patch 级交叉注意力**算两者的细粒度兼容性；最后过一个 **horizon 自适应专家头**按目标 horizon 输出排名分数，而整个训练被一层**跨任务元学习**包住以保证对新数据集、新 horizon 的泛化。推理时按分数选出最优模型，全程不运行任何候选模型。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["下游数据集 D + 模型池 Z<br/>+ 目标 horizon H"]
+    subgraph DUAL["双编码器（各自独立嵌入）"]
+        direction TB
+        DATA["数据编码器：切 patch + 自注意力<br/>→ 数据嵌入 E_d"]
+        MODEL["模型编码器：元信息 + 拓扑 + 功能<br/>→ 模型嵌入 E_m"]
+    end
+    CA["Patch 级交叉注意力<br/>E_m 查 E_d → 兼容性表示 E_ca"]
+    EXP["Horizon 自适应专家头<br/>路由器按 H 加权 G 个专家 → 排名分数"]
+    OUT["按分数选出最优预训练模型"]
+    IN --> DUAL
+    DATA --> CA
+    MODEL --> CA
+    CA --> EXP
+    EXP --> OUT
+    EXP -. 跨任务元学习包住训练 .-> DUAL
+```
 
 ### 关键设计
 
-**1. 双编码器：让数据和模型各自独立成像，绕开前向传播开销。** 既有特征分析方法的根本瓶颈在于——要判断模型是否适配数据，就得让每个候选模型对目标数据跑一遍前向，开销随模型池线性增长。SwiftTS 改成数据和模型各自独立编码、互不依赖。数据侧把时间序列 $X \in \mathbb{R}^{L \times C}$ 切成 $P = \lfloor L/S \rfloor$ 个 patch，线性投影到 $d$ 维并加位置编码，再用自注意力捕获长程依赖：$E_{\text{sa}} = \text{softmax}\!\left(\frac{E_{\text{inp}} W_Q^{sa} (E_{\text{inp}} W_K^{sa})^T}{\sqrt{d_k}}\right) E_{\text{inp}} W_V^{sa}$；对大数据集重复采样 $B$ 条序列再聚合，得到紧凑的数据嵌入 $E_d \in \mathbb{R}^{P \times d}$。模型侧则融合三类知识来刻画候选 $\phi_k$：元信息嵌入 $\boldsymbol{v}_a^k$ 编码架构类型（encoder/decoder/enc-dec）、参数量、GMACs、隐藏维度与预训练领域这些"描述性"属性；拓扑嵌入 $\boldsymbol{v}_t^k$ 把模型结构画成 DAG，用 graph2vec 取无监督图嵌入；功能嵌入 $\boldsymbol{v}_c^k$ 则做"黑盒探测"——喂固定高斯噪声 $\epsilon \sim \mathcal{N}(0, I)$ 记录输出，不同模型实现不同函数因而输出可区分，即便不知内部结构也能把它们拉开。三者拼接后投影成模型嵌入 $\boldsymbol{E}_m = \sigma([\boldsymbol{v}_a, \boldsymbol{v}_t, \boldsymbol{v}_c] W_m^T)$。这样一来，候选模型从不"看过"目标数据，昂贵的逐模型前向被一次性的离线嵌入取代。
+**1. 双编码器：让数据和模型各自独立成像，绕开前向传播开销**
 
-**2. Patch 级交叉注意力：算细粒度兼容性而非全局相似度。** 模型与数据嵌入已在同一空间，但简单点积只能给出全局相似度，丢掉了"模型擅长数据中哪一段时序模式"的信息。SwiftTS 让模型嵌入 $E_m$ 作 query、数据嵌入 $E_d$ 作 key/value 做交叉注意力：$E_{\text{ca}} = \text{softmax}\!\left(\frac{E_m W_Q^{ca} (E_d W_K^{ca})^T}{\sqrt{d_k}}\right) E_d W_V^{ca}$，使每个模型聚焦于和自身特征最匹配的 patch 区域，得到 patch 级而非整体的兼容性表示。训练目标兼顾排名与精度：$\mathcal{L}_{\text{total}} = -\sum_{k=1}^K p_k(\hat{\boldsymbol{r}}) \log q_k(\boldsymbol{r}) + \lambda \cdot \sum_{k=1}^K \|\boldsymbol{r}_k - \hat{\boldsymbol{r}}_k\|_2^2$，前一项是把预测分布对齐真实排名的 ranking loss，后一项是回归性能数值的 prediction loss，权重 $\lambda$ 平衡两者——既要选对顺序，也要预测分数本身可信。
+既有特征分析方法的根本瓶颈在于——要判断模型是否适配数据，就得让每个候选模型对目标数据跑一遍前向，开销随模型池线性增长。SwiftTS 改成数据和模型各自独立编码、互不依赖。数据侧把时间序列 $X \in \mathbb{R}^{L \times C}$ 切成 $P = \lfloor L/S \rfloor$ 个 patch，线性投影到 $d$ 维并加位置编码，再用自注意力捕获长程依赖：
 
-**3. Horizon 自适应专家 + 跨任务元学习：吃掉 horizon 维度和 OOD 泛化。** 同一个模型在 $H=96$ 和 $H=720$ 上的相对优劣可能完全反转，固定的评分头无法兼顾。SwiftTS 用一个轻量路由器按目标 horizon 动态加权 $G$ 个专家：$\boldsymbol{w} = \text{softmax}(\text{Router}(H; \theta_s))$，$\hat{\boldsymbol{r}} = \sum_{g=1}^G w_g \cdot \text{MLP}_g(E_{\text{ca}})$，不同 horizon 激活不同专家组合，一套框架覆盖多 horizon 而无需重训。在此之上套一层 MAML 式元学习来增强对未见数据集/horizon 的泛化：内循环在 support set 上快速适应 $\theta_i' = \theta - \alpha \nabla_\theta \mathcal{L}_{\text{supp}}(\mathcal{T}_i; \theta)$，外循环在 query set 上更新元参数 $\theta \leftarrow \theta - \gamma \nabla_\theta \sum_{\mathcal{T}_i} \mathcal{L}_{\text{query}}(\mathcal{T}_i; \theta_i')$。关键在两种任务采样：跨数据集采样让 support 与 query 来自不同数据集，逼模型学域间通用的匹配模式；跨 horizon 采样让两者用不同 horizon，强化 horizon 级的快速适配。模型选择本就是"learning-to-learn"，这层元学习也因此与问题天然契合。
+$$E_{\text{sa}} = \text{softmax}\!\left(\frac{E_{\text{inp}} W_Q^{sa} (E_{\text{inp}} W_K^{sa})^T}{\sqrt{d_k}}\right) E_{\text{inp}} W_V^{sa}$$
+
+对大数据集重复采样 $B$ 条序列再聚合，得到紧凑的数据嵌入 $E_d \in \mathbb{R}^{P \times d}$。模型侧则融合三类知识来刻画候选 $\phi_k$：元信息嵌入 $\boldsymbol{v}_a^k$ 编码架构类型（encoder-only / decoder-only / encoder-decoder）、参数量、GMACs、隐藏维度与预训练领域这些"描述性"属性；拓扑嵌入 $\boldsymbol{v}_t^k$ 把模型结构画成有向无环图（DAG），用 graph2vec 取无监督图嵌入；功能嵌入 $\boldsymbol{v}_c^k$ 则做"黑盒探测"——喂固定的高斯噪声 $\epsilon \sim \mathcal{N}(0, I)$ 记录输出 $\boldsymbol{v}_c^k = \phi_k(\epsilon)$，不同模型实现不同函数因而输出可区分，即便不知内部结构也能把它们拉开。三者拼接后投影成模型嵌入 $\boldsymbol{E}_m = \sigma([\boldsymbol{v}_a, \boldsymbol{v}_t, \boldsymbol{v}_c] W_m^T)$。这样一来，候选模型从不"看过"目标数据，昂贵的逐模型前向被一次性的离线嵌入取代。
+
+**2. Patch 级交叉注意力：算细粒度兼容性而非全局相似度**
+
+模型与数据嵌入已在同一空间，但简单点积只能给出全局相似度，丢掉了"模型擅长数据中哪一段时序模式"的信息。SwiftTS 让模型嵌入 $E_m$ 作 query、数据嵌入 $E_d$ 作 key/value 做交叉注意力：
+
+$$E_{\text{ca}} = \text{softmax}\!\left(\frac{E_m W_Q^{ca} (E_d W_K^{ca})^T}{\sqrt{d_k}}\right) E_d W_V^{ca}$$
+
+使每个模型聚焦于和自身特征最匹配的 patch 区域，得到 patch 级而非整体的兼容性表示。训练目标兼顾排名与精度：$\mathcal{L}_{\text{total}} = -\sum_{k=1}^K p_k(\hat{\boldsymbol{r}}) \log q_k(\boldsymbol{r}) + \lambda \cdot \sum_{k=1}^K \|\boldsymbol{r}_k - \hat{\boldsymbol{r}}_k\|_2^2$，前一项是把预测分布对齐真实排名的 ranking loss，后一项是回归性能数值的 prediction loss，权重 $\lambda$ 平衡两者——既要选对顺序，也要让预测分数本身可信。
+
+**3. Horizon 自适应专家 + 跨任务元学习：吃掉 horizon 维度和 OOD 泛化**
+
+同一个模型在 $H=96$ 和 $H=720$ 上的相对优劣可能完全反转，固定的评分头无法兼顾。SwiftTS 用一个轻量路由器按目标 horizon 动态加权 $G$ 个专家：$\boldsymbol{w} = \text{softmax}(\text{Router}(H; \theta_s))$，$\hat{\boldsymbol{r}} = \sum_{g=1}^G w_g \cdot \text{MLP}_g(E_{\text{ca}})$，不同 horizon 激活不同专家组合，一套框架覆盖多 horizon 而无需重训。在此之上套一层 MAML 式元学习来增强对未见数据集/horizon 的泛化：内循环在 support set 上快速适应 $\theta_i' = \theta - \alpha \nabla_\theta \mathcal{L}_{\text{supp}}(\mathcal{T}_i; \theta)$，外循环在 query set 上更新元参数 $\theta \leftarrow \theta - \gamma \nabla_\theta \sum_{\mathcal{T}_i} \mathcal{L}_{\text{query}}(\mathcal{T}_i; \theta_i')$。关键在两种任务采样：跨数据集采样让 support 与 query 来自不同数据集，逼模型学域间通用的匹配模式；跨 horizon 采样让两者用不同 horizon，强化 horizon 级的快速适配。模型选择本就是"learning-to-learn"，这层元学习也因此与问题天然契合。
 
 ## 实验关键数据
 

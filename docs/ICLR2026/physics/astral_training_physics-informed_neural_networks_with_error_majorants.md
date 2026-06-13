@@ -43,29 +43,40 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Astral 想解决的事很具体：PiNN 训练时用的残差损失和真实误差几乎不相关，所以训练完了也不知道解准不准。它的做法是把经典数值分析里的「函数型后验误差估计」搬过来——对给定 PDE $\mathcal{A}[\phi, \mathcal{D}] = 0$，先推导出一个能量范数下的误差上界泛函 $U[\tilde{\phi}, \mathcal{D}, w] \geq E[\tilde{\phi} - \phi]$，其中 $\tilde{\phi}$ 是近似解、$w$ 是一个辅助自由函数。然后用两个独立的神经网络分别参数化 $\tilde{\phi}$ 和 $w$，共同最小化 $U$。这样训练目标本身就是误差的上界，训练一结束，$U$ 的当前值直接就是误差的可靠上界估计——近似解和误差证书一次拿到。
+Astral 想解决的事很具体：PiNN 训练时最小化的残差损失和真实误差几乎不相关，所以训练完了也不知道解准不准。它把经典数值分析里的「函数型后验误差估计」（functional a posteriori error estimate）搬过来——对给定 PDE $\mathcal{A}[\phi,\mathcal{D}]=0$，先逐个推导出一个能量范数下的误差上界泛函 $U[\tilde{\phi},\mathcal{D},w]\ge E[\tilde{\phi}-\phi]$，其中 $\tilde{\phi}$ 是近似解、$w$ 是一族可自由选取的辅助函数。训练时用两张独立的 Siren 网络分别参数化 $\tilde{\phi}$ 和 $w$，共同最小化 $U$（即 Astral 损失）。由于 $U$ 本身就是误差的上界，训练一结束，$U$ 的当前值直接就是误差的可靠上界——近似解、误差上界、以及刻画误差空间分布的「误差指示器」（error indicator）三样东西一次拿到。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["PDE 方程 + 问题数据 D"] --> MAJ["逐 PDE 推导误差上界泛函<br/>error majorant U ≥ 误差能量范数"]
+    MAJ --> TRAIN
+    subgraph TRAIN["最小化 Astral 损失 U"]
+        direction TB
+        SOL["Siren 网络①：近似解 φ̃"]
+        AUX["Siren 网络②：辅助场 w<br/>（扩散为通量场、Maxwell 为标量场）"]
+    end
+    TRAIN --> OUT1["近似解 φ̃"]
+    TRAIN --> OUT2["误差上界<br/>（majorant 当前值）"]
+    TRAIN --> OUT3["误差指示器<br/>逐点误差分布"]
+```
 
 ### 关键设计
 
-**1. Astral 损失函数：用 error majorant 直接当训练目标**
+**1. 逐 PDE 推导 error majorant：把误差上界泛函写出来**
 
-这一点直击「残差和误差不相关」这个痛点。以扩散方程为例，除了近似解 $\tilde{\phi}$，再引入一个辅助变量 $\tilde{F}(x,y) \simeq \sigma(x,y)\,\text{grad}\,\phi(x,y)$ 来近似精确通量，损失写成
+这一点直击「残差只是误差的间接度量、不是上界」这个痛点。Astral 不是一个现成损失，而是一套针对不同 PDE 各自推导上界的框架：对每类方程，从它的积分恒等式出发，借助 Cauchy-Schwarz 不等式、Friedrichs 不等式等经典工具放缩出一个误差上界泛函 $U[\tilde{\phi},\mathcal{D},w]\ge E[\tilde{\phi}-\phi]$。这个 $U$ 要满足三条性质才好用：当 $\tilde{\phi}=\phi$ 时存在 $w$ 让上界取等（可饱和）、只用问题数据和近似解就能高效求值、且对任意 $\tilde{\phi}$/$w$ 都在连续意义下成立而不依赖具体离散方式（与近似方法无关，因此天然适合神经网络）。论文为 7 种方程给出了具体表达式：各向同性/各向异性扩散、大混合导数扩散、L 型域扩散、Maxwell 方程（$\alpha>0$ 和 $\alpha=0$ 两种情形）、对流扩散、以及非线性弹塑性问题。代价也在这里——每类 PDE 都得人工推一遍。
+
+**2. Astral 损失：用 error majorant 当训练目标，两张网络共同收紧上界**
+
+有了上界泛函，就把它直接当损失。以扩散方程为例，除了近似解 $\tilde{\phi}$，再引入一个辅助场 $\tilde{F}(x,y)\simeq\sigma(x,y)\,\text{grad}\,\phi(x,y)$ 来近似精确通量，损失写成
 
 $$U = \alpha \int (f + \text{div}\,\tilde{F})^2 + \beta \int \frac{\|\sigma\,\text{grad}\,\tilde{\phi} - \tilde{F}\|^2}{\sigma}$$
 
-其中 $\alpha, \beta$ 是依赖 PDE 参数的常数。关键在于 $U$ 不是误差的间接度量，而是误差能量范数的严格上界，并且只有当 $\tilde{\phi} \to \phi$ 且 $\tilde{F} \to \sigma\,\text{grad}\,\phi$ 时上界才饱和。这意味着把 $U$ 压小，等于同时把近似解推向精确解、把辅助场推向精确通量两件事一起做。和旧办法的差别也清楚：残差损失只保证残差小、不保证误差小；变分损失要求问题有变分形式（Maxwell 这类就不行）；Astral 既给严格上界又拿到更高精度。
+其中 $\alpha,\beta$ 是依赖 PDE 参数的常数。辅助场 $w$（这里就是 $\tilde{F}$）是上界里的自由变量，优化它就是在收紧上界，所以它得和近似解一起被显式参数化——每个待预测的场各用一张独立的 Siren 网络，且 $w$ 的形态随 PDE 变（扩散里是通量向量场，Maxwell 里退化为一个标量场）。关键在于只有当 $\tilde{\phi}\to\phi$ 且 $\tilde{F}\to\sigma\,\text{grad}\,\phi$ 时上界才饱和，因此把 $U$ 压小，等于同时把近似解推向精确解、把辅助场推向精确通量。这种写法还有个附带好处：二阶问题里 $U$ 只含一阶导数（残差损失要算二阶导），自动微分更省，训练更快。和旧办法的差别也清楚：残差损失只保证残差小、不保证误差小；变分损失要求问题有变分形式（Maxwell 这类就不行）；Astral 既给严格上界又拿到更高精度。
 
-**2. 辅助场参数化：每个自由场单独一张 Siren 网络**
+**3. 误差指示器：从损失里读出误差的空间分布**
 
-辅助场 $w$ 是 error majorant 里的自由变量，优化它就是在收紧上界，所以它得被显式参数化、和近似解一起学。$w$ 的维度和物理含义随 PDE 变——扩散方程里它是通量向量场，Maxwell 方程里它退化成一个标量场。每个场都用一张独立的 Siren 网络来表示，和 $\tilde{\phi}$ 的网络分开训练，让上界在优化中尽可能贴近真实误差。
-
-**3. 多类 PDE 的 error majorant 推导：把上界泛函逐个 PDE 写出来**
-
-Astral 不是一个现成损失，而是一套针对不同 PDE 各自推导上界的框架。论文为 7 种 PDE 给出了具体的 error majorant 表达式：各向同性/各向异性扩散方程、大混合导数扩散、L 型域扩散、Maxwell 方程（$\alpha > 0$ 和 $\alpha = 0$ 两种情形）、对流扩散方程、以及非线性弹塑性问题。推导手法是从 PDE 的积分恒等式出发，借助 Cauchy-Schwarz 不等式、Friedrichs 不等式等经典工具放缩出严格上界。这也是方法的代价所在——每类 PDE 都得人工推一遍。
-
-**4. 误差指示器（error indicator）：从损失里读出误差的空间分布**
-
-Astral 损失不仅给一个全局上界，还能拆出逐点的误差密度估计：误差指示器 $\|\sigma^{-1/2}(\tilde{F} - \sigma\,\text{grad}\,\tilde{\phi})\|^2$ 直接刻画误差在空间上集中在哪。它和真实误差的空间相关性达到 $0.82 \pm 0.04$，而残差只有 $0.22 \pm 0.09$，所以这个指示器能可靠地告诉你哪片区域误差大，可直接拿去做自适应加密。
+Astral 损失不仅给一个全局上界，还能拆出逐点的误差密度估计：误差指示器 $\|\sigma^{-1/2}(\tilde{F}-\sigma\,\text{grad}\,\tilde{\phi})\|^2$ 不含未知的精确解、可直接算出，刻画误差在空间上集中在哪。它和真实误差能量密度的空间相关性达到 $0.82\pm0.04$，而残差只有 $0.22\pm0.09$，所以这个指示器能可靠地告诉你哪片区域误差大，可直接拿去做自适应网格加密。
 
 ### 损失函数 / 训练策略
 - 用 Monte Carlo 方法在 $64 \times 64$ 均匀网格的随机子集上近似积分

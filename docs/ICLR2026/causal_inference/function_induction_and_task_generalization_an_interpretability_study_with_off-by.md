@@ -39,21 +39,41 @@ tags:
 
 ### 整体框架
 
-本文不训练任何模型，而是以 Gemma-2 (9B) 为主要解剖对象，用 path patching 做因果干预来反推 off-by-one addition 背后的内部电路。核心做法是构造一对仅差一个规则的提示：base prompt 走标准加法（1+1=2），contrast prompt 走 off-by-one 加法（1+1=3），然后把后者的部分激活逐层换成前者再看输出是否从 "+1 行为" 塌回 "标准加法"。顺着这条因果链逐层追溯，最终浮现出一个由三组注意力头分工协作、共同实现 $f(x)=x+1$ 的电路。
+本文不训练任何模型，而是以 Gemma-2 (9B) 为主要解剖对象，用 path patching 做因果干预来反推 off-by-one addition 背后的内部电路。核心做法是构造一对仅差一个规则的提示：base prompt 走标准加法（1+1=2），contrast prompt 走 off-by-one 加法（1+1=3），然后把后者的部分激活逐层换成前者，看输出是否从 "+1 行为" 塌回 "标准加法"。从最终输出 logit 出发逐层反查上游，电路收敛到三组分工明确的注意力头——它们在前向计算时按 PT → FI → Consolidation 的顺序协作，共同实现 $f(x)=x+1$。最后再用 function vector 分析单独验证：这条电路里的 FI heads 确实把 +1 函数写进了残差流。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["提示对<br/>base：标准加法 1+1=2<br/>contrast：off-by-one 1+1=3"] --> B["Path patching 因果干预<br/>移植 base 激活进 contrast<br/>用相对 logit 差 r 打分"]
+    B -->|从输出 logit 逐层反查上游| C
+    subgraph C["三组注意力头的分工电路"]
+        direction TB
+        PT["PT heads<br/>在答案 c_i 位登记<br/>预期与实际的偏差"] --> FI["FI heads<br/>在 = 位搬运<br/>+1 函数到测试样本"]
+        FI --> CO["Consolidation heads<br/>聚合信息、敲定输出"]
+    end
+    C --> D["Function vector 分析<br/>单个 FI head 输出加入残差流<br/>验证 +1 被分布式编码"]
+    D --> E["输出 7（off-by-one 泛化成功）<br/>同一电路跨任务复用"]
+```
 
 ### 关键设计
 
-**1. Path patching 因果干预：把"是谁算出了 +1"变成可量化的实验。** 单看注意力权重无法判断哪个组件真正负责 +1，因为相关不等于因果。作者改用 path patching：在 base 与 contrast 两个提示上分别前向传播，把某个目标组件在 base 提示下的激活 $M(\cdot|x_{base})$ 移植进 contrast 提示的前向过程，观察输出是否回退。为了量化这种移植的破坏力，先定义 logit 差 $F(C, x) = C(y_{base}|x) - C(y_{cont}|x)$，再用归一化的相对 logit 差 $r = \frac{F(M', x_{cont}) - F(M, x_{cont})}{F(M, x_{cont}) - F(M, x_{base})}$ 来打分——$r$ 越接近 $-100\%$，说明把该组件换成 base 版本越能把模型"拉回"标准加法，也就越说明它是 +1 行为的因果来源。这样就能从最终输出 logit 出发，一级一级反查上游，不靠先验假设地把电路结构挖出来。
+**1. Path patching 因果干预：把"是谁算出了 +1"变成可量化的实验**
 
-**2. 三组注意力头的分工电路：把多步推理拆成可命名的角色。** 逐层做 path patching 后，信息流自然收敛到三组头上，各司其职。**Consolidation Heads** 处在最下游，负责聚合信息、敲定最终输出，注意力主要落在当前 token 和 `<bos>` 上。**Function Induction (FI) Heads** 是全文主角，在 "=" 位置回看前面每个 ICL 示例的答案 token $c_i$，把示例里隐含的 +1 函数"搬运"到当前测试样本——它和传统 induction heads 的关键区别在于操作的层级：传统 induction heads 复制的是具体 token [B]（零阶常函数），而 FI heads 归纳的是一阶函数 $f(x)=x+1$。**Previous Token (PT) Heads** 则在每个答案 $c_i$ 的位置回看紧邻的前一个 "=" token，把"模型预期答案与示例实际答案之间的偏差"登记下来，正是这个偏差信号喂给了 FI heads。三者构成 Output → Consolidation → FI → PT 的逆向信息链，多步推理由此被拆成了可命名、可消融的角色。
+单看注意力权重无法判断哪个组件真正负责 +1，因为相关不等于因果。作者改用 path patching：在 base 与 contrast 两个提示上分别前向传播，把某个目标组件在 base 提示下的激活 $M(\cdot|x_{base})$ 移植进 contrast 提示的前向过程，观察输出是否回退。为了量化这种移植的破坏力，先定义 logit 差 $F(C, x) = C(y_{base}|x) - C(y_{cont}|x)$，再用归一化的相对 logit 差 $r = \frac{F(M', x_{cont}) - F(M, x_{cont})}{F(M, x_{cont}) - F(M, x_{base})}$ 来打分——$r$ 越接近 $-100\%$，说明把该组件换成 base 版本越能把模型"拉回"标准加法，也就越说明它是 +1 行为的因果来源。这样就能从最终输出 logit 出发，把输出节点设为 target、一级一级反查上游，不靠先验假设地把电路结构挖出来。
+
+**2. 三组注意力头的分工电路：把多步推理拆成可命名的角色**
+
+逐层做 path patching 后，信息流自然收敛到三组头上，各司其职。按它们在前向计算时的协作顺序：**Previous Token (PT) Heads** 在每个示例的答案 $c_i$ 位置回看紧邻的前一个 "=" token，把"模型早期层草拟的预期答案（如 2）与示例实际答案（如 3）之间的偏差"登记在 $c_i$ 处；**Function Induction (FI) Heads** 是全文主角，在测试样本的 "=" 位置取回 PT heads 登记的偏差信息，把示例里隐含的 +1 函数"搬运"到当前样本——它和传统 induction heads 的关键区别在于操作的层级：传统 induction heads 复制的是具体 token [B]（零阶常函数 $f=\text{output}([B])$），而 FI heads 归纳的是一阶函数 $f(x)=x+1$；**Consolidation Heads** 处在最下游、集中在最后两层，聚合各路信息、敲定最终输出，注意力主要落在当前 token 和 `<bos>` 上。值得注意的是，电路的**发现顺序**和**计算顺序**相反：path patching 从输出反查（先发现 Consolidation 与 FI，再顺着 FI 的 value 找到 PT），而信息在前向计算时按 PT → FI → Consolidation 流动。多步推理由此被拆成了可命名、可消融的角色。
 
 | 组别 | 名称 | 功能 | 注意力模式 |
 |------|------|------|-----------|
-| Group 1 | **Consolidation Heads** | 聚合信息、最终化输出 | 主要关注当前 token 和 `<bos>` |
+| Group 3 | **Previous Token (PT) Heads** | 在答案位置登记"预期与实际的差异" | 在 $c_i$ 位置关注紧邻的前一个 "=" token |
 | Group 2 | **Function Induction (FI) Heads** | 从 ICL 示例中携带 +1 函数到测试样本 | 在 "=" 位置关注前面各示例的答案 token $c_i$ |
-| Group 3 | **Previous Token (PT) Heads** | 在答案位置注册"预期与实际的差异" | 在 $c_i$ 位置关注紧邻的前一个 "=" token |
+| Group 1 | **Consolidation Heads** | 聚合信息、最终化输出 | 主要关注当前 token 和 `<bos>` |
 
-**3. Function vector 分析：验证 FI heads 真的承载了 +1，而非统计巧合。** 找到 FI heads 还不够，得证明它们的输出本身就编码了 +1 函数。作者构造极简的 naive prompt（如 "2=2\n3=?"），把单个 FI head 的输出直接加到残差流里，再看模型对各候选数字的 logit 如何变化，绘成 $10\times10$ 热力图。结果显示每个 FI head 只写出 +1 函数的一块"碎片"：H39.7 促进 $x+1$，H28.6 抑制 $x-1$，H32.1 促进大于 $x$ 的数字，H24.9 抑制 $x$ 本身——单看任一头都不完整，但 6 至 9 个头的输出叠加后，整体效果恰好拼成完整的 +1 函数。这说明 +1 是被分布式地编码进多个头里的因果机制，而不是某个头的统计相关。
+**3. Function vector 分析：验证 FI heads 真的承载了 +1，而非统计巧合**
+
+找到 FI heads 还不够，得证明它们的输出本身就编码了 +1 函数。作者构造极简的 naive prompt（如 "2=2\n3=?"），把单个 FI head 的输出直接加到残差流里，再看模型对各候选数字的 logit 如何变化，绘成 $10\times10$ 热力图。结果显示每个 FI head 只写出 +1 函数的一块"碎片"：有的头促进 $x+1$、有的抑制 $x-1$、有的促进大于 $x$ 的数字、有的抑制 $x$ 本身——单看任一头都不完整，但 6 至 9 个头的输出叠加后，整体效果恰好拼成完整的 +1 函数。这说明 +1 是被分布式地编码进多个头里的因果机制，而不是某个头的统计相关。
 
 由于全程不涉及训练，评估只用两个量：off-by-one addition 的 **Accuracy**，以及上面定义的相对 logit 差 $r$，后者专门用来衡量某个电路组件对 +1 行为的因果贡献。
 

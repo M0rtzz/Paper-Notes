@@ -41,7 +41,19 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GraphTokenizer $\Phi = T \circ f$：输入带标签图 $\mathcal{G}$ → 频率引导的可逆序列化 $f_g(\mathcal{G}, F)$ 产生符号序列 → BPE tokenizer $T$ 将符号序列压缩为 token 序列 $S_T$ → 送入标准 Transformer（BERT/GTE）进行下游任务。解码时反向操作 $f^{-1} \circ T^{-1}$ 可完全重建原图。
+GraphTokenizer 想回答的核心问题是：能不能不改 Transformer 的任何架构，就让它像处理文本一样处理图？它的答案是把图也变成离散 token 序列。整个流水线记作 $\Phi = T \circ f$，分三步走：先扫一遍训练集，统计每种局部边模式的出现频率 $F$，得到一张全局先验；再用这张频率图引导一次可逆遍历 $f_g(\mathcal{G}, F)$，把图无损地「拉直」成 node-edge-node 交替的符号序列；最后用 BPE tokenizer $T$ 把符号序列压缩成 token 序列 $S_T$，喂给标准 Transformer（BERT/GTE）做分类或回归。由于序列化和 BPE 都可逆，解码时反向走 $f^{-1} \circ T^{-1}$ 就能完整重建原图——这种信息无损正是它能拿到好效果的前提。序列化这一步还提供了两条可互换的路线：默认的欧拉回路（Feuler）和作为对照的中国邮递员（CPP）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    G["带标签图 G"] --> FREQ["局部结构模式统计<br/>边模式频率 F"]
+    FREQ -->|全局频率先验| FEULER["频率引导的可逆序列化<br/>Feuler 欧拉回路 · 线性时间"]
+    FREQ -.->|替代路线| CPP["频率引导的 CPP<br/>中国邮递员 · 立方时间"]
+    FEULER --> SEQ["符号序列<br/>node-edge-node 交替"]
+    CPP -.-> SEQ
+    SEQ --> BPE["BPE 词汇学习<br/>合并高频相邻符号对 · 压缩约 10 倍"]
+    BPE --> TF["标准 Transformer BERT/GTE<br/>下游分类 / 回归"]
+```
 
 ### 关键设计
 

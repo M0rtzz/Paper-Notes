@@ -43,6 +43,31 @@ tags:
 ### 整体框架
 RefTool 想解决的是「LLM 在专业领域凭内在知识造工具会写错公式」这个痛点，办法是把权威教材当成知识源、离线编译成一套可执行工具，推理时直接调用。整条流水线分两阶段：先做**工具创建**，逐节读教材、生成带描述和示例的 Python 函数、跑执行测试验证正确性，最后按教材的章-节结构组织成一个两级 toolbox；再做**工具利用**，推理时先按章级类别再按具体工具两步检索，把命中的工具喂给 PoT 单轮或 ReAct 多轮推理去解题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    R["权威教材 /<br/>知识片段"] --> GEN
+    subgraph CREATE["参考资料引导的工具创建（设计 1，离线）"]
+        direction TB
+        GEN["逐节生成工具<br/>描述+Python函数+示例"] --> TEST{"执行测试<br/>跑对?"}
+        TEST -->|"否，回传报错修复"| GEN
+        TEST -->|"是"| BOX["按章-节组织成<br/>两级 toolbox"]
+    end
+    Q["输入问题 q"] --> CAT
+    BOX --> CAT
+    subgraph RET["层次化工具检索（设计 2）"]
+        direction TB
+        CAT["章级选类别<br/>选 ≤nc 个相关类"] --> TOOL["类内选工具<br/>选 ≤nt 个工具"]
+    end
+    TOOL -->|"命中工具"| REASON
+    subgraph REASON["两种推理模式（设计 3）"]
+        direction TB
+        POT["PoT 单轮<br/>一次生成调用代码"]
+        REACT["ReAct 多轮<br/>边推理边调用"]
+    end
+    REASON --> ANS["答案"]
+```
+
 ### 关键设计
 
 **1. 参考资料引导的工具创建：用教材而非 LLM 脑补当知识源**

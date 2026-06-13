@@ -39,15 +39,44 @@ tags:
 
 ### 整体框架
 
-VideoMind 在 Qwen2-VL 单一基座上定义四个专职角色——Planner 读懂查询后动态决定调用顺序，Grounder 预测相关片段的起止时间戳，Verifier 在 Grounder 给出的候选里挑出最可靠的一个，Answerer 再基于定位到的片段（或全视频）生成自然语言答案。角色之间用 JSON 风格的函数调用 `{"type": "<role>", "value": "<argument>"}` 串成一条链。Planner 并非每次都跑满四步，而是从三种计划里挑：需要同时给答案和时序证据时走 Plan-1（Grounding+Verifying+Answering），只要时间戳时走 Plan-2（Grounding+Verifying），短视频或简单问题则走 Plan-3 直接回答。
+VideoMind 要解决的是长视频的"时序 grounded 推理"——既要答对问题，又要指出答案依据的片段落在视频的第几秒。它在单个 Qwen2-VL 基座上定义四个专职角色，串成一条函数调用链：Planner 读懂查询后决定调用哪几个角色，Grounder 预测相关片段的起止时间戳，Verifier 回看候选片段挑出最可靠的一个，Answerer 再基于定位到的片段（或全视频）生成自然语言答案。关键在于这四个角色不是四个独立模型，而是共享同一基座、各挂一组 LoRA，靠切换 LoRA 在一个模型内完成角色切换。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["视频 + 自然语言查询"] --> P
+    subgraph COL["Chain-of-LoRA（共享 Qwen2-VL 基座 + 角色专属 LoRA 切换）"]
+        direction TB
+        P["Planner<br/>读懂查询、选 Plan-1/2/3"]
+        G["Grounder（Timestamp Decoder）<br/>专用解码器预测候选起止时间戳"]
+        V["Verifier（Zoom-in 验证）<br/>扩边界+标记+打分选最可靠候选"]
+        ANS["Answerer<br/>基于定位片段生成答案"]
+        P -->|"Plan-1/2"| G
+        P -->|"Plan-3：短/简单"| ANS
+        G --> V
+        V -->|"Plan-1"| ANS
+    end
+    V -->|"Plan-2"| TS["输出时间戳"]
+    ANS --> OUT["答案 + 时序证据"]
+```
 
 ### 关键设计
 
-**1. Timestamp Decoder：用专用解码器替代语言建模来定位时间。** 视频时序定位的痛点在于，如果让 LLM 像写文字那样直接吐出"从 12.3 秒到 18.7 秒"，数字本身缺乏几何约束、精度很差。VideoMind 的 Grounder 改为引入一个 `<REG>` token，生成它时把它与全部视觉 token 的隐状态一起送进专用解码器：先做 1D 平均池化把每帧压成一个向量 $\mathbf{h}_v' \in \mathbb{R}^{T \times D_L}$，再线性投影降维得 $\mathbf{e}_v = E_v(\mathbf{h}_v') \in \mathbb{R}^{T \times D}$，经三层 Transformer 编码器把帧特征与查询特征融合。核心是其后的**时序特征金字塔**——四级 Conv1D 逐步下采样，分别保留 1、1/2、1/4、1/8 的序列长度后拼接，使得短事件和长事件能在不同尺度上被并行预测。解码器顶端挂三个输出：帧级前景/背景分类头、帧级起止偏移的边界回归头、以及拉开帧-查询匹配度的对比项。这套"检测器式"结构把定位从模糊的文本生成变成有监督的几何回归，正是 2B 模型 mIoU 能反超 GPT-4o 的原因。
+**1. Planner：按查询难度自适应选择推理计划**
 
-**2. Verifier 的 Zoom-in 策略：模拟人类"回看确认"。** Grounder 单次预测难免给出几个似是而非的候选，谁更准需要二次甄别。Verifier 对每个候选片段向两侧各扩展 50% 边界，把上下文一起纳入视野，并在序列中插入 `<SEG-START>` 与 `<SEG-END>` 两个特殊 token 显式标出片段边界，让模型清楚"该看哪一段"。随后做一次二值判断（Yes/No），用 teacher forcing 取出两个答案 token 的 logit $L_y, L_n$，以 $\text{Sigmoid}(L_y - L_n)$ 作为该候选的置信度排序。这个"放大边界 + 标记 + 打分"的回看动作让 grounding 的 mIoU 额外提升约 3.2。
+四步全跑并非总是划算——短视频或常识类问题根本不需要先定位再验证，硬上 grounding 既费算力又可能引入噪声把答案带偏。Planner 因此先读懂查询，再从三种预定义计划里挑一条：需要同时给出答案和时序证据时走 Plan-1（Grounding → Verifying → Answering），只要时间戳时走 Plan-2（Grounding → Verifying），短视频或简单问题则走 Plan-3 直接回答。角色之间用 JSON 风格的函数调用 `{"type": "<role>", "value": "<argument>"}` 串成一条链，由 Planner 输出调度顺序。消融显示这种自适应调度只对约 40% 的样本真正执行 grounding，其余直接回答，准确率反而从 69.2 升到 70.0——把算力花在真正需要定位的样本上。
 
-**3. Chain-of-LoRA：把多 agent 压进一个模型。** 直接用四个独立模型当四个角色（All-Distributed）效果好但内存爆炸，多任务联合训一个模型（All-in-One）又会让角色能力互相干扰。VideoMind 让所有角色共享同一 LMM 主干，每个角色只配一组角色专属的 LoRA 适配器（Grounder 额外挂上前述时间戳解码器）。推理时所有 LoRA 参数都常驻内存，切换角色仅是切换对应的 LoRA 权重，没有重新加载整模型的开销。结果是它在性能上与 All-Distributed 完全持平，内存却从 16.6G 压到 4.2G，把"多智能体协作"做成了单模型内的零成本切换。
+**2. Grounder 的 Timestamp Decoder：用检测器式解码替代语言建模来定位时间**
+
+视频时序定位的痛点在于，如果让 LLM 像写文字那样直接吐出"从 12.3 秒到 18.7 秒"，数字本身缺乏几何约束、精度很差。VideoMind 的 Grounder 改为引入一个 `<REG>` token，生成它时把它与全部视觉 token 的隐状态一起送进专用解码器：先做 1D 平均池化把每帧压成一个向量 $\mathbf{h}_v' \in \mathbb{R}^{T \times D_L}$，再线性投影降维得 $\mathbf{e}_v = E_v(\mathbf{h}_v') \in \mathbb{R}^{T \times D}$，经三层 Transformer 编码器把帧特征与查询特征融合。核心是其后的**时序特征金字塔**——四级 Conv1D 逐步下采样，分别保留 1、1/2、1/4、1/8 的序列长度后拼接，使得短事件和长事件能在不同尺度上被并行预测。解码器顶端挂三个输出：帧级前景/背景分类头、帧级起止偏移的边界回归头、以及拉开帧-查询匹配度的对比项。这套"检测器式"结构把定位从模糊的文本生成变成有监督的几何回归，正是 2B 模型 mIoU 能反超 GPT-4o 的原因。
+
+**3. Verifier 的 Zoom-in 策略：模拟人类"回看确认"**
+
+Grounder 单次预测难免给出几个似是而非的候选，谁更准需要二次甄别。Verifier 对每个候选片段向两侧各扩展 50% 边界，把上下文一起纳入视野，并在序列中插入 `<SEG-START>` 与 `<SEG-END>` 两个特殊 token 显式标出片段边界，让模型清楚"该看哪一段"。随后做一次二值判断（Yes/No），用 teacher forcing 取出两个答案 token 的 logit $L_y, L_n$，以 $\text{Sigmoid}(L_y - L_n)$ 作为该候选的置信度排序。这个"放大边界 + 标记 + 打分"的回看动作让 grounding 的 mIoU 额外提升约 3.2。
+
+**4. Chain-of-LoRA：把多角色压进一个模型**
+
+直接用四个独立模型当四个角色（All-Distributed）效果好但内存爆炸，多任务联合训一个模型（All-in-One）又会让角色能力互相干扰。VideoMind 让所有角色共享同一 LMM 主干，每个角色只配一组角色专属的 LoRA 适配器（Grounder 额外挂上前述时间戳解码器）。推理时所有 LoRA 参数都常驻内存，切换角色仅是切换对应的 LoRA 权重，没有重新加载整模型的开销。结果是它在性能上与 All-Distributed 完全持平，内存却从 16.6G 压到 4.2G，把"多智能体协作"做成了单模型内的零成本切换。
 
 ### 损失函数 / 训练策略
 

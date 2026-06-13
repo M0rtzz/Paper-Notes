@@ -43,7 +43,21 @@ DiffVax 训练一个前馈免疫器（UNet++），对任意图像仅需一次前
 
 ### 整体框架
 
-训练阶段分两步：Stage 1 免疫器 $f(\cdot;\theta)$ 对输入图像 $\mathbf{I}$ 生成扰动 $\epsilon_{\mathrm{im}}$，与 mask $\mathbf{M}$ 相乘后加到图像上得到 $\mathbf{I}_{\mathrm{im}}$；Stage 2 将免疫后图像送入冻结的 SD Inpainting 模型进行编辑，计算编辑失败损失。推理时仅需 Stage 1 的单次前向传播。
+整篇要解决的问题是：怎么让"给图像加对抗扰动以抵御扩散编辑"这件事从逐图优化（每张图跑几百步、耗时几分钟到几小时）变成一次前向推理。DiffVax 把它拆成一个端到端的两阶段训练管线。Stage 1，免疫器 $f(\cdot;\theta)$ 读入图像 $\mathbf{I}$ 预测扰动 $\epsilon_{\mathrm{im}}$，再与免疫 mask $\mathbf{M}$ 相乘叠加到原图，得到免疫图 $\mathbf{I}_{\mathrm{im}}=\mathbf{I}+\epsilon_{\mathrm{im}}\odot\mathbf{M}$；Stage 2 把 $\mathbf{I}_{\mathrm{im}}$ 送进**冻结**的 SD Inpainting 模型走一遍编辑，用编辑失败损失反传去训练免疫器。训练用的图像、合成 mask 和多样 prompt 都来自精心构建的数据集，保证学到的扰动能泛化到未见内容。训练完成后，推理只跑 Stage 1 的单次前向（~70ms），Stage 2 整条扩散反传链路只在训练时存在。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["数据构建<br/>1000 人像 + SAM 合成 mask<br/>+ ChatGPT 多样 prompt"] --> I["输入图像 I"]
+    I --> F["UNet++ 免疫器 f(·;θ)<br/>一次前向预测扰动 ε_im"]
+    F --> A["ε_im × 免疫 mask M<br/>叠加得免疫图 I_im"]
+    A --> N["L_noise<br/>约束扰动不可感知"]
+    A --> S["冻结 SD Inpainting<br/>训练与编辑解耦：<br/>不绑 prompt、免疫 mask≠编辑 mask"]
+    S --> E["L_edit<br/>编辑区趋向全黑 → 编辑失败"]
+    N --> T["反传更新 θ"]
+    E --> T
+    A -.->|"推理仅需此步"| O["免疫图输出 (~70ms)"]
+```
 
 ### 关键设计
 

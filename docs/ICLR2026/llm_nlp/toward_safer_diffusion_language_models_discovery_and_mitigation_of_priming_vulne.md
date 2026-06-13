@@ -44,6 +44,27 @@ tags:
 
 本文先用两类攻击量化掩码扩散语言模型的"启动漏洞"——只要去噪中间步骤里混进了肯定性 token，模型就难以收回安全防线；再用 Recovery Alignment 把这种"被污染的中间状态"显式塞进训练，教模型从中毒状态走回安全响应。攻击侧负责暴露并度量风险，对齐侧负责修复，二者共享同一个观察：MDLM 的安全性取决于去噪轨迹而非起点。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    Q["有害 query<br/>+ MDLM 迭代去噪轨迹"]
+    subgraph ATK["攻击侧：量化启动漏洞"]
+        direction TB
+        A["锚定攻击<br/>中间步 t_inter 注入有害 token"]
+        B["First-Step GCG<br/>第一步似然下界·仅改输入"]
+        A -->|"暴露第一步支配地位"| B
+    end
+    subgraph ALN["对齐侧：Recovery Alignment"]
+        direction TB
+        C["Recovery Alignment<br/>从中毒中间状态去噪 + GRPO"]
+        D["线性调度 t_inter<br/>由浅到深的恢复课程"]
+        C -->|"干预步随训练进度抬高"| D
+    end
+    Q --> ATK
+    ATK -->|"漏洞已量化：第一步注入即 2%→21%"| ALN
+    ALN --> OUT["MDLM 学会从中毒状态<br/>走回安全响应"]
+```
+
 ### 关键设计
 
 **1. 锚定攻击：用可控干预把漏洞量化出来**

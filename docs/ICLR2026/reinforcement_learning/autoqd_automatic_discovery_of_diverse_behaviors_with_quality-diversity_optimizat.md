@@ -37,15 +37,34 @@ tags:
 
 ### 整体框架
 
-AutoQD 把"什么算不同的行为"这个本来要人工拍板的问题，交给占据度量来回答：先用随机傅里叶特征把每个策略压成一个有限维向量，使两个向量的欧氏距离近似它们占据度量之间的 MMD；再用按回报加权的 PCA 把这个高维向量投影成低维行为描述符（BD），喂给 CMA-MAE 做 QD 搜索。整个优化过程中策略搜索和 BD 重算交替进行，archive 长出新行为后 BD 也随之刷新。
+AutoQD 把"什么算不同的行为"这个本来要人工拍板的问题，交给占据度量（occupancy measure）来回答。整条 pipeline 是一个带回环的闭环：CMA-ES 采样一批策略参数，放进环境跑出轨迹和回报 $J(\pi)$；这些轨迹先经**随机傅里叶特征嵌入**压成一个有限维向量 $\psi^\pi$，使两个向量的欧氏距离近似它们占据度量之间的最大均值差异（MMD, Maximum Mean Discrepancy）；再经 **cwPCA 投影**降到低维行为描述符（BD, behavior descriptor）；策略据回报和 BD 落进 CMA-MAE 的 archive，CMA-ES 按 archive 的改进量更新采样分布。关键的回环是：搜索过程中**QD 搜索与 BD 刷新交替**进行，每隔一段就用 archive 里现存策略的嵌入重算一次 cwPCA、刷新投影矩阵——archive 长出新行为后，"多样性怎么定义"也随之演化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["CMA-ES 采样<br/>一批策略参数"] --> B["环境中评估<br/>收集轨迹 + 回报 J(π)"]
+    B --> C["随机傅里叶特征嵌入<br/>轨迹 → 策略嵌入 ψ<br/>(欧氏距离 ≈ 占据度量 MMD)"]
+    C --> D["cwPCA 投影<br/>ψ → 行为描述符 desc = Aψ+b"]
+    D --> E["按回报 J 与 BD<br/>更新 CMA-MAE archive"]
+    E --> F["CMA-ES 按 archive 改进量<br/>更新采样分布"]
+    F -->|继续 QD 搜索| A
+    E -->|周期性触发| G["QD 搜索与 BD 刷新交替<br/>从 archive 重算 cwPCA<br/>刷新投影 A, b"]
+    G -->|新 A,b 回灌| D
+```
 
 ### 关键设计
 
-**1. 随机傅里叶特征嵌入：把"策略距离"变成可计算的欧氏距离。** 占据度量虽然完整刻画了一个策略的行为，但它是状态-动作空间上的连续分布，无法直接比较两个策略差多少。AutoQD 给每对状态动作 $[s;a]$ 算一个 $D$ 维随机特征 $\phi(s,a) = \sqrt{2/D}\,[\cos(w_1^T[s;a]+b_1), \ldots, \cos(w_D^T[s;a]+b_D)]$，其中频率 $w_i \sim \mathcal{N}(0, \sigma^{-2}I)$、相位 $b_i \sim \mathcal{U}(0, 2\pi)$，这组特征在期望意义上近似带宽为 $\sigma$ 的高斯核 $k(x,y)=\exp(-\|x-y\|^2/(2\sigma^2))$。把策略沿轨迹采到的特征做折扣加权平均，就得到策略嵌入 $\psi^\pi = \frac{1}{n}\sum_{j=1}^{n}(1-\gamma)\sum_{t=0}^{T}\gamma^t \phi(s_t^j, a_t^j)$（$n$ 为轨迹条数），于是 $\|\psi^{\pi_1}-\psi^{\pi_2}\| \approx \text{MMD}(\rho^{\pi_1}, \rho^{\pi_2})$。这一近似不是经验拼凑：定理 1 证明嵌入距离与真实 MMD 的偏差以指数速率收敛，$\Pr[\,|\,\|\phi_1-\phi_2\|_2 - \text{MMD}(\rho_1,\rho_2)\,| \geqslant \tfrac{3}{4}\varepsilon\,] \leqslant 2e^{-nc\varepsilon^2} + \mathcal{O}(\varepsilon^{-2}\exp(-D\varepsilon^2/(64(d+2)))) + 6e^{-n\varepsilon^2/8}$，关键是误差里 $D$ 只要随状态-动作维度 $d$ **线性增长**就能控住，避免了高维分布比较常见的维度灾难。
+**1. 随机傅里叶特征嵌入：把"策略距离"变成可计算的欧氏距离**
 
-**2. cwPCA 投影：把高维嵌入压成稳定、偏向高回报的低维 BD。** 嵌入 $\psi^\pi \in \mathbb{R}^D$ 维度太高，直接当 BD 会让 QD archive 的格子数随维度指数爆炸，必须降到 $k \ll D$ 维。AutoQD 用 Calibrated Weighted PCA（cwPCA）：先按每个策略的回报（fitness）给嵌入加权再做 PCA，让高质量策略对主成分方向的贡献更大，从而把搜索的多样性轴对齐到"好策略附近怎么变才有意义"；再加一步校准，缩放每根输出轴使投影值落进 $[-1,1]$，保证 archive 边界不会随 archive 内容漂移而失稳。最终 BD 就是一个仿射变换 $\text{desc}(\pi) = A\psi^\pi + b$（$A \in \mathbb{R}^{k\times D}$，$b \in \mathbb{R}^k$），计算极轻，便于在优化中反复刷新。
+占据度量虽然完整刻画了一个策略的行为，但它是状态-动作空间上的连续分布，无法直接比较两个策略差多少。AutoQD 给每对状态动作 $[s;a]$ 算一个 $D$ 维随机特征 $\phi(s,a) = \sqrt{2/D}\,[\cos(w_1^T[s;a]+b_1), \ldots, \cos(w_D^T[s;a]+b_D)]$，其中频率 $w_i \sim \mathcal{N}(0, \sigma^{-2}I)$、相位 $b_i \sim \mathcal{U}(0, 2\pi)$，这组特征在期望意义上近似带宽为 $\sigma$ 的高斯核 $k(x,y)=\exp(-\|x-y\|^2/(2\sigma^2))$。把策略沿轨迹采到的特征做折扣加权平均，就得到策略嵌入 $\psi^\pi = \frac{1}{n}\sum_{j=1}^{n}(1-\gamma)\sum_{t=0}^{T}\gamma^t \phi(s_t^j, a_t^j)$（$n$ 为轨迹条数），于是 $\|\psi^{\pi_1}-\psi^{\pi_2}\| \approx \text{MMD}(\rho^{\pi_1}, \rho^{\pi_2})$。这一近似不是经验拼凑：定理 1 证明嵌入距离与真实 MMD 的偏差以指数速率收敛，$\Pr[\,|\,\|\phi_1-\phi_2\|_2 - \text{MMD}(\rho_1,\rho_2)\,| \geqslant \tfrac{3}{4}\varepsilon\,] \leqslant 2e^{-nc\varepsilon^2} + \mathcal{O}(\varepsilon^{-2}\exp(-D\varepsilon^2/(64(d+2)))) + 6e^{-n\varepsilon^2/8}$，关键是误差里 $D$ 只要随状态-动作维度 $d$ **线性增长**就能控住，避免了高维分布比较常见的维度灾难。
 
-**3. QD 搜索与 BD 刷新交替：让"多样性的定义"随发现而演化。** 单纯固定一个 BD 等于又回到人工预设维度，AutoQD 的关键是让两个阶段交替推进。QD 优化阶段用当前 BD 配合 CMA-MAE 搜索：CMA-ES 维护策略参数上的高斯分布，采样一批策略、评估回报、按它们对 archive 的改进量排序，再据此更新分布均值和协方差；按预设调度进入 BD 更新阶段，从 archive 里所有现存策略的嵌入重算一次 cwPCA，得到新的 $A, b$。值得注意的是随机傅里叶特征 $\{w_i, b_i\}$ 一旦初始化就冻结，只有投影矩阵随 archive 演化，这样嵌入空间始终稳定、只是观察它的"视角"在变，既能随新行为调整多样性维度，又不会让此前 archive 里的策略距离整体错位。
+**2. cwPCA 投影：把高维嵌入压成稳定、偏向高回报的低维 BD**
+
+嵌入 $\psi^\pi \in \mathbb{R}^D$ 维度太高，直接当 BD 会让 QD archive 的格子数随维度指数爆炸，必须降到 $k \ll D$ 维。AutoQD 用校准加权主成分分析（cwPCA, Calibrated Weighted PCA）：先按每个策略的回报（fitness）给嵌入加权再做 PCA，让高质量策略对主成分方向的贡献更大，从而把搜索的多样性轴对齐到"好策略附近怎么变才有意义"；再加一步校准，缩放每根输出轴使投影值落进 $[-1,1]$，保证 archive 边界不会随 archive 内容漂移而失稳。最终 BD 就是一个仿射变换 $\text{desc}(\pi) = A\psi^\pi + b$（$A \in \mathbb{R}^{k\times D}$，$b \in \mathbb{R}^k$），计算极轻，便于在优化中反复刷新。
+
+**3. QD 搜索与 BD 刷新交替：让"多样性的定义"随发现而演化**
+
+单纯固定一个 BD 等于又回到人工预设维度，AutoQD 的关键是让两个阶段交替推进。QD 优化阶段用当前 BD 配合 CMA-MAE 搜索：CMA-ES 维护策略参数上的高斯分布，采样一批策略、评估回报、按它们对 archive 的改进量排序，再据此更新分布均值和协方差；按预设调度进入 BD 更新阶段，从 archive 里所有现存策略的嵌入重算一次 cwPCA，得到新的 $A, b$。值得注意的是随机傅里叶特征 $\{w_i, b_i\}$ 一旦初始化就冻结，只有投影矩阵随 archive 演化，这样嵌入空间始终稳定、只是观察它的"视角"在变，既能随新行为调整多样性维度，又不会让此前 archive 里的策略距离整体错位。
 
 ## 实验设计
 

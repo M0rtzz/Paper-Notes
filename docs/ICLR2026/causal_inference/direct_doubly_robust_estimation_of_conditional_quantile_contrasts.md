@@ -47,6 +47,19 @@ tags:
 
 整条流程落到数据上是两步。给定观测 $D = \{(Y^{(i)}, X^{(i)}, A^{(i)})\}_{i=1}^{2n}$，先做**样本分割**：一半数据 $D_\mathcal{I}$ 用来估扰动参数（倾向得分 $\hat{\pi}$ 和两组条件 CDF $\hat{F}_0, \hat{F}_1$），另一半 $D_\mathcal{J}$ 用来拟合 CQC 参数 $\theta$；然后在 $D_\mathcal{J}$ 上拿双重鲁棒梯度 $\hat{\zeta}_{dr}$ 对 $\theta$ 跑随机梯度下降。样本分割是为了让"估扰动参数"和"拟合 CQC"用互不重叠的数据，避免过拟合污染收敛分析。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["观测数据 D<br/>{(Y, X, A)}"] --> SP["样本分割<br/>D_I 估扰动 / D_J 拟合"]
+    SP -->|"D_I"| NUI["估扰动参数<br/>π̂, F̂₀, F̂₁"]
+    LOSS["损失函数构造<br/>把 CQC 变成损失极小值点"] --> DRG["双重鲁棒梯度 ζ_dr<br/>π 与 (F₀,F₁) 误差相乘"]
+    PARAM["显式参数化 CQC<br/>g_θ：线性 / 核 / 神经网络"] --> DRG
+    NUI --> DRG
+    SP -->|"D_J"| DRG
+    DRG --> SGD["投影 SGD + 迭代平均<br/>得到 θ̂"]
+    SGD --> OUT["CQC 估计 ĝ_θ"]
+```
+
 ### 关键设计
 
 **1. 损失函数构造：把"反演求根"换成"求极小值"**

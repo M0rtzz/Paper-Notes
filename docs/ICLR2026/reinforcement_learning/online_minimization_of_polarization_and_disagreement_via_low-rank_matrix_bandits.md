@@ -39,15 +39,31 @@ tags:
 
 ### 整体框架
 
-本文把社交网络干预包装成一个秩一矩阵bandit：每一步 $t$ 学习器从有限干预集 $\mathcal{L}$ 中选一个图Laplacian $\mathbf{L}_t$（等价于选 forest matrix $\mathbf{X}_t = (\mathbf{I} + \mathbf{L}_t)^{-1}$），FJ动力学收敛后只回传一个含噪标量损失 $Y_t = \langle \mathbf{\Theta}^*, \mathbf{X}_t \rangle + \eta_t$，其中未知参数 $\mathbf{\Theta}^* = \bm{s}\bm{s}^\top$ 是内在观点的秩一外积，目标是最小化累积遗憾 $R_T = \sum_{t=1}^T [f(\mathbf{X}_t) - f(\mathbf{X}^*)]$。算法 OPD-Min-ESTR 分两阶段——先花 $T_1$ 轮探索把 $\mathbf{\Theta}^*$ 的方向估出来，再借这个方向把高维问题压成低维线性bandit跑剩下的 $T - T_1$ 轮。
+本文把社交网络干预包装成一个秩一矩阵bandit：每一步 $t$ 学习器从有限干预集 $\mathcal{L}$ 中选一个图Laplacian $\mathbf{L}_t$（等价于选 forest matrix $\mathbf{X}_t = (\mathbf{I} + \mathbf{L}_t)^{-1}$），Friedkin-Johnsen（FJ）动力学收敛后只回传一个含噪标量损失 $Y_t = \langle \mathbf{\Theta}^*, \mathbf{X}_t \rangle + \eta_t$，其中未知参数 $\mathbf{\Theta}^* = \bm{s}\bm{s}^\top$ 是内在观点的秩一外积，目标是最小化累积遗憾 $R_T = \sum_{t=1}^T [f(\mathbf{X}_t) - f(\mathbf{X}^*)]$。算法 OPD-Min-ESTR（Explore-Subspace-Then-Refine）分两阶段：Stage 1 先花 $T_1$ 轮探索，用核范数正则最小二乘把 $\mathbf{\Theta}^*$ 的方向 $\hat{\bm{s}}$ 估出来；Stage 2 借这个方向把 $|V|^2$ 维问题旋转压成 $O(|V|)$ 维，在低维空间里跑标准线性bandit（OFUL）选干预、跑完剩下的 $T - T_1$ 轮。两阶段的探索预算 $T_1$ 由遗憾分析最优地划定。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["干预集 𝒳：forest matrix<br/>(I+L)⁻¹ 离散结构化行动集"] --> B
+    B["Stage 1 · 子空间估计<br/>探索 T₁ 轮，核范数正则最小二乘估 Θ̂"] -->|"top 特征向量 ŝ"| C
+    C["Stage 2 · 子空间旋转降维<br/>|V|² 维 → 2|V|−1 维特征"] --> D
+    D["低维线性 bandit (OFUL)<br/>跑剩余 T−T₁ 轮选干预"] --> E
+    E["两阶段遗憾界<br/>最优 T₁ 平衡探索/利用，维度 |V|²→|V|"]
+```
 
 ### 关键设计
 
-**1. 秩一结构下的子空间估计：把 $|V|^2$ 维探索压成方向估计问题。** 朴素做法是把矩阵拉直成 $|V|^2$ 维线性bandit，遗憾界会膨胀到 $\tilde{O}(|V|^2\sqrt{T})$；而现成的低秩矩阵bandit又默认能从高斯之类的连续分布采样，对 forest matrix 这种离散结构化行动集失效。本文在 Stage 1 用核范数正则化最小二乘直接估计参数矩阵，$\widehat{\mathbf{\Theta}} = \arg\min_{\mathbf{\Theta}} \frac{1}{2T_1} \sum_{t=1}^{T_1} (Y_t - \langle \mathbf{X}_t, \mathbf{\Theta} \rangle)^2 + \lambda_{T_1} \|\mathbf{\Theta}\|_{\text{nuc}}$，取正则系数 $\lambda_{T_1} = 2\sqrt{2\log(2|V|/\delta)/T_1}$，让核范数惩罚把解逼向低秩。关键是不假设外部给定"良好探索分布"，而是针对 forest matrix 集合直接证明 Restricted Strong Convexity (RSC) 成立——其曲率参数 $\kappa = \kappa_{\min}(\mathcal{X})$ 度量行动集自身的多样性，再用 Talagrand 集中不等式和 Rademacher 过程压住统计偏差，从而得到估计误差 $\|\widehat{\mathbf{\Theta}} - \mathbf{\Theta}^*\|_F^2 \leq \frac{36\log(2|V|/\delta)}{\kappa^2 T_1}$，随探索轮数 $T_1$ 衰减。
+**1. 子空间估计：把 $|V|^2$ 维探索压成方向估计问题**
 
-**2. 子空间旋转降维：用估出的方向把线性bandit从 $|V|^2$ 维降到 $O(|V|)$ 维。** 拿到 $\widehat{\mathbf{\Theta}}$ 后取其 top eigenvector $\hat{\bm{s}}$，补成正交基 $[\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$，对每个 arm 做旋转 $\mathbf{X}' = [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]^\top \mathbf{X} [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$，只保留旋转后的第一行和第一列，拼成 $k = 2|V|-1$ 维特征 $\bm{x}_{\text{sub}}$，在这 $O(|V|)$ 维空间里跑标准线性bandit（如 OFUL）。之所以能这么砍维度，是因为 $\mathbf{\Theta}^*$ 秩一、信号全部集中在 $\bm{s}$ 方向，丢掉的正交补分量的投影误差可由 Davis-Kahan $\sin\theta$ 定理控制，并随 $T_1$ 增大而消失，于是降维几乎不损失信息。
+朴素做法是把矩阵拉直成 $|V|^2$ 维线性bandit，遗憾界会膨胀到 $\tilde{O}(|V|^2\sqrt{T})$；而现成的低秩矩阵bandit又默认能从高斯之类的连续分布采样，对 forest matrix 这种离散结构化行动集失效。本文在 Stage 1 用核范数正则化最小二乘直接估计参数矩阵，$\widehat{\mathbf{\Theta}} = \arg\min_{\mathbf{\Theta}} \frac{1}{2T_1} \sum_{t=1}^{T_1} (Y_t - \langle \mathbf{X}_t, \mathbf{\Theta} \rangle)^2 + \lambda_{T_1} \|\mathbf{\Theta}\|_{\text{nuc}}$，取正则系数 $\lambda_{T_1} = 2\sqrt{2\log(2|V|/\delta)/T_1}$，让核范数惩罚把解逼向低秩。关键是不假设外部给定"良好探索分布"，而是针对 forest matrix 集合直接证明限制强凸性（Restricted Strong Convexity, RSC）成立——其曲率参数 $\kappa = \kappa_{\min}(\mathcal{X})$ 度量行动集自身的多样性，再用 Talagrand 集中不等式和 Rademacher 过程压住统计偏差，从而得到估计误差 $\|\widehat{\mathbf{\Theta}} - \mathbf{\Theta}^*\|_F^2 \leq \frac{36\log(2|V|/\delta)}{\kappa^2 T_1}$，随探索轮数 $T_1$ 衰减。
 
-**3. 两阶段遗憾界：用最优探索预算把 $|V|^2$ 换成 $|V|$。** 把两阶段串起来，Stage 1 的探索代价随 $T_1$ 线性增长、Stage 2 的剩余遗憾随 $T_1$ 增大而下降，两者权衡给出最优探索预算 $T_1 \asymp \frac{1}{\|\bm{s}\|^2 \kappa} \sqrt{T \log(2|V|/\delta)}$。Theorem 4.1 在 RSC 条件下证明总遗憾为 $R_T = \widetilde{\mathcal{O}}\left(\max\left\{\frac{1}{\kappa}, \sqrt{|V|}\right\}\sqrt{|V| \cdot T}\right)$——对时间 $\sqrt{T}$ 已是最优阶，而维度因子从朴素做法的 $|V|^2$ 降到 $|V|$，统计与计算两头同时受益。
+**2. 子空间旋转降维：用估出的方向把线性bandit从 $|V|^2$ 维降到 $O(|V|)$ 维**
+
+拿到 $\widehat{\mathbf{\Theta}}$ 后取其首特征向量（top eigenvector）$\hat{\bm{s}}$，补成正交基 $[\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$，对每个 arm 做旋转 $\mathbf{X}' = [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]^\top \mathbf{X} [\hat{\bm{s}}, \hat{\mathbf{S}}_\perp]$，只保留旋转后的第一行和第一列，拼成 $k = 2|V|-1$ 维特征 $\bm{x}_{\text{sub}}$，在这 $O(|V|)$ 维空间里跑标准线性bandit（如 OFUL）。之所以能这么砍维度，是因为 $\mathbf{\Theta}^*$ 秩一、信号全部集中在 $\bm{s}$ 方向，丢掉的正交补分量的投影误差可由 Davis-Kahan $\sin\theta$ 定理控制，并随 $T_1$ 增大而消失，于是降维几乎不损失信息。
+
+**3. 两阶段遗憾界：用最优探索预算把 $|V|^2$ 换成 $|V|$**
+
+把两阶段串起来，Stage 1 的探索代价随 $T_1$ 线性增长、Stage 2 的剩余遗憾随 $T_1$ 增大而下降，两者权衡给出最优探索预算 $T_1 \asymp \frac{1}{\|\bm{s}\|^2 \kappa} \sqrt{T \log(2|V|/\delta)}$。Theorem 4.1 在 RSC 条件下证明总遗憾为 $R_T = \widetilde{\mathcal{O}}\left(\max\left\{\frac{1}{\kappa}, \sqrt{|V|}\right\}\sqrt{|V| \cdot T}\right)$——对时间 $\sqrt{T}$ 已是最优阶，而维度因子从朴素做法的 $|V|^2$ 降到 $|V|$，统计与计算两头同时受益。
 
 ## 实验关键数据
 

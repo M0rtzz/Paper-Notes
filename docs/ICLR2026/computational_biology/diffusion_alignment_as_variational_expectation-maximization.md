@@ -42,7 +42,26 @@ tags:
 
 ### 整体框架
 
-DAV 想解决的是扩散模型对齐里"奖励越调越高、多样性却越掉越惨"的老毛病。它的破局思路是把对齐重新写成一个变分 EM 循环：先在测试时主动搜出一批既高奖励又互不雷同的轨迹，再把这批轨迹蒸馏回模型，如此往复，让奖励和多样性一起往上走。落到每一轮 EM 上就是两步交替——E-step（探索）从当前模型出发，用 test-time search（梯度引导采样 + 重要性采样）生成高奖励且多样的轨迹，近似变分后验 $\eta_k^*$；M-step（蒸馏）拿这些轨迹训练模型，最小化 forward-KL $D_{\text{KL}}(\eta_k^* \| p_\theta)$，等价于最大化搜索轨迹的对数似然 $-\log p_\theta(\tau)$。
+DAV 想解决的是扩散模型对齐里"奖励越调越高、多样性却越掉越惨"的老毛病。它的破局思路是把对齐重新写成一个变分 EM 循环：先在测试时主动搜出一批既高奖励又互不雷同的轨迹，再把这批轨迹蒸馏回模型，如此往复，让奖励和多样性一起往上走。落到每一轮 EM 上就是两步交替——E-step（探索）从当前模型出发，用 test-time search（梯度引导采样 + 重要性采样）生成高奖励且多样的轨迹，近似变分后验 $\eta_k^*$；M-step（蒸馏）拿这些轨迹训练模型，最小化 forward-KL $D_{\text{KL}}(\eta_k^* \| p_\theta)$，等价于最大化搜索轨迹的对数似然 $-\log p_\theta(\tau)$。两步循环往复，模型一轮比一轮更对齐，E-step 也就能从越来越好的分布里采到更优的轨迹，形成正向循环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["第 k 轮扩散模型 θ_k"] --> ES
+    subgraph ES["E-step：test-time search（探索）"]
+        direction TB
+        B["梯度引导：Tweedie 近似 soft Q<br/>从当前模型采 M 个候选粒子"] --> C["重要性采样<br/>精炼粒子贴近最优后验"]
+    end
+    ES --> D["高奖励且多样的轨迹<br/>近似变分后验 η*_k"]
+    D --> MS
+    subgraph MS["M-step：forward-KL 蒸馏（利用）"]
+        direction TB
+        E["最小化 forward-KL<br/>= 最大化搜索轨迹对数似然"]
+    end
+    MS --> F["更新得到模型 θ_k+1"]
+    F -->|迭代下一轮 EM| A
+    F --> G["对齐模型<br/>高奖励 + 高多样性"]
+```
 
 ### 关键设计
 

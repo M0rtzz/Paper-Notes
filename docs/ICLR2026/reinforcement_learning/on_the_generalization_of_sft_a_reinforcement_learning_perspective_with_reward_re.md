@@ -49,11 +49,17 @@ tags:
 
 ### 关键设计
 
-**1. SFT梯度的策略梯度改写：把"为什么泛化差"算出来。** 以往"SFT记忆、RL泛化"只是经验观察，本文给出数学根因。对标准SFT梯度做重要性采样变换，可以严格写成on-policy策略梯度的形式 $\nabla\mathcal{L}_{SFT} = -\mathbb{E}_{y\sim\pi_\theta}\big[\tfrac{\mathbf{1}[y=y^*]}{\pi_\theta(y|x)} \nabla\log\pi_\theta(y|x)\big]$。把它和标准策略梯度 $\nabla J = \mathbb{E}[\nabla\log\pi_\theta \cdot r(x,y)]$ 对齐，就能读出SFT的隐式奖励由两部分构成：奖励函数 $r(x,y)=\mathbf{1}[y=y^*]$ 只在exact match时非零，因此极度稀疏；而重要性权重 $w=1/\pi_\theta(y|x)$ 在模型概率越低的token上越大，等于把梯度向低概率token疯狂放大。两者叠加，优化就被拽去死磕那些低概率的精确匹配token，过拟合训练集而非学到泛化能力——这也解释了为什么SFT会在OlympiadBench、AIME24这类难基准上不升反降。
+**1. SFT梯度的策略梯度改写：把"为什么泛化差"算出来**
 
-**2. DFT矫正损失：用token概率中和逆概率权重。** 既然病根是那个$1/\pi_\theta$，最直接的解法就是乘回一个$\pi_\theta$把它消掉。这样得到的token级DFT损失为 $\mathcal{L}_{DFT} = -\sum_{t=1}^{|y^*|} \text{sg}\big(\pi_\theta(y_t^*|y_{<t}^*,x)\big) \log\pi_\theta(y_t^*|y_{<t}^*,x)$，其中$\text{sg}(\cdot)$是stop-gradient算子，让梯度不流过权重项，使权重只起"缩放"作用而不引入额外的优化通路。形式上它就是把标准交叉熵$-\log p$换成$-p\log p$，DFT因此保持了SFT原本的实现样貌，不需要奖励模型、偏好数据、reference模型或在线采样，真正意义上的一行代码改动。
+以往"SFT记忆、RL泛化"只是经验观察，本文给出数学根因。对标准SFT梯度做重要性采样变换，可以严格写成on-policy策略梯度的形式 $\nabla\mathcal{L}_{SFT} = -\mathbb{E}_{y\sim\pi_\theta}\big[\tfrac{\mathbf{1}[y=y^*]}{\pi_\theta(y|x)} \nabla\log\pi_\theta(y|x)\big]$。把它和标准策略梯度 $\nabla J = \mathbb{E}[\nabla\log\pi_\theta \cdot r(x,y)]$ 对齐，就能读出SFT的隐式奖励由两部分构成：奖励函数 $r(x,y)=\mathbf{1}[y=y^*]$ 只在exact match时非零，因此极度稀疏；而重要性权重 $w=1/\pi_\theta(y|x)$ 在模型概率越低的token上越大，等于把梯度向低概率token疯狂放大。两者叠加，优化就被拽去死磕那些低概率的精确匹配token，过拟合训练集而非学到泛化能力——这也解释了为什么SFT会在OlympiadBench、AIME24这类难基准上不升反降。
 
-**3. Token级加权与均匀奖励：为什么必须落在token粒度。** 加权粒度的选择直接决定方法是否可用。若改用句子级概率$\pi(y|x)=\prod_t\pi(y_t)$，长序列连乘会让权重小到数值下溢、loss几乎无信息，几何均值变体同样收效甚微——实验里句子级加权只有15.75，和不加权的15.92持平，而token级加权能把均值从15.92拉到31.58。从奖励视角看，中和之后每条expert轨迹拿到的实际是均匀奖励1，等价于RLVR给所有正确样本赋同一奖励的做法，避免了把更新过度集中在个别低概率token上，这正是DFT既稳又泛化的来源。
+**2. DFT矫正损失：用token概率中和逆概率权重**
+
+既然病根是那个$1/\pi_\theta$，最直接的解法就是乘回一个$\pi_\theta$把它消掉。这样得到的token级DFT损失为 $\mathcal{L}_{DFT} = -\sum_{t=1}^{|y^*|} \text{sg}\big(\pi_\theta(y_t^*|y_{<t}^*,x)\big) \log\pi_\theta(y_t^*|y_{<t}^*,x)$，其中$\text{sg}(\cdot)$是stop-gradient算子，让梯度不流过权重项，使权重只起"缩放"作用而不引入额外的优化通路。形式上它就是把标准交叉熵$-\log p$换成$-p\log p$，DFT因此保持了SFT原本的实现样貌，不需要奖励模型、偏好数据、reference模型或在线采样，真正意义上的一行代码改动。
+
+**3. Token级加权与均匀奖励：为什么必须落在token粒度**
+
+加权粒度的选择直接决定方法是否可用。若改用句子级概率$\pi(y|x)=\prod_t\pi(y_t)$，长序列连乘会让权重小到数值下溢、loss几乎无信息，几何均值变体同样收效甚微——实验里句子级加权只有15.75，和不加权的15.92持平，而token级加权能把均值从15.92拉到31.58。从奖励视角看，中和之后每条expert轨迹拿到的实际是均匀奖励1，等价于RLVR给所有正确样本赋同一奖励的做法，避免了把更新过度集中在个别低概率token上，这正是DFT既稳又泛化的来源。
 
 ## 实验关键数据
 

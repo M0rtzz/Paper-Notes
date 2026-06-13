@@ -40,28 +40,43 @@ tags:
 ## 方法详解
 
 ### 整体框架
-给定训练 prompt $q$ 及其 $m$ 种语言翻译 $\{q^{(\ell)}\}_{\ell=1}^m$，提取各语言 last token 的 hidden state，经可训练线性投影后归一化，堆叠为矩阵 $\mathbf{Z} \in \mathbb{R}^{d \times m}$。总损失 $\mathcal{L}_{total} = \mathcal{L}_{align} + \lambda_{aux} \mathcal{L}_{cons}$，其中 $\mathcal{L}_{align}$ 是原始对齐损失（DPO/SFT），$\mathcal{L}_{cons}$ 是 MLC 辅助损失。
+这篇论文要解决的是：怎么只用一种语言（英语）的对齐数据，就让安全行为一致地迁移到所有语言、而不必为每种目标语言单独收集 response。它的切入点是「行为一致源于表示一致」——只要同一个 query 在不同语言下的内部表示方向一致（共线），模型自然会给出一致的安全行为。
+
+整条流程是这样转的：给定训练 prompt $q$ 及其 $m$ 种语言翻译 $\{q^{(\ell)}\}_{\ell=1}^m$，先让 LLM 各跑一遍前向、取每种语言最后一个 token 的 hidden state，经一个可训练线性投影 + 归一化得到表示向量，再把 $m$ 种语言的表示堆叠成矩阵 $\mathbf{Z} \in \mathbb{R}^{d \times m}$；对 $\mathbf{Z}$ 做 SVD，用一项 MLC 辅助损失把它压向「秩-1」（即所有语言共线）；最后把这项辅助损失加到原始对齐损失上一起反传，总损失 $\mathcal{L}_{total} = \mathcal{L}_{align} + \lambda_{aux}\,\mathcal{L}_{cons}$。整套机制不改训练数据格式，只是给现成的对齐管线挂一个加项。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["训练 prompt q<br/>+ m 种语言翻译 {q⁽ˡ⁾}"] --> H["LLM 前向<br/>取各语言 last-token<br/>hidden state h⁽ˡ⁾"]
+    H --> EXT["线性表示提取器<br/>W·h⁽ˡ⁾ 投影 + 归一化 → r⁽ˡ⁾"]
+    EXT --> Z["堆叠为表示矩阵 Z (d×m)"]
+    Z --> MLC["MLC 一致性损失<br/>SVD 取奇异值 → 带温度 softmax-CE<br/>把质量压向 σ₁ (秩-1 / 共线)"]
+    Q --> ALIGN["原对齐损失 L_align<br/>(DPO / SFT / SimPO / ORPO)"]
+    MLC -->|"L_cons"| SUM["Plug-and-Play 加权相加<br/>L_total = L_align + λ·L_cons"]
+    ALIGN --> SUM
+    SUM --> OUT["多语言一致的安全模型"]
+```
 
 ### 关键设计
 
-**1. MLC 一致性损失：把"多语言行为一致"翻译成"表示矩阵秩-1"**
+**1. 线性表示提取器：用一个可训练投影抓住跨语言的语义方向**
 
-核心矛盾在于不同语言的内部表示方向不一致，模型才会对同一 query 给出参差不齐的安全行为。本文把这件事量化成一个矩阵秩的问题：对堆叠好的多语言表示矩阵 $\mathbf{Z}$ 做 SVD 得到奇异值 $\{\sigma_j\}$，如果 $\sigma_1$ 远大于其余奇异值，就说明所有语言的表示几乎落在同一条方向上（共线），即矩阵近似秩-1。于是只要把 $\sigma_1$ 顶上去、把其余奇异值压下去，就等价于强迫各语言表示对齐到同一方向。具体做法是把奇异值当作 logits，用带温度的 softmax 交叉熵鼓励整个概率质量集中到 $\sigma_1$：
+要对哪一组表示做共线约束，是后面 MLC 能否生效的前提——选错了表示子空间，再怎么压秩也压不到安全相关的方向上。本文取 LLM 在每种语言 prompt 上最后一个 token 的 hidden state $\mathbf{h}^{(\ell)}$，经一个线性投影 $\mathbf{r}^{(\ell)} = \mathbf{W}\mathbf{h}^{(\ell)} + b$（$\mathbf{W} \in \mathbb{R}^{d \times d_h}$）映射到低维表示空间，再归一化后把 $m$ 种语言堆成矩阵 $\mathbf{Z}$。投影矩阵 $\mathbf{W}$ 与 LLM 联合训练，让模型自己学出哪一个子空间最能体现跨语言语义一致性。值得注意的是这里没有用更复杂的提取器——实验显示简单线性投影反而更优，说明跨语言一致性方向本身就是近似线性可分的。
+
+**2. MLC 一致性损失：把"多语言行为一致"翻译成"表示矩阵秩-1"**
+
+有了矩阵 $\mathbf{Z}$，剩下的问题是怎么把「各语言表示方向一致」这件抽象的事写成一个可优化的目标。本文把它量化成矩阵秩的问题：对 $\mathbf{Z}$ 做 SVD 得到奇异值 $\{\sigma_j\}$，如果 $\sigma_1$ 远大于其余奇异值，就说明所有语言的表示几乎落在同一条方向上（共线），即矩阵近似秩-1。于是只要把 $\sigma_1$ 顶上去、把其余奇异值压下去，就等价于强迫各语言表示对齐到同一方向。具体做法是把奇异值当作 logits，用带温度 $\tau$ 的 softmax 交叉熵鼓励整个概率质量集中到 $\sigma_1$：
 
 $$\mathcal{L}_{cons} = -\frac{1}{N}\sum_{n=1}^N \log \frac{\exp(\sigma_1^{(n)}/\tau)}{\sum_j \exp(\sigma_j^{(n)}/\tau)}$$
 
 这个形式的好处是处处可微、梯度平滑，避免了直接对秩做硬约束的不可导问题。理论上它也站得住脚：由 Eckart-Young 定理，秩-1 约束等价于最小化 $\|\mathbf{Z} - \tilde{\mathbf{Z}}\|_F^2$，即让多语言表示尽量贴近自己的最佳秩-1 近似；论文的 Proposition 1 进一步证明，最小化这个重构误差就等价于最大化 $\sigma_1$ 相对其余奇异值的优势，正好对应上面的 softmax 目标。
 
-**2. 线性表示提取器：用一个可训练投影抓住跨语言的语义方向**
-
-要对哪一组表示做共线约束，是 MLC 能否生效的前提。本文取 LLM 在每种语言 prompt 上最后一个 token 的 hidden state $\mathbf{h}^{(\ell)}$，经一个线性投影 $\mathbf{r}^{(\ell)} = \mathbf{W}\mathbf{h}^{(\ell)} + b$（$\mathbf{W} \in \mathbb{R}^{d \times d_h}$）映射到低维表示空间，再归一化后堆成矩阵 $\mathbf{Z}$。投影矩阵 $\mathbf{W}$ 与 LLM 联合训练，让模型自己学出哪一个子空间最能体现跨语言语义一致性。值得注意的是这里没有用更复杂的提取器——实验显示简单线性投影反而更优，说明跨语言一致性方向本身就是近似线性可分的。
-
 **3. Plug-and-Play 集成：只当一项辅助 loss，不碰原训练管线**
 
-MLC 不替换任何已有的对齐算法，而是作为加项挂在原损失上：$\mathcal{L}_{total} = \mathcal{L}_{align} + \lambda_{aux} \mathcal{L}_{cons}$，$\lambda_{aux}$ 控制一致性约束的权重。由于它只需要多语言 prompt 的翻译、不改变原始训练数据格式，因此能与 SFT、DPO、SimPO、ORPO 等任意对齐范式无缝拼接，实验中对四种范式都带来正收益。
+MLC 不替换任何已有的对齐算法，而是作为加项挂在原损失上：$\mathcal{L}_{total} = \mathcal{L}_{align} + \lambda_{aux} \mathcal{L}_{cons}$，$\lambda_{aux}$ 控制一致性约束的权重。关键在于这项约束只读多语言 prompt 的表示、不碰 response，因此不改变原始训练数据格式——这也正是「不需要目标语言 response」的来源。正因如此，它能与 SFT、DPO、SimPO、ORPO 等任意对齐范式无缝拼接，实验中对四种范式都带来正收益。
 
 ### 训练策略
-只需英语 response 数据 + 多语言 prompt 翻译。翻译可用机器翻译获得（成本极低）。训练时同时前向传播所有语言的 prompt，计算 MLC loss 后与原始对齐 loss 相加反传。
+只需英语 response 数据 + 多语言 prompt 翻译，翻译可用机器翻译获得（成本极低）。训练时同时前向传播所有语言的 prompt，算出 MLC loss 后与原始对齐 loss 加权相加再一起反传。
 
 ## 实验关键数据
 

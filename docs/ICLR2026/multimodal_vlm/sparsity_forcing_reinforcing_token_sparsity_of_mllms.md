@@ -41,21 +41,40 @@ tags:
 
 ### 整体框架
 
-Sparsity Forcing 把"让 MLLM 更稀疏"当成一个 RL 目标来训练：带 top-$p$ 稀疏注意力的 MLLM 充当策略模型 $\pi_\theta$，参数冻结的原始 MLLM 充当参考模型 $\pi_{\text{ref}}$。对每个视觉-语言 query，策略模型用若干个不同的保留阈值各跑一次自回归解码（rollout），按"答案是否正确 + token 砍掉多少"打联合奖励，再用 GRPO 做组内对比优化。整个训练 loop 用的是和部署时一模一样的稀疏注意力 + KV cache 裁剪流程，因此学到的稀疏性可以直接迁移到推理。
+Sparsity Forcing 把"让 MLLM 更稀疏"当成一个强化学习目标来训练：带 top-$p$ 稀疏注意力的 MLLM 充当策略模型 $\pi_\theta$，参数冻结的原始 MLLM 充当参考模型 $\pi_{\text{ref}}$。对每个视觉-语言 query，策略模型用若干个不同的 token 保留阈值各跑一次自回归解码（rollout），按"答案是否正确 + token 砍掉多少"算联合奖励，再用 GRPO 做组内对比优化、把梯度回传给策略模型；训练好后推理时把阈值固定在训练上界即可直接部署。整个训练 loop 用的是和部署时一模一样的稀疏注意力 + KV cache 裁剪流程，因此学到的稀疏性可以无损迁移到推理。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["视觉-语言 query"] --> P["策略-参考双模型架构<br/>策略 π_θ：top-p 稀疏注意力 + KV cache 裁剪"]
+    REF["参考模型 π_ref<br/>（冻结，标准因果注意力）"] -.->|KL 锚定| P
+    P --> R["多预算 Rollout 探索<br/>N 个阈值 p∈[0.94, 0.975] 各解码一次<br/>→ N 个答案 + token 比率 τ"]
+    R --> J["效率-性能联合奖励与 GRPO 更新<br/>r = r_per + C·r_eff（组级指示器 C 防崩）<br/>组内归一化优势 → clip surrogate + KL"]
+    J -->|更新 π_θ| P
+    J --> I["推理一致性<br/>固定 p=0.975 部署，沿用训练裁剪流程"]
+```
 
 ### 关键设计
 
-**1. 策略-参考双模型架构：在高稀疏率下守住原始能力。** 策略模型 $\pi_\theta$ 在解码时执行稀疏 token 选择和 KV cache 裁剪，其 top-$p$ 注意力在每一层独立决定保留多少 token——把当层注意力分数累积排序，取最小的前缀 $b$ 使累积质量达到阈值：$b = \min\{p \in \mathbb{Z} \mid \sum_{j=1}^{p} a_{\text{sorted}(j)} \geq p \times \ell\}$，其中 $a_j = \sum_{c=1}^{\ell} \mathbf{A}_{c,j}$ 是第 $j$ 个 token 的累积注意力分数，$\ell$ 为序列长度。这样裁剪是激进的，单靠它很容易把模型推坏，所以引入冻结的参考模型 $\pi_{\text{ref}}$，通过 KL 散度 $\mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ 把策略锚回原始分布附近。参考模型相当于一根安全绳，让模型敢于探索高稀疏率，又不至于偏离到丢失任务保真度。
+**1. 策略-参考双模型架构：在高稀疏率下守住原始能力**
 
-**2. 多预算 Rollout 探索：让对比信号自己长出来，不用手工标正负样本。** 对同一个 query，方法用 $N$ 个不同阈值 $p_n$ 各做一次独立 rollout，得到 $N$ 个答案 $\{\mathbf{o}_1, \dots, \mathbf{o}_N\}$ 和对应的 token 比率 $\{\tau_1, \dots, \tau_N\}$。这些阈值构成一次从稀疏到密集的"预算扫描"：小 $p$ 只保留少量 token，赌还能不能答对；大 $p$ 多留 token，充当正确性兜底。训练阈值范围设为 $p \in [0.94, 0.975]$、步长 0.005。这样做绕开了 DPO 需要预先定义正/负样本对的痛点——同一组里既高效又答对的 rollout 自然拿到正优势，答错或留太多 token 的拿负优势；而且随着训练推进，"能答对的最小预算"会一路下移，rollout 范围跟着自动适应，不需要人工调整偏好对。
+策略模型 $\pi_\theta$ 在解码时执行稀疏 token 选择和 KV cache 裁剪，其 top-$p$ 注意力在每一层独立决定保留多少 token——把当层注意力分数累积排序，取最小的前缀 $b$ 使累积质量达到阈值：$b = \min\{p \in \mathbb{Z} \mid \sum_{j=1}^{p} a_{\text{sorted}(j)} \geq p \times \ell\}$，其中 $a_j = \sum_{c=1}^{\ell} \mathbf{A}_{c,j}$ 是第 $j$ 个 token 的累积注意力分数，$\ell$ 为序列长度。这样裁剪是激进的，单靠它很容易把模型推坏，所以引入参数冻结、用标准因果注意力的参考模型 $\pi_{\text{ref}}$，通过 KL 散度 $\mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})$ 把策略锚回原始分布附近。参考模型相当于一根安全绳，让模型敢于探索高稀疏率，又不至于偏离到丢失任务保真度。
 
-**3. 效率-性能联合奖励与 GRPO 更新：把效率从代理目标变成端到端目标。** 每个 rollout 拿两份奖励：性能奖励 $r_{\text{per}} \in \{0, 1\}$ 看答案对错，效率奖励 $r_{\text{eff}} = 1 - \tau_i$ 等于 token 减少率。关键是加了一个组级指示器 $C = \mathbb{1}\{\exists j: \text{Correct}(\mathbf{o}_j) = 1\}$，只有当组里至少有一个 rollout 答对时，效率奖励才计入总奖励：$r_i = r_{\text{per},i} + C \cdot r_{\text{eff},i}$。这是防崩的核心——如果一组全错，没有 $C$ 把关，效率信号还会继续奖励"砍得更狠"，把模型推向输出空答案的极端稀疏。拿到奖励后按组内归一化算优势 $A_i = (r_i - \text{mean}) / \text{std}$，再用 GRPO 的 clip surrogate 目标更新：
+**2. 多预算 Rollout 探索：让对比信号自己长出来，不用手工标正负样本**
+
+对同一个 query，方法用 $N$ 个不同阈值 $p_n$ 各做一次独立 rollout，得到 $N$ 个答案 $\{\mathbf{o}_1, \dots, \mathbf{o}_N\}$ 和对应的 token 比率 $\{\tau_1, \dots, \tau_N\}$。这些阈值构成一次从稀疏到密集的"预算扫描"：小 $p$ 只保留少量 token，赌还能不能答对；大 $p$ 多留 token，充当正确性兜底。训练阈值范围设为 $p \in [0.94, 0.975]$、步长 0.005。这样做绕开了 DPO 需要预先定义正/负样本对的痛点——同一组里既高效又答对的 rollout 自然拿到正优势，答错或留太多 token 的拿负优势；而且随着训练推进，"能答对的最小预算"会一路下移，rollout 范围跟着自动适应，不需要人工调整偏好对。
+
+**3. 效率-性能联合奖励与 GRPO 更新：把效率从代理目标变成端到端目标**
+
+每个 rollout 拿两份奖励：性能奖励 $r_{\text{per}} \in \{0, 1\}$ 看答案对错，效率奖励 $r_{\text{eff}} = 1 - \tau_i$ 等于 token 减少率。关键是加了一个组级指示器 $C = \mathbb{1}\{\exists j: \text{Correct}(\mathbf{o}_j) = 1\}$，只有当组里至少有一个 rollout 答对时，效率奖励才计入总奖励：$r_i = r_{\text{per},i} + C \cdot r_{\text{eff},i}$。这是防崩的核心——如果一组全错，没有 $C$ 把关，效率信号还会继续奖励"砍得更狠"，把模型推向输出空答案的极端稀疏。拿到奖励后按组内归一化算优势 $A_i = (r_i - \text{mean}) / \text{std}$，再用 GRPO 的 clip surrogate 目标更新：
 
 $$\mathcal{J}(\theta) = \mathbb{E}\left[\min\left(\frac{\pi_\theta(\mathbf{o}_n|\mathbf{x})}{\pi_{\theta_{\text{old}}}(\mathbf{o}_n|\mathbf{x})} A_i,\; \kappa(\cdot) A_i\right) - \beta \mathbb{D}_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}})\right]$$
 
 GRPO 的 on-policy 特性让正/负对比随训练实时更新，避免了 DPO 预定义偏好对会越训越陈旧的问题，效率和性能由此成为真正的端到端优化目标，而不是注意力锐度那类只能间接逼近 token 预算的代理。
 
-**4. 推理一致性：训练 loop 完全镜像部署 pipeline。** 训练和推理用的是同一套稀疏注意力流程——同样的 token 裁剪策略、同样的 KV cache 管理。推理时把阈值固定在训练范围上界 $p=0.975$，模型在训练中已经学会即便在这个相对宽松的阈值下也产生更稀疏的注意力分布，于是既保住精度又带走训练里学到的效率收益。这一点正是对 SFT 的纠偏：SFT 训练时用 teacher forcing、推理时是自回归解码，两条 pipeline 不一致，导致稀疏作用在 ground-truth token 上、实际效率收益打折；而这里训练时就用自回归 rollout，做到 deployment-aligned。
+**4. 推理一致性：训练 loop 完全镜像部署 pipeline**
+
+训练和推理用的是同一套稀疏注意力流程——同样的 token 裁剪策略、同样的 KV cache 管理。推理时把阈值固定在训练范围上界 $p=0.975$，模型在训练中已经学会即便在这个相对宽松的阈值下也产生更稀疏的注意力分布，于是既保住精度又带走训练里学到的效率收益。这一点正是对 SFT 的纠偏：SFT 训练时用 teacher forcing、推理时是自回归解码，两条 pipeline 不一致，导致稀疏作用在 ground-truth token 上、实际效率收益打折；而这里训练时就用自回归 rollout，做到 deployment-aligned。
 
 ## 实验结果
 

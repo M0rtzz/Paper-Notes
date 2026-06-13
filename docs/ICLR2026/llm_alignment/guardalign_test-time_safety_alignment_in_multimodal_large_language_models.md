@@ -44,7 +44,32 @@ tags:
 ## 方法详解
 
 ### 整体框架
-GuardAlign 要在不碰模型权重的前提下，把一张可能藏有恶意语义的图像变成"安全可用"的输入。它分两步走：先做 OT 增强的安全检测，逐 patch 找出图像里哪些局部区域携带不安全语义并把它们遮蔽，得到一张净化后的图像；再把净化图像、一段安全前缀和用户查询一起喂进 LVLM，在生成过程中对中间层做跨模态注意力校准，确保安全前缀的影响力不会随层深衰减。两步都在推理时完成，不需要任何训练或微调。
+GuardAlign 要在不碰模型权重的前提下，把一张可能藏有恶意语义的图像变成"安全可用"的输入。它分两步走：先做 **OT 增强安全检测**，逐 patch 找出图像里哪些局部区域携带不安全语义并把它们遮蔽，得到一张净化图像；再把净化图像、一段安全前缀和用户查询一起喂进 LVLM，在生成过程中做 **跨模态注意力校准**，在中间层持续抬升安全前缀的注意力，确保它的影响力不会随层深衰减。两步都在推理时完成，不需要任何训练或微调。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IMG["输入图像<br/>(可能含恶意语义)"] --> P
+
+    subgraph OT["OT 增强安全检测"]
+        direction TB
+        P["切 M 个 patch ＋<br/>C 类不安全文本锚点"] --> CLIP["CLIP 编码为<br/>熵加权离散分布"]
+        CLIP --> SINK["Sinkhorn 求 OT 距离<br/>逐 patch 聚合 d_OT(m)"]
+        SINK --> MASK["阈值 τ 判定并<br/>遮蔽不安全 patch"]
+    end
+
+    MASK --> SAN["净化图像"]
+    PRE["安全前缀"] --> LVLM
+    USR["用户查询"] --> LVLM
+    SAN --> LVLM
+
+    subgraph CAL["跨模态注意力校准"]
+        direction TB
+        LVLM["LVLM 逐层融合生成"] --> MID["中间层抬升<br/>instruction→prefix 注意力"]
+    end
+
+    MID --> OUT["安全响应"]
+```
 
 ### 关键设计
 

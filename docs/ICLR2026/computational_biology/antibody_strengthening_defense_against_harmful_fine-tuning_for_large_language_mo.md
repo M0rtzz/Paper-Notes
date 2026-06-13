@@ -41,7 +41,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Antibody分两阶段：(1) **对齐阶段**——优化 $\mathcal{L}_{\text{align}}(\theta) + \lambda_t \mathcal{L}_{\text{sharp}}(\theta) + \lambda_{\text{refusal}} \mathcal{L}_{\text{refusal}}(\theta_{\text{pert}})$，使模型在对齐的同时处于有害损失的平坦区域；(2) **微调阶段**——用样本加权更新 $\theta_{t+1} \leftarrow \theta_t - \eta \sum_i w_{\theta_t}(x_i,y_i) \nabla \ell_{\theta_t}(x_i,y_i)$，有害样本权重自动降低。
+Antibody 要守住的场景是 FTaaS：模型先在服务商手里做安全对齐，再开放给用户上传数据微调，而用户数据里可能混着有害样本。它的核心思路是在**对齐**和**微调**两个阶段对"有害梯度"做双重抑制。对齐阶段优化 $\mathcal{L}_{\text{align}}(\theta) + \lambda_t \mathcal{L}_{\text{sharp}}(\theta) + \lambda_{\text{refusal}} \mathcal{L}_{\text{refusal}}(\theta_{\text{pert}})$，一边对齐、一边把模型推进有害损失的平坦盆地，并额外训练让"被未来攻击扰动过"的模型仍坚持拒绝，得到一个既平坦又抗漂移的对齐模型；交付到微调阶段后，用样本加权更新 $\theta_{t+1} \leftarrow \theta_t - \eta \sum_i w_{\theta_t}(x_i,y_i) \nabla \ell_{\theta_t}(x_i,y_i)$，让有害样本自动拿到小权重，梯度被进一步压低。两阶段串起来，有害样本既"本来梯度就小"又"被降权"，而良性任务学习不受影响。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A0["对齐数据"]
+    H["有害数据集<br/>D_harm"]
+    subgraph ALIGN["对齐阶段（服务商）"]
+        direction TB
+        F["平坦度正则化对齐<br/>停进有害损失平坦盆地"]
+        R["扰动模型拒绝训练<br/>模拟未来攻击仍保持拒绝"]
+    end
+    M0["平坦 + 抗漂移的<br/>对齐模型"]
+    U["用户上传数据<br/>(混入有害样本)"]
+    subgraph FT["微调阶段（FTaaS）"]
+        direction TB
+        W["似然比样本加权微调<br/>有害样本权重自动压小"]
+    end
+    OUT["安全模型<br/>有害梯度被双重抑制"]
+
+    A0 --> ALIGN
+    H --> ALIGN
+    ALIGN --> M0
+    M0 --> FT
+    U --> FT
+    FT --> OUT
+```
 
 ### 关键设计
 

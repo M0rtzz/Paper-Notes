@@ -36,6 +36,22 @@ tags:
 ### 整体框架
 CDP 把扩散策略的反向采样看成一条 ODE $d\mathbf{a}_t = F_\theta(\mathbf{a}_t, t)\, dt$，并要求这条 ODE 是"收缩"的——相近的两条采样轨迹会越走越近，从而把途中累积的 score 误差和数值误差自然遗忘掉。具体做法是把 ODE 的 Jacobian 拆成漂移项 $f(t)I$ 与 score Jacobian $h(t)J_{\epsilon_\theta}$（其中 $h(t)=g(t)^2/(2\sigma_t)$），在训练时对每个去噪步约束 score Jacobian 的最大特征值，使采样过程满足收缩条件；部署阶段策略冻结，照常用 ODE 采样生成动作，无需任何额外推理开销。
 
+整个方法只改训练侧的损失：从一批离线数据出发，去噪网络给出 score 后取其 Jacobian，用幂迭代廉价估出最大特征值，再按收缩条件把它压进一个带阈值的收缩损失，与原本的 score matching 损失加权相加，最后无缝嵌进 EDP / DBC 等现有学习框架。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["离线数据 batch<br/>(动作 a、状态 s)"] --> N["去噪网络 ε_θ<br/>加噪 a_t → 预测 score"]
+    N --> J["取 score Jacobian<br/>J_εθ"]
+    N --> LD["score matching 损失 L_d"]
+    COND["收缩条件的充要刻画<br/>λmax(J^sym) < −f(t)/h(t)"] -.提供阈值.-> LC
+    J --> PI["幂迭代估特征值<br/>K=3~4 次 Jacobian-向量积 → λ̂max"]
+    PI --> LC["带阈值的收缩损失<br/>L_c = max(−β, λ̂max + f/h)"]
+    LC --> TOT["总损失<br/>L = L_d + γ·L_c"]
+    LD --> TOT
+    TOT --> INT["嵌入 EDP(离线RL) / DBC(模仿学习) 训练<br/>推理仍为标准 ODE 采样、零额外开销"]
+```
+
 ### 关键设计
 
 **1. 收缩条件的充要刻画：把"误差会不会爆"变成一个可检验的特征值不等式**

@@ -39,7 +39,21 @@ tags:
 
 ### 整体框架
 
-CODA 用 DINOv2 提取图像特征、Slot Attention 抽出一组 slot，再让冻结的 Stable Diffusion v1.5 作为 slot 解码器重建原图。围绕这条主干，它在 slot 与扩散解码器的交界处补了三件事——多塞一批吸收残余注意力的 register slots、只微调 cross-attention 的投影、再加一个对比对齐损失，分别针对 slot 纠缠和弱对齐两个老毛病。
+CODA 用 DINOv2 提取图像特征、Slot Attention 抽出一组 slot，再让冻结的 Stable Diffusion v1.5 作为 slot 解码器重建原图。围绕这条主干，它在 slot 与扩散解码器的交界处补了三件事——多塞一批吸收残余注意力的 register slots、只微调 cross-attention 的投影、再加一个对比对齐损失，分别针对 slot 纠缠和弱对齐两个老毛病。注意力主路（实线）走"图像→特征→slot→拼接条件→去噪重建→单 slot 生成/组合编辑"，对比对齐则是一条只回传到 Slot Attention 的旁路（虚线）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["输入图像"] --> B["DINOv2 提特征"]
+    B --> C["Slot Attention<br/>(GRU 迭代 · slot 轴 softmax 竞争)"]
+    C --> D["语义 slots s"]
+    R["Register Slots<br/>CLIP padding token → 77 个固定嵌入"] --> E["拼接 (s, register) 作条件"]
+    D --> E
+    E --> F["冻结 SD v1.5 U-Net<br/>交叉注意力微调 KVO 投影"]
+    F -->|ε-预测去噪重建| G["单 slot 生成 · 组合式编辑"]
+    F -.->|跨图换半数 slot 构造困难负样本| H["对比对齐<br/>停梯度解码 · 只回传更新 SA"]
+    H -.->|压低错配 slot 似然| C
+```
 
 ### 关键设计
 

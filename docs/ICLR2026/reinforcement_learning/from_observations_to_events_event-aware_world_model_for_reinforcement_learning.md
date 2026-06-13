@@ -37,7 +37,23 @@ tags:
 
 ### 整体框架
 
-EAWM 不是一个独立的网络，而是叠加在已有世界模型之上的通用插件。作者先把主流世界模型抽象成一个统一公式——序列模型 $\mathbf{h}_t, \mathbf{y}_t = \mathbf{F}_\theta(\mathbf{h}_{t-1}, \mathbf{Z}_{t-1}, \mathbf{A}_{t-1})$ 推进隐状态，表征模型 $\mathbf{z}_t \sim q_\theta(\mathbf{z}_t | \mathbf{o}_t, \mathbf{h}_t)$ 编码当前观测，动力学预测器 $\hat{\mathbf{z}}_t \sim p_\theta(\hat{\mathbf{z}}_t | \mathbf{y}_t)$ 在想象中预测下一步，再配上奖励与继续预测器——然后在这套骨架上挂入两个新模块：观测预测器和事件预测器，让表征学会感知事件。由于事件预测器只依赖世界模型的输出，整套设计与具体架构解耦，论文据此实现了基于 DreamerV3 的 EADream 与基于 Simulus 的 EASimulus 两个实例。
+EAWM 不是一个独立的网络，而是叠加在已有世界模型之上的通用插件。作者先把主流世界模型抽象成一个统一公式——序列模型 $\mathbf{h}_t, \mathbf{y}_t = \mathbf{F}_\theta(\mathbf{h}_{t-1}, \mathbf{Z}_{t-1}, \mathbf{A}_{t-1})$ 推进隐状态，表征模型 $\mathbf{z}_t \sim q_\theta(\mathbf{z}_t | \mathbf{o}_t, \mathbf{h}_t)$ 编码当前观测，动力学预测器 $\hat{\mathbf{z}}_t \sim p_\theta(\hat{\mathbf{z}}_t | \mathbf{y}_t)$ 在想象中预测下一步，再配上奖励与继续预测器。EAWM 在这套骨架旁挂上一条事件支路：**自动事件生成器**先从原始观测里无监督地产出事件，**通用事件分段器（GES）**判定哪些时刻落在事件边界上，**事件预测器**则在表征上预测这些事件；与此同时，观测预测器被 GES 在事件发生处加权，让模型在关键时刻更看重观测。由于这条支路只依赖世界模型的输出，整套设计与具体架构解耦，论文据此实现了基于 DreamerV3 的 EADream 与基于 Simulus 的 EASimulus 两个实例。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    O["原始观测 o_t<br/>视觉 / 有序 / 名义"] --> WM["基础世界模型骨架<br/>序列+表征+动力学预测器"]
+    O --> EG["自动事件生成器<br/>AGMM+马氏距离 / 阈值<br/>无监督产出事件"]
+    EG --> GES["通用事件分段器 GES<br/>检测事件边界"]
+    WM --> EP["事件预测器<br/>逐模态解码 + stop-grad"]
+    EG -->|事件作预测目标| EP
+    GES -->|边界处抑制预测| EP
+    WM --> OP["观测预测器"]
+    GES -->|事件处加权| OP
+    EP --> Z["事件感知表征"]
+    OP --> Z
+    Z --> IMG["想象轨迹 → 策略学习"]
+```
 
 ### 关键设计
 

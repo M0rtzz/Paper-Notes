@@ -36,11 +36,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-QUANN 要解决的是集合函数学习里"池化操作写死、不可训练"的根本限制。它把整条 pipeline 拆成三步：编码器 $\phi$ 先把集合里每个元素映射成嵌入，中间的可逆神经网络 $\psi$ 把这些嵌入聚合成一个可学习的 Kolmogorov 均值，最后估计器 $\rho$ 从聚合表示读出预测。整体写成
+QUANN 要解决的是集合函数学习里"池化操作写死、不可训练"的根本限制。它沿用 DeepSets 式的"编码—池化—读出"骨架，但把中间的池化换成可学习的部件：编码器 $\phi$ 先把集合里每个元素映射成嵌入，中间的可逆神经网络 $\psi$ 把这些嵌入聚合成一个可学习的 Kolmogorov 均值，最后估计器 $\rho$ 从聚合表示读出预测。整体写成
 
 $$\hat{F}(X) = \rho\Big(\psi^{-1}\big(\tfrac{1}{|P_k(X)|}\sum_{\pi} \psi(\phi(\pi))\big)\Big)$$
 
-其中 $\phi$ 是编码器、$\psi$ 是充当生成函数的可逆神经网络、$\rho$ 是估计器。关键在于中间这层不再是固定的 sum 或 max，而是一个形状由数据决定的广义均值。
+其中 $\phi$ 是编码器、$\psi$ 是充当生成函数的可逆神经网络、$\rho$ 是估计器，$P_k(X)$ 是参与池化的元素组合：$k=1$ 时直接喂单个元素（对应 QUANN-1），$k=2$ 时用注意力把元素对的交互喂进去（对应 QUANN-2）。关键在于中间这层不再是固定的 sum 或 max，而是一个形状由数据决定的广义均值。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["输入集合 X = {x1,…,xn}<br/>(无序)"] --> ENC["编码器 φ<br/>每个元素 → 嵌入 φ(x)"]
+    ENC -->|"k=1 取单元素 (QUANN-1)<br/>k=2 取元素对·注意力 (QUANN-2)"| PIN["池化输入 P_k(X)"]
+    subgraph NKM["神经化 Kolmogorov 均值 NKM (可学习池化)"]
+        direction TB
+        PSI["可逆网络 ψ 编码<br/>ψ(φ(·))"] --> AVG["算术平均<br/>(1/|P_k|)·Σ ψ(φ(·))"]
+        AVG --> INV["逆变换 ψ⁻¹<br/>= 广义均值"]
+    end
+    PIN --> PSI
+    INV --> RHO["估计器 ρ<br/>读出预测"]
+    RHO --> OUT["集合函数输出 F̂(X)<br/>(置换不变)"]
+```
 
 ### 关键设计
 

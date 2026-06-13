@@ -40,15 +40,43 @@ LLM 训练中，注意力层的 QKV 投影占用大量内存：输入 $X$ 需要
 
 ### 整体框架
 
-PAMM 的目标是把反传时需要的激活 $X$ 从内存里"瘦身"。前向阶段不再原样保存 $X \in \mathbb{R}^{b \times n}$，而是只留下少量代表性 token 作为生成点，外加每个 token 指向哪个生成点、缩放多少的辅助信息；反向阶段则用这套压缩表示直接近似出权重梯度 $\nabla W = X^\top \cdot \nabla Z$，绕过对完整 $X$ 的依赖。整个过程只动 QKV 投影层的反向通路，前向输出和其他层的梯度一字不改。
+PAMM 的目标是把反传时需要的激活 $X$ 从内存里"瘦身"。前向阶段不再原样保存 $X \in \mathbb{R}^{b \times n}$，而是只留下少量代表性 token 作为生成点（generating point），外加每个 token 指向哪个生成点、缩放多少的辅助信息；反向阶段则用这套压缩表示直接近似出权重梯度 $\nabla W = X^\top \cdot \nabla Z$，绕过对完整 $X$ 的依赖。整套流程是一个"先压缩、再近似乘法"的两段式：前向把 $X$ 换成生成点 $C$ + 指派表 $f$ + 缩放表 $\alpha$，反向把这三件小东西直接喂进近似矩阵乘法算出梯度。整个过程只动 QKV 投影层的反向通路，前向输出和其他层的梯度一字不改。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["前向激活 X (b×n)<br/>反传需要、占注意力块约 20% 显存"]
+    subgraph FWD["激活压缩（设计 1）"]
+        direction TB
+        S1["随机抽 k=r·b 行<br/>当生成点 C"]
+        S2["按余弦相似度<br/>指派 f(i) + 缩放系数 α"]
+        S1 --> S2
+    end
+    STORE["压缩存储 C + f + α<br/>丢弃完整 X"]
+    subgraph BWD["近似矩阵乘法（设计 2）"]
+        direction TB
+        B1["同生成点梯度<br/>加权聚合 B̃"]
+        B2["Õ = Cᵀ B̃<br/>第一维 b→k"]
+        B3["归一化 β 修正<br/>保证无偏"]
+        B1 --> B2 --> B3
+    end
+    OUT["近似权重梯度 ∇W̃<br/>前向与其他层梯度不变"]
+    X --> FWD --> STORE -->|反向| BWD --> OUT
+```
 
 ### 关键设计
 
-**1. 激活压缩：用代表点 + 缩放系数复述整批 token。** QKV 投影的输入有 $b = BL$ 个 token，但隐藏维度 $n$ 远小于 $b$，所以 $\text{rank}(X) \le n$，整批 token 本质上躺在一个低维子空间里。PAMM 据此从 $X$ 里随机抽取 $k = r \cdot b$ 行充当生成点 $C \in \mathbb{R}^{k \times n}$（随机采样就够，无需聚类）。对剩下每个 token $A_i$，按余弦相似度找最贴合的生成点 $f(i) = \arg\max_j |\text{csim}(A_i, C_j)|$，再沿该方向投影出缩放系数 $\alpha = \frac{\langle A_i, C_j \rangle}{\|C_j\|_2^2}$，于是 $A_i$ 被一条 $\tilde{A}_i = \alpha(i, f(i)) \cdot C_{f(i)}$ 来近似。论文还设了邻域条件 $\|A_i - \tilde{A}_i\|_2 \le \varepsilon \|A_i\|_2$，近似太差的 token 直接丢弃——但实验发现取 $\varepsilon \to \infty$（即不丢弃、全部保留）反而最稳，所以实践中这道闸门并不真正开启。
+**1. 激活压缩：用生成点 + 缩放系数复述整批 token**
 
-**2. 近似矩阵乘法：先聚合再相乘，省掉重建完整激活。** 拿到压缩表示后，朴素做法是先还原 $\tilde{A}$ 再算 $\tilde{A}^\top B$，但那等于又把内存吃回去。PAMM 改用结合律先做聚合：把所有指向同一生成点 $j$ 的 token 的梯度按缩放系数加权汇总成 $\tilde{B}_j = \sum_{i:f(i)=j} \alpha_i B_i$，再算 $\tilde{O} = C^\top \tilde{B}$，参与乘法的张量第一维从 $b$ 缩到 $k$，省下的正是序列维度的冗余。由于丢弃 token 会让结果偏小，论文乘上归一化因子 $\beta = \frac{b}{b-\eta}$（$\eta$ 为被丢弃数）把期望拉回真值，保证 $\mathbb{E}[\tilde{O}] = O$ 的无偏估计。
+QKV 投影的输入有 $b = BL$ 个 token，但隐藏维度 $n$ 远小于 $b$，所以 $\text{rank}(X) \le n$，整批 token 本质上躺在一个低维子空间里——这是整个方法能高压缩的根本前提。PAMM 据此从 $X$ 里随机抽取 $k = r \cdot b$ 行充当生成点 $C \in \mathbb{R}^{k \times n}$（无放回随机采样就够，无需聚类）。对每个 token $A_i$，按绝对余弦相似度找最贴合的生成点 $f(i) = \arg\max_j |\text{csim}(A_i, C_j)|$，再沿该方向投影出缩放系数 $\alpha_i = \text{csim}(A_i, C_{f(i)}) \cdot \frac{\|A_i\|_2}{\|C_{f(i)}\|_2}$，于是 $A_i$ 被一条 $\tilde{A}_i = \alpha_i \cdot C_{f(i)}$ 近似。这样整个 $X$ 就被替换成"生成点 $C$ + 指派表 $f$ + 缩放表 $\alpha$"三件小东西。论文还设了邻域闸门 $\|A_i - \tilde{A}_i\|_2 \le \varepsilon \|A_i\|_2$，近似太差的 token 直接丢弃——但实验发现取 $\varepsilon \to \infty$（即不丢弃、全部保留）反而最稳，所以实践中这道闸门并不真正开启。
 
-**3. 理论保证：对数级生成点 + 误差上界。** 要让随机抽点站得住脚，得回答"$k$ 取多少够用"。Lemma 2 给出充分条件 $k > \frac{b}{n_{\min}} \ln(\frac{b}{\delta})$，即生成点数量只需随 $b$ 对数增长，这解释了为何 $r$ 能压到 $1/512$ 仍不崩。近似误差也有闭式上界 $\|O - \tilde{O}\|_F^2 \le \|B\|_2^2 (\varepsilon^2 \|A_\mathcal{I}\|_F^2 + \|A_{\bar{\mathcal{I}}}\|_F^2)$，把误差拆成被保留 token 的投影残差（受 $\varepsilon$ 控制）和被丢弃 token 的能量两部分，从理论上界定了压缩的代价。
+**2. 近似矩阵乘法：先聚合再相乘，省掉重建完整激活**
+
+拿到压缩表示后，朴素做法是先还原 $\tilde{A}$ 再算 $\tilde{A}^\top B$，但那等于又把内存吃回去，压缩白做。PAMM 改用结合律先做聚合：把所有指向同一生成点 $j$ 的 token 的梯度按缩放系数加权汇总成 $\tilde{B}_j = \sum_{i:f(i)=j} \alpha_i B_i$，再算 $\tilde{O} = C^\top \tilde{B}$。这样参与乘法的张量第一维从 $b$ 缩到 $k$，省下的正是序列维度的冗余，而且全程不需要把完整激活物化出来。由于丢弃 token 会让结果偏小，论文乘上归一化因子 $\beta = \frac{b}{b-\eta}$（$\eta$ 为被丢弃数）把期望拉回真值，保证 $\mathbb{E}[\tilde{O}] = O$ 的无偏估计。
+
+**3. 理论保证：对数级生成点数 + 误差上界**
+
+前两步的随机抽点要站得住脚，得回答"$k$ 取多少够用"。Lemma 2 给出充分条件 $k > \frac{b}{n_{\min}} \ln(\frac{b}{\delta})$，由于 $b/n_{\min}$ 近似为常数，等价于生成点数量只需随 batch token 数 $b$ **对数级**增长，这正解释了为何压缩比 $r$ 能压到 $1/512$ 仍不崩。近似误差也有闭式上界 $\|O - \tilde{O}\|_F^2 \le \|B\|_2^2 (\varepsilon^2 \|A_\mathcal{I}\|_F^2 + \|A_{\bar{\mathcal{I}}}\|_F^2)$，把误差拆成被保留 token 的投影残差（受 $\varepsilon$ 控制）和被丢弃 token 的能量两部分，从理论上界定了压缩的代价——这也呼应了设计 1 里 $\varepsilon\to\infty$（不丢弃）最稳的实验现象：丢弃带来的第二项能量损失往往比省下的那点内存更不划算。
 
 ### 损失函数 / 训练策略
 

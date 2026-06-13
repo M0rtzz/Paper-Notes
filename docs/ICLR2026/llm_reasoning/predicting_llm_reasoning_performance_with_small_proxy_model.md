@@ -40,24 +40,44 @@ tags:
 ## 方法详解
 
 ### 整体框架
-rBridge 的目标是设计一个能在小模型上计算的 proxy 指标 $\text{metric}^p$，使它与大模型的目标指标（Acc./Pass@K）尽可能相关，即最大化 $\text{corr}(\text{metric}^p(\pi^p), \text{metric}^t(\pi^t))$。它不重新训练任何模型，而是回到预训练的本源——next-token prediction 的 NLL，但通过换掉 gold label、再对每个 token 重新加权，把原本嘈杂的 NLL 信号校准成与推理能力对齐的预测量。
+rBridge 要解决的事情很具体：用一个 ≤1B 的小代理模型，可靠地预测、排名 13B–32B 大模型的推理性能，而不必真的把大模型训出来。它的整体思路是回到预训练的本源——既然小模型的训练目标是 next-token prediction，那评估也应该用 NLL，而不是和训练目标完全脱节的离散准确率（Acc./Pass@K）。但直接拿 benchmark 标准答案算 NLL 信号很嘈杂，所以 rBridge 做了两件事把 NLL 校准成与推理能力对齐的预测量：先让一个 frontier 大模型对每道题生成推理 trace，把这段 trace（而非标准答案）当作算 NLL 的 gold label，让目标文本落回预训练分布；再用 frontier 模型对每个 token 的置信度给 NLL 重新加权，放大推理关键步骤、压低格式噪声。
+
+把这个"加权 NLL"（rBridge NLL）在预训练过程中保存的小模型中间检查点上算出来，就得到一个比准确率稳定得多的代理指标。最后只需在少量参考的"代理–目标"模型对上，拟合一条 rBridge NLL → 目标 Acc/Pass@K 的映射曲线，就能用小模型零成本地预测大模型表现、给候选数据集排名。frontier 的推理 trace 与 token 概率都是离线一次性标注（每个 benchmark 成本不到 $10），整条流程几乎不增加额外训练开销。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    F["Frontier 大模型<br/>逐题生成推理过程"]
+    G["推理 Trace 作 Gold Label<br/>取 trace R^φ 当 NLL 目标"]
+    W["Token 级任务对齐加权<br/>按 frontier 置信度给每个 token 赋权"]
+    P["小代理模型检查点<br/>≤1B 预训练中间快照"]
+    R["在 R^φ 上算 rBridge NLL<br/>加权后的代理 NLL"]
+    FIT["拟合 rBridge NLL → 目标 Acc<br/>少量参考对 + 5 折交叉验证"]
+    OUT["预测 / 排名大模型推理性能<br/>13B-32B、数据集优劣"]
+    F --> G
+    F --> W
+    G --> R
+    W --> R
+    P --> R
+    R --> FIT --> OUT
+```
 
 ### 关键设计
 
 **1. 推理 Trace 作为 Gold Label：让 NLL 落回训练分布**
 
-标准做法是拿 benchmark 的标准答案算 NLL，但小模型在这种 label 上信号极嘈杂，根源在于答案文本严重偏离预训练数据分布。rBridge 改用 frontier 模型 $\pi^\phi$ 生成的**推理 trace** $R^\phi$（只取推理过程，剥掉最终答案的格式部分）作为 gold label。这样做有两层好处：一是 $R^\phi$ 是连续的长文本，更贴近预训练语料，NLL 比用标准答案降低了 74.7%，信号噪声大幅下降；二是这段 trace 本身就是通向正确答案的推理链，天然与目标任务对齐。作为对比，ScalingBench 用的是 $R^\phi + A^\phi$（trace 拼上答案），而答案里夹着 "\\n"、"Final Answer:"、"I hope it is correct." 这类格式伪影，严重 OOD，反而把 NLL 信号污染了。
+整条 pipeline 的第一步是确定"在什么文本上算 NLL"，而这一步决定了信号的好坏。标准做法是拿 benchmark 的标准答案算 NLL，但小模型在这种 label 上信号极嘈杂，根源在于答案文本严重偏离预训练数据分布——论文用 $-\log p(Y^*)$ 度量一个 gold label $Y^*$ 有多 in-distribution，越 OOD 信号越烂。rBridge 改用 frontier 模型 $\pi^\phi$ 生成的**推理 trace** $R^\phi$（只取推理过程，剥掉最终答案与其格式部分）作为 gold label。这样做有两层好处：一是 $R^\phi$ 是连续的长文本，更贴近以长文为主的预训练语料，5 个推理 benchmark 上 NLL 比用标准答案平均降低 74.7%，信号噪声大幅下降；二是这段 trace 本身就是通向正确答案的推理链，天然与"解对题"这个目标任务对齐。作为反例，ScalingBench 用的是 $R^\phi + A^\phi$（trace 拼上答案），而答案部分夹着 "\\n"、"Final Answer:"、"I hope it is correct." 这类几乎不出现在预训练数据里的格式伪影，严重 OOD，反而把 NLL 信号污染了（Tab. 1 显示其 NLL 与拟合质量都劣于只用 $R^\phi$）。
 
 **2. Token 级任务对齐加权：把推理关键步骤和格式噪声分开**
 
-即便换了 gold label，标准 NLL 仍对所有 token 一视同仁，无法区分哪些是推理关键步骤、哪些只是排版噪声。rBridge 用 frontier 模型自身对每个 token 的置信度做权重，定义为
+换了 gold label 只解决"在哪算"，还没解决"每个 token 该算多重"。标准 NLL 对 $R^\phi$ 里所有 token 一视同仁，但一条推理 trace 里既有 "sum modulo 9" 这种关键推理步骤，也有换行、编号这类排版 token，二者对"会不会推理"的贡献天差地别。rBridge 用 frontier 模型自身对每个 token 的置信度作为自动的任务对齐权重，定义为
 
-$$\text{rBridge NLL}(\text{token}_i) = -\log(p^p(\text{token}_i)) \cdot \frac{1}{|\text{token}_i|} \sum_{\text{letter} \in \text{token}_i} p^\phi(\text{letter})$$
+$$\text{rBridge NLL}(\text{token}_i) = \underbrace{-\log p^p(\text{token}_i)}_{\text{标准 NLL}} \cdot \underbrace{\frac{1}{|\text{token}_i|} \sum_{\text{letter} \in \text{token}_i} p^\phi(\text{letter})}_{\text{自动任务对齐权重}}$$
 
-直觉很直接：frontier 模型高置信的 token（如 "sum modulo 9"）往往是推理的关键节点，应当获得更大权重；而它低置信的 token（换行符、编号等）多是格式化噪声，权重应被压低。为了让权重跨 tokenizer 可比，这里不直接用 token 概率，而是把权重摊到**字母级**再取平均，从而消除不同分词方式带来的差异；最后再对所有权重因子做一次 MinMax 归一化，放大关键 token 与噪声 token 之间的对比。整套加权对 frontier 模型只需一次性前期投入——生成推理 trace 的成本不到 $10/benchmark，之后的加权计算只要几秒 CPU 时间。
+直觉很直接：frontier 模型高置信的 token 往往是推理关键节点，应获得更大权重；它低置信的 token（换行符、编号等）多是格式噪声，权重被压低。这里有一个跨 tokenizer 的细节——代理模型和 frontier 模型分词方式不同，无法直接对齐 token 概率，所以 rBridge 不直接取 token 概率，而是把权重摊到**字母级** $p^\phi(\text{letter})$ 再在 token 内取平均，从而消除分词差异；最后对整列权重因子做一次 MinMax 归一化，放大关键 token 与噪声 token 之间的对比。这套加权对 frontier 模型只是一次性前期投入，算完后在代理模型上的评估只要几秒 CPU 时间。
 
-### 损失函数 / 训练策略
-本文不训练任何新模型，而是直接取预训练过程中的中间检查点作为 proxy 模型，在其上计算 rBridge NLL 来预测目标大模型的性能；frontier 模型的 trace 与 token 概率作为离线标注一次性算好，整条流程几乎不增加额外训练开销。
+### 训练与使用
+rBridge 不训练任何新模型，而是直接取预训练过程中保存的小模型中间检查点作为代理模型，在其上计算 rBridge NLL；frontier 模型的推理 trace 与 token 概率作为离线标注一次性算好。要把代理指标变成对大模型的预测，只需在少量已知的"代理–目标"数据点上做曲线拟合：候选函数空间（线性 / 二次 / 指数 / 对数）事先固定以防过拟合，用 5 折交叉验证按训练 $R^2$ 选最优函数，报告测试 MAE。拟合好的这条曲线还能零样本迁移到另一个预训练数据集上做预测与排名。
 
 ## 实验关键数据
 

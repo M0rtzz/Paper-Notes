@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 D2E 把"桌面交互能不能迁移到具身机器人"这件事拆成一条三段式管线：先用 OWA Toolkit 收集并标准化键鼠级别的桌面演示数据，再用 Generalist-IDM 给海量无标注的 YouTube 游戏视频伪标注出动作，最后用 VAPT 在这批桌面数据上预训练一个统一骨干，再迁移到机器人操作与导航任务。三者环环相扣——工具解决"采得到、读得快"，IDM 解决"标得起、标得准"，VAPT 解决"迁得动"。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["31款游戏<br/>人类演示 335h"] --> B["OWA Toolkit<br/>ocap录制 + OWAMcap格式<br/>键鼠-画面时间对齐"]
+    C["YouTube游戏视频<br/>1000+h 无标注"] --> D["Generalist-IDM<br/>NEP-τ 反推键鼠动作"]
+    B --> E["标准化键鼠动作数据<br/>259h人工 + 1000+h伪标注"]
+    D --> E
+    E --> F["VAPT<br/>InternVL3-1B 骨干<br/>视觉-动作预训练"]
+    F -->|迁移微调| G["机器人操作 LIBERO<br/>+ 导航 CANVAS"]
+```
+
 ### 关键设计
 
 **1. OWA Toolkit：让桌面演示数据采集与读取不再是瓶颈**

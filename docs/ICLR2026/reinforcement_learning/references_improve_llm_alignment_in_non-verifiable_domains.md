@@ -45,15 +45,37 @@ tags:
 
 ### 整体框架
 
-论文把"高质量参考输出"当作非可验证域里的软验证器，用它从两个层面驱动对齐：先设计专门的 prompting 策略让 LLM-judge 学会正确利用参考做 pairwise 评判（RefEval / RefMatch），再把这个参考引导的 judge 当成偏好信号源，串成"SFT 蒸馏 + 参考引导 DPO"的两阶段自改进流程，整个过程不需要人类偏好标注。
+论文把"高质量参考输出"当作非可验证域里的**软验证器**：对齐任务（指令跟随、摘要、创意写作）没有数学/代码那样的 ground-truth 验证器，但前沿模型生成的参考答案往往廉价可得，于是用它来替代验证器。整条思路分两层：先解决"怎么让 judge 正确用参考"——设计专门的 pairwise 评估 prompt（RefEval / RefMatch），把一个普通 LLM 变成更准的评判器；再把这个参考引导的 judge 当成偏好信号源，串成"SFT 蒸馏 → 参考引导 DPO"的两阶段自改进流程，其中 DPO 所需的偏好对由模型 on-policy 自采样、再用 RefEval judge 全配对打分得到。整个过程不需要任何人类偏好标注，只需一批参考输出。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    R["高质量参考输出<br/>(DeepSeek-V3 生成, 60K≈$40)"]
+    R --> J["参考引导评估 prompt<br/>RefEval / RefMatch<br/>(交换顺序去位置偏见)"]
+    R --> S1["阶段一·SFT 蒸馏<br/>在参考上监督微调 → SFT 模型"]
+    S1 --> POL["On-policy 偏好对构造<br/>自采样 5 个候选 (T=0.8)"]
+    POL -->|"10 次 pairwise 打分"| J
+    J -->|"取最高/最低分组成 (y_w, y_l)"| DPO["阶段二·参考引导 DPO"]
+    DPO --> OUT["对齐后的 LLM<br/>(全程无需人类偏好标注)"]
+```
 
 ### 关键设计
 
-**1. 参考引导的评估 prompt：把"是否给参考"变成"怎么用参考"。** 已有工作只是把参考拼进 prompt，却没告诉 judge 该拿参考做什么，因此收益微弱。论文据此设计了两档指令。RefEval 让 judge 评估哪个候选输出在质量和内容上与参考更一致，但同时仍要回应原始指令——参考充当质量标杆而非唯一答案；RefMatch 更激进，直接把 judge 定位成"语义和风格匹配器"，明确指令 "Your goal is to determine which output demonstrates closer similarity to the reference"。作为对照的 Ref-Free 则不给参考，仅沿指令跟随质量、事实性、冗长度等维度打分。这种"明确指导用法"的设计相比简单拼接参考能带来 4–5 个百分点的差距，说明信号本身一直存在、缺的只是用法。
+**1. 参考引导的评估 prompt：把"是否给参考"变成"怎么用参考"**
 
-**2. 两阶段自改进：先用参考蒸馏，再用参考引导 DPO 精修。** 第一阶段直接在高质量参考输出上做监督微调（SFT 蒸馏），把前沿模型的能力先迁移进基座；论文发现这比从 base 模型直接做偏好优化更稳，因为好参考本身就是强监督信号。第二阶段在 SFT 模型上做参考引导 DPO，优化目标是标准 DPO 损失 $\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x, y_w, y_l) \sim D}\left[\log\sigma\left(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)\right]$，关键差别在于偏好对 $(y_w, y_l)$ 不靠人标，而由前一步的参考引导 judge 自动产出，从而把"评估上的改善"直接转化成"训练信号"。
+已有工作（LLMBar、HREF）只是把参考拼进 prompt，却没告诉 judge 该拿参考做什么，因此收益微弱——这说明信号一直在、缺的只是用法。论文据此设计了两档指令。RefEval 让 judge 评估哪个候选输出在质量和内容上与参考更一致，但同时仍要回应原始指令，参考充当质量标杆而非唯一答案；RefMatch 更激进，直接把 judge 定位成"语义和风格匹配器"，明确要求判断哪个候选与参考更相似。作为对照的 Ref-Free 不给参考，仅沿指令跟随质量、事实性、冗长度等维度打分。pairwise 评估时还把两个候选的呈现顺序交换两遍取平均，以压住 LLM-judge 已知的位置偏见。这种"明确指导用法 + 去偏"的设计相比简单拼接参考能多拿 4–5 个百分点，并让不同 judge 之间的一致率从 76.6% 升到 81.4%——参考给了大家一个共享的决策锚点。
 
-**3. On-policy 偏好对构造：自采样 + 全配对打分。** 偏好数据全部由待微调模型自己在线生成而非借用外部模型——on-policy 数据已被证明更利于 DPO。具体做法是对每条指令以温度 0.8 采样 5 个候选，对全部 $\binom{5}{2}=10$ 对做 pairwise 比较得到平均质量分，再取分数最高与最低的两条组成一个训练对；60K 条指令因此累计约 600K 次 judge 判断。为压制位置偏见，每次 pairwise 评估都交换两次输入顺序取平均准确率。参考来源选用 DeepSeek-V3 生成，60K 条仅约 40 美元，使整条流程在成本上同样可行。
+**2. 两阶段自改进：先用参考蒸馏，再用参考引导 DPO 精修**
+
+直接在基座上做偏好优化并不稳，论文改成两阶段。第一阶段在高质量参考输出上做监督微调（SFT 蒸馏），先把前沿模型的能力迁移进基座；实验显示这一步本身就比直接套用现成奖励模型做 DPO 更强（53.9 vs 49.2 AlpacaEval），因为好参考就是强监督信号。第二阶段在 SFT 模型上做参考引导 DPO，优化标准 DPO 损失
+
+$$\mathcal{L}_{\text{DPO}}(\pi_\theta; \pi_{\text{ref}}) = -\mathbb{E}_{(x, y_w, y_l) \sim D}\left[\log\sigma\left(\beta\log\frac{\pi_\theta(y_w|x)}{\pi_{\text{ref}}(y_w|x)} - \beta\log\frac{\pi_\theta(y_l|x)}{\pi_{\text{ref}}(y_l|x)}\right)\right]$$
+
+关键差别在于偏好对 $(y_w, y_l)$ 不靠人标，而由设计 1 的参考引导 judge 自动产出——这样"评估上的改善"就直接转化成了"训练信号"。
+
+**3. On-policy 偏好对构造：自采样 + 全配对打分**
+
+DPO 用的偏好数据全部由待微调模型自己在线生成，而非借用外部模型——已有研究表明 on-policy 数据比静态偏好标注更利于 DPO。具体做法是对每条指令以温度 0.8 采样 5 个候选，用 RefEval judge 对全部 $\binom{5}{2}=10$ 对做 pairwise 比较，按胜负累计出每个候选的平均质量分，再取分数最高与最低的两条组成一个训练对 $(y_w, y_l)$。这样 60K 条指令累计约 600K 次 judge 判断；参考由 DeepSeek-V3 生成、60K 条仅约 40 美元，使整条流程在成本上也可行。
 
 ## 实验结果
 

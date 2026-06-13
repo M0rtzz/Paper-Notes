@@ -41,13 +41,29 @@ tags:
 
 ### 关键设计
 
-**1. Epoch-wise 近似：把逐样本更新折叠成一步等效梯度。** 直接分析 batch=1 的逐样本轨迹很难，因为一个 epoch 内权重被更新了 $n$ 次，预条件器也在不断变化。本文的做法是把整个 epoch 的净位移近似成单步更新（Proposition 2.5）：$w_{r+1}^0 - w_r^0 \approx -\eta \sum_i \frac{\sum_j \beta_1^{(i,j)} \nabla \mathcal{L}_j(w)}{\sqrt{\sum_j \beta_2^{(i,j)} \nabla \mathcal{L}_j(w)^2}}$。把它和 full-batch Adam 的渐近形式（退化为 SignGD：$w_{t+1} - w_t \approx -\eta \cdot \text{sign}(\nabla \mathcal{L}(w))$）放在一起，关键差异立刻显现：Inc-Adam 的预条件器分母里是**单样本梯度平方的加权和** $\sum_i (\nabla \mathcal{L}_i)^2$，而 full-batch 用的是全批梯度的平方 $(\sum_i \nabla \mathcal{L}_i)^2$，两者并不相等。正是这一项差异在后续传导成完全不同的隐式偏差，也解释了为什么单纯类比 SGD「batch size 无关」会失效。
+**1. Epoch-wise 近似：把逐样本更新折叠成一步等效梯度**
 
-**2. Scaled Rademacher 数据上的精确结果：构造一个让自适应性消失的极端场景。** 为了把直觉坐实成定理，作者构造了 SR 数据——每个样本各坐标绝对值相等（形如 $x_i = (a_i, \pm a_i, \pm a_i, \pm a_i)$）。在这种对称结构下，Inc-Adam 预条件器的逐坐标自适应被完全抹平，整个算法退化成一个加权归一化 GD，于是 Theorem 3.3 给出它收敛到 $\ell_2$ 最大间隔分类器。与此同时 full-batch Adam 在同一数据上仍走向 $\ell_\infty$ 最大间隔，两者构成最干净的极端对比，证明「mini-batch 改变 Adam 偏差」不是数值假象而是可证的结构性事实。
+直接分析 batch=1 的逐样本轨迹很难，因为一个 epoch 内权重被更新了 $n$ 次、预条件器也在不断变化。本文的做法是把整个 epoch 的净位移近似成单步更新（Proposition 2.5）：
 
-**3. AdamProxy：把一般数据集的偏差归约成 Mahalanobis 间隔最大化。** SR 数据太特殊，要覆盖任意可分数据集，作者取 $\beta_2 \to 1$ 的极限得到简化的代理更新 $\delta_t = \frac{\nabla \mathcal{L}(w)}{\sqrt{\sum_i \nabla \mathcal{L}_i(w)^2}}$，称为 AdamProxy。这一极限保留了「单样本梯度平方求和」这一关键项，却剥掉了难以处理的瞬态动量耦合。在此基础上证明其收敛方向求解的是一个 Mahalanobis 范数下的间隔最大化 $\max \min_i \frac{x_i^\top w}{\|w\|_M}$，其中度量矩阵 $M$ 由数据通过一个对偶不动点方程自适应确定。这把「Adam 收敛到什么方向」从逐例分析升格成一个统一的几何问题，$\ell_2$ 与 $\ell_\infty$ 都只是 $M$ 取特殊形式时的特例。
+$$w_{r+1}^0 - w_r^0 \approx -\eta \sum_i \frac{\sum_j \beta_1^{(i,j)} \nabla \mathcal{L}_j(w)}{\sqrt{\sum_j \beta_2^{(i,j)} \nabla \mathcal{L}_j(w)^2}}$$
 
-**4. Signum 的不变性：用对照说明偏差变化源自预条件器而非动量。** 为排除「是动量或 sign 操作导致差异」的解释，作者把带动量的 SignSGD（Signum）作为对照：它在任意 batch size 下都仍收敛到 $\ell_\infty$ 最大间隔。原因是 sign 操作只看梯度符号、把幅值信息整体丢弃，因而对「单样本平方和 vs 全批平方」这一差异天然免疫。这条对照反过来坐实了 Adam 偏差对采样方式敏感的根源正是其平方根预条件器，而非动量本身。
+把它和 full-batch Adam 的渐近形式（退化为 SignGD：$w_{t+1} - w_t \approx -\eta \cdot \text{sign}(\nabla \mathcal{L}(w))$）放在一起，关键差异立刻显现：Inc-Adam 的预条件器分母里是**单样本梯度平方的加权和** $\sum_i (\nabla \mathcal{L}_i)^2$，而 full-batch 用的是全批梯度的平方 $(\sum_i \nabla \mathcal{L}_i)^2$，两者并不相等。正是这一项差异在后续传导成完全不同的隐式偏差，也解释了为什么单纯类比 SGD「batch size 无关」会失效。这一步是整篇分析的支点：它把不可解的完整 Adam 动力学换成只依赖当前权重的可处理表达式。
+
+**2. Scaled Rademacher 数据上的精确结果：构造一个让自适应性消失的极端场景**
+
+为了把上面的直觉坐实成定理，作者构造了 Scaled Rademacher（SR）数据——每个样本各坐标绝对值相等（形如 $x_i = (a_i, \pm a_i, \pm a_i, \pm a_i)$）。在这种对称结构下，Inc-Adam 预条件器的逐坐标自适应被完全抹平，第一步得到的等效更新退化成一个加权归一化 GD（其中权重 $a_i(r)$ 随 epoch 数 $r$ 变化，需借助 Corollary 3.2 把它夹在两个正常数之间，保证没有样本贡献消失）。于是 Theorem 3.3 给出它收敛到 $\ell_2$ 最大间隔分类器。与此同时 full-batch Adam 在同一数据上仍走向 $\ell_\infty$ 最大间隔，两者构成最干净的极端对比，证明「mini-batch 改变 Adam 偏差」不是数值假象，而是可证的结构性事实。
+
+**3. AdamProxy：把一般数据集的偏差归约成 Mahalanobis 间隔最大化**
+
+SR 数据太特殊，要覆盖任意可分数据集，作者在 $\beta_2 \to 1$ 的极限下取简化的代理更新（Proposition 4.1），称为 AdamProxy：
+
+$$\delta_t = \frac{\nabla \mathcal{L}(w)}{\sqrt{\sum_i \nabla \mathcal{L}_i(w)^2}}$$
+
+这个极限有实际意义（实践中 $\beta_2$ 本就取到接近 1），它保留了「单样本梯度平方求和」这一关键项，却剥掉了难以处理的瞬态动量耦合。在此基础上证明其收敛方向求解的是一个 Mahalanobis 范数下的间隔最大化 $\max \min_i \frac{x_i^\top w}{\|w\|_M}$，其中度量矩阵 $M$ 由数据通过一个对偶不动点方程 $T(\mathbf{c})=\mathbf{c}$ 自适应确定（Theorem 4.8，可用 Algorithm 3 的不动点迭代数值求解）。这把「Adam 收敛到什么方向」从逐例分析升格成一个统一的几何问题：$\ell_2$ 与 $\ell_\infty$ 都只是 $M$ 取特殊形式时的特例，而一般数据上的收敛方向可以两者都不是。
+
+**4. Signum 的不变性：用对照说明偏差变化源自预条件器而非动量**
+
+为排除「是动量或 sign 操作导致差异」的解释，作者把带动量的 SignSGD（Signum）作为对照：当动量参数足够接近 1 时，它在任意 batch size 下都仍收敛到 $\ell_\infty$ 最大间隔（Theorem 5.1）。原因是 sign 操作只看梯度符号、把幅值信息整体丢弃，因而对「单样本平方和 vs 全批平方」这一差异天然免疫。这条对照反过来坐实了 Adam 偏差对采样方式敏感的根源正是其平方根预条件器，而非动量本身。
 
 ## 实验关键数据
 

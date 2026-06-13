@@ -43,6 +43,27 @@ tags:
 ### 整体框架
 AdaTTT要解决的是：一个在源医院训练好的IMV预测模型，部署到别的医院时因分布偏移而掉点，但目标医院没有标签、也来不及微调。它的做法是给模型挂一个自监督（SSL）辅助任务，让模型在推理时对着每个新患者就地做几步无标签更新，再出预测。整个网络由共享编码器 $f_e$、主任务分类头 $h_c$ 和SSL头 $h_s$ 三部分组成：训练阶段三者联合优化（主任务损失 + SSL损失 + 原型学习损失），测试阶段冻结分类头、只让SSL损失加上一项最优传输（OT）对齐损失去更新编码器，每个样本更新5步后做预测，预测完立刻把参数重置回训练终点，再处理下一个患者。论文的两条主线——什么样的SSL任务才有用、测试时怎么柔性对齐分布——分别由下面的动态掩码和原型OT回答，而这两者都源自一个信息论分析。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    BOUND["信息论误差界<br/>误差被辅助↔主任务条件熵夹住<br/>故SSL须与主任务对齐"]
+    subgraph TRAIN["训练阶段（源医院·有标签）"]
+        direction TB
+        ENC["共享编码器 f_e<br/>+主任务头+SSL头"]
+        ENC --> PROTO["联合优化主任务+SSL<br/>并学 k=4 个原型"]
+    end
+    BOUND -.指导.-> ENC
+    PROTO --> FREEZE["冻结分类头<br/>记录训练终点参数"]
+    subgraph TEST["测试阶段（目标医院·逐患者无标签）"]
+        direction TB
+        MASK["动态特征掩码SSL<br/>按梯度重要性掩码"]
+        MASK --> POT["原型引导POT对齐<br/>扰动复制→Sinkhorn"]
+        POT --> UPD["更新编码器·5步"]
+    end
+    FREEZE --> MASK
+    UPD --> PRED["输出IMV预测<br/>再重置参数·处理下一患者"]
+```
+
 ### 关键设计
 
 **1. 信息论误差界：把"SSL要设计成什么样"变成一个可推导的问题**

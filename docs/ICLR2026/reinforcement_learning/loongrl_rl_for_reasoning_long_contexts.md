@@ -43,6 +43,18 @@ tags:
 ### 整体框架
 LoongRL 想解决的是：怎样用一份"够难、可验证、又不昂贵"的数据，把长上下文推理这种特殊思维方式从模型里逼出来。它的做法是先把现成的短文本多跳 QA 改造成高难度长上下文题目（KeyChain），再用 GRPO 在这些题目上做多阶段 RL，同时掺入数学和检索数据守住短上下文能力。整条链路的输入是约 16K token 的长文本加一个问题，输出是带推理过程、最终答案放在 `\boxed{}` 里的回答。关键在于：训练长度始终压在 16K，但学到的推理模式能直接迁移到 128K。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["短文本多跳 QA<br/>(HotpotQA / MuSiQue / 2Wiki)"] --> B["KeyChain 数据构造<br/>插入干扰文档 + UUID 链条<br/>把真实问题藏成谜题"]
+    B --> C["~16K 长文本训练样本<br/>隐藏问题 + 干扰链"]
+    R["Two-way Substring 奖励<br/>双向子串匹配"] --> D
+    C --> D["三阶段课程式 RL (GRPO)<br/>warm-up → Stage I<br/>→ Stage II 难样本挖掘"]
+    M["混合数据配方<br/>+多跳 QA / 检索 / 数学"] --> D
+    D --> E["涌现 plan → retrieve<br/>→ reason → recheck"]
+    E --> F["16K 训练泛化到 128K"]
+```
+
 ### 关键设计
 
 **1. KeyChain 数据构造：用 UUID 链条把"真正的问题"藏起来，逼模型先规划再检索**

@@ -48,6 +48,23 @@ tags:
 
 SpectralGCD把每张图像表示成它在一部CLIP概念字典上的「语义混合」——即图文相似度向量，然后分两步走：先用一个冻结的强教师从庞大的字典里自动挑出任务相关的概念子集（谱过滤），再在这个精简表示上训练一个轻量分类器，并靠正反双向蒸馏防止表示在训练中语义漂移。两步都把教师的跨模态表示预计算好，因此整体计算量与纯视觉的单模态方法相当。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IMG["输入图像 + 概念字典<br/>（task-agnostic，上万概念）"]
+    IMG --> REP["跨模态充分表示<br/>逐概念算 CLIP 图文相似度 → M 维向量"]
+    REP -->|冻结教师 ViT-H/14<br/>预计算全数据集表示| SF
+    subgraph SF["谱过滤"]
+        direction TB
+        A["softmax 归一化得 q"] --> B["跨模态协方差矩阵 G"]
+        B --> C["特征值分解<br/>留主成分 + 按重要性选概念"]
+    end
+    SF --> DICT["精简字典<br/>（上万 → 几百概念）"]
+    DICT --> STU["学生训练<br/>仅微调 ViT-B/16 末层 → 投影 → 分类器"]
+    STU --> KD["正反知识蒸馏<br/>双向 KL 把学生表示钉在教师附近"]
+    KD --> OUT["GCD 输出：Old/New 类别发现"]
+```
+
 ### 关键设计
 
 **1. 跨模态充分表示：把图像翻译成概念坐标，让分类器拿到的就是语义本身**

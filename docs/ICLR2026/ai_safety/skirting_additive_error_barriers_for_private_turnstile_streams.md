@@ -43,7 +43,20 @@ tags:
 
 论文要解决的是同一个工程难题在两个经典统计量上的不同实例：在允许插入和删除的旋转门流上，私密地、连续地估计不同元素数 (distinct elements) 和 $F_2$ 矩，而又不被多项式级的纯加性误差下界卡住。它的统一思路是把差分隐私**连续计数** (DP continual counting) 当成一块可靠的积木——这块积木只承受 $O(\log^{1.5}(T))$ 级别的 polylogarithmic 加性误差——然后用流算法里的三种经典技术（最小哈希、域缩减、Johnson-Lindenstrauss 降维）把"难统计量"小心地拆解成若干个"易计数"的子问题。只要每个子问题都能交给一个连续计数器，整体就继承了计数器的小加性误差，多项式误差自然被绕开，代价是拆解过程引入一点乘性误差。
 
-支撑这块积木的隐私机制是 zero-concentrated differential privacy (zCDP) 下的 Gaussian Binary Tree Mechanism：连续计数器用二叉树结构聚合前缀和并注入高斯噪声，$\rho$-zCDP 经 zCDP-to-DP 转换即可保证 $(\varepsilon, \delta)$-DP（当 $\rho = O(\varepsilon^2/\log(1/\delta))$），其组合性质比标准 DP 更紧凑，这也是三个算法能层层归约而隐私预算不爆的前提。下面三个设计分别对应三种拆解方式。
+支撑这块积木的隐私机制是 zero-concentrated differential privacy (zCDP) 下的 Gaussian Binary Tree Mechanism：连续计数器用二叉树结构聚合前缀和并注入高斯噪声，$\rho$-zCDP 经 zCDP-to-DP 转换即可保证 $(\varepsilon, \delta)$-DP（当 $\rho = O(\varepsilon^2/\log(1/\delta))$），其组合性质比标准 DP 更紧凑，这也是三个算法能层层归约而隐私预算不爆的前提。下面三个设计分别对应三种拆解方式：MinHash 桶化处理严格旋转门下的不同元素计数，域缩减处理一般旋转门下的不同元素计数，JL 降维处理 $F_2$ 矩——三者把各自的"难统计量"拆成若干子问题后，统一喂给同一块连续计数器原语。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["旋转门流<br/>(插入/删除事件)"] --> D{"按统计量与<br/>流类型选拆解方式"}
+    D -->|"严格旋转门<br/>不同元素"| MH["1. 最小哈希+桶化<br/>lsb 分 K+1 桶"]
+    D -->|"一般旋转门<br/>不同元素"| DR["2. 域缩减+碰撞检测<br/>压小域制造碰撞"]
+    D -->|"F2 矩"| JL["3. JL 降维<br/>投到 m 维坐标"]
+    MH --> CC["DP 连续计数器<br/>(Gaussian Binary Tree)<br/>polylog 加性误差"]
+    DR --> CC
+    JL --> CC
+    CC --> OUT["混合误差估计<br/>(α 乘性, polylog 加性)"]
+```
 
 ### 关键设计
 

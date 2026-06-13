@@ -40,33 +40,54 @@ tags:
 
 ### 整体框架
 
-DrPose 要解决的是：当输入图像里的人体处于街舞、杂技这类极端姿态时，多视角扩散模型生成的人体姿态严重失真，而问题的根源在于 3D 人体扫描数据太少、姿态分布太窄。它的思路是绕开昂贵的 3D 资产，转而从丰富的运动捕捉数据里借姿态监督。整条流水线分三块串起来：先用 Motion-X 的舞蹈姿态 + 视频生成器 MIMO 合成出一批姿态多样的单视角图像（DrPose15K 数据集）；再用一个可微的奖励函数 PoseScore 衡量扩散模型生成的多视角图像和 GT 3D 姿态对不对得上，通过直接奖励微调把模型往姿态准确的方向拉；最后把后训练好的多视角扩散模型接上显式 carving（SMPL-X 初始化 → 可微 remeshing → 外观融合）完成 3D 重建。
+DrPose 要解决的是：当输入图像里的人体处于街舞、杂技这类极端姿态时，多视角扩散模型生成的人体姿态严重失真，而问题的根源在于 3D 人体扫描数据太少、姿态分布太窄。它的思路是绕开昂贵的 3D 资产，转而从丰富的运动捕捉数据里借姿态监督。整条流水线分三块串起来：先用 Motion-X 的舞蹈姿态 + 视频生成器 MIMO 合成出一批姿态多样的单视角图像（DrPose15K 数据集）；再用一个可微的奖励函数 PoseScore 衡量扩散模型生成的多视角图像和 GT 3D 姿态对不对得上，通过直接奖励微调把模型往姿态准确的方向拉（KL 正则同时兜住画质）；最后把后训练好的多视角扩散模型接上显式 carving（SMPL-X 初始化 → 可微 remeshing → 外观融合）完成 3D 重建。真正属于 DrPose 创新的是中间这套"数据 + 可微奖励 + 微调"的后训练机制，重建管线沿用 PSHuman 现成方案。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    subgraph DATA["DrPose15K 数据集构建"]
+        direction TB
+        A["Motion-X AIST<br/>300K 舞蹈姿态"] -->|"最远点采样 1.5K<br/>+ 9 时间邻居"| B["15K 姿态序列"]
+        B -->|"MIMO 姿态条件 I2V<br/>+ 全身人像"| C["单视角图像 ↔ GT 姿态 θ"]
+    end
+    C --> D["I2MV 扩散 U-Net ε_ω<br/>DDIM 采样 T=20"]
+    D -->|"仅 K=2 步保留梯度"| E["多视角潜变量图像 x0"]
+    subgraph TUNE["直接奖励微调"]
+        direction TB
+        E --> F["PoseScore 可微奖励<br/>g_skel(x0) 比 R(J(θ)) 骨骼图"]
+        F --> G["L_reward = 1 − r"]
+        E -.->|"vs 冻结 ε_ω0"| H["KL 散度正则 L_KL"]
+    end
+    G --> I["L_total = L_reward + w_KL·L_KL<br/>回传更新 ε_ω"]
+    H --> I
+    I -.->|"收敛"| J["后训练 I2MV → 多视角法线+RGB<br/>→ 显式 carving → 3D 人体"]
+```
 
 ### 关键设计
 
-**1. PoseScore 可微奖励函数：把"姿态对不对"变成可回传梯度的 2D 骨骼图比较**
+**1. DrPose15K 数据集构建：用运动数据 + 视频生成器补齐缺失的多样姿态**
 
-直接在 3D 空间对齐生成结果和 GT 姿态既复杂又难求导，DrPose 改成在 2D 骨骼图像空间里比。一路是生成结果：用预训练 U-Net $g_{\text{skel}}$ 把多视角潜变量图像 $\mathbf{x}_0$ 转成预测骨骼图 $\hat{I}_{\text{skel}}$；另一路是监督信号：用渲染函数 $\mathcal{R}$ 把 GT 3D 关节 $J(\theta)$ 投影到各个视角得到 GT 骨骼图 $I_{\text{skel}}$。奖励就是两者的负距离
+奖励微调需要大量"姿态多样的单视角图像 + GT 3D 姿态"配对，但现成的 3D 扫描集姿态太单一（THuman2.1 仅 2445、CustomHumans 仅 647 个姿态）。DrPose 转而从 Motion-X 的 AIST 子集（300K 舞蹈姿态）里用最远点采样挑出 1.5K 个尽量分散的姿态，每个再取 9 个时间邻居凑成姿态序列（这是 MIMO 的输入格式），共 15K 姿态；然后用姿态条件的 I2V 模型 MIMO 把全身人像按这些姿态序列动画化，生成对应的单视角图像。最终 DrPose15K 的 SMPL-X 关节位置标准差比 THuman2.1 大 1.73 倍，姿态多样性显著更高，正好补上了极端姿态这块短板。
 
-$$r(\mathbf{x}_0, \theta) = -\mathbb{E}(\|\hat{I}_{\text{skel}} - I_{\text{skel}}\|)$$
+**2. PoseScore 可微奖励函数：把"姿态对不对"变成可回传梯度的 2D 骨骼图比较**
+
+有了多样姿态的数据还不够，得有个信号告诉模型"生成的姿态准不准"。直接在 3D 空间对齐生成结果和 GT 姿态既复杂又难求导，DrPose 改成在 2D 骨骼图像空间里比。一路是生成结果：用预训练 U-Net $g_{\text{skel}}$ 把多视角潜变量图像 $\mathbf{x}_0$ 转成预测骨骼图 $\hat{I}_{\text{skel}}$；另一路是监督信号：用渲染函数 $\mathcal{R}$ 把 GT 3D 关节 $J(\theta)$ 投影到各个视角得到 GT 骨骼图 $I_{\text{skel}}$。奖励就是两者的负距离
+
+$$r(\mathbf{x}_0, \theta) = -\mathbb{E}(\|\hat{I}_{\text{skel}} - I_{\text{skel}}\|) = -\mathbb{E}(\|g_{\text{skel}}(\mathbf{x}_0) - \mathcal{R}(J(\theta))\|)$$
 
 其中距离用 BCE + LPIPS 估计。关键在于骨骼图被设计成 23 通道图像（每个关节占一个通道），这样既精确保留了姿态的结构信息，又全程可微——梯度能从奖励一路回传到扩散模型参数，这是后面整套奖励微调能跑起来的前提。
 
-**2. 直接奖励微调（基于 DRTune）：用稀疏梯度的方式把奖励信号灌回 U-Net**
+**3. 直接奖励微调（基于 DRTune）：用稀疏梯度的方式把奖励信号灌回 U-Net**
 
-有了可微奖励，微调本身走 DRTune 路线：从噪声 $x_T \sim \mathcal{N}(0, \mathbf{I})$ 出发，经 DDIM 采样（$T=20$ 步）生成多视角潜变量图像 $x_0$，再计算 $\mathcal{L}_{\text{reward}} = 1 - r(\mathbf{x}_0, \theta)$ 并反向传播。问题是生成的是 24 张 768×768 图像，若 20 步全保留梯度显存根本扛不住，所以只对采样出的 $K=2$ 个去噪步保留梯度、其余步做 stop_grad。这种稀疏采样训练步 + 梯度停止是让奖励微调在这个规模下可行的必要效率折中。
+有了可微奖励，微调本身走 DRTune 路线：从噪声 $x_T \sim \mathcal{N}(0, \mathbf{I})$ 出发，经 DDIM 采样（$T=20$ 步）生成多视角潜变量图像 $\mathbf{x}_0$，再计算 $\mathcal{L}_{\text{reward}} = 1 - r(\mathbf{x}_0, \theta)$ 并反向传播。问题是生成的是 6 视角 768×768 图像，若 20 步全保留梯度显存根本扛不住，所以只对采样出的 $K=2$ 个去噪步保留梯度、其余步阻断输入梯度（stop_grad）。这种稀疏采样训练步 + 梯度停止是让奖励微调在这个规模下可行的必要效率折中，也让优化集中在早期去噪步上。
 
-**3. KL 散度正则化：防止模型为刷高 PoseScore 而牺牲画质（reward hacking）**
+**4. KL 散度正则化：防止模型为刷高 PoseScore 而牺牲画质（reward hacking）**
 
-只优化奖励容易让模型钻空子——姿态分数上去了图像质量却塌了。DrPose 在每个训练步 $t \in t_{\text{train}}$ 处约束可训练模型 $\epsilon_\omega$ 不要偏离冻结的初始模型 $\epsilon_{\omega_0}$ 太远，用两者预测噪声的 MSE 当正则项
+只优化奖励容易让模型钻空子——姿态分数上去了图像质量却塌了。DrPose 在中间去噪步 $t \in t_{\text{train}}$ 处约束可训练模型 $\epsilon_\omega$ 不要偏离冻结的初始模型 $\epsilon_{\omega_0}$ 太远，用两者预测噪声的 MSE 当正则项
 
 $$\mathcal{L}_{\text{KL}} = \mathbb{E}(\|\hat{\epsilon} - \hat{\epsilon}_0\|)$$
 
-这样在拉高姿态准确性的同时，把原模型的图像质量稳住。
-
-**4. DrPose15K 数据集构建：用运动数据 + 视频生成器补齐缺失的多样姿态**
-
-奖励微调需要大量"姿态多样的单视角图像 + GT 3D 姿态"配对，但现成的 3D 扫描集姿态太单一。DrPose 转而从 Motion-X 的 AIST 子集（300K 舞蹈姿态）里用最远点采样挑出 1.5K 个尽量分散的姿态，每个再取 9 个时间邻居凑成姿态序列（这是 MIMO 的输入格式），共 15K 姿态；然后用姿态条件的 I2V 模型 MIMO 把全身人像按这些姿态序列动画化，生成对应的单视角图像。最终 DrPose15K 的 SMPL-X 关节位置标准差比 THuman2.1 大 1.73 倍，姿态多样性显著更高，正好补上了极端姿态这块短板。
+这样在拉高姿态准确性的同时，把原模型的图像质量稳住。总目标是 $\mathcal{L}_{\text{reward}} + w_{\text{KL}} \cdot \mathcal{L}_{\text{KL}}$ 联合最小化。
 
 ### 损失函数 / 训练策略
 

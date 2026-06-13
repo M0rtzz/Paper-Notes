@@ -38,17 +38,50 @@ tags:
 
 ### 整体框架
 
-PPFlow 把整个去噪轨迹按时间步切成几个阶段，每个阶段配一套不同的 patch 大小：高噪声段用大 patch（token 少、算得快），低噪声段退回标准的 $2\times2$ patch（token 多、保细节）。除了首尾的 Patchify/Unpatchify 线性投影按阶段各配一套外，所有 DiT block 的参数在阶段间完全共享，因此推理流程和普通 DiT 别无二致，只是不同时间步喂进去的 token 数不一样。
+PPFlow 想解决的痛点很直接：DiT 在所有去噪时间步都用同一种 $2\times2$ patch、喂进同样多的 token，可高噪声时图像几乎没有空间细节，这些算力纯属浪费。它的做法是把整条去噪轨迹按时间步切成几个阶段，每个阶段配一套不同的 patch 大小——高噪声段用大 patch（token 少、算得快），低噪声段退回标准的 $2\times2$ patch（token 多、保细节）。整个推理流程和普通 DiT 别无二致：每一步先按当前时间步 $t$ 落到某个阶段，用该阶段专属的 Patchify 投影把潜变量切成 token，过一遍**所有阶段共享**的 DiT block 预测速度场，再用该阶段的 Unpatchify 投影还原，积分前进一步；唯一变化的是不同时间步喂进去的 token 数。整个过程始终在全分辨率潜空间上完成，阶段间不切换分辨率、也不重新加噪。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["噪声潜变量 x_t + 时间步 t<br/>全分辨率潜空间"] --> PYR
+    subgraph PYR["阶段化金字塔 patch 化（设计 1）"]
+        direction TB
+        S{"按 t 判定<br/>当前阶段"}
+        S -->|"高噪声"| P1["4×4 大 patch<br/>token 数 L=(I/4)²"]
+        S -->|"过渡"| P2["4×2 过渡 patch"]
+        S -->|"低噪声"| P3["2×2 标准 patch<br/>token 最多"]
+    end
+    subgraph CORE["Patchify 分阶段、DiT block 全共享（设计 2）"]
+        direction TB
+        PK["分阶段 Patchify 投影 W_si<br/>各阶段一套 → 映到隐藏维 d"]
+        PK --> DIT["共享 DiT block<br/>一套参数，占 ~99.8% FLOPs"]
+        DIT --> UP["分阶段 Unpatchify 投影<br/>预测速度场 v"]
+    end
+    P1 --> PK
+    P2 --> PK
+    P3 --> PK
+    UP --> STEP["流匹配积分前进一步<br/>更新 x_t（不重噪声）"]
+    STEP -->|"未到终点"| S
+    STEP -->|"到 t=1"| OUT["生成图像"]
+```
 
 ### 关键设计
 
-**1. 阶段化金字塔 patch 化：让高噪声步用更少 token。** 核心观察是高噪声时图像几乎没有空间细节，用细 patch 表示纯属浪费。PPFlow 把时间区间 $[0,1]$ 划成多段，越靠近高噪声（$t$ 越小）patch 越大。以三级方案为例：$[0,t_{s_1})$ 用 $4\times4$ patch，token 数降到 $L=(I/4)^2$；$[t_{s_1},t_{s_2})$ 用过渡的 $4\times2$；$[t_{s_2},1]$ 回到 $2\times2$ 的正常 DiT。由于每个 DiT block 的复杂度是 $\mathcal{O}(L_s^2 d + L_s d)$，token 数 $L_s$ 一减，注意力的平方项立刻塌下来，整段去噪的算力随之大幅下降。
+**1. 阶段化金字塔 patch 化：让高噪声步用更少 token**
 
-**2. Patchify 分阶段、DiT block 全共享：几乎零额外参数换来提速。** 每个阶段只有一对独立的投影矩阵 $\mathbf{W}_{s_i}\in\mathbb{R}^{d\times d_{s_i}}$ 负责把不同尺寸的 patch 映到同一隐藏维 $d$，而占模型绝大部分容量的 DiT block 一套参数走天下。这样做的底气在于成本结构：Patchify 这步的代价 $L_s\times d_s\times d = I^2 C d$ 其实与 patch 大小无关（patch 越大、token 越少但每个 token 越宽，正好抵消），真正吃算力的 DiT block 才依赖 token 数。在 DiT-XL/2 里约 99.8% 的 FLOPs 都落在 DiT block，所以只要把高噪声段的 token 砍掉，整体 FLOPs 就直接下降——二级方案减 37.8%，三级方案减 50.6%。
+针对"高噪声步白白算细节"这个痛点，PPFlow 把时间区间 $[0,1]$ 划成多段，越靠近高噪声（$t$ 越小）patch 越大。以三级方案为例：$[0,t_{s_1})$ 用 $4\times4$ patch，token 数降到 $L=(I/4)^2$；$[t_{s_1},t_{s_2})$ 用过渡的 $4\times2$；$[t_{s_2},1]$ 回到 $2\times2$ 的正常 DiT。之所以有效，是因为每个 DiT block 的复杂度是 $\mathcal{O}(L_s^2 d + L_s d)$，token 数 $L_s$ 一减，注意力的平方项立刻塌下来，整段去噪的算力随之大幅下降。
 
-**3. 从预训练 DiT 平滑初始化：低成本微调即可上手。** 大 patch 的投影矩阵不是从头随机学，而是由现成 $2\times2$ 投影复制扩展而来，让新阶段一开始就站在预训练模型的肩膀上。Patchify 端用平均化把 $2\times2$ 投影摊到 $4\times4$，$\mathbf{W}_2=\frac{1}{4}[\mathbf{W},\mathbf{W},\mathbf{W},\mathbf{W}]$；Unpatchify 端则直接堆叠复制，$\mathbf{W}_2^u=[(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top]^\top$。靠这套初始化，从预训练 SiT-XL/2 出发只需约 8% 的额外训练量就能恢复同等质量，省去了重训整个模型的代价。
+**2. Patchify 分阶段、DiT block 全共享：几乎零额外参数换来提速**
 
-**4. 全分辨率潜空间操作：绕开 Pyramidal Flow 的重噪声技巧。** 同样是金字塔思路，PPFlow 与 Pyramidal Flow 的根本差别在于它始终在全分辨率潜空间上做去噪，只是改变 patch 划分粒度，而不像后者那样在多分辨率之间切换。这一点保证了流过程满足连续性方程，阶段切换处不会出现"跳跃点"，也就不需要 Pyramidal Flow 那套为了缝合不同分辨率而设计的复杂重噪声技巧，推理流程可以和标准 DiT 完全对齐。
+要让上一步落地又不膨胀模型，PPFlow 每个阶段只配一对独立的投影矩阵 $\mathbf{W}_{s_i}\in\mathbb{R}^{d\times d_{s_i}}$ 负责把不同尺寸的 patch 映到同一隐藏维 $d$，而占模型绝大部分容量的 DiT block 一套参数走天下。这样做的底气在于成本结构：Patchify 这步的代价 $L_s\times d_s\times d = I^2 C d$ 其实与 patch 大小无关（patch 越大、token 越少但每个 token 越宽，正好抵消），真正吃算力的 DiT block 才依赖 token 数。在 DiT-XL/2 里约 99.8% 的 FLOPs 都落在 DiT block，所以只要把高噪声段的 token 砍掉，整体 FLOPs 就直接下降——二级方案减 37.8%，三级方案减 50.6%，而新增参数几乎可以忽略。
+
+**3. 从预训练 DiT 平滑初始化：低成本微调即可上手**
+
+大 patch 的投影矩阵如果从头随机学会很慢，PPFlow 让它由现成的 $2\times2$ 投影复制扩展而来，使新阶段一开始就站在预训练模型的肩膀上。Patchify 端用平均化把 $2\times2$ 投影摊到 $4\times4$，$\mathbf{W}_2=\frac{1}{4}[\mathbf{W},\mathbf{W},\mathbf{W},\mathbf{W}]$；Unpatchify 端则直接堆叠复制，$\mathbf{W}_2^u=[(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top,(\mathbf{W}^u)^\top]^\top$。靠这套初始化，从预训练 SiT-XL/2 出发只需约 8% 的额外训练量就能恢复同等质量，省去了重训整个模型的代价。
+
+**4. 全分辨率潜空间操作：绕开 Pyramidal Flow 的重噪声技巧**
+
+同样是金字塔思路，PPFlow 与 Pyramidal Flow 的根本差别在于它始终在全分辨率潜空间上做去噪，只是改变 patch 划分粒度，而不像后者那样在多分辨率之间切换。这一点保证了流过程满足连续性方程，阶段切换处不会出现"跳跃点"，也就不需要 Pyramidal Flow 那套为了缝合不同分辨率而设计的复杂重噪声技巧，推理流程可以和标准 DiT 完全对齐——这也是框架图里去噪回环能直接绕回阶段判定、无需任何额外加噪节点的原因。
 
 | 特性 | PPFlow | Pyramidal Flow |
 |------|--------|---------------|

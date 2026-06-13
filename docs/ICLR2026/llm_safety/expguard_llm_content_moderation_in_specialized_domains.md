@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR2026  
 **arXiv**: [2603.02588](https://arxiv.org/abs/2603.02588)  
 **代码**: [brightjade/ExpGuard](https://github.com/brightjade/ExpGuard)  
-**领域**: 医学图像  
+**领域**: LLM 安全  
 **关键词**: LLM safety, guardrail model, content moderation, domain-specific, financial/medical/legal
 
 ## 一句话总结
@@ -38,19 +38,37 @@ tags:
 
 ### 整体框架
 
-ExpGuard 的核心不是新模型结构，而是一条"数据为先"的护栏构建流水线：先从 Wikipedia 挖出金融/医疗/法律三领域的专业术语，再围绕这些术语用 LLM 批量合成有害与良性 prompt-response，经三模型集成标注与严格共识过滤后得到 ExpGuardMix（共 58,928 样本，含 ExpGuardTrain 56,653 + ExpGuardTest 2,275），最后用这批数据多任务微调一个 7B LLM，使其能同时判定 prompt 和 response 的有害性。
+ExpGuard 的贡献不在模型结构，而在一条"数据为先"的护栏构建流水线：通用护栏在金融"haircut"这类被术语伪装的风险面前失效，根因是它们的训练数据里压根没有领域专业知识，所以作者干脆让数据**围绕领域术语生长**。整条流水线从 Wikipedia 挖出金融/医疗/法律三领域的专业术语作种子，围绕术语用 LLM 批量合成有害与良性的 prompt 及对应回复，再经三模型 CoT 集成标注与严格类别共识过滤，得到 ExpGuardMix（58,928 样本 = ExpGuardTrain 56,653 + 经专家复核的 ExpGuardTest 2,275）；最后用训练集多任务微调一个 7B LLM，使同一个护栏既能判定入站 prompt、也能判定出站 response 的有害性。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    W["Wikipedia<br/>金融/医疗/法律类目页"] --> T["1. 领域术语挖掘<br/>Wikidata→GPT-4o→人工投票<br/>得 2,646 术语"]
+    T --> G["2. 对称 prompt-response 生成<br/>术语种子有害+敏感无害良性 prompt<br/>+野外/jailbreak/人写数据"]
+    G --> R["回复合成<br/>Mistral 生 compliant<br/>Gemma 生 refusal"]
+    R --> L["3. 三模型共识标注+专家验证<br/>Claude/Gemini/Qwen CoT 标 13 类<br/>≥2/3 精确类别一致 + SBERT 去重"]
+    L --> D["ExpGuardMix 58,928<br/>Train 56,653 / Test 2,275 专家复核"]
+    D --> M["4. 多任务护栏微调<br/>7B LLM"]
+    M --> O["ExpGuard<br/>同判 prompt / response 有害性"]
+```
 
 ### 关键设计
 
-**1. 领域术语挖掘：让数据围绕"专业盲区"生长。** 通用护栏失效的根因在于它们没见过金融"haircut"这类被术语伪装的风险，因此作者把术语本身当作数据生成的种子。流程从 Wikipedia 递归爬取金融、医疗、法律类目页面提取候选术语，先用 Wikidata API 过滤掉人名、组织、国家等非技术实体，再让 GPT-4o 排除非敏感/无关词，最后由 3 名标注者多数投票人工把关，得到 2,646 个高质量术语（金融 989、医疗 1,012、法律 645）。每个术语都对应一个潜在的领域特定风险场景，保证了后续合成数据精准覆盖通用护栏的盲区。
+**1. 领域术语挖掘：把"专业盲区"变成数据生长的种子**
 
-**2. 有害与良性 prompt 的对称生成：既补漏检又防过度拒绝。** 对每个术语，用 GPT-4o 生成聚焦其风险场景的有害 prompt，并借"I have an idea for a prompt:"前缀绕过生成模型自身的安全机制，同时产出长短两种变体、随机采样 100+ 预设指令模板并配 few-shot 示例以增加多样性。但只喂有害样本会让护栏对一切敏感话题草木皆兵，于是作者把 Wikipedia 文档转成指令-回复对、只保留指令部分作为良性 prompt——这些 prompt 话题敏感但意图无害，专门用来抑制过度安全行为。再叠加从 LMSYS-Chat-1M、WildChat 子采样的野外数据、DAN jailbreak prompt 以及 HH-RLHF、Aegis 2.0 的人写样本，覆盖真实交互分布。回复侧则有意用偏旧、更易服从有害请求的 Mistral-7B-Instruct-v0.1 生成 compliant response，用 Gemma-3-27B-IT 生成 refusal response，让正负回复都足够典型。
+通用护栏拦不住"obscure high haircuts in asset evaluations"这类请求，是因为它读不懂 haircut 在金融里是风险折价、也察觉不到背后的隐瞒意图。作者的对策是让术语本身充当数据种子：先从 Wikipedia 递归爬取金融、医疗、法律的类目页面提取候选术语，用 Wikidata API 滤掉人名/组织/国家等非技术实体，再让 GPT-4o 排除非敏感、与有害场景无关的词，最后由 3 名标注者多数投票人工把关，得到 2,646 个高质量术语（金融 989、医疗 1,012、法律 645）。每个术语都对应一个潜在的领域风险场景，后续所有合成数据都挂在这些术语上，从源头保证覆盖通用护栏看不见的盲区。
 
-**3. 三模型严格共识标注：把标签噪声压到最低。** 作者定义 13 类有害类别加 1 类"无害"伪类别（涵盖暴力、色情、歧视、隐私侵犯、金融欺诈、非法药物等），用 Claude 3.7 Sonnet、Gemini 2.0 Flash、Qwen2.5-Max 三模型集成标注，并要求每个模型先生成 CoT 推理再给出类别。关键之处在于共识口径：必须至少 2/3 模型给出**完全相同的类别索引**（而非仅"安全/不安全"二分一致），不满足的 4.8% 模糊样本直接丢弃，再用 Sentence-BERT 余弦相似度 $>0.9$ 去除近重复。这种细粒度共识比二分类共识严苛得多，换来的是训练标签的高一致性。
+**2. 有害与良性 prompt-response 的对称生成：既补漏检又防过度拒绝**
 
-**4. ExpGuardTest 的专家验证：让评测集可信。** 2,275 条测试样本（金融 964、医疗 771、法律 540）先由 LLM 集成初标，再请领域专家复核。其中金融子集由银行业从业者逐条审核，prompt 与 response 标注的 Cohen's Kappa 分别达 0.89 / 0.98，落在"几乎完美一致"区间，使得这套领域测试集足以支撑可靠的横向对比。
+只喂有害样本会把护栏训成"见敏感词就拦"，所以这一步刻意做正负对称。有害侧：对每个术语用 GPT-4o 生成聚焦其风险场景的 prompt，借"I have an idea for a prompt:"这类前缀绕过生成模型自身的安全机制，并产出长短变体、从 100+ 预设指令模板随机采样、配 few-shot 示例来拉开多样性。良性侧：把 Wikipedia 文档转成指令-回复对、只留指令部分当良性 prompt——它们话题同样敏感但意图无害，专门用来压住过度拒绝；再叠加 LMSYS-Chat-1M / WildChat 的野外数据、DAN 等 jailbreak prompt、HH-RLHF 与 Aegis 2.0 的人写样本逼近真实分布。回复侧同样对称：用偏旧、更易服从有害请求的 Mistral-7B-Instruct-v0.1 生成 compliant 回复，用 Gemma-3-27B-IT 生成 refusal 回复（约 50% prompt 不配回复、10% 配拒答、40% 配服从回复），让正负样本都足够典型。
 
-**5. 多任务护栏微调：一个模型双重判定。** 最终模型基于 7B LLM 在 ExpGuardTrain 上多任务微调：当输入仅含 prompt 时预测 prompt 的有害性，当输入为 prompt-response 对时同时预测两者的有害性，统一输出 safe/unsafe 二分类标签。这样同一护栏既能拦截入站请求，也能审核出站回复，无需为两种场景各训一个模型。
+**3. 三模型精确类别共识 + 专家验证：把标签噪声压到最低，让评测可信**
+
+合成数据的标签质量直接决定护栏上限。作者定义 13 类有害类别加 1 类"无害"伪类别（c0–c13，涵盖暴力、色情、歧视、隐私侵犯、金融欺诈、非法药物等），用 Claude 3.7 Sonnet、Gemini 2.0 Flash、Qwen2.5-Max 三模型集成标注，每个模型先写 CoT 推理再给类别，逼它做领域级判断而非表层分类。关键在共识口径不是宽松的"安全/不安全"二分一致，而是要求至少 2/3 模型给出**完全相同的类别索引**——哪怕三个模型都判"unsafe"，只要归到不同有害类别（一个暴力、一个骚扰、一个仇恨）就直接丢弃，由此剔除 4.8% 的模糊样本，再用 Sentence-BERT 余弦相似度 $>0.9$ 去近重复。在评测侧再加一道人工：2,275 条 ExpGuardTest（金融 964、医疗 771、法律 540）先由 LLM 集成初标，金融子集再由银行从业者两轮交叉复核，凡两名标注者一致即定终标，prompt / response 与集成标签的 Cohen's Kappa 达 0.89 / 0.98（"几乎完美一致"），使这套领域测试集足以支撑可靠的横向对比。
+
+**4. 多任务护栏微调：一个 7B 模型双重判定**
+
+最终模型在 ExpGuardTrain 上以多任务方式微调一个 7B LLM：输入只含 prompt 时预测 prompt 有害性，输入为 prompt-response 对时同时预测两者，统一输出 safe/unsafe 二分类标签。这样同一护栏既能拦入站请求又能审出站回复，无需为两种场景各训一个模型；作者还验证增益不来自骨干选择——换成 WildGuard 同款 Mistral-7B-v0.3 骨干趋势一致，说明提升来自数据而非底座。
 
 ## 实验关键数据
 

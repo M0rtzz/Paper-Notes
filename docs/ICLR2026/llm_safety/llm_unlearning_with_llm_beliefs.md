@@ -47,6 +47,21 @@ tags:
 
 形式化地，给定遗忘集 $\mathcal{D}_u = \{(\mathbf{x}_u, \mathbf{y}_u)\}$ 和保留集 $\mathcal{D}_r$，目标是让模型对 $\mathcal{D}_u$ 及其释义的似然降低（遗忘），同时对 $\mathcal{D}_r$ 的输出分布贴近原模型（保留）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["遗忘集 (x_u, y_u)"] --> M["当前模型 π_θ<br/>(提供 model beliefs)"]
+    M --> GA["基础遗忘损失<br/>压低目标响应概率"]
+    GA --> SQ{"挤压效应：概率质量<br/>逃向高似然释义邻域"}
+    SQ -->|"token 级·局部信念"| BST["BS-T：把 top-k 邻域<br/>插值进软目标一并压住"]
+    SQ -->|"序列级·全局信念"| BSS["BS-S：采样高置信完整响应<br/>当额外遗忘数据 (可 on-policy 重采)"]
+    M -.->|"top-k 预测"| BST
+    M -.->|"采样响应"| BSS
+    BST --> OBJ["belief-aware 遗忘目标<br/>可挂 NPO / WGA / GradDiff"]
+    BSS --> OBJ
+    OBJ --> UP["更新模型：堵死逃逸路径<br/>实现真正遗忘"]
+```
+
 ### 关键设计
 
 **1. 挤压效应的诊断：先证明虚假遗忘是机制必然，不是个例**

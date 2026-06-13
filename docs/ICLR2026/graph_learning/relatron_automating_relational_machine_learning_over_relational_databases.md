@@ -42,7 +42,25 @@ tags:
 
 ### 整体框架
 
-Relatron 把"该用 RDL 还是 DFS、用什么配置"这个选择问题，转化成一个由任务嵌入驱动的元分类问题。它先对 RDL 和 DFS 两条路线做大规模架构搜索，把每个任务上各配置的性能存成"性能银行"；再为每个 RDB 任务计算一组可廉价获得的嵌入特征（同质性、亲和力、训练规模），用它们训练一个元选择器来预测该选哪条路线、哪个配置；最后在验证性能领先的少数候选里，用 loss landscape 几何指标挑出对分布偏移更鲁棒的检查点。
+Relatron 把"该用 RDL 还是 DFS、用什么配置"这个选择问题，转化成一个由任务嵌入驱动的元分类问题。它先对 RDL 和 DFS 两条路线做大规模架构搜索，把每个任务上各配置的性能存成"性能银行"；再为每个 RDB 任务计算一组可廉价获得的任务嵌入特征——RDB 任务同质性、锚点亲和力（含路径、特征、时序、训练规模四类信号）；接着用这些嵌入训练一个元选择器，先在宏观层做 RDL/DFS 路线选择、再在微观层做具体配置选择；最后在验证性能领先的少数候选里，用 Loss Landscape 几何指标挑出对分布偏移更鲁棒的检查点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["RDB 预测任务<br/>(PK-FK 异构图 + 标签)"] --> SEARCH["大规模架构搜索<br/>RDL + DFS 各配置"]
+    SEARCH --> BANK[("性能银行<br/>配置 → 性能")]
+    IN --> EMB
+    subgraph EMB["任务嵌入（廉价信号）"]
+        direction TB
+        H["RDB 任务同质性"]
+        A["锚点亲和力嵌入<br/>路径 / 特征 / 时序 / 规模"]
+    end
+    BANK --> META["元选择器<br/>宏观选 RDL/DFS<br/>微观选配置"]
+    EMB --> META
+    META --> CAND["验证 top 候选"]
+    CAND --> LL["Loss Landscape 后选择<br/>挑平坦极小值"]
+    LL --> OUT["最终架构 + 配置"]
+```
 
 ### 关键设计
 

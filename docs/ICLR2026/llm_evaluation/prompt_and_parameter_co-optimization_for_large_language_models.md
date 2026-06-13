@@ -41,25 +41,43 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MetaTuner 想把"调 prompt"和"调参数"这两件一直被分开做的事，塞进一个端到端可训练的框架里。它的核心是一个共享底层的 Meta Encoder：一条 query $x_i$ 进来后，先经过共享编码层 $\phi_s$，再分流到两条并行分支——Prompt Decoder（私有参数 $\phi_p$）把它改写成一条定制 prompt $p_i$，Parameter Decoder（私有参数 $\phi_q$）则吐出一组 query 专属的 LoRA 参数 $\theta_i$。两者随后一起作用到下游的 Actor Model $\mathcal{M}$ 上：prompt 决定输入上下文，LoRA 决定权重偏移，$\mathcal{M}$ 据此做预测，损失再沿整条链路回传。关键在于两条分支共用 $\phi_s$，所以 prompt 侧学到的东西能渗透到参数侧，反之亦然。
+MetaTuner 想把一直被分开做的「调 prompt」和「调参数」塞进同一个端到端可训练的框架，核心洞察是把 prompt 当成一种「特殊参数」、用同一张网络把它和 LoRA 权重一起生成出来。具体来说：一条 query $x_i$ 配上一条人工写的初始 prompt $\tilde{p}$ 进来后，先经过共享底层的 Meta Encoder $\phi_s$，再分流到两个私有头——Prompt Decoder（私有参数 $\phi_p$）把它改写成定制 prompt $p_i$，Parameter Decoder（私有参数 $\phi_q$）则吐出一组 query 专属的 LoRA 参数 $\theta_i$。两者一起作用到下游的 Actor Model $\mathcal{M}$ 上：prompt 决定输入上下文，LoRA 决定权重偏移，$\mathcal{M}$ 据此预测，损失再沿整条链路回传。两条分支共用 $\phi_s$ 是关键——prompt 侧学到的东西能渗透到参数侧、反之亦然；而把「在 token 空间里搜 prompt」改写成「对 $\phi_p$ 做连续优化」后，原本不可微的混合离散-连续问题就被拉回到一个可微的统一目标里。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}%%
+flowchart TD
+    Q["输入 query x_i<br/>+ 初始 prompt p̃"]
+    S["共享底层 φs：前 k 层 decoder<br/>（设计 1 共享-私有 meta encoder）"]
+    PG["Prompt Decoder φp<br/>改写出定制 prompt p_i（设计 2 Prompt Generator）"]
+    PD["Parameter Decoder φq<br/>生成 query 专属 LoRA θ_i（设计 3）"]
+    M["Actor Model M：p_i 当输入上下文<br/>+ θ_i 当权重偏移"]
+    Y["预测 ŷ_i → 统一损失 L<br/>(主任务 + 监督正则)"]
+    Q --> S
+    S --> PG
+    S --> PD
+    PG --> M
+    PD --> M
+    M --> Y
+    Y -. 梯度回传 .-> S
+```
 
 ### 关键设计
 
-**1. Prompt Generator $\mathcal{G}$：把不可微的离散 prompt 搜索变成连续优化**
+**1. 共享-私有 meta encoder：让 prompt 分支和参数分支互相纠错**
 
-离散 prompt 优化最大的麻烦是它在 token 空间里搜，目标不可微、没法跟梯度训练拼在一起。MetaTuner 的做法是绕开"从零生成 prompt"，改成"在一个初始 prompt 上重写"：给定一条人工写的初始 prompt $\tilde{p}$，用可学习的 LLM $\mathcal{G}_\phi$ 针对每条 query 改写出定制版 $p_i = \mathcal{G}_\phi(\tilde{p}, x_i)$。这样要优化的不再是离散 token，而是 $\mathcal{G}$ 的连续参数 $\phi$，搜索空间被 rewrite 策略大幅压缩；同时所有 query 共享同一个 $\tilde{p}$ 作为起点，省掉了逐条标注 prompt 的人工成本。
-
-**2. Shared-Private 参数生成架构：让 prompt 分支和参数分支互相纠错**
-
-如果两条分支各自为政，prompt 侧的次优解和参数侧的次优解就会各自固化、谁也救不了谁。MetaTuner 把 $\mathcal{G}$ 的参数拆成 $\phi = \{\phi_s, \phi_p\}$：$\phi_s$ 是共享底层（前 $k$ 层 Transformer decoder），$\phi_p$ 是 prompt 专用的上层；Parameter Decoder $\mathcal{F}$ 复用同一份 $\phi_s$，再叠上自己的私有参数 $\phi_q$。整个系统在一个统一目标下联合优化：
+如果 prompt 侧和参数侧各自为政，两边的次优解就会各自固化、谁也救不了谁。MetaTuner 把 prompt 生成器 $\mathcal{G}$ 的参数拆成 $\phi = \{\phi_s, \phi_p\}$：$\phi_s$ 是共享底层（前 $k$ 层 Transformer decoder，充当 meta encoder），$\phi_p$ 是 prompt 专用的上层；Parameter Decoder $\mathcal{F}$ 直接复用同一份 $\phi_s$，再叠上自己的私有参数 $\phi_q$。整个系统在一个统一目标下联合优化：
 
 $$\min_{\phi_s, \phi_p, \phi_q} \sum_{i=1}^N \mathcal{L}(\mathcal{M}_{\mathcal{F}_{(\phi_s,\phi_q)}(\tilde{p},x_i)}(\mathcal{G}_{(\phi_s,\phi_p)}(\tilde{p},x_i), x_i), y_i)$$
 
-共享的 $\phi_s$ 起到互相正则的作用——任何一条分支给出的次优解，都会在统一损失里被另一条分支拉回来；而私有的 $\phi_p$、$\phi_q$ 又保留了各自独立探索最优解的余地，不至于被共享层压成一个模子。消融里"不共享参数"明显掉点，正说明这层互相增强不是摆设。
+共享的 $\phi_s$ 起到互相正则的作用——任何一条分支给出的次优解，都会在统一损失里被另一条分支拉回来；而私有的 $\phi_p$、$\phi_q$ 又保留了各自独立探索最优解的余地，不至于被共享层压成一个模子。共享深度 $k$ 是个可调的权衡：7B 模型表征力足、留更多私有层（$k=K/4$）更好，3B 模型则靠更高共享比例（$k=3K/4$）增强两支的一致性。消融里「不共享参数（w/o S，即 $k=0$）」明显掉点，正说明这层互相增强不是摆设。
+
+**2. Prompt Generator $\mathcal{G}$：把不可微的离散 prompt 搜索变成连续优化**
+
+离散 prompt 优化最大的麻烦是它在 token 空间里搜，目标不可微、没法跟梯度训练拼在一起。MetaTuner 的做法是绕开「从零生成 prompt」，改成「在一个初始 prompt 上重写」：给定人工写的初始 prompt $\tilde{p}$，用可学习的 LLM $\mathcal{G}_\phi$ 针对每条 query 改写出定制版 $p_i = \mathcal{G}_\phi(\tilde{p}, x_i)$。这样要优化的不再是离散 token，而是 $\mathcal{G}$ 的连续参数 $\phi$，搜索空间被 rewrite 策略大幅压缩；同时所有 query 共享同一个 $\tilde{p}$ 作为起点，省掉了逐条标注 prompt 的人工成本。正是这一步把整个问题转成「fully continuous」，后续才能跟参数分支拼进同一个可微目标。
 
 **3. Parameter Decoder：从隐状态直接生成 query 专属的 LoRA 权重**
 
-参数分支要解决的是"怎么把共享编码器的隐状态变成可用的权重偏移"。它对 LoRA 更新 $\Delta W = \theta_i^b \cdot \theta_i^a$ 的两个低秩矩阵分别用一个两层"矩阵乘法 + ReLU"的小网络从隐状态 $h_i$ 生成，例如 $\theta_i^b = \text{MM}(\text{ReLU}(\text{MM}(W_d^b, h_i)), W_u^b)$，对应的 decoder 参数为 $\phi_q = \{W_d^b, W_u^b, W_d^a, W_u^a\}$，并用缩放因子 $\lambda$ 控制生成的 LoRA 加权强度。选 LoRA 而非全参数微调是为了训练效率，而"每条 query 各生成一套 LoRA"则把适配做到了输入粒度——不同问题拿到的权重偏移不一样，比所有输入共用一套要更有针对性。
+参数分支要解决的是「怎么把共享编码器的隐状态变成可用的权重偏移」。它对 LoRA 更新 $\Delta W = \theta_i^b \cdot \theta_i^a$ 的两个低秩矩阵，分别用一个两层「矩阵乘法 + ReLU」的小网络从隐状态 $h_i$ 生成，例如 $\theta_i^b = \text{MM}(\text{ReLU}(\text{MM}(W_d^b, h_i)), W_u^b)$，对应的 decoder 参数为 $\phi_q = \{W_d^b, W_u^b, W_d^a, W_u^a\}$，并用缩放因子 $\lambda$ 控制生成的 LoRA 加权强度。选 LoRA 而非全参数微调是为了训练效率，而「每条 query 各生成一套 LoRA」则把适配做到了输入粒度——不同问题拿到的权重偏移不一样，比所有输入共用一套要更有针对性。
 
 ### 损失函数 / 训练策略
 

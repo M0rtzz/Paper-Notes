@@ -41,21 +41,41 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FE先按验证器能力把问题分成两类——强验证器（$\Omega_v = \Omega$，能完全刻画有效空间）走全局扩展、目标是把密度铺成有效空间上的均匀分布；弱验证器（$\Omega_v \supset \Omega$，只能当过滤器）走局部扩展、在预训练分布附近做受约束的扩散。两种情形都被统一成噪声空间上的Mirror Descent优化，再由ExpandThenProject算法把"扩展"和"投影回有效区"交替迭代来求解。
+预训练流模型只覆盖了数据高密度区的一小块，可科学发现恰恰需要往数据之外、但仍有效的区域探索。Flow Expander（FE）的整体思路是：先看手里的验证器有多强，据此选一条扩展路线，再用同一套"先扩散、后拉回有效区"的迭代去逼近目标分布。具体地，强验证器（$\Omega_v = \Omega$，能精确判定有效与否）走**全局扩展**，目标是把密度直接铺成有效空间上的均匀分布 $\mathcal{U}(\Omega)$；弱验证器（$\Omega_v \supset \Omega$，只能当过滤器、有盲区）走**局部扩展**，在预训练分布附近做受KL约束的扩散。两条路线被统一写成噪声空间上的一个Mirror Descent优化，由 **ExpandThenProject** 算法把"扩展"和"投影回有效区"交替迭代K次来求解；其中扩展步只用到流速度场线性变换出的score，无需额外训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    PRE["预训练流模型<br/>p_pre（只覆盖数据高密度区）"] --> SEL{"验证器强弱？"}
+    SEL -->|"强验证器 Ω_v=Ω"| GLOBAL["全局/局部扩展目标<br/>熵最大化 +（弱时）KL 锚定"]
+    SEL -->|"弱验证器 Ω_v⊃Ω"| GLOBAL
+    GLOBAL --> EXP["扩展步：噪声空间无约束优化<br/>running cost 用流速度场 → score"]
+    EXP --> PROJ["投影步：reward-guided 微调<br/>以 log v 为奖励拉回有效区"]
+    PROJ -->|"未到 K 轮"| EXP
+    PROJ -->|"K 轮收敛（Thm 5.1/5.2）"| OUT["扩展后流模型<br/>覆盖更广、样本仍有效"]
+```
 
 ### 关键设计
 
-**1. 全局流扩展：强验证器下直接逼近均匀分布。** 当验证器足够强、能精确判定一个设计是否有效时，问题被写成熵最大化 $\pi^* = \arg\max_{\pi} \mathcal{H}(p_1^\pi)$，约束为期望有效性 $\mathbb{E}_{x \sim p_1}[v(x)] = 1$ 且起点固定 $p_0^\pi = p_0^{\text{pre}}$。这个凸问题的最优解非常干净：终端分布就是有效设计空间上的均匀分布 $p_1^{\pi^*} = \mathcal{U}(\Omega)$。关键在于此时**根本不需要依赖预训练模型**——既然验证器已经完整刻画了有效空间，最大熵的答案完全由 $\Omega$ 决定，于是探索可以毫无包袱地铺满整个有效区域。
+**1. 验证器分级：强者逼近均匀、弱者用KL锚回先验**
 
-**2. 局部流扩展：弱验证器下用KL锚住预训练分布。** 现实中的验证器（如原子键检查器）往往只是过滤器，会漏掉一些它检测不到的无效设计。如果照搬全局扩展，模型就会把密度分配到这些"验证器看不见的无效区"。FE的做法是在熵最大化里加一项KL正则 $\max_\pi \mathcal{H}(p_1^\pi) - \alpha D_{\text{KL}}(p_1^\pi \| p_1^{\text{pre}})$，仍保留有效性约束 $\mathbb{E}[v(x)] = 1$。KL项把扩展后的分布拉回预训练分布附近，等于借预训练模型的先验来兜住弱验证器的盲区；超参 $\alpha$ 就是保守度旋钮——$\alpha$ 越大越贴近预训练分布、越不敢往外探。
+科学发现要往数据之外探，但"无约束地扩"必然生成大量无效设计——扩展力度该放到多大，取决于验证器能不能信。FE据此把问题分成两档。验证器**够强**（能完整刻画有效空间 $\Omega$）时，问题就是带有效性约束的纯熵最大化 $\pi^* = \arg\max_{\pi} \mathcal{H}(p_1^\pi)$，s.t. $\mathbb{E}_{x \sim p_1}[v(x)] = 1$、起点 $p_0^\pi = p_0^{\text{pre}}$；这个凸问题的最优解非常干净——终端分布就是有效空间上的均匀分布 $p_1^{\pi^*} = \mathcal{U}(\Omega)$，此时**完全不必依赖预训练模型**，因为有效区已被验证器说清，最大熵的答案只由 $\Omega$ 决定。但现实验证器（如原子键检查器）通常只是**弱**过滤器、有检测不到的无效区；照搬全局扩展会把密度灌进这些盲区。FE的修法是在目标里加一项KL正则 $\max_\pi \mathcal{H}(p_1^\pi) - \alpha D_{\text{KL}}(p_1^\pi \| p_1^{\text{pre}})$，借预训练先验把分布拉回数据附近来兜住盲区；超参 $\alpha$ 就是保守度旋钮——$\alpha$ 越大越贴近预训练分布、越不敢外探，因此 $\alpha$ 应随验证器质量调（强验证器小 $\alpha$、弱验证器大 $\alpha$）。
 
-**3. ExpandThenProject：把扩展与投影拆成两步交替。** 直接求解上面的约束优化很难，FE把每一步Mirror Descent拆成两个易实现的子步并迭代K次。**扩展步**在噪声空间上做无约束优化（Eq. 15），用running cost $f_t = \lambda_t \delta\mathcal{G}_t$ 驱动密度往外摊开；**投影步**则是一次reward-guided fine-tuning（Eq. 16），把验证器对数 $\log v$ 当奖励，把刚才扩出去的密度拉回有效区。先尽情扩、再约束投影，这种"先放后收"的交替正好对应Mirror Descent的一步更新，既保留了探索力度又不会失控。
+**2. ExpandThenProject：把约束优化拆成"扩散—投影"交替，扩展步只复用流速度场**
 
-**4. 闭式梯度：用速度场线性变换近似score，避免显式估计。** 扩展步的核心是running cost的梯度 $\delta\mathcal{G}_t$。FE给出了闭式表达：全局情形 $\nabla_x \delta\mathcal{G}_t = -s_t^\pi$，即score function取负；局部情形多一项把当前与预训练score的差也算进来，$\nabla_x \delta\mathcal{G}_t = -s_t^\pi - \alpha_t(s_t^\pi - s_t^{\text{pre}})$，这正是KL正则在梯度上的体现。而score本身不必单独训练，可以从流的速度场 $\pi(x,t)$ 经线性变换得到 $s_t^\pi(x) = \frac{1}{\kappa_t(\frac{\dot{\omega}_t}{\omega_t}\kappa_t - \dot{\kappa}_t)}(\pi(x,t) - \frac{\dot{\omega}_t}{\omega_t}x)$，让整套优化直接复用预训练流模型的输出。
+上面的约束优化直接解很难，FE把它化成噪声空间上的Mirror Descent，并把每一步更新拆成两个好实现的子步、迭代K次。**扩展步**做一次无约束优化（Eq. 15），用 running cost $f_t = \lambda_t \delta\mathcal{G}_t$ 驱动密度向外摊开；**投影步**做一次 reward-guided fine-tuning（Eq. 16），把验证器对数 $\log v$ 当奖励、把刚扩出去的密度拉回有效区。"先放后收"恰好对应Mirror Descent的一步更新，既保留探索力度又不会失控。关键在于扩展步并不需要单独估计score：running cost的梯度有闭式——全局情形 $\nabla_x \delta\mathcal{G}_t = -s_t^\pi$，弱验证器情形多一项KL的贡献 $\nabla_x \delta\mathcal{G}_t = -s_t^\pi - \alpha_t(s_t^\pi - s_t^{\text{pre}})$，而 score 本身可由流速度场 $\pi(x,t)$ 经线性变换得到
 
-**5. 噪声空间探索（NSE）：用整段轨迹的score稳住高维探索。** NSE是FE去掉投影步后的副产品，却解决了一个独立的痛点：现有流探索方法只用终端 $t=1$ 处的score $s_1^\pi$，而它在数据稀疏处会发散。FE的扩展步沿用整个流过程 $t \in [0,1]$ 的score信息，相当于把探索信号在时间上均摊，避免被终端的奇异点带偏，因此在高维分子设置中比只看终端的方法稳定得多。
+$$s_t^\pi(x) = \frac{1}{\kappa_t\left(\frac{\dot{\omega}_t}{\omega_t}\kappa_t - \dot{\kappa}_t\right)}\left(\pi(x,t) - \frac{\dot{\omega}_t}{\omega_t}x\right),$$
 
-**6. 收敛保证：从精确到近似的两级理论支撑。** 整套交替迭代有理论兜底：Proposition 1证明ExpandThenProject恰好精确求解一步Mirror Descent的解；Theorem 5.1在理想化的精确更新下给出有限时间收敛率 $D_{\text{KL}}(\mathbf{Q}^* \| \mathbf{Q}^K) \leq \frac{C}{K}$；Theorem 5.2进一步放宽到实际的近似更新，在温和的噪声/偏差假设下保证渐近收敛，把"扩展步和投影步都只是近似"的现实情形也纳入保证。
+于是整套优化直接复用预训练流模型的输出、无需额外训练一个score网络。
+
+**3. 噪声空间探索（NSE）：用整段轨迹的score稳住高维探索**
+
+NSE是FE去掉投影步后剩下的扩展机制，却单独解决了一个老痛点：现有流探索方法只取终端 $t=1$ 处的 score $s_1^\pi$ 来引导，而它在数据稀疏处会发散、把探索带偏。FE的扩展步改用整个流过程 $t \in [0,1]$ 的 score 信息，相当于把探索信号沿时间均摊、避开终端奇异点，因此在高维分子设定下比只看终端的方法稳定得多——这也是FE在高维有效的直接原因。
+
+**4. 收敛保证：从精确更新到近似更新的两级理论兜底**
+
+交替迭代会不会真的收敛、收敛到哪，FE给了理论支撑。Proposition 1 证明 ExpandThenProject 恰好精确求解一步 Mirror Descent；Theorem 5.1 在理想化的精确更新下给出有限时间收敛率 $D_{\text{KL}}(\mathbf{Q}^* \| \mathbf{Q}^K) \leq \frac{C}{K}$；Theorem 5.2 进一步放宽到现实——扩展步和投影步都只是近似时，在温和的噪声/偏差假设下仍保证渐近收敛。这条从"精确"到"近似"的链条把实际可实现的算法也纳入了保证范围。
 
 ## 实验关键数据
 

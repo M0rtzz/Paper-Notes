@@ -40,9 +40,21 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SER 的 pipeline 如下：输入图像 → 数据增强 → ViT 编码器 → 中间层产出空间 token map（施加等变正则化）→ 后续层产出 [CLS] token（施加不变性 SSL 损失）→ 输出表征。
+SER 要解决的问题是：怎样把"等变性"塞进 MoCo-v3/DINO 这类"不变性"自监督方法，既不和原来的不变性目标打架、又不新增任何模块。它的核心思路是**层解耦（layer decoupling）**——不变性和等变性别挤在同一层，而是各管一层：不变性 SSL 损失留在最终层（[CLS] token），等变正则化挪到中间层（第 3 层）那张仍保留 $H_f \times W_f$ 网格结构的空间 token map 上。
 
-关键设计是将 ViT 编码器 $f$ 分解为两部分：$f = f^{(2)} \circ f^{(1)}$，其中 $f^{(1)}$ 输出保留空间结构的 token map（无 [CLS] token），$f^{(2)}$ 在输入时才插入 [CLS] token 并产出最终嵌入。
+具体怎么转：一个 mini-batch 先被切成两半（批次分区），一半走标准增强（含裁剪）、一半走可逆增强（无裁剪、带旋转翻转缩放）；两半都进入分解后的 ViT 编码器 $f = f^{(2)} \circ f^{(1)}$，其中 $f^{(1)}$ 先产出不含 [CLS] 的纯空间 token map（[CLS] 延迟到 $f^{(2)}$ 输入端才插入）；在 $f^{(1)}$ 这张干净的 token map 上，只对走可逆增强的那半用解析群操作 $\rho_g$ 施加软等变正则化；随后插入 [CLS]、过 $f^{(2)}$，两半都照常计算不变性 SSL 损失。最终目标是不变性损失加上一个加权的等变正则项。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入 mini-batch"] --> SPLIT{"批次分区<br/>切成 b₁ / b₂"}
+    SPLIT -->|"b₁ 标准增强(含裁剪)<br/>b₂ 可逆增强(无裁剪,+旋转翻转缩放)"| F1["f⁽¹⁾ 编码<br/>CLS 延迟插入 → 纯空间 token map"]
+    F1 -->|"仅 b₂, 第3层"| EQUIV["层解耦·中间层<br/>解析群操作 ρ_g 置换 token<br/>→ 逐 patch 软等变正则化"]
+    F1 --> F2["插入 [CLS] → f⁽²⁾ 编码"]
+    F2 --> INV["层解耦·最终层<br/>[CLS] 不变性 SSL 损失"]
+    EQUIV --> LOSS["总损失<br/>ℒ_inv + λ·ℒ_equiv"]
+    INV --> LOSS
+```
 
 ### 关键设计
 

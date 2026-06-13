@@ -42,19 +42,47 @@ tags:
 
 ### 整体框架
 
-协议遵循"先粗后精"的两步范式：先用极低的通信量在分布式数据上求出一个常数近似解，再以它为基准计算每个点的 sensitivity 并做重要性采样，把摘要升级成 $(1+\varepsilon)$-strong coreset。真正的难点不在算法骨架，而在如何让每一步的通信比特数与机器数 $s$、维度 $d$、精度 $1/\varepsilon$ 三者解耦，最终在 Coordinator 模型达到 $\tilde{O}(sk + dk/\min(\varepsilon^4, \varepsilon^{2+z}) + dk\log(n\Delta))$、在 Blackboard 模型达到 $\tilde{O}(s\log(n\Delta) + dk\log(n\Delta) + dk/\min(\varepsilon^4, \varepsilon^{2+z}))$，二者均匹配已知下界（至多差 polylog 因子）。
+协议遵循"先粗后精"的两步范式：先用极低的通信量在分布式数据上求出一个常数近似解 $C'$，再以它为基准算出每个点的 sensitivity $\mu(x)$ 并做重要性采样，把摘要升级成 $(1+\varepsilon)$-strong coreset，最后在 coreset 上跑任意中心化聚类算法即可。算法骨架本身并不新，真正的难点在于让每一步的通信比特数与三个量彻底解耦——机器数 $s$、维度 $d$、精度 $1/\varepsilon$，否则它们会像已有方法那样相乘成 $\tilde O(skd/\varepsilon^4)$ 这样的大项。本文的四个核心技术正好对应这三个解耦目标：阶段一用 Lazy + $L_1$ Sampling 把 $s$ 摘出去、用逐坐标采样把 $d$ 摘出去求常数近似；阶段二再用逐坐标 sensitivity 采样和紧凑编码把 $d$、$1/\varepsilon$ 控制住完成升级。最终在 Coordinator 模型达到 $\tilde{O}(sk + dk/\min(\varepsilon^4, \varepsilon^{2+z}) + dk\log(n\Delta))$、在 Blackboard 模型达到 $\tilde{O}(s\log(n\Delta) + dk\log(n\Delta) + dk/\min(\varepsilon^4, \varepsilon^{2+z}))$，二者均匹配已知下界（至多差 polylog 因子）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["分布式数据<br/>s 台机器各持部分 d 维点"] --> S1
+
+    subgraph S1["阶段一：求常数近似解 C'"]
+        direction TB
+        A["分布式 adaptive sampling<br/>逐个挑聚类中心"] --> B["Lazy + L₁ Sampling<br/>（把机器数 s 摘出去）"]
+        B --> C["Coordinate-wise Sampling<br/>（把维度 d 摘出去）"]
+    end
+
+    S1 --> SENS["以 C' 算每点 sensitivity μ(x)"]
+    SENS --> S2
+
+    subgraph S2["阶段二：升级为 (1+ε)-coreset"]
+        direction TB
+        D["Coordinate-wise<br/>Sensitivity Sampling<br/>（逐坐标低维采样）"] --> E["Compact Encoding<br/>（对齐 1/ε 下界）"]
+    end
+
+    S2 --> OUT["(1+ε)-strong coreset<br/>下游在其上跑聚类"]
+```
 
 ### 关键设计
 
-**1. Lazy Sampling：用过时的距离估计避免每轮全局通信。** 黑板模型里求常数近似最自然的做法是分布式 $k$-means++ 式的 adaptive sampling，但它要求每采一个中心就让全部 $s$ 台机器上报各自的距离和 $D_i$，单轮就要 $O(sk\log n)$ 比特，代价过高。Lazy Sampling 的想法是黑板上只维护各机器距离和的近似值 $\widehat{D_i}$，并按 $\widehat{D_i}$ 的比例挑机器采样——只要 $\widehat{D_i}$ 还是 $D_i$ 的常数近似，单次采样失败的概率就是常数，总采样轮次维持在 $O(k)$。一旦某次采样失败，恰好说明该机器的 $D_i$ 已经大幅下降，此时机器 $i$ 才更新黑板上的值；由于距离和单调递减，每台机器最多更新 $O(\log n)$ 次，每次还只需传 $O(\log\log n)$ 比特（传一个指数即可）。容忍过时信息、仅在偏差超阈值时纠正，这正是它把全局开销摊薄的核心。
+**1. Lazy + $L_1$ Sampling：把"机器数 $s$"从每轮通信里摘出去**
 
-**2. $L_1$ Sampling：把"是否该全局更新"也变成一次采样。** 即便有了 Lazy Sampling，判断全局总权重 $\sum_i D_i$ 是否已经显著下降本身仍可能触发全员通信。这里改用 $L_1$ Sampling：随机选一台机器 $i$（概率正比于 $\widehat{D_i}$），用无偏估计 $D_i/p_i$ 去估计全局总权重是否下降超过阈值 $1/64$，据此决定要不要触发一次全局更新。再配合指数增长的批采样——在总权重尚未明显下降时一次性采 $2^i$ 个样本（$i$ 逐轮递增）——把通信轮次从 $O(k)$ 量级压到 $O(\log n \log k)$，从而让 $s$ 项只以 $\log(n\Delta)$ 的代价出现在最终上界里。
+阶段一在 Blackboard 模型求常数近似，最自然的做法是分布式 $k$-means++ 式的 adaptive sampling，但它每采一个中心就要全部 $s$ 台机器上报各自的距离和 $D_i$，单轮 $O(sk\log n)$ 比特，$s$ 与 $k$ 直接相乘，代价过高。本文用两层"用采样代替广播"的技巧把 $s$ 摘出来。第一层 Lazy Sampling：黑板上只维护各机器距离和的过时近似 $\widehat{D_i}$，按 $\widehat{D_i}$ 的比例挑机器采样——只要 $\widehat{D_i}$ 仍是 $D_i$ 的常数近似，单次采样失败概率就是常数，总轮次维持 $O(k)$；某次失败恰好说明该机器的 $D_i$ 已大幅下降，此时机器 $i$ 才更新黑板上的值，而距离和单调递减，每台机器最多更新 $O(\log n)$ 次、每次仅传 $O(\log\log n)$ 比特（一个指数）。第二层 $L_1$ Sampling 解决"何时该触发全局更新"本身也会引发全员通信的问题：随机选一台机器 $i$（概率正比于 $\widehat{D_i}$），用无偏估计 $D_i/p_i$ 判断全局总权重 $\sum_i D_i$ 是否下降超过阈值 $1/64$；再配合指数增长的批采样（总权重未明显下降时一次性采 $2^i$ 个样本，$i$ 逐轮递增），把通信轮次从 $O(k)$ 压到 $O(\log n \log k)$。两者合起来，让 $s$ 项只以 $\log(n\Delta)$ 的代价出现在最终上界里——容忍过时信息、仅在偏差超阈值时纠正，是把全局开销摊薄的核心。
 
-**3. Coordinate-wise Sampling：让通信量与维度解耦。** 把常数近似升级到 $(1+\varepsilon)$-coreset 时，朴素做法要把采到的高维中心点完整传一遍，通信量直接正比于 $d$。本文不传完整坐标，而是在 coordinator 与持有该点的机器之间，对排序后的坐标序列做分布式二分搜索，最终只传一个小偏移量来定位目标。这样每次采样的通信代价与维度 $d$ 解耦，是 Coordinator 模型里去掉 $s\cdot d$ 乘积项的关键一步；一个值得注意的副产物是：整个协议不需要任何机器把完整点坐标广播给所有人。
+**2. Coordinate-wise Sampling：逐坐标二分定位，把维度 $d$ 从常数近似的传输里摘出去**
 
-**4. Coordinate-wise Sensitivity Sampling：把高维通信拆成逐坐标的低维问题。** 利用常数近似解 $C'$ 算出每个点的 sensitivity $\mu(x)$ 后，需要按 sensitivity 分布采 $\tilde{O}(k/\min(\varepsilon^4, \varepsilon^{2+z}))$ 个点。本文把每个点按坐标分解，依据各维度的重要性逐维采样：coordinator 先发一份紧凑摘要，各机器只在确有需要时才请求额外信息。代价是重构出的样本可能不对应数据集中任何真实点，但论文证明由此引入的聚类代价失真可控，因而 coreset 的近似保证不受影响。
+求常数近似时朴素做法要把采到的高维中心点完整传一遍，通信量直接正比于 $d$，于是 $s$ 又会乘上 $d$。本文不传完整坐标：在 coordinator 与持有该点的机器之间，对排序后的坐标序列做分布式二分搜索，最终只传一个小偏移量来定位目标点。这样每次采样的通信代价与维度 $d$ 解耦，是 Coordinator 模型里去掉 $s\cdot d$ 乘积项的关键一步。一个值得注意的副产物是：整个协议不需要任何机器把完整点坐标广播给所有人。
 
-**5. Compact Encoding：把每个采样点压到对数比特。** 最后一步是采样点的表示。每个点编码为 $(c'(x), y)$：$c'(x)$ 是它最近中心的索引，$y$ 则把残差向量逐坐标取对数后只保留指数。这样每个采样点仅需 $O(\log k + d\log(1/\varepsilon,\, d,\, \log(n\Delta)))$ 比特即可表示，使得 coreset 的总通信量里关于 $1/\varepsilon$ 的项不再额外乘上 $\log(n\Delta)$，恰好对齐通信下界。
+**3. Coordinate-wise Sensitivity Sampling：把高维 coreset 采样拆成逐坐标的低维问题**
+
+进入阶段二，用常数近似解 $C'$ 算出每点 sensitivity $\mu(x)$ 后，需要按 sensitivity 分布采 $\tilde{O}(k/\min(\varepsilon^4, \varepsilon^{2+z}))$ 个点；若仍按整点传输，维度 $d$ 又会回到通信量里。本文把每个点按坐标分解，依据各维度的重要性逐维采样：coordinator 先发一份紧凑摘要，各机器只在确有需要时才请求额外信息，于是高维采样被拆成一组低维问题。代价是重构出的样本可能不对应数据集中任何真实点，但论文证明由此引入的聚类代价失真可控，coreset 的近似保证不受影响。
+
+**4. Compact Encoding：把每个采样点压到对数比特，对齐 $1/\varepsilon$ 下界**
+
+最后一步是采样点的表示方式。每个点编码为 $(c'(x), y)$：$c'(x)$ 是它最近中心的索引，$y$ 则把残差向量逐坐标取对数后只保留指数。这样每个采样点仅需 $O(\log k + d\log(1/\varepsilon,\, d,\, \log(n\Delta)))$ 比特即可表示，使得 coreset 总通信量里关于 $1/\varepsilon$ 的项不再额外乘上 $\log(n\Delta)$，恰好对齐通信下界——这是把精度项 $1/\varepsilon$ 单独控制住、不与数据规模 $\log(n\Delta)$ 耦合的最后一块拼图。
 
 ## 实验关键数据
 

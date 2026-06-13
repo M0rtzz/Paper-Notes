@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR 2026  
 **arXiv**: [2602.10109](https://arxiv.org/abs/2602.10109)  
 **代码**: [https://internrobotics.github.io/internvla-m1.github.io](https://internrobotics.github.io/internvla-m1.github.io)  
-**领域**: 自动驾驶  
+**领域**: 机器人  
 **关键词**: Vision-Language-Action, 空间引导训练, 双系统架构, 扩散策略, 机器人操控  
 
 ## 一句话总结
@@ -43,15 +43,34 @@ tags:
 
 ### 整体框架
 
-ST4VLA 是一个基于 Qwen2.5-VL-3B 的双系统 VLA：System 2（VLM Planner）作为"慢而可靠"的多模态推理器，捕获空间与语义先验、负责高层规划；System 1（Action Expert）是一个轻量扩散 Transformer（DiT）配 DINOv2 视觉编码器，负责具身特定的快速运动控制。两者由一个仅 8.7MB 的 Querying Transformer 桥接，再配合两阶段训练（先空间 grounding 预训练、后空间引导动作后训练），把 VLM 里现成的空间知识平滑地灌进策略学习。
+ST4VLA 是一个基于 Qwen2.5-VL-3B 的双系统 VLA：System 2（VLM Planner）作为"慢而可靠"的多模态推理器，捕获空间与语义先验、负责高层规划；System 1（Action Expert）是一个轻量扩散 Transformer（DiT）配 DINOv2 视觉编码器，负责具身特定的快速运动控制。一次推理里，图像和任务指令先被追加一句**空间提示**唤醒 VLM 的空间感知，VLM 据此吐出变长的空间 grounding 表征，经一个仅 8.7MB 的 **Querying Transformer** 压成定长 query token 作为条件信号灌进 Action Expert，由后者扩散去噪出机器人动作；训练时动作损失会沿这条链反传回 VLM，**梯度衰减**负责把这股梯度按比例缩小，保护 VLM 已有的语义能力不被动作目标冲垮。整套流程再叠加两阶段训练（先空间 grounding 预训练、后空间引导动作后训练），把 VLM 里现成的空间知识平滑地灌进策略学习。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入：图像 + 任务指令"]
+    SP["空间提示<br/>(指令后追加一句<br/>触发空间推理)"]
+    S2["System 2·VLM Planner<br/>(Qwen2.5-VL-3B)<br/>→ 变长 grounding 表征"]
+    QT["Querying Transformer<br/>(8.7MB 交叉注意力)<br/>→ 定长 query token"]
+    S1["System 1·Action Expert<br/>(DiT + DINOv2 扩散去噪)"]
+    OUT["输出：机器人动作"]
+    IN --> SP --> S2 --> QT --> S1 --> OUT
+    S1 -.->|"动作梯度 ×0.5 衰减回传"| S2
+```
 
 ### 关键设计
 
-**1. Querying Transformer：把变长空间表征压成定长 query 喂给动作模块。** VLM Planner 输出的是变长的 latent spatial grounding embeddings，而扩散动作头需要固定形状的条件输入，二者无法直接对接。作者用一个 $k$ 层交叉注意力模块充当转接器：让一组可学习的 query tokens 去 cross-attend VLM 的变长 grounding embeddings，把它们汇聚成固定数量的 token 再送进 Action Expert。这个模块整体只有 8.7MB，几乎不增加参数量，却让"慢系统"的空间推理结果能稳定地作为"快系统"的条件信号，避免了把整段 VLM 输出硬塞进 DiT 带来的接口错配。
+**1. 空间提示：用一句追加文本唤醒预训练学到的空间感知**
 
-**2. 空间提示（Spatial Prompting）：用一句追加文本唤醒预训练学到的空间感知。** 直接把动作数据丢给 VLM 微调时，模型容易只盯着低层运动模式，预训练阶段攒下的空间能力被晾在一边。ST4VLA 的做法极其轻量——在动作后训练时，于原始任务指令后面追加一句空间提示。例如指令 "store all toys into the toy box" 被扩展为 "Identify all relevant toys and their spatial relationships to the container."，更通用的写法是 "Figure out how to execute it, then locate the key object needed"。这句提示显式触发 VLM 走一遍空间推理，产出带空间线索的 latent grounding embeddings，相当于在动作生成前先给策略递上一份"物体在哪、彼此什么关系"的备忘，从而强化语义到运动的对齐，且不需要任何额外的中间表示生成模块。
+直接把动作数据丢给 VLM 微调时，模型容易只盯着低层运动模式，预训练阶段攒下的空间能力被晾在一边。空间提示（Spatial Prompting）的做法极其轻量——在动作后训练时，于原始任务指令后面追加一句空间提示。例如指令 "store all toys into the toy box" 被扩展为 "Identify all relevant toys and their spatial relationships to the container."，更通用的写法是 "Figure out how to execute it, then locate the key object needed"。这句提示显式触发 VLM 走一遍空间推理，产出带空间线索的 latent grounding embeddings，相当于在动作生成前先给策略递上一份"物体在哪、彼此什么关系"的备忘，从而强化语义到运动的对齐，且不需要任何额外的中间表示生成模块。
 
-**3. 梯度衰减（Gradient Decay）：让动作目标别把 VLM 的语义能力学坏。** 联合训练时，Action Expert 的动作损失会沿 Querying Transformer 反传回 VLM——实验发现这股梯度若不加约束，会和空间感知目标方向打架（vanilla co-train 时梯度一致性 PSS 仅 0.25），把 VLM 已有的空间表征冲垮（RefCOCO-g 在 20k 步内掉到近随机）。作者在 Querying Transformer 处插入一个梯度衰减因子（取 0.5），把反传到 VLM 的梯度按比例缩小：既保留了端到端联合优化的好处，又给 VLM 的语义推理能力留出保护层。配合空间引导后，PSS 从 0.25 升到 0.42，空间先验不再坍塌。
+**2. Querying Transformer：把变长空间表征压成定长 query 喂给动作模块**
+
+VLM Planner 输出的是变长的 latent spatial grounding embeddings，而扩散动作头需要固定形状的条件输入，二者无法直接对接。作者用一个 $k$ 层交叉注意力模块充当转接器：让一组可学习的 query tokens 去 cross-attend VLM 的变长 grounding embeddings，把它们汇聚成固定数量的 token 再送进 Action Expert。这个模块整体只有 8.7MB，几乎不增加参数量，却让"慢系统"的空间推理结果能稳定地作为"快系统"的条件信号，避免了把整段 VLM 输出硬塞进 DiT 带来的接口错配。
+
+**3. 梯度衰减：让动作目标别把 VLM 的语义能力学坏**
+
+联合训练时，Action Expert 的动作损失会沿 Querying Transformer 反传回 VLM——实验发现这股梯度（Gradient Decay 针对的就是它）若不加约束，会和空间感知目标方向打架（vanilla co-train 时梯度一致性 PSS 仅 0.25），把 VLM 已有的空间表征冲垮（RefCOCO-g 在 20k 步内掉到近随机）。作者在 Querying Transformer 处插入一个梯度衰减因子（取 0.5），把反传到 VLM 的梯度按比例缩小：既保留了端到端联合优化的好处，又给 VLM 的语义推理能力留出保护层。配合空间引导后，PSS 从 0.25 升到 0.42，空间先验不再坍塌。
 
 ### 损失函数 / 训练策略
 

@@ -43,31 +43,45 @@ tags:
 
 ### 整体框架
 
-SeeDNorm 的核心设计是在 RMSNorm 的基础上，将静态缩放因子替换为依赖于输入的动态缩放因子。给定输入 $\mathbf{x} \in \mathbb{R}^{N \times D}$，SeeDNorm 的公式为：
+SeeDNorm 想解决的是 RMSNorm 的两个软肋——前向把输入尺度信息抹掉、缩放因子又与输入无关——但它没有推翻归一化主干，而是只动了那个静态缩放项。整条计算分成两路并行再汇合：一路照旧做 RMS 归一化，把 $\mathbf{x}$ 压到单位超球面上得到 $\frac{\mathbf{x}}{\text{RMS}(\mathbf{x})}$；另一路用输入自身算出一个动态缩放矩阵 $\sigma(\mathbf{x}\cdot\boldsymbol{\beta}^T)\cdot\boldsymbol{\alpha}+\boldsymbol{\gamma}$，让每个 token 的缩放系数随它自己的内容而变；两路逐维相乘，就把归一化时丢掉的尺度信息重新乘回特征里。完整公式为：
 
 $$\text{SeeDNorm}(\mathbf{x}) = [\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha} + \boldsymbol{\gamma}] \odot \frac{\mathbf{x}}{\text{RMS}(\mathbf{x})}$$
 
 其中 $\text{RMS}(\mathbf{x}) = \sqrt{\frac{1}{D}\sum_{i=1}^D x_i^2 + \epsilon}$，$\boldsymbol{\alpha}, \boldsymbol{\beta}, \boldsymbol{\gamma} \in \mathbb{R}^{1 \times D}$ 为可学习参数，$\sigma$ 为非线性激活函数（默认 tanh）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["输入 x"]
+    X --> NORM["归一化主干<br/>x / RMS(x)<br/>保住梯度自适应"]
+    X --> SCALE
+    subgraph SCALE["动态缩放项 σ(x·βᵀ)·α + γ"]
+        direction TB
+        H["分 n 头点积 x·βᵀ<br/>压低高维方差"] --> T["tanh 有界激活 σ"]
+        T --> A["逐维展开 ×α + γ"]
+    end
+    NORM --> MUL["逐维相乘 ⊙<br/>把尺度信息乘回"]
+    SCALE --> MUL
+    MUL --> OUT["输出"]
+```
+
 ### 关键设计
 
-**1. 自适应缩放矩阵：让缩放因子随输入而变，把范数信息找回来**
+**1. 自适应缩放矩阵：动态项找回范数、保留 1/RMS 守住梯度自适应**
 
-RMSNorm 丢掉输入尺度的根源在于它的缩放因子 $\boldsymbol{\gamma}$ 是与输入无关的静态参数。SeeDNorm 把这一项换成依赖输入的动态项 $\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha}$：输入 $\mathbf{x}$ 先与参数 $\boldsymbol{\beta}$ 做点积压成标量，经 tanh 把它约束到 $[-1, 1]$ 这个有界区间，再乘上 $\boldsymbol{\alpha}$ 展开成一个逐维的缩放矩阵。这样每个 token 看到的缩放系数都由它自身的内容决定——不同范数、不同分布的输入会得到不同的缩放，归一化时被抹掉的尺度信息因此在前向传播里被重新编码回特征中，而这只需额外引入 $\boldsymbol{\alpha}, \boldsymbol{\beta}$ 两个 $D$ 维向量。
+RMSNorm 前向抹掉尺度、缩放因子又与输入无关，根子都在那个静态的 $\boldsymbol{\gamma}$ 上。SeeDNorm 把它换成依赖输入的动态项 $\sigma(\mathbf{x} \cdot \boldsymbol{\beta}^T) \cdot \boldsymbol{\alpha}$：输入 $\mathbf{x}$ 先与 $\boldsymbol{\beta}$ 做点积压成标量，经 tanh 约束到 $[-1, 1]$，再乘 $\boldsymbol{\alpha}$ 展开成逐维缩放矩阵。于是每个 token 的缩放系数都由它自身内容决定，不同范数、不同分布的输入得到不同缩放，前向被抹掉的尺度信息因此重新编码回特征——代价只是 $\boldsymbol{\alpha}, \boldsymbol{\beta}$ 两个 $D$ 维向量。
+
+更关键的是 SeeDNorm 没动归一化主干，仍保留 $\frac{1}{\text{RMS}(\mathbf{x})}$ 这个除法结构，这让它在反向传播里同时继承了 RMSNorm 的稳定优势。DyT 之所以失效，是因为 tanh 饱和后梯度被压死，且在常数范数假设下其梯度等价于 RMSNorm 的逐元素操作，丢掉了按范数调节梯度的能力。SeeDNorm 因为保住了 $\frac{1}{\text{RMS}(\mathbf{x})}$，反向时梯度仍主要由它主导：当某输入 $k\mathbf{x}$ 异常大，$\frac{1}{\text{RMS}(k\mathbf{x})} = \frac{1}{k \cdot \text{RMS}(\mathbf{x})}$ 会把梯度按 $k$ 自动缩小，输入过小则相应放大。这种由输入范数驱动的自动伸缩正是 RMSNorm 稳定的关键——前向恢复尺度、反向守住梯度自适应，两件事在一套设计里同时拿下，是 SeeDNorm 的核心。
 
 **2. 尺度不变的初始化：训练初期不让动态项乱动**
 
 引入输入相关项的代价是模型可能在训练早期对输入尺度过度敏感，反而破坏稳定性。当输入整体被缩放 $k$ 倍时，由于 RMS 归一化本身具备尺度不变性，$\frac{\mathbf{x}}{\text{RMS}(\mathbf{x})}$ 不变，SeeDNorm 中唯一随 $k$ 变化的就是自适应项里的 $\sigma(k\mathbf{x} \cdot \boldsymbol{\beta}^T)$。作者把 $\boldsymbol{\beta}$ 初始化为零，使训练起点处 $\nabla_\mathbf{x} f$ 恰好为零，于是网络在最初阶段对尺度扰动近乎免疫，等价于退化成标准 RMSNorm，再随训练逐步学出动态行为，避免了一上来就被动态项带偏。
 
-**3. 梯度自适应调整：在反向传播里保住 RMSNorm 的稳定优势**
-
-DyT 之所以会失效，是因为 tanh 饱和后梯度被压死，而且在常数范数假设下它的梯度等价于 RMSNorm 的逐元素操作，丢掉了按输入范数调节梯度的能力。SeeDNorm 因为保留了 $\frac{1}{\text{RMS}(\mathbf{x})}$ 这个除法结构，反向传播时梯度仍主要由它主导：当某个输入 $k\mathbf{x}$ 异常大时，$\frac{1}{\text{RMS}(k\mathbf{x})} = \frac{1}{k \cdot \text{RMS}(\mathbf{x})}$ 会把梯度按 $k$ 倍自动缩小；输入异常小时梯度则相应放大。这种由输入范数驱动的自动伸缩，正是 RMSNorm 训练稳定的关键，SeeDNorm 在保留范数信息的同时把它一并继承了下来。
-
-**4. 多头形式：用分头点积压住高维下爆炸的梯度方差**
+**3. 多头形式：用分头点积压住高维下爆炸的梯度方差**
 
 直接在高维特征上算 $\mathbf{x} \cdot \boldsymbol{\beta}^T$ 会出问题——这个点积的方差与维度 $D$ 成正比（Theorem 3.2），维度一高方差就过大，导致梯度剧烈震荡甚至不收敛。借鉴多头注意力的思路，SeeDNorm 把 $\mathbf{x}$ 和 $\boldsymbol{\beta}$ 各切成 $n$ 个子向量，在每个子空间内分别算点积再拼接，单个点积涉及的维度从 $D$ 降到 $D/n$，方差随之被压下来。视觉任务对此尤其敏感，因此默认采用多头版本，消融显示 ViT-B 上单头直接不收敛，而 16 头能稳定到最优。
 
-**5. AdaSeeDNorm：适配 DiT 里 AdaLN 的条件注入结构**
+**4. AdaSeeDNorm：适配 DiT 里 AdaLN 的条件注入结构**
 
 DiT 中的 AdaLN 会把类别条件 $c$ 通过缩放、偏移注入归一化，结构和 RMSNorm 不同，不能简单替换。作者为此设计了兼容变体，把动态缩放项嵌进 AdaLN 的条件调制框架：
 

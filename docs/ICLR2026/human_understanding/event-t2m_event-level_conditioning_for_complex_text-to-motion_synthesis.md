@@ -41,13 +41,33 @@ tags:
 
 ### 整体框架
 
-Event-T2M 的核心思路是将文本到动作生成重新定义为事件级别的条件生成问题，包含三个关键组件：
+Event-T2M 把"复杂多动作文本 → 动作"的生成重新拆到**事件粒度**来做。给定一句提示 $W$，先用 LLM（Gemini 2.5 Flash）把它切成**有序的事件序列** $\{C_k\}_{k=1}^K$（如"向后退、向上跳、向前跑、再倒退"切成四个事件）；再用运动感知的 TMR 编码器把每个事件单独编码成一枚**事件 token**（堆叠成 $E$，保住先后顺序），同时把整句编成一枚**全局 token** $G$ 备用。生成端是一个 Conformer 风格的扩散去噪器，由 $N$ 个相同的 **Event-T2M Block** 堆叠而成；每个块里靠 **ECA（事件级交叉注意力）** 让运动逐帧去对齐有序事件 token、靠 **ATII（自适应文本注入）** 在局部事件描述含糊时用全局语义兜底，最终从噪声逐步去噪出与各事件逐段对齐的动作序列。
 
-1. **LLM 事件分解**：利用 Gemini 2.5 Flash 将输入文本提示 $W$ 分割为事件序列 $\{C_k\}_{k=1}^K$
-2. **TMR 事件编码**：用运动感知的 TMR 编码器将每个事件映射为事件 token
-3. **ECA 注入**：通过事件级交叉注意力模块在 Conformer 块中融合事件信息
+**事件的形式化定义**：事件是文本提示中最小的、语义自包含的动作或状态变化，其执行可以在时间上被隔离并映射到一段连续运动片段——这是整套方法的出发点，也是把"压成一个嵌入"换成"一串有序 token"的依据。
 
-**事件的形式化定义**：事件是文本提示中最小的语义自包含动作或状态变化，其执行可以在时间上被隔离并映射到连续运动片段。例如，"A person steps backward, jumps up, runs forward, then runs backward" 被分解为四个事件。
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    W["文本提示 W<br/>退→跳→跑→倒退"] --> LLM["LLM 事件分解<br/>(Gemini 2.5 Flash)"]
+    LLM --> C["有序事件序列 {C_k}"]
+    subgraph TOK["事件 Token 生成（设计 1）"]
+        direction TB
+        C --> TMR["TMR 编码器<br/>(运动-语言对齐)"]
+        W --> TMR
+        TMR --> E["事件 token E<br/>局部、保序"]
+        TMR --> G["全局 token G<br/>整句兜底"]
+    end
+    NZ["噪声运动 x_t"] --> BLK
+    subgraph BLK["Event-T2M Block ×N（设计 2）"]
+        direction TB
+        ATII["ATII 自适应文本注入<br/>通道门控 ⊙ G（设计 4）"] --> SA["ConformerSA<br/>自注意力"]
+        SA --> ECA["ECA 事件级交叉注意力<br/>运动 query ← 事件 token（设计 3）"]
+        ECA --> CV["ConformerConv<br/>局部动力学"]
+    end
+    E --> ECA
+    G --> ATII
+    BLK --> OUT["动作序列 x_0"]
+```
 
 ### 关键设计
 

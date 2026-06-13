@@ -41,7 +41,18 @@ tags:
 ## 方法详解
 
 ### 整体框架
-COMI 要解决的是「在高压缩率下既保住相关信息、又不被冗余拖垮」这个矛盾。给定上下文 $X$ 和查询 $Q$，先用 Encoder 把它们编码成向量，然后做一套粗到细的两阶段压缩：宏观上先把上下文切成等长段，按每段的信息价值动态分配压缩预算（相关又独特的段少压一点）；微观上再在每段内部把多个 token 加权融合成一个压缩 token。两阶段都由同一个度量——边际信息增益 MIG——来驱动。压缩后的表征经过 LSA（Layer-wise Semantic Alignment）做跨层语义对齐，最后送进 Decoder 解码出答案。
+COMI 要解决的是「在高压缩率下既保住相关信息、又不被冗余拖垮」这个矛盾。整体是 Encoder-Decoder 架构：给定上下文 $X$ 和查询 $Q$，先用 Encoder 编码成隐状态，并把查询多个 token 平均池化成一个查询向量 $\bar{q}$ 作为后续相关性的参照。随后做一套粗到细的两阶段压缩——宏观上先把上下文切成等长段，按每段的信息价值动态分配压缩预算（相关又独特的段少压一点）；微观上再在每段内部把多个 token 加权融合成一个压缩 token。两阶段都由同一个度量——边际信息增益（Marginal Information Gain, MIG）——来驱动。压缩后的表征经过 LSA（Layer-wise Semantic Alignment）做跨层语义对齐，最后送进 Decoder 解码出答案。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["上下文 X + 查询 Q"] --> B["Encoder 编码隐状态<br/>查询平均池化得 q̄"]
+    B --> C["边际信息增益 MIG<br/>相关性 − 冗余度"]
+    C -->|段间 MIG 分预算| D["粗粒度分组预算再分配<br/>高 MIG 段少压"]
+    D -->|组内 MIG 加权| E["细粒度 token 融合<br/>独特 token 主导"]
+    E --> F["LSA 跨层语义对齐"]
+    F --> G["Decoder 解码答案"]
+```
 
 ### 关键设计
 
@@ -63,7 +74,7 @@ $$P_i = \frac{e^{-G_i}}{\sum_j e^{-G_j}}$$
 
 **3. 细粒度 token 融合：组内合并时让独特 token 主导，而不是均匀平均**
 
-分完段预算后要把每段内多个 token 压成更少的几个。简单做均匀平均会把关键信息稀释掉，COMI 改用 MIG 加权融合——以段代表 query $\bar{q}$ 为参照，按组内每个 token 的 MIG 做 softmax 加权求和：
+分完段预算后要把每段内多个 token 压成更少的几个。简单做均匀平均会把关键信息稀释掉，COMI 改用 MIG 加权融合——以池化后的查询向量 $\bar{q}$ 为参照，按组内每个 token 的 MIG 做 softmax 加权求和：
 
 $$\tilde{h}_i = \sum_{h_k \in S_i} \frac{e^{G(h_k, \bar{q}, S_i)}}{\sum_{h_l \in S_i} e^{G(h_l, \bar{q}, S_i)}} \cdot h_k$$
 

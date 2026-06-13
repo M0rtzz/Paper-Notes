@@ -41,7 +41,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-论文不训练新模型，而是把 OLMoE-7B 已公开的一串预训练 checkpoint 当成"时间切片"来解剖。整个分析分两步走：先在这串 checkpoint 上分别标定每条训练数据"何时被记住"和每个 benchmark 样本"何时被答对"，把两者对齐起来验证 grokking 是否真的发生、以什么形式发生；再把视线转向 MoE 的 routing pathway——即每个样本在各层被路由到哪些 expert 组成的序列——观察它随训练如何演化，并设计两个只需训练数据、无需任何外部评估的指标来量化这种演化，最后证明这两个指标与下游泛化强相关。
+论文不训练新模型，而是把 OLMoE-7B 已公开的一串预训练 checkpoint 当成"时间切片"来解剖。整个分析分两条线展开：一条线在这串 checkpoint 上分别标定每条训练数据"何时被记住"和每个 benchmark 样本"何时被答对"，再把两者对齐，验证 grokking 是否真的发生、以什么形式发生；另一条线把视线转向 MoE 的 routing pathway——即每个样本在各层被路由到哪些 expert 组成的序列——用两个只需训练数据、无需任何外部评估的指标量化它随训练的演化。最后用一层 MoE 的理论分析把 pathway 复杂度和泛化界挂钩，并证明这两个指标与下游泛化强相关，从而成为零成本的泛化监控信号。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["OLMoE-7B 已公开的<br/>预训练 checkpoint 序列"]
+    subgraph B["局部异步 Grokking 的验证"]
+        direction TB
+        B1["标记每条数据的记忆时间"]
+        B2["标记 benchmark 样本的泛化时间"]
+        B1 --> B3["Hungarian 匹配记忆组↔泛化组<br/>发现泛化滞后于记忆、且局部异步"]
+        B2 --> B3
+    end
+    C["Pathway 编辑距离<br/>样本间路由相似度"]
+    D["Pathway 一致性<br/>单样本层间路由平滑度"]
+    E["理论支撑<br/>pathway 复杂度↔泛化界"]
+    F["零成本泛化监控指标"]
+    A --> B
+    A --> C
+    A --> D
+    C --> E
+    D --> E
+    B --> F
+    E --> F
+```
 
 ### 关键设计
 

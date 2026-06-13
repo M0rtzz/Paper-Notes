@@ -48,21 +48,53 @@ tags:
 
 ### 整体框架
 
-本文把 LRH 中的每个属性方向 $\bar{\ell}_m$ 当作嵌入空间里的一道半空间分界：对象嵌入 $\mathbf{v}_g$ 在该方向上的内积超过阈值，就判定该对象具有属性 $m$，由此从一组 token 嵌入和一组属性方向中构造出 FCA 的形式上下文 $(G, M, I)$。在此之上，多个半空间的交集对应一个概念，概念之间的包含、交、并都被翻译成嵌入几何上的可计算操作，最终在外延包含序下恢复出一个完备的概念格，把连续几何与符号抽象接到了一起。
+本文要回答的问题是：LLM 把概念的层次结构（谁是谁的下位、两个概念怎么交怎么并）藏在了连续嵌入几何的哪里？它的回答是一条从嵌入到概念格的构造管线。先把每个属性 $m$ 看成嵌入空间里的一道线性分界——属性方向 $\bar{\ell}_m$ 加阈值 $\tau_m$ 划出一个半空间，对象嵌入 $\mathbf{v}_g$ 落在哪一侧就决定它有没有这条属性；属性方向和阈值由带标注的对象集合统计估出，再软化成可微的关联关系，从而读出一份 FCA 的形式上下文 $(G, M, I)$。接着用一次全局平移把所有阈值吸收掉，让半空间都过原点，于是"一个概念"就落成"若干半空间的交集"这块几何区域，并附带一个连续的投影轮廓当它的"指纹"。最后在轮廓上定义软包含度量（推断概念偏序）和概念代数 Meet/Join（做交并组合），整条管线在外延包含序下恢复出一个**完备的概念格**，把连续几何与符号抽象接到了一起。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["对象嵌入(synset 均值)<br/>+ 属性标注"]
+    D1["估属性半空间<br/>软化成形式上下文 (G,M,I)<br/>→ 完备格(定理 1)"]
+    D2["规范平移吸收阈值<br/>半空间概念 + 投影轮廓 π"]
+    D3["软包含度量<br/>推断概念偏序 A⊑B"]
+    D4["概念代数<br/>Meet ∧ / Join ∨"]
+    OUT["完备概念格<br/>连续几何 ↔ 符号抽象"]
+    IN --> D1 --> D2
+    D2 --> D3
+    D2 --> D4
+    D3 --> OUT
+    D4 --> OUT
+```
 
 ### 关键设计
 
-**1. 软关联关系：把"对象是否具有属性"从硬判定改成可微的概率。** 直接用硬阈值判断 $\mathbf{v}_g \cdot \bar{\ell}_m \geq \tau_m$ 会让整个构造不可微、对噪声敏感，因此本文把关联关系软化为 $P_\alpha(m(g) = 1) := \sigma\!\left(\alpha \cdot (\mathbf{v}_g \cdot \bar{\ell}_m - \tau_m)\right)$，其中 $\sigma$ 是 sigmoid，$\alpha > 0$ 控制分界面的锐度，$\tau_m$ 是属性阈值；当 $\alpha \to \infty$ 时它退化回原来的硬阈值判断。给定置信水平 $\delta$，再把概率截断成二元关联 $I_\delta := \{(\mathbf{v}_g, \bar{\ell}_m) \mid P_\alpha(m(g) = 1) \geq \delta\}$，从而得到一个确定的形式上下文。这样构造的好处由定理 1 保证：诱导出的形式概念集 $\mathcal{F}_\delta$ 满足 Galois 连接的闭包性质，并在外延包含序下构成一个**完备格**——这正是"格表示假说"成立的几何基础。
+**1. 估属性半空间，软化成形式上下文：把统计估出的线性分界读成可微的"对象-属性"关联**
 
-**2. 规范表示：用一次全局平移把所有阈值吸收掉，让半空间都过原点。** 不同属性各有自己的阈值 $\tau_m$，分界面散落在空间各处，不便做交集和代数运算。命题 1 指出，若把属性方向按行排成矩阵 $D$、阈值排成向量 $\bm{\tau}$，且存在一点 $\mathbf{c} \in \mathbb{R}^d$ 满足 $D\mathbf{c} = \bm{\tau}$，那么只要对所有嵌入做一次平移 $\mathbf{v}_g \mapsto \mathbf{v}_g - \mathbf{c}$，就能把阈值整体消掉：$\sigma(\alpha(\mathbf{v}_g \cdot \mathbf{d}_i - \tau_i)) = \sigma(\alpha((\mathbf{v}_g - \mathbf{c}) \cdot \mathbf{d}_i))$。平移后每个属性都对应一个过原点的半空间，后续的交集、投影、代数运算都在这个统一坐标系下进行，形式大为简化。
+要从嵌入里读出 FCA 的形式上下文，第一步得拿到每条属性的几何分界。属性方向用正则化 Fisher 判别分析估计，$\bar{\ell}_m := (\Sigma_+ + \Sigma_- + \lambda I)^{-1}(\bm{\mu}_+ - \bm{\mu}_-)$，协方差用 Ledoit-Wolf 收缩稳定求逆；阈值取正负对象投影均值的中点 $\tau_m := \frac{1}{2}(\mathbb{E}_{g \in G_+}[\text{Proj}_m(\mathbf{v}_g)] + \mathbb{E}_{g \in G_-}[\text{Proj}_m(\mathbf{v}_g)])$；对象嵌入取 WordNet 同义词集（synset）的平均嵌入，以压低单词级的词汇噪声。拿到方向和阈值后，理想情况下用硬判据 $\mathbf{v}_g \cdot \bar{\ell}_m \geq \tau_m$ 就能定下对象 $g$ 有没有属性 $m$，但这种硬判定不可微、对噪声敏感，于是本文把关联软化为
 
-**3. 概念的半空间表示与投影轮廓：把符号概念落成几何区域，再给它一个连续"指纹"。** 在规范表示下，一个由属性集 $Y \subseteq M$ 定义的概念 $C$ 就是这些属性半空间的交集 $\mathcal{R}(Y) := \{\mathbf{v} \in \mathbb{R}^d \mid \mathbf{v} \cdot \mathbf{d}_m \geq 0,\ \forall m \in Y\}$——这是概念的外延区域。为了刻画概念的内涵，本文再定义投影轮廓 $\pi_C(m) := \frac{1}{n} \sum_{i=1}^{n} \mathbf{v}_i \cdot \mathbf{d}_m$，即概念内所有对象嵌入在属性方向 $m$ 上投影的均值，可看作离散内涵的连续推广；所有投影向量都经 $\ell_2$ 归一化以保证不同概念之间可比。轮廓把"概念满足哪些属性、满足到什么程度"压成一个稠密向量，是后面包含度量和概念代数的统一计算基底。
+$$P_\alpha(m(g) = 1) := \sigma\!\left(\alpha \cdot (\mathbf{v}_g \cdot \bar{\ell}_m - \tau_m)\right),$$
 
-**4. 软包含度量：不查 ground-truth 层次，直接从轮廓判断谁是谁的下位。** 判断概念归约 $A \sqsubseteq B$（$A$ 是 $B$ 的特例）时，本文用 $\text{Inclusion}(A \sqsubseteq B) = \dfrac{\sum_{m \in M} \phi(\pi_B(m)) \cdot \sigma(\pi_A(m))}{\sum_{m \in M} \phi(\pi_B(m))}$ 来度量。这里用 softplus $\phi(x) = \log(1 + e^x)$ 给 $B$ 中越显著的属性越大的权重，再用 $\sigma(\pi_A(m))$ 把 $A$ 在该属性上的投影读作"$A$ 满足此属性的软似然"——直观上就是看 $A$ 是否满足了 $B$ 强调的那些属性。整个度量只依赖嵌入几何算出的轮廓，因此可以在完全不访问真实层次结构的前提下推断偏序关系。
+其中 $\sigma$ 是 sigmoid，$\alpha > 0$ 控制分界面的锐度，$\alpha \to \infty$ 时退化回硬阈值。给定置信水平 $\delta$ 把概率截断成二元关联 $I_\delta := \{(\mathbf{v}_g, \bar{\ell}_m) \mid P_\alpha(m(g) = 1) \geq \delta\}$，就得到一份确定的形式上下文 $(G, M, I_\delta)$。这步为什么关键：定理 1 保证由此诱导出的形式概念集 $\mathcal{F}_\delta$ 满足 Galois 连接的闭包性质，并在外延包含序下构成一个**完备格**——这正是"格表示假说"成立的几何地基，后面所有概念操作都建在这块地基上。
 
-**5. 概念代数：在嵌入空间里直接做 Meet 与 Join。** 概念的交 Meet 定义为 $A \wedge B := \mathcal{R}(Y_A \cup Y_B)$，即同时满足两者全部属性的更窄区域；并 Join 定义为 $A \vee B := \mathcal{R}(Y_A) \cup \mathcal{R}(Y_B)$，即同时覆盖两者的最小区域。对应到连续轮廓上，则用模糊逻辑的 t-norm / co-norm 实现 $\pi_{A \wedge B}(m) = \min\{\pi_A(m), \pi_B(m)\}$、$\pi_{A \vee B}(m) = \max\{\pi_A(m), \pi_B(m)\}$，而软等价则把包含度量做调和平均对称化得到。这样概念组合推理（如 dog∨wolf 取上位、horse∧zebra 取精化交集）就成了可直接在嵌入上执行的代数运算。
+**2. 规范平移与半空间概念：用一次全局平移把阈值清零，让符号概念落成过原点的几何区域**
 
-**6. 属性方向与阈值估计：从带标注的对象集合反推出每条几何分界。** 上述构造需要先拿到属性方向 $\bar{\ell}_m$ 和阈值 $\tau_m$。属性方向用正则化 Fisher 判别分析估计，$\bar{\ell}_m := (\Sigma_+ + \Sigma_- + \lambda I)^{-1}(\bm{\mu}_+ - \bm{\mu}_-)$，协方差用 Ledoit-Wolf 收缩稳定求逆；阈值取正负对象投影均值的中点 $\tau_m := \frac{1}{2}(\mathbb{E}_{g \in G_+}[\text{Proj}_m(\mathbf{v}_g)] + \mathbb{E}_{g \in G_-}[\text{Proj}_m(\mathbf{v}_g)])$；对象嵌入则取 WordNet 同义词集（synset）的平均嵌入以压低单词级的词汇噪声。这一步把统计估出的方向与阈值喂回前面的软关联，整条从嵌入到概念格的管线才闭合。
+不同属性各有自己的阈值 $\tau_m$，分界面散落在空间各处，做交集和代数运算很别扭。命题 1 给出一个清场办法：把属性方向按行排成矩阵 $D$、阈值排成向量 $\bm{\tau}$，若存在一点 $\mathbf{c} \in \mathbb{R}^d$ 满足 $D\mathbf{c} = \bm{\tau}$（属性方向线性无关时成立），那么对所有嵌入平移 $\mathbf{v}_g \mapsto \mathbf{v}_g - \mathbf{c}$ 就能把阈值整体消掉，且不改变诱导的格：$\sigma(\alpha(\mathbf{v}_g \cdot \mathbf{d}_i - \tau_i)) = \sigma(\alpha((\mathbf{v}_g - \mathbf{c}) \cdot \mathbf{d}_i))$。平移后每个属性都对应一个**过原点的半空间**，于是一个由属性集 $Y \subseteq M$ 定义的概念就是这些半空间的交集
+
+$$\mathcal{R}(Y) := \{\mathbf{v} \in \mathbb{R}^d \mid \mathbf{v} \cdot \mathbf{d}_m \geq 0,\ \forall m \in Y\},$$
+
+几何上是一个凸的多面锥——这就是概念的外延区域。为了同时刻画概念的内涵、并把硬区域软化以容忍噪声，本文给每个概念 $C$ 再配一个投影轮廓 $\pi_C(m) := \frac{1}{n} \sum_{i=1}^{n} \mathbf{v}_i \cdot \mathbf{d}_m$，即概念内所有对象嵌入在属性方向 $m$ 上投影的均值，可看作离散 FCA 内涵的连续推广；所有轮廓向量经 $\ell_2$ 归一化以保证不同概念可比。轮廓把"概念满足哪些属性、满足到什么程度"压成一个稠密向量，是后面包含度量和概念代数的统一计算基底。
+
+**3. 软包含度量：不查 ground-truth 层次，直接从投影轮廓判断谁是谁的下位**
+
+有了轮廓，判断概念归约 $A \sqsubseteq B$（$A$ 是 $B$ 的特例）就不必查真实层次，而是看 $A$ 的轮廓有没有满足 $B$ 所强调的那些属性：
+
+$$\text{Inclusion}(A \sqsubseteq B) = \frac{\sum_{m \in M} \phi(\pi_B(m)) \cdot \sigma(\pi_A(m))}{\sum_{m \in M} \phi(\pi_B(m))},\quad \phi(x) = \log(1 + e^x).$$
+
+这里用 softplus $\phi$ 给 $B$ 中越显著的属性越大的权重，使弱表达或未激活的属性被平滑下调；再用 $\sigma(\pi_A(m))$ 把 $A$ 在该属性上的投影读作"$A$ 满足此属性的软似然"。于是包含被建模成一个连续、几何驱动的轮廓兼容度，而非严格的集合包含——好处是整个度量只依赖嵌入算出的轮廓，可以在完全不访问真实层次结构的前提下推断偏序关系。
+
+**4. 概念代数：把 Meet 与 Join 直接定义在嵌入区域上，让组合推理变成几何运算**
+
+概念组合也落到半空间模型里直接算。交 Meet 是同时满足两者全部属性的更窄区域 $A \wedge B := \mathcal{R}(Y_A \cup Y_B)$（几何上即两组半空间的交集）；并 Join 是同时覆盖两者的最小区域 $A \vee B := \mathcal{R}(Y_A) \cup \mathcal{R}(Y_B)$，可用两者属性方向张成的凸锥（conic hull）近似。落到连续轮廓上，则用模糊逻辑的 t-norm / co-norm 实现 $\pi_{A \wedge B}(m) = \min\{\pi_A(m), \pi_B(m)\}$、$\pi_{A \vee B}(m) = \max\{\pi_A(m), \pi_B(m)\}$，软等价则把包含度量做调和平均对称化得到。这样概念组合推理（如 dog∨wolf 取上位、horse∧zebra 取精化交集）就成了可直接在嵌入上执行的代数运算，符号抽象因此从连续几何里自然涌现，无需显式的符号系统介入。
 
 ---
 

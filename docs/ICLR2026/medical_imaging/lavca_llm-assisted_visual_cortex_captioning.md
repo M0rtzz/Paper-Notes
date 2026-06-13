@@ -45,7 +45,22 @@ tags:
 
 LaVCa 要解决的问题是：给定人类视觉皮层里的一个体素，用一句简洁的自然语言说清它"对什么视觉内容敏感"，而且这句话还得准确到能反过来预测该体素的脑活动。它把这件事拆成一条四步流水线，关键在于**先把"选图"和"描述"两件事分开**，再让 LLM 在文本侧做提炼组合。
 
-输入是 NSD 数据集中受试者观看图像时记录的 fMRI 脑活动。第一步先为每个体素拟合一个"图像→脑活动"的线性编码模型 $\mathbf{y}_i = \mathbf{W}\mathbf{x}_i + \bm{\varepsilon}_i$；第二步拿这个模型去 170 万张外部图像上打分，挑出最能激活该体素的 top-N 张最优图像；第三步用 MLLM（MiniCPM-V）给每张最优图像写描述；第四步再用 LLM（GPT-4o）从这些描述里提炼共性关键词，过滤后由 MeaCap Sentence Composer 组合成最终那句 caption。最终输出就是每个体素一句话。
+输入是 NSD 数据集中受试者观看图像时记录的 fMRI 脑活动。第一步先为每个体素拟合一个"图像→脑活动"的线性编码模型 $\mathbf{y}_i = \mathbf{W}\mathbf{x}_i + \boldsymbol{\varepsilon}_i$；第二步拿这个模型去 170 万张外部图像上打分，挑出最能激活该体素的 top-N 张最优图像；第三步用 MLLM（MiniCPM-V）给每张最优图像写描述；第四步再用 LLM（GPT-4o）从这些描述里提炼共性关键词，过滤后由 MeaCap Sentence Composer 组合成最终那句 caption。最终输出就是每个体素一句话。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["fMRI 脑活动<br/>(NSD：受试者看图)"] --> ENC["编码模型构建<br/>CLIP 特征 + 岭回归<br/>→ 体素权重 W"]
+    ENC --> OPT["最优图像集探索<br/>170 万外部图像 × W<br/>→ top-N 最优图像"]
+    OPT --> SC
+    subgraph SC["LLM 关键词提取与句子组合"]
+        direction TB
+        CAP["MLLM(MiniCPM-V)<br/>逐张写描述"] --> KW["GPT-4o 提取<br/>候选关键词"]
+        KW --> FLT["CLIP-Text 算相似度<br/>softmax 阈值过滤"]
+        FLT --> COMP["MeaCap Sentence Composer<br/>(用权重 W 引导成句)"]
+    end
+    SC --> OUT["体素 caption<br/>一句话"]
+```
 
 ### 关键设计
 

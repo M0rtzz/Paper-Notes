@@ -43,7 +43,21 @@ tags:
 ### 整体框架
 这篇论文要解决的是长上下文里的多步检索：给一段（预切分成 chunks 的）长文档和一个查询，需要分几步把散落在不同位置的支持事实逐个找齐。它和主流做法的根本分歧在于"改谁"——既不去微调 LLM 让它生成搜索查询（贵、且用不了闭源模型），也不用监督学习训练一个检索器（泛化差），而是把检索本身建模成一个序贯决策问题，只微调 embedder 让它学会"在检索空间里一步步做决策"。
 
-具体把整个过程写成 MDP：状态是当前已检索 chunks 的有序列表，动作是从剩余候选里挑下一个 chunk，奖励是稀疏的终端奖励（把所有支持事实都找到才得 1 分）。训练用 soft Q-learning 配合 PQN，全程只更新 embedder 的参数。
+具体把整个过程写成 MDP：状态是当前已检索 chunks 的有序列表，动作是从剩余候选里挑下一个 chunk，奖励是稀疏的终端奖励（把所有支持事实都找到才得 1 分）。训练用 soft Q-learning 配合 PQN，全程只更新 embedder 的参数。推理时则是一个迭代回环：状态 embedder 编码已检索内容、动作 embedder 编码每个候选 chunk，两者内积打分后选出下一个 chunk 加入集合，循环到支持事实找齐再交给 LLM 作答。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["长文档（切成 chunks）+ 查询"] --> B["状态 embedder E_s<br/>编码已检索 chunks → 状态嵌入"]
+    A --> C["动作 embedder E_a<br/>编码各候选 chunk + RoPE 相对位置<br/>→ 动作嵌入"]
+    B --> D["Q 值即内积<br/>状态嵌入·动作嵌入<br/>一次打分全部候选"]
+    C --> D
+    D --> E["选 Q 值最高的 chunk<br/>加入已检索集"]
+    E -->|支持事实未找齐| B
+    E -->|已找齐| F["输出检索到的 chunks → LLM 作答"]
+    T["PQN + soft Q-learning 训练<br/>只更新 E_s / E_a 参数"] -.-> B
+    T -.-> C
+```
 
 ### 关键设计
 

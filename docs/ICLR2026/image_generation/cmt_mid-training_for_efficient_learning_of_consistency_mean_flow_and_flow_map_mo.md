@@ -42,38 +42,45 @@ tags:
 
 ### 整体框架
 
-CMT 提出三阶段 pipeline：**预训练** → **中间训练 (CMT)** → **后训练 (Flow Map)**。
+CMT 要解决的是 flow map 模型（少步生成器）训练又慢又不稳的老问题，思路是在「预训练扩散模型」和「flow map 后训练」之间插一个轻量的中间训练阶段。整条流水线分三段走：先拿一个预训练好的扩散 / flow matching 模型当**教师**，用它的 ODE solver 跑出一批确定性轨迹；再把这些轨迹当成**固定的回归目标**，让模型学会「从轨迹上任意点跳回干净终点」——这一步就是 CMT 本身；最后用 CMT 训出的权重去**初始化** flow map 模型（ECT/ECD/MF），照原样后训练即可。关键在于：教师轨迹是确定且现成的监督，省去了 flow map 训练里 stop-gradient 伪目标带来的漂移；而轨迹对齐的初始化又让后训练既快又稳，1-2 步就能生成高质量图像。
 
-- **输入**：预训练好的扩散模型 $\mathbf{D}_\phi$（或 flow matching 模型）
-- **中间训练**：从先验分布 $p_{\text{prior}}$ 采样 $\mathbf{x}_T$，用预训练模型的 ODE solver（如 DPM-Solver++ 16 步）生成离散轨迹 $\{\hat{\mathbf{x}}_{t_i}\}_{i=0}^M$，训练模型将轨迹上任意点映射回干净终点
-- **后训练**：用 CMT 的权重初始化 flow map 模型（ECT/ECD/MF），正常训练
-- **输出**：1-2 步即可生成高质量图像的 flow map 模型
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["预训练扩散 / FM 模型<br/>（自带 ODE solver）"] --> B["灵活的教师采样器<br/>跑出一条确定性 ODE 轨迹"]
+    B --> C["轨迹复用机制<br/>一条轨迹榨出 M 个训练对"]
+    C -->|CM 框架| D["CMT-CM 损失<br/>轨迹点→干净终点 纯回归"]
+    C -->|MF 框架| E["CMT-MF 损失<br/>两点间平均漂移的有限差分回归"]
+    D --> F["flow map 后训练<br/>用 CMT 权重初始化 ECT/ECD/MF"]
+    E --> F
+    F --> G["1-2 步少步生成"]
+```
 
 ### 关键设计
 
-**1. CMT-CM 损失：把 consistency 训练变成对 ODE 终点的纯回归**
+**1. 灵活的教师采样器：谁能生成 ODE 轨迹谁就能当教师**
 
-Flow map 训练之所以不稳，根子在于它用 stop-gradient 的伪目标自己监督自己，目标随训练漂移。CMT 把这个目标换成一个**固定且确定**的东西：用预训练模型的 ODE solver 跑出一条轨迹后，轨迹终点 $\hat{\mathbf{x}}_{t_0}$ 就是现成的"干净样本"，让模型把轨迹上任意中间点 $\hat{\mathbf{x}}_{t_i}$ 直接映射回它即可。损失写成
+CMT 唯一要教师做的事，是产出一条 ODE 轨迹，所以教师既不必是预训练扩散模型、也不必很强。从先验 $p_{\text{prior}}$ 采样起点 $\mathbf{x}_T$，用任意能解 PF-ODE 的求解器（论文用 DPM-Solver++ 16 步，或一个 MF 教师 8 步）就能跑出离散轨迹 $\{\hat{\mathbf{x}}_{t_i}\}_{i=0}^M$，其中 $\hat{\mathbf{x}}_{t_i} \approx \Psi_{T \to t_i}(\mathbf{x}_T)$ 近似真实流映射。论文在 ImageNet 256 上把这点推到极限：用质量很差的小模型 MF-B/4（8 步 FID 才 13.44）当教师生成轨迹，照样能训出大得多的 MF-XL/2。这说明 CMT 的中间训练是架构无关的——落地上可以先快速训一个小模型，再用它的粗糙轨迹去引导、加速大模型的训练。
+
+**2. 轨迹复用机制：一次 solver 调用榨出 $M$ 个训练对**
+
+教师跑一条 $M$ 步轨迹时会留下一整串中间状态 $\{\hat{\mathbf{x}}_{t_i}\}$，若只拿端点用就浪费了。CMT 把每个中间点 $\hat{\mathbf{x}}_{t_i}$ 都和终点 $\hat{\mathbf{x}}_{t_0}$ 配成一个训练样本，于是一次 solver 调用就产出 $M$ 个训练对，喂给下面的回归损失。相比只用端点的 Slow CMT，这种复用让数据效率高约 3 倍，同样的 GPU 时间能喂进更多有效监督——这也是 CMT 训练成本远低于同类方法的直接原因之一。注意每个起点 $\mathbf{x}_T$ 只确定唯一一条轨迹，但 $\mathbf{x}_T$ 可以无限多采，所以不会过拟合到固定监督上。
+
+**3. CMT-CM 损失：把 consistency 训练变成对 ODE 终点的纯回归**
+
+Flow map 训练之所以不稳，根子在于它用 stop-gradient 的伪目标自己监督自己，目标随训练漂移。拿到上面那些轨迹训练对后，CMT 把目标换成一个**固定且确定**的东西：轨迹终点 $\hat{\mathbf{x}}_{t_0}$ 就是现成的「干净样本」，让模型把轨迹上任意中间点 $\hat{\mathbf{x}}_{t_i}$ 直接映射回它即可。损失写成
 
 $$\mathcal{L}_{\text{CMT-CM}}(\theta) = \mathbb{E}_i \mathbb{E}_{\mathbf{x}_T \sim p_{\text{prior}}} \big[d\big(\mathbf{f}_\theta(\hat{\mathbf{x}}_{t_i}, t_i),\ \hat{\mathbf{x}}_{t_0}\big)\big],$$
 
-其中 $d$ 取 LPIPS 或 $\ell_2$ 距离。由于 solver 生成点近似真实流映射 $\hat{\mathbf{x}}_{t_i} \approx \Psi_{T \to t_i}(\mathbf{x}_T)$，这其实是 oracle consistency 损失的离散近似，整个目标退化成标准回归问题——**不需要 stop-gradient、不需要自定义时间采样、也不需要损失权重调度**。每个起点 $\mathbf{x}_T$ 确定唯一一条轨迹，但 $\mathbf{x}_T$ 可以无限多采，所以不会过拟合到固定监督上。
+其中 $d$ 取 LPIPS 或 $\ell_2$ 距离。由于 solver 生成点近似真实流映射，这其实是 oracle consistency 损失的离散近似，整个目标退化成标准回归问题——**不需要 stop-gradient、不需要自定义时间采样、也不需要损失权重调度**，这正是它把 CM 类后训练初始化得又快又稳的原因。
 
-**2. CMT-MF 损失：把 mean flow 目标简化成轨迹点的有限差分回归**
+**4. CMT-MF 损失：把 mean flow 目标简化成轨迹点的有限差分回归**
 
-Mean Flow 学的不是直接映射回终点，而是两点之间的平均漂移，训练目标更复杂。CMT 同样用已经跑好的轨迹来构造监督——任取轨迹上两点 $t_i > t_j$，它们之间的平均漂移就用有限差分近似，让模型 $\mathbf{h}_\theta$ 去回归它：
+Mean Flow 学的不是直接映射回终点，而是两点之间的平均漂移，训练目标更复杂。CMT 同样用已跑好的轨迹来构造监督——任取轨迹上两点 $t_i > t_j$，它们之间的平均漂移用有限差分近似，让模型 $\mathbf{h}_\theta$ 去回归它：
 
 $$\mathcal{L}_{\text{CMT-MF}}(\theta) = \mathbb{E}_{i>j} \mathbb{E}_{\mathbf{x}_T} \Big[\big\|\mathbf{h}_\theta(\hat{\mathbf{x}}_{t_i}, t_i, t_j) - \tfrac{\hat{\mathbf{x}}_{t_i} - \hat{\mathbf{x}}_{t_j}}{t_i - t_j}\big\|_2^2\Big].$$
 
-当 $t_j = 0$ 时它正好退化为 CMT-CM，所以 CMT-MF 是更一般的形式，CM 只是它的特例。和原版 MF 相比，这里既不用 stop-gradient，也不用 Jacobian-向量积（JVP），而 JVP 正是 MF 训练里最昂贵的一块，省掉它直接把计算成本压下来。
-
-**3. 灵活的教师采样器：谁能生成 ODE 轨迹谁就能当教师**
-
-CMT 唯一需要教师做的事，是产出一条 ODE 轨迹，所以教师不必是预训练扩散模型、也不必很强。论文在 ImageNet 256 上把这点推到极限：用一个质量很差的小模型 MF-B/4（8 步 FID 才 13.44）当教师生成轨迹，去训练大得多的 MF-XL/2，照样有效。这说明 CMT mid-training 是架构无关的，落地上意味着可以先快速训一个小模型，再用它的粗糙轨迹去引导、加速大模型的训练。
-
-**4. 轨迹复用机制：一次 solver 调用榨出 $M$ 个训练对**
-
-DPM-Solver++ 这类多步 solver 跑一条 $M$ 步轨迹时，会留下一整串中间状态 $\{\hat{\mathbf{x}}_{t_i}\}$。CMT 不浪费这些中间点——每个 $\hat{\mathbf{x}}_{t_i}$ 都能和终点 $\hat{\mathbf{x}}_{t_0}$ 配成一个训练样本，于是一次 solver 调用就产出 $M$ 个训练对。相比只拿端点用的 Slow CMT，这种复用让数据效率高约 3 倍，同样的 GPU 时间能喂更多有效监督。
+当 $t_j = 0$ 时它正好退化为 CMT-CM，所以 CMT-MF 是更一般的形式、CM 只是其特例（框架图里两个损失因此并列在 MF / CM 两条分支上）。和原版 MF 相比，这里既不用 stop-gradient，也不用 Jacobian-向量积（JVP），而 JVP 正是 MF 训练里最昂贵的一块，省掉它直接把计算成本压下来。
 
 ### 损失函数 / 训练策略
 

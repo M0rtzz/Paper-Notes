@@ -45,13 +45,31 @@ tags:
 
 Scaf-GRPO 把训练切成两段：前 15% 步数是"引导豁免期"，模型完全靠自己探索，借此把"伪难题"刷掉、把真正啃不动的"真难题"筛出来；之后才对真难题介入。介入的方式是：一旦某个 batch 里所有 rollout 都拿到零奖励、advantage 归零，就按 Knowledge→Planning→Solution 三个层级由抽象到具体地往 prompt 里注入提示，直到模型用自己的策略生成出正确解，再拿这条成功轨迹替换掉组里一条失败轨迹，重新算出非零 advantage，最后照搬标准 GRPO 损失更新。整个干预只动数据、不动损失，模型始终在自己的分布上学习。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["问题 q：当前策略<br/>采样 N 条 rollout"] --> EX
+    EX["引导豁免期<br/>前 15% 步只靠自己探索<br/>筛掉伪难题、标出真难题"] -->|本组有非零奖励| GRPO
+    EX -->|真难题且本组全零<br/>触发学习悬崖| HINT
+    HINT["分层渐进 Hint<br/>K→P→S 由抽象到具体<br/>级内增量、解出即停"] -->|最具体 hint 仍失败| KEEP["该题本步不更新<br/>保留原全零组"]
+    HINT -->|找到最小有效 hint<br/>生成正确轨迹| AUG
+    AUG["On-policy Batch 增强<br/>成功轨迹替换一条失败轨迹<br/>重算非零 advantage"] --> GRPO
+    GRPO["标准 GRPO 更新<br/>clipped surrogate、KL=0"]
+```
+
 ### 关键设计
 
-**1. 引导豁免期：先让模型自己挣扎，再判断它是真不会还是装不会。** 直接对所有零奖励问题塞提示会有副作用——很多题目并不是模型能力不够，而只是格式不熟、初级技巧没磨合，这类"伪难题"会随着训练自然被攻克。Scaf-GRPO 因此在前 15% 步数里一律不给 hint，同时监控零奖励问题的解决速率：训练初期速率快速下降，对应的就是伪难题被陆续解决；当速率停滞、剩下一批怎么探索都过不了的问题，才把它们标记为"真难题"交给后续引导。这样 hint 只花在真正的能力缺口上，避免模型过早养成依赖提示的惰性——消融里去掉豁免期会掉 9.2 分。豁免期比例在 10%–40% 区间都稳定，15% 是经验取值。
+**1. 引导豁免期：先让模型自己挣扎，再判断它是真不会还是装不会**
 
-**2. 分层渐进 Hint：给路标而不给铁轨，奖励"用最少提示就解出来"。** 对真难题，Scaf-GRPO 注入的是三级由抽象到具体的 in-prompt 提示：$H_{\text{knowledge}}$ 只点关键概念与公式，$H_{\text{planning}}$ 给出高层策略框架，$H_{\text{solution}}$ 才落到具体计算步骤。引导从最抽象的一级开始、级内还逐块增量展示，模型一旦解出就立即停手并记下这次用到的最小有效提示级别。这套设计的核心是"最小干预"：越抽象的 hint 越逼模型自己补全推理链，因此能解出来时学到的是可迁移的技能而非对解法的记忆；反过来直接发 Solution hint 等于给铁轨，模型照抄一遍学不到泛化能力。三层互补缺一不可——去掉 Knowledge 层降到 49.2、去掉 Solution 层降到 48.0（降幅最大），把渐进式换成只给 Solution 也要掉 2.5 分。
+直接对所有零奖励问题塞提示会有副作用——很多题目并不是模型能力不够，而只是格式不熟、初级技巧没磨合，这类"伪难题"（pseudo-hard）会随着训练自然被攻克。Scaf-GRPO 因此在前 15% 步数里一律不给 hint，同时监控零奖励问题的解决速率：训练初期速率快速下降，对应的就是伪难题被陆续解决；当速率停滞、剩下一批怎么探索都过不了的问题，才把它们标记为"真难题"（true-hard）交给后续引导。这样 hint 只花在真正的能力缺口上，避免模型过早养成依赖提示的惰性——消融里把脚手架从第一步就开打、去掉豁免期，性能相对掉 9.2%。豁免期比例在 10%–40% 区间都稳定（高位平台 49.5–50.9），15% 是经验取值。
 
-**3. On-policy Batch 增强：只换数据不破坏 on-policy 一致性。** 拿到成功的 hint-guided 轨迹后，Scaf-GRPO 用它替换组内一条失败轨迹，$\mathcal{G}_{\text{final}} = (\mathcal{G} \setminus \{o_j\}) \cup \{o_h^*\}$，其中 $o_h^* \sim \pi_\theta(\cdot \mid q \oplus h^*)$ 由当前策略在"问题+提示"上自己采样得到。关键在概率比的写法：本方法对分子分母都用同一个 hint-augmented 条件 $q \oplus h^*$，即 $r_{i,t}'(\theta) = \frac{\pi_\theta(o_{i,t}'\mid o_{i,<t}', q \oplus h^*)}{\pi_{\theta_{\text{old}}}(o_{i,t}'\mid o_{i,<t}', q \oplus h^*)}$，这是标准的 on-policy 比率。而 prefix-based 方法（如 LUFFY）的比率分子用 $\pi_\theta(\cdot\mid q)$、分母用 $\pi_{\theta_{\text{old}}}(\cdot\mid q \oplus h^*)$，分子分母条件不一致，本质是 off-policy，需要额外的 policy shaping 去修分布不匹配。Scaf-GRPO 因为条件统一，省掉了这层修正，也保住了探索自由度。
+**2. 分层渐进 Hint：给路标而不给铁轨，奖励"用最少提示就解出来"**
+
+对真难题，Scaf-GRPO 注入的是三级由抽象到具体的 in-prompt 提示：$H_{\text{knowledge}}$ 只点关键概念与公式，$H_{\text{planning}}$ 给出高层策略框架，$H_{\text{solution}}$ 才落到具体计算步骤。引导按 $H_{\text{knowledge}}\to H_{\text{planning}}\to H_{\text{solution}}$ 从最抽象的一级开始确定性搜索，每一级内部还把内容拆成 4 个递进小块逐块增量展示，模型一旦解出就立即停手并记下这次用到的最小有效提示级别；连最具体的 Solution hint 都解不出，就判为本步无解、不做替换。这套设计的核心是"最小干预"：越抽象的 hint 越逼模型自己补全推理链，因此能解出来时学到的是可迁移的技能而非对解法的记忆；反过来直接发 Solution hint 等于给铁轨，模型照抄一遍学不到泛化能力。三层互补缺一不可——去掉 Knowledge 层降到 49.2、去掉 Solution 层降到 48.0（降幅最大），把渐进式换成只给 Solution（Solution-Only）也要掉到 48.4，把级内增量换成一次性给完整 hint 则掉到 47.7。
+
+**3. On-policy Batch 增强：只换数据不破坏 on-policy 一致性**
+
+拿到成功的 hint-guided 轨迹后，Scaf-GRPO 用它替换组内一条随机的失败轨迹，$\mathcal{G}_{\text{final}} = (\mathcal{G} \setminus \{o_j\}) \cup \{o_h^*\}$，其中 $o_h^* \sim \pi_\theta(\cdot \mid q \oplus h^*)$ 由当前策略在"问题+提示"上自己采样得到。关键在概率比的写法：本方法对分子分母都用同一个 hint-augmented 条件 $q \oplus h^*$，即 $r_{i,t}'(\theta) = \frac{\pi_\theta(o_{i,t}'\mid o_{i,<t}', q \oplus h^*)}{\pi_{\theta_{\text{old}}}(o_{i,t}'\mid o_{i,<t}', q \oplus h^*)}$，这是标准的 on-policy 比率。而 prefix-based 方法（如 LUFFY）的比率分子用 $\pi_\theta(\cdot\mid q)$、分母用 $\pi_{\theta_{\text{old}}}(\cdot\mid q \oplus h^*)$，分子分母条件不一致，本质是 off-policy，需要额外的 policy shaping 去修分布不匹配。Scaf-GRPO 因为条件统一，省掉了这层修正，也保住了探索自由度。因为整组干预只触发在 zero-reward 的学习悬崖、且实测只占 17.4% 的样本，大部分算力仍跑标准生成。
 
 ### 损失函数 / 训练策略
 

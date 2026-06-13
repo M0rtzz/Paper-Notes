@@ -41,7 +41,23 @@ tags:
 
 ### 整体框架
 
-PDS 是一个三阶段 pipeline：输入一个大规模图文数据集 $\mathcal{D} = \{(x_n, y_n)\}_{n=1}^N$，输出一个压缩的蒸馏集 $\mathcal{S} = \{(\tilde{x}_m, \tilde{y}_m)\}_{m=1}^M$（$M \ll N$）。三个阶段分别是：(i) 模态特异聚类——用 CLIP 编码器提取嵌入并分别聚类；(ii) 跨模态原型匹配——用线性分配问题对齐图文聚类；(iii) 图像合成——用 unCLIP 解码器从图像原型生成蒸馏图像。整个过程不训练任何模型参数。
+PDS 是一个三阶段 pipeline：输入一个大规模图文数据集 $\mathcal{D} = \{(x_n, y_n)\}_{n=1}^N$，输出一个压缩的蒸馏集 $\mathcal{S} = \{(\tilde{x}_m, \tilde{y}_m)\}_{m=1}^M$（$M \ll N$）。三个阶段分别是：(i) 模态特异聚类——用 CLIP 编码器提取嵌入并分别聚类，挑出 $M$ 个语义骨架；(ii) 跨模态原型匹配——用线性分配问题把图像簇和文本簇全局一一对齐，得到图文原型对；(iii) unCLIP 图像合成——用 unCLIP 解码器从图像原型生成蒸馏图像。整个过程不训练任何模型参数，蒸馏集生成后再用标准对比损失在下游微调 CLIP 评估。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["大规模图文数据集 D"] --> CLUS
+    subgraph CLUS["模态特异聚类"]
+        direction TB
+        ENC["CLIP 图文编码<br/>+ 过滤低相似度对"] --> KM["图像/文本嵌入<br/>分别 mini-batch k-means"]
+        KM --> CLS["M 个图像簇<br/>+ M 个文本簇"]
+    end
+    CLUS --> MATCH["跨模态原型匹配<br/>匈牙利算法全局配对<br/>取均值, 丢弃 pairless 簇"]
+    MATCH --> PROTO["M 对图文原型<br/>(图像原型 + 文本原型)"]
+    PROTO --> SYN["unCLIP 图像合成<br/>图像原型为条件<br/>+ 检索 caption 辅助"]
+    SYN --> OUT["蒸馏集 S (M 对)"]
+    OUT --> DOWN["InfoNCE 微调 CLIP<br/>(下游评估)"]
+```
 
 ### 关键设计
 

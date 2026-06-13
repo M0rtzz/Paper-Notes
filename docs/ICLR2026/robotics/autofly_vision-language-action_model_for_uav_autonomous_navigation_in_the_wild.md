@@ -40,7 +40,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AutoFly 想让无人机只凭一句粗粒度引导（"飞向那棵树"）就在未知野外完成避障、寻找目标和海拔控制，而不再依赖逐步指令。整条链路是：RGB 观测和自然语言指令进入一个 LLaVA 式视觉-语言模型，同时由伪深度编码器从同一张 RGB 推断出深度并编码成空间特征；视觉特征、深度特征和语言一起融合后送进 LLM，LLM 自回归地吐出离散的 action token，最后经 de-tokenizer 还原成连续的速度指令驱动飞机。整套模型的差异点不在主干（沿用 OpenVLA 那一类 VLA），而在补进来的深度通道和专门为"自主决策"准备的数据。
+AutoFly 想让无人机只凭一句粗粒度引导（"飞向那棵树"）就在未知野外完成避障、寻找目标和海拔控制，而不再依赖逐步指令。整条链路是：RGB 观测和自然语言指令进入一个 LLaVA 式视觉-语言模型，同时由伪深度编码器（pseudo-depth encoder）从同一张 RGB 推断出深度并编码成空间特征；视觉特征、深度特征和语言一起融合后送进 LLM，LLM 自回归地吐出离散的 action token，最后经 de-tokenizer 还原成连续的速度指令驱动飞机。整套模型的差异点不在主干（沿用 OpenVLA 那一类 VLA），而在补进来的深度通道；而要让模型学会"自主决策"，还需要专门构建的导航数据集和两阶段训练这两条训练侧支撑。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["RGB 观测 + 语言指令<br/>(粗粒度引导，如飞向那棵树)"]
+    IN --> VLM["LLaVA 式视觉-语言编码<br/>视觉 token + 语言 token"]
+    IN -->|同一张 RGB| DEPTH["伪深度编码器<br/>Depth Anything V2 估深度<br/>→ patch embed → Siamese 投影器<br/>→ 深度 token"]
+    VLM --> FUSE["融合视觉 / 深度 / 语言特征"]
+    DEPTH --> FUSE
+    FUSE --> LLM["LLM 自回归生成<br/>离散 action token"]
+    LLM --> DETOK["De-tokenizer<br/>LLaMA2 末 256 token → 连续动作"]
+    DETOK --> OUT["3DOF 速度指令<br/>驱动无人机飞行"]
+```
+
+> 上图是推理时的前向架构，其中"伪深度编码器"是核心创新（设计 1）；另外两个设计——自主导航数据集（设计 2）与两阶段训练（设计 3）作用在训练侧，决定这套架构学到的是"自主决策"还是"照指令复述"。
 
 ### 关键设计
 

@@ -32,6 +32,17 @@ tags:
 ### 整体框架
 GLYPH-SR要解决的是「图像超分时把文字越修越糊、甚至改错字」这件事。它以一个预训练的潜在扩散模型（Juggernaut-XL）为底座，输入低分辨率图像，输出既清晰又文字可读的高分辨率结果。关键在于不让模型把文字当普通纹理处理：先用 OCR 把图里的文字内容和位置抠出来，转成语义提示，再通过一个外挂的 Text-SR 融合 ControlNet（TS-ControlNet）把这份「文字级引导」注入扩散过程；去噪时再用一个 ping-pong 调度器在「专注修字」和「专注修图」两种模式间来回切换，让两个目标互不拖累。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["低分辨率图像 I_LR"] --> B["LDM 条件器 + OCR 模块<br/>抽多尺度特征 / 检测 K 个文本实例"]
+    B --> C["条件分解<br/>场景标题 S_IMG（全局光照构图）<br/>文本-位置对 S_TXT（哪里有什么字）"]
+    C --> D["Text-SR 融合 ControlNet<br/>冻结 SR 分支守画质<br/>+ 可训练文本分支修字形 → 残差混合"]
+    D --> E["Ping-Pong 调度器<br/>系数 λ_t 方波在文本中心 ↔ 图像中心翻转<br/>同步调制嵌入融合与残差注入"]
+    E --> F["EDM 采样器<br/>潜空间逐步去噪"]
+    F --> G["高分辨率图像<br/>清晰且文字可读"]
+```
+
 ### 关键设计
 
 **1. 条件分解（Condition Decomposition）：把引导信号拆成图像导向和文本导向两路**

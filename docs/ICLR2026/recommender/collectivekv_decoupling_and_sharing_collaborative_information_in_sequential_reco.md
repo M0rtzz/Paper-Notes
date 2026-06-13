@@ -43,6 +43,20 @@ tags:
 ### 整体框架
 CollectiveKV 要解决的是"每个用户都存一份完整 KV、显存装不下"的问题，做法是把 KV 拆成"少量个性化"加"大量共享"两块，让昂贵的高维信息由全体用户共用一个池子。整条流程沿用 Transformer 推荐模型的 prefill / decode 两阶段：prefill 阶段把用户行为序列线性投影成一份很瘦的用户特有 KV（维度 $d_u$），同时让一个 router 网络给序列里每个 item 算出它在全局 KV 池中的索引，**只把这个索引（而不是高维向量）缓存下来**；decode 阶段则按缓存的索引去 GPU 常驻的全局 KV 池里取出对应的高维共享 KV（维度 $d_g$），与个性化部分拼接后再算注意力。这样每用户真正要存的只有低维 $\mathbf{K}_u$ 加几个整数索引，高维信息全压进了所有人共享的池子里。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    S["用户行为序列<br/>embedding S"]
+    S --> KU["线性投影<br/>用户特有KV（低维 K_u）"]
+    S --> R["CollectiveKV Router<br/>序列→全局KV索引 I_k"]
+    KU --> CACHE["prefill 缓存<br/>只存 低维K_u + 整数索引"]
+    R --> CACHE
+    CACHE -->|"decode·索引"| POOL["全局KV池<br/>按索引检索集体KV（高维 K_c）"]
+    CACHE -->|"decode·用户特有K_u"| CONCAT
+    POOL --> CONCAT["KV分解·拼接<br/>concat(用户特有, 集体)=最终KV"]
+    CONCAT --> ATT["与 query 算注意力<br/>→ 推荐输出"]
+```
+
 ### 关键设计
 
 **1. KV 分解：把高维主成分交给共享池、低维残差留给个人**

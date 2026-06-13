@@ -45,7 +45,19 @@ COLD-Steer 想解决的是这样一个问题：要让模型行为偏向某种风
 
 $$\Delta\mathbf{Z}^*(\mathbf{x}) \approx -\frac{\eta}{N} \nabla_\theta \mathbf{Z}(\mathbf{x};\theta) \sum_i \nabla_\theta \mathcal{L}(\mathcal{M}(\tilde{\mathbf{x}}_i), \tilde{\mathbf{y}}_i)$$
 
-难点在于这个式子里有一项对新输入 $\mathbf{x}$ 的雅可比 $\nabla_\theta \mathbf{Z}(\mathbf{x};\theta)$，直接算等于要对每个新输入反向传播，推理时承受不起。COLD-Steer 给出两条绕开这项的近似路线，再用一个统一视角说明已有的对比方法其实都是它的特例。
+难点在于这个式子里有一项对新输入 $\mathbf{x}$ 的雅可比 $\nabla_\theta \mathbf{Z}(\mathbf{x};\theta)$，直接算等于要对每个新输入反向传播，推理时承受不起。COLD-Steer 给出两条绕开这项的近似路线（核加权与有限差分），再用一个统一视角说明已有的对比方法其实都是它的特例。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["N 个上下文示例<br/>{(x̃, ỹ)}：目标行为"] --> B["模拟单步梯度下降<br/>估计目标表征变化 ΔZ*"]
+    B --> C["瓶颈：雅可比项 ∇θ Z(x)<br/>对每个新输入反传太贵"]
+    C -->|核加权求和| D["COLD-Kernel-Steer<br/>单位核近似 eNTK<br/>新输入 1 次前向 + O(N·d)"]
+    C -->|有限差分| E["COLD-FD-Steer<br/>沿示例梯度微扰 ε<br/>新输入 2 次前向"]
+    D --> F["转向向量 ΔZ"]
+    E --> F
+    F --> G["推理时加到新输入<br/>第 l 层表征 → 受控生成"]
+```
 
 ### 关键设计
 

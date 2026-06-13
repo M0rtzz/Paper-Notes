@@ -37,25 +37,44 @@ tags:
 
 ### 整体框架
 
-DGNet把Green函数理论搬到图上：先用 Delaunay 三角化把空间域 $\Omega$ 离散成 $N$ 个节点构成的图 $G=(V,E)$，再用 Crank-Nicolson 中点格式做隐式时间积分，由此推导出离散Green算子 $\mathbf{G}(\Delta t)=(\mathbf{I}-\tfrac{\Delta t}{2}\mathbf{L})^{-1}$ 作为状态传播器。其中的空间算子 $\mathbf{L}$ 由物理先验与神经修正两部分相加而成，使得整个时间推进既严格遵循叠加原理的代数结构，又能用数据补足离散化和未建模动力学带来的偏差。
+DGNet把Green函数理论搬到图上：先用 Delaunay 三角化把空间域 $\Omega$ 离散成 $N$ 个节点构成的图 $G=(V,E)$；再在图上构造空间算子 $\mathbf{L}=\mathbf{L}_{\text{physics}}+\mathbf{L}_{\text{neural}}$，由物理先验与神经修正两部分相加而成；由 $\mathbf{L}$ 经 Crank-Nicolson 中点格式做隐式时间积分，推导出离散Green算子 $\mathbf{G}(\Delta t)=(\mathbf{I}-\tfrac{\Delta t}{2}\mathbf{L})^{-1}$ 作为状态传播器；最后逐步推进出整条轨迹。整个时间推进既严格遵循叠加原理的代数结构（状态演化 + 源响应两项），又能用数据补足离散化和未建模动力学带来的偏差。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["输入：空间域 Ω + 初始条件 u₀ + 源项 f"]
+    G["Delaunay 三角化<br/>→ 图 G(V,E)，N 个节点"]
+    subgraph LMIX["物理-神经混合算子 L = L_physics + L_neural"]
+        direction TB
+        LP["物理先验 L_physics<br/>Green-Gauss 梯度 + 余切 Laplacian"]
+        LN["神经修正 L_neural<br/>Encode-Process-Decode GNN"]
+    end
+    GREEN["离散Green算子<br/>G(Δt)=(I − Δt/2·L)⁻¹<br/>稀疏 LU 一次分解、多次回代"]
+    STEP["Crank-Nicolson 叠加推进<br/>uᵏ⁺¹ = 初态演化 + 源响应"]
+    OUT["输出：时空轨迹<br/>未见源项零样本泛化"]
+    IN --> G --> LMIX
+    LP --> GREEN
+    LN --> GREEN
+    GREEN --> STEP --> OUT
+```
 
 ### 关键设计
 
-**1. 叠加原理的Green函数分解：把"系统演化"和"源响应"解耦**
+**1. 物理-神经混合算子：物理先验定骨架，神经修正补离散误差**
 
-数据效率低的症结在于源项 $f(x,t)$——训练轨迹只覆盖有限几种源模式，端到端模型一旦遇到未见源项就外推失败。DGNet借助Green函数 $G(x,t;x',\tau)$（在 $(x',\tau)$ 处施加单位点源、在 $(x,t)$ 处观测到的响应）把完整解拆成两项：初态演化项 $\int G(x,t;x',0)\,u_0(x')\,dx'$ 描述初始条件的传播，源响应项 $\int\!\!\int G(x,t;x',\tau)\,f(x',\tau)\,dx'd\tau$ 描述源项随时间的累积响应。这一分解让"系统怎么演化"和"源怎么驱动"在结构上彻底分离，因此换一个从未见过的源项时，模型只需把新的 $f$ 代入同一个Green算子做卷积，而不必重新学习动力学——这正是零样本泛化的原理性来源。
+数据效率低的根子在于：通用神经架构得从数据里重新学习局部性、守恒律这些基本物理结构。DGNet 把空间算子拆成 $\mathbf{L} = \mathbf{L}_{\text{physics}} + \mathbf{L}_{\text{neural}}$，让手工算子承担可靠的底层结构、GNN 只补离散化误差。物理先验项 $\mathbf{L}_{\text{physics}}$ 直接从网格几何构造，保证与物理定律一致：梯度算子基于 Green-Gauss 定理，由控制体积面积、法向量投影和面长度组装；Laplacian 算子基于离散 Laplace-Beltrami，用余切权重 $w_{ij}=\tfrac{1}{2}(\cot\alpha_{ij}+\cot\beta_{ij})$ 配 Voronoi 面积。神经修正项 $\mathbf{L}_{\text{neural}}$ 走 Encode-Process-Decode 的 GNN：Encoder 把节点特征（空间坐标 + 节点类型）和边特征（相对位移 + 距离）编码成嵌入，Processor 用 $M$ 层带残差连接的消息传递网络（MPNN）聚合邻域信息，Decoder 拼接两端节点嵌入后用 MLP 预测边级修正值。因为骨架由物理定律给定、GNN 只需微调，模型不必从零学起，这正是它仅用数十条轨迹就够的原因——消融实验里去掉 $\mathbf{L}_{\text{neural}}$ 的性能损失明显小于去掉 $\mathbf{L}_{\text{physics}}$，印证了二者"骨架 + 微调"的分工。
 
-**2. 离散Green公式与稀疏复用：把叠加原理一字不差搬到图上**
+**2. 离散Green算子与稀疏复用：把叠加原理一字不差搬到图上**
 
-在图上用 Crank-Nicolson 格式离散后，单步更新写成
+有了空间算子 $\mathbf{L}$，在图上用 Crank-Nicolson 中点格式做隐式时间积分，单步更新写成
 
 $$\mathbf{u}^{k+1} = \mathbf{G}(\Delta t)\Big(\mathbf{I} + \tfrac{\Delta t}{2}\mathbf{L}\Big)\mathbf{u}^k + \mathbf{G}(\Delta t)\tfrac{\Delta t}{2}\big(\mathbf{f}^k + \mathbf{f}^{k+1}\big),$$
 
-其中 $\mathbf{G}(\Delta t) = (\mathbf{I} - \tfrac{\Delta t}{2}\mathbf{L})^{-1}$ 就是离散Green函数。这个公式完整复刻了连续情形的结构：下一时刻状态等于当前状态被传播 + 源项在该时间步内的累积响应，两项各自走同一个 $\mathbf{G}(\Delta t)$。直接求逆在大网格上代价高昂，但系数矩阵 $(\mathbf{I}-\tfrac{\Delta t}{2}\mathbf{L})$ 只依赖静态网格几何、在整条轨迹推进中不变，因此采用"一次分解、多次求解"——预先做一次稀疏LU分解并缓存，之后每个时间步只需回代求解，把矩阵求逆的开销摊薄到几乎可忽略。
+其中 $\mathbf{G}(\Delta t) = (\mathbf{I} - \tfrac{\Delta t}{2}\mathbf{L})^{-1}$ 就是离散Green算子，充当状态传播器。直接对大网格求逆代价高昂，但系数矩阵 $(\mathbf{I}-\tfrac{\Delta t}{2}\mathbf{L})$ 只依赖静态网格几何、在整条轨迹推进中不变，于是采用"一次分解、多次求解"——预先做一次稀疏 LU 分解并缓存，之后每个时间步只回代求解，把矩阵求逆的开销摊薄到几乎可忽略。
 
-**3. 物理-神经混合算子：物理先验定骨架，神经修正补离散误差**
+**3. 叠加原理分解与零样本泛化：把"系统演化"和"源响应"解耦**
 
-空间算子拆成 $\mathbf{L} = \mathbf{L}_{\text{physics}} + \mathbf{L}_{\text{neural}}$。物理先验项 $\mathbf{L}_{\text{physics}}$ 直接从网格几何构造，保证与物理定律一致：梯度算子基于 Green-Gauss 定理，由控制体积面积、法向量投影和面长度组装；Laplacian算子基于离散 Laplace-Beltrami，用余切权重 $w_{ij}=\tfrac{1}{2}(\cot\alpha_{ij}+\cot\beta_{ij})$ 配 Voronoi 面积。神经修正项 $\mathbf{L}_{\text{neural}}$ 走 Encode-Process-Decode 的GNN：Encoder 把节点特征（空间坐标+节点类型）和边特征（相对位移+距离）编码成嵌入，Processor 用 $M$ 层带残差连接的消息传递网络（MPNN）聚合邻域信息，Decoder 拼接两端节点嵌入后用MLP预测边级修正值。这样手工算子负责可靠的底层结构，GNN只需微调离散化误差和算子未显式覆盖的动力学——消融实验也证实，去掉 $\mathbf{L}_{\text{neural}}$ 的性能损失明显小于去掉 $\mathbf{L}_{\text{physics}}$，印证了二者"骨架 + 微调"的分工。
+上面的更新公式并非偶然长成两项之和：它正是连续 Green 函数 $G(x,t;x',\tau)$（在 $(x',\tau)$ 处施加单位点源、在 $(x,t)$ 处观测到的响应）的离散对应。连续解可分解为初态演化项 $\int G(x,t;x',0)\,u_0(x')\,dx'$（初始条件的传播）与源响应项 $\int\!\!\int G(x,t;x',\tau)\,f(x',\tau)\,dx'd\tau$（源项随时间的累积响应），离散更新里的 $\mathbf{G}(\Delta t)(\cdots)\mathbf{u}^k$ 与 $\mathbf{G}(\Delta t)\tfrac{\Delta t}{2}(\mathbf{f}^k+\mathbf{f}^{k+1})$ 与这两项一一对应。"系统怎么演化"和"源怎么驱动"在结构上彻底分离——这意味着换一个从未见过的源项时，模型只需把新的 $\mathbf{f}$ 代入同一个 Green 算子做卷积，而不必重新学习动力学。这正是 DGNet 零样本泛化到未见源项的原理性来源（激光加热测试中 baseline 误差暴涨数个数量级、它几乎无衰退）。
 
 ### 损失函数 / 训练策略
 

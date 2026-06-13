@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 论文要解决的是「IQA 只会全图打分、不会指出哪块有问题」。整条流水线分两步：先用一套全自动标注流水线，把已有的全图质量描述「升级」成带边界框的细粒度标注，攒成 GIQA-160K 数据集；再把这批数据组织成「带框描述（GIQA-DES）」和「空间问答（GIQA-VQA）」两类样本，在 mPLUG-Owl2 这类 MLLM 上做标准 SFT。训练完的模型既能输出"台球桌区域（bbox）清晰、背景区域（bbox）模糊"这种带坐标的描述，也能在 referring 和 grounding 两个方向上回答质量问题。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["已有 IQA 数据集<br/>全图质量描述（无框）"]
+    subgraph PIPE["四阶段自动标注流水线（设计 1）"]
+        direction TB
+        S1["Stage1 Llama3 抽三元组<br/>(短语, 质量, 效果)"] --> S2["Stage2 Grounding DINO<br/>用质量短语检测边界框"]
+        S2 --> S3["Stage3 质量精化<br/>IQA-Filter 剔误检 + Box-Merge 合碎框"]
+        S3 --> S4["Stage4 坐标离散化<br/>20×20 网格，1 框≤9 token"]
+    end
+    IN --> PIPE
+    PIPE --> DES["GIQA-DES<br/>带框质量描述"]
+    DES --> VQA["GIQA-VQA 生成（设计 2）<br/>Yes/No + What/Why/How，引用带框实体"]
+    DES --> MERGE["GIQA-160K<br/>描述 + 问答两类样本"]
+    VQA --> MERGE
+    MERGE --> SFT["多任务 SFT（设计 3）<br/>mPLUG-Owl2，自回归 LM 损失"]
+    SFT --> OUT["带框质量描述<br/>+ referring / grounding 问答"]
+```
+
 ### 关键设计
 
 **1. 四阶段自动标注流水线：把无框的质量描述自动补上空间坐标**

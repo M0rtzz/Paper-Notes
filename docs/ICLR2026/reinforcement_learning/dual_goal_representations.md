@@ -43,7 +43,30 @@ tags:
 
 ### 整体框架
 
-方法分为两个阶段并行训练。**阶段一（表征学习）**：使用离线轨迹数据，通过目标条件 IQL（Implicit Q-Learning）训练一个参数化的距离函数 $d^*(s,g) \approx \psi(s)^\top \phi(g)$，其中 $\psi$ 是状态编码器、$\phi$ 是目标编码器。训练完成后提取 $\phi(g)$ 作为目标表征。**阶段二（策略学习）**：将 $\phi(g)$ 作为目标的压缩表征，输入任意下游 GCRL 算法（如 GCIVL、CRL、GCFBC），以 $\pi(a|s, \phi(g))$ 的形式训练策略。两阶段共用同一批数据，联合梯度更新（不是先预训练再微调），state-based 任务共训练 1M 步。
+方法分为两个阶段并行训练。**阶段一（表征学习）**：使用离线轨迹数据，通过目标条件 IQL（Implicit Q-Learning）训练一个参数化的距离函数 $d^*(s,g) \approx \psi(s)^\top \phi(g)$，其中 $\psi$ 是状态编码器、$\phi$ 是目标编码器；这个非对称内积形式既是学习目标也是表征载体，训练后从中提取目标编码器输出 $\phi(g)$ 作为"对偶目标表征"。**阶段二（策略学习）**：把 $\phi(g)$ 当成目标的压缩表征（梯度截断），输入任意下游 GCRL 算法（如 GCIVL、CRL、GCFBC），以 $\pi(a|s, \phi(g))$ 的形式训练策略。两阶段共用同一批数据、联合梯度更新（不是先预训练再微调），state-based 任务共训练 1M 步。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    D["离线轨迹数据<br/>(offline trajectories)"]
+    subgraph REP["表征学习阶段（联合训练）"]
+        direction TB
+        L["基于 IQL 的距离函数学习<br/>expectile 回归估 V*(s,g)"]
+        P["非对称内积参数化<br/>d*(s,g)=ψ(s)ᵀφ(g)"]
+        L --> P
+    end
+    PHI["对偶目标表征 φ(g)<br/>从所有状态到 g 的时间距离谱"]
+    SG["stop-gradient<br/>(截断梯度)"]
+    subgraph POL["策略学习阶段"]
+        direction TB
+        G["下游 GCRL<br/>GCIVL / CRL / GCFBC"]
+    end
+    OUT["目标条件策略<br/>π(a | s, φ(g))"]
+    D --> REP
+    REP --> PHI
+    PHI --> SG --> POL
+    POL --> OUT
+```
 
 ### 关键设计
 

@@ -39,6 +39,27 @@ tags:
 
 "Protein-as-Second-Language" 想解决的是：不训练、不改一个参数，就让通用 LLM 读懂氨基酸序列的功能含义。它分三个阶段串起来。首先离线**构建双语数据集**——从 Swiss-Prot 出发，经 GO-DAG 剪枝分组、序列与功能两轮去冗余、再用 DeepSeek-R1 出题，得到 79,926 条"蛋白质序列-自然语言"QA 三元组。推理时对每个查询蛋白质做**自适应上下文构造**：同时检索序列同源和文本相似的示例，拼成一段双语上下文。最后把这段上下文连同查询直接喂进冻结的 LLM，让它靠 in-context 示例零训练地生成功能答案。整条链路的精髓是把"读蛋白质"当成一次第二语言习得，用母语（自然语言）的能力去推断外语（氨基酸序列）的含义。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    SP["Swiss-Prot<br/>573,661 条注释"] --> DS
+    subgraph DS["双语数据集构建（离线）"]
+        direction TB
+        A["GO-DAG 剪枝分组<br/>自适应支持阈值"] --> B["双语去冗余<br/>序列聚类 + 功能 IC 采样"] --> C["DeepSeek-R1 出题<br/>四类 QA"]
+    end
+    DS --> POOL["79,926 条<br/>蛋白质-语言 QA 库"]
+    Q["查询蛋白质序列"] --> CTX
+    POOL --> CTX
+    subgraph CTX["自适应上下文构造"]
+        direction TB
+        SEQ["序列同源检索"] --> MERGE["双语上下文整合"]
+        TXT["文本相似检索"] --> MERGE
+    end
+    CTX --> ICL["双语上下文学习<br/>冻结 LLM 零训练推理"]
+    Q --> ICL
+    ICL --> OUT["蛋白质功能答案"]
+```
+
 ### 关键设计
 
 **1. 双语数据集构建：先把 Swiss-Prot 的冗余和类别失衡治好，再让 LLM 出题**

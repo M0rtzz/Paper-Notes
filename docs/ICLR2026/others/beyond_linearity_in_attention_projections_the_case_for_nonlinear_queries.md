@@ -40,7 +40,25 @@ tags:
 
 ### 整体框架
 
-方法只动 Transformer 注意力里的 Query 路径一处：把原本的线性投影 $Q=XW_Q$ 替换成非线性残差形式 $Q(X)=(X+f_\theta(X))/2$，其中 $f_\theta$ 是一个瓶颈 MLP，而 Key、Value 仍走标准线性投影。这样既绕开了"线性 $W_Q$ 代数上可被吸收"的冗余陷阱，又把新增的非线性容量约束在与原始 $W_Q$ 同阶的参数预算内，做到参数中性。
+方法只动 Transformer 注意力里的 Query 路径一处：把原本的线性投影 $Q=XW_Q$ 替换成非线性残差形式 $Q(X)=(X+f_\theta(X))/2$，其中 $f_\theta$ 是一个瓶颈 MLP（bottleneck MLP）。同一个 token 表示 $X$ 在这里分两路走——一路进 $f_\theta$ 算出非线性增量，另一路作为恒等项 $X$ 直接相加，二者取平均后得到 Query；与此同时，Key、Value 仍走标准线性投影，两条路最后在多头注意力里汇合。这样既绕开了"线性 $W_Q$ 代数上可被吸收"的冗余陷阱，又把新增的非线性容量约束在与原始 $W_Q$ 同阶的参数预算内，做到参数中性。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    X["输入 token X<br/>(上一 block 输出)"]
+    subgraph Q["非线性 Query 投影"]
+        direction TB
+        MLP["瓶颈 MLP f_θ<br/>RMSNorm→GELU<br/>先降维 d→d/2 再升回 d"]
+        RES["残差合成<br/>Q=(X+f_θ(X))/2"]
+        MLP --> RES
+    end
+    X -->|"增量项: 算 f_θ(X)"| MLP
+    X -->|"恒等项 X 直通"| RES
+    X -->|"标准线性投影"| KV["保留 K/V 线性<br/>K=XW_K, V=XW_V"]
+    RES --> ATT["多头注意力<br/>softmax(QKᵀ/√d_k)·V"]
+    KV --> ATT
+    ATT --> OUT["注意力层输出"]
+```
 
 ### 关键设计
 

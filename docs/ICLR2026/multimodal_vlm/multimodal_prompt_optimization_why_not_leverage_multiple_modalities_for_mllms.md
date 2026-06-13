@@ -42,7 +42,23 @@ tags:
 
 ### 整体框架
 
-MPO 的优化流程采用 beam search 框架：每轮迭代维护 $b=3$ 个最优多模态提示 $\{(\mathbf{t}_i, \mathbf{m}_i)\}$，对每个父提示应用三种探索算子生成 $b^2$ 个子提示，再通过先验继承的贝叶斯 UCB 从中选出新的 top-$b$ 作为下一轮的父提示。整个过程迭代 $T=13$ 轮。输入是任务数据集（query-answer 对），输出是性能最优的多模态提示对 $(\mathbf{t}^*, \mathbf{m}^*)$。第一轮因为还没有非文本提示，只用 Generation 算子初始化。
+MPO 要解决的问题是：把自动提示优化从纯文本空间 $\mathcal{T}$ 扩展到「文本+非文本」联合空间 $\mathcal{T} \times \mathcal{M}$，又不让两个模态各更各的导致语义打架、也不在稀疏的高质量候选里浪费评估预算。整体采用 beam search 框架，每轮迭代维护 $b=3$ 个最优多模态提示 $\{(\mathbf{t}_i, \mathbf{m}_i)\}$。对每个父提示，先做**对齐保持探索**——从失败案例读出一份同时覆盖文本和非文本的统一反馈，再据此联合更新文本提示和非文本提示；接着用 **Generation / Edit / Mix 三种探索算子**把每个父提示扩成多个候选，一轮共生成 $b^2$ 个子提示；最后用**先验继承的贝叶斯 UCB**从这堆候选里选出新的 top-$b$ 作为下一轮父提示。整个过程迭代 $T=13$ 轮，输入是任务数据集（query-answer 对），输出是性能最优的多模态提示对 $(\mathbf{t}^*, \mathbf{m}^*)$。第一轮因为还没有非文本提示，只用 Generation 算子初始化。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["任务数据集<br/>(query-answer 对)"] --> BEAM["beam 维护 top-b=3<br/>父提示 (t_i, m_i)"]
+    subgraph D1["对齐保持探索（设计1）"]
+        direction TB
+        F["在失败集 F 上<br/>凝聚反向传播"] --> G["统一语义梯度<br/>∇p = (∇t, ∇m)"]
+        G --> U["联合更新：文本 t'<br/>+ 模态条件 c → m'"]
+    end
+    BEAM --> F
+    U --> OP["三探索算子（设计2）<br/>Generation / Edit / Mix<br/>经生成器 g 扩成 b² 子提示"]
+    OP --> SEL["先验继承贝叶斯 UCB（设计3）<br/>父均值 warm-start Beta 先验<br/>选 top-b"]
+    SEL -->|"迭代 T=13 轮"| BEAM
+    SEL --> OUT["最优多模态提示<br/>(t*, m*)"]
+```
 
 ### 关键设计
 

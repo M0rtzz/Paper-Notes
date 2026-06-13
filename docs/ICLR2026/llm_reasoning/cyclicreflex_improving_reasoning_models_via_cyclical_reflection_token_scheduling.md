@@ -36,23 +36,44 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CyclicReflex是一种免训练的解码策略：给定问题$\mathbf{x}$，模型自回归地生成推理轨迹$\mathbf{r}$和答案$\mathbf{y}$，方法只在每一步解码时按当前token位置$t$给反思token的logit叠加一个随时间周期性振荡的偏置，既不改模型参数也不增加额外推理开销。其灵感是把反思token当成需要按时分配的"资源"，用类似周期性学习率的方式交替鼓励与抑制反思。
+CyclicReflex是一种免训练的解码策略：给定问题$\mathbf{x}$，大推理模型照常自回归地生成推理轨迹$\mathbf{r}$和答案$\mathbf{y}$，方法唯一的介入点是——在每一步解码、对原始logit做softmax采样之前，只给"反思token"（"wait"、"but"、"alternatively"等）的logit叠加一个随当前token位置$t$周期性振荡的偏置$\delta(t)$，非反思token原封不动。这个偏置既能为正（鼓励多反思）也能为负（抑制反思），随推理进程在上下两端往复，因此既不改模型参数、也不增加任何推理开销。
+
+支撑这个极简介入的是两条逐级递进的思路：先把"反思token的多寡与位置"形式化为一个**资源分配**问题，并通过一个warm-up实验证明任何固定、单向的策略都治不好；再把反思token类比成优化里的**学习率**，借"思维景观"验证反思过少/过多恰好对应学习率过小/过大；最后落到一个借鉴**周期性学习率**的三角波形上，用一行公式实现"有进有退"的双向调度。下图是这套解码机制在自回归循环里的位置：
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["输入问题 x"] --> DEC["第 t 步自回归解码<br/>得到原始 logits z(t,v)"]
+    DEC --> WAVE["三角波形 δ(t)<br/>振幅 A 控制强度、周期 C 控制频率<br/>在 −A 与 A 之间周期振荡"]
+    WAVE --> MOD["仅对反思 token v∈V̂<br/>叠加偏置: ẑ = z + δ(t)<br/>其余 token logit 不变"]
+    MOD --> SAMPLE["采样下一个 token<br/>追加到推理轨迹 r"]
+    SAMPLE -->|"未结束, t←t+1"| DEC
+    SAMPLE -->|结束| Y["输出推理轨迹 r 与答案 y"]
+```
 
 ### 关键设计
 
-**1. 反思token的资源化形式化：把"何时反思"变成可调度问题。** 作者首先把推理中的反思token（"wait"、"but"、"alternatively"等）抽象成一种影响推理质量的可调度资源——它们出现的频率与位置决定了模型是过早收敛还是反复打转。为了说明单一固定策略行不通，作者把baseline方法TIP从只允许负惩罚扩展到正负皆可的$\alpha$：实验显示TIP($-3$)在Hard问题上提升最大却让Easy问题严重掉点，而TIP($+1$)只在Easy上略有改善。一个固定的$\alpha$既治不好under-reflection又治不好over-reflection，这就把问题逼向"随推理进程动态调度"的方向。
+**1. 把反思token形式化为"可调度资源"，并戳穿固定单向策略的失效**
 
-**2. 思维景观可视化验证三种反思模式：为动态调度提供证据。** 借助Landscape of Thoughts工具，作者把推理步骤投影到二维平面观察轨迹形态，确认了三种典型模式：under-reflection的轨迹过于保守、始终无法远离起点；desired-reflection结构良好并稳定收敛到正确答案；over-reflection则更微妙——模型曾经走到接近正确答案的区域（如输出"Alternatively, perhaps the correct answer is..."），却因反思过度迅速越过该区域、最终偏离。这组可视化直接印证了under/over-reflection是一对对称的失败，需要的不是单向抑制而是有进有退的调节。
+要解决的，是图里"该不该给反思token加偏置、加多少"这个决策到底依据什么。作者先把推理中的反思token抽象成一种影响推理质量的可调度资源——它们出现的频率和位置，决定了模型是过早收敛（under-reflection）还是反复打转（over-reflection）。为说明现成方法不够用，作者拿baseline——TIP（thought switching penalty）做warm-up：TIP给反思token的logit加一个固定惩罚$\alpha\le 0$以压制频繁的思路切换。在MATH500上按生成长度与反思token数把题目聚成Easy/Medium/Hard三档（原始准确率分别约$0.92/0.71/0.21$），结果TIP只在Hard上有提升，却把Easy和Medium拉低了。换句话说，一个与推理步$t$无关的常数惩罚，按下over-reflection的同时会按出under-reflection。附录里进一步把"正向TIP（一味鼓励反思）""随机扰动""线性衰减"都试了一遍：前两者甚至不如标准TIP，线性衰减能缩小但合不上与CyclicReflex的差距。这组对照把问题逼到了唯一出路——偏置必须**随位置动态、且双向**。
 
-**3. 三角波形的双向logit调制：核心解码公式。** CyclicReflex的做法是给反思token集合$\hat{V}$中的每个token按位置叠加一个偏置$\delta(t)$，非反思token保持不变：
+**2. 反思token↔学习率的类比：用思维景观验证这是一对对称失败**
 
-$$\hat{z}_{t,v} = \begin{cases} z_{t,v} + \delta(t) & \text{if } v \in \hat{V} \\ z_{t,v} & \text{otherwise} \end{cases}$$
+光说"要动态双向"还不够，得证明under/over-reflection确实是对称的两端、值得用"有进有退"的调度去对冲。作者给出的桥梁是一个类比：推理中的反思token之于"思维景观"，正如优化中的学习率之于"损失景观"——都是控制每一步走多远的旋钮。学习率过小会过早陷在次优解，对应under-reflection；学习率过大会发散，对应over-reflection。为坐实这个类比，作者借Landscape of Thoughts工具把每个推理步$r_i$按它与最终答案$y$的"距离"投影到二维平面，距离定义为模型在该步条件下生成答案的概率（按答案长度归一）：
 
-$$\delta(t) = A \left| \frac{4 \cdot (t - C/4) \bmod C}{C} - 2 \right| - A$$
+$$d(r_i, y) = p_{\text{LRM}}(y \mid r_i)^{1/|y|}$$
 
-其中振幅$A$控制调整强度、周期$C$控制振荡频率。$\delta(t)$是一条在$[-A, 0]$区间往复的三角波：在$t=C/4$处取到$\delta=A$这样的正值峰、促进反思（鼓励换思路探索），在$t=3C/4$处取到$\delta=-A$这样的负值谷、抑制反思（促进收敛稳定）。整个过程没有任何可学习参数，实现上只是在logit上加一个由位置算出的标量。
+可视化后看到三种轨迹：under-reflection太保守、始终离不开起点；desired-reflection结构良好、稳定收敛到正确答案；over-reflection最微妙——模型曾走到接近正确答案的暗色区域（如冒出"Alternatively, perhaps the correct answer is..."），却因反思过度一冲而过、最终偏离。作者还发现轨迹里的急转弯几乎都由反思token触发。这正印证了优化里"步长对冲"（stepsize hedging）的智慧——小步与大步各有失败模式，交替使用可互相弥补，而周期性学习率（cyclical learning rate）就是它在深度学习里的三角波实现，直接成了下一步的蓝本。
 
-**4. 与TIP的本质区别：从单向静态到双向动态。** TIP本质是单向静态策略，用固定的$\alpha \leq 0$一味压低反思token；CyclicReflex则是双向动态的，借三角波在生成过程中交替促进和抑制——上升阶段鼓励模型转换思路、下探阶段推动它稳定收敛。这正对应优化里周期性学习率的"步长对冲"（stepsize hedging）思想：不押注单一步长，而是用大小步交替来同时对冲过早收敛和振荡发散两种风险。
+**3. 三角波形的双向logit调制：一行公式实现的核心解码机制**
+
+落到实现，CyclicReflex给反思token集合$\hat{V}$里的每个token按位置叠加偏置$\delta(t)$，其余token不变：
+
+$$\hat{z}_{t,v} = \begin{cases} z_{t,v} + \delta(t) & \text{若 } v \in \hat{V} \\ z_{t,v} & \text{否则} \end{cases}$$
+
+$$\delta(t) = A\left|\frac{4\big((t - C/4)\bmod C\big)}{C} - 2\right| - A$$
+
+其中振幅$A$控制调整强度、周期$C$控制振荡频率，$(t-C/4)\bmod C$给出当前token在一个周期内的相位。$\delta(t)$是一条在$[-A, A]$之间往复的三角波：在$t=C/4$处取到峰值$\delta=A$、促进反思（鼓励换思路探索），在$t=3C/4$处取到谷值$\delta=-A$、抑制反思（推动稳定收敛）。它正好把设计1要的"双向动态"和设计2类比来的"步长对冲"合二为一——上升相位放大反思促进探索、下降相位压低反思促进收敛，不押注单一步长，而用大小步交替同时对冲过早收敛与振荡发散两种风险。相比TIP那个与位置无关、只会单向压制的常数惩罚，这里整个机制没有任何可学习参数，实现上只是在每步logit上加一个由位置算出的标量，零额外开销。作者还指出周期$C$对效果的影响比振幅$A$更大。
 
 ### 损失函数 / 训练策略
 本方法是纯粹的推理期策略，不涉及任何训练或参数更新。唯一需要确定的是两个超参数，通过网格搜索得到：振幅$A \in [1, 10]$、周期$C \in [200, 2000]$，具体取值因数据集而异。

@@ -43,7 +43,25 @@ tags:
 
 ### 整体框架
 
-NRGPT把GPT-J风格的平行Transformer改写成一个权重共享的循环架构：单个模块反复应用 $T$ 次，替代传统 $T$ 层各自独立权重的堆叠。关键的视角转换在于，让注意力和前馈网络分别成为两个能量函数的梯度，这样每一次模块应用就等价于token表示在能量landscape上做一步梯度下降 $x^{(t+1)} = x^{(t)} - \eta^{(t)} \frac{\partial E}{\partial g^{(t)}}$，其中 $g^{(t)} = \text{LN}(x^{(t)})$ 是经LayerNorm/RMSNorm归一化后的表示，$\eta$ 是推理速率矩阵（inference rate matrix）。训练范式完全不变，仍是自监督next-token prediction，只是把前向传播本身重新解释成了能量优化过程。
+NRGPT把GPT-J风格的平行Transformer改写成一个权重共享的循环架构：单个模块反复应用 $T$ 次，替代传统 $T$ 层各自独立权重的堆叠。关键的视角转换在于，让注意力和前馈网络分别成为两个能量函数的梯度，这样每一次模块应用就等价于token表示在能量landscape上做一步梯度下降 $x^{(t+1)} = x^{(t)} - \eta^{(t)} \frac{\partial E}{\partial g^{(t)}}$，其中 $g^{(t)} = \text{LN}(x^{(t)})$ 是经LayerNorm/RMSNorm归一化后的表示，$\eta$ 是推理速率矩阵（inference rate matrix）。每个token都被看成一颗在自己能量景观上滚动的粒子，反复迭代直到收敛，最终的稳定状态即用于预测下一个token。训练范式完全不变，仍是自监督next-token prediction，只是把前向传播本身重新解释成了能量优化过程。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入token序列 x⁽⁰⁾<br/>（词嵌入）"] --> G["归一化<br/>g⁽ᵗ⁾ = LN / RMSNorm(x⁽ᵗ⁾)"]
+    subgraph DUAL["双能量函数"]
+        direction TB
+        EA["注意力能量 E_AT<br/>（联想记忆形式）"]
+        EF["前馈能量 E_FF<br/>（FF1 / FF2W 变体）"]
+    end
+    G --> EA
+    G --> EF
+    EA --> SUM["合成能量<br/>E = E_AT + E_FF"]
+    EF --> SUM
+    SUM --> STEP["能量梯度下降一步<br/>x⁽ᵗ⁺¹⁾ = x⁽ᵗ⁾ − η·∂E/∂g<br/>η = 推理速率矩阵"]
+    STEP -->|"权重共享 · 循环 T 次"| G
+    STEP -->|"逐token级联收敛后"| OUT["稳定token状态<br/>→ 预测下一个token"]
+```
 
 ### 关键设计
 

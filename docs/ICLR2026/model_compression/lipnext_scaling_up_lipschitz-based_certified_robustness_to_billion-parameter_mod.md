@@ -43,15 +43,33 @@ tags:
 
 ### 整体框架
 
-LipNeXt把一个 block 拆成四个串联的 1-Lipschitz 组件——正交投影 $R\in\mathcal{M}_C$ 先在通道维做混合，Spatial Shift $\mathcal{S}$ 做空间混合，$R^\top$ 把通道投回原位，最后一层正交线性 $M$ 接 $\beta$-Abs 激活，整块写作 $Z=\sigma(MR^\top\mathcal{S}(R(X+p))+b)$，其中 $p\in\mathbb{R}^{H\times W\times 1}$ 是可学习位置编码。这样设计的核心是：每个组件都被单独证明保持 1-Lipschitz，串起来后全网严格 1-Lipschitz，无需任何事后约束或重参数化；末端用 L2 Spatial Pool $[\text{L2Pool}(X)]_c=\sqrt{\sum_{h,w}X_{h,w,c}^2}$ 汇聚空间维，把保范性一路保持到分类头。
+LipNeXt把一个 block 拆成四个串联的 1-Lipschitz 组件——正交投影 $R\in\mathcal{M}_C$ 先在通道维做混合，Spatial Shift $\mathcal{S}$ 做空间混合，$R^\top$ 把通道投回原位，最后一层正交线性 $M$ 接 $\beta$-Abs 激活，整块写作 $Z=\sigma(MR^\top\mathcal{S}(R(X+p))+b)$，其中 $p\in\mathbb{R}^{H\times W\times 1}$ 是可学习位置编码。这样设计的核心是：每个组件都被单独证明保持 1-Lipschitz，串起来后全网严格 1-Lipschitz，无需任何事后约束或重参数化；堆叠 $L$ 个这样的 block 后，末端用 L2 Spatial Pool $[\text{L2Pool}(X)]_c=\sqrt{\sum_{h,w}X_{h,w,c}^2}$ 汇聚空间维，把保范性一路保持到分类头。三个核心创新各管一段数据流：FastExp 流形优化负责把所有正交矩阵（$R$、$R^\top$、$M$）训出来，Spatial Shift 负责无参数的空间混合，$\beta$-Abs 负责 1-Lipschitz 的非线性。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入特征 X<br/>+ 可学习位置编码 p"] --> R["正交投影 R<br/>通道维混合<br/>(FastExp 流形优化训练)"]
+    R --> S["Spatial Shift 模块<br/>5-partition 循环位移<br/>无参数空间混合"]
+    S --> RT["正交回投 Rᵀ<br/>通道投回原位<br/>(FastExp 流形优化训练)"]
+    RT --> M["正交线性 M + 偏置 b<br/>(FastExp 流形优化训练)"]
+    M --> ACT["β-Abs 激活 σ<br/>1-Lipschitz 非线性"]
+    ACT -->|"严格 1-Lipschitz<br/>堆叠 L 个 block"| POOL["L2 Spatial Pool<br/>保范汇聚空间维"]
+    POOL --> CLS["分类头 → 认证鲁棒精度"]
+```
 
 ### 关键设计
 
-**1. FastExp 流形优化：在正交流形上直接训练，把每步开销压到 5 次矩阵乘。** 紧的 Lipschitz 界要求权重正交，但显式重参数化（矩阵指数、Cayley、Cholesky-Orth）都引入 FFT、矩阵逆等昂贵算子，是 scaling 的瓶颈。本文转而把正交矩阵当作流形上的点直接优化，关键观察是大模型学习率 $\eta\sim10^{-3}$ 很小，使指数映射的参数矩阵 $A$ 的 Frobenius 范数也很小，于是用自适应截断 Taylor 展开 $\text{FastExp}(A)$ 代替精确 $\exp(A)$：当 $\|A\|_F<0.05$ 时只取 $I+A+\tfrac12A^2$，$0.05\le\|A\|_F<0.25$ 取到 $\tfrac16A^3$ 项，$0.25\le\|A\|_F<1$ 取到 $\tfrac1{24}A^4$ 项，仅当 $\|A\|_F\ge1$ 才回退到精确指数。截断误差会缓慢累积，因此每个 epoch 结束做一次 SVD $X=U\Sigma V^\top$ 并重置 $X\leftarrow UV^\top$ 做 Polar Retraction 把矩阵拉回流形；同时把 Lookahead 改造成流形版本——标准的权重插值 $0.5X_t+0.5X_{t-K}$ 会破坏正交性，改为在正切空间累加 skew-symmetric 更新 $X_{\text{slow}}\leftarrow X_{\text{slow}}\cdot\text{FastExp}(\tfrac12\sum_{j=t-K+1}^{t}\Delta_j)$。三者组合后每步额外开销最多 5 次矩阵乘，远低于 FFT 卷积或 power iteration，且数值上稳定到能跑 bfloat16。
+**1. FastExp 流形优化：在正交流形上直接训练，把每步开销压到 5 次矩阵乘**
 
-**2. Spatial Shift Module：用 Theorem 1 把"保范的空间混合"逼成确定的空间位移。** 空间混合若用普通卷积，控制 Lipschitz 又得引入 power iteration。本文先证 Theorem 1：对 kernel $K\in\mathbb{R}^{k\times k}$、单位步长、circular padding 的卷积 $f_K$，它保范（$\|f_K(X)-f_K(Y)\|_F=\|X-Y\|_F$ 对所有 $X,Y$ 成立）当且仅当 $K$ 中恰有一个非零元且取值 $\pm1$。也就是说，保范的 depthwise 卷积别无选择、只能退化成一次空间位移——架构直接由定理导出而非试出来。落到 2D 实现上，把每个 token 的特征切成 5 个 partition 分别做上/下/左/右移和不动的 circular shift，并靠前后的正交投影 $R$ 混通道，避免位移永远作用在同一组通道上，经验最优位移比例 $\alpha\in\{1/8,1/16\}$。这里特意选 circular padding 而非 zero padding：后者会隐式泄露位置信息但破坏保范，前者保范却不带位置信息，于是再补一个显式位置编码 $p$，实验证实"circular padding + 显式 PE"优于 zero-padding 方案。
+紧的 Lipschitz 界要求权重正交，但显式重参数化（矩阵指数、Cayley、Cholesky-Orth）都引入 FFT、矩阵逆等昂贵算子，是 scaling 的瓶颈。本文转而把正交矩阵当作流形上的点直接优化，关键观察是大模型学习率 $\eta\sim10^{-3}$ 很小，使指数映射的参数矩阵 $A$ 的 Frobenius 范数也很小，于是用自适应截断 Taylor 展开 $\text{FastExp}(A)$ 代替精确 $\exp(A)$：当 $\|A\|_F<0.05$ 时只取 $I+A+\tfrac12A^2$，$0.05\le\|A\|_F<0.25$ 取到 $\tfrac16A^3$ 项，$0.25\le\|A\|_F<1$ 取到 $\tfrac1{24}A^4$ 项，仅当 $\|A\|_F\ge1$ 才回退到精确指数。截断误差会缓慢累积，因此每个 epoch 结束做一次 SVD $X=U\Sigma V^\top$ 并重置 $X\leftarrow UV^\top$ 做 Polar Retraction 把矩阵拉回流形；同时把 Lookahead 改造成流形版本——标准的权重插值 $0.5X_t+0.5X_{t-K}$ 会破坏正交性，改为在正切空间累加 skew-symmetric 更新 $X_{\text{slow}}\leftarrow X_{\text{slow}}\cdot\text{FastExp}(\tfrac12\sum_{j=t-K+1}^{t}\Delta_j)$。三者组合后每步额外开销最多 5 次矩阵乘，远低于 FFT 卷积或 power iteration，且数值上稳定到能跑 bfloat16。
 
-**3. β-Abs 激活：一个既 1-Lipschitz 又 GPU 友好的非线性。** 常用的 MinMax 激活要排序/配对，在大模型上不划算。本文定义 $[\beta\text{-Abs}(\boldsymbol{x})]_i=|x_i|$（当 $i\le\beta d$）否则 $=x_i$，用 $\beta\in[0,1]$ 连续调节非线性比例。它取绝对值的部分自然 1-Lipschitz，且只是逐元素分段，没有排序或配对操作所以对 GPU 友好；同时表达力不减——当 $\beta=0.5$ 时存在 $R\in\mathcal{M}_{2d}$ 使 $\text{MinMax}(x)=R^\top\beta\text{-Abs}(Rx)$，等于把 MinMax 作为特例包含进来。
+**2. Spatial Shift Module：用 Theorem 1 把"保范的空间混合"逼成确定的空间位移**
+
+空间混合若用普通卷积，控制 Lipschitz 又得引入 power iteration。本文先证 Theorem 1：对 kernel $K\in\mathbb{R}^{k\times k}$、单位步长、circular padding 的卷积 $f_K$，它保范（$\|f_K(X)-f_K(Y)\|_F=\|X-Y\|_F$ 对所有 $X,Y$ 成立）当且仅当 $K$ 中恰有一个非零元且取值 $\pm1$。也就是说，保范的 depthwise 卷积别无选择、只能退化成一次空间位移——架构直接由定理导出而非试出来。落到 2D 实现上，把每个 token 的特征切成 5 个 partition 分别做上/下/左/右移和不动的 circular shift，并靠前后的正交投影 $R$ 混通道，避免位移永远作用在同一组通道上，经验最优位移比例 $\alpha\in\{1/8,1/16\}$。这里特意选 circular padding 而非 zero padding：后者会隐式泄露位置信息但破坏保范，前者保范却不带位置信息，于是再补一个显式位置编码 $p$，实验证实"circular padding + 显式 PE"优于 zero-padding 方案。
+
+**3. β-Abs 激活：一个既 1-Lipschitz 又 GPU 友好的非线性**
+
+常用的 MinMax 激活要排序/配对，在大模型上不划算。本文定义 $[\beta\text{-Abs}(\boldsymbol{x})]_i=|x_i|$（当 $i\le\beta d$）否则 $=x_i$，用 $\beta\in[0,1]$ 连续调节非线性比例。它取绝对值的部分自然 1-Lipschitz，且只是逐元素分段，没有排序或配对操作所以对 GPU 友好；同时表达力不减——当 $\beta=0.5$ 时存在 $R\in\mathcal{M}_{2d}$ 使 $\text{MinMax}(x)=R^\top\beta\text{-Abs}(Rx)$，等于把 MinMax 作为特例包含进来。
 
 ### 损失函数 / 训练策略
 

@@ -45,7 +45,36 @@ tags:
 
 ### 整体框架
 
-CDE 把"动作"建模成潜空间里的一根方向向量：给定干预前后的观测对 $(x, \tilde{x})$，先用编码器 $\phi$ 把两张图各自映射到潜空间，再做元素相减得到 Delta 嵌入 $\delta_a := \phi(\tilde{x}) - \phi(x)$。在理想的完美反事实假设下，这个差向量应该满足 $\delta_a = [0 \cdots \tilde{z}_a - z_a \cdots 0]^T$，也就是只有被动作 $a$ 真正改变的那几个维度非零、其余维度被减法消掉。整个方法围绕"让这根 Delta 向量变成可泛化的因果表示"展开，从约束定义、网络架构到训练损失层层落地。
+CDE 想解决的问题是：让模型学到的"动作/干预"表示能跨物体、跨场景泛化，在测试遇到训练里没见过的物体-动作组合时仍然认得出动作。它的核心想法是把"动作"建模成潜空间里的一根方向向量：给定干预前后的观测对 $(x, \tilde{x})$，先用编码器 $\phi$（ViT-DINO 骨干 + 因果投影器）把两张图各自映射到潜空间，再做元素相减得到 Delta 嵌入 $\delta_a := \phi(\tilde{x}) - \phi(x)$。在理想的完美反事实假设下，这根差向量应满足 $\delta_a = [0 \cdots \tilde{z}_a - z_a \cdots 0]^T$——只有被动作 $a$ 真正改变的那几个维度非零、其余共享背景在相减时被抵消。
+
+围绕这根 Delta 向量，方法分三块落地：先用三条因果约束（独立性、稀疏性、不变性）规定它"该长什么样"；再给出两种把图像变成 Delta 的网络结构——动作影响全局时用全局 CDE 模型（Model A，取 CLS token），动作只改局部时用 Patch-wise CDE 模型（Model B，逐 patch 算 Delta 再取 Top-K）；最后两条支路得到的 Delta 都送进同一个动作分类器预测动作类别，三条约束则通过三项损失在训练时塑造 Delta。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["干预前后图像对<br/>(x, x̃)"] --> BB["ViT-DINO 骨干"]
+    BB --> A1
+    BB --> B1
+    subgraph A["全局 CDE 模型（Model A）"]
+        direction TB
+        A1["取 CLS token<br/>过因果投影器"] --> A2["元素相减<br/>得全局 δ"]
+    end
+    subgraph B["Patch-wise CDE 模型（Model B）"]
+        direction TB
+        B1["保留所有 patch 特征<br/>共享投影器逐 patch 相减"] --> B2["按 L2 范数<br/>取 Top-K patch δ"]
+    end
+    A2 --> CLF["动作分类器"]
+    B2 --> CLF
+    CLF --> OUT["预测动作类别"]
+    subgraph C["三条因果约束"]
+        direction TB
+        C1["独立性：减法天然保证"]
+        C2["不变性：有监督对比损失"]
+        C3["稀疏性：L1 正则"]
+    end
+    A2 -.->|约束 δ| C
+    B2 -.->|约束 δ| C
+```
 
 ### 关键设计
 
@@ -81,18 +110,20 @@ $$\mathcal{L}_{\text{contrast}} = \sum_{i=1}^{B} \frac{-1}{|P(i)|} \sum_{p \in P
 | Vanilla-V (ViT-DINO) | 0.95 | 0.34 | 0.47 | 0.48 |
 | ICM-R | 0.95 | 0.41 | 0.50 | 0.45 |
 | SMS-R | 0.96 | 0.47 | 0.54 | 0.42 |
-| **CDE Global** | **0.95** | **显著提升** | **显著提升** | **大幅缩小** |
+| **CDE Global** | **0.95** | — | — | **0.21** |
 
-多物体和真实世界（Epic-Kitchens）场景同样展示了 CDE 在 OOD 泛化上的显著优势。
+全局 CDE 在单物体场景把泛化 gap 从 0.56 压到 0.21，同时几乎不损失 IID 精度；多物体和真实世界（Epic-Kitchens）场景下 Patch-wise 模型超越所有基线，甚至包括用了真值分割掩码的 oracle 方法。
+
+> ⚠️ 上表基线的 Gap 数值口径与原文正文（baseline gap 0.56）略有出入，CDE 的 gap 缩减幅度以原文为准。
 
 ### 消融实验
 
 | 配置 | 效果 |
 |------|------|
-| 全部三个损失 | 最佳 OOD 性能 |
-| 去掉对比损失 | 不变性下降，OOD 准确率降低 |
-| 去掉稀疏正则 | 表示不够紧凑，OOD 略有下降 |
-| 只用交叉熵 | 退化为普通分类器，OOD 大幅下降 |
+| 全部三个损失 | 最佳 OOD 准确率约 75.0% |
+| 去掉对比损失 | 不变性丢失，OOD 下降约 7 个点 |
+| 去掉稀疏正则 | 表示不够紧凑，OOD 下降约 2 个点 |
+| 只用交叉熵 | 退化为普通分类器，比完整模型低约 8 个点 |
 | Global vs Patch-wise | Patch-wise 在多物体场景更优 |
 
 ### 关键发现

@@ -45,6 +45,21 @@ tags:
 
 CSNN 的核心改动是把输入无向图拆成有向图——每条无向边变成方向相反的一对有向边——再为每个节点 $i$ 学习一对 conformal 映射：源映射 $\mathbf{S}_i$ 管它往外传什么，目标映射 $\mathbf{T}_i$ 管它往里收什么。表示更新沿用 NSD 风格的归一化扩散迭代，但把扩散算子换成由 out-degree 和转置 in-degree 两个有向 sheaf Laplacian 组合而成的非对称算子，这样信息流入和流出就被两条独立的通道分开控制了。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["无向图 + 节点特征"] --> SG
+    C["Flat vector bundle 参数化<br/>每点学源映射 S_i 与目标映射 T_i"] --> SG
+    subgraph SG["有向 Cellular Sheaf 与 in/out-degree Laplacian"]
+        direction TB
+        B["每条无向边<br/>→ 方向相反的一对有向边"] --> D["out/in-degree sheaf Laplacian<br/>S 管传出、T 管接收"]
+        D --> E["非对称扩散算子<br/>(Δin)ᵀ · Δout"]
+    end
+    SG --> F["归一化扩散迭代（叠 t 层）"]
+    F --> G["扩展感受野与选择性注意<br/>2t-hop 直达、跳过中间节点"]
+    G --> H["节点表示 → 下游分类/回归"]
+```
+
 ### 关键设计
 
 **1. 有向 Cellular Sheaf 与 in/out-degree Laplacian：把"传播"和"监听"解耦**

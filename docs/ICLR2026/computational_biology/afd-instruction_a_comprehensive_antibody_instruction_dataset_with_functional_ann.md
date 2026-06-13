@@ -41,7 +41,33 @@ tags:
 ## 方法详解
 
 ### 整体框架
-AFD-Instruction的构建分三步：(1) 从SAbDab/PDB收集抗体，用MMseqs2序列距离采样平衡集（4305条）；(2) 多智能体系统从对应文献中抽取功能注释；(3) self-questioning策略将注释扩展为430K+指令对。数据涵盖两大应用：抗体理解（分类QA+开放式caption）和抗体设计（CDR3设计+完整序列生成）。
+这篇论文要解决的是"抗体序列与自然语言功能描述无法对齐"的数据空白：通用 LLM 看不懂氨基酸序列、蛋白语言模型又听不懂自然语言。AFD-Instruction 把"从已发表文献里挖功能信号、再放大成指令"做成一条流水线，最终产出 430K+ 条覆盖"理解 + 设计"双向能力的指令对，用来微调通用 LLM。
+
+整条 pipeline 从 SAbDab/PDB 收集抗体出发，先用 MMseqs2 按序列距离做平衡采样得到 4305 条代表性抗体；这批抗体对应的文献交给一个**多智能体抽取系统**（Mr. Extractor → Dr. Mechanism → Prof. Function 三角色串行），抠出抗体–功能描述对；再由 **Self-Questioning 策略**围绕这些配对从多视角自动派生问答，分别长出"抗体理解"（5 类分类 QA + 开放式 caption）和"抗体设计"（CDR3 / 完整序列生成）两条任务线。贯穿全程的还有两件支撑性设计：**序列格式规范**（用链标签让文本 LLM 看懂序列结构）和**质量控制**（人工抽检 + 专家复核给自动 pipeline 兜底）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["SAbDab / PDB 抗体<br/>+ ~4000 篇对应文献"]
+    SAMP["MMseqs2 平衡采样<br/>4305 条代表性抗体"]
+    subgraph EXTRACT["多智能体文献抽取系统"]
+        direction TB
+        E1["Mr. Extractor<br/>提取基础事实<br/>(类别/靶标/来源/功能)"] --> E2["Dr. Mechanism<br/>分析结构与机制<br/>(结合位点/分子效应)"] --> E3["Prof. Function<br/>综合作用模式与<br/>治疗相关性"]
+    end
+    PAIR["抗体–功能描述对<br/>(~4305)"]
+    subgraph EXPAND["Self-Questioning 策略"]
+        direction TB
+        U["理解线：5 类分类 QA<br/>+ 开放式 caption"]
+        D["设计线：CDR3 / 完整<br/>序列生成"]
+    end
+    OUT["AFD-Instruction<br/>430K+ 指令对"]
+    APP["指令微调通用 LLM<br/>→ 抗体理解 + 功能导向设计"]
+
+    IN --> SAMP --> EXTRACT --> PAIR --> EXPAND --> OUT --> APP
+    FMT["序列格式规范<br/>链标签 H/L/Anti/CDR3"] -.链标记输入输出.-> EXPAND
+    QC["质量控制<br/>10% 抽检 + 5% 专家复核 (κ=0.82)"] -.兜底校验.-> EXTRACT
+    QC -.兜底校验.-> EXPAND
+```
 
 ### 关键设计
 

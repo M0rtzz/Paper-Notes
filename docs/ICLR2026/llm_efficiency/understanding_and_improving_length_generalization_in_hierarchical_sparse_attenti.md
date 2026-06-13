@@ -42,7 +42,21 @@ tags:
 ### 整体框架
 论文要解决的问题是：为什么有些 chunk-based 稀疏注意力能把短上下文训练的模型外推到极长序列、而有些不能？它把现有方法统一到一个 SWA+HSA（Sliding Window Attention + Hierarchical Sparse Attention）框架里，再逐一拆掉组件看谁在起作用。
 
-整条数据流分三段：底层用滑动窗口注意力处理局部上下文，保证近距离信息精确；中间的 chunking layer 把隐层表示按固定大小切块，每块编码成一个全局记忆单元（一个 landmark 向量 + 一组 encoded chunks）；顶层的 HSA 拿当前 query 去所有 landmark 里挑出 top-N 最相关的 chunk，再对这些 chunk 做加权注意力，把全局信息融回主干。论文的三个核心发现，正好对应这条流水线上"怎么编码 chunk""检索信息怎么并回主干""训练时怎么逼模型学会选择"三个环节。
+整条数据流分三段。底层是若干个滑动窗口注意力（SWA）解码层，每层做 SWA + FFN，只处理局部上下文、保证近距离信息精确。到网络中点插入一个 chunking 层，把底层隐层表示 $\mathbf{H}^{L/2}$ 按固定大小切块，每块送进一个**非线性 Chunk Encoder + CLS Token** 编码，产出一个全局记忆单元：一个 landmark 向量 $\mathbf{lmk}_{[i]}$（供检索）和一组 encoded chunks $\mathbf{E}$（供读取内容）。顶层是若干个上层解码器，每层在局部自注意力之外多挂一个 HSA：先拿当前 query $\mathbf{q}_t$ 和所有 landmark 算相似度 $s_{t,i}=\mathbf{q}_t\cdot\mathbf{lmk}_{[i]}$、挑出 top-N 最相关的 chunk，再对这些 chunk 的 KV 做加权注意力，最后通过 **Bypassing Residual Path** 把检索结果干净地并回主干。论文的三个核心发现正好落在这条流水线上：怎么把 chunk 编码得可检索（设计 1）、检索结果怎么并回主干不出乱（设计 2），以及训练时怎么逼模型在海量 chunk 里学会挑（设计 3，**训练时强制选择稀疏性**，作用在选择那一步上）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入 token 序列"] --> SWA["底层解码器<br/>SWA + FFN，处理局部上下文"]
+    SWA --> CHUNK["中点 chunking 层<br/>把隐层表示按固定大小切块"]
+    CHUNK --> ENC["1. 非线性 Chunk Encoder + CLS Token<br/>双向 Transformer 编码每块<br/>CLS 输出→landmark，其余→encoded chunks"]
+    ENC --> MEM["全局记忆<br/>landmark 向量 + encoded chunks (E)"]
+    MEM --> SEL["上层解码器·HSA 选择<br/>query·landmark 相似度取 top-N chunk"]
+    TRAIN["3. 训练时强制选择稀疏性<br/>大上下文对比学习 + 强制稀疏"] -.训练阶段塑造选择能力.-> SEL
+    SEL --> ATT["HSA 加权注意力<br/>对选中 chunk 的 KV 加权求和"]
+    ATT --> BYP["2. Bypassing Residual Path<br/>检索结果经 MLP 再并回主干"]
+    BYP --> OUT["下一个 token 预测"]
+```
 
 ### 关键设计
 

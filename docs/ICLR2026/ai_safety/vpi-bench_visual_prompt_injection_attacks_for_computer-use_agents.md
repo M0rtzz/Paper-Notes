@@ -44,7 +44,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-VPI-Bench 不是训练模型，而是搭一套能复现真实危害的攻击沙盒：它把一个端到端威胁模型落到 5 个高仿真网页平台上，配以 306 个测试样本和一套自动化的行为判定。一次评测的完整链路是——Agent 接到一条良性用户指令，去访问一个被注入了视觉恶意内容的网页，最终看它会不会被这条藏在画面里的指令诱导，去执行窃取文件、删除数据、发隐私信息这类系统级危险操作。被测的 Agent 直接用现成的商业 API（GPT-5、Claude-3.7 等）和开源模型，本身不做任何微调。
+VPI-Bench 不是训练模型，而是搭一套能复现真实危害的攻击沙盒：它把一个端到端威胁模型落到 5 个高仿真网页平台上，配以 306 个测试样本和一套自动化的行为判定。一次评测的完整链路是——Agent 接到一条良性用户指令，去访问一个被注入了视觉恶意内容的网页，最终看它会不会被这条藏在画面里的指令诱导，去执行窃取文件、删除数据、发隐私信息这类系统级危险操作。被测的 Agent 直接用现成的商业 API（GPT-5、Claude-3.7 等）和开源模型，本身不做任何微调；判定则交给三个 frontier LLM 多数投票，输出 AR/SR 双指标。下面这张图把"威胁模型形式化 → 平台与注入构建 → Agent 在沙箱里执行 → 自动化判定"这条评测流水线串起来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    subgraph TM["端到端威胁模型"]
+        direction TB
+        U["良性用户指令<br/>T_benign（如买最便宜眼镜）"] --> W["伪真网页平台 w<br/>攻击者只控内容、不入侵平台"]
+        W --> V["视觉攻击 prompt<br/>v_adv ⊂ w"]
+    end
+    V --> PLAT["五平台高仿真注入场景<br/>弹窗 Amazon/Booking/BBC<br/>消息 Messenger · 邮件 Email"]
+    PLAT --> CAT["恶意任务分类<br/>UA 24.5% / PL 20.6%<br/>UA+PL 54.9%"]
+    CAT --> AGENT["被测 Agent（CUA/BUA）<br/>现成 API、零微调"]
+    AGENT --> ENV["沙箱环境 E<br/>文件 / 终端 / 云存储 / 通讯"]
+    ENV --> EVAL["自动化评估协议<br/>3 个 frontier LLM 多数投票"]
+    EVAL --> OUT["AR / SR 双指标<br/>+ 5 类行为标签"]
+```
 
 ### 关键设计
 

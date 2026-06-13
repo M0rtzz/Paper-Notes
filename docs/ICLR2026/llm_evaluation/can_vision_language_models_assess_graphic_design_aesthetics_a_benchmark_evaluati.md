@@ -41,13 +41,26 @@ tags:
 ## 方法详解
 
 ### 整体框架
-工作包含三部分：(1) AesEval-Bench 基准构建——从 Crello 数据集采样专业设计，施加可控扰动生成缺陷设计，人工标注后构造 4500 个 QA 对；(2) 系统评估——在 10+ VLM 上测试 3 种任务；(3) AesEval-Train 训练集构建——用 human-guided VLM labeling 扩展标签，用 indicator-grounded reasoning 生成推理路径，微调 VLM。
+
+这篇论文要回答一个此前没被系统研究过的问题：VLM 到底能不能评判图形设计的美学，又能不能被教会做这件事。作者把工作拆成相互衔接的三段。第一步先确立一套**美学指标体系与三级任务**，把"好不好看"这种主观判断拆成 4 维度 12 指标，以及由粗到细的三个任务，作为后续评测和标注共用的坐标系。第二步围绕这套坐标系造数据：从 Crello 的专业设计出发，在其结构化元数据上施加**可控缺陷设计生成**再重渲染、人工过滤，得到带精确 ground truth 的 **AesEval-Bench**（4500 个 QA）；拿它系统评测 10+ 个 VLM（含推理增强型），量出它们在设计美学上的能力边界。第三步为了把 VLM 教得更好，用 **Human-guided VLM Labeling** 把少量人工标准放大成大规模训练标签，再用 **Indicator-grounded Reasoning** 给每条样本生成锚定到具体 bbox 的推理路径，组成 AesEval-Train（30k QA）去全参微调 Qwen2.5-VL-7B。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Crello 专业设计<br/>(自带 JSON 元数据)"] --> T["美学指标体系与三级任务<br/>4维度×12指标 → 判断/区域选择/精确定位"]
+    T --> B["可控缺陷设计生成<br/>JSON层扰动 → 重渲染 → 人工过滤"]
+    B --> C["AesEval-Bench<br/>4500 QA"]
+    C --> EVAL["10+ VLM 系统评测<br/>(含推理增强型)"]
+    C --> D["Human-guided VLM Labeling<br/>少量人工示例 + bbox先验 放大标签"]
+    D --> E["Indicator-grounded Reasoning<br/>抽象指标锚定到 bbox 生成推理路径"]
+    E --> F["全参微调 Qwen2.5-VL-7B<br/>→ AesEval-Train (30k QA)"]
+```
 
 ### 关键设计
 
-**1. AesEval-Bench 基准设计：把"好不好看"拆成可量化的维度和任务**
+**1. 美学指标体系与三级任务：把"好不好看"拆成可量化的维度和任务**
 
-现有设计美学 benchmark 往往只覆盖少数维度、评估又停在粗粒度打分或开放式描述，既难量化也无法定位问题区域。AesEval-Bench 把设计美学拆成 4 个维度共 12 个指标：字体（legibility、hierarchy）、布局（balance、layering、whitespace、alignment）、配色（harmony、contrast、appeal、psychology）、图形（quality、relevance）。在此之上设计 3 个由粗到细递进的任务——美学判断（整图 yes/no）、区域选择（4 选 1 找出有问题的区域）、精确定位（直接输出问题区域的 bbox 坐标）。三个任务从全局感知一路收敛到细粒度空间定位，逐级加难，因此能把 VLM 的美学理解深度逐层量出来，而不是只给一个笼统的分数。
+现有设计美学 benchmark 往往只覆盖少数维度、评估又停在粗粒度打分或开放式描述，既难量化也无法定位问题区域。这套指标体系把设计美学拆成 4 个维度共 12 个指标：字体（legibility、hierarchy）、布局（balance、layering、whitespace、alignment）、配色（harmony、contrast、appeal、psychology）、图形（quality、relevance）。在此之上设计 3 个由粗到细递进的任务——美学判断（整图 yes/no）、区域选择（4 选 1 找出有问题的区域）、精确定位（直接输出问题区域的 bbox 坐标）。三个任务从全局感知一路收敛到细粒度空间定位，逐级加难，因此能把 VLM 的美学理解深度逐层量出来，而不是只给一个笼统的分数；这套维度-指标-任务的坐标系也成为后面造数据和标注时共用的标准。
 
 **2. 可控缺陷设计生成：从专业设计反向制造缺陷，以拿到精确 ground truth**
 

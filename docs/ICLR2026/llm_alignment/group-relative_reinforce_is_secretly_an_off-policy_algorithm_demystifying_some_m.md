@@ -46,7 +46,23 @@ tags:
 
 这篇论文想回答一个长期被含糊带过的问题：GRPO 在理论上被当成 on-policy 算法，工程上却几乎总跑在 off-policy 数据上，这两者到底怎么调和，又是哪个组件在真正撑着训练稳定性。作者的做法不是从采样分布出发去打补丁，而是反过来从一个 KL 正则化的代理目标出发，证明 GRPO 的更新公式可以在不假设数据来源的情况下被推出来——既然推导里压根没用到"数据来自当前策略"，那它天然就是 off-policy 的。
 
-整套理论沿三步展开。第一步，定义以上一轮策略 $\pi_{\theta_t}$ 为锚点的 KL 正则化代理目标 $J(\theta; \pi_{\theta_t}) = \mathbb{E}[r(x,y)] - \tau \cdot D_{\text{KL}}(\pi_\theta \| \pi_{\theta_t})$，求出它的最优策略满足的 pairwise consistency condition；第二步，用有限样本构造一个强制该条件成立的均方代理损失；第三步，在当前参数 $\theta_t$ 处对这个损失取一步梯度，结果恰好等价于 group-relative REINFORCE 的更新公式。拿到这个 off-policy 解释后，作者再提炼出两条增强原则来应对任意数据分布：一是**正则化策略更新步**（clipping、KL 惩罚等），防止在次优数据分布下一步走得太大把策略带崩；二是**主动塑造训练数据分布**（样本加权、丢弃低奖励样本等），引导更新方向。下面四个设计点，前三个落在第一条原则上，最后一个落在第二条。
+整套理论沿三步展开。第一步，定义以上一轮策略 $\pi_{\theta_t}$ 为锚点的 KL 正则化代理目标 $J(\theta; \pi_{\theta_t}) = \mathbb{E}[r(x,y)] - \tau \cdot D_{\text{KL}}(\pi_\theta \| \pi_{\theta_t})$，求出它的最优策略满足的 pairwise consistency condition；第二步，用有限样本构造一个强制该条件成立的均方代理损失；第三步，在当前参数 $\theta_t$ 处对这个损失取一步梯度，结果恰好等价于 group-relative REINFORCE 的更新公式。拿到这个 off-policy 解释后，作者再从中提炼出两条增强原则来应对任意数据分布：一是**正则化策略更新步**（clipping、KL 惩罚等），防止在次优数据分布下一步走得太大把策略带崩；二是**主动塑造训练数据分布**（样本加权、丢弃低奖励样本等），引导更新方向。下面四个设计点里，第一个就是这套推导本身（理论地基，也正是它催生了两条原则），后三个再分别落到两条原则上：REC 系列与 OPMD/AsymRE 的统一解释属第一条原则，RED 系列属第二条。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    subgraph DERIV["三步推导：从代理目标一步梯度回到 REINFORCE"]
+        direction TB
+        A["KL 正则化代理目标<br/>J=E[r]−τ·D_KL(π_θ‖π_θt)"] --> B["最优解作差<br/>→ pairwise consistency + 均方代理损失"]
+        B -->|"θt 处取一步梯度，log-prob 差项归零"| C["= group-relative REINFORCE<br/>（天然 off-policy）"]
+    end
+    DERIV --> E{"两条增强原则<br/>应对任意数据分布"}
+    E --> P1["原则一：正则化策略更新步"]
+    E --> P2["原则二：主动塑造数据分布"]
+    P1 --> F["REC 系列：隔离 IS 与 clipping<br/>→ clipping 才是关键、IS 可去"]
+    P1 --> G["统一解释 OPMD / AsymRE<br/>= REINFORCE 加不同正则化"]
+    P2 --> H["RED 系列：放开均匀权重<br/>RED-Drop / RED-Weight"]
+```
 
 ### 关键设计
 
@@ -72,7 +88,7 @@ $$M_i^t = \mathbb{1}(A_i > 0,\ \rho_i^t \leq 1+\epsilon_{\text{high}}) + \mathbb
 
 **4. RED 系列：把均匀权重放开，落到第二条原则上**
 
-前三点都在第一条原则（正则化更新）里打转，第四点转向第二条原则（塑造数据分布）。作者把 pairwise 代理损失里的均匀权重推广成一般权重 $\sum_{i<j} w_{i,j}(a_i - a_j)^2$，推出加权版的 REINFORCE 更新公式，并据此给出两种具体方法。**RED-Drop** 丢弃一部分低奖励负样本、只在子集 $\mathcal{S} \subseteq [K]$ 上训练，动机是负梯度会加剧 entropy collapse 的风险（与 Kimi-Researcher 博客的经验建议一致），而在 off-policy 框架下这种丢弃有了理论依据。**RED-Weight** 则用奖励相关的权重 $w_i$ 给每个样本的梯度项加权，它可以分解为 pairwise 加权 REINFORCE 加一个模仿高奖励响应的正则化项，正好呼应 offline RL 文献里"对高奖励轨迹做正则化，比保守地模仿所有轨迹更有效"的结论。
+前面 REC 与 OPMD/AsymRE 的统一解释两点都在第一条原则（正则化更新）里打转，第四点转向第二条原则（塑造数据分布）。作者把 pairwise 代理损失里的均匀权重推广成一般权重 $\sum_{i<j} w_{i,j}(a_i - a_j)^2$，推出加权版的 REINFORCE 更新公式，并据此给出两种具体方法。**RED-Drop** 丢弃一部分低奖励负样本、只在子集 $\mathcal{S} \subseteq [K]$ 上训练，动机是负梯度会加剧 entropy collapse 的风险（与 Kimi-Researcher 博客的经验建议一致），而在 off-policy 框架下这种丢弃有了理论依据。**RED-Weight** 则用奖励相关的权重 $w_i$ 给每个样本的梯度项加权，它可以分解为 pairwise 加权 REINFORCE 加一个模仿高奖励响应的正则化项，正好呼应 offline RL 文献里"对高奖励轨迹做正则化，比保守地模仿所有轨迹更有效"的结论。
 
 ### 损失函数 / 训练策略
 

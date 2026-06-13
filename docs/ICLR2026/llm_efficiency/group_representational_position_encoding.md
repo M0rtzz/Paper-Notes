@@ -43,15 +43,46 @@ tags:
 
 ### 整体框架
 
-GRAPE 把位置编码看成一个作用在 query/key 上的群作用 $\mathbf{G}(n) = \exp(n\omega\mathbf{L})$：位置 $n$ 通过李群指数映射变成一个变换矩阵，生成元 $\mathbf{L}$ 决定它"长什么样"。当 $\mathbf{L}$ 取反对称矩阵时，变换是 $\mathrm{SO}(d)$ 里的保范旋转，对应乘法型编码 GRAPE-M（RoPE 是其特例）；当 $\mathbf{L}$ 取幂零矩阵时，变换是 $\mathrm{GL}$ 里的幂么平移，给注意力 logit 加上线性偏置，对应加法型编码 GRAPE-A（ALiBi、FoX 是其特例）。整个设计空间由"选什么群、选什么生成元"两个旋钮统一参数化。
+GRAPE 想解决的是位置编码"各搞各的"——RoPE、ALiBi、FoX 这些方法各自独立设计，没有共同的理论底座。它的核心抽象是：把位置编码看成一个作用在 query/key 上的**群作用** $\mathbf{G}(n) = \exp(n\omega\mathbf{L})$，位置 $n$ 通过李群指数映射变成一个变换矩阵，而生成元 $\mathbf{L}$ 决定这个变换"长什么样"。整套设计空间于是收敛到一个旋钮上——**选什么样的生成元**，并由此自然分叉成两大家族。
+
+当 $\mathbf{L}$ 取反对称矩阵时，$\mathbf{G}(n)$ 是 $\mathrm{SO}(d)$ 里的保范旋转，把位置编码成对 query/key 的旋转，对应**乘法型 GRAPE-M**（RoPE 是它的精确特例）；当生成元改取幂零矩阵时，指数映射退化成一阶平移，给注意力 logit 直接加一个随距离变化的偏置项，对应**加法型 GRAPE-A**（ALiBi、FoX 是它的精确特例）。加法这一支还能进一步把"每步固定的偏置"升级成"沿因果路径累加的内容相关偏置"，得到 **GRAPE-AP**。无论走哪一支，最终注意力分数都只依赖相对偏移 $j-i$，保持严格相对律。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    P["位置 n 作用于 query/key"] --> G["群作用<br/>G(n)=exp(nωL)"]
+    G -->|"反对称生成元<br/>L∈so(d)"| M["GRAPE-M：李代数生成元<br/>统一旋转式编码<br/>SO(d) 保范旋转，含 RoPE"]
+    G -->|"幂零生成元<br/>A²=0"| A["GRAPE-A：幂零生成元<br/>统一线性偏置<br/>GL 幂么平移，含 ALiBi/FoX"]
+    A --> AP["GRAPE-AP：路径积分<br/>内容相关偏置<br/>沿因果路径累加"]
+    M --> OUT["注意力 logit<br/>只依赖相对偏移 j−i"]
+    AP --> OUT
+```
 
 ### 关键设计
 
-**1. 乘法型 GRAPE-M：用李代数生成元统一所有旋转式编码。** RoPE 之所以好用，是因为旋转矩阵天然满足相对律——只要把每个位置编码成一个旋转，注意力分数就只依赖相对偏移而非绝对位置。GRAPE-M 把这件事抽象成：用秩-2 反对称生成元 $\mathbf{L} = \mathbf{ab}^\top - \mathbf{ba}^\top \in \mathfrak{so}(d)$ 通过指数映射造出旋转 $\mathbf{G}(n) = \exp(n\omega\mathbf{L}) \in \mathrm{SO}(d)$。这样构造的变换自动满足精确相对律 $\mathbf{G}(n+m) = \mathbf{G}(n)\mathbf{G}(m)$（注意力只看偏移 $j-i$）和保范性 $\mathbf{G}(n)^\top\mathbf{G}(n) = \mathbf{I}$（不放大也不缩小特征）。算的时候不用显式矩阵化，直接用 Rodrigues 闭式 $\exp(\mathbf{L}) = \mathbf{I} + \frac{\sin s}{s}\mathbf{L} + \frac{1-\cos s}{s^2}\mathbf{L}^2$，复杂度只有 $O(d)$，和 RoPE 持平。把 $d/2$ 个秩-2 生成元分别作用在正交的 2D 子空间上，再令子空间取标准坐标对、频率取对数均匀谱，就精确还原出 RoPE；而把子空间基设成可学习、把不同子空间做非交换混合，就比 RoPE 多出"跨子空间耦合"和"上下文相关相位弯曲"的表达力——这正是 RoPE 因固定坐标平面而做不到的事。
+**1. 乘法型 GRAPE-M：用李代数生成元统一所有旋转式编码**
 
-**2. 加法型 GRAPE-A：用幂零生成元把线性偏置纳入同一框架。** ALiBi 这类方法不旋转特征，而是直接在 logit 上按距离扣分。GRAPE 通过齐次坐标把维度提升到 $\mathrm{GL}(d+k)$，换用幂零生成元 $\mathbf{A}$（满足 $\mathbf{A}^2=\mathbf{0}$），此时指数映射截断成一阶 $\mathbf{G}_\mathrm{add}(n) = \exp(n\omega\mathbf{A}) = \mathbf{I} + n\omega\mathbf{A}$，效果就是给注意力加一个随位置线性增长的平移项。在 $\mathrm{GL}(d+2)$ 里取秩-1 幂零生成元，logit 恰好变成 $\mathbf{q}_i^\top\mathbf{k}_j + (j-i)\beta_h$，与 ALiBi 逐字一致。把固定斜率换成内容相关的门控斜率，就得到 GRAPE-A-QK 变体：$\text{logit} = \mathbf{q}_i^\top\mathbf{k}_j + (j-i)\omega[\text{softplus}(\mathbf{v}^\top\mathbf{q}_i/\sqrt{d}) + \text{softplus}(\mathbf{u}^\top\mathbf{k}_j/\sqrt{d})]$，让每个 token 自己决定"忘得多快"。当斜率退化为逐 token 的标量、令 $\omega_t = \log f_t$（$f_t$ 是遗忘门），累积偏置就还原出 Forgetting Transformer 的遗忘偏置 $D_{ij}$，说明 FoX 也只是 GRAPE-A 的一个路径依赖特例。
+这一支要回答的是"旋转式编码为什么有效、能不能统一参数化"。RoPE 好用的根因是旋转矩阵天然满足相对律——把每个位置编码成一个旋转，注意力分数就只依赖相对偏移而非绝对位置。GRAPE-M 把这件事抽象成：用秩-2 反对称生成元 $\mathbf{L} = \mathbf{ab}^\top - \mathbf{ba}^\top \in \mathfrak{so}(d)$ 通过指数映射造出旋转 $\mathbf{G}(n) = \exp(n\omega\mathbf{L}) \in \mathrm{SO}(d)$。这样构造的变换自动满足精确相对律 $\mathbf{G}(n+m) = \mathbf{G}(n)\mathbf{G}(m)$（注意力只看偏移 $j-i$）和保范性 $\mathbf{G}(n)^\top\mathbf{G}(n) = \mathbf{I}$（不放大也不缩小特征）。算的时候不用显式矩阵化，直接用 Rodrigues 闭式
 
-**3. 路径积分变体 GRAPE-AP：把单步偏置升级为沿路径累加的内容相关偏置。** 前面的加法偏置每一步是固定的，GRAPE-AP 让每一步的边势函数依赖当前内容：$\psi_h(t,\ell) = \alpha_h \cdot g\left(\frac{1}{d}\langle\mathbf{p}_{t,h},\, \mathbf{R}_\ell\mathbf{p}_{\ell,h}\rangle\right) \leq 0$，再沿因果路径把它们累加成总偏置 $b_h(t,j) = \sum_{\ell=j+1}^{t}\psi_h(t,\ell)$。因为势函数恒非正、且按"逐步累加"的方式计算，它既保持了单调距离惩罚（越远扣得越多），又能根据中间 token 的内容动态调节惩罚力度，还天然满足因果约束、可增量更新支持流式推理与 KV-cache。这一项可以叠加在乘法型 GRAPE-M 之上联合使用，是论文实验里下游收益的主要来源。
+$$\exp(\mathbf{L}) = \mathbf{I} + \frac{\sin s}{s}\mathbf{L} + \frac{1-\cos s}{s^2}\mathbf{L}^2$$
+
+复杂度只有 $O(d)$，和 RoPE 持平、流式 KV-cache 完全兼容。把 $d/2$ 个秩-2 生成元分别作用在正交的 2D 子空间上，再令子空间取标准坐标对、频率取对数均匀谱，就精确还原出 RoPE；而把子空间基设成可学习、把不同子空间做非交换混合，就比 RoPE 多出"跨子空间耦合"和"上下文相关相位弯曲"的表达力——这正是 RoPE 因固定坐标平面、对数均匀谱而做不到的事。
+
+**2. 加法型 GRAPE-A：用幂零生成元把线性偏置纳入同一框架**
+
+ALiBi 这类方法不旋转特征，而是直接在 logit 上按距离扣分，乍看和旋转编码毫无关系。GRAPE 的做法是通过齐次坐标把维度提升到 $\mathrm{GL}(d+k)$，换用幂零生成元 $\mathbf{A}$（满足 $\mathbf{A}^2=\mathbf{0}$），此时指数映射截断成一阶 $\mathbf{G}_\mathrm{add}(n) = \exp(n\omega\mathbf{A}) = \mathbf{I} + n\omega\mathbf{A}$，效果就是给注意力加一个随位置线性增长的平移项——于是加法偏置也被纳入"群作用 + 选生成元"的同一框架。在 $\mathrm{GL}(d+2)$ 里取秩-1 幂零生成元，logit 恰好变成 $\mathbf{q}_i^\top\mathbf{k}_j + (j-i)\beta_h$，与 ALiBi 逐字一致。把固定斜率换成内容相关的门控斜率，就得到 GRAPE-A-QK 变体
+
+$$\text{logit} = \mathbf{q}_i^\top\mathbf{k}_j + (j-i)\,\omega\,[\text{softplus}(\mathbf{v}^\top\mathbf{q}_i/\sqrt{d}) + \text{softplus}(\mathbf{u}^\top\mathbf{k}_j/\sqrt{d})]$$
+
+让每个 token 自己决定"忘得多快"，其中 softplus 保证有效衰减率非负、维持单调距离惩罚。当斜率退化为逐 token 的标量、令 $\omega_t = \log f_t$（$f_t$ 是遗忘门），累积偏置就还原出 Forgetting Transformer 的遗忘偏置 $D_{ij}$，说明 FoX 也只是 GRAPE-A 的一个路径依赖特例。
+
+**3. 路径积分变体 GRAPE-AP：把单步偏置升级为沿路径累加的内容相关偏置**
+
+前面的加法偏置每一步是固定的，惩罚力度和中间 token 的内容无关。GRAPE-AP 让每一步的**边势函数**依赖当前内容：
+
+$$\psi_h(t,\ell) = \alpha_h \cdot g\!\left(\frac{1}{d}\langle\mathbf{p}_{t,h},\, \mathbf{R}_\ell\mathbf{p}_{\ell,h}\rangle\right) \leq 0$$
+
+其中链接函数 $g$ 单调且 1-Lipschitz（实验取 $g(z)=\log\mathrm{Sigmoid}(z)$），保证边势恒非正；再沿因果路径把这些边势累加成总偏置 $b_h(t,j) = \sum_{\ell=j+1}^{t}\psi_h(t,\ell)$。因为势函数恒非正、且按"逐步累加"的方式计算，它既保持了单调距离惩罚（越远扣得越多），又能根据中间 token 的内容动态调节惩罚力度——这是固定斜率的 GRAPE-A 做不到的（GRAPE-A 正是边势不依赖端点时的退化特例）。它还天然满足因果约束、可增量更新，支持流式推理与 KV-cache，并且可以叠加在乘法型 GRAPE-M 之上联合使用，是论文实验里下游收益的主要来源。
 
 ## 实验
 

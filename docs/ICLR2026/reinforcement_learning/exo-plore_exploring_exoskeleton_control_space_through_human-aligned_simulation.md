@@ -17,7 +17,7 @@ tags:
 **会议**: ICLR2026  
 **arXiv**: [2601.22550](https://arxiv.org/abs/2601.22550)  
 **代码**: [项目页](https://daebangstn.github.io/exo-plore/)  
-**领域**: 医学图像  
+**领域**: 强化学习  
 **关键词**: exoskeleton optimization, neuromechanical simulation, deep reinforcement learning, human-in-the-loop, surrogate optimization  
 
 ## 一句话总结
@@ -38,17 +38,45 @@ tags:
 
 ### 整体框架
 
-Exo-plore 把"优化外骨骼"这件需要真人反复试穿的事搬进了仿真器：一个**步态数据生成器**先用神经力学仿真生成人体在各种辅助条件下的真实步态与代谢响应，一个**外骨骼优化器**再在这些仿真数据上搜索使代谢运输成本（Cost of Transport, CoT）最低的控制参数。关键在于让仿真里的"虚拟人"既能复现已观测到的人体适应行为、又能外推到没测过的辅助条件，这样优化才不需要把患者拉来走几个小时。
+Exo-plore 把"优化外骨骼"这件需要真人反复试穿的事搬进了仿真器。整条流水线分两段：前段是一个**神经力学步态生成器**，用 Deep RL 驱动的"虚拟人"在给定的外骨骼辅助力下真实地走起来，输出步态与代谢响应；后段是一个**外骨骼优化器**，在生成器吐出的仿真数据上搜索使代谢运输成本（Cost of Transport, CoT）最低的控制参数。整套方法成立的前提是仿真里的虚拟人既能复现已观测到的人体适应行为、又能外推到没测过的辅助条件——为此它一头靠延迟反馈控制把待优化的辅助策略压成两个旋钮，一头靠代谢模型调参和损失厌恶奖励把仿真行为拉回真人数据，这样优化才不需要把患者拉来走几个小时。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    P["控制参数<br/>(κ, Δt)"] --> CTRL["延迟反馈外骨骼控制器<br/>τ_exo = κ·u(t-Δt)"]
+    CTRL --> GEN
+    subgraph GEN["神经力学步态生成器"]
+        direction TB
+        POSE["PoseNet (Deep RL)<br/>目标关节位置 q_d"] --> PD["PD Controller<br/>扣除外骨骼辅助力矩"]
+        PD --> MCN["MCN + IMR<br/>力矩→肌肉激活 a"]
+    end
+    GEN --> ALIGN["Sim-to-Real 匹配<br/>代谢模型(α,β) + HEI 损失厌恶奖励"]
+    ALIGN --> DATA["仿真步态 + 代谢<br/>→ 运输成本 CoT"]
+    DATA --> OPT["MLP 代理优化器<br/>LHS采样→代理网络→SLSQP"]
+    OPT -->|搜索最优 κ,Δt| P
+```
 
 ### 关键设计
 
-**1. 延迟反馈外骨骼控制器：把待优化的辅助策略压成两个可搜索参数。** 髋关节外骨骼采用延迟反馈控制，辅助力矩为 $\tau_{\text{exo}}(t) = \kappa \cdot u(t - \Delta t)$，其中控制信号 $u(t) = \sin(\theta_r) - \sin(\theta_l)$ 取自左右髋关节角度差，$\kappa$ 是增益（等效刚度），$\Delta t$ 是时间延迟。这样整个辅助策略只剩 $(\kappa, \Delta t)$ 两个旋钮，优化问题就退化成在二维参数空间里找让 CoT 最小的点，既贴合真实外骨骼硬件的工作方式，又把搜索空间收得足够小。
+**1. 延迟反馈外骨骼控制器：把待优化的辅助策略压成两个可搜索参数**
 
-**2. 神经力学步态生成器：让虚拟人主动适应外力而非死板跟踪动捕。** 人体控制器由三块串联：PoseNet 用 Deep RL 学出 PD 目标关节位置 $\mathbf{q}_d$，PD Controller 据此生成关节力矩并扣除外骨骼施加的辅助力，Muscle Coordination Network（MCN）再通过监督学习把目标力矩映射成肌肉激活值 $\mathbf{a}$。训练用总奖励 $r_{\text{total}} = w_{\text{gait}} r_{\text{gait}} + w_{\text{arm}} r_{\text{arm}} + w_{\text{energy}} r_{\text{energy}} + w_{\text{HEI}} r_{\text{HEI}}$，分别鼓励跟随目标步态、抑制不自然手臂摆动、正则化能耗、以及建模人-外骨骼交互；MCN 的损失里还加了**肌肉内部正则化器（IMR）**，让同一解剖肌肉群内的线肌肉保持协调一致的激活模式。因为人体被建模成"为省力而主动调整动作"的优化器而非跟踪固定轨迹，它就能在新的辅助力下自发改变步态，这正是固定步态假设做不到的。
+优化的第一关是辅助策略本身维度太高，没法直接在仿真里搜。本文用延迟反馈控制把它压缩：髋关节辅助力矩取 $\tau_{\text{exo}}(t) = \kappa \cdot u(t - \Delta t)$，其中控制信号 $u(t) = \sin(\theta_r) - \sin(\theta_l)$ 来自左右髋关节角度差，$\kappa$ 是增益（等效刚度），$\Delta t$ 是时间延迟。这样整个辅助策略只剩 $(\kappa, \Delta t)$ 两个旋钮，优化问题退化成在二维参数空间里找让 CoT 最小的点——既贴合真实外骨骼硬件的工作方式，又把后段优化器的搜索空间收得足够小。
 
-**3. Sim-to-Real 匹配：靠代谢模型调参和损失厌恶奖励把仿真拉回真人数据。** 要让仿真预测可信，需要两处对齐。其一是代谢能量模型，把消耗建模为 $\frac{d}{dt}\text{MEE} = \sum_i m_i^\alpha a_i^\beta$，用 Algorithm 1、2 搜索指数 $(\alpha, \beta)$，使仿真的 Preferred Walking Speed（PWS）匹配真人数据，最终定为 $(\alpha, \beta) = (1.5, 1.0)$。其二是人-外骨骼交互（HEI）奖励，基于**阻力最小化假设**设计，借用行为经济学里"人对损失比收益更敏感"的损失厌恶（Loss Aversion）思路：$r_{\text{HEI}} = 1 + \frac{1}{\kappa} \sum_{k \in \{L,R\}} \min(0, P_k)$。一旦外骨骼对人体做负功（阻力功率 $P_k < 0$），奖励就跌破 1，逼策略主动调整运动学去躲开阻力——这恰好再现了真人实验中观察到的适应行为，而只奖励正向助力是复现不出来的。
+**2. 神经力学步态生成器：让虚拟人主动适应外力而非死板跟踪动捕**
 
-**4. MLP 代理优化器：用数据充裕的仿真喂一个比高斯过程更能扩展的代理网络。** 优化阶段不再用高斯过程，而是训练 MLP 代理网络（Surrogate Network）拟合控制参数到 CoT 的映射，因为仿真能廉价产出大量样本，正好发挥神经网络的数据吞吐优势。参数空间用 Latin Hypercube Sampling（LHS）采样以避开网格采样的混叠效应；代理损失同时含抗离群值的 Huber Loss、平滑 CoT 景观的梯度惩罚、以及 L1/L2 正则；最后用 SLSQP 加 trust-region 梯度优化在拟合出的平滑景观上求出最优 $(\kappa, \Delta t)$。
+有了辅助力矩，还得让虚拟人"穿着外骨骼"自然地走，且能在没测过的辅助力下自发改变步态——这是固定步态假设做不到的。人体控制器由三块串联：PoseNet 用 Deep RL 学出 PD 目标关节位置 $\mathbf{q}_d$，PD Controller 据此生成关节力矩并扣除外骨骼施加的辅助力，Muscle Coordination Network（MCN）再通过监督学习把目标力矩映射成肌肉激活值 $\mathbf{a}$。训练用总奖励 $r_{\text{total}} = w_{\text{gait}} r_{\text{gait}} + w_{\text{arm}} r_{\text{arm}} + w_{\text{energy}} r_{\text{energy}} + w_{\text{HEI}} r_{\text{HEI}}$，分别鼓励跟随目标步态、抑制不自然手臂摆动、正则化能耗、以及建模人-外骨骼交互；MCN 的损失里还加了**肌肉内部正则化器（IMR）**，让同一解剖肌肉群内的线肌肉保持协调一致的激活模式。因为人体被建模成"为省力而主动调整动作"的优化器而非跟踪固定轨迹，它在新的辅助力下就会自发改变步态。
+
+**3. Sim-to-Real 匹配：靠代谢模型调参和损失厌恶奖励把仿真拉回真人数据**
+
+虚拟人会走还不够，它走得像不像真人才决定优化结果可不可信，这需要两处对齐。其一是代谢能量模型，把消耗建模为 $\frac{d}{dt}\text{MEE} = \sum_i m_i^\alpha a_i^\beta$，用 Algorithm 1、2 搜索指数 $(\alpha, \beta)$，使仿真的 Preferred Walking Speed（PWS）匹配真人数据，最终定为 $(\alpha, \beta) = (1.5, 1.0)$。其二是人-外骨骼交互（HEI）奖励，基于**阻力最小化假设**设计，借用行为经济学里"人对损失比收益更敏感"的损失厌恶（Loss Aversion）思路：
+
+$$r_{\text{HEI}} = 1 + \frac{1}{\kappa} \sum_{k \in \{L,R\}} \min(0, P_k)$$
+
+一旦外骨骼对人体做负功（阻力功率 $P_k < 0$），奖励就跌破 1，逼策略主动调整运动学去躲开阻力——这恰好再现了真人实验中观察到的适应行为，而只奖励正向助力是复现不出来的。
+
+**4. MLP 代理优化器：用数据充裕的仿真喂一个比高斯过程更能扩展的代理网络**
+
+到了后段优化，数据来源从"昂贵的真人试穿"变成"廉价的仿真采样"，瓶颈也随之改变，所以本文弃用高斯过程、改训一个 MLP 代理网络（Surrogate Network）拟合控制参数到 CoT 的映射，正好发挥神经网络在大样本下的数据吞吐优势。参数空间用 Latin Hypercube Sampling（LHS）采样以避开网格采样的混叠效应；代理损失同时含抗离群值的 Huber Loss、平滑 CoT 景观的梯度惩罚、以及 L1/L2 正则；最后用 SLSQP 加 trust-region 梯度优化在拟合出的平滑景观上求出最优 $(\kappa, \Delta t)$。
 
 ## 实验关键数据
 

@@ -37,7 +37,21 @@ tags:
 
 ### 整体框架
 
-方法先用 LVLMs-Saliency 诊断框架量化每个输出 token 的视觉锚定强度，再用两个推理时模块把"幻觉始于显著性下降"这条规律转成主动干预：SGRS 充当门卫，在候选 token 提交进序列前过滤掉显著性过低的；LocoRE 充当稳定器，在 token 被接受后增强它对近期上下文的注意力。两者一前一后形成闭环，全程无需训练。
+方法先用 LVLMs-Saliency 诊断框架量化每个输出 token 的视觉锚定强度，再用两个推理时模块把"幻觉始于显著性下降"这条规律转成主动干预：SGRS 充当门卫，在候选 token 提交进序列前过滤掉显著性过低的；LocoRE 充当稳定器，在 token 被接受后增强它对近期上下文的注意力。两者一前一后嵌进逐 token 解码循环，全程无需训练。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像 + 文本提示"] --> B["LVLM 解码到位置 P<br/>top-K 采样候选集"]
+    B --> C["LVLMs-Saliency 诊断框架<br/>注意力 × 梯度 → 显著性 S"]
+    C --> D["SGRS 显著性引导拒绝采样<br/>候选幻觉分 vs 自适应阈值 τ"]
+    D -->|"S ≥ τ 接受"| E["LocoRE 局部一致性增强<br/>放大近期 w_s 个 token 注意力"]
+    D -->|"S < τ 且重采样 <R 次"| B
+    D -->|"R 次仍不过 取显著性最高者"| E
+    E --> F["写入输出序列<br/>预测下一 token"]
+    F -->|"未结束"| B
+    F -->|"结束"| G["最终文本输出"]
+```
 
 ### 关键设计
 

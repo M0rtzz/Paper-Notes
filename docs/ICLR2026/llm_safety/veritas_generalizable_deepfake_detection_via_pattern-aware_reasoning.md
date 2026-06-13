@@ -48,12 +48,27 @@ tags:
 
 ### 整体框架
 
-Veritas 基于 InternVL3-8B 构建，采用两阶段训练流程：
+Veritas 要解决的是「让通用多模态大语言模型 (MLLM) 真正学会鉴伪推理、而非记忆某类伪造的 artifact」。它以 InternVL3-8B 为基座，输入一张人脸图像加用户查询，输出一段带结构化推理过程的回答（`<think>` 块内依次出现 `<fast>`、`<reasoning>`、`<planning>`、`<reflection>`、`<conclusion>` 等模式标签）和最终真伪判断，让推理过程直接驱动决策，而非事后补理由。
 
-- **Stage 1 — Pattern-Guided Cold-Start**：先用 SFT 注入推理格式（36K 样本），再用 MiPO（Mixed Preference Optimization）对齐推理质量（3K 人工标注偏好对）
-- **Stage 2 — Pattern-Aware Exploration**：用 P-GRPO（Pattern-aware Group Relative Policy Optimization）通过在线采样和模式感知奖励进一步激励自适应推理（9K 样本，仅需二分类标签）
+整条 pipeline 先用自建的 HydraFake 数据集喂养，再走两个训练阶段把人类鉴伪的思维模式逐步内化进模型。第一阶段是「模式引导冷启动 (pattern-guided cold-start)」：先用监督微调 (SFT) 把 5 种推理模式的格式注入模型（36K 样本），再用 MiPO（Mixed Preference Optimization，混合偏好优化）对齐推理质量（3K 人工标注偏好对），逼模型不只答对、还要「以正确的方式答对」。第二阶段是「模式感知探索 (pattern-aware exploration)」：用 P-GRPO（Pattern-aware Group Relative Policy Optimization，模式感知的组相对策略优化）通过在线采样和模式感知奖励，激励模型只在真正困难时才调用 planning 和 reflection，把自适应的推理深度训出来（9K 样本，仅需真/伪二分类标签）。
 
-输入为人脸图像 + 用户查询，输出为包含推理过程的结构化回答（`<think>` 块内含 `<fast>`、`<reasoning>`、`<planning>`、`<reflection>`、`<conclusion>` 等 pattern 标签）以及最终真伪判断。
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["人脸图像 + 用户查询"]
+    DATA["HydraFake 数据集<br/>50K真+50K伪 / 四级 OOD 评估协议"]
+    PAT["模式感知推理链<br/>fast→reasoning→planning<br/>→reflection→conclusion（按需调用）"]
+    subgraph CS["Stage 1：模式引导冷启动"]
+        direction TB
+        SFT["SFT 注入 5 种推理模式格式"]
+        MIPO["MiPO 推理质量对齐<br/>混入「答对但理由差」负样本"]
+        SFT --> MIPO
+    end
+    PGRPO["Stage 2：P-GRPO 自适应探索<br/>pattern-aware 奖励 + 在线采样"]
+    OUT["结构化推理链 + 真/伪判断"]
+    IN --> DATA --> PAT --> CS
+    CS --> PGRPO --> OUT
+```
 
 ### 关键设计
 

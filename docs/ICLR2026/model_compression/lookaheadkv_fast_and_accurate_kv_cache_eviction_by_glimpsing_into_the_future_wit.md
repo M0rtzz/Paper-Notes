@@ -40,6 +40,18 @@ KV缓存大小随序列长度线性增长，成为长上下文推理的瓶颈。
 ### 整体框架
 KV 缓存淘汰的核心难题是「该保留哪些 token」：要判断准就得知道未来的响应会重点关注哪些 prompt token，但真去生成一段草稿响应又太贵。LookaheadKV 的破局思路是把「未来」预测出来而不是生成出来——在预填充阶段，于输入序列末尾追加一小撮可学习的前瞻 token，让它们的注意力查询向量经过专门的 LoRA 增强后，直接预测真实响应会对各 prompt token 投出怎样的注意力分布。训练时用 KL 散度把这组预测分数往真实响应的分数上拉；推理时只跑一遍预填充、读出前瞻 token 的注意力，就能给每个 prompt token 打重要性分并据此淘汰，整个解码阶段不再有任何额外开销。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    OFF["离线: 真实生成响应<br/>统计真值重要性分"] -->|KL散度训练对齐| MOD["可学习前瞻Token + Lookahead LoRA<br/>学会预测响应注意力"]
+    IN["输入prompt"] --> APP["末尾追加可学习前瞻Token<br/>(32个软token)"]
+    MOD -. 套用学好的模块 .-> APP
+    APP --> PF["一次预填充<br/>Lookahead LoRA选择性激活<br/>仅修正前瞻token的Q/K"]
+    PF --> SC["读前瞻token注意力按列平均<br/>得每个prompt token重要性分"]
+    SC --> EV["保留top-budget个<br/>淘汰其余prompt KV"]
+    EV --> DEC["解码<br/>不带前瞻token, 零额外开销"]
+```
+
 ### 关键设计
 
 **1. 可学习前瞻 Token：用一组软 token 把「未来注意力」压成一次预填充就能读出的信号**

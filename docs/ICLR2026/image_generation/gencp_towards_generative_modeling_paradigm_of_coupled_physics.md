@@ -43,7 +43,25 @@ tags:
 
 ### 整体框架
 
-GenCP 把"耦合物理仿真"重新看成函数空间里一团概率测度从噪声向真解的传输问题，分训练、推理两步：训练时分别在解耦数据集 $\mathcal{D}_f$、$\mathcal{D}_g$ 上用 flow matching 各学一个条件速度场 $\hat{v}_f$、$\hat{v}_g$；推理时用 Lie-Trotter 算子分裂，在每个流步里交替推动两个场，从噪声逐步演化出耦合解。整套设计的灵魂是把"耦合"放进流的采样步骤里完成，而不是采样完再迭代修正。
+GenCP 把"耦合物理仿真"重新看成函数空间里一团概率测度从噪声向真解的传输问题，分训练、推理两步：训练时分别在解耦数据集 $\mathcal{D}_f$、$\mathcal{D}_g$ 上用 flow matching 各学一个条件速度场 $\hat{v}_f$、$\hat{v}_g$；推理时用 Lie-Trotter 算子分裂，在每个流步里交替推动两个场，从噪声逐步演化出耦合解。整套设计的灵魂是把"耦合"放进流的采样步骤里完成，而不是采样完再迭代修正。撑起这两步的是一个理论支点（概率密度演化视角让速度场可分解）和一条误差保证（把分家带来的误差线性钉死）。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    subgraph TRAIN["解耦训练：学条件速度场"]
+        direction TB
+        D["解耦数据 D_f / D_g"] --> I["线性插值条件流<br/>f_t=(1-t)·z_f+t·f_1"]
+        I --> V["flow matching 各学一个<br/>条件速度场 v_f, v_g"]
+    end
+    V --> SPLIT["速度场可分解<br/>v=v_f+v_g（弱连续性方程）"]
+    SPLIT --> INFER
+    subgraph INFER["耦合推理：算子分裂"]
+        direction TB
+        Z["噪声 z_f, z_g"] --> STEP["每步先推 f<br/>再用新 f 推 g"]
+        STEP --> NEXT["交替 N≈10 步<br/>Lie-Trotter 分裂"]
+    end
+    INFER --> OUT["耦合解 u=(f,g)<br/>误差 W1≤C(τ+ε_f+ε_g)"]
+```
 
 ### 关键设计
 

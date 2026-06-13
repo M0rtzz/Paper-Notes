@@ -43,6 +43,17 @@ tags:
 ### 整体框架
 CCL 要解决的核心问题是：多任务 VRP 求解器在自回归解码时，上下文（剩余容量、当前时间）每步都在变，但节点嵌入却是编码完一次就固定，导致状态表征逐步失真。它的做法是把"动态"贯穿到底——仍是 encoder-decoder 范式，encoder 用 Transformer 把约束标记和节点属性编码成初始嵌入；解码每一步则做三件事：先由 RGCR 根据各约束与当前节点的相关性重新聚合出当步上下文，再由 TSNR 用这份上下文跨轨迹更新节点嵌入，最后用更新后的上下文与节点嵌入做选点决策。更新后的节点嵌入还会传给下一步，形成"上下文链"。训练时混合 16 种 VRP 任务（4 个约束的组合）联合训练，推理时零样本泛化到 32 种额外变体。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["VRP 实例<br/>节点属性 + 约束标记"] --> B["Transformer 编码器<br/>初始节点嵌入"]
+    B --> C["RGCR<br/>按约束相关性自适应<br/>聚合当步上下文"]
+    C --> D["TSNR<br/>跨轨迹共享更新节点嵌入<br/>（加距离偏置）"]
+    D --> E["选点决策<br/>选下一个访问节点"]
+    E -->|"未走完：H_j 作下一步 query<br/>（Chain-of-Context 链式传递）"| C
+    E -->|"全部节点走完"| F["输出路径"]
+```
+
 ### 关键设计
 
 **1. RGCR（Relevance-Guided Context Reformulation）：让每步的上下文按约束重要性自适应聚合**

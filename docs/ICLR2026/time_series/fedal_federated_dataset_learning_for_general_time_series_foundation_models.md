@@ -33,7 +33,29 @@ tags:
 
 ### 整体框架
 
-FeDaL 采用标准的"客户端训练-服务端聚合"联邦学习范式。每个客户端持有一个时序数据集，采用 patch-wise masked reconstruction 进行无监督预训练。输入序列被分 patch 并随机掩码（75%），经 backbone 编码后通过 DBE 模块分离数据集特有偏差，再通过重构头还原原始序列。服务端收到客户端模型更新后，执行梯度级动态校正和 core-set 精细调优两步 GBE 操作，产出修正后的全局模型。每轮通信后服务端同时广播更新后的全局模型 $\theta^g$ 和全局偏差参考 $\mathbf{b}^g$。
+FeDaL 采用标准的"客户端训练-服务端聚合"联邦学习范式，每轮通信经历三个阶段。**客户端**侧，每个客户端持有一个时序数据集，对输入序列分 patch 并随机掩码（75%），经 backbone 编码后用域偏差消除（Domain Bias Elimination, DBE）模块把数据集特有的偏差从表示里剥出来、再做带偏差正则的重构，同时构建一个浓缩本地知识的 core-set。**服务端**侧，收到各客户端的模型更新和 core-set 后，用全局偏差消除（Global Bias Elimination, GBE）依次做 FedAvg 聚合、梯度级动态校正、core-set 精细调优三步，产出修正后的全局模型。每轮结束后服务端同时广播更新后的全局模型 $\theta^g$ 和全局偏差参考 $\mathbf{b}^g$，进入下一轮，DBE 与 GBE 一内一外协同把数据集级偏差逐步磨掉。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    S0["服务端广播<br/>全局模型 θᵍ + 全局偏差 bᵍ"] --> M["客户端：patch 切分<br/>+ 75% 随机掩码"]
+    M --> E["backbone 编码<br/>得潜在表示"]
+    subgraph DBE["域偏差消除 DBE（客户端）"]
+        direction TB
+        E --> D1["趋势-季节分解<br/>提偏差向量 b"]
+        D1 --> D2["偏差注回特征<br/>重构 + 偏差正则"]
+    end
+    DBE --> CS["构建 core-set<br/>梯度匹配 + 傅里叶幅值加噪"]
+    CS --> UP["上传模型更新 + core-set"]
+    subgraph GBE["全局偏差消除 GBE（服务端）"]
+        direction TB
+        UP --> G1["FedAvg 聚合"]
+        G1 --> G2["梯度级动态校正<br/>补偿客户端漂移"]
+        G2 --> G3["core-set 精细调优<br/>+ 凸融合"]
+    end
+    GBE --> OUT["更新后的全局 TSFM"]
+    OUT -.下一轮广播.-> S0
+```
 
 ### 关键设计
 

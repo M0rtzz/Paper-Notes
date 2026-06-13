@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-这篇论文想搞清楚一件事：VLM 在处理"哪个特征属于哪个物体"时，内部到底发生了什么。作者用**场景描述任务**当探针——给模型一张含多个形状/颜色物体的图片和一段只描述了部分物体的文字，让它补全缺失物体。这个任务逼着模型必须在脑子里把"位置"和"特征"对应起来，于是绑定机制会暴露在中间层的激活里。围绕它，作者把三种分析手段叠在一起用：表征分析（PCA、RSA）看激活的几何结构、因果中介分析（CMA）把功能钉到具体注意力头上、干预实验验证这些头确实在控制输出。整套流程在 7 个 VLM（Qwen2-VL、Qwen2.5-VL-3B/7B/32B、Llava1.5-7B/13B、Llava-OneVision-7B）上跑下来，结论高度一致。
+这篇论文想搞清楚一件事：VLM 在处理"哪个特征属于哪个物体"时，内部到底发生了什么。作者用**场景描述任务**当探针——给模型一张含多个形状/颜色物体的图片和一段只描述了部分物体的文字，让它补全缺失物体。这个任务逼着模型必须在脑子里把"位置"和"特征"对应起来，于是绑定机制会暴露在中间层的激活里。作者发现 VLM 内部涌现出一条三阶段流水线（ID retrieval → ID selection → feature retrieval），并把三种分析手段叠在一起去验证它：表征分析（PCA、RSA）看激活的几何结构、因果中介分析（CMA）把每个阶段钉到具体注意力头上、干预实验直接编辑这些头确认它们在控制输出。整套流程在 7 个 VLM（Qwen2-VL、Qwen2.5-VL-3B/7B/32B、Llava1.5-7B/13B、Llava-OneVision-7B）上跑下来，结论高度一致。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["多物体图像 + 部分描述 prompt<br/>(场景描述任务探针)"]
+    subgraph MECH["三阶段 Position ID 机制"]
+        direction TB
+        S1["Stage 1 · ID Retrieval (Layer 12-16)<br/>prompt 物体 → 取空间位置指针"]
+        S2["Stage 2 · ID Selection (Layer 18-21)<br/>排除法 → 算目标物体 position ID"]
+        S3["Stage 3 · Feature Retrieval (Layer 23-27)<br/>凭 position ID → 取目标语义特征"]
+        S1 --> S2 --> S3
+    end
+    IN --> S1
+    S3 --> OUT["补全缺失物体<br/>(说出颜色+形状)"]
+    CMA["因果中介分析（CMA）<br/>逐阶段定位注意力头"] -. 定位 .-> MECH
+    INT["Position ID 干预<br/>编辑空间指针验证功能性"] -. 读写验证 .-> MECH
+```
 
 ### 关键设计
 

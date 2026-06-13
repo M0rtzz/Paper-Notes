@@ -48,7 +48,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-输入是 LLM 某一层的残差流表示 $\bm{z} \in \mathbb{R}^D$（对所有 token 做 mean pooling），输出是有害/无害的二分类概率。核心模型是一个 $N$ 阶多项式，可在推理时截断为任意 $n \leq N$ 阶的子模型，形式为 $P_{:n}^{[N]}(\bm{z}) = w^{[0]} + \bm{z}^\top \bm{w}^{[1]} + \sum_{k=2}^{n} \sum_{r=1}^{R} \lambda_r^{[k]} (\bm{z}^\top \bm{u}_r^{[k]})^k$。
+TPC 想解决的是「一个安全监控器、多种计算预算」：简单输入用接近线性探针的低成本快速放行，困难输入再投入更多算力深入检查。整体上，先把 LLM 某一层的残差流表示 $\bm{z} \in \mathbb{R}^D$（对所有 token 做 mean pooling）喂给一个 $N$ 阶多项式分类器；这个多项式按阶**逐阶训练**成一串嵌套子模型，推理时从低阶到高阶**级联评估、按置信度提前退出**，最终输出有害/无害的二分类概率，并能顺带把决策**归因到具体的神经元交互**。多项式可在推理时截断为任意 $n \leq N$ 阶的子模型，形式为 $P_{:n}^{[N]}(\bm{z}) = w^{[0]} + \bm{z}^\top \bm{w}^{[1]} + \sum_{k=2}^{n} \sum_{r=1}^{R} \lambda_r^{[k]} (\bm{z}^\top \bm{u}_r^{[k]})^k$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Z["LLM 某层残差流 z<br/>(对 token 做 mean pooling)"] --> TPC["截断多项式分类器 TPC<br/>1~N 阶嵌套多项式"]
+    TPC -->|逐阶训练、冻结低阶项| PT["渐进式训练<br/>每个截断点都是有效分类器"]
+    PT --> CAS["级联防御<br/>从 1 阶起逐阶评估"]
+    CAS -->|"不确信: σ(s)∈(τ,1-τ)"| UP["升一阶<br/>加高阶交互项"]
+    UP --> CAS
+    CAS -->|"足够确信: early-exit"| OUT["有害 / 无害"]
+    TPC --> ATTR["内置特征归因<br/>拆出神经元对交互贡献"]
+    ATTR --> OUT
+```
 
 ### 关键设计
 

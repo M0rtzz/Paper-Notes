@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Prism 只吃以 TSS 为中心的 2k bp DNA 序列 $X$ 和近端多模态表观基因组信号 $S$（H3K27ac、DNase-seq、Hi-C），核心是在融合信号时做一次因果去混杂。信号编码器 $g_\theta$ 把 $S$ 映射成高维特征 $H$，混杂编码器 $g_\omega$ 从 $S$ 学出 $n$ 组刻画不同背景染色质状态的权重，预测器 $h_\phi$（基于 Caduceus）在这些背景状态下对 $H$ 做边缘化干预后与 $X$ 一起预测表达量 $Y$。
+Prism 只吃以 TSS 为中心的 2k bp DNA 序列 $X$ 和近端多模态表观基因组信号 $S$（H3K27ac、DNase-seq、Hi-C），核心是在融合信号时做一次因果去混杂。整篇论文的逻辑是"先诊断、再下药"：前两个设计是诊断——用控制实验证明长序列无效、再用结构因果模型把"信号该怎么融合"形式化成"该怎么去混杂"；后两个设计是 Prism 架构本身。运行时，信号编码器 $g_\theta$ 把 $S$ 映射成高维特征 $H$，混杂编码器 $g_\omega$ 从 $S$ 学出 $n$ 组刻画不同背景染色质状态的权重 $\{a_1,\dots,a_n\}$，预测器 $h_\phi$（基于 Caduceus）在这些背景状态下对 $H$ 做后门调整（边缘化干预）后再与 $X$ 一起预测表达量 $Y$；多样性约束在训练时把 $n$ 组权重推开，保证不同背景状态真有区分度。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["2k bp DNA 序列 X"]
+    S["近端表观信号 S<br/>(H3K27ac / DNase-seq / Hi-C)"]
+    S --> GT["信号编码器 g_θ<br/>线性层 → 高维特征 H"]
+    S --> GW["混杂编码器 g_ω<br/>→ n 组背景状态权重 a_i"]
+    DIV["多样性约束<br/>(uniform loss 推开 a_i)"] -.约束.-> GW
+    GT --> BD["后门调整<br/>各背景状态下 H⊙a_i 取平均"]
+    GW --> BD
+    X --> HP["预测器 h_φ (Caduceus)<br/>融合 X 与去混杂特征"]
+    BD --> HP
+    HP --> Y["基因表达 Y (CAGE 值)"]
+```
 
 ### 关键设计
 

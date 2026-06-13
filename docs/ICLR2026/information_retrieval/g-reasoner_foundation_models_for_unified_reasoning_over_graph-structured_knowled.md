@@ -43,6 +43,25 @@ tags:
 ### 整体框架
 G-reasoner 要解决的是：不同知识源（知识图谱、文档图、层次图）各有各的图结构，过去的 GraphRAG 方法只能为某一种结构定制管道，换个图就得重写。它的思路是把"图结构"和"图推理"彻底解耦——先用一个统一接口 QuadGraph 把任意异构知识源压成同一种四层格式，再训练一个图基础模型（GFM）在这种标准格式上做推理。整条链路是：原始知识源 → QuadGraph 标准化 → 34M 参数 GNN 一次前向传播给出各节点相关性 → 把检索到的相关节点/文档喂给 LLM 生成答案。关键在于 GFM 只需在标准化接口上训练一次，就能迁移到任何能映射成 QuadGraph 的新知识源，而推理只是单次前向、不再依赖 PageRank 启发式或多轮 LLM 调用。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    SRC["异构知识源<br/>知识图谱 / 文档图 / 层次图"]
+    SRC -->|"标准化映射"| QG
+    subgraph QG["QuadGraph 统一图接口（设计 1）"]
+        direction TB
+        L1["属性层 + 知识图谱层"] --> L2["文档层 + 社区层"]
+    end
+    QG --> GFM
+    subgraph GFM["图基础模型 GFM（设计 2）"]
+        direction TB
+        MP["L 层消息传递<br/>DistMult + 文本编码器初始化"] --> PRED["type-specific 预测器<br/>逐层节点相关性"]
+    end
+    DMP["分布式消息传递（设计 3）<br/>METIS 分区 + 混合精度"] -.->|"支撑大规模训练 / 推理"| GFM
+    GFM --> RET["检索相关节点 / 文档"]
+    RET --> LLM["LLM 生成答案"]
+```
+
 ### 关键设计
 
 **1. QuadGraph 统一图接口：用四层标准格式消除图结构依赖**

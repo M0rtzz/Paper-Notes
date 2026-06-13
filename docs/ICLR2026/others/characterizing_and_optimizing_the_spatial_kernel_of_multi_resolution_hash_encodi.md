@@ -42,6 +42,17 @@ tags:
 ### 整体框架
 这篇论文不提新模型，而是回答一个被长期搁置的问题：Instant-NGP 的多分辨率哈希编码（MHE）等效的空间核到底长什么样、真实分辨率有多高、哈希碰撞如何拖累质量。作者把 MHE 当成一个物理系统来探针——测量它对一个点源约束的响应，也就是点扩展函数（PSF），就像在光学/物理里用 Green's function 表征系统。整条分析分三步层层递进：先在无碰撞的理想设定下推出 PSF 的闭式近似，再实测优化把这个核展宽了多少，最后把有限哈希容量带来的碰撞噪声纳入 SNR 框架。结论汇总成一个反直觉的判断——分辨率由平均分辨率 $N_{\text{avg}}$ 而非最细层 $N_{\max}$ 决定——并据此提出零开销的 Rotated MHE（R-MHE）。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["把 MHE 当物理系统探针<br/>优化拟合单点源 → 读出 PSF"] --> D1["理想 PSF 的闭式推导<br/>无碰撞·解码器线性化"]
+    D1 --> D2["优化引起的空间展宽<br/>β_emp≈3.0（spectral bias）"]
+    D2 --> D3["哈希碰撞的 SNR 分析<br/>有限表 T → speckle 噪声"]
+    D3 --> CONC["核心结论：有效分辨率<br/>∝ β_emp/N_avg 而非 N_max<br/>+ 网格各向异性"]
+    CONC -->|"反解超参"| HP["令 β_emp/N_avg=目标分辨率<br/>解出增长因子 b_theory"]
+    CONC -->|"消除各向异性"| RMHE["Rotated MHE<br/>逐层旋转坐标 R_l·x"]
+```
+
 ### 关键设计
 
 **1. 理想 PSF 的闭式推导：先搞清没有哈希碰撞时 MHE 的空间响应是什么形状**

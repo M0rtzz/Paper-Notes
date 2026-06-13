@@ -49,15 +49,33 @@ tags:
 
 ### 整体框架
 
-方法分两步走：先用 Mean-in-Interior（MII）估计器丢掉所有 boundary 节点、只在 interior 节点上做差分均值，把 HT 那种爆炸的逆概率权重换成温和的均匀权重以压低方差；再用一个反事实预测器（如 GNN）在全图上训练并外推到全局处理/控制场景，构造校正项补偿 interior 子群与全体总体之间的协变量偏移，得到增广版 AMII，从而同时拿到低方差和低偏差。
+这篇论文要解决的是：网络干扰下做 A/B 测试时，怎么把全局处理效应（GATE）估得又准（低偏差）又稳（低方差）。整体分两步走。第一步是 **Mean-in-Interior（MII）** 估计器——先做 cluster 级随机化，然后丢掉所有 boundary 节点、只在 interior 节点上做差分均值，把 HT 那种爆炸的逆概率权重换成温和的均匀权重以压低方差。第二步是 **Augmented MII（AMII）**——另起一路在全图上训练一个反事实预测器（如 GNN），外推到全局处理/全局控制场景，构造一个校正项补偿 interior 子群与全体总体之间的协变量偏移，把它叠加到 MII 上，从而在保住低方差的同时把偏差也吃掉。最后再从 **Prediction-Powered Inference（PPI）** 的视角回看 AMII，把它统一成"用预测去偏"的半监督估计，解释它为什么能同时低方差、低偏差。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图 + cluster 随机分配<br/>+ 观测结果 Y"] --> B["筛出 interior 节点<br/>(1-hop 邻居全在同 cluster)"]
+    A --> F["训练反事实预测器 f<br/>(全图 GNN)"]
+    B --> C["Mean-in-Interior<br/>interior 上差分均值"]
+    F -->|外推到全处理 / 全控制| D["协变量偏移<br/>校正项"]
+    C --> E["Augmented MII<br/>MII + 校正项"]
+    D --> E
+    E --> G["GATE 估计 τ"]
+```
 
 ### 关键设计
 
-**1. Mean-in-Interior 估计器：用均匀权重换掉爆炸的逆概率权重。** 现有 HT 估计器为了在 boundary 节点上满足无偏性，要施加 $(1/p)^c$ 的指数级权重（$c$ 是节点连接的不同 cluster 数，实网络中可达数十），权重一爆方差就失控。MII 的应对极其直接：把 boundary 节点全部丢弃，只在 interior 节点上做差分均值 $\hat{\tau}_{MII} = \frac{\sum_{i \in \text{Int}} z_i Y_i}{\sum_{j \in \text{Int}} z_j} - \frac{\sum_{i \in \text{Int}} (1-z_i) Y_i}{\sum_{j \in \text{Int}} (1-z_j)}$，所有保留下来的样本都拿均匀权重。这之所以站得住脚，是因为 interior 节点的 1-hop 邻居全在同一 cluster 内，局部环境天然接近全局处理/控制；在 NIA 假设加上"interior 比例跨 cluster 渐近均匀、interior 能代表整个 cluster"等技术条件下，MII 满足一致性 $\hat{\tau}_{MII} - \tau = o_p(1)$。对一类典型的潜在结果模型 $Y_i(\mathbf{z}) = \beta z_i + h(\sum_j z_j / \deg_i, v_i)$，每个 interior 节点本身就是全局均值的无偏估计，而等权平均按 Cauchy-Schwarz 不等式恰好是其中方差最小的那个，所以 MII 的方差在所有方法里始终最低。
+**1. Mean-in-Interior 估计器：用均匀权重换掉爆炸的逆概率权重**
 
-**2. Augmented MII：用反事实预测去掉 interior 的选择偏差。** MII 的软肋是 interior 节点在网络协变量（degree、连接 cluster 数等）上与全体总体有系统性差异，直接取均值会引入选择偏差。AMII 引入一个反事实预测器 $f(\mathbf{z}, X, A)$（论文用 3 层 Chebyshev 卷积的 GNN），在整张图上训练后外推到全处理 $\mathbf{1}$ 与全控制 $\mathbf{0}$，构造校正项 $\hat{\tau}_{AMII} = \hat{\tau}_{MII} + \big(\frac{1}{n}\sum_j f(\mathbf{1},X,A)_j - \frac{1}{s_1}\sum_{i \in \text{Int}} z_i f(\mathbf{1},X,A)_i\big) - \big(\frac{1}{n}\sum_j f(\mathbf{0},X,A)_j - \frac{1}{s_0}\sum_{i \in \text{Int}} (1-z_i) f(\mathbf{0},X,A)_i\big)$，括号里分别是处理组、控制组的校正，捕捉的正是预测值在全体总体与 interior 子群之间的差距。偏差分析（Theorem 4.1）量化了收益：在部分线性模型 $Y_i(\mathbf{z}) = (\beta + \alpha u_i)z_i + h(\cdot)$ 下，MII 偏差为 $\alpha(\mu_{\text{Int}} - \mu)$（协变量均值差乘以交互系数），AMII 偏差则降到 $(\mathbb{E}[\hat{\alpha}_n] - \alpha)(\mu - \mu_{\text{Int}})$——只要回归的线性部分估得准，偏差就被大幅吃掉；当两群无分布差异时校正项归零，不引入额外偏差（harmlessness）。
+现有 HT 估计器为了在 boundary 节点上满足无偏性，要施加 $(1/p)^c$ 的指数级权重（$c$ 是节点连接的不同 cluster 数，实网络中可达数十），权重一爆方差就失控。MII 的应对极其直接：把 boundary 节点全部丢弃，只在 interior 节点上做差分均值 $\hat{\tau}_{MII} = \frac{\sum_{i \in \text{Int}} z_i Y_i}{\sum_{j \in \text{Int}} z_j} - \frac{\sum_{i \in \text{Int}} (1-z_i) Y_i}{\sum_{j \in \text{Int}} (1-z_j)}$，所有保留下来的样本都拿均匀权重。这之所以站得住脚，是因为 interior 节点的 1-hop 邻居全在同一 cluster 内，局部环境天然接近全局处理/控制；在 NIA 假设加上"interior 比例跨 cluster 渐近均匀、interior 能代表整个 cluster"等技术条件下，MII 满足一致性 $\hat{\tau}_{MII} - \tau = o_p(1)$。对一类典型的潜在结果模型 $Y_i(\mathbf{z}) = \beta z_i + h(\sum_j z_j / \deg_i, v_i)$，每个 interior 节点本身就是全局均值的无偏估计，而等权平均按 Cauchy-Schwarz 不等式恰好是其中方差最小的那个，所以 MII 的方差在所有方法里始终最低。
 
-**3. 半监督 / PPI 视角：把网络实验看成"用预测去偏"。** 重新整理 AMII 可写成 $\hat{\tau}_{AMII,1} = \frac{1}{n}\sum_j f(\mathbf{1},X,A)_j + \frac{1}{s_1}\sum_{i \in \text{Int}} z_i (Y_i - f(\mathbf{1},X,A)_i)$，这恰好是 **Prediction-Powered Inference（PPI）** 的点估计形式。其中 interior 节点充当带标签数据（但带选择偏差），boundary 节点提供有代表性的协变量却只有部分标签信息。这个视角把 AMII 的本质讲清楚了：它做的是"用预测去偏（debiasing using predictions）"——修正 interior 因聚类产生的选择偏差，恰好与经典 doubly-robust 估计器"用标签去偏预测"互补；区别在于标准 PPI 假设标签样本 MCAR，而这里的 interior 节点本身就是有选择偏差的子群，所以 AMII 必须额外处理这层分布偏移。
+**2. Augmented MII：用反事实预测去掉 interior 的选择偏差**
+
+MII 的软肋是 interior 节点在网络协变量（degree、连接 cluster 数等）上与全体总体有系统性差异，直接取均值会引入选择偏差。AMII 引入一个反事实预测器 $f(\mathbf{z}, X, A)$（论文用 3 层 Chebyshev 卷积的 GNN），在整张图上训练后外推到全处理 $\mathbf{1}$ 与全控制 $\mathbf{0}$，构造校正项 $\hat{\tau}_{AMII} = \hat{\tau}_{MII} + \big(\frac{1}{n}\sum_j f(\mathbf{1},X,A)_j - \frac{1}{s_1}\sum_{i \in \text{Int}} z_i f(\mathbf{1},X,A)_i\big) - \big(\frac{1}{n}\sum_j f(\mathbf{0},X,A)_j - \frac{1}{s_0}\sum_{i \in \text{Int}} (1-z_i) f(\mathbf{0},X,A)_i\big)$，括号里分别是处理组、控制组的校正，捕捉的正是预测值在全体总体与 interior 子群之间的差距。偏差分析（Theorem 4.1）量化了收益：在部分线性模型 $Y_i(\mathbf{z}) = (\beta + \alpha u_i)z_i + h(\cdot)$ 下，MII 偏差为 $\alpha(\mu_{\text{Int}} - \mu)$（协变量均值差乘以交互系数），AMII 偏差则降到 $(\mathbb{E}[\hat{\alpha}_n] - \alpha)(\mu - \mu_{\text{Int}})$——只要回归的线性部分估得准，偏差就被大幅吃掉；当两群无分布差异时校正项归零，不引入额外偏差（harmlessness）。
+
+**3. 半监督 / PPI 视角：把网络实验看成"用预测去偏"**
+
+重新整理 AMII 可写成 $\hat{\tau}_{AMII,1} = \frac{1}{n}\sum_j f(\mathbf{1},X,A)_j + \frac{1}{s_1}\sum_{i \in \text{Int}} z_i (Y_i - f(\mathbf{1},X,A)_i)$，这恰好是 **Prediction-Powered Inference（PPI）** 的点估计形式。其中 interior 节点充当带标签数据（但带选择偏差），boundary 节点提供有代表性的协变量却只有部分标签信息。这个视角把 AMII 的本质讲清楚了：它做的是"用预测去偏（debiasing using predictions）"——修正 interior 因聚类产生的选择偏差，恰好与经典 doubly-robust 估计器"用标签去偏预测"互补；区别在于标准 PPI 假设标签样本 MCAR，而这里的 interior 节点本身就是有选择偏差的子群，所以 AMII 必须额外处理这层分布偏移。
 
 ## 实验关键数据
 

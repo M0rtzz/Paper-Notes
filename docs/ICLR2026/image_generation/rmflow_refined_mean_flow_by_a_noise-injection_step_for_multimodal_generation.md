@@ -26,8 +26,6 @@ tags:
 
 ## 研究背景与动机
 
-### 领域现状
-
 **领域现状**：MeanFlow 通过学习平均速度场实现少步生成，无需预训练或蒸馏。但 1-NFE 时性能显著下降——单步传输不够精确，生成样本偏离目标分布。
 
 **现有痛点**：1-NFE MeanFlow 在高斯混合分布上偏差大、在分子生成上生成无效结构（断裂分子）。多步（8/32 NFE）效果好但失去了效率优势。
@@ -44,19 +42,48 @@ tags:
 
 ### 整体框架
 
-RMFlow 把 1-NFE MeanFlow 的单步传输看成一次"粗搬运"，再补一步噪声注入做精炼，生成过程写成 $x_{\text{gen}} = x_0 + \hat{u}_{0,1}(x_0; \theta) + \sigma \epsilon$，其中前两项是 MeanFlow 学到的平均速度场把噪声 $x_0$ 一步推到数据空间，$\sigma\epsilon$ 是补偿项。训练同步优化两件事：保持平均速度场本身准确，以及让加噪后的终端分布真正贴近目标分布。
+RMFlow 想解决的是：1-NFE MeanFlow 单步传输太糙、生成样本偏离目标分布，但又不能加 NFE。它的整体思路是把生成显式拆成「粗传输 + 噪声精炼」两阶段，再配一个引导编码器支持跨模态。一条样本这样走：先把条件 $c$ 经编码器嵌入得到先验 $x_0$，用 1-NFE MeanFlow 把 $x_0$ 一步搬到中间态 $x_1$，再补一步噪声注入得到最终样本。三阶段最终合并成一条单步生成公式
+
+$$\hat{x}_{\text{tgt}} = x_0 + \hat{u}_{0,1}(x_0;\theta) + \sqrt{\sigma_{\min}^2-\sigma^2}\,\epsilon_2,\quad \epsilon_2\sim\mathcal{N}(\mathbf{0},I),$$
+
+其中 $\hat{u}_{0,1}$ 是 MeanFlow 学到的平均速度场（一次网络评估），噪声项与它并行相加、几乎零开销，所以虽然概念上两阶段、生成仍是 1-NFE。训练时联合优化三件事：让平均速度场把路走对（Wasserstein 控制）、让加噪后的终端分布贴近目标（KL 控制）、以及约束引导编码。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    C["条件 c / 先验噪声 ε"] --> G["多模态引导编码<br/>x0 = φω(c) + σc·ε"]
+    G --> T["1-NFE MeanFlow 传输<br/>x1 = x0 + û0,1(x0;θ)"]
+    T --> N["噪声注入精炼<br/>+ √(σmin²−σ²)·ε2"]
+    N --> O["生成样本 x̂tgt（1-NFE）"]
+    L["最大似然训练目标<br/>LCMFM + λ1·LNLL + λ2·引导正则"] -.训练优化 θ,ω.-> G
+    L -.-> N
+```
 
 ### 关键设计
 
-**1. 噪声注入精炼：把确定性点估计变成有方差的分布。** MeanFlow 在 1-NFE 下的输出 $x_0 + \hat{u}_{0,1}$ 是一个确定的点，而平均速度只是真实速度场沿路径的近似，单步传输必然带误差，于是这个点系统性地偏离目标——在高斯混合上表现为 TV 偏大，在分子生成上则直接搬出断裂的无效结构。RMFlow 的做法是在传输结果上再加一项 $\sigma\epsilon$（$\epsilon\sim\mathcal{N}(0,I)$），让原本的点估计摊开成一个以传输结果为中心、方差为 $\sigma^2$ 的小邻域分布。这一步几乎零计算开销，却把"模型把样本放偏了"的硬误差，软化成可以被概率覆盖的散布，从而让生成分布有机会盖住真实模式而不是卡在一个偏点上。
+**1. 多模态引导编码：让一套框架同时支持有条件与无条件生成**
 
-**2. 最大似然训练目标：用 NLL 把终端分布拉向目标。** 光加噪声还不够，得让加噪前的传输落点落在对的位置。RMFlow 额外引入负对数似然损失 $\mathcal{L}_{\text{NLL}} = \mathbb{E}\big[\|x_{\text{tgt}} - (x_0 + \hat{u}_{0,1})\|^2\big]$，在高斯噪声模型下，最小化这个平方误差等价于最大化目标样本在"传输落点 + $\sigma\epsilon$"这一分布下的期望对数似然。文中据此证明该损失是目标分布期望对数似然的下界，优化它就是在压低学习分布与目标分布之间的 KL 散度，给噪声注入提供了原理性的而非纯启发式的依据。
+MeanFlow 本身是无条件传输，但 RMFlow 要做 T2I、context-to-molecule、时间序列这类跨模态生成，得把条件信号塞进来。做法是用一个编码器 $\phi_\omega(c)$ 把条件嵌入，并据此构造先验：有引导时 $x_0=\phi_\omega(c)+\sigma_c\epsilon$（$\sigma_c\ll1$，如 $10^{-3}$），无引导时退化为 $x_0=\epsilon$。这样同一套 MeanFlow 既能从「条件嵌入附近的噪声」出发做有条件生成，也能从纯高斯噪声做无条件生成，编码器与 MeanFlow 联合训练。论文明确指出（Remark 1），引导编码与噪声注入正是 RMFlow 区别于原始 MeanFlow 的两点。
 
-**3. 联合损失：两个目标各管一段。** 最终训练把 MeanFlow 损失与 NLL 损失加权合并，外加一项 guidance 正则化，总损失为 MeanFlow 损失加 $\lambda_1\mathcal{L}_{\text{NLL}}$ 加 $\lambda_2$ guidance 项。两者分工明确：MeanFlow 损失约束整条概率路径、对应 Wasserstein 距离意义下的传输质量，保证平均速度场把路径学对；NLL 损失只盯终端、对应 KL 散度意义下的分布贴合，保证最后落点加噪后接近目标。前者管"路走对"，后者管"终点准"，两端同时收紧才让 1-NFE 的输出既不跑偏又能覆盖真实分布。
+**2. 噪声注入精炼：把确定性点估计软化成有方差的分布**
+
+1-NFE MeanFlow 的输出 $x_0+\hat{u}_{0,1}$ 是一个确定的点，而平均速度只是真实速度场沿路径的近似，单步传输必然带误差，于是这个点系统性地偏离目标——在高斯混合上表现为 TV 偏大，在分子生成上直接搬出断裂的无效结构。RMFlow 把生成显式拆成两阶段：第一阶段 1-NFE 把先验搬到中间态 $x_1=x_{\text{data}}+\sigma\epsilon_1$（$\sigma<\sigma_{\min}$），第二阶段补一步噪声注入 $x_{\text{tgt}}=x_1+\sqrt{\sigma_{\min}^2-\sigma^2}\,\epsilon_2$，把方差恰好补到 $\sigma_{\min}^2$，对齐论文采用的平滑目标 $x_{\text{tgt}}=x_{\text{data}}+\sigma_{\min}\epsilon$。注意这里的噪声系数是 $\sqrt{\sigma_{\min}^2-\sigma^2}$ 而非随手一个 $\sigma$——它由「中间态已有 $\sigma$ 噪声、终端要凑够 $\sigma_{\min}$」反推而来。这一步把「模型把样本放偏了」的硬误差，软化成以传输结果为中心、方差 $\sigma_{\min}^2-\sigma^2$ 的散布，从而盖住真实模式而不是卡在一个偏点上。
+
+**3. 最大似然训练目标：给噪声注入一个 KL 意义下的原理依据**
+
+光加噪声不够，还得让加噪前的传输落点落在对的位置，并说清为什么这样能逼近目标分布。噪声注入让最终样本服从条件高斯 $\hat{x}_{\text{tgt}}\mid x_0\sim\mathcal{N}\big(x_0+\hat{u}_{0,1},(\sigma_{\min}^2-\sigma^2)I\big)$，于是它的对数似然正好是一个平方误差项，据此定义负对数似然损失
+
+$$\mathcal{L}_{\text{NLL}} = \mathbb{E}\big[\|(x_{\text{data}}+\sigma_{\min}\epsilon)-(x_0+\hat{u}_{0,1}(x_0;\theta))\|^2\big].$$
+
+论文证明（Theorem 4.1）$-A\cdot\mathcal{L}_{\text{NLL}}+C$ 是目标分布期望对数似然 $-H(p_{\text{tgt}})-D_{\text{KL}}(p_{\text{tgt}}\|p_\theta)$ 的下界，所以最小化 $\mathcal{L}_{\text{NLL}}$ 就是在压低学习分布与目标分布的 KL 散度。这恰好补上了原始 MeanFlow 的短板：Boffi 等只证明了 MeanFlow 损失 $\mathcal{L}_{\text{CMFM}}$ 约束 Wasserstein 距离 $W_2^2(p_{\text{tgt}},p_\theta)$，而经验上额外的 KL 约束往往带来更好的生成质量。
 
 ### 损失函数 / 训练策略
 
-大规模任务采用两阶段：先按常规训好 MeanFlow，再用 LoRA 微调阶段引入 NLL 损失做精炼，避免从头联合训练的开销。具体设置上，T2I 用 COCO 数据集、480M U-Net、在 SD-VAE 潜空间上生成；分子生成则在 QM9 与 Geom-Drugs 上验证。
+最终目标把三项加权合并：
+
+$$\mathcal{L}_{\text{RMFlow}}(\theta,\omega)=\underbrace{\mathcal{L}_{\text{CMFM}}}_{\text{Wasserstein 控制}}+\lambda_1\underbrace{\mathcal{L}_{\text{NLL}}}_{\text{KL 控制}}+\lambda_2\underbrace{\mathbb{E}_{(x_{\text{data}},c)}[\|\phi_\omega(c)\|^2]}_{\text{引导正则}}.$$
+
+三项分工明确：$\mathcal{L}_{\text{CMFM}}$ 管「路走对」（约束整条概率路径），$\mathcal{L}_{\text{NLL}}$ 管「终点准」（约束终端分布），$\lambda_2$ 项正则引导编码。大规模任务（如 T2I）采用两阶段训练：先按常规训好 MeanFlow，再用 PEFT/LoRA 微调阶段引入 NLL 精炼，避免从头联合训练的开销。具体设置上，T2I 用 COCO + 480M U-Net 在 SD-VAE 潜空间生成，分子生成在 QM9 与 Geom-Drugs 上验证。
 
 ## 实验关键数据
 

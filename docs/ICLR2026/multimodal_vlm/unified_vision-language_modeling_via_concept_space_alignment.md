@@ -37,6 +37,22 @@ tags:
 
 方法的核心是把视觉这个"新模态"塞进已经训练好的 Sonar 文本/语音嵌入空间里，从而免费复用在该空间上预训练的 Large Concept Model。具体分三步走：先用 v-Sonar 把 Perception Encoder 的输出对齐到 Sonar 文本嵌入，验证纯文本训练的 LCM 能零样本读懂这些视觉嵌入，最后在 v-Sonar 与 Sonar 共享的统一空间上做视觉-语言指令微调，得到 v-LCM。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["输入图像 / 视频"] --> PE["Perception Encoder<br/>逐帧编码"]
+    PE --> PROJ
+    subgraph PROJ["v-Sonar 视觉编码器对齐"]
+        direction TB
+        A["注入位置编码<br/>(带上时序信息)"] --> B["temporal attention<br/>帧间交互"] --> C["attention pooling<br/>聚合成视频级表征"]
+    end
+    PROJ --> CUR["粗到细三阶段课程<br/>图文12M → 合成视频2M → 人工200K<br/>MSE 对齐到冻结 Sonar"]
+    CUR --> VEMB["v-Sonar 视觉嵌入<br/>(落入 Sonar 文本空间)"]
+    VEMB -->|纯文本 LCM 零样本读取| CAP["视频检索 / 字幕"]
+    VEMB --> VLCM["v-LCM 潜在扩散视觉-语言模型<br/>拼接视觉+文本嵌入<br/>two-tower 预测下一嵌入"]
+    VLCM --> OUT["多语言图像/视频理解"]
+```
+
 ### 关键设计
 
 **1. v-Sonar 视觉编码器对齐：让视觉嵌入落进文本空间。** 难点在于 Perception Encoder (PE) 产出的逐帧特征既无时序结构，也不在 Sonar 这个目标空间里。作者不重训编码器，而是在 PE 之上堆一个轻量投影器：先注入位置编码让帧带上时序信息，再过一层 temporal attention 做帧间交互，最后用 attention pooling 把所有帧聚合成单一视频级表征。整个对齐用最朴素的 MSE 把视觉嵌入往冻结的 Sonar 文本嵌入上拉，目标为 $\mathcal{L}_{\text{align}} = \frac{1}{N}\sum_{i=1}^{N}\|f_\theta(V_i) - g(T_i)\|_2^2$，其中 Sonar 编码器 $g$ 全程冻结作为"锚点"，只更新投影器和视觉编码器。因为目标空间已经是高质量、模态无关的，对齐做的只是搬运而非重建语义，所以一个回归损失就够，也正是这一点让后续的零样本迁移成为可能。

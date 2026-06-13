@@ -45,7 +45,25 @@ tags:
 
 SPECS 想解决的是 VLM 强化学习里"冷启动学太深"的问题：传统 SFT 冷启动把格式、解题、推理一锅炖，过拟合训练分布，反而压缩了后续 RL 的探索空间。它的思路是把冷启动从"模仿学习"换成"格式偏好对齐"，让冷启动只负责浅层的输出规范，把深层推理留给 RL。
 
-整套流程分三阶段串起来。第一阶段先对 base model 做一轮简短的 GRPO，得到一个格式已经很规整的中间模型 GRPO-zero；第二阶段用 GRPO-zero 自蒸馏出偏好数据，再用 DPO 加 SFT 的混合损失做"格式预对齐"，这一步就是冷启动；第三阶段在对齐后的模型上接 GRPO 做最终 RL 微调。关键在于第一、二阶段共同把"格式"这件事提前对齐好，第三阶段的 RL 就能专注在推理能力上。
+整套流程分三阶段串起来。第一阶段先对 base model 做一轮简短的 GRPO，得到一个格式已经很规整的中间模型 GRPO-zero，再用它自蒸馏出偏好数据；第二阶段用 DPO 加 SFT 的混合损失对这批偏好数据做"格式预对齐"，这一步就是冷启动；第三阶段在对齐后的模型上接 GRPO 做最终 RL 微调。关键在于前两阶段共同把"格式"这件事提前对齐好，第三阶段的 RL 就能专注在推理能力上。GF（泛化因子）度量则是贯穿全文的诊断工具，用来量化"哪种冷启动泛化更好"，正是它的对比结果支撑了"用 DPO 而非 SFT 做冷启动"这个核心选择。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    B["Base VLM<br/>(Qwen2.5-VL-7B)"] --> G1
+    subgraph S1["自蒸馏偏好数据生成（阶段1）"]
+        direction TB
+        G1["短程 GRPO<br/>得到 GRPO-zero"] --> R["采样回答<br/>(GRPO-zero 与 base)"]
+        R -->|"chosen"| C["Gemini 过滤<br/>推理-答案一致"]
+        R -->|"rejected"| J["5 种格式破坏<br/>人工构造"]
+        C --> P["偏好数据对<br/>(答案同对、仅格式不同)"]
+        J --> P
+    end
+    P --> S2["DPO 格式预对齐冷启动<br/>混合损失 (DPO+SFT)"]
+    S2 --> M["冷启动模型<br/>(格式已对齐)"]
+    M --> S3["最终 GRPO 微调<br/>(可验证奖励)"]
+    S3 --> O["SPECS 模型"]
+```
 
 ### 关键设计
 

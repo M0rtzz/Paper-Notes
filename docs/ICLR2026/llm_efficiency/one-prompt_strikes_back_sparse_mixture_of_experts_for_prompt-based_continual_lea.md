@@ -42,7 +42,27 @@ tags:
 
 ### 整体框架
 
-SMoPE 想解决的是「单个共享 prompt 既要省参数又不能被知识干扰拖垮」这个矛盾。它的做法是把单个共享 prompt 内部重新看成一个稀疏 MoE：输入是 ViT 的 patch token 序列 $\mathbf{X} \in \mathbb{R}^{N \times d}$，模型维护一份共享的 prefix key $\mathbf{P}^K \in \mathbb{R}^{N_p \times d}$ 和 prefix value $\mathbf{P}^V \in \mathbb{R}^{N_p \times d}$，prepend 到每个 MSA 层 attention 的 key 和 value 上。每个 prefix token 被当成一个独立的 prompt expert，于是一次前向就分三步走完：先用 prompt-attention score aggregation 给每个 expert 算一个统一代理分数，再据此做 Top-K 稀疏选择只激活最相关的几个 expert，最后让选中的 expert 参与 attention 计算，输出每层的 attention 结果。整条链路只更新 prefix 参数和分类器头，骨干始终冻结。
+SMoPE 想解决的是「单个共享 prompt 既要省参数又不能被知识干扰拖垮」这个矛盾。它的做法是把单个共享 prompt 内部重新看成一个稀疏 MoE：输入是 ViT 的 patch token 序列 $\mathbf{X} \in \mathbb{R}^{N \times d}$，模型维护一份共享的 prefix key $\mathbf{P}^K \in \mathbb{R}^{N_p \times d}$ 和 prefix value $\mathbf{P}^V \in \mathbb{R}^{N_p \times d}$，prepend 到每个 MSA 层 attention 的 key 和 value 上。每个 prefix token 被当成一个独立的 prompt expert，于是一次前向就分三步走完：先用 prompt-attention score aggregation 给每个 expert 算一个统一代理分数，再据此做 Top-K 稀疏选择只激活最相关的几个 expert，最后让选中的 expert 参与 attention 计算，输出每层的 attention 结果。训练时另有两条辅助回路——adaptive noise 在选择前压一压高频 expert、prototype loss 用旧 prefix key 守住旧 expert 的分工；整条链路只更新 prefix 参数和分类器头，骨干始终冻结。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["ViT patch token 序列 X<br/>+ 共享 prefix（每个 prefix token = 一个 prompt expert）"]
+    AGG["Prompt-Attention Score Aggregation<br/>token 均值 → 每个 expert 一个代理分数"]
+    NOISE["Adaptive Noise Mechanism（仅训练）<br/>对高频 expert 加噪声惩罚"]
+    TOPK["Sparse Expert Selection<br/>按代理分数 Top-K，只激活 K 个 expert"]
+    ATTN["选中 expert 参与 attention<br/>拼接 prompt 与预训练注意力"]
+    OUT["每层 attention 输出<br/>（骨干冻结，只更新 prefix + 分类器头）"]
+    PROTO["Prototype-based Loss（仅训练）<br/>旧 prefix key 当原型，约束旧 expert 路由一致"]
+
+    IN --> AGG
+    AGG --> TOPK
+    NOISE -.训练时压低分数.-> TOPK
+    TOPK --> ATTN
+    ATTN --> OUT
+    OUT -.冻结旧 prefix key.-> PROTO
+    PROTO -.守住旧分工.-> AGG
+```
 
 ### 关键设计
 

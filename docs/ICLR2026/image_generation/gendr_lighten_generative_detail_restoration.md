@@ -42,29 +42,56 @@ tags:
 
 ### 整体框架
 
-GenDR把"为SR定制扩散模型"拆成三层：先把SD2.1 UNet配上16通道VAE训成一个0.9B的基础模型（SD2.1-VAE16），让潜在空间装得下SR需要保留的细节；再用CiD/CiDA一致性蒸馏把多步采样压成单步，同时把SR的图像先验灌进蒸馏过程；最后剥掉scheduler和text encoder，留下VAE+UNet的极简管线，单步77ms出图。
+GenDR把"为SR定制扩散模型"拆成三层：先把SD2.1 UNet配上16通道VAE训成一个0.9B的基础模型（SD2.1-VAE16），让潜在空间装得下SR需要保留的细节；再用CiD/CiDA一致性蒸馏把多步采样压成单步，同时把SR的图像先验灌进蒸馏过程；最后剥掉scheduler和text encoder，留下VAE+UNet的极简管线，单步77ms出图。下面四个关键设计正好沿着"基础模型 → 蒸馏 → 推理管线"的顺序依次落地。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    HRX["HR 训练图像"] --> BASE["SD2.1-VAE16 基础模型<br/>16通道VAE + 0.9B UNet + REPA对齐"]
+    BASE --> DISTILL
+    subgraph DISTILL["CiD / CiDA 一致性蒸馏（把多步压成单步 + 灌SR先验）"]
+        direction TB
+        CID["CiD：HR真值校准score网络<br/>+ 恒等变换"] --> CIDA["CiDA：+ 对抗判别头<br/>+ REPA语义对齐"]
+    end
+    DISTILL -->|蒸馏出单步权重| INFER
+    subgraph INFER["极简推理 pipeline（仅 VAE16 + UNet，77ms）"]
+        direction TB
+        LR["LR 输入"] --> ENC["VAE16 编码"]
+        ENC --> UNET["单步 UNet<br/>固定prompt嵌入"]
+        UNET --> DEC["VAE16 解码"]
+    end
+    INFER --> OUT["HR 输出图像"]
+```
 
 ### 关键设计
 
-**1. SD2.1-VAE16：用16通道潜在空间换回SR丢掉的细节。** SR的关键不是从噪声里凭空生成，而是补回高频细节，所以输入信息能不能完整进入潜在空间至关重要。4通道VAE是为T2I降低生成难度而设计的，不可逆压缩会抹掉精细纹理和结构；FLUX/SD3.5这类16通道DiT虽然信息容量够，但12B规模做4×SR要40GB显存、1.4s，是SD2.1的5.3×/11.4×，纯属杀鸡用牛刀。作者因此在轻量SD2.1 UNet上换装开源16通道VAE，全参数训练出0.9B的基础模型，在信息容量和规模之间取平衡。训练时用表示对齐（REPA）补充语义监督：在UNet第一个下采样块后插一个MLP投影头 $h$，把UNet中间特征 $\mathbf{h}_t = f_\theta(\mathbf{z}_t)$ 对齐到预训练DINOv2编码器对HR图的表示 $\mathbf{h}_\mathcal{E} = \mathcal{E}(\mathbf{x}_h)$：
+**1. SD2.1-VAE16：用16通道潜在空间换回SR丢掉的细节**
+
+SR的关键不是从噪声里凭空生成，而是补回高频细节，所以输入信息能不能完整进入潜在空间至关重要。4通道VAE是为T2I降低生成难度而设计的，不可逆压缩会抹掉精细纹理和结构；FLUX/SD3.5这类16通道DiT虽然信息容量够，但12B规模做4×SR要40GB显存、1.4s，是SD2.1的5.3×/11.4×，纯属杀鸡用牛刀。作者因此在轻量SD2.1 UNet上换装开源16通道VAE，全参数训练出0.9B的基础模型，在信息容量和规模之间取平衡。训练时用表示对齐（REPA）补充语义监督：在UNet第一个下采样块后插一个MLP投影头 $h$，把UNet中间特征 $\mathbf{h}_t = f_\theta(\mathbf{z}_t)$ 对齐到预训练DINOv2编码器对HR图的表示 $\mathbf{h}_\mathcal{E} = \mathcal{E}(\mathbf{x}_h)$：
 
 $$\mathcal{L}^{(\text{repa})} = -\mathbb{E}_{\mathbf{x}_h, t}\left[\frac{1}{N}\sum_{n=1}^{N}\text{sim}\left(\mathbf{h}_\mathcal{E}[n], h(\mathbf{h}_t[n])\right)\right]$$
 
 这样既扩了通道又没扩模型，VAE16在T2I上只是略退（GenEval −0.02、FID +14.44），换来SR上细节保真的明显增益。
 
-**2. CiD：把SR先验灌进score蒸馏，让单步输出稳得住。** VSD/SiD这类score distillation本是为T2I设计的，"真实"score网络对齐的是文本嵌入分布，直接拿来做SR会出现训练分布不一致——内容漂移、质量忽好忽坏。CiD在SiD基础上做两处改动：一是用HR目标图像 $\mathbf{z}_h$ 去训练"真实"score网络 $\phi$，把它的输出分布钉在高保真图像流形上而非文本流形；二是把蒸馏目标里波动的生成结果 $\mathbf{z}_g$ 换成稳定的 $\mathbf{z}_h$ 做恒等变换，避免生成质量抖动反过来污染score估计。最终损失在原始SiD项 $\mathcal{L}_\theta^{(1)}$ 之外加上以 $\mathbf{z}_h$ 为目标、带CFG增强引导的 $\mathcal{L}_\theta^{(3)}$：
+**2. CiD：把SR先验灌进score蒸馏，让单步输出稳得住**
+
+VSD/SiD这类score distillation本是为T2I设计的，"真实"score网络对齐的是文本嵌入分布，直接拿来做SR会出现训练分布不一致——内容漂移、质量忽好忽坏。CiD在SiD基础上做两处改动：一是用HR目标图像 $\mathbf{z}_h$ 去训练"真实"score网络 $\phi$，把它的输出分布钉在高保真图像流形上而非文本流形；二是把蒸馏目标里波动的生成结果 $\mathbf{z}_g$ 换成稳定的 $\mathbf{z}_h$ 做恒等变换，避免生成质量抖动反过来污染score估计。最终损失在原始SiD项 $\mathcal{L}_\theta^{(1)}$ 之外加上以 $\mathbf{z}_h$ 为目标、带CFG增强引导的 $\mathcal{L}_\theta^{(3)}$：
 
 $$\mathcal{L}_\theta^{(\text{cid})} = \mathcal{L}_\theta^{(3)} - \xi \mathcal{L}_\theta^{(1)}$$
 
 其中 $\xi$ 是经验权重。靠HR真值校准score网络加上恒等变换，CiD把SR的图像先验真正塞进了蒸馏过程，消融里相对SiD把Q-Align从4.391抬到4.428。
 
-**3. CiDA：对抗学习去"AI假感"，REPA稳结构、加速收敛。** 纯score蒸馏容易出那种过度平滑、一眼假的细节，于是CiDA在CiD上再叠两项。对抗项直接复用预训练UNet $\phi$ 当特征提取器、接一个判别头 $h$，逼生成结果落进真实纹理分布；REPA项继续在高层语义空间正则化，避免对抗训练把结构带偏，同时加快收敛。三项加权组合：
+**3. CiDA：对抗学习去"AI假感"，REPA稳结构、加速收敛**
+
+纯score蒸馏容易出那种过度平滑、一眼假的细节，于是CiDA在CiD上再叠两项。对抗项直接复用预训练UNet $\phi$ 当特征提取器、接一个判别头 $h$，逼生成结果落进真实纹理分布；REPA项继续在高层语义空间正则化，避免对抗训练把结构带偏，同时加快收敛。三项加权组合：
 
 $$\mathcal{L}_\theta^{(\text{cida})} = \lambda_1 \mathcal{L}_\theta^{(\text{cid})} + \lambda_2 \mathcal{L}_\theta^{(\text{adv})} + \lambda_3 \mathcal{L}_\theta^{(\text{repa})}$$
 
 工程上靠两招控成本：判别器只用LoRA适配（rank=64、alpha=128），并让score网络和判别器共享同一个base model做特征提取，省去多份UNet的显存。叠完对抗后Q-Align进一步到4.453，CiD贡献约0.05、对抗约0.03。
 
-**4. 极简推理pipeline：单步用不上的零件全部删掉。** 既然是单步推理，scheduler的多步调度就是多余的，作者直接固定 $\bar{\alpha}_t = \bar{\beta}_t = 0.5$ 把它去掉；text encoder和tokenizer也不要，换成预计算的固定prompt嵌入——SR场景下一句通用质量描述就够用。代价极小：相比DAPE/Qwen2.5VL动态生成prompt，固定嵌入的MUSIQ只降0.17，却把参数从1775M/8.3B压到933M、推理从113ms/3.18s压到77ms（512²像素，A100）。最终管线只剩VAE+UNet两个模块。
+**4. 极简推理pipeline：单步用不上的零件全部删掉**
+
+既然是单步推理，scheduler的多步调度就是多余的，作者直接固定 $\bar{\alpha}_t = \bar{\beta}_t = 0.5$ 把它去掉；text encoder和tokenizer也不要，换成预计算的固定prompt嵌入——SR场景下一句通用质量描述就够用。代价极小：相比DAPE/Qwen2.5VL动态生成prompt，固定嵌入的MUSIQ只降0.17，却把参数从1775M/8.3B压到933M、推理从113ms/3.18s压到77ms（512²像素，A100）。最终管线只剩VAE+UNet两个模块。
 
 ## 实验结果
 

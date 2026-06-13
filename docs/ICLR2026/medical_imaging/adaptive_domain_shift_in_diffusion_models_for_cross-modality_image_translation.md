@@ -41,7 +41,22 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CDTSDE（Cross-Domain Translation SDE）在VP扩散过程中引入自适应域混合场 $\Lambda_t \in (0,1)^{C \times H \times W}$。前向过程的边际分布以 $\sqrt{\bar\alpha_t} \cdot d_t$ 为均值（$d_t = \Lambda_t \odot \hat{x}_0^{\text{src}} + (1-\Lambda_t) \odot x_0$），逆向SDE的漂移项中包含显式的域迁移恢复力。输入是源模态图像，输出是目标模态翻译结果。
+CDTSDE（Cross-Domain Translation SDE）要解决的是：跨模态翻译里源域到目标域的过渡路径若走全局线性直线，会穿过两模态流形之间的高能量区，逼着采样器做大量偏离流形的校正。它的整体思路是把这条过渡路径变成可学习的弯路——在 VP 扩散过程里引入一个空间自适应域混合场 $\Lambda_t \in (0,1)^{C \times H \times W}$，逐像素决定每一步该掺入多少源域信息，并把这条混合路径 $d_t = \Lambda_t \odot \hat{x}_0^{\text{src}} + (1-\Lambda_t)\odot x_0$ 直接写进扩散 SDE 的漂移项。运行时（见下图）：给定源模态图像，采样不从纯噪声、而从中间时步 $t_1$ 的"源图像中心噪声"起步；此后每一步先由混合场网络 $\mathcal{S}_\theta$ 预测当前 $\Lambda_t$，再用带域迁移恢复力的逆向 SDE 配合闭式精确解采样器走一大步，迭代收敛到 $t=0$ 即得目标模态图像，全程仅需约 5 步。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    SRC["源模态图像 x_src"]
+    TRUNC["中间时步截断<br/>从 t1 起步、x_t1~N(√ᾱ·x_src, σ²)"]
+    MIX["空间自适应域混合场 Λt<br/>S_θ 逐像素/逐通道预测混合比例"]
+    SDE["域感知逆向 SDE<br/>漂移 = 标准项 + 域迁移恢复力 + score"]
+    SAMP["精确解一阶采样器<br/>坐标变换求闭式解、走一大步"]
+    OUT["目标模态翻译结果"]
+    SRC --> TRUNC --> MIX
+    MIX --> SDE --> SAMP
+    SAMP -->|"t > 0：迭代下一步"| MIX
+    SAMP -->|"t = 0"| OUT
+```
 
 ### 关键设计
 

@@ -43,15 +43,37 @@ tags:
 
 ### 整体框架
 
-Jackpot 在小 rollout 模型自回归采样出轨迹后、反向传播前插入一道 token 级闸门：对每个 token 用带预算约束的最优拒绝采样（OBRS）判断接受还是丢弃，被拒的 token 直接从损失里 mask 掉，从源头把 rollout 分布拉向策略分布；与此同时策略模型和 rollout 模型联合训练，并用在线蒸馏让 rollout 模型持续追赶策略模型，避免分布差距随训练越拉越大。
+Jackpot 要解决的是「用小模型代替大模型做 rollout」省成本时带来的极端分布不匹配：小 rollout 模型采出的轨迹分布 $q$ 和真正要训练的策略分布 $p$ 差出一个数量级，事后加权（TIS 等）压不住就会崩。它的思路是在 rollout 模型自回归采完轨迹后、反向传播前插一道 **token 级闸门**——对每个 token 用带预算约束的最优拒绝采样（Optimal Budget Rejection Sampling，OBRS）判断接受还是丢弃，被拒 token 直接从损失里 mask 掉，从源头把 rollout 分布拉向策略分布。接受规则里要的归一化常数 $Z$ 本该对全词表求和，Jackpot 用 top-k 近似 + batch 偏差修正把它压成可负担的开销。最后策略模型和 rollout 模型联合训练，再加一项在线蒸馏让 rollout 模型持续追赶策略模型，避免分布差距随训练越拉越大。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["小 rollout 模型 p_inf<br/>自回归采样轨迹"] --> B["OBRS 接受规则<br/>逐 token 以 a(x) 接受/拒绝<br/>被拒 token 从损失 mask 掉"]
+    B -->|"接受规则需归一化常数 Z"| C["Top-k 近似 + batch 偏差修正<br/>候选集求和得 Z_approx<br/>用经验接受率 κ 校正回无偏"]
+    C --> D["重加权后的接受 token"]
+    subgraph TRAIN["联合训练目标（共享同一批轨迹）"]
+        direction TB
+        E["策略模型 PPO-OBRS<br/>被拒 token 不进梯度"]
+        F["rollout 模型 PPO<br/>吃同一批奖励"]
+        G["前向 KL 蒸馏<br/>策略当老师→压住 gap"]
+    end
+    D --> TRAIN
+    TRAIN --> H["策略模型逼近 on-policy 性能<br/>rollout 模型持续追赶"]
+```
 
 ### 关键设计
 
-**1. OBRS 接受规则：用任意预算换取分布对齐的闭式最优解。** 经典 rejection sampling 要精确匹配分布，须取归一化常数 $\lambda \geq \max_i p_i/q_i$，可 LLM 词表超 10 万、个别 token 上概率比 $p_i/q_i$ 极度尖峰，导致 $\lambda$ 巨大、接受率趋近于零，根本跑不动。OBRS 的做法是放开这个约束：对 rollout 模型 $p_{\text{inf}}$ 采到的 token $x$，以 $a(x) = \min\!\left(1, \frac{p_{\text{target}}(x)}{\lambda \cdot p_{\text{inf}}(x)}\right)$ 的概率接受，其中 $\lambda>0$ 是用户自定的接受预算——$\lambda$ 越小拒得越多、对齐越精确，$\lambda$ 越大保留越多、接受率越高。理论上对任意 $\lambda$ 都有 $D_{\text{KL}}(p \| \tilde{q}) \leq D_{\text{KL}}(p \| q)$，即接受后的后验分布 $\tilde q$ 严格不比原 rollout 分布更差，且在该预算下它是唯一最小化 $D_{\text{KL}}(p\|\hat q)$ 的接受规则。接受后样本服从重加权分布 $P_{\text{OBRS}}(x) = \frac{\min\!\left(p_{\text{inf}}(x), p_{\text{target}}(x)/\lambda\right)}{Z}$，等价于把概率被 rollout 模型高估的 token 削平、低估的保留，从而在可控的样本损失下最大程度贴近目标。
+**1. OBRS 接受规则：用任意预算换取分布对齐的闭式最优解**
 
-**2. 联合训练目标：让 rollout 模型追着策略模型跑，堵住持续扩大的 gap。** 朴素解耦训练里策略模型不断更新而 rollout 模型固定，分布差距只会越拖越大。Jackpot 把两者一起优化，总损失为 $\mathcal{L}^{\text{Jackpot}}(\theta, \omega) = \mathcal{L}^{\text{PPO-OBRS}}(\theta) + \mathcal{L}^{\text{PPO}}(\omega) + \lambda_{\text{distill}} \mathcal{L}^{\text{distill}}(\omega)$ 三项：第一项是带 OBRS mask 与重加权的策略模型 PPO，被拒 token 不进梯度；第二项让 rollout 模型也吃同一批奖励信号做标准 PPO；第三项是前向 KL 蒸馏 $D_{\text{KL}}(\text{SG}(p_{\theta_{\text{new}}}) \| p_\omega)$，把策略模型当老师、用 stop-gradient 固定，逼 rollout 模型持续跟踪策略模型的改进。三项共享同一批 rollout 轨迹，不额外采样，正是蒸馏这一项把 gap 主动压住，OBRS 才不至于一直在拒越来越多的 token。
+经典 rejection sampling 要精确匹配分布，须取归一化常数 $\lambda \geq \max_i p_i/q_i$，可 LLM 词表超 10 万、个别 token 上概率比 $p_i/q_i$ 极度尖峰，导致 $\lambda$ 巨大、接受率趋近于零，根本跑不动。OBRS 的做法是放开这个约束：对 rollout 模型 $p_{\text{inf}}$ 采到的 token $x$，以 $a(x) = \min\!\left(1, \frac{p_{\text{target}}(x)}{\lambda \cdot p_{\text{inf}}(x)}\right)$ 的概率接受，其中 $\lambda>0$ 是用户自定的接受预算——$\lambda$ 越小拒得越多、对齐越精确，$\lambda$ 越大保留越多、接受率越高。理论上对任意 $\lambda$ 都有 $D_{\text{KL}}(p \| \tilde{q}) \leq D_{\text{KL}}(p \| q)$，即接受后的后验分布 $\tilde q$ 严格不比原 rollout 分布更差，且在该预算下它是唯一最小化 $D_{\text{KL}}(p\|\hat q)$ 的接受规则。接受后样本服从重加权分布 $P_{\text{OBRS}}(x) = \frac{\min\!\left(p_{\text{inf}}(x), p_{\text{target}}(x)/\lambda\right)}{Z}$，等价于把概率被 rollout 模型高估的 token 削平、低估的保留，从而在可控的样本损失下最大程度贴近目标。
 
-**3. Top-k 近似与 batch 偏差修正：把全词表归一化压成可负担的开销。** 重加权分布里的归一化常数 $Z$ 原本要对超 10 万的整个词表求和，显存吃不消。注意到 LLM 输出概率高度集中在少数 token，Jackpot 只在候选集 $\mathcal{V}_k = \text{top-k}(p_{\text{inf}}) \cup \text{top-k}(p_{\text{new}})$ 上求和得到 $Z_{\text{approx}}$。但截断会系统性低估真实 $Z$，于是再做一次偏差修正：利用 $Z$ 恰好等于期望接受率 $\bar\alpha$ 这一性质，用一个 batch 里的经验接受率反算校正因子 $\kappa = \frac{\hat{\bar{\alpha}}}{\frac{1}{B}\sum_{i=1}^{B} Z_{\text{approx}}^{(i)}}$，把 top-k 估计整体放大回无偏水平。整套流程不必碰 vLLM、无需定制算子，与 speculative decoding 不同，拒掉 token 后剩余轨迹原样保留、不做重采样。
+**2. Top-k 近似与 batch 偏差修正：把全词表归一化压成可负担的开销**
+
+OBRS 重加权分布里的归一化常数 $Z$ 原本要对超 10 万的整个词表求和，显存吃不消。注意到 LLM 输出概率高度集中在少数 token，Jackpot 只在候选集 $\mathcal{V}_k = \text{top-k}(p_{\text{inf}}) \cup \text{top-k}(p_{\text{new}})$ 上求和得到 $Z_{\text{approx}}$。但截断会系统性低估真实 $Z$，于是再做一次偏差修正：利用 $Z$ 恰好等于期望接受率 $\bar\alpha$ 这一性质，用一个 batch 里的经验接受率反算校正因子 $\kappa = \frac{\hat{\bar{\alpha}}}{\frac{1}{B}\sum_{i=1}^{B} Z_{\text{approx}}^{(i)}}$，把 top-k 估计整体放大回无偏水平。整套流程不必碰 vLLM、无需定制算子，与 speculative decoding 不同，拒掉 token 后剩余轨迹原样保留、不做重采样。
+
+**3. 联合训练目标：让 rollout 模型追着策略模型跑，堵住持续扩大的 gap**
+
+朴素解耦训练里策略模型不断更新而 rollout 模型固定，分布差距只会越拖越大，OBRS 也就得拒越来越多的 token。Jackpot 把两者一起优化，总损失为 $\mathcal{L}^{\text{Jackpot}}(\theta, \omega) = \mathcal{L}^{\text{PPO-OBRS}}(\theta) + \mathcal{L}^{\text{PPO}}(\omega) + \lambda_{\text{distill}} \mathcal{L}^{\text{distill}}(\omega)$ 三项：第一项是带 OBRS mask 与重加权的策略模型 PPO，被拒 token 不进梯度；第二项让 rollout 模型也吃同一批奖励信号做标准 PPO；第三项是前向 KL 蒸馏 $D_{\text{KL}}(\text{SG}(p_{\theta_{\text{new}}}) \| p_\omega)$，把策略模型当老师、用 stop-gradient 固定，逼 rollout 模型持续跟踪策略模型的改进。三项共享同一批 rollout 轨迹，不额外采样，正是蒸馏这一项把 gap 主动压住，OBRS 才不至于一直在拒越来越多的 token。
 
 ### 损失函数 / 训练策略
 

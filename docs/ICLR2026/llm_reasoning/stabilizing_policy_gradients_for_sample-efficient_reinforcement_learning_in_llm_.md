@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR 2026  
 **arXiv**: [2510.00819](https://arxiv.org/abs/2510.00819)  
 **代码**: [https://github.com/luckeciano/stable-pg-llm](https://github.com/luckeciano/stable-pg-llm)  
-**领域**: 视频理解  
+**领域**: LLM 推理  
 **关键词**: 策略梯度, 曲率感知, 样本效率, GRPO, 二阶优化
 
 ## 一句话总结
@@ -39,20 +39,44 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CAPO 在 GRPO 之上加了一道轻量级的 token 筛选闸门：每次更新参数前，先用一个只算最后一层的曲率模型预判每个候选更新是否会把策略推下性能悬崖，只放行安全的 token 进入真正的策略梯度。整个机制夹在采样和参数更新之间——拿到轨迹后先估计 last-layer 的梯度与曲率，对每个 token 检查信赖域约束，剔除越界的部分，再用留下来的子集算 LLM 策略梯度去更新模型。
+CAPO（Curvature-Aware Policy Optimization，曲率感知策略优化）的目标是让 GRPO 在激进超参（高学习率、小 batch）下不崩。它的做法是在采样和参数更新之间塞一道轻量级闸门：每次更新前，先用一个只在最后一层（LM head）计算的曲率模型，预判每个候选 token 更新会把策略推下性能悬崖还是安全前进，只放行安全的 token 进入真正的策略梯度。整条流水线是——拿到 GRPO 的轨迹后，先在 last-layer 子空间估出梯度与曲率，对每个 token 算出「目标偏移」和「策略偏移」两个标量，用信赖域阈值剔掉越界的 token，再用留下来的子集照常算策略梯度去更新模型。目标函数本身（clipped surrogate + KL）完全没动，全部创新都落在梯度估计阶段的数据筛选上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["GRPO 采样轨迹<br/>得到候选 token 更新"] --> B["Last-Layer 曲率模型<br/>在 LM head 子空间<br/>解析求 Hessian / Fisher"]
+    B --> C["方向曲率诊断<br/>沿 Adam 真实更新步算<br/>目标偏移 m_H、策略偏移 m_F"]
+    C --> D{"Token 级信赖域<br/>δ_H ≤ m_H ≤ δ_H^high<br/>且 m_F ≤ δ_F ?"}
+    D -->|越界| E["剔除该 token"]
+    D -->|通过| F["保留进入子集"]
+    F --> G["用通过的 token 子集<br/>算策略梯度更新模型"]
+    G --> A
+```
 
 ### 关键设计
 
-**1. Last-Layer 曲率模型：让二阶信息在十亿参数尺度可算。** 直接对完整 LLM 求 Hessian 在数十亿参数下毫无可能，CAPO 的破局点是把参数切成 $\bm{\theta} = (\bar{\bm{\theta}}, \bm{\psi})$，其中 $\bar{\bm{\theta}}$ 是主干、$\bm{\psi} = \text{vec}(W)$ 只是 LM head 那一层线性变换。因为 logit 完全由这一层产生，作者在这个子空间上推导出目标 Hessian $\tilde{H}(\bm{\psi})$ 和 Fisher 信息矩阵 $\tilde{F}(\bm{\psi})$ 的解析形式，避开了对整网络的二阶展开。更关键的是 top-k 采样让梯度天然稀疏——通常只有 $k < 100$ 个 token 概率非零，于是内存复杂度从朴素的 $\mathcal{O}((Kd_i)^2)$ 一路压到 $\mathcal{O}(\tilde{k} \cdot d_i)$，曲率才真正变得「可以每步都算」。
+**1. Last-Layer 曲率模型：让二阶信息在十亿参数尺度可算**
 
-**2. 方向曲率计算：把更新对目标和策略的影响各拆成一个标量。** 有了 $\tilde{H}$ 和 $\tilde{F}$，CAPO 不去显式构造大张量，而是沿实际更新方向 $\Delta\bm{\psi}$ 做两次二阶展开，得到两个可解释的诊断量。目标偏移 $m_H(\Delta\bm{\psi}) = \tilde{g}(\bm{\psi})^\top \Delta\bm{\psi} + \frac{1}{2} \Delta\bm{\psi}^\top \tilde{H}(\bm{\psi}) \Delta\bm{\psi}$ 预测这一步会让目标函数升还是降，策略偏移 $m_F(\Delta\bm{\psi}) = \frac{1}{2} \Delta\bm{\psi}^\top \tilde{F}(\bm{\psi}) \Delta\bm{\psi}$ 衡量策略分布会被推动多远。两者都只需稀疏向量点积就能算出，因此整套筛选额外开销极小。
+策略梯度只用一阶信息，在非凸 RL 目标上无法感知曲率，可能沿看似改进的方向走一大步却跌下性能悬崖；但 Hessian 在数十亿参数下根本无法计算。CAPO 的破局点是把参数切成 $\bm{\theta} = (\bar{\bm{\theta}}, \bm{\psi})$，其中 $\bar{\bm{\theta}}$ 是主干、$\bm{\psi} = \text{vec}(W)$ 只是 LM head 那一层线性变换 $W \in \mathbb{R}^{K \times d_i}$。因为 logit 完全由这一层产生，作者在这个子空间上推导出目标 Hessian $\tilde{H}(\bm{\psi})$ 和 Fisher 信息矩阵 $\tilde{F}(\bm{\psi})$ 的解析形式，避开了对整网络的二阶展开。更关键的是 top-k 采样让梯度天然稀疏——通常只有 $k < 100$ 个 token 概率非零，于是内存复杂度从朴素的 $\mathcal{O}((Kd_i)^2)$ 一路压到 $\mathcal{O}(\tilde{k} \cdot d_i)$，曲率才真正变得「可以每步都算」。
 
-**3. Token 级信赖域筛选：只过滤少数「有毒」token 而不动目标函数。** CAPO 把一个 batch 拆成 token 级子集，逐个算出对应的 $m_H$ 与 $m_F$，再用三个阈值卡住信赖域：只有同时满足 $\delta_H \leq m_H(\Delta\psi_i) \leq \delta_H^{high}$ 且 $m_F(\Delta\psi_i) \leq \delta_F$ 的 token 才被接受，越界的直接踢出本步策略梯度。下界 $\delta_H$ 滤掉几乎没贡献的更新、上界 $\delta_H^{high}$ 和 $\delta_F$ 挡住会让策略剧烈跳变的更新。这一步不修改 surrogate 目标本身，只在样本层面做细粒度清洗，因此可以无缝叠加到任意策略梯度方法上。
+**2. 方向曲率诊断：把更新对目标和策略的影响各压成一个标量**
 
-**4. 优化器建模：用 Adam 的真实更新步而非理想 SGD 来估曲率。** 上述 $\Delta\bm{\psi}$ 若按纯 SGD 假设，会和实际训练脱节，所以 CAPO 直接用 Adam 的一阶/二阶矩估计来模拟真正落地的更新步，让曲率预测对应的是优化器实际会走的那一步，筛选判断才不会偏。
+有了 $\tilde{H}$ 和 $\tilde{F}$，CAPO 不去显式构造大张量，而是沿实际更新方向 $\Delta\bm{\psi}$ 做两次二阶展开，得到两个可解释的诊断量。目标偏移预测这一步会让目标函数升还是降：
+
+$$m_H(\Delta\bm{\psi}) = \tilde{g}(\bm{\psi})^\top \Delta\bm{\psi} + \frac{1}{2} \Delta\bm{\psi}^\top \tilde{H}(\bm{\psi}) \Delta\bm{\psi}$$
+
+策略偏移衡量策略分布会被推动多远：
+
+$$m_F(\Delta\bm{\psi}) = \frac{1}{2} \Delta\bm{\psi}^\top \tilde{F}(\bm{\psi}) \Delta\bm{\psi}$$
+
+两者都只需稀疏向量点积，因此整套诊断额外开销极小。这里有个易被忽略的关键细节：$\Delta\bm{\psi}$ 不能按理想 SGD 假设取，否则会和实际训练脱节。CAPO 直接用 Adam 的一阶/二阶矩估计来模拟真正会落地的更新步，让曲率预测对应的就是优化器实际会走的那一步，筛选判断才不会偏。
+
+**3. Token 级信赖域筛选：只清掉少数「有毒」token 而不碰目标函数**
+
+CAPO 把一个 batch 拆成 token 级子集，逐个算出对应的 $m_H$ 与 $m_F$，再用三个阈值卡住信赖域：只有同时满足 $\delta_H \leq m_H(\Delta\psi_i) \leq \delta_H^{high}$ 且 $m_F(\Delta\psi_i) \leq \delta_F$ 的 token 才被接受，越界的直接踢出本步策略梯度。下界 $\delta_H$ 滤掉几乎没贡献的更新，上界 $\delta_H^{high}$ 和 $\delta_F$ 挡住会让策略剧烈跳变的更新。这一步不修改 surrogate 目标，只在样本层面做细粒度清洗，因此可以无缝叠加到任意策略梯度方法上（Dr.GRPO→Dr.CAPO、REINFORCE→ReinCAPO）。理论上作者还给出单调改进保证：只要把信赖域半径取到 $\omega \geq C\sqrt{\delta_F}$，就能保证更新后 $J(\pi_{\theta+\Delta\theta}) \geq J(\pi_\theta)$，把「过滤越界 token」这件经验操作和「策略不退化」这条结论对应了起来。
 
 ### 损失函数 / 训练策略
-目标函数与 GRPO 完全一致——clipped surrogate 加 KL 正则，CAPO 的全部创新都落在梯度估计阶段的数据筛选上，不碰目标本身。理论上作者给出了单调改进保证：只要把信赖域半径取到 $\omega \geq C\sqrt{\delta_F}$，就能保证更新后 $J(\pi_{\theta+\Delta\theta}) \geq J(\pi_\theta)$，把「过滤越界 token」这件经验操作和「策略不退化」这条理论结论对应了起来。
+目标函数与 GRPO 完全一致——clipped surrogate 加 KL 正则，CAPO 不引入任何新的损失项；它的全部作用都发生在「算梯度时用哪些 token」这一层。实践中拒绝率初期约 8%、之后降到 2% 以下，额外计算开销 <5%。
 
 ## 实验关键数据
 

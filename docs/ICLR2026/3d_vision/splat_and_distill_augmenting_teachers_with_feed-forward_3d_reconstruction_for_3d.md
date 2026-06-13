@@ -44,6 +44,23 @@ tags:
 
 Splat and Distill (SnD) 把前馈式 3D 重建塞进 DINO/DINOv2 的 student-teacher 自蒸馏框架里，让 teacher 给出的监督信号天然带有几何一致性。每次迭代从一个场景 $\mathcal{S} = \{(\mathbf{I}_i, \mathbf{P}_i)\}_{i=1}^N$ 采样两个上下文视角和一个目标视角：冻结的 MVSplat 把两张上下文图像前馈预测成一组 3D Gaussian primitives $\{(\mu_j, \Sigma_j, \alpha_j)\}$，teacher 提取的 2D 特征经上采样挂到这些 Gaussian 上、渲染并混合到目标视角，得到的特征图 $\mathbf{F}_{blend}^{tgt}$ 充当监督；student 只看目标视角的单张 2D 图像就要匹配上这份带 3D 感知的特征，而 teacher 自己再用 student 的 EMA 持续更新。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["场景采样<br/>2 上下文视角 + 1 目标视角"] --> T["Teacher 提取<br/>2D 低分辨率特征"]
+    A --> R["前馈式重建 + EMA<br/>MVSplat 预测 3D Gaussian"]
+    T --> U["Mask-Aware 特征上采样"]
+    U --> M["特征挂到 Gaussian<br/>pixel-to-Gaussian"]
+    R --> M
+    M --> P["渲染到目标视角<br/>得到 2D 特征图"]
+    P --> B["语义混合正则化"]
+    B --> F["监督特征图 F_blend"]
+    A --> S["Student 提取<br/>目标视角单图特征 F_s"]
+    F --> L["蒸馏损失<br/>F_blend ↔ F_s"]
+    S --> L
+    L -->|EMA 更新| T
+```
+
 ### 关键设计
 
 **1. Mask-Aware 特征上采样：消除跨物体边界的特征泄漏**

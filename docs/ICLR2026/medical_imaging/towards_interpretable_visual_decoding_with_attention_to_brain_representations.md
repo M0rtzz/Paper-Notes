@@ -43,7 +43,17 @@ tags:
 
 ### 整体框架
 
-NeuroAdapter 想做的事情很直接：跳过 CLIP/DINO 这类中间嵌入空间，让 fMRI 信号本身直接当扩散模型的条件，同时让"哪个脑区驱动了图像"这件事变得可读。整条 pipeline 是这样转的：受试者看图时的 fMRI 皮层表面数据先经 Schaefer 分区切成每半球 500 个脑区，按 SNR 筛出最高的 $p=200$ 个；每个脑区各自走一条独立线性投影，被压成一个 token，拼成条件序列 $E \in \mathbb{R}^{p \times f}$；接着把 Stable Diffusion U-Net 里的交叉注意力层换成 IP-Adapter 风格的模块，让 U-Net 的空间 query 直接去"关注"这 200 个 fMRI token，最后去噪生成重建图像。训练时冻结 SD 主体，只更新脑区投影矩阵和新加的交叉注意力模块；推理时再用一个脑编码器从多张候选里挑出最优重建。
+NeuroAdapter 想做的事情很直接：跳过 CLIP/DINO 这类中间嵌入空间，让 fMRI 信号本身直接当扩散模型的条件，同时让"哪个脑区驱动了图像"这件事变得可读。整条 pipeline 是这样转的：受试者看图时的 fMRI 皮层表面数据先经 Schaefer 分区切成每半球 500 个脑区，按信噪比（SNR）筛出最高的 $p=200$ 个；每个脑区各自走一条独立线性投影，被压成一个 token，拼成条件序列 $E \in \mathbb{R}^{p \times f}$；训练时再对这些 token 做随机丢弃（fMRI Token Dropout）做正则。接着把 Stable Diffusion U-Net 里的交叉注意力层换成 IP-Adapter 风格的模块，让 U-Net 的空间 query 直接去"关注"这 200 个 fMRI token，去噪生成重建图像。训练时冻结 SD 主体，只更新脑区投影矩阵和新加的交叉注意力模块；推理时再用一个脑编码器从多张候选里挑出最优重建。最后，因为脑区与 token 一一对应，注意力矩阵本身可被 IBBI 双向可解释性框架读出，反查"哪个脑区驱动了图像的哪一块"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["fMRI 皮层表面数据（受试者看图时）<br/>Schaefer 分区→每半球 500 脑区→SNR 筛 p=200"] --> C["脑区粒度 Token 化与线性映射<br/>每脑区独立投影成 1 个 token→序列 E"]
+    C --> D["fMRI Token Dropout 正则化<br/>训练时按随机概率置零部分 token"]
+    D --> E["IP-Adapter 交叉注意力条件化 SD U-Net<br/>扩散去噪→多随机种子候选图"]
+    E --> G["脑编码器辅助的图像选择<br/>逆向编码回验→选最贴合脑活动的重建图"]
+    E -.交叉注意力矩阵.-> I["IBBI 双向可解释性框架<br/>脑区贡献视图↔ROI 注意力图"]
+```
 
 ### 关键设计
 

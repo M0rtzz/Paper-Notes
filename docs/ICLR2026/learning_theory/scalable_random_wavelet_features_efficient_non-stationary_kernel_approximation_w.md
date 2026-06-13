@@ -28,21 +28,46 @@ tags:
 ## 方法详解
 
 ### 整体框架
-RWF 的出发点是把 RFF 里的全局正弦基替换成空间-频率双重局部化的小波原子：先用一族尺度-平移小波积分定义一个非平稳核，再用 Monte Carlo 随机采样这个积分得到有限维特征映射，最后把核回归化成普通的贝叶斯线性回归。整套流程只需对 $D$ 个随机小波原子求一次特征，因此保留了随机特征 $O(ND^2)$ 的线性时间复杂度，却获得了随位置变化的非平稳建模能力。
+RWF 的核心思路，是把 RFF 里那套铺满全空间、只认 $x-y$ 的全局正弦基，换成在空间和频率上都局部化的小波原子。整条流水线分三层：先用一族尺度-平移小波原子定义一个非平稳核（核值随位置漂移，不再只依赖 $\mathbf{x}-\mathbf{y}$）；再用一个多分辨率先验 $p(s,\mathbf{t})$ 决定这些原子覆盖哪些尺度和位置；最后用 Monte Carlo 从这个先验里采 $D$ 个原子，把无穷维的积分核压成一张有限维特征映射，于是核回归直接退化成普通的贝叶斯线性回归。整套流程只需对 $D$ 个随机小波原子求一次特征，因此保留了随机特征 $O(ND^2)$ 的线性时间复杂度，却额外获得了随位置变化的非平稳建模能力。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    X["输入 x（空间/时间坐标）"]
+    subgraph D1["小波原子核（设计 1）"]
+        direction TB
+        A["母小波 ψ → 尺度-平移<br/>原子族 ψ(s,t)，天然局部化"] --> B["对所有尺度-平移积分<br/>→ 非平稳核 k(x,y)"]
+    end
+    subgraph D2["多分辨率采样策略（设计 2）"]
+        direction TB
+        P["先验 p(s,t)：尺度 log-均匀<br/>+ 平移凸包均匀 + 选母小波"]
+    end
+    subgraph D3["随机小波特征（设计 3）"]
+        direction TB
+        M["Monte Carlo 采 D 个原子<br/>(s_i, t_i)"] --> Z["特征映射 z(x)<br/>近似核 k̂ = z(x)ᵀz(y)"] --> R["贝叶斯线性回归<br/>→ GP 后验均值/方差"]
+    end
+    X --> A
+    B --> M
+    P -->|控制采哪些原子| M
+```
 
 ### 关键设计
 
 **1. 小波原子核：用局部基取代全局正弦基定义非平稳核**
 
-RFF 受限于平稳性的根源在于傅里叶基 $e^{i\omega^\top x}$ 在全空间上同质，相关性只依赖 $x-y$。RWF 改用从母小波 $\psi:\mathbb{R}^d\to\mathbb{R}$ 生成的原子族 $\psi_{s,\mathbf{t}}(\mathbf{x}) = s^{-d/2}\psi\big((\mathbf{x}-\mathbf{t})/s\big)$，每个原子由尺度 $s$ 和平移 $\mathbf{t}$ 控制，天然在某个空间位置和频带上局部化。非平稳核由对所有尺度-平移积分得到：$k(\mathbf{x},\mathbf{y}) = \int_0^\infty\!\int_{\mathbb{R}^d}\psi_{s,\mathbf{t}}(\mathbf{x})\,\psi_{s,\mathbf{t}}(\mathbf{y})\,p(s,\mathbf{t})\,d\mathbf{t}\,ds$，其中 $p(s,\mathbf{t})$ 是尺度-平移上的采样密度。由于原子随位置漂移，核值不再只依赖 $\mathbf{x}-\mathbf{y}$，从而原生支持非平稳；而把核写成内积形式 $\psi_{s,\mathbf{t}}(\mathbf{x})\psi_{s,\mathbf{t}}(\mathbf{y})$ 的积分，正是后续随机近似能保证正定与无偏的结构基础。
+RFF 受限于平稳性的根源在于傅里叶基 $e^{i\omega^\top x}$ 在全空间上同质，相关性只依赖 $x-y$。RWF 改用从母小波 $\psi:\mathbb{R}^d\to\mathbb{R}$ 生成的原子族 $\psi_{s,\mathbf{t}}(\mathbf{x}) = s^{-d/2}\psi\big((\mathbf{x}-\mathbf{t})/s\big)$，每个原子由尺度 $s$ 和平移 $\mathbf{t}$ 控制，天然在某个空间位置和频带上局部化。非平稳核由对所有尺度-平移积分得到：
 
-**2. 随机小波特征：Monte Carlo 把积分核压成有限维内积**
+$$k(\mathbf{x},\mathbf{y}) = \int_0^\infty\!\int_{\mathbb{R}^d}\psi_{s,\mathbf{t}}(\mathbf{x})\,\psi_{s,\mathbf{t}}(\mathbf{y})\,p(s,\mathbf{t})\,d\mathbf{t}\,ds$$
 
-上面的积分核无法直接计算，RWF 用 Monte Carlo 从 $p(s,\mathbf{t})$ 中独立采 $D$ 组 $(s_i,\mathbf{t}_i)$，构造特征映射 $z(\mathbf{x}) = \frac{1}{\sqrt{D}}[\psi_{s_1,\mathbf{t}_1}(\mathbf{x}),\ldots,\psi_{s_D,\mathbf{t}_D}(\mathbf{x})]^\top$，并用 $\hat{k}(\mathbf{x},\mathbf{y}) = z(\mathbf{x})^\top z(\mathbf{y})$ 近似真核。这一步把核回归变成显式有限维特征上的线性模型，于是 GP 推断退化为贝叶斯线性回归，后验协方差与均值有闭式解 $\mathbf{S}_{\mathbf{w}} = (\mathbf{I}_D + \sigma^{-2}\mathbf{Z}^\top\mathbf{Z})^{-1}$、$\mathbf{m}_{\mathbf{w}} = \sigma^{-2}\mathbf{S}_{\mathbf{w}}\mathbf{Z}^\top\mathbf{y}$。由于每个特征是独立同分布采样的无偏估计，求和后期望恰好等于积分核，这正是无偏性与一致收敛保证的来源。
+其中 $p(s,\mathbf{t})$ 是尺度-平移上的采样密度。由于原子随位置漂移，核值不再只依赖 $\mathbf{x}-\mathbf{y}$，从而原生支持非平稳；而把核写成内积形式 $\psi_{s,\mathbf{t}}(\mathbf{x})\psi_{s,\mathbf{t}}(\mathbf{y})$ 的积分，正是后续随机近似能保证正定与无偏的结构基础。
 
-**3. 多分辨率采样策略：用先验分布控制小波覆盖哪些尺度和位置**
+**2. 多分辨率采样策略：用先验分布控制小波覆盖哪些尺度和位置**
 
-特征质量取决于怎么采 $(s,\mathbf{t})$ 和选哪个母小波。尺度 $s$ 取对数均匀分布，让精细小波与粗糙小波在数量级上均衡覆盖，从而精细原子捕捉局部突变、粗糙原子建模长程趋势；平移 $\mathbf{t}$ 在数据凸包上均匀采样，保证原子铺满输入支撑域；母小波则按信号特性选取——Morlet 适合时频分析的振荡信号，Daubechies 适合尖锐转变，Mexican Hat 适合脉冲检测。$p(s,\mathbf{t})$ 因此既是采样器又是先验旋钮：调整它就能让随机特征族适配不同数据的非平稳结构，而无需改动整体推断流程。
+定义了原子核后，特征质量就取决于怎么采 $(s,\mathbf{t})$ 和选哪个母小波——这正是上面积分里 $p(s,\mathbf{t})$ 要回答的问题。尺度 $s$ 取对数均匀分布，让精细小波与粗糙小波在数量级上均衡覆盖，从而精细原子捕捉局部突变、粗糙原子建模长程趋势；平移 $\mathbf{t}$ 在数据凸包上均匀采样，保证原子铺满输入支撑域；母小波则按信号特性选取——Morlet 适合时频分析的振荡信号，Daubechies 适合尖锐转变，Mexican Hat 适合脉冲检测。$p(s,\mathbf{t})$ 因此既是采样器又是先验旋钮：调整它就能让随机特征族适配不同数据的非平稳结构，而无需改动整体推断流程。
+
+**3. 随机小波特征：Monte Carlo 把积分核压成有限维内积**
+
+上面的积分核无法直接计算，RWF 用 Monte Carlo 从设计 2 的先验 $p(s,\mathbf{t})$ 中独立采 $D$ 组 $(s_i,\mathbf{t}_i)$，构造特征映射 $z(\mathbf{x}) = \frac{1}{\sqrt{D}}[\psi_{s_1,\mathbf{t}_1}(\mathbf{x}),\ldots,\psi_{s_D,\mathbf{t}_D}(\mathbf{x})]^\top$，并用 $\hat{k}(\mathbf{x},\mathbf{y}) = z(\mathbf{x})^\top z(\mathbf{y})$ 近似真核。这一步把核回归变成显式有限维特征上的线性模型，于是 GP 推断退化为贝叶斯线性回归，后验协方差与均值有闭式解 $\mathbf{S}_{\mathbf{w}} = (\mathbf{I}_D + \sigma^{-2}\mathbf{Z}^\top\mathbf{Z})^{-1}$、$\mathbf{m}_{\mathbf{w}} = \sigma^{-2}\mathbf{S}_{\mathbf{w}}\mathbf{Z}^\top\mathbf{y}$。由于每个特征是独立同分布采样的无偏估计，求和后期望恰好等于积分核，这正是无偏性与一致收敛保证的来源。
 
 下表对比 RWF 与主流方法的复杂度，可见它与 RFF 同等高效却多了非平稳建模能力：
 

@@ -41,7 +41,29 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FEM 是一个即插即用的模块，直接替换 Transformer block 中的注意力层。它将任何选择先验（softmax attention、GLA、Mamba、AFT）作为输入，通过四个组件增强读取能力：(C) 低秩卷积局部条件化、(L) LSE 混合、(T) 线性化温度学习、(G) 外部门控。输出替代原始注意力输出，其余组件（MLP、embedding 等）不变。
+FEM 不是一套新注意力，而是一个**即插即用的"读取层"**：拿任意已有机制（softmax 注意力、GLA、Mamba、AFT）算出的选择先验 $p_t$ 当输入，把原本"用 $p_t$ 对值做一次凸平均"的读取，换成逐通道、值感知的自由能读取，再原样替换掉 Transformer block 里的注意力输出，其余部分（MLP、embedding）一律不动，渐近复杂度也与原机制保持一致。
+
+整条读取链路自上而下是：先验 $p_t$ 进来后，先由一支**低秩卷积（C）**注入局部位置信息、同时调制先验与后面的门控；核心的**自由能读取 / LSE 混合（L）**在一次 pass 里同时算出均值分支 $\mu_t$ 和高温分支 $F_t^{\max}$；**内层温度门 $\lambda_t$（线性化温度学习 LTL，T）**逐通道在这两支之间插值，决定"读得多硬"；最后**外层门 $g_t$（G）**缩放输出幅度，得到替换注意力的最终读取 $\mathbf{o}_t$。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["当前 token 特征<br/>+ 无损 KV-cache"]
+    PRIOR["选择先验 p_t<br/>(softmax / GLA / Mamba)"]
+    C["低秩卷积 C<br/>局部位置条件化"]
+    L["自由能读取·LSE 混合 L<br/>一次 pass 出 μ_t 与 F_t^max"]
+    T["内层温度门 λ_t (LTL)<br/>逐通道在 μ_t 与 F_t^max 间插值"]
+    G["外层门 g_t<br/>softplus + RMSNorm 缩放"]
+    OUT["读取输出 o_t<br/>替换注意力输出"]
+    IN --> PRIOR
+    IN --> C
+    C -->|调制先验| PRIOR
+    PRIOR --> L
+    L --> T
+    T --> G
+    C -->|调制门控| G
+    G --> OUT
+```
 
 ### 关键设计
 

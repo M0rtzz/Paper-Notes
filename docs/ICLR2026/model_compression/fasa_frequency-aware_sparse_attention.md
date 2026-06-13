@@ -36,7 +36,16 @@ tags:
 ## 方法详解
 
 ### 整体框架
-FASA把一次注意力拆成"先粗筛、再精算"两步：先用一组离线校准好的主导频率块（FC）以极低代价为每个token打重要性分数（Token重要性预测，TIP），再只在被选中的关键token子集上跑全维度注意力（聚焦注意力计算，FAC）。主导FC的识别是一次性离线校准，推理时不再产生额外训练成本。
+FASA把一次注意力拆成"先粗筛、再精算"两步：先用一组离线校准好的主导频率块（frequency chunk，FC）以极低代价为每个token打重要性分数（Token重要性预测，TIP），再只在被选中的关键token子集上跑全维度注意力（聚焦注意力计算，FAC）。主导FC的识别是一次性离线校准，推理时不再产生额外训练成本——这也正是FASA无训练却能做查询感知预测的关键。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    CAL["RoPE频率块的功能稀疏性<br/>离线按 CA 度量选出<br/>主导FC集合（不到 1% 的 FC）"] -.一次性校准.-> B
+    A["输入：查询 q_t<br/>+ 完整 KV 缓存 K_1:t"] --> B
+    B["TIP token重要性预测<br/>只在主导FC上累加分数 S_t<br/>取 top-N_fac 得候选 token 集 T_t"] --> C
+    C["FAC 聚焦注意力计算<br/>Gather 取 T_t 的 K/V，保留原始<br/>位置跑全维注意力"] --> D["输出：下一个 token"]
+```
 
 ### 关键设计
 

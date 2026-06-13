@@ -43,7 +43,18 @@ tags:
 
 ### 整体框架
 
-对纯噪声输入 $\mathbf{x}_T \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$ 和 prompt $c$，在两个人工设定的时间步（$t=0$ 和 $t=T$）分别做一次条件和无条件前向传播，计算检测指标 $\mathcal{M}(\mathbf{x}_T, c)$。高于阈值则判定为记忆 prompt。全程不需要运行去噪轨迹。
+这篇论文要解决的是：现有基于范数的扩散模型记忆检测指标，在低噪声各向异性区域会失效，能否找到一个既准又快、还不用跑去噪轨迹的替代判据。整体思路是把记忆的"签名"按噪声区间拆成两路互补信号——高噪声区用范数、低噪声区用角度——再加权合成一个统一判据。具体地，对纯噪声输入 $\mathbf{x}_T \sim \mathcal{N}(\mathbf{0}, \mathbf{I})$ 和 prompt $c$，只在 $t \approx T$ 和 $t \approx 0$ 两个人工设定的时间步各做一次条件/无条件前向，分别得到**各向同性范数项**和**各向异性角度对齐项**，二者加权成**组合检测指标** $\mathcal{M}(\mathbf{x}_T, c)$，高于阈值即判为记忆 prompt。全程不运行去噪轨迹，这是它比依赖 Hessian 的方法快 5× 以上的来源。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["纯噪声 x_T + prompt c"]
+    IN -->|"高噪声 t≈T<br/>一次条件/无条件前向"| NORM["各向同性范数项<br/>‖s^Δ‖"]
+    IN -->|"低噪声 t≈0<br/>一次条件/无条件前向"| COS["各向异性角度对齐项<br/>cos_sim(s^Δ, s)"]
+    NORM --> COMB["组合检测指标<br/>M = γ₁·cos + γ₂·‖s^Δ‖"]
+    COS --> COMB
+    COMB -->|"M > 阈值"| OUT["判定记忆 prompt"]
+```
 
 ### 关键设计
 

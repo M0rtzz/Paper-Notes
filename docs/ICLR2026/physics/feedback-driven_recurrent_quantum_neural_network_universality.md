@@ -46,13 +46,21 @@ RQNN 把状态向量的每个分量交给一个并行量子电路计算，电路
 
 ### 关键设计
 
-**1. 余弦基量子读出：把电路测量结果写成可逼近的解析形式。** RQNN 的单个电路由初始化门 $\mathtt{V}$ 和参数化量子门 $\mathtt{U}$ 组成。$\mathtt{V}$ 先把 $|0\rangle^{\otimes \mathfrak{n}}$ 映射到均匀叠加态 $|\psi\rangle = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1}|i\rangle \otimes |00\rangle$，$\mathtt{U}$ 则是由 $n$ 个旋转块 $\bar{\mathtt{U}}^{(i)}$ 以块对角形式拼成的 uniformly controlled gate，每块把依赖状态 $\bm{x}$ 与输入 $\bm{z}$ 的编码门 $\mathtt{U}_1^{(i)}$ 和偏置门 $\mathtt{U}_2^{(i)}$ 张量积起来。测量目标 qubit 的概率后，状态映射可写成 $\bar{F}_{R,j}^{n,\bm{\theta}}(\bm{x},\bm{z}) = R - 2R[\mathbb{P}_1^{n,\bm{\theta}^j} + \mathbb{P}_2^{n,\bm{\theta}^j}]$，它恰好等价于一个余弦基展开 $\frac{1}{n}\sum_{i=1}^n R\cos(\gamma^{i,j})\cos(b^{i,j} + \bm{a}^{i,j}\cdot(\bm{x},\bm{z}))$。这一步是整套理论的支点：把量子测量结果显式写成 $n$ 个余弦特征的平均，逼近问题就转化为经典的随机特征逼近，可以套用 Barron 型分析。
+**1. 余弦基量子读出：把电路测量结果写成可逼近的解析形式**
 
-**2. 对数级量子资源：用精度参数控制 qubit 与权重的增长。** 块数 $n$ 是精度旋钮，电路只需作用在 $\mathfrak{n} = \lceil\log_2(2n)\rceil$ 个 qubit 上，所以 qubit 数随精度仅对数增长。要达到逼近误差 $\varepsilon$，整网需要 $\mathcal{O}(\varepsilon^{-2})$ 个可训练权重和 $\mathcal{O}(\lceil\log_2(\varepsilon^{-1})\rceil)$ 个 qubit。对数级的 qubit 需求正是这套架构对 NISQ 设备友好的关键——同样的精度下，经典储层往往要付出多项式级的资源。
+RQNN 的单个电路由初始化门 $\mathtt{V}$ 和参数化量子门 $\mathtt{U}$ 组成。$\mathtt{V}$ 先把 $|0\rangle^{\otimes \mathfrak{n}}$ 映射到均匀叠加态 $|\psi\rangle = \frac{1}{\sqrt{n}}\sum_{i=0}^{n-1}|i\rangle \otimes |00\rangle$，$\mathtt{U}$ 则是由 $n$ 个旋转块 $\bar{\mathtt{U}}^{(i)}$ 以块对角形式拼成的 uniformly controlled gate，每块把依赖状态 $\bm{x}$ 与输入 $\bm{z}$ 的编码门 $\mathtt{U}_1^{(i)}$ 和偏置门 $\mathtt{U}_2^{(i)}$ 张量积起来。测量目标 qubit 的概率后，状态映射可写成 $\bar{F}_{R,j}^{n,\bm{\theta}}(\bm{x},\bm{z}) = R - 2R[\mathbb{P}_1^{n,\bm{\theta}^j} + \mathbb{P}_2^{n,\bm{\theta}^j}]$，它恰好等价于一个余弦基展开 $\frac{1}{n}\sum_{i=1}^n R\cos(\gamma^{i,j})\cos(b^{i,j} + \bm{a}^{i,j}\cdot(\bm{x},\bm{z}))$。这一步是整套理论的支点：把量子测量结果显式写成 $n$ 个余弦特征的平均，逼近问题就转化为经典的随机特征逼近，可以套用 Barron 型分析。
 
-**3. 导数可控的反馈误差传播：让循环不放大逼近误差。** 反馈结构最难处理的地方在于，单步逼近的微小误差会沿时间轴累积。论文对满足 Barron 型可积条件、收缩系数 $\lambda < 1$ 的状态映射 $F$ 给出定理 4.6 的均匀逼近界 $\sup_{\bm{z}}\sup_t \|U^F(\bm{z})_t - \bar{U}(\bm{z})_t\| \leq \frac{1}{1-\lambda}\frac{\sqrt{N}\max_j C_j^\infty}{\sqrt{n}}$。误差以 $1/\sqrt{n}$ 衰减，且分子里只出现 $\sqrt{N}$ 而非 $N$、$d$ 的指数项，因此**与输入维度 $d$ 和状态维度 $N$ 无关**，避开了维度灾难。能做到这一点靠的是 Proposition 4.4：QNN 不仅逼近目标函数本身，还同时逼近其导数，于是反馈回路里由 Jacobian 控制的误差放大被压住，$\frac{1}{1-\lambda}$ 这个收缩因子才得以封顶整条时间链上的累积误差。
+**2. 对数级量子资源：用精度参数控制 qubit 与权重的增长**
 
-**4. 线性读出即万能：去掉多项式读出层的实现负担。** 此前 QRC 的万能性证明依赖多项式读出（借 Stone-Weierstrass），训练复杂、实验难落地。定理 4.8 证明只用线性读出 $W$ 就够：对**任意因果、时不变、fading memory 滤波器** $U$，存在 RQNN 参数与线性 $W$ 使 $\sup_{\bm{z}}\sup_t \|U(\bm{z})_t - \bar{U}_W(\bm{z})_t\| \leq \varepsilon$。这一步既不需要 Barron 可积条件、也不需要收缩性假设，代价是额外引入线性预处理矩阵 $P_j$ 并对记忆做有限步分区，以保证 echo state property（系统对足够久远的初始状态不敏感）。整套证明走的是 internal approximation approach：先建立 QNN 对静态函数及其导数的逼近界，再用导数界压住反馈回路中的误差累积，最后从状态映射逼近推出滤波器逼近。
+块数 $n$ 是精度旋钮，电路只需作用在 $\mathfrak{n} = \lceil\log_2(2n)\rceil$ 个 qubit 上，所以 qubit 数随精度仅对数增长。要达到逼近误差 $\varepsilon$，整网需要 $\mathcal{O}(\varepsilon^{-2})$ 个可训练权重和 $\mathcal{O}(\lceil\log_2(\varepsilon^{-1})\rceil)$ 个 qubit。对数级的 qubit 需求正是这套架构对 NISQ 设备友好的关键——同样的精度下，经典储层往往要付出多项式级的资源。
+
+**3. 导数可控的反馈误差传播：让循环不放大逼近误差**
+
+反馈结构最难处理的地方在于，单步逼近的微小误差会沿时间轴累积。论文对满足 Barron 型可积条件、收缩系数 $\lambda < 1$ 的状态映射 $F$ 给出定理 4.6 的均匀逼近界 $\sup_{\bm{z}}\sup_t \|U^F(\bm{z})_t - \bar{U}(\bm{z})_t\| \leq \frac{1}{1-\lambda}\frac{\sqrt{N}\max_j C_j^\infty}{\sqrt{n}}$。误差以 $1/\sqrt{n}$ 衰减，且分子里只出现 $\sqrt{N}$ 而非 $N$、$d$ 的指数项，因此**与输入维度 $d$ 和状态维度 $N$ 无关**，避开了维度灾难。能做到这一点靠的是 Proposition 4.4：QNN 不仅逼近目标函数本身，还同时逼近其导数，于是反馈回路里由 Jacobian 控制的误差放大被压住，$\frac{1}{1-\lambda}$ 这个收缩因子才得以封顶整条时间链上的累积误差。
+
+**4. 线性读出即万能：去掉多项式读出层的实现负担**
+
+此前 QRC 的万能性证明依赖多项式读出（借 Stone-Weierstrass），训练复杂、实验难落地。定理 4.8 证明只用线性读出 $W$ 就够：对**任意因果、时不变、fading memory 滤波器** $U$，存在 RQNN 参数与线性 $W$ 使 $\sup_{\bm{z}}\sup_t \|U(\bm{z})_t - \bar{U}_W(\bm{z})_t\| \leq \varepsilon$。这一步既不需要 Barron 可积条件、也不需要收缩性假设，代价是额外引入线性预处理矩阵 $P_j$ 并对记忆做有限步分区，以保证 echo state property（系统对足够久远的初始状态不敏感）。整套证明走的是 internal approximation approach：先建立 QNN 对静态函数及其导数的逼近界，再用导数界压住反馈回路中的误差累积，最后从状态映射逼近推出滤波器逼近。
 
 ## 实验关键数据
 

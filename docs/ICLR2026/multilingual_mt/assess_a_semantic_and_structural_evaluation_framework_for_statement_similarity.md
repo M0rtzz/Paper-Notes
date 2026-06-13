@@ -41,7 +41,22 @@ tags:
 
 ### 整体框架
 
-ASSESS 想解决的是"两条形式化命题到底有多像"这个问题——既不能像 BLEU 那样只比字面、把 $a+b$ 和 $b+a$ 判成不像，也不能像 BEq 那样非得证出完全等价、把"很接近但不全等"的翻译一刀切掉。它的做法分两步：先把每条形式化命题用 Lean Language Server 解析成一棵**算子树 (OPT)**，把符号序列变成带层次结构的树；再在标准**树编辑距离 (TED)** 之上，借 Lean 的 tactic 注入语义变换，算出最终的实数相似度 **TransTED Similarity**。整条流水线只依赖 CPU 和 Lean Language Server/REPL，不需要 GPU，因此可复现、成本低。
+ASSESS 想解决的是"两条形式化命题到底有多像"这个问题——既不能像 BLEU 那样只比字面、把 $a+b$ 和 $b+a$ 判成不像，也不能像 BEq 那样非得证出完全等价、把"很接近但不全等"的翻译一刀切掉。它的核心是一条度量流水线：先把每条形式化命题用 Lean Language Server 解析成一棵**算子树 (OPT)**，把符号序列变成带层次结构的树；再在标准**树编辑距离 (TED)** 上算出结构相似度作为基线；最后借 Lean 的 tactic 把语义变换注入这条距离，得到真正的实数相似度 **TransTED Similarity**。为了验证这个指标到底准不准，论文还配套构建了 **EPLA 基准**——一批专家逐对标注的形式化命题对，作为所有指标对比的裁判。整条流水线只依赖 CPU 和 Lean Language Server/REPL，不需要 GPU，因此可复现、成本低。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["EPLA 基准<br/>1247 个专家标注命题对"] --> B["算子树 (OPT)<br/>Lean Language Server 解析"]
+    B --> C["TED Similarity<br/>树编辑距离归一化（基线）"]
+    subgraph TRANS["TransTED Similarity（语义变换增强）"]
+        direction TB
+        D["两命题拼成等式<br/>施加 Lean tactic"] --> E["启发式树搜索<br/>优先缩小两侧 OPT 差异"]
+        E -->|"Proved / NLE / TLE 停止"| F["归一化 TransTED 距离"]
+    end
+    B --> D
+    C -.->|"TED 当启发函数"| E
+    F --> G["对照 EPLA 专家标签<br/>算 Accuracy / Kappa"]
+```
 
 ### 关键设计
 

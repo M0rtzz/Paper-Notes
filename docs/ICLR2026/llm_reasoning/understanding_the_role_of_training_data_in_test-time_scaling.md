@@ -42,25 +42,35 @@ tags:
 
 ### 整体框架
 
-本文把 test-time scaling 放进一个可解析的玩具世界：用线性回归的 in-context learning 作任务，用单层线性自注意力（LSA）作模型，再把测试时的多步 CoT 看成在这个模型上反复迭代。在这套设定里，整篇论文的所有结论——CoT 等于什么算法、任务有多难、思考多久才划算、何时会越想越糟、该挑什么训练数据——都能从同一个协方差矩阵 $\Lambda$ 的谱性质里推出来，从而把原本只能靠经验观察的现象变成可证明的定理。
+本文把 test-time scaling 放进一个可解析的玩具世界：用线性回归的上下文学习（in-context learning, ICL）作任务，用单层线性自注意力（linear self-attention, LSA）作模型，再把测试时的多步思维链（chain-of-thought, CoT）看成在这个模型上反复迭代。整篇论文沿一条因果链展开：先把"从 prompt 反推权重"写成可优化的回归问题，证明 LSA 的全局最优解只取决于一个由训练数据协方差决定的枢纽矩阵 $\Gamma$；再证明测试时跑 CoT 等价于用 $\Gamma^{-1}$ 做伪牛顿迭代，于是"思考好不好"被翻译成"这个迭代收不收敛、收得快不快"；接着用协方差谱给任务难度下定义、推出 test-time scaling law，量化"多思考"和"多训练数据"如何互换；最后说明这套迭代只在训练协方差 $\Gamma$ 与测试协方差 $\Sigma$ 对齐时才有效，由此既解释了 overthinking（越想越糟）、又导出该挑什么训练数据。所有结论都从同一个协方差矩阵的谱性质里推出来，把原本只能靠经验观察的现象变成可证明的定理。
+
+> 本文是纯理论分析（线性模型 + 谱性质推导），核心是一串环环相扣的定理而非数据流水线，故不画框架图；下面四个关键设计即按上述因果链顺序展开。
 
 ### 关键设计
 
-**1. ICL 权重预测与 LSA 全局最优：把推理写成一个可优化的回归问题。** 每个 prompt 是 $P_\tau = (x_{\tau,1}, y_{\tau,1}, \ldots, x_{\tau,n}, y_{\tau,n})$，标签由隐藏权重生成 $y_{\tau,i} = \langle w_\tau, x_{\tau,i}\rangle$，其中 $x_{\tau,i}\sim\mathcal{N}(0,\Lambda)$、$w_\tau\sim\mathcal{N}(0,I_d)$，模型要从 prompt 里反推出 $w_\tau$。输入被排成一个嵌入矩阵，最后一列专门留给权重估计位 $\hat w_0$：
+**1. 可解析的玩具世界：ICL 权重预测与 LSA 全局最优**
+
+要严格分析 test-time scaling，先得有一个能算出闭式解的设定。每个 prompt 是 $P_\tau = (x_{\tau,1}, y_{\tau,1}, \ldots, x_{\tau,n}, y_{\tau,n})$，标签由隐藏权重生成 $y_{\tau,i} = \langle w_\tau, x_{\tau,i}\rangle$，其中 $x_{\tau,i}\sim\mathcal{N}(0,\Lambda)$、$w_\tau\sim\mathcal{N}(0,I_d)$，模型要从 prompt 里反推出 $w_\tau$。输入被排成一个嵌入矩阵，最后一列专门留给权重估计位 $\hat w_0$：
 
 $$E_\tau = \begin{bmatrix} X_\tau & 0 \\ y_\tau & 0 \\ 0_{d \times n} & \hat{w}_0 \\ 0_{1 \times n} & 1 \end{bmatrix}$$
 
-训练目标就是让最后一列预测出真权重，最小化均方误差 $L(\theta) = \tfrac{1}{2}\mathbb{E}\big[\| f_{\text{LSA}}(E_\tau;\theta)_{[:,-1]} - (0_d, 0, w_\tau, 1)\|^2\big]$。Theorem 3.1 证明，在合适初始化下常数步长的梯度下降会收敛到全局最优 $V_* = -\Gamma^{-1}/c$，关键是这个最优解只依赖一个由数据协方差决定的矩阵 $\Gamma := (1 + \tfrac{1}{n})\Lambda + \tfrac{1}{n}\text{tr}(\Lambda) I_d$。$\Gamma$ 之后会反复出现，它正是把训练数据属性传导到推理行为的枢纽。
+训练目标就是让最后一列预测出真权重，最小化均方误差 $L(\theta) = \tfrac{1}{2}\mathbb{E}\big[\| f_{\text{LSA}}(E_\tau;\theta)_{[:,-1]} - (0_d, 0, w_\tau, 1)\|^2\big]$。Theorem 3.1 证明，在合适初始化下常数步长的梯度下降会收敛到全局最优 $V_* = -\Gamma^{-1}/c$，关键是这个最优解只依赖一个由数据协方差决定的矩阵 $\Gamma := (1 + \tfrac{1}{n})\Lambda + \tfrac{1}{n}\text{tr}(\Lambda) I_d$。$\Gamma$ 是整篇论文的枢纽——它把训练数据属性（协方差 $\Lambda$、prompt 长度 $n$）一次性打包，后面所有定理都通过它来传导。
 
-**2. CoT 等价于伪牛顿法：解释"多思考"到底在算什么。** Proposition 3.2 表明，测试时跑 $k$ 步 CoT，本质上是让权重估计按 $w_{i+1} = w_i - \tfrac{1}{m}\Gamma^{-1} X_{\text{test}} X_{\text{test}}^\top (w_i - w_{\text{test}})$ 递推。这恰好是对测试损失 $\ell(w) = \tfrac{1}{2m}\|y_{\text{test}} - X_{\text{test}}^\top w\|^2$ 做**伪牛顿法**——用训练得到的 $\Gamma^{-1}$ 去近似真 Hessian 的逆 $\Lambda^{-1}$。展开 $k$ 步得到闭式 $w_{k+1} = \big(I - (I - \tfrac{1}{m}\Gamma^{-1} X_{\text{test}} X_{\text{test}}^\top)^k\big) w_{\text{test}}$。这个等价关系之所以重要，是因为它把"链式思考"从一个黑盒动作翻译成了一个收敛行为可分析的优化迭代，后面所有的好坏判断都建立在"这个迭代收不收敛、收得快不快"上。
+**2. CoT 等价于伪牛顿法**
 
-**3. 任务难度度量：用协方差谱给"难"下定义。** Theorem 3.3 给出无 CoT 直接 ICL 的误差上界 $\mathbb{E}\|\hat{w} - w_{\text{test}}\|^2 \leq \tfrac{d}{n^2}(1 + \tfrac{\text{tr}(\Lambda)}{\lambda_{\min}(\Lambda)})^2 + \tfrac{d}{m}(1 + \tfrac{\text{tr}(\Lambda)}{\lambda_{\min}(\Lambda)})$，其中那个反复出现的比值就被提炼成任务难度 $\text{Hard}(\Lambda) := \tfrac{\text{tr}(\Lambda)}{\lambda_{\min}(\Lambda)}$。直观上 $\Lambda$ 的每个特征向量是一种"技能"、特征值是技能强度：容易任务只靠少数几种势均力敌的技能（特征值相近，$\lambda_{\min}$ 不小），困难任务则依赖多种技能且分布长尾（存在极小特征值，把比值顶得很大）。这个定义的价值在于它不靠人工标注难度，而是直接从数据分布的几何结构里读出来。
+设定搭好后，第一个问题是"测试时多跑几步 CoT 到底在算什么"。Proposition 3.2 表明，测试时跑 $k$ 步 CoT，本质上是让权重估计按 $w_{i+1} = w_i - \tfrac{1}{m}\Gamma^{-1} X_{\text{test}} X_{\text{test}}^\top (w_i - w_{\text{test}})$ 递推。这恰好是对测试损失 $\ell(w) = \tfrac{1}{2m}\|y_{\text{test}} - X_{\text{test}}^\top w\|^2$ 做**伪牛顿法**——用训练得到的 $\Gamma^{-1}$ 去近似真 Hessian 的逆 $\Lambda^{-1}$。展开 $k$ 步得到闭式 $w_{k+1} = \big(I - (I - \tfrac{1}{m}\Gamma^{-1} X_{\text{test}} X_{\text{test}}^\top)^k\big) w_{\text{test}}$。这个等价关系把"链式思考"从黑盒动作翻译成收敛行为可分析的优化迭代，后面所有好坏判断都建立在"这个迭代收不收敛、收得快不快"之上——而收敛速度恰由枢纽 $\Gamma$ 与测试数据的匹配程度决定。
 
-**4. Test-time scaling law：量化思考与训练数据的可替代性。** 把伪牛顿迭代的收敛速度和任务难度合在一起，Corollary 3.5 给出 $k$ 步 CoT 后的误差 $\mathbb{E}\|w_{k+1} - w_{\text{test}}\|^2 \leq d\,(1 + \tfrac{n}{1 + \text{Hard}(\Lambda)})^{-2k}(1 + o(1))$。这条 scaling law 直接读出三个结论：固定目标误差 $\varepsilon$ 时，增大思考步数 $k$ 可以换取更短的训练 prompt 长度 $n$（训练算力和推理算力可互补）；任务越难（$\text{Hard}(\Lambda)$ 越大），底数越接近 1、收敛越慢，需要越长的 CoT 才达标；整个过程的计算复杂度只是 $O(kd^2)$。
+**3. 任务难度与 test-time scaling law**
 
-**5. Overthinking 机制：解释为什么会越想越糟。** 上面的收敛只在训练协方差 $\Gamma$ 与测试协方差 $\Sigma$ 对齐时成立。Remark 4.1 指出，思考的净效果实际由 $\text{tr}\big((I - \Gamma^{-1/2}\Sigma\Gamma^{-1/2})^{2k}\big)$ 控制：当目标任务的某些技能方向（$\Sigma$ 的特征向量）在训练数据里覆盖不足、对应的 $\Gamma$ 在该方向很弱时，括号里的矩阵在那个方向的特征值大于 1，于是该项随 $k$ 指数级放大——多思考不是去修正误差，而是把训练没学到的方向越推越偏。这就是 overthinking 的数学根源：它不是模型"想累了"，而是迭代在未覆盖子空间上发散。
+有了"CoT = 迭代"，就能量化什么任务难、思考多久才划算。Theorem 3.3 给出无 CoT 直接 ICL 的误差上界 $\mathbb{E}\|\hat{w} - w_{\text{test}}\|^2 \leq \tfrac{d}{n^2}(1 + \tfrac{\text{tr}(\Lambda)}{\lambda_{\min}(\Lambda)})^2 + \tfrac{d}{m}(1 + \tfrac{\text{tr}(\Lambda)}{\lambda_{\min}(\Lambda)})$，其中反复出现的比值被提炼成任务难度 $\text{Hard}(\Lambda) := \tfrac{\text{tr}(\Lambda)}{\lambda_{\min}(\Lambda)}$。直观上 $\Lambda$ 的每个特征向量是一种"技能"、特征值是技能强度：容易任务只靠少数几种势均力敌的技能（特征值相近，$\lambda_{\min}$ 不小），困难任务依赖多种技能且分布长尾（存在极小特征值，把比值顶得很大）。它不靠人工标注，而是直接从数据分布的几何结构里读出难度。把这个难度和伪牛顿迭代的收敛速度合在一起，Corollary 3.5 给出 $k$ 步 CoT 后的误差
 
-**6. 最优任务选择：把"该练什么数据"变成一个凸问题。** 既然推理表现取决于训练协方差能否覆盖并对齐目标谱，多任务训练里就该优先挑能补上缺失方向的任务。Proposition 4.3 证明最优采样概率 $\{\pi_\ell\}$ 会把至少一半概率分配给"困难"任务（$\sigma_{\min}(\Lambda_\ell)$ 小的那些），而求最优配比本身可以写成一个高效可解的二次规划：
+$$\mathbb{E}\|w_{k+1} - w_{\text{test}}\|^2 \leq d\,\Big(1 + \tfrac{n}{1 + \text{Hard}(\Lambda)}\Big)^{-2k}(1 + o(1))$$
+
+这条 scaling law 一次读出三个结论：固定目标误差 $\varepsilon$ 时，增大思考步数 $k$ 可换取更短的训练 prompt 长度 $n$（训练算力和推理算力可互补）；任务越难（$\text{Hard}(\Lambda)$ 越大），底数越接近 1、收敛越慢，需要越长的 CoT 才达标；整个过程复杂度只是 $O(kd^2)$。
+
+**4. 分布对齐决定成败：overthinking 与最优任务选择**
+
+前面 scaling law 的收敛有个前提——训练协方差 $\Gamma$ 要跟测试协方差 $\Sigma$ 对齐；这条前提一旦破了，就同时解释了"越想越糟"和"该练什么数据"。思考的净效果实际由 $\text{tr}\big((I - \Gamma^{-1/2}\Sigma\Gamma^{-1/2})^{2k}\big)$ 控制：当目标任务的某些技能方向（$\Sigma$ 的特征向量）在训练数据里覆盖不足、对应的 $\Gamma$ 在该方向很弱时，括号里矩阵在该方向的特征值大于 1，该项随 $k$ 指数级放大——多思考不是修正误差，而是把训练没学到的方向越推越偏。这就是 overthinking 的数学根源：不是模型"想累了"，而是迭代在未覆盖子空间上发散。反过来，既然表现取决于训练协方差能否覆盖并对齐目标谱，多任务训练就该优先挑能补上缺失方向的任务。Proposition 4.3 证明最优采样概率 $\{\pi_\ell\}$ 会把至少一半概率分配给"困难"任务（$\sigma_{\min}(\Lambda_\ell)$ 小的那些），而求最优配比本身是一个高效可解的二次规划：
 
 $$\min_{\{\pi_\ell\}} \left\| I - \Sigma^{-1} \sum_{\ell} \Lambda_\ell \pi_\ell \right\|_F^2 \quad \text{s.t.} \sum_\ell \pi_\ell = 1,\ \pi_\ell \geq 0$$
 

@@ -40,25 +40,36 @@ tags:
 ## 方法详解
 
 ### 整体框架
-CAGE 要解决的是"怎么把一套英语红队基准搬到另一个文化里，既不丢攻击力又不丢文化味"。它的做法是把一条红队 prompt 拆成两层——攻击结构（要让模型做什么坏事的修辞框架）和文化内容（用哪些具体实体、场景、法律事实去落地），然后只替换后者。整条流水线分三步：先做 **Seed 收集**，从 6 个英语红队数据集里捞 prompt，让 6 个 frontier LLM 一致投票筛掉噪声、并把每条映射到一套三级风险分类；再做 **Refine-with-Slot**，把每条 prompt 改写成带 slot 标记的"语义模具"，把具体内容抠成占位符、只留骨架；最后 **Translate-with-Context**，用目标文化的本地化内容把 slot 填回去，生成既保留原攻击结构、又扎根当地的 prompt。
+CAGE 要解决的是"怎么把一套英语红队基准搬到另一个文化里，既不丢攻击力又不丢文化味"。它的核心假设是：一条红队 prompt 可以拆成两层——**攻击结构**（让模型做什么坏事的修辞框架）和**文化内容**（用哪些具体实体、场景、法律事实去落地），跨文化适配时只需替换后者、保留前者。整条流水线分三步串行。先做 **Seed 收集**：从 6 个英语红队数据集里捞 prompt，让 6 个 frontier LLM 一致投票筛掉噪声、并把每条映射到一套三级风险分类。再做 **Refine-with-Slot**：把每条 prompt 改写成带 slot 标记的"语义模具"，把具体内容抠成占位符、只留攻击骨架。最后 **Translate-with-Context**：另起一条支线为目标文化构建本地化内容库，再用这些内容把 slot 填回去，生成既保留原攻击结构、又扎根当地的 prompt。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["6 个英语红队数据集<br/>(AdvBench / HarmBench 等)"] --> B["多模型一致投票 + 人工验证<br/>6 个 frontier LLM 一致才保留"]
+    B --> C["三级风险分类体系<br/>5 领域 → 12 类 → 53 型"]
+    C --> D["Semantic Mold（语义模具）<br/>按类别抽成 slot-tagged 攻击骨架"]
+    E["文化内容库构建<br/>Taxonomy-Driven + Trend-Driven<br/>→ 二分类过滤"] --> F["Translate-with-Context<br/>用本地化内容填回 slot"]
+    D --> F
+    F --> G["文化扎根红队基准<br/>(KorSET 等)"]
+```
 
 ### 关键设计
 
-**1. 三级风险分类体系：给 slot schema 一个可定制的挂载点**
+**1. 多模型一致投票 + 人工验证：保证 seed 分类不带偏**
 
-整套生成要按类别区别对待，所以第一步先把"有害"这件事拆细。CAGE 在 Weidinger 等人的风险分类基础上做精细化，建成 5 个风险领域 → 12 个类别 → 53 个类型的层次结构，5 个顶层领域是 Toxic Contents、Unfair Representation、Misinformation Harms、Info & Safety Harms、Malicious Use。分类做细不是为了好看，而是因为下一步的语义模具是**按类别定制**的——不同类别需要的语义元素不同，有了这套 taxonomy，每个类别才能挂上自己专属的 slot schema。
+整条流水线的起点是 seed prompt 的收集与分类，分错了后面全错，所以这一步用冗余来抗噪。CAGE 从 6 个英语红队数据集捞 prompt，让 6 个 frontier 模型（GPT-4.1、Claude 3.5/4、Gemini 2.5 Pro、Llama 3.3、Qwen 2.5）各自独立给 prompt 分类，**只保留所有模型一致的结果**，再叠一道人工验证。用多模型一致而非单模型，是为了把单个模型的分类偏见过滤掉，让进入后续语义模具环节的 seed 标签足够可靠。
 
-**2. Semantic Mold（语义模具）：把"语义骨架"和"具体内容"解耦**
+**2. 三级风险分类体系：给 slot schema 一个可定制的挂载点**
+
+seed 分类要往哪套类别上挂？整套生成需要按类别区别对待，所以 CAGE 先把"有害"这件事拆细。它在 Weidinger 等人的风险分类基础上做精细化，建成 5 个风险领域 → 12 个类别 → 53 个类型的层次结构，5 个顶层领域是 Toxic Contents、Unfair Representation、Misinformation Harms、Info & Safety Harms、Malicious Use。分类做细不是为了好看，而是因为下一步的语义模具是**按类别定制**的——不同类别需要的语义元素不同，有了这套 taxonomy，每个类别才能挂上自己专属的 slot schema。
+
+**3. Semantic Mold（语义模具）：把"语义骨架"和"具体内容"解耦**
 
 这是全文最核心的设计，针对的正是"直接翻译丢文化、模板化又不够多样"的两难。Mold 的思路是为每个风险类别定义一组**最小语义元素**，分 Required Slots（必填）和 Optional Slots（选填）：比如 Illegal Activities 类需要 `[Act]`、`[Target]`、`[Method/Approach]`，Bias and Hate 类需要 `[Target/Group]`、`[Attribute]`。Seed prompt 会被 LLM 重写成 slot-tagged 形式（例如 "There are rumors that [Fake Event] in [Time]"），修辞结构和攻击意图原封不动，只把具体内容抽象成占位符。关键在于 Mold 规定的是"这条 prompt 应该包含哪些语义"，而不是"句子应该长什么样"——正因为只约束语义、不约束句法，填回内容后生成的 prompt 既能保住攻击保真度，又能在语言表达上保持多样，比固定模板自然得多。
 
-**3. 文化内容库构建：双轨抓取 + 二分类过滤，避免逐条手写**
+**4. 文化内容库构建 + Translate-with-Context：双轨抓取填回 slot，避免逐条手写**
 
-模具有了骨架，还得有目标文化的"血肉"来填 slot。CAGE 用双轨策略为目标文化（如韩国）收内容：一是 **Taxonomy-Driven**，从法律条文、判例、执行条例里抽客观的类别内容（这部分保证文化事实的准确性，比如什么在当地真的违法）；二是 **Trend-Driven**，从新闻门户和在线社区自动抓热门话题与关键词（这部分保证内容贴近当下舆论）。为了不退回"逐条人工撰写"的高成本老路，抓来的 content 只过一道**二分类（通过/不通过）过滤**做质量控制，把人力从"写内容"降到"判内容"，这也是框架能扩展到任意文化的成本前提。
-
-**4. 多模型一致投票 + 人工验证：保证 seed 分类不带偏**
-
-整条流水线的起点是 seed prompt 的分类，分错了后面全错，所以这一步用冗余来抗噪。6 个 frontier 模型（GPT-4.1、Claude 3.5/4、Gemini 2.5 Pro、Llama 3.3、Qwen 2.5）各自独立给 prompt 分类，**只保留所有模型一致的结果**，再叠一道人工验证。用多模型一致而非单模型，是为了把单个模型的分类偏见过滤掉，让进入语义模具环节的 seed 标签足够可靠。
+模具有了攻击骨架，还得有目标文化的"血肉"来填 slot。CAGE 用双轨策略为目标文化（如韩国）收内容：一是 **Taxonomy-Driven**，从法律条文、判例、执行条例里抽客观的类别内容（保证文化事实准确，比如什么在当地真的违法）；二是 **Trend-Driven**，从新闻门户和在线社区自动抓热门话题与关键词（保证内容贴近当下舆论）。为了不退回"逐条人工撰写"的高成本老路，抓来的 content 只过一道**二分类（通过/不通过）过滤**做质量控制，把人力从"写内容"降到"判内容"。最后由 Translate-with-Context 把这些本地化内容填回语义模具的 slot，生成文化扎根的 prompt——这条支线既是文化落地的关键，也是框架能扩展到任意文化的成本前提。
 
 ## 实验关键数据
 

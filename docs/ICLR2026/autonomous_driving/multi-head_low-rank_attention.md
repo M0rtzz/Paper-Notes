@@ -43,33 +43,39 @@ tags:
 
 ### 整体框架
 
-MLRA 的核心思路是：将 MLA 中不可分片的单一 latent head **显式分解为多个独立的 latent head**，每个 latent head 独立进行 up-projection 生成 NoPE KV，然后对各分支的注意力输出求和。这种设计天然支持 4-way 张量并行。
+这篇论文要解决的痛点是：MLA 把 KV cache 压成单一 latent head，总量虽小，却**无法分片**——做张量并行（TP）解码时，每个设备都被迫冗余加载完整的 $4.5 d_h$ KV cache，TP 本该带来的权重分片红利被抵消，加载量随设备数停滞不前。MLRA 的破局思路是把这个不可分的 latent head **显式拆成多个独立的 latent block**，让每块各自 up-project 成 NoPE KV、各跑一路分支注意力，最后把各分支输出求和；分支之间互不耦合，于是天然能一一映射到多个 TP 设备。
 
-MLRA 提供两个变体：
-- **MLRA-2**：2 个 latent head，每个 latent head 服务半数注意力头，产生 2 分支输出求和
-- **MLRA-4**：4 个 latent head，每个 latent head 通过 up-projection 服务全部注意力头，产生 4 分支输出求和
+前向一条线走下来是：隐藏状态 $H$ 先下投影得到 latent $C^Q$、$C^{KV}$ 和共享的 RoPE key → 把 $C^{KV}$ 沿通道切成多块、各块独立 up-project 后分路算注意力 → 各分支输出按分支数归一后求和得到 $O$。其中 latent 侧的缩放与输出侧的归一一起构成方差校准，保证拆分后 softmax logits 不失衡。论文给两个变体：**MLRA-2** 用 2 个 latent block、每块服务半数注意力头，产生 2 分支求和（适合 2-way TP）；**MLRA-4** 用 4 个 latent block、每块服务全部注意力头，产生 4 分支求和，原生支持 4-way TP。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    H["隐藏状态 $H$<br/>下投影得 latent $C^Q$,$C^{KV}$ 与 RoPE key"]
+    SPLIT["块分解：$C^{KV}$ 沿通道切成多块<br/>各块独立 up-proj 成 NoPE KV，分路算分支注意力"]
+    CAL["方差校准：latent 侧按 $\sqrt{d/d_c}$ 缩放<br/>各分支输出按分支数归一后求和 → $O$"]
+    DEC["高效解码：weight absorption 后<br/>各 latent block 映射一个 TP 设备，每设备只搬 $1.5 d_h$，再 all-reduce"]
+    H --> SPLIT
+    SPLIT -->|"MLRA-2: 2 分支 / MLRA-4: 4 分支"| CAL
+    CAL --> DEC
+```
 
 ### 关键设计
 
 **1. 块分解：把不可分片的求和拆成可独立计算的分支**
 
-MLA 之所以无法分片，是因为它把整段 KV 信息压在一个 latent head 里，解码时只能整块搬运。MLRA 的破局点在于一个被忽视的代数恒等式：MLA 里每个头的 NoPE key/value 其实等价于若干子块乘积之和（原文 Eq. 2）。既然结果是一个求和，就可以把这个求和从「KV 计算阶段」搬到「注意力输出阶段」。具体做法是把 KV latent 矩阵 $C^{KV} \in \mathbb{R}^{n \times d_c}$ 沿通道切成 4 个块 $C_{:,(b)}^{KV}$，对应地把 up-projection 矩阵 $W^{UK}, W^{UV}$ 按行切成 4 个子块。这样每个头的输出就变成 4 个分支注意力之和（以 MLRA-4 为例）：
+MLA 无法分片，根因是它把整段 KV 信息压在一个 latent head 里，解码时只能整块搬运。MLRA 的破局点在于一个被忽视的代数恒等式：MLA 里每个头的 NoPE key/value 其实等价于若干子块乘积之和（原文 Eq. 2）。既然结果是一个求和，就能把这个求和从「KV 计算阶段」搬到「注意力输出阶段」。具体做法是把 KV latent 矩阵 $C^{KV} \in \mathbb{R}^{n \times d_c}$ 沿通道切成块 $C_{:,(b)}^{KV}$，对应地把 up-projection 矩阵 $W^{UK}, W^{UV}$ 按行切成子块。这样每个头的输出就变成各分支注意力之和（以 MLRA-4 的 4 块为例）：
 
 $$O_{:,i,:} = \sum_{b=0}^{3} \text{Softmax}\left(\tau Q_{:,i,:}^{\text{NoPE}} (C_{:,(b)}^{KV} W_{(b),(i)}^{UK})^\top + \tau Q_{:,i,:}^{\text{RoPE}} (K^{\text{RoPE}})^\top \right) (C_{:,(b)}^{KV} W_{(b),(i)}^{UV})$$
 
-关键在于：每个分支 $b$ 只依赖自己那块 $C_{:,(b)}^{KV}$（大小 $d_h$），分支之间互不耦合，于是 4 个分支可以原封不动地分配给 4 个 TP 设备各算各的，最后求和——这正是 MLA 做不到的事。
+关键在于：每个分支 $b$ 只依赖自己那块 $C_{:,(b)}^{KV}$（大小 $d_h$），分支之间互不耦合，于是各分支可以原封不动地分配给不同 TP 设备各算各的，最后求和——这正是 MLA 做不到的事。同一套拆分思路按分支数衍生出两个变体：**MLRA-4** 用 4 块、每块经 up-projection 服务全部 $h$ 个头，产生 4 分支求和；**MLRA-2** 沿用 GLA-2 的分组思路把 latent head 二等分，由分组映射函数 $\gamma(i)$ 决定哪些头用第一组 latent、哪些用第二组，每块只服务 $h/2$ 个头，产生 2 分支求和，在更轻的拆分开销下适配 2-way TP。
 
-**2. MLRA-2 的分组映射：用更轻的 2 分支兼顾容量与效率**
+**2. 方差校准：拆分会放大 RoPE/NoPE 的方差错位，得显式补偿**
 
-并非所有部署都是 4-way TP，所以论文给了一个更轻的 MLRA-2 变体作为替代。它沿用 GLA-2 的分组思路，把 latent head 二等分，前半注意力头用第一组 latent、后半用第二组，每个头的输出是 2 个分支注意力之和。哪个头落到哪一组，由分组映射函数 $\gamma(i)$ 决定。相比 MLRA-4 的 4 分支，它在 2 分支求和里换取更低的拆分开销，适合 2-way TP 场景。
+分支拆开不是免费的——它会加剧 MLA 本就存在的方差不匹配。理论上 NoPE key 的方差是 $d_c \sigma_w^2$、RoPE key 的方差是 $d \sigma_w^2$，两者之比约为 $d/d_c$，当 latent 维度远小于隐藏维度时已差一个量级；而把 latent 再切成多块、再把多分支输出加起来，又一次改变了输出的方差尺度，若放任不管 softmax 的 logits 分布就会失衡。MLRA 的对策是两处显式缩放：在 latent state 侧用 $\alpha_q = \sqrt{d/d_c'}$、$\alpha_{kv} = \sqrt{d/d_c}$ 把 query/NoPE key 的方差拉回与 RoPE key 可比的尺度；在输出侧再按分支数归一，MLRA-2 的输出乘 $1/\sqrt{2}$、MLRA-4 乘 $1/2$，抵消多分支求和带来的方差膨胀。这套缩放是从方差推导直接得来、而非凭经验调参；不过它依赖权重 i.i.d. 的 Assumption 1，训练中该假设并不严格成立，因此最终以消融验证为准。
 
-**3. 方差校准：拆分会放大 RoPE/NoPE 的方差错位，得显式补偿**
+**3. 高效解码：各块天然落到不同设备，每设备只搬 $1.5 d_h$**
 
-分支拆开不是免费的——它会加剧 MLA 本就存在的方差不匹配。理论上 NoPE key 的方差是 $d_c \sigma_w^2$、RoPE key 的方差是 $d \sigma_w^2$，当 latent 维度远小于隐藏维度时两者已经差一个量级；而把 latent 再切成多块、再把多分支输出加起来，又一次改变了输出的方差尺度。如果放任不管，softmax 的 logits 分布会失衡。MLRA 的对策是两处显式缩放：在 latent state 侧做 $C^Q \leftarrow \sqrt{d/d_c'} \cdot C^Q$、$C^{KV} \leftarrow \sqrt{4d/d_c} \cdot C^{KV}$，把 query/key 的方差拉回可比尺度；在输出侧再按分支数归一，MLRA-2 的输出除以 $\sqrt{2}$、MLRA-4 除以 $2$，抵消多分支求和带来的方差膨胀。这套缩放是从方差推导直接得来的，不是凭经验调出来的。
-
-**4. 高效解码：4 块天然落到 4 个设备，每设备只搬 $1.5 d_h$**
-
-前三步的设计最终要兑现成解码时的真实加速。因为 4 个 latent block 彼此独立，它们可以自然地一一映射到 4 个 TP 设备上——每个设备只加载一个 latent block（$d_h$）外加各设备共享的 RoPE key（$0.5 d_h$），于是每设备 KV 加载量从 MLA 的 $4.5 d_h$ 降到 $1.5 d_h$。落地时沿用 MLA 的 weight absorption 技巧，把 up-projection 吸收进 query 侧，每个设备就退化成一个标准的 MQA-style 解码，算完各分支后再 all-reduce 求和即可。这样 TP 带来的好处第一次真正传导到了 KV cache 搬运上。
+前两步的设计最终要兑现成解码时的真实加速。因为各 latent block 彼此独立，它们可以自然地一一映射到 TP 设备上——以 MLRA-4 的 4-way TP 为例，每个设备只加载一个 latent block（$d_h$）外加各设备共享的 RoPE key（$0.5 d_h$），于是每设备 KV 加载量从 MLA 的 $4.5 d_h$ 降到 $1.5 d_h$（GLA-2 在 2-way TP 下也只能降到 $2.5 d_h$，且 TP>2 后停滞）。落地时沿用 MLA 的 weight absorption 技巧，把 up-projection 吸收进 query 侧，每个设备就退化成一个标准的 MQA-style 解码，算完各分支后再 all-reduce 求和即可。这样 TP 带来的好处第一次真正传导到了 KV cache 搬运上，把解码从内存受限推向计算受限。
 
 ### 损失函数 / 训练策略
 

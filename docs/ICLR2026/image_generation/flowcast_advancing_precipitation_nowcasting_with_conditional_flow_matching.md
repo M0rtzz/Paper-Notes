@@ -41,7 +41,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-两阶段流程：(1) 训练VAE将雷达帧压缩到低维潜空间；(2) 在潜空间中训练基于Cuboid Attention U-Net的CFM模型。输入13帧历史雷达观测（65分钟），输出12帧未来预报（60分钟），可采样 $N$ 个成员形成概率集合。
+FlowCast 要解决的是"又快又准的概率降水临近预报"：给定一段历史雷达观测，预测出未来若干帧、并能采样多个成员表达不确定性，同时把推理步数压到扩散模型的零头。整条流水线分两阶段。**离线先训一个逐帧 VAE**，把高维雷达像素压进低维潜空间，让后面昂贵的生成建模负担得起；**在潜空间里训一个条件流匹配（CFM）模型**，学习一个由 Cuboid Attention U-Net 参数化的向量场，直接把高斯噪声沿近乎直线的轨迹"运"到雷达潜表示上。推理时，把 13 帧历史观测（65 分钟）编码成条件，从随机噪声出发用很少的 Euler 步积分得到未来潜表示，再由 VAE 解码回 12 帧像素预报（60 分钟）；多次采样不同噪声就得到一个 $N$ 成员的概率集合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["13 帧历史雷达<br/>(65 分钟)"] --> ENC["Frame-wise VAE 编码器<br/>像素 → 低维潜空间"]
+    ENC --> ZPAST["历史潜表示 Z_past<br/>(条件)"]
+    NOISE["高斯噪声 Z_0"] --> CFM
+    ZPAST --> CFM
+    subgraph CFM["I-CFM 潜空间生成"]
+        direction TB
+        UNET["FlowCast U-Net<br/>Cuboid Attention + 流时间 t"] --> VF["向量场 v_θ"]
+        VF -->|Euler 少步积分| Z1["预测潜表示 Z_1"]
+    end
+    CFM --> DEC["Frame-wise VAE 解码器<br/>潜空间 → 像素"]
+    DEC --> OUT["12 帧未来预报<br/>(60 分钟)"]
+    OUT -->|采样 N 个不同噪声| ENS["概率集合预报"]
+```
 
 ### 关键设计
 

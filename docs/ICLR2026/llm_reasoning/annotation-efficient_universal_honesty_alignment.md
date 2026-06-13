@@ -40,24 +40,38 @@ tags:
 ## 方法详解
 
 ### 整体框架
-EliCal 把"教模型表达置信度"和"把置信度校准到真实正确率"这两件事拆开，分别用便宜信号和昂贵标注来做。Stage 1 在 560K 个问题上用 self-consistency 信号训练模型一次性吐出内部置信度，全程不碰 ground truth；Stage 2 只拿 1K 个带正确性标注的样本，把已经会"表达置信度"的模型微调到与真实正确率对齐。模型这一侧很轻：冻结 LLM 主体参数，只在其上挂 LoRA 和一个线性头，由线性头读出一个置信度分数。
+EliCal 的出发点是把"通用诚实性对齐"里最贵的那部分省掉。正确性标注同时承担两件事——教模型**表达**自己的置信度、再把这个置信度**校准**到真实正确率——而第一件事其实不必依赖昂贵的 ground truth。EliCal 据此拆成两阶段：Stage 1（置信度激发）在 HonestyBench 的 560K 个问题上，用免费的 self-consistency 信号训练模型一次性吐出内部置信度，全程不碰正确性标注；Stage 2（置信度校准）从 Stage 1 的参数接着出发，只拿 1K 个带正确性标注的样本，把"会表达置信度"的模型微调到与真实正确率对齐。
+
+模型这一侧很轻：冻结 LLM 主干参数 $\theta$，只在所有线性层挂上 LoRA，并在最后一层接一个线性头 $f_\phi$，读取问题末位 token 的隐状态 $\mathbf{h}^{(L)}_T$，输出一个标量置信度 $\hat c=\mathbf{w}^\top\mathbf{h}^{(L)}_T+b$。两阶段共用这一套结构、共用 MSE 损失，差别只在回归目标（self-consistency vs. correctness）和数据量（560K vs. 1K）。这正是一个"预训练—微调"范式：重活压在无标注的激发阶段，标注只用来收尾，所以远比"从零校准"（Cal-Only）省标注、且更易泛化到未见任务。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["输入问题 q"] --> ENC["冻结 LLM 主干 + LoRA + 线性头<br/>读末位 token 隐状态 → 置信度分数 ĉ"]
+    HB["HonestyBench 基准<br/>10 个 free-form QA · 560K 训练 + 70K 评测<br/>每条标注 20 采样一致性 + 正确性"]
+    ENC --> S1["Stage 1 置信度激发<br/>回归 self-consistency 目标<br/>560K 无标注问题 · MSE"]
+    HB -->|"self-consistency 目标"| S1
+    S1 -->|"初始化 θ_LoRA¹, φ¹"| S2["Stage 2 置信度校准<br/>回归 correctness 目标<br/>1K 标注样本(0.18%) · MSE"]
+    HB -->|"1K 正确性标注"| S2
+    S2 --> OUT["one-shot 输出<br/>校准后置信度"]
+```
 
 ### 关键设计
 
 **1. Stage 1 置信度激发：用免费的 self-consistency 信号教模型"感知自己有多确定"**
 
-通用诚实性对齐最贵的地方在于，标注既要教模型表达置信度、又要做校准，而表达置信度这件事本不该靠 ground truth。这一阶段就把表达能力的学习改成无标注：对每个问题采样 $k=20$ 个回答，统计它们与 greedy 回答在语义上一致的比例，作为 self-consistency 目标；再用 MSE 损失训练 LoRA + 线性头去预测这个目标，让模型学会一次性输出这个量，而不必在推理时真的采样 20 次。之所以这个免费信号管用，是因为 self-consistency 与真实正确率高度相关（Figure 2）——它不等于正确率，但足够好地刻画了"模型对自己答案的笃定程度"，先把这层感知建立起来。
+通用诚实性对齐最贵的地方在于，正确性标注既要教模型表达置信度、又要做校准，而"表达"这件事本不该靠 ground truth。Stage 1 就把表达能力的学习改成完全无标注：对每个问题在解码策略 $\pi$ 下采样 $k=20$ 个回答 $\hat{\mathcal{R}}$，统计其中与 greedy 回答 $\tilde r$ 语义一致的比例，作为 self-consistency 目标 $\text{Confidence}_\theta(q)=\frac{1}{k}\sum_{r\in\hat{\mathcal{R}}}s(r,\tilde r)$（$s(\cdot)=1$ 表示语义一致）；再用 MSE 损失 $\frac{1}{|\mathcal{Q}|}\sum_q\big(\hat c(q)-\text{Confidence}_\theta(q)\big)^2$ 训练 LoRA + 线性头去预测这个量。训练完，模型在推理时只需一次前向（one-shot）就能给出这个置信度，不必真的再采样 20 次。之所以这个免费信号管用，是因为 self-consistency 与真实正确率高度相关（Figure 2）——它不等于正确率，但足够好地刻画了"模型对自己答案有多笃定"，先把这层感知建立起来。
 
 **2. Stage 2 置信度校准：用极少量标注完成"最后一公里"的对齐**
 
-self-consistency 只反映模型自己有多一致，而模型普遍过度自信，一致并不代表答对，所以还差一步把置信度拉到真实正确率上。这一步从 Stage 1 训好的参数出发，继续用同样的 MSE 损失微调，但把回归目标从 self-consistency 换成基于 ground truth 的 Accuracy。关键在于此时只需 ~1K 个标注样本：表达置信度的能力已经在 Stage 1 学到，剩下的只是校准这层映射，因而走的是预训练—微调式的范式——重活在无标注阶段，标注只用来收尾。
+self-consistency 只反映模型对自己回答有多一致，而模型普遍过度自信，"一致"并不等于"答对"，所以还差一步把置信度拉到真实正确率上。Stage 2 从 Stage 1 得到的 $\theta_{\text{LoRA}}^1,\phi^1$ 出发，继续用同样的 MSE 损失微调，但把回归目标从 self-consistency 换成基于 ground truth 的正确率 $\text{Accuracy}_\theta(q)$（20 个采样回答中命中标准答案的比例），即 $\frac{1}{|\mathcal{Q}_{\text{small}}|}\sum_q\big(\hat c(q)-\text{Accuracy}_\theta(q)\big)^2$。关键在于此时只需约 1K 个标注样本：表达置信度的能力已在 Stage 1 学到，这一步只是把已有的"内部笃定度"映射重定到真实正确率上，因而走的是微调而非从头训练——这也是 EliCal 比 Cal-Only 省标注、且校准后泛化更好的根因。
 
 **3. HonestyBench 基准：把通用诚实性对齐放到大规模、跨任务的尺度上评测**
 
-此前的诚实性研究多在小数据集上做 in-domain 评估，无法说明方法是否"通用"。HonestyBench 整合 10 个 free-form QA 数据集，给出 560K 训练 + 38K in-domain 评估 + 33K OOD 评估的划分，覆盖 3 个 LLM（Qwen-7B/14B、Llama-8B）。每个模型-问题对都标注了 20 个采样回答的一致性与正确性，既为 Stage 1 提供 self-consistency 信号、又为 Stage 2 和评测提供正确性标签，从而能在 in-domain 和 OOD（如 MMLU）两侧检验对齐是否真正泛化。
+此前的诚实性研究多在单个小数据集上做 in-domain 评估，无法说明方法是否"通用"。HonestyBench 整合 10 个 free-form factual QA 数据集，给出 560K 训练 + 38K in-domain 评估 + 33K OOD 评估的划分，覆盖 3 个代表性 LLM（Qwen2.5-7B/14B、Llama-3-8B）。它为每个模型-问题对存下 20 个采样回答 + 1 个 greedy 回答，并同时标注 self-consistency 一致性与正确性——前者直接喂给 Stage 1 的激发、后者供 Stage 2 校准与最终评测，从而能在 in-domain 和 OOD（如完全未见的 MMLU）两侧检验对齐是否真正泛化。
 
 ### 损失函数 / 训练策略
-两个阶段都用 MSE 回归损失，区别只在目标：Stage 1 回归 self-consistency、Stage 2 回归 correctness。训练时始终冻结 LLM 主体参数，只更新 LoRA 和线性头；Stage 1 在全量 560K 上训练，Stage 2 在 1K 标注样本上接着微调。
+两阶段共用同一套 MSE 回归损失与同一套可训练参数（LoRA + 线性头，LLM 主干始终冻结），区别只在回归目标和数据规模：Stage 1 在全量 560K 无标注问题上回归 self-consistency 目标，Stage 2 在 1K 正确性标注样本上接着回归 correctness 目标。这种"先大规模无标注激发、后小样本标注校准"的两段式安排，正是 EliCal 标注效率比从头校准高 500 倍以上的来源。
 
 ## 实验关键数据
 

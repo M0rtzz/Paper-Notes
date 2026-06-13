@@ -34,7 +34,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-IDER 在经验回放框架上添加两个模块：(1) 标准幂等模块——使当前模型在当前任务数据上保持幂等；(2) 幂等蒸馏模块——利用旧模型checkpoint实现跨任务的幂等约束。只需两次前向传播，几乎不引入额外参数。
+IDER 想解决的是：基于回放的持续学习模型在学新任务时既会灾难性遗忘旧知识、又往往过度自信（校准误差高）。它的做法是把代数里的幂等性（idempotence，$f(f(x))=f(x)$）当成"预测自一致性"的约束写进训练。整条 pipeline 是：先把分类骨干改造成能"吃下自己的预测"（拆成前后两段、腾出第二输入位）；图像走一遍得到初次预测 $y_0$，再把 $y_0$ 分别回灌——一路喂回当前模型构成**标准幂等模块**（两次前向都要对得上 ground truth），一路送进冻结的上一阶段 checkpoint 构成**幂等蒸馏模块**（让初次预测朝旧模型认可的方向收敛）；回放缓冲区里的旧样本同样跑这套幂等训练。整体只需两次前向传播、几乎不加参数，可即插即用挂到 ER、BFP、CLS-ER 上。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    X["图像 x + 第二输入<br/>（标签 y 或空信号 0）"] --> BB
+    subgraph BB["改造骨干 f_t：拆两段、可吃第二输入"]
+        direction TB
+        F1["前半 f_t¹ → 中间特征图"] --> ADD["第二输入经线性层+LeakyReLU<br/>变标签特征并相加"]
+        ADD --> F2["后半 f_t² → logits"]
+    end
+    BB -->|"首次预测 y₀ = f_t(x, 0)"| Y0["初次预测 y₀"]
+    Y0 -->|"回灌当前模型再前向一次"| SIM["标准幂等模块<br/>两次前向各与 y 算 CE → L_ice"]
+    Y0 -->|"送进冻结的旧模型 f_t-1"| IDM["幂等蒸馏模块<br/>‖f_t(x,0) − f_t-1(x, y₀)‖² → L_ide"]
+    BUF["回放缓冲区旧样本<br/>同样做幂等训练 → L_rep-ice"] --> LOSS
+    SIM --> LOSS["总损失 L_IDER<br/>= L_ice + α·L_ide + β·L_rep-ice"]
+    IDM --> LOSS
+```
 
 ### 关键设计
 

@@ -36,17 +36,49 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Sem-MoE 把 MoE 推理的通信优化从"事后治理 all-to-all"前移到"事前预测路由"：先离线对 token-expert 亲和性做画像，据此把高度共激活的专家聚到同一 GPU；在线时再用同一份亲和性把请求或 token 直接送往其最可能命中的专家所在设备，从而让大部分激活变成本地访问、远程 all-to-all 流量被压到最低。模型放置与数据分发由同一个目标统一求解，而不是各自为政。
+Sem-MoE 把 MoE 推理的通信优化从"事后治理 all-to-all"前移到"事前预测路由"。它先离线对 token-expert 亲和性做**画像**，证明 token 路由稳定到足以预测；再把"专家放哪块卡"和"token 发往哪块卡"放进**同一个共聚类（co-clustering）整数规划**一起解，让经常一起被激活的专家聚到同卡、让请求/token 直接投递到其最可能命中的专家所在设备。上线时分两路落地：Attention-DP 走请求级调度、Attention-TP 走更细的 token 级重排，最后由一套融合内核执行优化后的 all-to-all。这样大部分专家激活变成本地访问，远程 all-to-all 流量被结构性压到最低——本质是把全局的"any-to-any token 洗牌"换成了"数据与模型协同就位"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["离线 profiling<br/>token 激活频率统计"]
+    D1["Token-Expert 亲和性画像<br/>路由概率表 (置信表)"]
+    D2["离线模型调度<br/>co-clustering ILP<br/>共激活专家聚到同卡 (解 C)"]
+    SPLIT{"Attention<br/>并行方式"}
+    D3a["在线数据调度·DP<br/>请求间投递到亲和 rank<br/>(用 token→cluster R)"]
+    D3b["在线数据调度·TP<br/>请求内 token 重排<br/>SRS / SAG + 2-gram"]
+    D4["系统实现<br/>融合内核 + DeepEP<br/>执行优化后 all-to-all"]
+    OUT["本地激活率↑ → all-to-all 流量↓<br/>吞吐↑ / 延迟↓"]
+
+    IN --> D1 --> D2 --> SPLIT
+    SPLIT -->|DP| D3a
+    SPLIT -->|TP| D3b
+    D3a --> D4
+    D3b --> D4
+    D4 --> OUT
+```
 
 ### 关键设计
 
-**1. 上下文无关的 Token-Expert 亲和性画像：为预测式调度提供可靠先验。** 整套方法成立的前提，是 token 路由是否足够稳定到可以"预测"。作者在 ShareGPT 上对 DeepSeek-V2-Lite 做 profiling，发现同一个 token 在不同上下文中会一致地路由到相同的 top-k 专家子集——各层路由命中的 F1-score 中位数高达 0.833–1.000，而非 top-k 专家的最大热度仅约 0.05，激活高度集中。据此为每个 token 维护一张激活频率表 $T^{(L)} \in \mathbb{N}^{t\times N}$（$t$ 为词表大小、$N$ 为专家数），归一化后即得 token 对各专家的路由概率 $R_{ij}$，作为后续放置与调度的统一依据。这一画像离线一次完成，且具备跨数据集零样本迁移能力，避免了在线统计的额外开销。
+**1. Token-Expert 亲和性画像：为预测式调度提供可靠先验**
 
-**2. 离线模型调度——把共激活专家聚到一处：从源头减少跨设备激活。** 拿到亲和性后，作者把"专家放到哪块 GPU"建模成一个 0-1 整数规划：将专家划分为若干等大小的 cluster（对应各 GPU），优化目标是 $L = \theta\cdot L_{\text{balance}} + (1-\theta)\cdot L_{\text{remote}}$，其中前项约束各 cluster 负载均衡、后项最小化跨 cluster 的远程激活量，$\theta$ 在两者间权衡；约束要求每个专家恰属一个 cluster 且各 cluster 专家数相等。直接求解 ILP 代价高，作者用交替优化在专家归属与 cluster 中心之间迭代逼近，把经常一起被激活的专家放进同一张卡。这样一来，token 命中的多个专家更可能落在本地，远程 all-to-all 的需求被结构性地削减。
+整套方法成立的前提，是 token 路由是否稳定到可以"预测"。作者在 ShareGPT 上对 DeepSeek-V2-Lite 做 profiling，发现尽管门控函数 $G_L(h_{L,j})=\text{top-}k(\text{softmax}(\mathbf{W}_{L,g}h_{L,j}+\mathbf{b}_{L,g}))$ 理论上依赖上下文语义，实际中同一个 token 在不同上下文里却一致地路由到同一个窄而静止的 top-k 专家子集——各层"只凭最热 top-k 专家预测命中"的 F1-score 中位数高达 0.833–1.000，而非 top-k 专家的最大热度（max hotness）中位数仅约 0.05，激活高度集中且稳定。据此为每层维护一张激活频率表 $\mathbf{T}^{(L)}\in\mathbb{N}^{t\times N}$（$t$ 为词表大小、$N$ 为专家数，$\mathbf{T}^{(L)}_{j,k}$ 记 token $x_j$ 激活专家 $E_k$ 的次数），归一化得路由概率 $\Pr(E_k^{(L)}\mid x_j)=\mathbf{T}^{(L)}_{j,k}/\sum_k \mathbf{T}^{(L)}_{j,k}$ 并存成置信表，作为后续放置与调度的统一先验；OOV token 用 embedding 空间最近邻兜底。画像离线一次完成、可跨数据集零样本迁移，避免了在线统计的额外开销。
 
-**3. 在线数据调度——让数据主动靠近专家：把"路由"变成"投递"。** 放置固定后，在线阶段反过来用亲和性决定数据往哪送，并针对两类 Attention 并行分别设计。Attention-DP 下做**请求间调度**：把整条请求投递到其 token 最可能激活的专家所在 rank，即 $S_r = \arg\max_j \sum_{i\in r} R_{ij}$，再叠加 workload-aware 的均衡策略防止某些 rank 过热。Attention-TP 下做更细粒度的**请求内 token 调度**：单看单层预测不够准，作者利用相邻层专家选择的马尔可夫依赖，用一个 2-gram 设备转移模型增强预测，并设计 Shuffled-Reduce-Scatter (SRS) 与 Shuffled-AllGather (SAG) 两个融合通信原语，把投机性的 token 重排直接嵌进 TP 既有的通信阶段，使额外开销仅约 1%。两种场景共用同一套亲和性，区别只在调度粒度。
+**2. 离线模型调度：把共激活专家聚到同一张卡**
 
-**4. 系统实现——让算法收益真正落到延迟上：消除工程瓶颈。** 协同调度的理论收益要靠高效内核兑现。作者基于 SGLang 实现约 5000 行 Python 加自定义 Triton 内核，重写的 argsort 内核比 PyTorch 原生快 25%，并集成 DeepEP 通信库执行优化后的 all-to-all，确保减少的远程激活能切实转化为端到端的吞吐与延迟收益。
+拿到亲和性后，作者把"专家放哪块卡"和"token 归哪个 cluster"放进同一个 0-1 整数规划一起解。决策变量是 token $j$ 到 cluster $i$ 的归属 $\mathbf{R}_{ij}\in\{0,1\}$ 与专家 $k$ 到 cluster $i$ 的放置 $\mathbf{C}_{ik}\in\{0,1\}$（cluster 数等于 EP 度、对应各 GPU），目标函数为
+
+$$\mathcal{L}=\theta\sum_{i}\Big|\sum_{j}\mathbf{R}_{ij}\bm{a}_j-\tfrac{S}{E}\Big|+(1-\theta)\sum_{i_1\neq i_2}\sum_{j,k}\mathbf{R}_{i_1 j}\mathbf{C}_{i_2 k}\,\bm{\mathcal{C}}_{p,jk}\,\bm{a}_j$$
+
+左项让各 cluster 的 token 频率尽量均衡以促进 EP rank 间负载均衡，右项最小化跨 cluster 的远程激活量（即所有归属不同 cluster 的 token-专家激活之和），$\theta$ 权衡二者；硬约束要求每个 token、每个专家各属唯一 cluster，且各 cluster 专家数相等。直接 LP 求解因线性化引入大量中间变量而代价高，作者改用交替优化在 token 归属与专家放置间迭代逼近一个可行解。**模型调度**就是把解出的 $\mathbf{C}$ 落地：若 $\mathbf{C}_{jk}=1$ 就把专家 $j$ 放到设备 $k$，并相应洗牌门控矩阵的列，实现对上层透明的专家重分布。经常一起被激活的专家因此落在同卡，token 命中的多个专家更可能本地，远程 all-to-all 的需求从源头被削减。
+
+**3. 在线数据调度：让数据主动靠近专家**
+
+放置固定后，在线阶段反过来用同一份解决定数据往哪送，并按 Attention 并行方式分两路。Attention-DP 下请求各自独立，做**请求间调度**：把整条请求投到其 token 聚合后最亲和的 cluster（即 DP rank），$\bm{S}_{\bm{r}}=\arg\max_{j\in\llbracket E\rrbracket}\sum_{i\in\bm{r}}\mathbf{R}_{ij}$，再叠加 workload-aware 的均衡策略——对连续 $E$ 条请求保证铺满全部 $E$ 个 rank，防止 decoding 阶段负载倾斜。Attention-TP 下注意力本身被切分，需要更细的 **token 级调度**：单层预测不够准，作者发现相邻层专家选择存在马尔可夫依赖，用一个 2-gram 设备转移模型 $\Pr(D_k^{(L)}\mid D^{(L-1)},\dots,D^{(L-n)})$ 增强预测，并把投机性的 token 重排直接嵌进 TP 既有的通信阶段——用 Shuffled-Reduce-Scatter (SRS) 替换标准的 post-attention reduce-scatter、再配一个延后的 Shuffled-AllGather (SAG)，让"重排"与"必要的数据变换"合并执行。两路共用同一套亲和性，区别只在调度粒度（请求级 vs token 级）。
+
+**4. 系统实现：把算法收益落到延迟上**
+
+协同调度的理论收益要靠高效内核兑现，否则重排开销会吃掉省下的通信。作者把 Sem-MoE 实现为 SGLang 的插件，约 5000 行 Python 加自定义 Triton 内核：DP 侧扩展请求调度器以读入 token-expert 亲和信息批处理相似请求；TP 侧的 SRS/SAG 依赖一个比 PyTorch 原生快 25% 的优化 argsort 内核，把重排嵌进环形通信调度后实测额外开销仅约 1%；并集成 DeepEP 通信库执行优化后的 all-to-all，确保减少的远程激活切实转化为端到端吞吐与延迟收益。
 
 ## 实验
 

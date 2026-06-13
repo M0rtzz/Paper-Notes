@@ -44,7 +44,31 @@ tags:
 
 ### 整体框架
 
-WASI 把 Transformer 的训练和推理整体搬进低秩子空间：每一层的权重被分解成 $\mathcal{W}_i \approx L_i R_i$ 两个瘦矩阵，激活则用 Tucker 分解压成核张量，前向时直接在压缩表示里算 $\mathcal{A}_{i+1} = \mathcal{A}_i R_i^T L_i^T$，反向时梯度也在低秩空间计算并就地更新 $L_i R_i \leftarrow L_i R_i + \eta \cdot \widetilde{\nabla_{\mathcal{W}_i}\mathcal{L}}$。这套框架由权重侧的 WSI 和激活侧的 ASI 两条子空间迭代构成，全程不需要把张量恢复成全秩，因此训练显存和推理显存能同步降下来。
+WASI 把 Transformer 的训练和推理整体搬进低秩子空间。微调开始前先做一次初始化：每一层的权重 $\mathcal{W}_i$ 被 WSI 用完整 SVD 分解成 $L_i R_i$ 两个瘦矩阵，激活则被 ASI 用 Tucker 分解压成核张量。之后的每个训练步，前向直接在压缩表示里算 $\mathcal{A}_{i+1} = \mathcal{A}_i R_i^T L_i^T$，反向的梯度也在低秩空间计算并就地更新 $L_i R_i \leftarrow L_i R_i + \eta \cdot \widetilde{\nabla_{\mathcal{W}_i}\mathcal{L}}$；同时 WSI 用廉价的 Gram-Schmidt、ASI 用固定秩子空间迭代分别追踪权重/激活子空间的微小漂移，省掉每步重算 SVD/HOSVD。整条链路全程不把张量恢复成全秩，所以训练显存、推理显存能同步降下来。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["预训练 Transformer<br/>+ 下游微调数据"] --> INIT["初始化（第 0 步）"]
+    subgraph WSI["1. WSI 权重子空间迭代"]
+        direction TB
+        W0["完整 SVD 一次<br/>按 ε 选最优秩 K_i → L_i R_i"] --> W1["每步 Gram-Schmidt<br/>追踪子空间漂移"]
+    end
+    subgraph ASI["2. ASI 激活子空间迭代"]
+        direction TB
+        A0["动态规划选激活秩 r_i<br/>3D Tucker 分解"] --> A1["每步固定秩<br/>子空间迭代"]
+    end
+    INIT --> W0
+    INIT --> A0
+    WSI --> FB
+    ASI --> FB
+    subgraph FB["3. 统一低秩前向-反向"]
+        direction TB
+        F["前向 A_i+1 = A_i R_i^T L_i^T"] --> B["反向低秩梯度<br/>就地更新 L_i R_i"]
+    end
+    FB -->|下一训练步| WSI
+    FB --> OUT["低秩模型<br/>边缘设备训练 + 推理"]
+```
 
 ### 关键设计
 

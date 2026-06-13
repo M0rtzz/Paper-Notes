@@ -31,7 +31,7 @@ tags:
 
 **核心矛盾**：SE 假设概率分布是无偏的（广延性假设），但 CLIP 的预测分布存在系统性偏差（非广延性），SE 无法刻画这种偏差结构。
 
-**本文目标** 如何在 TTA 过程中纠正 VLM 预测偏差对熵估计的影响？
+**本文目标**：如何在 TTA 过程中纠正 VLM 预测偏差对熵估计的影响？
 
 **切入角度**：Tsallis 熵是 Shannon 熵的推广，通过非广延参数 $q$ 可以刻画概率分布间的统计依赖性。当 $q<1$ 时，TE 倾向于选择更可靠的高置信视图。
 
@@ -40,7 +40,24 @@ tags:
 ## 方法详解
 
 ### 整体框架
-ADTE 要解决的是「TTA 里用来挑高置信视图的熵本身就有偏」这件事。它把自己定位成 Zero/TPT 等方法中 Shannon 熵的即插即用替代品，不改动 pipeline 其余部分：一张测试图先扩成 N 个增强视图，对每个视图用 ADTE 而非 SE 算一个不确定性分数，挑出分数低（置信高）的那批视图，再聚合它们的预测得到最终结果。换熵这一步带来两处关键改动——熵的函数形式从 Shannon 换成 Tsallis，以及参数 $q$ 从一个全局常数变成逐类别自适应的 $q^l$。
+ADTE 要解决的是「TTA 里用来挑高置信视图的熵本身就有偏」这件事。它把自己定位成 Zero/TPT 等方法中 Shannon 熵的即插即用替代品，不改动 pipeline 其余部分：一张测试图先扩成 N 个增强视图，对每个视图用 ADTE 而非 SE 算一个不确定性分数，挑出分数低（置信高）的那批视图，再聚合它们的预测得到最终结果。换熵这一步带来两处关键改动——熵的函数形式从 Shannon 换成 Tsallis，以及参数 $q$ 从一个全局常数变成逐类别自适应的 $q^l$；后者由一条单独的参数估计支路从 memory bank 算出，可选地再叠一层 logit adjustment。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IMG["测试图像"] --> AUG["数据增强<br/>扩成 N 个增强视图"]
+    subgraph QEST["自适应去偏参数 q^l"]
+        direction TB
+        MB["memory bank<br/>伪标签近似各类样本"] --> PRI["Jacobi 迭代<br/>估计各类先验偏差"]
+        PRI --> QL["min-max 归一化<br/>偏差越大 q 越小，落到 0.01–0.9"]
+    end
+    AUG --> ADJ["Logit Adjustment<br/>logits 层先去偏（可选）"]
+    QL --> ADTE["ADTE 不确定性分数<br/>用 Tsallis 熵 + 逐类 q^l"]
+    ADJ --> ADTE
+    ADTE --> SEL["挑选低分<br/>即高置信视图"]
+    SEL --> AGG["聚合所选视图预测"]
+    AGG --> OUT["最终分类结果"]
+```
 
 ### 关键设计
 

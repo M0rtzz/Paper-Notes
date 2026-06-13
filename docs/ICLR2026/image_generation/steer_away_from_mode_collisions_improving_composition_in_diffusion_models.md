@@ -46,33 +46,61 @@ tags:
 
 ### 整体框架
 
-CO3 是一个采样阶段的校正器，在 DDIM 采样过程中嵌入。在去噪的前 20% 步骤中执行校正，分为两个阶段：(1) CO3-resampler：前 3 步进行噪声重采样（权重和为 0）；(2) CO3-corrector：后续步骤进行潜码校正（权重和为 1）。不修改模型参数，不需要梯度计算。
+CO3（Concept Contrasting Corrector）要解决的是「a cat and a dog」这类多概念 prompt 里某个概念把别的概念吞掉的问题。它不动模型、不算梯度，而是在标准 DDIM 采样的去噪循环里插一个校正器：每一步先对联合 prompt $C$ 和各单概念 $c_1,\dots,c_K$ 分别跑一次噪声预测，把它们都映射到同一个 **Tweedie 均值空间**里组合；组合时各概念的负权重由当前样本和它的「贴近度」动态算出；再按当前处于哪个去噪阶段切换两种组合规则——开局高噪声步用 **CO3-resampler**（权重和为 0）先把强势概念压下去，中段步用 **CO3-corrector**（权重和为 1）做精细校正，去噪后段则退回普通 DDIM。整个校正只发生在去噪的前 20% 步骤内，输出是一张各概念都没缺失的图像。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["当前噪声潜码 x_t<br/>联合 prompt C + 单概念 c_1…c_K"]
+    PRED["对 C 与每个 c_k<br/>分别预测噪声 ε"]
+    TW["Tweedie 均值组合框架<br/>ε→干净样本估计，统一组合空间"]
+    MOD["Closeness-Aware 权重调制<br/>按贴近度 d_k 算抑制权重 w_k"]
+    RES["CO3-resampler（开局高噪声步）<br/>Σw=0，重采样压住强势概念"]
+    COR["CO3-corrector（中段步）<br/>Σw=1，校正且保持 CFG 形式"]
+    DDIM["去噪后段：普通 DDIM 步"]
+    STEP["组合 Tweedie 均值→校正噪声<br/>更新 x_(t-1)"]
+    OUT["各概念齐全的生成图像"]
+
+    IN --> PRED --> TW --> MOD
+    MOD -->|"前 3 步"| RES
+    MOD -->|"前 20% 中段"| COR
+    MOD -->|"后 80% 步"| DDIM
+    RES --> STEP
+    COR --> STEP
+    DDIM --> STEP
+    STEP -->|"循环去噪"| IN
+    STEP --> OUT
+```
 
 ### 关键设计
 
 **1. Tweedie 均值组合框架：把分布组合从分数空间挪到 Tweedie 均值空间，统一两类方法**
 
-可组合扩散直接在分数（噪声预测）空间做线性组合，问题是在 $t>0$ 时这种组合并不对应任何合法的前向分布。CO3 改在 Tweedie 均值空间组合：每个条件的噪声预测先映射成对干净样本的估计 $\hat{x}_{\text{tweedie}}[\epsilon_t^{\lambda,c}] = x_t - \sigma_t \epsilon_t^{\lambda,c}$，再按权重叠加
+可组合扩散直接在分数（噪声预测）空间做线性组合，问题是在 $t>0$ 时这种组合并不对应任何合法的前向分布，于是样本被推出分布、出伪影。CO3 改在 Tweedie 均值空间组合：每个条件的噪声预测先映射成对干净样本的估计 $\hat{x}_{\text{tweedie}}[\epsilon_t^{\lambda,c}] = x_t - \sigma_t \epsilon_t^{\lambda,c}$，再按权重叠加
 
 $$\tilde{x}_{\text{tweedie}} = w_0 \hat{x}_{\text{tweedie}}[\epsilon_t^{\lambda,C}] + \sum_{k=1}^K w_k \hat{x}_{\text{tweedie}}[\epsilon_t^{\lambda,c_k}].$$
 
-这个框架的价值在于 Proposition 1 揭示的权重约束：当 $\sum_k w_k = 1$ 时，组合后的 Tweedie 均值仍是一个合法的 Tweedie 均值，对应后面的 CO3-corrector；当 $\sum_k w_k = 0$ 时它退化成加权噪声，对应 CO3-resampler（这一支只在 $t=T$ 处有严格理论保证）。正是这一个约束把已有的校正方法和可组合扩散统一进同一张图里。
+这个框架的价值在于 Proposition 1 揭示的权重约束：当 $\sum_k w_k = 1$ 时，组合后的 Tweedie 均值仍是一个合法的 Tweedie 均值，对应后面的 CO3-corrector；当 $\sum_k w_k = 0$ 时它退化成加权噪声，对应 CO3-resampler（这一支只在 $t=T$ 处有严格理论保证）。正是这一个约束把已有的校正方法和可组合扩散统一进同一张图里——后面两个去噪阶段不过是这套框架在不同权重和下的两种实例。
 
-**2. CO3-resampler：在高噪声早期重采样起始噪声，先把强势概念压下去**
+**2. Closeness-Aware 概念权重调制：离当前样本越近的概念，抑制得越狠**
 
-去噪最前面的几步噪声占主导，此时直接把当前 $x_t$ 替换成各概念噪声的加权组合（权重和为 0），相当于从一个"概念已被抑制"的分布里重新采样起点。实验发现重采样在 $t$ 越大时收益越明显，所以它专门负责开局阶段，把"a cat and a dog"里某个概念一上来就吞掉另一个的倾向先扳回来。
+各单概念该用多大的负权重不应固定，而要看它此刻有多「主导」。CO3 计算当前联合噪声预测 $\epsilon^C$ 与每个概念噪声 $\epsilon^{c_k}$ 的贴近度（距离）$d_k$，用指数核 $a_k = \exp(-\beta d_k)$ 把距离转成亲和度——越近亲和度越高，归一化后取负作为该概念的抑制权重
 
-**3. CO3-corrector：在中期校正 Tweedie 均值，并保持 CFG 形式不外溢**
+$$w_k = -\,a_k \Big/ \sum_j a_j.$$
 
-进入中间步骤后切换到权重和为 1 的校正：联合 prompt 给正权重 $w_0 > 0$，各单概念给负权重 $w_1,\dots,w_K < 0$ 起抑制作用。关键在于这样组合出来的噪声预测仍然写得回 CFG 的标准形式
+于是离当前生成方向最近、最容易吞掉别人的那个概念会被压得最重，实现一种随采样动态平衡的抑制。这组权重同时喂给下面两个阶段的组合规则。
+
+**3. CO3-resampler：在开局高噪声步重采样起始噪声，先把强势概念压下去**
+
+去噪最前面的几步噪声占主导，此时直接把当前 $x_t$ 替换成各概念噪声的加权组合（权重和为 0），相当于从一个「概念已被抑制」的分布里重新采样起点。实验发现重采样在 $t$ 越大时收益越明显，所以它专门负责开局阶段，把「a cat and a dog」里某个概念一上来就吞掉另一个的倾向先扳回来。
+
+**4. CO3-corrector：在中段步校正 Tweedie 均值，并保持 CFG 形式不外溢**
+
+开局之后切换到权重和为 1 的校正：联合 prompt 给正权重 $w_0 > 0$，各单概念给上一步算出的负权重 $w_1,\dots,w_K < 0$ 起抑制作用。关键在于这样组合出来的噪声预测仍然写得回 CFG 的标准形式
 
 $$\tilde{\epsilon}_t^{\tilde{\lambda},C} = \epsilon_t^\phi + \lambda\Big(\sum_k w_k \epsilon_t^{c_k} - \epsilon_t^\phi\Big),$$
 
 也就是无条件项与条件项的比例没有被破坏。可组合扩散用的是任意 $\lambda_i$ 的线性组合，会打乱这个比例从而把样本推到分布之外；CO3-corrector 通过 $\sum w_k = 1$ 锁住 CFG 结构，既做了概念抑制又不产生 OOD 伪影。
-
-**4. Closeness-Aware 概念权重调制：离当前样本越近的概念，抑制得越狠**
-
-各单概念该用多大的负权重不应固定，而要看它此刻有多"主导"。CO3 计算当前联合噪声预测 $\epsilon^C$ 与每个概念噪声 $\epsilon^{c_k}$ 的距离 $d_k$，用指数核 $a_k = \exp(-\beta d_k)$ 把距离转成亲和度——越近亲和度越高，归一化后取负作为该概念的抑制权重 $w_k = -a_k / \sum_j a_j$。于是离当前生成方向最近、最容易吞掉别人的那个概念会被压得最重，实现一种随采样动态平衡的抑制。
 
 ### 损失函数 / 训练策略
 

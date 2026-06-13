@@ -39,7 +39,18 @@ LLM 微调面临严峻的内存瓶颈。训练内存由三部分组成：(I) 模
 ## 方法详解
 
 ### 整体框架
-TokenSeek 把"省激活内存"拆成"先挑 token、再丢梯度"两个环节：先用上下文与梯度两路信息为每个实例的 token 打一个重要性分，按分数选出约 10% 的高价值 token，反向传播时只对这部分 token 回传梯度、其余 token 的激活根本不必缓存。整个过程逐 batch 在线进行，因此对每条样本都是量身定制的实例感知选择。
+TokenSeek 把"省激活内存"拆成"先挑 token、再丢梯度"两个环节：先用上下文与梯度两路信息为每个实例的 token 打一个重要性分（综合评分），按分数选出约 10% 的高价值 token，反向传播时只对这部分 token 回传梯度、其余 token 的激活根本不必缓存。重要性评估对每条实例独立进行，因此选择是量身定制的实例感知（instance-aware）策略，而非对所有样本套同一套模板。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["输入序列<br/>(每条实例 n 个 token)"] --> C["上下文重要性<br/>注意力按列累加得 I₁"]
+    IN --> G["梯度重要性<br/>部分反传得 I₂"]
+    C --> S["综合评分<br/>log(I₁) 与 Norm(I₂) 加权，选前 10% token"]
+    G --> S
+    S --> D["高效 Token Ditching<br/>未选中 token 不回传梯度、不缓存激活"]
+    D --> OUT["微调完成<br/>激活内存最高省 65.7%"]
+```
 
 ### 关键设计
 

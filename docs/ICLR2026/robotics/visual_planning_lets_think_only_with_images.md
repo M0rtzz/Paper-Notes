@@ -48,17 +48,55 @@ tags:
 
 ### 整体框架
 
-把"规划"重新定义为图像序列生成：给定初始状态图 $v_0$，一个仅在图像/视频上预训练的大视觉模型（LVM-7B，零文本数据）自回归地一步步画出后续状态图，整条轨迹 $\hat{\mathcal{T}} = (\hat{v}_1, \ldots, \hat{v}_n)$ 就是规划方案，全程没有任何文本中介。训练分两阶段：Stage 1 用随机轨迹把策略初始化成一个"会动、且保持探索"的模型，Stage 2 再用 GRPO 配合一个进度奖励，把它优化成"专挑通向目标的合法动作"的规划器。
+这篇论文想回答一个问题：在空间规划任务（走迷宫、网格导航）里，把推理过程完全放在图像空间、不经任何文本中介，会不会比"先把图像描述成文字再推理"更强。它的做法是把"规划"重新定义成图像序列生成：给定初始状态图 $v_0$，一个仅在图像/视频上预训练的大视觉模型（Large Vision Model，LVM-7B，训练时零文本数据）自回归地一步步画出后续状态图，整条轨迹 $\hat{\mathcal{T}} = (\hat{v}_1, \ldots, \hat{v}_n)$ 就是规划方案——动作（往哪走）隐式藏在相邻两帧的变化里，全程不输出一个文字。
+
+光让模型会"画下一帧"还不够，得让它画出**通向目标的合法**下一帧，这靠一套两阶段强化学习框架 VPRL（Visual Planning via RL）来训：Stage 1 先用随机轨迹把策略初始化成一个"会动、且保持充分探索"的模型，Stage 2 再用 GRPO 配合一个**进度奖励**，把它优化成"专挑通向目标的合法动作"的规划器。其中进度奖励负责把每一帧画得好不好翻译成可优化的标量信号，是连接"画图"和"规划"的关键一环。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    V0["初始状态图 v0<br/>(网格 / 迷宫布局)"] --> LVM["纯视觉自回归规划<br/>LVM-7B 逐帧预测下一状态<br/>动作隐式编码在状态转换里"]
+    LVM --> TRAJ["图像序列轨迹<br/>= 规划方案 (无文本)"]
+
+    subgraph TRAIN["两阶段 VPRL"]
+        direction TB
+        S1["Stage 1 随机轨迹初始化<br/>随机游走采监督目标<br/>→ 高熵、低无效动作率"]
+        S2["Stage 2 GRPO 优化<br/>每状态采 G 个候选帧<br/>组内相对优势 + KL 约束"]
+        S1 --> S2
+    end
+
+    REWARD["进度奖励<br/>dynamics interpreter 判动作类型<br/>progress estimator 量化到目标距离<br/>最优 +1 / 合法绕路 0 / 非法 -5"]
+
+    TRAIN -.训练得到.-> LVM
+    S2 -->|候选状态| REWARD
+    REWARD -->|相对优势| S2
+```
 
 ### 关键设计
 
-**1. 纯视觉自回归规划：把动作藏进状态转换里。** 空间规划任务（迷宫移动、网格导航）的状态本就是空间布局，用文字描述坐标既冗长又容易错——实验里有 25.7% 的坐标描述与真实布局对不上。Visual Planning 干脆让模型在图像空间里直接预测"下一帧"，每一步条件依赖全部历史状态 $\hat{v}_i \sim \pi_\theta(v_i \mid v_0, \hat{v}_1, \ldots, \hat{v}_{i-1})$，动作（往哪走）隐式编码在相邻状态图的变化里，无需显式输出。选 LVM-7B 而非多模态模型作 backbone，是为了彻底切断语言监督这个 confound——这样"视觉推理是否真的更强"才不会被文本能力污染。
+**1. 纯视觉自回归规划：把动作藏进状态转换里**
 
-**2. 两阶段 VPRL：先把探索能力喂饱，再上 RL。** 一个反直觉的坑是：直接拿监督学好的 VPFT 模型当 RL 初始策略，探索会立刻崩溃——teacher-forcing 训练后模型 entropy 迅速趋零，采样出的候选动作几乎一模一样，组内 advantage 全是零，策略根本无法更新。VPRL 用 Stage 1 专门解决这点：在环境里随机游走收集轨迹，每步**随机采样一个合法的下一状态**当监督目标，损失为 $\mathcal{L}_{\text{VPFT}}(\theta) = -\mathbb{E}_{(v_{\leq i}, \tilde{v}_{i+1})} [\log \pi_\theta(\tilde{v}_{i+1} \mid v_{\leq i})]$，训出来的模型 entropy 接近均匀随机、无效动作率又低，正好给 Stage 2 留足探索空间。Stage 2 行为模型对每个状态采 $G$ 个候选下一帧，按奖励算组内相对优势，用带 KL 约束的 GRPO 目标更新：
+空间规划任务的状态本就是空间布局，用文字描述坐标既冗长又容易错——论文统计发现约 25.7% 的坐标/布局描述与真实环境对不上，这个 modality gap 正是文本推理在此类任务上吃亏的根源。Visual Planning 干脆让模型在图像空间里直接预测"下一帧"，每一步条件依赖全部历史状态 $\hat{v}_i \sim \pi_\theta(v_i \mid v_0, \hat{v}_1, \ldots, \hat{v}_{i-1})$，"往哪走"这个动作隐式编码在相邻状态图的变化里，不需要显式输出任何符号。backbone 特意选只在图像/视频上预训练、完全没碰过文字的 LVM-7B，是为了切断"语言能力"这个 confound——只有这样，"纯视觉推理是否真的更强"的结论才不会被模型自带的文本能力污染。
+
+**2. 两阶段 VPRL：先喂饱探索能力，再上 RL**
+
+一个反直觉的坑是：直接拿监督学好的模型（VPFT，用最优轨迹做 teacher-forcing）当 RL 初始策略，探索会立刻崩溃——训练后模型 entropy 迅速趋零，对同一状态采样出的候选动作几乎一模一样，于是组内候选拿到的奖励全相同、相对优势全是零，GRPO 根本没有梯度可更新。Stage 1 专门解决这点：不学最优轨迹，而是在环境里**随机游走**收集轨迹，每步从所有合法的下一状态里**随机采样一个**当监督目标，最小化
+
+$$\mathcal{L}_{\text{VPFT}}(\theta) = -\mathbb{E}_{(v_{\leq i}, \tilde{v}_{i+1})} \left[\log \pi_\theta(\tilde{v}_{i+1} \mid v_{\leq i})\right]$$
+
+训出来的模型 entropy 接近均匀随机规划器、无效动作率又低，正好给 Stage 2 留足探索空间。Stage 2 在此基础上对每个状态采 $G$ 个候选下一帧，按奖励算组内相对优势 $A^{(k)}$，用带 KL 约束的 GRPO 目标更新策略：
 
 $$\mathcal{J}_{\text{VPRL}}(\theta) = \mathbb{E}\left[ \frac{1}{G}\sum_{k=1}^{G} \min\left(\rho^{(k)} A^{(k)},\; \text{clip}(\rho^{(k)}, 1-\epsilon, 1+\epsilon) A^{(k)}\right) - \beta D_{\text{KL}}(\pi_\theta \| \pi_{\text{ref}}) \right]$$
 
-**3. 进度奖励：用环境语义给"画出来的状态"打分。** 视觉输出是高维稀疏的，没法像文本 token 那样逐位匹配对错，所以需要环境级别的语义评估。这里引入 dynamics interpreter $\mathcal{D}$ 解析相邻状态图对应的动作类型、progress estimator $P$ 量化到目标的剩余距离，把每个候选状态分成三档给奖励：$r(v_i, \hat{v}_{i+1}^{(k)}) = \alpha_{\text{opt}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{A}_{\text{opt}}] + \alpha_{\text{nopt}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{A}_{\text{nopt}}] + \alpha_{\text{inv}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{E}_{\text{inv}}]$。三个系数分别取最优动作 $\alpha_{\text{opt}}=1$、有效但非最优 $\alpha_{\text{nopt}}=0$、无效动作 $\alpha_{\text{inv}}=-5$——既鼓励朝目标前进、又容忍合法绕路、还对穿墙这类非法状态重罚，把策略牢牢约束在合法动作空间里找最优路径。
+消融证实改进几乎全部来自 Stage 2，但没有 Stage 1 撑起探索，Stage 2 就无从优化——两个阶段缺一不可。
+
+**3. 进度奖励：用环境语义给"画出来的状态"打分**
+
+视觉输出是高维稀疏的，没法像文本 token 那样逐位匹配对错，所以 Stage 2 的相对优势需要一个环境级别的语义信号来计算。论文为此引入两个组件：dynamics interpreter $\mathcal{D}$ 解析相邻两帧对应的动作类型（论文实现为规则解析，也可换成 dynamics 模型或神经判别器），progress estimator $P$ 用 BFS 预先算出每个格点到目标的剩余步数。两者把每个候选状态分成三档给奖励：
+
+$$r(v_i, \hat{v}_{i+1}^{(k)}) = \alpha_{\text{opt}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{A}_{\text{opt}}] + \alpha_{\text{nopt}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{A}_{\text{nopt}}] + \alpha_{\text{inv}} \cdot \mathbb{I}[\mathcal{D}(\cdot) \in \mathcal{E}_{\text{inv}}]$$
+
+三档系数分别是：让到目标距离变小的最优动作 $\alpha_{\text{opt}}=1$、合法但没前进的绕路动作 $\alpha_{\text{nopt}}=0$、穿墙等非法动作 $\alpha_{\text{inv}}=-5$。这样既鼓励朝目标前进、又容忍合法绕路、还对非法状态重罚，把策略牢牢约束在合法动作空间里找最短路径。
 
 ## 实验关键数据
 

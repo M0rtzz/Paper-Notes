@@ -47,21 +47,49 @@ tags:
 
 ### 整体框架
 
-TwinFlow 把标准 flow matching 的时间区间从 $[0,1]$ 扩展到 $[-1,1]$，让同一个网络 $F_\theta$ 同时学两条共用噪声起点的"孪生轨迹"——正半轴 $t\in(0,1]$ 是噪声到真实数据的 real 轨迹，负半轴 $t\in[-1,0)$ 是噪声到模型自身单步输出（fake 数据）的 fake 轨迹。模型用 $\mathbf{x}^{\text{fake}} = \mathbf{z} - F_\theta(\mathbf{z}, 0)$ 现场生成 fake 端点，再让两条轨迹的速度场互相对齐，从而把"自己的多步质量教自己的单步"变成一个不需要判别器、不需要冻结教师的纯自监督目标。
+TwinFlow 把标准 flow matching 的时间区间从 $[0,1]$ 扩展到 $[-1,1]$，让同一个网络 $F_\theta$ 同时学两条共用噪声起点的"孪生轨迹"——正半轴 $t\in(0,1]$ 是噪声到真实数据的 real 轨迹，负半轴 $t\in[-1,0)$ 是噪声到模型自身单步输出（fake 数据）的 fake 轨迹。模型用 $\mathbf{x}^{\text{fake}} = \mathbf{z} - F_\theta(\mathbf{z}, 0)$ 现场生成 fake 端点，再用两项自监督损失把两条轨迹拉到一起：自对抗损失 $\mathcal{L}_{\text{adv}}$ 在负时间上把 fake 轨迹学成标准 flow matching，速度匹配校正损失 $\mathcal{L}_{\text{rectify}}$ 让 real/fake 速度场对齐、把 fake 分布往 real 分布推。整套流程不需要判别器、不需要冻结教师，最后由 any-step 公式让同一个 checkpoint 支持 1/2/4 步推理。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    Z["共享噪声起点 z"] --> NET["共享网络 F_θ<br/>时间条件 t ∈ [-1,1]"]
+    subgraph TWIN["孪生轨迹：用时间符号区分真假"]
+        direction TB
+        REAL["real 分支 (t>0)<br/>噪声 → 真实数据"]
+        FAKE["fake 分支 (t<0)<br/>噪声 → 即时端点<br/>x_fake = z - F_θ(z,0)"]
+    end
+    NET -->|"正半轴"| REAL
+    NET -->|"负半轴"| FAKE
+    REAL --> ADV["自对抗损失 L_adv<br/>负时间上做标准 flow matching"]
+    FAKE --> ADV
+    REAL --> RECT["速度匹配校正损失 L_rectify<br/>速度差 Δv 等价 KL 梯度"]
+    FAKE --> RECT
+    ADV --> ANY["Any-step 统一框架<br/>一份 checkpoint 支持 1/2/4 步"]
+    RECT --> ANY
+    ANY --> OUT["单步出图 (1-NFE)"]
+```
 
 ### 关键设计
 
-**1. 孪生轨迹：用时间符号区分真假，把外部教师内化。** 高质量少步方法之所以都依赖判别器或冻结教师，是因为单步输出需要一个"什么才算好"的参照，而这些辅助组件在 20B 规模会直接 OOM。TwinFlow 的破局点是让模型自己充当参照：负半轴专门承载模型当前的 fake 分布，正半轴承载真实分布，两半轴共享网络仅靠时间条件的正负号切换。fake 端点由当前模型即时给出，意味着参照随训练一起演化（self-play），既省掉了额外模型副本，又避免了冻结教师带来的固定目标偏差。
+**1. 孪生轨迹：用时间符号区分真假，把外部教师内化**
 
-**2. 自对抗损失 $\mathcal{L}_{\text{adv}}$：在负时间上做标准 flow matching。** 有了 fake 轨迹后，直接对它套用标准 flow matching 目标即可——教网络在负时间条件下学会从噪声映射到 fake 数据。这一步让"对抗"完全发生在单一网络内部：模型既要拟合真实数据（正半轴），又要刻画自己当前的生成分布（负半轴），二者的张力构成对抗信号，无需任何独立判别器参与。
+高质量少步方法之所以都依赖判别器或冻结教师，是因为单步输出需要一个"什么才算好"的参照，而这些辅助组件在 20B 规模会直接 OOM。TwinFlow 的破局点是让模型自己充当参照：正半轴 $t\in(0,1]$ 承载真实分布的 real 分支，负半轴 $t\in[-1,0)$ 承载模型当前 fake 分布的 fake 分支，两条分支共享同一网络 $F_\theta$、仅靠时间条件的正负号切换。fake 端点 $\mathbf{x}^{\text{fake}} = \mathbf{z} - F_\theta(\mathbf{z}, 0)$ 由当前模型即时给出，意味着参照随训练一起演化（self-play），既省掉了额外模型副本，又避免了冻结教师带来的固定目标偏差。
 
-**3. 速度匹配校正损失 $\mathcal{L}_{\text{rectify}}$：把 KL 梯度转写成可优化的速度差。** 仅有自对抗还不足以把 fake 分布往 real 分布推。本文的核心数学洞察是：在同一中间点 $\mathbf{x}_t$ 上，最小化 real/fake 两条轨迹的速度场差异
+**2. 自对抗损失 $\mathcal{L}_{\text{adv}}$：在负时间上做标准 flow matching**
+
+有了 fake 分支后，直接对它套用标准 flow matching 目标即可——教网络在负时间条件下学会从噪声映射到 fake 数据。这一步让"对抗"完全发生在单一网络内部：模型既要拟合真实数据（正半轴），又要刻画自己当前的生成分布（负半轴），二者的张力构成对抗信号，无需任何独立判别器参与。
+
+**3. 速度匹配校正损失 $\mathcal{L}_{\text{rectify}}$：把 KL 梯度转写成可优化的速度差**
+
+仅有自对抗还不足以把 fake 分布往 real 分布推。本文的核心数学洞察是：在同一中间点 $\mathbf{x}_t$ 上，最小化 real/fake 两条轨迹的速度场差异
 
 $$\Delta_\mathbf{v}(\mathbf{x}_t) = \mathbf{v}_{\text{real}}(\mathbf{x}_t, t) - \mathbf{v}_{\text{fake}}(\mathbf{x}_t, -t)$$
 
 等价于最小化 $D_{\text{KL}}(p_{\text{fake}} \,\|\, p_{\text{real}})$。这样就不必像 DMD 那样显式训练一个 score 估计器，而是通过 stop-gradient 把这个速度差转化为可直接反传的损失，让 fake 分布沿 KL 梯度方向收敛到 real 分布。
 
-**4. Any-step 统一框架：一份 checkpoint 支持 1/2/4 步。** 训练基于 RCGM 的 any-step 公式，使同一模型同一 checkpoint 在推理时可灵活选 1/2/4/… 步，部署时按质量与速度需求动态权衡，而不必为不同步数各训一版。
+**4. Any-step 统一框架：一份 checkpoint 支持 1/2/4 步**
+
+训练基于 RCGM 的 any-step 公式，使同一模型同一 checkpoint 在推理时可灵活选 1/2/4/… 步，部署时按质量与速度需求动态权衡，而不必为不同步数各训一版。
 
 ### 损失函数 / 训练策略
 

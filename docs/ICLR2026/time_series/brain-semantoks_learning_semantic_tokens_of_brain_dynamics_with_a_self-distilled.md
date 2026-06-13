@@ -39,7 +39,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-Brain-Semantoks 是一个学生-教师自蒸馏架构：输入 fMRI 时间序列 $X \in \mathbb{R}^{C \times T}$（C=457 个脑区）被裁出两个长片段作为不同的时间视角，先由语义分词器把噪声很大的 ROI 信号聚合成功能网络级 token，再送入 Transformer 编码器。教师网络是学生权重的指数移动平均（EMA），整个训练不重建任何 BOLD 信号，而是逼着两个视角的表征互相对齐，从而学到对时间波动不敏感的抽象脑动态特征。
+Brain-Semantoks 是一个学生-教师（student-teacher）自蒸馏架构，整条训练流水线不重建任何 BOLD 信号，只逼两个时间视角的表征互相对齐。输入 fMRI 时间序列 $X \in \mathbb{R}^{C \times T}$（C=457 个脑区）先被裁出两个长片段作为不同的时间视角，再由语义分词器把噪声很大的 ROI 信号聚合成功能网络级 token。token 序列分两路走：学生分支先经切片掩码（slice masking）盖掉一大块再过 Transformer 编码器，教师分支拿完整序列过同结构编码器，且教师权重是学生的指数移动平均（exponential moving average，EMA）。两路输出由三重跨视角损失对齐——全局损失抓稳定表型、token 级损失抓局部时间特征、TTR 在训练早期约束 token 空间稳住自蒸馏。训练结束后丢掉学生、只留教师权重，下游任务上冻结这套表征做线性探测即可。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    X["fMRI 时间序列<br/>X (457 ROI × T)"] --> CROP["裁两个长时间视角<br/>视角1 / 视角2"]
+    CROP --> TOK["1. 语义分词器 G<br/>9 功能网络 → token Z<br/>(9 × P × 768)"]
+    TOK --> MASK["2. 切片掩码<br/>整行/整列, 65-85%"]
+    MASK --> STU["学生编码器 f_s<br/>含 mask embedding"]
+    TOK --> TEA["教师编码器 f_t<br/>学生权重 EMA, 看完整序列"]
+    STU --> LOSS["3. 三重损失<br/>L_CLS 全局 + L_Tok 局部"]
+    TEA --> LOSS
+    STU --> TTR["4. TTR 课程调度<br/>summary token 跨视角蒸馏<br/>仅前 5% 步, 余弦衰减"]
+    TEA --> TTR
+    TTR -.早期稳定.-> LOSS
+    LOSS -->|留教师权重| OUT["冻结表征<br/>线性探测下游任务"]
+```
 
 ### 关键设计
 

@@ -42,17 +42,36 @@ tags:
 
 ### 整体框架
 
-xCPD 是挂在任意预测模型之后的后处理插件，接收 backbone 的预测输出 $\hat{X}^{\text{model}} \in \mathbb{R}^{C \times T'}$，输出精修后的 $\hat{X}^{\text{predict}}$。它把每个通道切成 patch、让每个"通道-patch"成为图节点，先用一组共享的图傅里叶基把节点投到谱域，再按谱能量把节点分进低/中/高频三组，最后用动态 MoE 给每个节点的局部子图挑选频率专属的滤波专家、做图学习，并以门控残差的方式叠回原预测。
+xCPD 是挂在任意预测模型之后的后处理插件，接收 backbone 的预测输出 $\hat{X}^{\text{model}} \in \mathbb{R}^{C \times T'}$，输出精修后的 $\hat{X}^{\text{predict}}$。它把每个通道切成 patch、让每个"通道-patch"成为图节点，先用一组共享的图傅里叶基把节点投到谱域（谱通道-patch 嵌入），再按谱能量把节点分进低/中/高频三组、构建 ego-graph（谱能量分组），最后用动态 MoE 给每个节点的局部子图挑选频率专属的滤波专家做图学习（动态 MoE 路由），并以门控双路残差的方式把跨通道谱依赖与通道独立精修一起叠回原预测。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["backbone 预测输出<br/>(C 通道 × T' 步)"] --> EMB["谱通道-patch 嵌入<br/>切 patch 成图节点 → 余弦构图 → 共享傅里叶基 U → 谱嵌入"]
+    EMB --> GRP["谱能量分组与 ego-graph<br/>算谱能量响应 → 低/中/高频软分区 → 按频段分组 → k-NN ego-graph"]
+    GRP --> MOE["动态 MoE 路由<br/>路由网络按累积概率挑频率滤波专家 → 合并稀疏邻接 → L 层图学习"]
+    MOE -->|"δ_GNN：跨通道谱依赖"| GATE["门控双路残差<br/>逐通道门控 σ(g)⊙δ，残差叠回原预测"]
+    IN -->|"δ_Lin：通道独立精修"| GATE
+    GATE --> OUT["精修后预测 X̂_predict"]
+```
 
 ### 关键设计
 
-**1. 谱通道-patch 嵌入：把建模单元从通道细化到通道-patch，并搬到统一谱域。** 现有 CP 方法以整条通道为关系单元，无法刻画同一通道前后两段的不同交互；而在时域算注意力又会把低频趋势、中频波动、高频噪声搅在一起产生虚假相关。xCPD 先把 $\hat{X}^{\text{model}}$ 切成 $N=\lceil T'/P\rceil$ 个不重叠 patch、线性映射到 $d$ 维得到 $X^{\text{emb}}\in\mathbb{R}^{n\times d}$（$n=C\times N$ 个节点），再用对尺度不变的余弦相似度构图 $A_{ij}^t=\cos(X_i^{\text{emb},t},X_j^{\text{emb},t})$、取归一化拉普拉斯 $L=I-D^{-1/2}AD^{-1/2}$。关键在于：若每个 batch 各自做特征分解，得到的傅里叶基彼此不可比；因此 xCPD 从平均拉普拉斯学一组**共享图傅里叶基** $U$，把所有时间步统一投到同一谱坐标系，谱嵌入 $X^{\text{spc}}=U^\top X^{\text{emb}}$。Theorem 4.1 给出近似界 $\|U^t-UR^t\|_F\le C\|L^t-L_{\text{avg}}\|_F$，保证共享基与各 batch 真实基只差一个可控旋转。
+**1. 谱通道-patch 嵌入：把建模单元从通道细化到通道-patch，并搬到统一谱域**
 
-**2. 谱能量分组与 ego-graph：让同频段的节点才相互传消息。** 投到谱域后，需要判断每个节点主要"响应"哪段频率。xCPD 定义谱能量响应 $S_{i,j}=\|U_{i,j}\cdot X_{j,:}^{\text{spc}}\|_2^2$ 量化节点 $i$ 在频率 $j$ 上的能量，Theorem 4.2 保证能量守恒 $\sum_j S_{i,j}=\|X_{i,:}^{\text{emb}}\|_2^2$，即谱域不丢信息。两个可学习边界 $\tau_1,\tau_2$ 用 sigmoid 软分区把频率切成低/中/高三段、给出权重 $\alpha_j^{\text{low/mid/high}}$，再按各段累积能量经 softmax 把节点分到能量最大的频段组——边界可学习因而能自适应不同数据的频率结构。分组后对每个节点用 $k$-NN 取邻居构建 ego-graph，只保留与中心节点相关、且同频段的连边，从而避免平滑趋势节点和高频噪声节点混在一起做交互。
+现有 CP 方法以整条通道为关系单元，无法刻画同一通道前后两段的不同交互；而在时域算注意力又会把低频趋势、中频波动、高频噪声搅在一起产生虚假相关。xCPD 先把 $\hat{X}^{\text{model}}$ 切成 $N=\lceil T'/P\rceil$ 个不重叠 patch、线性映射到 $d$ 维得到 $X^{\text{emb}}\in\mathbb{R}^{n\times d}$（$n=C\times N$ 个节点），再用对尺度不变的余弦相似度构图 $A_{ij}^t=\cos(X_i^{\text{emb},t},X_j^{\text{emb},t})$、取归一化拉普拉斯 $L=I-D^{-1/2}AD^{-1/2}$。关键在于：若每个 batch 各自做特征分解，得到的傅里叶基彼此不可比；因此 xCPD 从平均拉普拉斯学一组**共享图傅里叶基** $U$，把所有时间步统一投到同一谱坐标系，谱嵌入 $X^{\text{spc}}=U^\top X^{\text{emb}}$。Theorem 4.1 给出近似界 $\|U^t-UR^t\|_F\le C\|L^t-L_{\text{avg}}\|_F$，保证共享基与各 batch 真实基只差一个可控旋转。
 
-**3. 动态 MoE 路由：按输入逐节点挑选可变数量的频率滤波专家。** 三个频率 filter 分别从低/中/高频谱分量构建候选邻接矩阵，对应捕获平滑趋势、局部波动、突变异常。路由网络给出带噪声的打分 $\psi(x_i)=\text{Linear}_c(x_i)+\epsilon\cdot\text{Softplus}(\text{Linear}_n(x_i))$，随后不走固定 top-K，而是按累积概率阈值挑选**最少**数量的专家使其累积概率 $\ge\tau$（式 7），于是平滑段可能只用低频专家、突变段会额外调入高频专家。被选中专家的边集按式 (8) 合并成稀疏邻接矩阵，再过 $L$ 层图学习（式 9–10）聚合邻域。为防专家坍缩，训练额外加入熵损失 $\mathcal{L}_{\text{Entropy}}$ 和负载平衡损失 $\mathcal{L}_{\text{Balance}}$。
+**2. 谱能量分组与 ego-graph：让同频段的节点才相互传消息**
 
-**4. 门控双路残差：既用跨通道谱依赖，又保住通道独立精修，且安全无损。** xCPD 同时走两条修正路：GNN 路 $\delta_{\text{GNN}}=W_{\text{proj}}H^{(L)}$ 注入跨变量的谱依赖，Linear 路 $\delta_{\text{Lin}}=f_{\text{lin}}(\hat{X}^{\text{model}})$ 保留通道独立（CI 风格）的精修。两路各配一组逐通道门控 $g_{\text{GNN}},g_{\text{Lin}}\in\mathbb{R}^C$，最终输出 $\hat{X}^{\text{predict}}=\hat{X}^{\text{model}}+\sigma(g_{\text{GNN}})\odot\delta_{\text{GNN}}+\sigma(g_{\text{Lin}})\odot\delta_{\text{Lin}}$。这样设计的好处是：当门值趋近零，插件退化为原 backbone 预测，因此对任何基础模型都是"只可能更好、不会更差"；逐通道门控又允许不同变量选择不同的跨通道依赖程度。总损失为 $\mathcal{L}=\mathcal{L}_{\text{MSE}}+\mu\mathcal{L}_{\text{Entropy}}+\beta\mathcal{L}_{\text{Balance}}$。
+投到谱域后，需要判断每个节点主要"响应"哪段频率。xCPD 定义谱能量响应 $S_{i,j}=\|U_{i,j}\cdot X_{j,:}^{\text{spc}}\|_2^2$ 量化节点 $i$ 在频率 $j$ 上的能量，Theorem 4.2 保证能量守恒 $\sum_j S_{i,j}=\|X_{i,:}^{\text{emb}}\|_2^2$，即谱域不丢信息。两个可学习边界 $\tau_1,\tau_2$ 用 sigmoid 软分区把频率切成低/中/高三段、给出权重 $\alpha_j^{\text{low/mid/high}}$，再按各段累积能量经 softmax 把节点分到能量最大的频段组——边界可学习因而能自适应不同数据的频率结构。分组后对每个节点用 $k$-NN 取邻居构建 ego-graph，只保留与中心节点相关、且同频段的连边，从而避免平滑趋势节点和高频噪声节点混在一起做交互。
+
+**3. 动态 MoE 路由：按输入逐节点挑选可变数量的频率滤波专家**
+
+三个频率 filter 分别从低/中/高频谱分量构建候选邻接矩阵，对应捕获平滑趋势、局部波动、突变异常。路由网络给出带噪声的打分 $\psi(x_i)=\text{Linear}_c(x_i)+\epsilon\cdot\text{Softplus}(\text{Linear}_n(x_i))$，随后不走固定 top-K，而是按累积概率阈值挑选**最少**数量的专家使其累积概率 $\ge\tau$（式 7），于是平滑段可能只用低频专家、突变段会额外调入高频专家。被选中专家的边集按式 (8) 合并成稀疏邻接矩阵，再过 $L$ 层图学习（式 9–10）聚合邻域。为防专家坍缩，训练额外加入熵损失 $\mathcal{L}_{\text{Entropy}}$ 和负载平衡损失 $\mathcal{L}_{\text{Balance}}$。
+
+**4. 门控双路残差：既用跨通道谱依赖，又保住通道独立精修，且安全无损**
+
+xCPD 同时走两条修正路：GNN 路 $\delta_{\text{GNN}}=W_{\text{proj}}H^{(L)}$ 注入跨变量的谱依赖，Linear 路 $\delta_{\text{Lin}}=f_{\text{lin}}(\hat{X}^{\text{model}})$ 保留通道独立（CI 风格）的精修。两路各配一组逐通道门控 $g_{\text{GNN}},g_{\text{Lin}}\in\mathbb{R}^C$，最终输出 $\hat{X}^{\text{predict}}=\hat{X}^{\text{model}}+\sigma(g_{\text{GNN}})\odot\delta_{\text{GNN}}+\sigma(g_{\text{Lin}})\odot\delta_{\text{Lin}}$。这样设计的好处是：当门值趋近零，插件退化为原 backbone 预测，因此对任何基础模型都是"只可能更好、不会更差"；逐通道门控又允许不同变量选择不同的跨通道依赖程度。总损失为 $\mathcal{L}=\mathcal{L}_{\text{MSE}}+\mu\mathcal{L}_{\text{Entropy}}+\beta\mathcal{L}_{\text{Balance}}$。
 
 ## 实验关键数据
 

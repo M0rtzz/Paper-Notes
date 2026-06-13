@@ -38,7 +38,19 @@ PTP 的核心洞察：如果把采样用的随机变量 $u_i \sim \mathcal{U}[0,
 
 ### 整体框架
 
-PTP 把"采样的随机性"从输出端搬到输入端：让模型在预测每个未来 token 时额外读入一组辅助随机变量 $u_i,\ldots,u_N$，于是原本需要逐步采样的 token 变成了上文与这些随机变量的确定性函数，从而能在单次前向传播里联合给出多个 token。它有两种变体——O-PTP 直接吐出 one-hot 结果走投机解码，C-PTP 还原完整条件分布以支持任意采样温度——两者都可通过蒸馏教师模型或从头训练得到。
+PTP 要解决的是自回归解码"一次前向只产一个 token"的延迟瓶颈。它的整体思路是把"采样的随机性"从输出端搬到输入端：模型在预测每个未来 token 时额外读入一组一次性采到的辅助随机变量 $u_i,\ldots,u_N$，于是原本要逐步采样的 token 变成"上文 + 这些随机变量"的确定性函数，能在单次前向里联合给出多个 token。落地时分两种变体——O-PTP 直接输出 one-hot 结果、延迟最低，适合当投机解码（speculative decoding）的草稿模型；C-PTP 还原完整条件分布、支持任意采样温度，两者都能通过蒸馏教师或从头训练得到。由于真实 Transformer 容量有限、单次能准确并行的 token 数受限，最后再用 Partial Quadratic Decoding 把草稿交给教师并行验证纠错，在不损失质量的前提下兑现加速。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["已知上文 + 一次性采样<br/>辅助变量 u_i…u_N ~ U[0,1]"] --> B["辅助变量采样机制<br/>把随机性搬到输入端"]
+    B --> C["Transformer 单次前向<br/>并行预测所有未来 token"]
+    C -->|"取 argmax 输出 one-hot"| D["O-PTP<br/>最快并行草稿"]
+    C -->|"扣掉当前位 u_k 还原分布"| E["C-PTP<br/>支持任意温度采样"]
+    D --> F["Partial Quadratic Decoding<br/>草稿与验证并行，按置信度分支"]
+    E --> F
+    F --> G["教师并行验证<br/>输出多个被接受 token"]
+```
 
 ### 关键设计
 

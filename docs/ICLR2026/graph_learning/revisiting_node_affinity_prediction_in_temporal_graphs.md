@@ -42,7 +42,24 @@ tags:
 
 ### 整体框架
 
-NAViS 把每个查询节点的亲和力预测当作一个线性状态空间模型来跑：为每个节点维护一份状态 $\mathbf{h} \in \mathbb{R}^d$，再维护一份所有节点共享的虚拟全局状态 $\mathbf{g} \in \mathbb{R}^d$（这里 $d = |\mathcal{V}|$，即状态的每一维对应一个潜在目标节点）。每来一个新事件，模型用门控把"上一时刻的亲和力向量"和"当前观测"做凸组合更新状态，再结合全局状态读出当前的亲和力排名。整个流程刻意让输出保持为输入的线性组合，这样才能复现启发式、又比启发式更灵活。
+NAViS 把每个查询节点的亲和力预测当作一个线性状态空间模型来跑：为每个节点维护一份状态 $\mathbf{h} \in \mathbb{R}^d$，再维护一份所有节点共享的虚拟全局状态 $\mathbf{g} \in \mathbb{R}^d$（这里 $d = |\mathcal{V}|$，即状态的每一维对应一个潜在目标节点）。每来一个新事件，模型先用一个状态更新门把"上一时刻的节点状态"和"当前观测到的亲和力向量"做凸组合，更新出新的节点状态 $\mathbf{h}_i$；与此同时，一个全局 buffer 缓存最近若干个亲和力向量并聚合成全局状态 $\mathbf{g}$；最后读出门把 $\mathbf{h}_i$、$\mathbf{g}$ 和当前输入再做一次凸组合，读出当前的亲和力排名向量 $\mathbf{s}$。整个流程刻意让输出保持为输入的线性组合，这样才能复现启发式、又比启发式更灵活；训练时则用排序损失对齐"排名"这一真正的下游目标。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    X["上一时刻亲和力向量 x<br/>+ 上一节点状态 h(i-1)"] --> GATE
+    subgraph GATE["门控线性 SSM"]
+        direction TB
+        UH["状态更新门 z_h<br/>h_i = z_h·h(i-1) + (1-z_h)·x"] --> RD["读出门 z_s<br/>s = z_s·h_i + (1-z_s)·x"]
+    end
+    subgraph VS["虚拟全局状态"]
+        direction TB
+        BUF["全局 buffer：最近<br/>若干亲和力向量"] --> G["聚合 → 全局状态 g"]
+    end
+    G --> RD
+    RD --> S["预测亲和力向量 s<br/>（节点亲和力排名）"]
+    S --> LOSS["Lambda 排序损失<br/>+ 配对边距正则"]
+```
 
 ### 关键设计
 

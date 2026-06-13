@@ -52,19 +52,59 @@ tags:
 
 ### 整体框架
 
-vCache 沿用语义缓存的标准流程：把 prompt $x$ 嵌入为 $\mathcal{E}(x)\in\mathbb{R}^d$，从向量库检索最近邻 $\text{nn}(x)=\arg\max_{y\in C}\text{sim}(\mathcal{E}(x),\mathcal{E}(y))$ 并算出相似度 $s(x)$，最后决定是 exploit（直接返回缓存回复）还是 explore（调用 LLM）。它与既有系统唯一也是最关键的区别在于：不再用一个全局阈值 $t$ 卡所有 prompt，而是为**每个缓存嵌入**在线维护一套统计量，把"是否命中"变成一个带用户错误率保证的概率决策。
+vCache 要解决的是语义缓存的"信任"问题：现有系统都用一个全局阈值 $t$ 判断新 prompt 与缓存条目够不够像，但相同的相似度在不同条目上可能一个该命中、一个该重算，单一阈值既保不住正确率又压不高命中率。vCache 的思路是把"是否命中"从一刀切的阈值比较，换成一个**带用户错误率保证的概率决策**：对每条新 prompt $x$，先嵌入为 $\mathcal{E}(x)\in\mathbb{R}^d$、从向量库检索最近邻 $\text{nn}(x)=\arg\max_{y\in C}\text{sim}(\mathcal{E}(x),\mathcal{E}(y))$ 并算出相似度 $s(x)$；再调出这条最近邻自己积累的历史观测，在线拟合一条"相似度→正确概率"曲线，由此算出当前该以多大概率去探索（调 LLM）才能守住用户设定的错误率 $\delta$；最后掷一次随机数决定 exploit（直接返回缓存回复 $r(\text{nn}(x))$）还是 explore（调用 LLM，并把这次结果写回该条目，让它越用越准）。整套流程在推理时边走边学，不需要任何离线训练或标注集。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    A["新 prompt x"] --> B["嵌入 E(x)<br/>检索最近邻 y=nn(x)<br/>计算相似度 s(x)"]
+    subgraph POLICY["决策策略 P(s, O(y), δ)"]
+        direction TB
+        D1["逐嵌入观测数据模型<br/>取出 y 的历史观测 O(y)"]
+        D2["错误率保证与探索概率<br/>由 δ 反解最小探索概率 τ"]
+        D3["sigmoid 建模 + 置信带悲观估计<br/>在线拟合 t'、γ'，得保守 τ̂"]
+        D1 --> D2 --> D3
+    end
+    B --> D1
+    D3 --> S{"采样 u~U(0,1)<br/>u ≤ τ̂ ?"}
+    S -->|"是 · explore"| EX["调用 LLM 得 r(x)<br/>回写观测 O(y)、入库"]
+    S -->|"否 · exploit"| EP["返回缓存回复 r(y)"]
+    EX -. 更新 .-> D1
+```
 
 ### 关键设计
 
-**1. 逐嵌入观测数据模型：让每个缓存条目记住自己的历史。** 静态阈值之所以失效，是因为不同嵌入的"安全相似度"差异巨大，而全局阈值无从知晓这种差异。vCache 把缓存存成三元组 $\mathcal{D}=\{(\mathcal{E}(x_i),r(x_i),\mathcal{O}(x_i))\}_{i=0}^{n}$，其中 $\mathcal{O}(x_i)=\{(s(x_j),c(x_j))\mid \text{nn}(x_j)=x_i\}$ 记录了所有把 $x_i$ 当最近邻的后续 prompt 的相似度及其正确标签 $c(x)=\mathbb{1}[r(\text{nn}(x))=r(x)]$。这样每个嵌入都积累起一份"相似度 vs 正确性"的局部经验，为后续逐条目估计阈值提供了素材。
+**1. 逐嵌入观测数据模型：让每个缓存条目记住自己的历史**
 
-**2. 用户错误率保证与探索概率下界：把约束翻译成探索多少次。** 用户只需指定最大错误率 $\delta$，vCache 承诺 $\Pr(\mathbf{vCache}(x)=r(x))\ge 1-\delta$。要兑现这个承诺，先把"答对"拆成两个互斥事件——要么探索（调 LLM 必对），要么命中且命中恰好正确：$\Pr(\text{正确})=\Pr(\text{explore})+(1-\Pr(\text{explore}))\cdot\Pr(c(x)=1)$。反解这个式子就得到满足约束所需的最小探索概率 $\Pr(\text{explore}\mid x,\mathcal{D})\ge\frac{(1-\delta)-\Pr(c(x)=1)}{1-\Pr(c(x)=1)}=\tau_{\text{nn}(x)}(s(x))$。直觉很清楚：当前缓存越可能答对，需要的探索就越少；越没把握，就越该去问 LLM。
+静态阈值之所以失效，是因为不同嵌入的"安全相似度"差异巨大（Figure 3 显示正确与错误命中的相似度分布高度重叠、各条目最优阈值天差地别），而全局阈值无从知晓这种差异。vCache 把缓存存成三元组 $\mathcal{D}=\{(\mathcal{E}(x_i),r(x_i),\mathcal{O}(x_i))\}_{i=0}^{n}$，其中观测集 $\mathcal{O}(x_i)=\{(s(x_j),c(x_j))\mid \text{nn}(x_j)=x_i\}$ 记录了所有把 $x_i$ 当最近邻的后续 prompt 的相似度及其正确标签 $c(x)=\mathbb{1}[r(\text{nn}(x))=r(x)]$。这样每个嵌入都积累起一份属于自己的"相似度 vs 正确性"局部经验，为后续逐条目估计阈值、而非全局共用一个阈值提供了素材。
 
-**3. sigmoid 建模 + 置信带悲观估计：在线拟合每个阈值并守住保证。** 上式里的 $\Pr(c(x)=1)$ 是未知量，vCache 对每个嵌入用 sigmoid 拟合它与相似度的关系 $\mathcal{L}(s(x),t,\gamma)=\frac{1}{1+e^{-\gamma(s(x)-t)}}$，其中 $t$ 是该嵌入专属的决策边界、$\gamma$ 控制陡峭度，二者通过对观测 $\mathcal{O}_{\text{nn}(x)}$ 做二元交叉熵的最大似然估计在线求出 $\hat{t},\hat{\gamma}$，因此无需任何预训练或标注集。但有限样本下点估计不可靠，直接代入会让保证失真，于是 vCache 不用点估计，而是取 $(1-\epsilon)$ 置信带上的**保守值** $t'(\epsilon),\gamma'(\epsilon)$，并在 $\epsilon$ 上取最紧的探索概率 $\hat{\tau}=\min_{\epsilon\in(0,1)}\frac{(1-\delta)-(1-\epsilon)\mathcal{L}(s(x),t'(\epsilon),\gamma'(\epsilon))}{1-(1-\epsilon)\mathcal{L}(s(x),t'(\epsilon),\gamma'(\epsilon))}\ge\tau_{\text{nn}(x)}(s(x))$。这种悲观处理把样本不确定性折算进探索次数，正是 Theorem 4.1（i.i.d. 与 sigmoid 建模假设下，对任意 $x$ 和任意时刻 $n$ 都有 $\Pr(\mathbf{vCache}(x)=r(x)\mid\mathcal{D})\ge 1-\delta$）能成立的关键。
+**2. 错误率保证与探索概率：把约束翻译成该探索多少**
+
+用户只需指定最大错误率 $\delta$，vCache 承诺 $\Pr(\mathbf{vCache}(x)=r(x))\ge 1-\delta$。要兑现这个承诺，先把"答对"拆成两个互斥来源——要么探索（调 LLM 必对），要么命中且命中恰好正确：
+
+$$\Pr(\text{正确})=\Pr(\text{explore})+(1-\Pr(\text{explore}))\cdot\Pr(c(x)=1)$$
+
+令上式 $\ge 1-\delta$ 反解，就得到满足约束所需的**最小探索概率**
+
+$$\Pr(\text{explore}\mid x,\mathcal{D})\ge\frac{(1-\delta)-\Pr(c(x)=1)}{1-\Pr(c(x)=1)}=\tau_{\text{nn}(x)}(s(x))$$
+
+直觉很清楚：当前缓存越可能答对（$\Pr(c(x)=1)$ 越大），需要的探索就越少、命中率越高；越没把握就越该去问 LLM。这正是把"全局阈值比大小"替换成"按条目算一个探索概率"的核心——决策从此随每条 prompt 的把握程度连续变化，而不是非黑即白地卡一个数。
+
+**3. sigmoid 建模 + 置信带悲观估计：在线拟合阈值并守住保证**
+
+上式里的 $\Pr(c(x)=1)$ 是未知量，vCache 对每个嵌入用 sigmoid 拟合它与相似度的关系
+
+$$\mathcal{L}(s(x),t,\gamma)=\frac{1}{1+e^{-\gamma(s(x)-t)}}$$
+
+其中 $t$ 是该嵌入专属的决策边界、$\gamma$ 控制曲线陡峭度，二者通过对观测 $\mathcal{O}_{\text{nn}(x)}$ 做二元交叉熵的最大似然估计在线求出 $\hat{t},\hat{\gamma}$，因此无需任何预训练或标注集。但有限样本下点估计不可靠，直接代入会让保证失真，于是 vCache 不用点估计，而是取 $(1-\epsilon)$ 置信带上的**保守值** $t'(\epsilon),\gamma'(\epsilon)$，并在 $\epsilon$ 上取最紧的探索概率
+
+$$\hat{\tau}=\min_{\epsilon\in(0,1)}\frac{(1-\delta)-(1-\epsilon)\mathcal{L}(s(x),t'(\epsilon),\gamma'(\epsilon))}{1-(1-\epsilon)\mathcal{L}(s(x),t'(\epsilon),\gamma'(\epsilon))}\ge\tau_{\text{nn}(x)}(s(x))$$
+
+这种悲观处理把样本不确定性折算进探索次数：观测越少、不确定性越大，置信带越宽、$\hat\tau$ 越保守（多探索），守住保证；观测累积后置信带收窄、$\hat\tau$ 下降，命中率自然爬升。它也正是 Theorem 4.1（i.i.d. 与 sigmoid 建模假设下，对任意 $x$、任意时刻 $n$ 都有 $\Pr(\mathbf{vCache}(x)=r(x)\mid\mathcal{D})\ge 1-\delta$）能成立的关键。
 
 ### 一个完整示例
 
-一条新 prompt $x$ 到来时（Algorithm 2）：先算嵌入并检索最近邻 $y=\text{nn}(x)$；用 $y$ 的历史观测 $\mathcal{O}(y)$ 拟合 sigmoid 得到 $\hat{t},\hat{\gamma}$；遍历 $\epsilon\in(0,1)$ 算出当前相似度 $s(x)$ 下的探索概率 $\hat{\tau}$；采样 $u\sim\text{Uniform}(0,1)$，若 $u\le\hat{\tau}$ 就 explore（调用 LLM，并把这次 $(s(x),c(x))$ 写回 $\mathcal{O}(y)$，让该嵌入的阈值估计越用越准），否则 exploit（直接返回 $r(y)$）。整个过程不依赖任何离线训练，缓存命中率随观测累积自然上升，而错误率始终被 $\delta$ 约束。
+一条新 prompt $x$ 到来时（Algorithm 1）：先算嵌入并检索最近邻 $y=\text{nn}(x)$、相似度 $s(x)$；调出 $y$ 的历史观测 $\mathcal{O}(y)$ 拟合 sigmoid 得到 $\hat{t},\hat{\gamma}$；遍历 $\epsilon\in(0,1)$ 算出当前相似度下满足 $\delta$ 的探索概率 $\hat{\tau}$；采样 $u\sim\text{Uniform}(0,1)$，若 $u\le\hat{\tau}$ 就 explore——调用 LLM 得 $r(x)$，把这次 $(s(x),c(x))$ 写回 $\mathcal{O}(y)$ 让该嵌入的阈值估计越用越准，并把 $x$ 入库；否则 exploit，直接返回 $r(y)$。冷启动时新嵌入没有历史观测，$\hat\tau$ 取到最保守值（几乎全探索），随观测累积命中率自然上升，而错误率始终被 $\delta$ 约束。
 
 ## 实验关键数据
 

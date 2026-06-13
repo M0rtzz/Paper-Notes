@@ -36,7 +36,31 @@ tags:
 
 ### 整体框架
 
-TumorChain把一次肿瘤分析拆成五个协同模块：3D视觉编码器$\mathcal{E}_v$负责把整张CT编码成全局视觉token，器官分割专家$\mathcal{S}eg$和辅助分类模型$\mathcal{C}ls$提供局部ROI和异常判别，MLP投影器$\mathcal{P}$把视觉特征对齐到语言空间，最后由$\mathcal{LLM}$串起从影像发现到病理分期的多步推理。整套系统的核心思路是先做全局-局部视觉对齐，再用交错的多模态推理把"先全局浏览、再聚焦可疑器官反复确认"的临床工作流写进模型的前向过程。
+TumorChain把"从影像发现到病理分期"的临床推理做成一条端到端、可追溯的管线，覆盖数据、训练、推理、评估四环。**数据**上，先用知识图谱约束的多Agent引擎，把4万余例3D CT和放射/病理报告炼成150万条逐步监督的CoT-VQA数据(TumorCoT-1.5M)；**模型**上，TumorChain由3D视觉编码器$\mathcal{E}_v$、器官分割专家$\mathcal{S}eg$、异常分类模型$\mathcal{C}ls$、MLP投影器$\mathcal{P}$和大语言模型$\mathcal{LLM}$协同；**推理**时，模型像放射科医师一样"先全局浏览整张CT、再聚焦可疑器官反复确认"，把这套交错读片工作流写进前向过程；**评估**上，把生成的推理链拆成三元组逐级打分，衡量每一步是否可信。核心思路是先做全局-局部视觉对齐，再用迭代交错推理把临床读片逻辑显式化，从而让中间推理过程透明、可追溯。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    RAW["4万余例 3D CT + 报告<br/>(肝/胰/胃/结肠/食管)"]
+    subgraph ENG["知识图谱驱动的 CoT 数据引擎（设计 1）"]
+        direction TB
+        A["分割定位器官 → 结构化特征提取"] --> B["CoT 推理器生成链条"]
+        B --> C["逻辑校准 + 总结"]
+    end
+    RAW --> ENG
+    ENG --> DATA["TumorCoT-1.5M<br/>逐步 CoT-VQA 监督数据"]
+    DATA --> HCO["混合模型协同优化（设计 3）<br/>分割 + 分类专家强化视觉编码器"]
+    CT["测试 CT"] --> IIR
+    HCO --> IIR
+    subgraph IIR["器官引导的迭代交错推理（设计 2）"]
+        direction TB
+        G["全局 token → LLM 初始诊断"] --> H["识别目标器官 → 分割 ROI"]
+        H --> I["注入局部 token → 再推理"]
+        I -->|"牵出新器官则循环"| G
+    end
+    IIR --> OUT["可追溯 CoT + TNM 分期"]
+    OUT --> EVAL["TumorChain-Eval（设计 4）<br/>三元组逐级打分"]
+```
 
 ### 关键设计
 

@@ -42,7 +42,19 @@ tags:
 
 ### 整体框架
 
-这篇论文不提新的 influence 算法，而是搭一套受控实验来回答"该用哪一层、该怎么聚合"。整条流水线围绕一个可验证的信号展开：先往训练集里注入已知的合成噪声（标签翻转），那么一个好的 influence 方法理应把这些被污染的样本排到最末尾。具体地，先在带噪数据上做 LoRA fine-tune 并在验证 loss 最低处取 checkpoint，再对所有可调层逐层算出每个训练样本的 influence；模型被切成三类层组——词嵌入层 WE、四组 attention 层、分类头 CL——分别在层组内聚合出每个训练样本的总 influence；最后删掉 influence 最低的 30% 样本重训，用测试准确率回过头来评判"这层 + 这种聚合"到底好不好。整个方法贡献分两块：先从理论上拆掉旧结论赖以成立的指标，再给出更稳的聚合策略和一个免重训的评估代理。
+这篇论文不提新的 influence 算法，而是搭一套受控实验来回答"该用哪一层、该怎么聚合"。整条流水线围绕一个可验证的信号展开：先往训练集里注入已知的合成噪声（标签翻转），那么一个好的 influence 方法理应把这些被污染的样本排到最末尾。具体地，分五步走——先在带噪数据上做 LoRA fine-tune 并在验证 loss 最低处取 checkpoint，再对所有可调层逐层算出每个训练样本的 influence；模型被切成三类层组——词嵌入层 WE、四组 attention 层、分类头 CL——在层组内聚合出每个训练样本的总 influence；最后删掉 influence 最低的 30% 样本重训，用测试准确率回过头来评判"这层 + 这种聚合"到底好不好。本文的贡献就挂在这条流水线的不同环节上：理论上先拆掉旧结论赖以成立的层选择指标（作用于"选哪层"这一步），再在聚合环节给出 Rank / Vote 两种比均值更稳的策略，并用 NDR 代理把末尾"删样本→重训→看准确率"这条昂贵回路短路掉。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["干净训练集<br/>注入标签翻转噪声"] --> B["LoRA fine-tune<br/>取最低验证 loss 的 checkpoint"]
+    B --> C["逐层算每个<br/>训练样本的 influence"]
+    C --> D["按层组聚合<br/>词嵌入 WE / 四组 attention / 分类头 CL"]
+    T["Cancellation Effect 的理论反驳<br/>旧层选择指标被反例推翻"] -.推翻旧层选择依据.-> D
+    D --> E["跨层聚合策略<br/>Mean baseline / Rank / Vote"]
+    E -->|删 influence 最低 30% 重训| F["测试准确率<br/>gold 标准，但需重训"]
+    E -->|NDR 代理，免重训| G["NDR / AUC 评分"]
+```
 
 ### 关键设计
 

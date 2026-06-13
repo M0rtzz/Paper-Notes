@@ -45,6 +45,29 @@ CARE 要回答的是一张医学图像加一个自然语言问题，但它拒绝
 
 在这条链之上有两种跑法：**CARE-Flow** 是静态管道，三种视觉证据全部跑一遍后对答案做多数投票；**CARE-Coord** 则让 GPT-5 当动态协调器，自己决定调哪种证据、怎么编排工具调用，并在最后审查 CoT 与答案是否自洽。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["医学图像 + 问题"]
+    E["实体提议 VLM<br/>InternVL3-2B + RLVR"]
+    S["实体指称分割<br/>SA-Med-2D 改进 +<br/>置信度过滤 τ=70%"]
+    subgraph EGVQA["证据引导 VQA（EG-VQA）"]
+        direction TB
+        EV["三种视觉证据<br/>Zoom-in / Mask / Global"]
+        Q["推理 VLM<br/>InternVL3-8B (SFT+RLVR)"]
+        EV --> Q
+    end
+    IN --> E
+    E -->|实体候选| S
+    S -->|ROI 掩码| EV
+    IN -->|原图| Q
+    Q --> MODE{推理模式}
+    MODE -->|CARE-Flow| VOTE["多数投票"]
+    MODE -->|CARE-Coord| COORD["GPT-5 协调器<br/>工具规划 + CoT 审查"]
+    VOTE --> OUT["答案"]
+    COORD --> OUT
+```
+
 ### 关键设计
 
 **1. 实体提议 VLM 的 RLVR 训练：把"图里有哪些相关实体"变成可训练的生成任务**

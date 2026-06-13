@@ -38,29 +38,41 @@ tags:
 
 ### 整体框架
 
-VAPT 想解决的核心问题是：VPT 的 prompt tokens 是一组与输入无关的固定向量，从 MoE 视角看，它们对应的 prompt expert 退化成了常量函数，表达力被钉死。VAPT 的做法是把"固定 prompt"换成"按输入算出来的 prompt"——在每个 ViT block 里插入一个 VAPT block，让它读当前层的输入 $\tilde{\bm{X}}^{(l)}$，现场生成这一层要用的 prompt tokens $\bm{P}^{(l)}$。整条链路是：特征图先过一个轻量卷积编码局部空间，再由 token-wise 投影器把它压成每个 prompt 对应的全局描述向量，最后送进一个所有层共享的瓶颈 MLP 做非线性变换，吐出最终自适应 prompt。前两步是线性聚合、最后一步引入非线性，这样既让 prompt expert 变成输入的非线性函数，又把函数形式保持得足够简洁、能撑起后面的理论分析。
+VAPT 想解决的核心问题是：VPT 的 prompt tokens 是一组与输入无关的固定向量，从 MoE 视角看，它们对应的 prompt expert 退化成了常量函数，表达力被钉死。VAPT 的做法是把"固定 prompt"换成"按输入算出来的 prompt"——在每个 ViT block 里插入一个 VAPT 模块，让它读当前层的输入 $\tilde{\bm{X}}^{(l)}$，现场生成这一层要用的 prompt tokens $\bm{P}^{(l)}$。整条链路是：先把这层特征还原成特征图、过一个 channel-wise 卷积编码局部空间，再由 token-wise 投影器把它逐 token 加权求和成每个 prompt 对应的全局描述向量，最后送进一个所有层共享的瓶颈 MLP 做非线性变换，吐出本层 prompt 并拼回 block 输入参与注意力。前两步是线性聚合、最后一步引入非线性，这样既让 prompt expert 变成输入的非线性函数，又把函数形式保持得足够简洁、能撑起后面的理论分析。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["第 l 个 ViT block 的输入特征"] --> B["LayerNorm + reshape<br/>还原成特征图 X_img"]
+    subgraph TWP["Token-wise 投影器 + Channel-wise 卷积"]
+        direction TB
+        B --> C["Channel-wise 卷积<br/>共享 K×K 核编码局部空间"]
+        C --> D["逐 token 加权求和<br/>得全局描述 G（线性）"]
+    end
+    TWP --> E["共享特征投影器<br/>瓶颈 MLP g（非线性，跨层共享）"]
+    E --> F["本层自适应 prompt P"]
+    F --> G["拼到 block 输入<br/>作为新 prompt experts 参与注意力"]
+```
 
 ### 关键设计
 
 **1. Token-wise 投影器 + Channel-wise 卷积：让 prompt 补上预训练 expert 看不到的全局空间信息**
 
-预训练 experts 本质是对每个 patch 做线性投影 $f_j(\bm{X}) = W_m^{V\top}\bm{x}_j$，只能捕获局部 patch 信息，所以 VAPT 希望生成的 prompt 互补地承载全局信息。它先用一个 channel-wise 卷积给特征图 $\bm{X}_{\text{img}} \in \mathbb{R}^{H \times W \times d}$ 编码局部空间关系 $\bm{X}_{\text{conv}} = F * \bm{X}_{\text{img}}$——所有 $d$ 个通道共享同一个 $K \times K$ 卷积核，因此只花 $K^2$ 个参数（比标准卷积省 $d$ 倍），却能建模相邻 patch 的空间邻接。然后由 token-wise 投影把这张图聚合成每个 prompt 的全局描述：
+预训练 experts 本质是对每个 patch 做线性投影 $f_j(\bm{X}) = W_m^{V\top}\bm{x}_j$，只能捕获局部 patch 信息，所以 VAPT 希望生成的 prompt 互补地承载全局信息。它先用一个 channel-wise 卷积给特征图 $\bm{X}_{\text{img}} \in \mathbb{R}^{H \times W \times d}$ 编码局部空间关系 $\bm{X}_{\text{conv}} = F * \bm{X}_{\text{img}}$——所有 $d$ 个通道共享同一个 $K \times K$ 卷积核，因此只花 $K^2$ 个参数（比标准卷积省 $d$ 倍），却能建模相邻 patch 的空间邻接（单纯加权求和会把相邻 patch 当成独立 token、丢掉这层邻接信息）。然后由 token-wise 投影把这张图聚合成每个 prompt 的全局描述：
 
 $$G_{j'}(\bm{X}_{\text{conv}}) = \sum_{k=1}^{H' \cdot W'} \alpha_{j',k}\, \bm{x}_k^{\text{conv}} \in \mathbb{R}^d$$
 
 其中 $\alpha_{j',k}$ 是可学习的标量权重，对所有 token 加权求和。卷积和加权求和都是线性操作，组合起来等价于一个线性映射 $G_{j'}(\bm{X}_{\text{conv}}) = W_{j'}\bm{X}$，也就是说到这一步 prompt 还只是输入的线性函数——非线性留给下一个模块。
 
-**2. 共享特征投影器：用一个瓶颈 MLP 把线性聚合升级成真正的非线性自适应 prompt**
+**2. 共享特征投影器：用一个瓶颈 MLP 把线性聚合升级成非线性自适应 prompt，且比 VPT 更省参数**
 
 光有线性聚合还不够——要让 prompt expert 从常量升级成非线性函数，关键就是这一步。VAPT 把上一步的全局描述送进一个瓶颈 MLP $g(\bm{x}) = W^{(2)} \sigma(W^{(1)} \bm{x})$，其中 $W^{(1)} \in \mathbb{R}^{r \times d}$、$W^{(2)} \in \mathbb{R}^{d \times r}$、$r \ll d$，于是最终 prompt 写成
 
 $$\bm{P}_{j'}(\bm{X}) = W^{(2)} \sigma(W^{(1)} W_{j'} \bm{X}) \in \mathbb{R}^d.$$
 
-代回 MoE 框架，prompt expert 的两个函数就都跟着输入变了：expert 函数 $f_{N+j'}(\bm{X}) = W_m^{V\top}\bm{P}_{j'}(\bm{X})$ 成为输入的非线性函数，连带 score 函数 $s_{i,N+j'}(\bm{X}) = \frac{\bm{x}_i^\top W_m^Q W_m^{K\top}\bm{P}_{j'}(\bm{X})}{\sqrt{d_v}}$ 也自适应了——这正好回应了 VPT 里 prompt expert 表达力受限的痛点。关键的省参技巧是：所有 ViT block 共享同一个投影器 $g$，不为每层各配一份，参数量因此被压得很低。
+代回 MoE 框架，prompt expert 的两个函数就都跟着输入变了：expert 函数 $f_{N+j'}(\bm{X}) = W_m^{V\top}\bm{P}_{j'}(\bm{X})$ 成为输入的非线性函数，连带 score 函数 $s_{i,N+j'}(\bm{X}) = \frac{\bm{x}_i^\top W_m^Q W_m^{K\top}\bm{P}_{j'}(\bm{X})}{\sqrt{d_v}}$ 也自适应了——这正好回应了 VPT 里 prompt expert 表达力受限的痛点。
 
-**3. 参数量分析：为什么"加了自适应"反而比 VPT 更省参数**
-
-直觉上动态生成 prompt 该更费参数，实际却相反。VPT 的可学习参数是 $L \times N_p \times d$，而 VAPT 拆成三块：token-wise 投影 $L \times N_p \times H' \times W'$、卷积 $L \times K^2$、共享投影器 $2rd$。对 ViT-B/16（$N=196,\, d=768$）来说，下采样后的 $H' \times W' < N \ll d$，而 $K$、$r$ 都是小常数、共享投影器又只算一次，三项加起来通常仍**少于** VPT 的 $L \times N_p \times d$。代价只是推理时多了卷积和两次矩阵乘，FLOPs 仅增加 0.6%。
+反直觉的是，加了这套自适应反而比 VPT 更省参数。关键省参技巧是所有 ViT block 共享同一个投影器 $g$、不为每层各配一份，于是 VAPT 的可学习参数拆成三块：token-wise 投影 $L \times N_p \times H' \times W'$、卷积 $L \times K^2$、共享投影器 $2rd$。对 ViT-B/16（$N=196,\, d=768$）来说，下采样后的 $H' \times W' < N \ll d$，而 $K$、$r$ 都是小常数、共享投影器又只算一次，三项加起来通常仍**少于** VPT 的 $L \times N_p \times d$。代价只是推理时多了卷积和两次矩阵乘，FLOPs 相对 VPT 仅增加 0.6%。
 
 ### 损失函数
 

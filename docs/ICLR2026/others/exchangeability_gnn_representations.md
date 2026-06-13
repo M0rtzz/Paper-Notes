@@ -32,7 +32,7 @@ tags:
 
 **核心矛盾**：传输距离计算昂贵且不满足标准 LSH 的度量条件，而欧氏距离高效但无法捕捉集合间的对齐关系。
 
-**本文目标** 找到一种理论支撑的近似方法，将传输距离图相似度归约为标准欧氏距离，从而启用 LSH 实现高效图检索。
+**本文目标**：找到一种理论支撑的近似方法，将传输距离图相似度归约为标准欧氏距离，从而启用 LSH 实现高效图检索。
 
 **切入角度**：发现 GNN 嵌入的一个此前未注意的概率对称性——特征维度的可交换性——并利用它简化传输距离计算。
 
@@ -44,6 +44,26 @@ tags:
 这篇论文要解决的是大规模图检索的瓶颈：图间相似度（子图匹配、图编辑距离）本质上是定义在节点嵌入集合上的最优传输距离，算一次就要 $O(n^3)$，语料库一大就跑不动；而高效的向量 ANN 方法又只认欧氏距离，接不上传输距离。作者的破局点是先发现一个性质——训练好的 GNN 节点嵌入沿**特征维度**是可交换的——再用它把昂贵的传输距离改写成可被 LSH 加速的欧氏距离。
 
 整条流水线这样转：一张图先过 GNN 编码器得到节点嵌入矩阵 $\mathbf{X} \in \mathbb{R}^{n \times D}$；接着对**每个特征维度 $d$ 各自独立排序**，得到 $\mathbf{v}_d = \text{sort}(\mathbf{X}_{:,d})$；排序后的向量过随机 Fourier 特征映射 $\mathbf{t}_d = F(\mathbf{v}_d)$，再用随机超平面 LSH 得到哈希码 $\mathbf{h}_d = \text{sign}(\mathbf{W}\mathbf{t}_d)$；查询时每个维度各自查自己的检索桶，最后把 $D$ 个维度的投票聚合起来。可交换性是地基，维度排序是把传输距离降为欧氏距离的桥，GraphHash 则是落地的索引结构。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    G["图 G<br/>(查询图 / 语料库图)"] --> ENC["GNN 编码器<br/>→ 节点嵌入矩阵 X (n×D)"]
+    EX["GNN 嵌入特征维度可交换性<br/>p(X)=p(Xπ)（理论依据）"] -.->|"使逐维拆解成立"| SORT
+    ENC --> SORT
+    subgraph SD["维度排序近似传输距离"]
+        direction TB
+        SORT["对每个特征维度 d 各自排序<br/>v_d = sort(X 第 d 列)"] --> W1["一维 Wasserstein<br/>= 排序后 L1 距离"]
+    end
+    subgraph GH["GraphHash（LSH 索引）"]
+        direction TB
+        FF["随机 Fourier 特征<br/>t_d = F(v_d)"] --> LSH["随机超平面哈希码<br/>h_d = sign(W·t_d)"]
+    end
+    W1 --> FF
+    LSH --> BUCKET["每维各自检索桶<br/>子线性查询"]
+    BUCKET --> VOTE["D 个维度投票聚合"]
+    VOTE --> OUT["Top-k 相似图"]
+```
 
 ### 关键设计
 

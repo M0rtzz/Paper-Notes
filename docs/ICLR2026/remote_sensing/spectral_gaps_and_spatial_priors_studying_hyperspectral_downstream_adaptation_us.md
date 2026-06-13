@@ -38,7 +38,21 @@ tags:
 
 ### 整体框架
 
-这篇论文想回答一个看似简单的问题：一个**根本没在高光谱数据上预训练过**的多模态地理空间基础模型 TerraMind，能不能当作高光谱（HSI）下游任务的有效基线？难点在于二者维度对不上——HSI 有数百个窄波段（$X_{\text{HSI}} \in \mathbb{R}^{H \times W \times C_{in}}$，$C_{in}$ 可达 200+），而 TerraMind 的光学分支只认 Sentinel-2 L2A 的 12 个波段。所以整条流程的核心就是一个「通道适配」环节：先把高维 HSI 投影到 12 波段的 S2 光谱空间（$\hat{X} \in \mathbb{R}^{H \times W \times 12}$），让它能喂进 TerraMind，再加上任务专用解码头，用预训练权重做下游微调。论文真正研究的，是这个投影该怎么做——两种策略孰优孰劣，以及为什么。
+这篇论文想回答一个看似简单的问题：一个**根本没在高光谱数据上预训练过**的多模态地理空间基础模型 TerraMind，能不能当作高光谱（HSI）下游任务的有效基线？难点在于二者维度对不上——HSI 有数百个窄波段（$X_{\text{HSI}} \in \mathbb{R}^{H \times W \times C_{in}}$，$C_{in}$ 可达 200+），而 TerraMind 的光学分支只认 Sentinel-2 L2A 的 12 个波段。所以整条流程的核心就是一个「通道适配」环节：先把高维 HSI 投影到 12 波段的 S2 光谱空间（$\hat{X} \in \mathbb{R}^{H \times W \times 12}$），让它能喂进 TerraMind，再加上任务专用解码头，用预训练权重做下游微调。论文真正研究的，是这个投影该怎么做——**朴素波段选择**和 **SRF 光谱重采样**两种策略孰优孰劣，以及为什么。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["高光谱输入 X_HSI<br/>(H×W, 200+ 窄波段)"] --> B{"通道适配<br/>投影到 12 波段 S2 空间"}
+    B -->|策略一| C["朴素波段选择<br/>取离 S2 中心波长<br/>最近的原始波段"]
+    B -->|策略二| D["SRF 光谱重采样<br/>按响应函数加权融合"]
+    C --> E["适配后 12 波段输入<br/>(对齐预训练域)"]
+    D --> E
+    E --> F["TerraMind 主干<br/>(Sentinel-2 预训练权重)"]
+    F --> G{"任务专用头"}
+    G -->|分割| H["FCN 解码器<br/>→ mIoU"]
+    G -->|回归| I["线性头<br/>→ nMSE"]
+```
 
 ### 关键设计
 

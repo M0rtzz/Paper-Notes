@@ -47,11 +47,17 @@ tags:
 
 ### 关键设计
 
-**1. 半空间深度分层：把"数据几何如何约束网络"翻译成可碎性。** 困难在于 BEoS 给出的是分布无关的 path norm 约束，直接做全局 metric entropy 会引发维度爆炸，与深度学习实际泛化矛盾。本文引入 Tukey 半空间深度 $\text{depth}(\boldsymbol{x}, \mathcal{P}_X) = \inf_{\boldsymbol{u} \in \mathbb{S}^{d-1}} \mathbb{P}(\boldsymbol{u}^\top(\boldsymbol{X} - \boldsymbol{x}) \geq 0)$ 把输入空间按深度分层：在 $T$-深区域 $\Omega_T$ 内，任何穿过它的 ReLU 激活边界都必然在两侧各保留至少 $T$ 比例的数据，于是加权 path norm 中的权重函数 $g(\boldsymbol{u}, t)$ 有正下界，对应神经元的无权 path norm 被有效压到 $O(1/g_{\min}(T))$。这正是"可碎性"的核心——数据越深、半空间越难把它切碎，正则化就越强。由此得到把泛化间隙拆成浅层与深层两部分的关键分解 $\sup_{\boldsymbol{\theta} \in \Theta_{\text{BEoS}}} \text{Gap}(f_{\boldsymbol{\theta}}, \mathcal{D}) \leq \tilde{O}(\mathbb{P}(\boldsymbol{X} \notin \Omega_T)) + \tilde{O}(g_{\min}(T)^{-d/(2d+3)} n^{-(d+3)/(4d+6)})$：第一项是落在浅层（高可碎）区域的数据占比，第二项是深层区域被压住后的可控复杂度，调节阈值 $T$ 即可在两者间取平衡。
+**1. 半空间深度分层：把"数据几何如何约束网络"翻译成可碎性**
 
-**2. Beta(α) 径向分布族的泛化谱：用一个参数扫出从记忆到泛化的连续过渡。** 为了把上面的通用界落到可解析的几何上，本文构造各向同性径向分布 $\boldsymbol{X} = h(R)\boldsymbol{U}$，其中 $h(r) = 1 - (1-r)^{1/\alpha}$，$R \sim \text{Uniform}[0,1]$，$\boldsymbol{U} \sim \text{Uniform}(\mathbb{S}^{d-1})$，单一参数 $\alpha$ 控制质量在球内的径向分布。$\alpha$ 大时质量集中在球心，落入浅层区域的概率小，可碎性低、泛化好；$\alpha$ 小时质量贴近球面，可以打包大量互不相交的 spherical cap，网络几乎无代价地记忆；极限 $\alpha \to 0$（球面）下甚至存在宽度 $\leq n$ 的网络在 BEoS 条件下完美插值，$\lambda_{\max} \leq 1 + (D^2+2)/n$。本文进一步给出匹配的上界（Theorem 3.4，率 $n^{-\alpha(d+3)/(2(d^2+4\alpha d+3\alpha))}$）和下界（Theorem 3.5，率 $n^{-2\alpha/(d-1+2\alpha)}$），二者都随 $\alpha$ 单调，从而把"记忆—泛化"刻画成一条由数据几何连续调控的谱，而非二元开关。
+困难在于 BEoS 给出的是分布无关的 path norm 约束，直接做全局 metric entropy 会引发维度爆炸，与深度学习实际泛化矛盾。本文引入 Tukey 半空间深度 $\text{depth}(\boldsymbol{x}, \mathcal{P}_X) = \inf_{\boldsymbol{u} \in \mathbb{S}^{d-1}} \mathbb{P}(\boldsymbol{u}^\top(\boldsymbol{X} - \boldsymbol{x}) \geq 0)$ 把输入空间按深度分层：在 $T$-深区域 $\Omega_T$ 内，任何穿过它的 ReLU 激活边界都必然在两侧各保留至少 $T$ 比例的数据，于是加权 path norm 中的权重函数 $g(\boldsymbol{u}, t)$ 有正下界，对应神经元的无权 path norm 被有效压到 $O(1/g_{\min}(T))$。这正是"可碎性"的核心——数据越深、半空间越难把它切碎，正则化就越强。由此得到把泛化间隙拆成浅层与深层两部分的关键分解 $\sup_{\boldsymbol{\theta} \in \Theta_{\text{BEoS}}} \text{Gap}(f_{\boldsymbol{\theta}}, \mathcal{D}) \leq \tilde{O}(\mathbb{P}(\boldsymbol{X} \notin \Omega_T)) + \tilde{O}(g_{\min}(T)^{-d/(2d+3)} n^{-(d+3)/(4d+6)})$：第一项是落在浅层（高可碎）区域的数据占比，第二项是深层区域被压住后的可控复杂度，调节阈值 $T$ 即可在两者间取平衡。
 
-**3. 对低维结构的自适应：解释真实数据为何能突破维度诅咒。** 真实数据往往近似落在低维流形上，本文用混合分布 $\mathcal{P}_X = \sum_{j=1}^J \pi_j \mathcal{P}_{X,j}$ 建模，每个分量是 $m$ 维仿射子空间上的均匀球分布（$m < d$）。关键机制是：当网络被限制在子空间 $V_j$ 上时，神经元激活只由投影 $\text{proj}_{V_j} \boldsymbol{w}_k$ 决定，原本 $d-1$ 维的分隔超平面退化为子空间内的低维"knot"，可碎性随内在维度而非环境维度急剧下降。由此证明的泛化率 $\text{Gap} \lessapprox_d \left(\frac{1}{\eta} - \frac{1}{2} + 4M\right)^{\frac{m}{m^2+4m+3}} M^2 J^{4/m} n^{-1/(2m+4)}$ 中指数只依赖内在维度 $m$，环境维度 $d$ 不进入收敛速率，这正解释了为何低维流形数据（如图像）比同维高斯噪声更难过拟合。
+**2. Beta(α) 径向分布族的泛化谱：用一个参数扫出从记忆到泛化的连续过渡**
+
+为了把上面的通用界落到可解析的几何上，本文构造各向同性径向分布 $\boldsymbol{X} = h(R)\boldsymbol{U}$，其中 $h(r) = 1 - (1-r)^{1/\alpha}$，$R \sim \text{Uniform}[0,1]$，$\boldsymbol{U} \sim \text{Uniform}(\mathbb{S}^{d-1})$，单一参数 $\alpha$ 控制质量在球内的径向分布。$\alpha$ 大时质量集中在球心，落入浅层区域的概率小，可碎性低、泛化好；$\alpha$ 小时质量贴近球面，可以打包大量互不相交的 spherical cap，网络几乎无代价地记忆；极限 $\alpha \to 0$（球面）下甚至存在宽度 $\leq n$ 的网络在 BEoS 条件下完美插值，$\lambda_{\max} \leq 1 + (D^2+2)/n$。本文进一步给出匹配的上界（Theorem 3.4，率 $n^{-\alpha(d+3)/(2(d^2+4\alpha d+3\alpha))}$）和下界（Theorem 3.5，率 $n^{-2\alpha/(d-1+2\alpha)}$），二者都随 $\alpha$ 单调，从而把"记忆—泛化"刻画成一条由数据几何连续调控的谱，而非二元开关。
+
+**3. 对低维结构的自适应：解释真实数据为何能突破维度诅咒**
+
+真实数据往往近似落在低维流形上，本文用混合分布 $\mathcal{P}_X = \sum_{j=1}^J \pi_j \mathcal{P}_{X,j}$ 建模，每个分量是 $m$ 维仿射子空间上的均匀球分布（$m < d$）。关键机制是：当网络被限制在子空间 $V_j$ 上时，神经元激活只由投影 $\text{proj}_{V_j} \boldsymbol{w}_k$ 决定，原本 $d-1$ 维的分隔超平面退化为子空间内的低维"knot"，可碎性随内在维度而非环境维度急剧下降。由此证明的泛化率 $\text{Gap} \lessapprox_d \left(\frac{1}{\eta} - \frac{1}{2} + 4M\right)^{\frac{m}{m^2+4m+3}} M^2 J^{4/m} n^{-1/(2m+4)}$ 中指数只依赖内在维度 $m$，环境维度 $d$ 不进入收敛速率，这正解释了为何低维流形数据（如图像）比同维高斯噪声更难过拟合。
 
 ## 实验与结果
 

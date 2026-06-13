@@ -18,7 +18,7 @@ tags:
 # Rethinking Code Similarity for Automated Algorithm Design with LLMs
 
 **会议**: ICLR 2026  
-**arXiv**: [2603.02787](https://arxiv.org/abs/2603.02787)  
+**arXiv**: [2603.02787](https://arxiv.org/abs/2603.02787) ⚠️ arXiv 号与代码链接存疑，以原文为准  
 **代码**: [https://github.com/RayZhhh/behavesim](https://github.com/RayZhhh/behavesim)  
 **领域**: LLM / 自动算法设计 / 代码相似度  
 **关键词**: LLM-AAD, 代码相似度, 行为相似度, 动态时间规整, FunSearch, EoH, 算法多样性
@@ -42,7 +42,20 @@ tags:
 ## 方法详解
 
 ### 整体框架
-BehaveSim 要解决的是一件别的代码相似度指标做不到的事：判断两段 LLM 生成的算法是不是"真的不一样"。它的做法是绕开代码文本和最终输出，转而盯着算法运行时的行为——也就是它一步步生成中间解的过程。整条 pipeline 是这样转的：先让算法在一批问题实例上跑一遍，按时间步把每一步的中间解记录成一条"问题求解轨迹"（PSTrajs）；再用动态时间规整（DTW）把两个算法的轨迹对齐、算出一个行为距离；这个距离既可以接进 FunSearch、EoH 这类 LLM-AAD 框架替换它们原有的去重/多样性机制，也可以拿来对一大堆 AI 生成算法做聚类分析。两个算法的轨迹越对得齐，说明它们的求解策略越接近。
+BehaveSim 要解决的是一件别的代码相似度指标做不到的事：判断两段 LLM 生成的算法是不是"真的不一样"。它的做法是绕开代码文本和最终输出，转而盯着算法运行时的行为——也就是它一步步生成中间解的过程。整条 pipeline 是这样转的：先让算法在一批问题实例上跑一遍，按时间步把每一步的中间解记录成一条"问题求解轨迹"（PSTrajs）；再用动态时间规整（DTW）把两个算法的轨迹对齐、算出一个行为距离；这个行为距离有两条下游通路——既可以接进 FunSearch、EoH 这类 LLM-AAD 框架替换它们原有的去重/多样性机制，也可以拿来对一大堆 AI 生成算法做聚类分析。两个算法的轨迹越对得齐，说明它们的求解策略越接近。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["待比较的两个算法<br/>+ 一批问题实例"]
+    PS["问题求解轨迹（PSTrajs）提取<br/>按时间步记录中间解序列 τ(p)"]
+    DTW["基于 DTW 的轨迹对齐<br/>弹性对齐 → 多实例平均行为距离"]
+    IN --> PS --> DTW
+    DTW -->|"替换框架的相似度接口"| AAD["集成到 LLM-AAD 框架<br/>FunSearch/EoH 去重与多样性"]
+    DTW -->|"两两距离拼成矩阵"| CLU["算法聚类与分析<br/>层次聚类 → 策略谱系"]
+    AAD --> OUT1["挤掉伪创新<br/>探索更广解空间"]
+    CLU --> OUT2["AI 生成算法的品质检测"]
+```
 
 ### 关键设计
 

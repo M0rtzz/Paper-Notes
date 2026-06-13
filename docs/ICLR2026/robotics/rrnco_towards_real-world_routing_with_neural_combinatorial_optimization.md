@@ -43,7 +43,26 @@ tags:
 
 ### 整体框架
 
-RRNCO 是一个编码器-解码器架构：编码器把节点坐标和真实道路矩阵（距离、时长、方向角）压缩成一组综合节点表示，解码器再以 POMO 风格自回归地逐步选下一个节点、拼出完整路径。所有针对"真实世界非对称性"的创新都集中在编码器端，核心是用自适应节点嵌入（ANE）把边特征注入节点表示、再用神经自适应偏置（NAB）把多模态非对称关系喂给无注意力的 AAFM 模块。
+RRNCO 是一个编码器-解码器（encoder-decoder）架构：编码器把节点坐标和真实道路矩阵（距离、时长、方向角）压缩成一组综合节点表示，解码器再以 POMO 风格自回归地逐步选下一个节点、拼出完整路径。所有针对"真实世界非对称性"的创新都集中在编码器端——先用自适应节点嵌入（Adaptive Node Embedding, ANE）把距离信息注入节点表示并派生行/列嵌入，再用神经自适应偏置（Neural Adaptive Bias, NAB）把距离、时长、方向角三种边特征学成一张偏置矩阵，最后把这张偏置接进无注意力模块 AAFM 的聚合接口，让堆叠 $L$ 层的编码器始终带着"这条边好不好走"的非对称先验。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}}%%
+flowchart TD
+    IN["输入：节点坐标<br/>+ 真实道路矩阵<br/>(距离 D / 时长 T / 方向角 Φ)"]
+    subgraph ENC["编码器（× L 层）"]
+        direction TB
+        ANE["自适应节点嵌入 ANE<br/>距离倒数采样 k 邻居<br/>+ Contextual Gating<br/>→ 行/列嵌入"]
+        NAB["神经自适应偏置 NAB<br/>D / Φ / T 各自嵌入<br/>+ 温度 softmax 门控<br/>→ 偏置矩阵 A"]
+        AAFM["AAFM 注入<br/>无注意力聚合 σ(Q)⊙…<br/>把偏置 A 接入接口"]
+        ANE --> AAFM
+        NAB -->|偏置 A| AAFM
+    end
+    DEC["POMO 解码器<br/>多起点自回归<br/>逐步选下一节点"]
+    OUT["输出：完整路径"]
+    IN --> ENC
+    ENC -->|综合节点表示| DEC
+    DEC --> OUT
+```
 
 ### 关键设计
 

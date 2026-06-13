@@ -47,15 +47,36 @@ tags:
 
 ### 整体框架
 
-D3S 在标准的 critic-free 策略优化（GRPO/GSPO）外面套了一层「先选数据、再算梯度」的下采样器：每个 batch 先用全部 rollout 估出 group-relative advantage，然后在 sample 层挑出让 advantage 方差最大的回答子集，在 token 层只保留高熵×高 advantage 的关键 token，最后用一个随训练进度变化的调度器控制两层的下采样强度。最终只有不到 20% 的 token 进入梯度更新，但携带的学习信号反而更集中。
+D3S 要解决的痛点是：critic-free 的 GRPO/GSPO 把一个大 group 里所有 rollout、一条回答里所有 token 一视同仁地塞进梯度，结果海量「无差异」样本和简单 token 把真正有价值的学习信号稀释掉，收敛很慢。D3S 的思路是在策略优化外面套一层「先选数据、再算梯度」的下采样器：每个 batch 先用全部 rollout 估出组内归一化的 group-relative advantage，然后在 sample 层挑出让 advantage 方差最大的回答子集，在 token 层只保留高熵×高 advantage 的关键 token，再用一个随训练进度变化的调度器同时控制这两层「保留多少」。最终只有不到 20% 的 token 进入 GRPO/GSPO 的梯度更新，但携带的学习信号反而更集中、梯度范数上界更高。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["每个 query 的<br/>G 个 rollout"] --> B["组内估 group-relative<br/>advantage（归一化）"]
+    B --> C["Sample 层跨组<br/>方差最大化<br/>保留 N 个高方差样本"]
+    C --> D["Token 层熵-advantage<br/>加权选择<br/>保留 top-K% 关键 token"]
+    D --> E["GRPO/GSPO 梯度更新<br/>（<20% token）"]
+    S["动态下采样调度<br/>随进度 p 调 (N, K)"] -.->|早期紧 N,K| C
+    S -.->|后期放宽 N,K| D
+```
 
 ### 关键设计
 
-**1. Sample 层跨组 advantage 方差最大化：把零信号样本筛掉。** GRPO 的痛点在于大 group 里塞满了全对/全错的「无差异」回答，它们的 advantage 接近零，被平均进梯度后只起稀释作用。D3S 反过来主动保留方差最大的子集——给定 query $x$ 的 $G$ 个 rollout，先在组内求 $\hat{\mathcal{S}}_{\text{query}} = \arg\max_{\hat{S},\,|\hat{S}|=N_{\hat{s}}} \text{Var}(A_{\hat{S}})$，实现上就是取正 advantage 最大的 $N_{\hat{S},\text{pos}}$ 个加负 advantage 最小的 $N_{\hat{S},\text{neg}}$ 个。考虑到不同 group 的 advantage 分布差异很大（有些整组全对全错直接归零），再在整个 batch 上做一次跨组选择 $\hat{\mathcal{S}}_{\text{batch}} = \arg\max_{\hat{S},|\hat{S}|=N} \text{Var}(A_{\hat{S}})$；注意 advantage 只在组内归一化、跨组时不再二次归一化，从而保留原始的分布幅度。之所以盯住 advantage 方差而非奖励方差，本文给了理论支撑：GRPO 的梯度范数上界恒为 $4\gamma(x;\theta)$、与 $\text{Var}(R)$ 无关（Proposition 1），所以单纯放大奖励方差不会改变上界；而下采样后的上界正比于 $(\text{Var}(A'))^{1/3}$（Proposition 2），且从标准化集合中总能抽出方差 $\geq 1$ 的子集（Lemma 1），保证筛选后梯度上界不低于原始。
+**1. Sample 层跨组 advantage 方差最大化：把零信号样本筛掉**
 
-**2. Token 层熵-advantage 加权选择：只在关键决策点更新。** 即便选对了样本，一条回答里仍有大量简单 token、中性 token 在稀释梯度。D3S 为每个 token 定义生成熵 $H_{i,t} = -\sum_{j=1}^{V} \pi_\theta(\text{token}_j \mid x_i, y_{i,<t}) \log \pi_\theta(\text{token}_j \mid x_i, y_{i,<t})$，再以 $|A_{i,t}| \times H_{i,t}$ 为打分取 top-$K\%$ 的 token 进入更新：$\mathcal{T} = \text{top}_{K\%}(y_{i,t},\; y_{i,t} \in \hat{\mathcal{S}},\; \text{key} = |A_{i,t}| \times H_{i,t})$。这个乘积度量同时要求「影响力大」和「不确定性高」——$|A_{i,t}|$ 大说明该 token 对最终奖励的贡献大，$H_{i,t}$ 大说明模型在此处摇摆不定，两者都满足的 token 恰是最值得优化的决策点。
+GRPO 的痛点在于大 group 里塞满了全对/全错的「无差异」回答，它们的 advantage 接近零，被平均进梯度后只起稀释作用。D3S 反过来主动保留方差最大的子集——给定 query $x$ 的 $G$ 个 rollout，先在组内求 $\hat{\mathcal{S}}_{\text{query}} = \arg\max_{\hat{S},\,|\hat{S}|=N_{\hat{s}}} \text{Var}(A_{\hat{S}})$，实现上就是取正 advantage 最大的 $N_{\hat{S},\text{pos}}$ 个加负 advantage 最小的 $N_{\hat{S},\text{neg}}$ 个。考虑到不同 group 的 advantage 分布差异很大（有些整组全对全错直接归零），再在整个 batch 上做一次跨组选择 $\hat{\mathcal{S}}_{\text{batch}} = \arg\max_{\hat{S},|\hat{S}|=N} \text{Var}(A_{\hat{S}})$；注意 advantage 只在组内归一化、跨组时不再二次归一化，从而保留原始的分布幅度。之所以盯住 advantage 方差而非奖励方差，本文给了理论支撑：GRPO 的梯度范数上界与 $\text{Var}(R)$ 无关（Proposition 1），所以单纯放大奖励方差不会改变上界；而下采样后的上界正比于 $(\text{Var}(A'))^{1/3}$（Proposition 2），且从标准化集合中总能抽出方差 $\geq 1$ 的子集（Lemma 1），保证筛选后梯度上界不低于原始。
 
-**3. 动态下采样调度：早期猛筛加速、后期放宽防过拟合。** 固定强度的激进下采样虽然早期收敛快，但持续只盯着少量高方差样本会让模型过拟合（消融里 D1S/D2S 后期被 GRPO 反超就是这个原因）。D3S 用一个随训练进度 $p \in [0,1]$ 线性插值的调度 $[N_s^{(p)}, K^{(p)}] = (1-p) \cdot [N_{\text{init}}, K_{\text{init}}] + p \cdot [N_{\text{final}}, K_{\text{final}}]$ 来折中：$p=0$ 时用少样本+少 token 的激进配置快速学习，$p \to 1$ 时逐步纳入更多样本和 token、把强度放回常规水平，从而在前期吃到效率红利的同时避免后期泛化崩塌。
+**2. Token 层熵-advantage 加权选择：只在关键决策点更新**
+
+即便选对了样本，一条回答里仍混着大量简单 token（模型既自信又正确）和中性 token（对结果几乎没影响），它们和真正的关键 token 一起平均，照样稀释梯度。D3S 为每个 token 定义生成熵 $H_{i,t} = -\sum_{j=1}^{V} \pi_\theta(\text{token}_j \mid x_i, y_{i,<t}) \log \pi_\theta(\text{token}_j \mid x_i, y_{i,<t})$，再以 $|A_{i,t}| \times H_{i,t}$ 为打分取 top-$K\%$ 的 token 进入更新：$\mathcal{T} = \text{top}_{K\%}(y_{i,t},\; y_{i,t} \in \hat{\mathcal{S}},\; \text{key} = |A_{i,t}| \times H_{i,t})$。这个乘积度量同时要求「影响力大」和「不确定性高」——$|A_{i,t}|$ 大说明该 token 对策略改进的潜力大（正负都算），$H_{i,t}$ 大说明模型在此处摇摆不定，两者都满足的 token 恰是奖励关键区里最值得优化、最该让模型「想清楚」的决策点。
+
+**3. 动态下采样调度：早期猛筛加速、后期放宽防过拟合**
+
+固定强度的激进下采样虽然早期收敛快，但持续只盯着少量高方差样本会诱发 reward hacking 和过拟合（消融里不带调度的 D1S/D2S 后期被 GRPO 反超就是这个原因）。借鉴课程学习「由简到繁」的思想，D3S 用一个随训练进度 $p \in [0,1]$ 线性插值的调度同时控制前两个设计的保留量——其中 $N_s^{(p)}$ 调每个 query 保留的样本数、$K^{(p)}$ 调每条回答保留的 token 比例：
+
+$$[N_s^{(p)}, K^{(p)}] = (1-p) \cdot [N_{\text{init}}, K_{\text{init}}] + p \cdot [N_{\text{final}}, K_{\text{final}}]$$
+
+$p=0$ 时用少样本+少 token 的激进配置快速学习，$p \to 1$ 时逐步纳入更多样本和 token、把强度放回常规水平，从而在前期吃到效率红利的同时避免后期泛化崩塌。
 
 ## 实验
 

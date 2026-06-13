@@ -40,15 +40,31 @@ tags:
 ## 方法详解
 
 ### 整体框架
-KVComm 让 Sender 处理完 context 后只把一部分层的 KV pairs 交给 Receiver，由后者在对应层把两方的 Key/Value 拼接起来继续推理：$\mathbf{k}_r^l \leftarrow [\mathbf{k}_s^{l_i}; \mathbf{k}_r^l]$。整个机制不需要训练，关键全在「传哪些层」这一步——用一个轻量打分函数挑出语义最丰富、注意力最集中的层子集。
+KVComm 要解决的是「多个同源 LLM 协作时该怎么把上下文信息高效地传给对方」。它的做法是：Sender 照常读完自己的 context、缓存好各层的 KV pairs，但不把全部层都发出去，而是先用一个轻量打分函数给每层算个「值不值得传」的分数，挑出 top-$M$ 层，只把这几层的 Key/Value 发给 Receiver；Receiver 收到后在对应层把两方的序列拼起来——$\mathbf{k}_r^l \leftarrow [\mathbf{k}_s^{l_i}; \mathbf{k}_r^l]$——再继续往下推理。整套机制零训练，唯一的「智能」全在打分选层这一步：选对了语义最丰富、注意力最集中的少数几层，传 30% 的层就能超过传全部 hidden states 的方法。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["Sender 读完 context<br/>缓存各层 KV pairs"] --> B["逐层打分<br/>注意力重要性 + 高斯先验"]
+    B --> C["按分数取 top-M 层<br/>(常为非连续层)"]
+    C --> D["只传选中层的<br/>Key/Value"]
+    D --> E["Receiver 在对应层拼接<br/>[k_s ; k_r]"]
+    E --> F["Receiver 继续推理输出"]
+```
 
 ### 关键设计
 
-**1. 选 KV pairs 而非 hidden states 作通信介质：避免覆盖 Receiver 自身表示。** 直观上 hidden states 是每层最完整的表示，似乎最该传。但作者发现它有「信息集中偏差」——last token 在深层承载了几乎全部上下文信息，而一旦把它传给 Receiver，就等于直接替换掉 Receiver 在该层的对应表示，把对方自己的推理状态冲掉了。KV pairs 则是 Attention 的输入而非输出：把 Sender 的 $\mathbf{k}_s$、$\mathbf{v}_s$ 拼接到 Receiver 的 KV 序列后端，Receiver 的 Query 只是多了一些可以 attend 的 Key，原有表示一个字节都没动。这种「加法而非替换」让 softmax 注意力能自己决定要不要、用多少 Sender 信息，无用部分被自然地低权重化，因此 KV 通信天生比 hidden states 温和、可控。
+**1. 选 KV pairs 而非 hidden states 作通信介质：避免覆盖 Receiver 自身表示**
 
-**2. 注意力重要性 + 高斯先验的层选择打分：用一个校准样本就挑出最优子集。** 既然只传部分层，就要量化每层值不值得传。作者给每层算两个分数再加权：一是注意力重要性，把该层所有 head、所有 query 对各 context token 的注意力求平均，$\hat{S}_a^l = \frac{1}{H|Q|}\sum_h\sum_q\sum_c a_{h,q,c}^l$，注意力越集中说明这层对上下文越「在意」、信息量越大；二是一个高斯先验 $P^l = \exp\!\big(-\frac{(l-\mu)^2}{2\sigma^2}\big)$，把分数往网络中间层倾斜，因为底层只管语法、低级特征，顶层又过于绑定 next-token 预测，唯有中层的语义与世界知识最通用、最可跨模型迁移。最终分数 $S^l = \alpha S_a^l + (1-\alpha) P^l$，取 top-$M$ 层传输。这套打分只需 **1 个校准样本**就足够稳健，所以部署成本极低；而且实验里挑出的层往往是非连续的，比 DroidSpeak 那种连续 chunk 选层更灵活。
+直观上 hidden states 是每层最完整的表示，似乎最该传。但作者发现它有「信息集中偏差」——last token 在深层承载了几乎全部上下文信息，而一旦把它传给 Receiver，就等于直接替换掉 Receiver 在该层的对应表示，把对方自己的推理状态冲掉了。KV pairs 则是 Attention 的输入而非输出：把 Sender 的 $\mathbf{k}_s$、$\mathbf{v}_s$ 拼接到 Receiver 的 KV 序列后端，Receiver 的 Query 只是多了一些可以 attend 的 Key，原有表示一个字节都没动。这种「加法而非替换」让 softmax 注意力能自己决定要不要、用多少 Sender 信息，无用部分被自然地低权重化，因此 KV 通信天生比 hidden states 温和、可控。
 
-**3. 两条假设支撑整个设计：中间层最可迁移、注意力越集中越有信息量。** 上面的打分函数不是拍脑袋，而是建立在两个被实验验证的假设上：H1——中间层的 KV 含有最可迁移的语义知识，所以高斯先验偏向中层是合理的；H2——注意力分布更集中的层信息量更大，所以注意力重要性可以当作选层依据。两条假设各自对应分数中的一项，把「为什么这么选层」讲清楚，也让后面 30% 层就超越多数 baseline 的结果有了解释——传得少不是妥协，而是把真正有用的几层精准挑了出来。
+**2. 注意力重要性 + 高斯先验的层选择打分：用一个校准样本就挑出最优子集**
+
+既然只传部分层，就要量化每层值不值得传。作者给每层算两个分数再加权：一是注意力重要性，把该层所有 head、所有 query 对各 context token 的注意力求平均，
+
+$$\hat{S}_a^l = \frac{1}{H|Q|}\sum_h\sum_q\sum_c a_{h,q,c}^l$$
+
+注意力越集中说明这层对上下文越「在意」、信息量越大（对应作者验证过的假设 H2：注意力分布更集中的层信息量更大）；二是一个高斯先验 $P^l = \exp\!\big(-\frac{(l-\mu)^2}{2\sigma^2}\big)$，把分数往网络中间层倾斜——因为底层只管语法、低级特征，顶层又过于绑定 next-token 预测，唯有中层的语义与世界知识最通用、最可跨模型迁移（对应假设 H1：中间层的 KV 含最可迁移的语义知识）。两项加权得最终分数 $S^l = \alpha S_a^l + (1-\alpha) P^l$，取 top-$M$ 层传输。这套打分只需 **1 个校准样本**就足够稳健，部署成本极低；而且实验里挑出的层往往是非连续的，比 DroidSpeak 那种连续 chunk 选层更灵活。两条假设各自撑起分数里的一项，也解释了为什么传 30% 层就能超越多数 baseline——传得少不是妥协，而是把真正有用的几层精准挑了出来。
 
 ## 实验关键数据
 

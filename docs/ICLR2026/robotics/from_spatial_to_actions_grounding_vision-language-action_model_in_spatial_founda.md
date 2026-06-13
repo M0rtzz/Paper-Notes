@@ -39,19 +39,40 @@ tags:
 
 ### 整体框架
 
-FALCON 把 VLA 拆成「大脑皮层 + 小脑」两条通路：2D VLM（Kosmos-2，~1.6B）负责读懂图像和语言指令，吐出语义 action token $\hat{\mathbf{t}}_{\text{act}}$；空间侧由 Embodied Spatial Model（ESM，基于空间基础模型 VGGT，~1.0B）从 RGB 中抽出富含几何的 3D 空间 token $\mathbf{T}_{\text{spl}}$。两路表示不在 VLM 输入端拼接，而是汇到 Spatial-Enhanced Action Head 做融合，再生成机器人动作，全模型约 2.9B 参数。这种「空间信息绕开 VLM、只在动作头注入」的拓扑，是后续所有设计的出发点。
+FALCON 把 VLA 拆成「大脑皮层 + 小脑」两条通路：2D VLM（Kosmos-2，~1.6B）负责读懂图像和语言指令，吐出语义 action token $\hat{\mathbf{t}}_{\text{act}}$；空间侧由 Embodied Spatial Model（ESM，基于空间基础模型 VGGT，~1.0B）从 RGB 中抽出富含几何的 3D 空间 token $\mathbf{T}_{\text{spl}}$，期间可选地把深度图 / 相机位姿当作随机注入的额外条件。两路表示不在 VLM 输入端拼接，而是汇到 Spatial-Enhanced Action Head 做逐元素加法融合，再生成机器人动作，全模型约 2.9B 参数。这种「空间信息绕开 VLM、只在动作头注入」的拓扑，是后续所有设计的出发点。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IMG["RGB 图像 + 语言指令"]
+    IMG --> VLM["2D VLM (Kosmos-2)<br/>语义理解"]
+    IMG --> DINO["DINO 编码<br/>视觉 token"]
+    VLM --> TACT["语义 action token"]
+    DINO --> ESM["Embodied Spatial Model<br/>VGGT 几何先验提取"]
+    COND["可选 3D 条件 + 随机注入<br/>深度图 / 相机位姿伯努利开关"] -.-> ESM
+    ESM --> TSPL["空间 token (3D 几何)"]
+    TACT --> HEAD["逐元素加法融合<br/>(Spatial-Enhanced Action Head)"]
+    TSPL --> HEAD
+    HEAD --> ACT["7D 机器人动作"]
+```
 
 ### 关键设计
 
-**1. Embodied Spatial Model：用空间基础模型当几何先验提取器。** VLA 的 3D 短板根源在于 2D 编码器看不到深度和几何关系。FALCON 不自己从头学 3D，而是直接借用预训练好的 VGGT：输入图像先经 DINO 编码成视觉 token $\mathbf{T}_{\text{vis}}$，与一个可学习相机 token $\mathbf{t}_{\text{cam}}$ 拼接后送进空间编码器（交叉注意力 + 自注意力堆叠），输出空间 token $\mathbf{T}_{\text{spl}} \in \mathbb{R}^{M \times D_s}$。由于 VGGT 本身是为多视图重建（深度、点云、位姿）训练的，它的 token 天然携带稠密几何信息，比伪深度估计这类弱线索强得多，也免去了 3D 数据稀缺下从零对齐的麻烦。
+**1. Embodied Spatial Model：用空间基础模型当几何先验提取器**
 
-**2. 可选 3D 条件 + 随机注入：一个模型吃下任意传感器组合。** 真实部署里深度图和相机位姿时有时无，为每种配置单独训一个模型代价太高。FALCON 把这两路做成可插拔条件：相机位姿 $P \in \mathbb{R}^7$ 经 MLP 编码为 GT camera token $\mathbf{t}_{\text{gt-cam}}$，替换掉那个可学习 camera token；深度图 $D_t$ 归一化后与有效性掩码拼接，过一个 14×14 卷积得到 $\mathbf{T}_{\text{dpt}}$，逐元素加到图像 token 上。关键在于训练时这两路是否注入由两个伯努利开关 $b_d, b_p \sim \text{Bernoulli}(p)$ 随机决定：
+VLA 的 3D 短板根源在于 2D 编码器看不到深度和几何关系。FALCON 不自己从头学 3D，而是直接借用预训练好的 VGGT：输入图像先经 DINO 编码成视觉 token $\mathbf{T}_{\text{vis}}$，与一个可学习相机 token $\mathbf{t}_{\text{cam}}$ 拼接后送进空间编码器（交叉注意力 + 自注意力堆叠），输出空间 token $\mathbf{T}_{\text{spl}} \in \mathbb{R}^{M \times D_s}$。由于 VGGT 本身是为多视图重建（深度、点云、位姿）训练的，它的 token 天然携带稠密几何信息，比伪深度估计这类弱线索强得多，也免去了 3D 数据稀缺下从零对齐的麻烦。
+
+**2. 可选 3D 条件 + 随机注入：一个模型吃下任意传感器组合**
+
+真实部署里深度图和相机位姿时有时无，为每种配置单独训一个模型代价太高。FALCON 把这两路做成可插拔条件：相机位姿 $P \in \mathbb{R}^7$ 经 MLP 编码为 GT camera token $\mathbf{t}_{\text{gt-cam}}$，替换掉那个可学习 camera token；深度图 $D_t$ 归一化后与有效性掩码拼接，过一个 14×14 卷积得到 $\mathbf{T}_{\text{dpt}}$，逐元素加到图像 token 上。关键在于训练时这两路是否注入由两个伯努利开关 $b_d, b_p \sim \text{Bernoulli}(p)$ 随机决定：
 
 $$(\mathbf{T}_{\text{spl}}, \hat{\mathbf{t}}_{\text{cam}}) = \mathcal{E}_{\text{spl}}(\mathbf{T}_{\text{vis}} + b_d \mathbf{T}_{\text{dpt}}, b_p \mathbf{t}_{\text{gt-cam}} + (1-b_p)\mathbf{t}_{\text{cam}})$$
 
 这样同一组权重在「纯 RGB」「RGB-D」「带位姿」之间都见过训练信号，测试时缺哪路都不会崩，有哪路就能顺势增强，模态可以灵活切换。
 
-**3. 在 Action Head 用逐元素加法融合：保护 VLM，零额外参数。** 把空间 embedding 直接拼进 VLM 输入会冲掉预训练好的视觉-语言对齐，零样本泛化随之退化——这是现有 3D 增强方法的通病。FALCON 干脆让空间信息绕过 VLM，只在动作头汇合：空间 token 先经 max-pooling 压成单一向量 $\mathbf{t}_{\text{spl}}$，再过一个轻量 MLP 适配器投影进 VLM 特征空间 $\widetilde{\mathbf{t}}_{\text{spl}} = \mathcal{D}(\mathbf{t}_{\text{spl}})$，然后与语义 action token 直接相加 $\mathbf{f}_{\text{fused}} = \hat{\mathbf{t}}_{\text{act}} + \widetilde{\mathbf{t}}_{\text{spl}}$，送入动作预测器（MLP 或 LSTM）输出 7D 动作序列。逐元素加法不引入新参数，消融里却胜过交叉注意力和 FiLM-Gated，原因正是它最不破坏 VLM 既有表示，把语义和几何当作可叠加的互补信号。
+**3. 在 Action Head 用逐元素加法融合：保护 VLM，零额外参数**
+
+把空间 embedding 直接拼进 VLM 输入会冲掉预训练好的视觉-语言对齐，零样本泛化随之退化——这是现有 3D 增强方法的通病。FALCON 干脆让空间信息绕过 VLM，只在动作头汇合：空间 token 先经 max-pooling 压成单一向量 $\mathbf{t}_{\text{spl}}$，再过一个轻量 MLP 适配器投影进 VLM 特征空间 $\widetilde{\mathbf{t}}_{\text{spl}} = \mathcal{D}(\mathbf{t}_{\text{spl}})$，然后与语义 action token 直接相加 $\mathbf{f}_{\text{fused}} = \hat{\mathbf{t}}_{\text{act}} + \widetilde{\mathbf{t}}_{\text{spl}}$，送入动作预测器（MLP 或 LSTM）输出 7D 动作序列。逐元素加法不引入新参数，消融里却胜过交叉注意力和 FiLM-Gated，原因正是它最不破坏 VLM 既有表示，把语义和几何当作可叠加的互补信号。
 
 ### 损失函数 / 训练策略
 

@@ -41,7 +41,25 @@ tags:
 ## 方法详解
 
 ### 整体框架
-MetaAPO 想解决的是同一个矛盾：offline 数据高效多样但分布不对齐，online 数据对齐却缺多样性，而以往混合方法靠固定阈值/比例硬拼，没把"采样"和"训练"两件事串起来。它的办法是放一个轻量级 meta-learner $h_\phi$（两层 MLP）做枢纽——同一个输出权重 $w$ 既决定某条 prompt 要不要在线重采样，又决定训练时 offline/online 损失各占多少。整个训练在一个 epoch 内迭代：先对每个 offline 样本由 meta-learner 评估它与当前策略的对齐度，对齐差的就触发在线采样补数据；再在混合数据集上用 $w$ 加权的偏好损失更新策略；每隔若干步回头更新一次 meta-learner。三个模块交替推进，让数据生成和偏好优化在训练过程中彼此咬合。
+MetaAPO 想解决的是同一个矛盾：offline 数据高效多样但分布不对齐，online 数据对齐却缺多样性，而以往混合方法靠固定阈值/比例硬拼，没把"采样"和"训练"两件事串起来。它的办法是放一个轻量级 meta-learner $h_\phi$（两层 MLP）做枢纽——同一个输出权重 $w$ 既决定某条 prompt 要不要在线重采样，又决定训练时 offline/online 损失各占多少。整个训练在一个 epoch 内把数据集切成 $T$ 个子集顺序迭代：每个子集上先由 meta-learner 评估每个 offline 样本与当前策略的对齐度，对齐差的就触发在线采样补数据；再在混合数据集上用 $w$ 加权的偏好损失更新策略；每隔若干步回头更新一次 meta-learner。三个模块交替推进，让数据生成和偏好优化在训练过程中彼此咬合。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["offline 偏好数据<br/>(x, y_w, y_l)"] --> B["算 offline DPO<br/>偏好得分 ℓ_off"]
+    B --> META
+    subgraph META["元学习器 h_φ：学习加权（设计 3）"]
+        direction TB
+        C["h_φ 把 ℓ_off<br/>映射为权重 w ∈ [0,1]"]
+        G["每 T_meta 步冻结策略<br/>用 meta buffer 更新 h_φ"]
+        G -.->|更新参数| C
+    end
+    META -->|输出权重 w| D["元加权自适应在线采样（设计 1）<br/>u>w 才在线生成 K=8 个回复<br/>→ reward model 排序 → 在线偏好对"]
+    D --> E["混合数据集 D_aug<br/>(offline + online)"]
+    E --> F["元加权偏好优化（设计 2）<br/>w·offline + (1−w)·online 损失<br/>→ 更新策略 θ"]
+    F -->|batch 入 meta buffer| G
+    F --> H["对齐后的策略 π_θ"]
+```
 
 ### 关键设计
 

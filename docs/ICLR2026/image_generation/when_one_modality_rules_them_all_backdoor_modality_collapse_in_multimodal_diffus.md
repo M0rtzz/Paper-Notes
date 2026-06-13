@@ -42,17 +42,34 @@ tags:
 
 ### 整体框架
 
-本文不提新攻击，而是搭一套把"后门到底靠哪个模态触发"量化出来的分析框架。在图像+文本的二模态设定下，把模态集 $\mathcal{M}=\{I,T\}$ 视为合作博弈的两个玩家，后门激活强度视为收益，于是只需评估 $\emptyset$、$\{I\}$、$\{T\}$、$\{I,T\}$ 四种触发器组合的收益，就能用 Shapley 值精确分解每个模态的贡献并检验二者是否协同。
+本文不提新攻击，而是搭一套把"后门到底靠哪个模态触发"量化出来的诊断框架。在图像 $I$ + 文本 $T$ 的二模态设定下，把模态集 $\mathcal{M}=\{I,T\}$ 视为合作博弈的两个玩家，后门激活强度视为收益。整条诊断流水线只有三步：先枚举 $\emptyset$、$\{I\}$、$\{T\}$、$\{I,T\}$ 四种触发器组合，对每种组合用一个 **值函数 $v(S)$** 把"后门被触发了多少"压成一个可加减的标量；再分两路读这四个数——一路用 **TMA**（Shapley 值）把后门收益按模态拆开、看谁主导，一路用 **CTI**（超可加性检验）看两个触发器是协同还是互相拆台。两个指标合起来就能定量刻画"赢者通吃"的模态坍缩。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    A["图像触发器 + 文本触发器<br/>多模态后门模型"] --> B["枚举四种触发器组合 S<br/>∅ / 仅图像 / 仅文本 / 双模态"]
+    B --> C["值函数 v(S)<br/>CLIP 空间: 靠近后门目标 − 靠近干净参考"]
+    C --> D["TMA: Shapley 值<br/>拆出模态贡献 φ_I 与 φ_T"]
+    C --> E["CTI: 超可加性检验<br/>交互项 I = v(IT) − v(I) − v(T) + v(∅)"]
+    D --> F["谁主导后门<br/>(文本赢者通吃)"]
+    E --> G["协同还是拆台<br/>(负交互)"]
+```
 
 ### 关键设计
 
-**1. Per-example 值函数：把"后门被触发了多少"变成一个可加减的标量。** 要做归因，首先得给每种触发器组合 $S$ 定义一个收益。直接用攻击成功率会丢掉样本级信息，作者改在 CLIP 嵌入空间上度量：生成结果 $\mathbf{z}_S$ 与后门目标 $\mathbf{z}_{\text{tr}}$ 的接近程度，减去它与干净参考 $\mathbf{z}_{\text{cl}}$ 的接近程度，即 $v(S)=\cos(\mathbf{z}_S,\mathbf{z}_{\text{tr}})-\cos(\mathbf{z}_S,\mathbf{z}_{\text{cl}})$。这样 $v(S)$ 越大表示组合 $S$ 越能把输出推向后门目标，且它是连续标量，能直接代入 Shapley 公式做边际差分。
+**1. 值函数 $v(S)$：把"后门被触发了多少"变成一个可加减的标量**
 
-**2. Trigger Modality Attribution（TMA）：用 Shapley 值给每个模态分配"它该负多少责任"。** 知道四个 $v(S)$ 后，按 Shapley 公式算出每个模态在所有加入顺序上的平均边际贡献：$\phi_I=\frac12\big(v(\{I\})-v(\emptyset)\big)+\frac12\big(v(\{I,T\})-v(\{T\})\big)$，文本侧 $\phi_T$ 对称。二模态下排列只有两种，所以四次评估就能精确求解，无需蒙特卡洛近似。Shapley 值满足效率公理 $\phi_I+\phi_T=v(\{I,T\})-v(\emptyset)$，意味着两个模态的归因恰好瓜分了联合触发带来的全部后门收益，因此 $\phi_I$ 与 $\phi_T$ 的相对大小能直接读出"谁在主导后门"。
+要做归因，首先得给每种触发器组合 $S$ 定义一个收益。直接用攻击成功率会丢掉样本级信息，作者改在 CLIP 嵌入空间上度量：设 $\mathbf{z}_S$ 是组合 $S$ 下生成结果的嵌入，$\mathbf{z}_{\text{tr}}$、$\mathbf{z}_{\text{cl}}$ 分别是后门目标与干净参考的嵌入，值函数取二者余弦相似度之差 $v(S)=\cos(\mathbf{z}_S,\mathbf{z}_{\text{tr}})-\cos(\mathbf{z}_S,\mathbf{z}_{\text{cl}})$。$v(S)$ 越大表示组合 $S$ 越能把输出推向后门目标。关键在于它是连续标量，能直接代入下面两个指标做边际差分，而 ASR 这种 0/1 判定做不到。
 
-**3. Cross-Trigger Interaction（CTI）：判断两个触发器是协同还是互相拆台。** TMA 只说了各模态分到多少，但联合触发究竟比单模态之和更强还是更弱，需要单独的超可加性检验。作者定义交互项 $\mathcal{I}=v(\{I,T\})-v(\{I\})-v(\{T\})+v(\emptyset)$：$\mathcal{I}>0$ 说明双模态一起上比各自相加还强，是真正的协同；$\mathcal{I}<0$ 则说明存在干扰或冗余，多放一个触发器反而帮倒忙。在验证集上取均值 $\bar{\mathcal{I}}=\frac{1}{|\mathcal{D}_{\text{val}}|}\sum_x \mathcal{I}(x)$ 即得数据集级别的交互强度，配合 TMA 一起就能刻画"赢者通吃"的坍缩动态。
+**2. TMA：用 Shapley 值给每个模态分配"它该负多少责任"**
 
-整套分析在 InstructPix2Pix + CelebA 上展开，覆盖三对触发器（White-box+mignneko、Eyeglasses+anonymous、Stop-sign+latte coffee）、两种投毒协议（OR 投毒三个等大小子集、AND 仅联合投毒）和 1%/5%/10% 三种投毒比例。
+知道四个 $v(S)$ 后，Trigger Modality Attribution 按 Shapley 公式算出每个模态在所有加入顺序上的平均边际贡献：$\phi_I=\frac12\big(v(\{I\})-v(\emptyset)\big)+\frac12\big(v(\{I,T\})-v(\{T\})\big)$，文本侧 $\phi_T$ 对称。二模态下加入顺序只有两种，所以四次评估就能精确求解，无需蒙特卡洛近似。Shapley 值满足效率公理 $\phi_I+\phi_T=v(\{I,T\})-v(\emptyset)$，意味着两个模态的归因恰好瓜分了联合触发带来的全部后门收益，因此 $\phi_I$ 与 $\phi_T$ 的相对大小能直接读出"谁在主导后门"——这正是诊断模态坍缩要的那把尺子。
+
+**3. CTI：判断两个触发器是协同还是互相拆台**
+
+TMA 只说了各模态分到多少，但联合触发究竟比单模态之和更强还是更弱，需要单独的超可加性检验。Cross-Trigger Interaction 定义交互项 $\mathcal{I}=v(\{I,T\})-v(\{I\})-v(\{T\})+v(\emptyset)$：$\mathcal{I}>0$ 说明双模态一起上比各自相加还强，是真正的协同；$\mathcal{I}<0$ 则说明存在干扰或冗余，多放一个触发器反而帮倒忙。在验证集上取均值 $\bar{\mathcal{I}}=\frac{1}{|\mathcal{D}_{\text{val}}|}\sum_x \mathcal{I}(x)$ 即得数据集级别的交互强度。它和 TMA 互补：TMA 回答"谁主导"，CTI 回答"合起来有没有 1+1>2"，两者一起才能刻画"赢者通吃"的坍缩动态。
+
+整套诊断在 InstructPix2Pix + CelebA 上展开，覆盖三对触发器（White-box+mignneko、Eyeglasses+anonymous、Stop-sign+latte coffee）、两种投毒协议（OR 把触发器分别投进各自子集、AND 仅对联合输入投毒）和 1%/5%/10% 三种投毒比例。
 
 ## 实验关键数据
 

@@ -38,7 +38,30 @@ tags:
 
 ### 整体框架
 
-TED 把 Agent 评估拆成 Talk、Evaluate、Diagnose 三个串起来的阶段：先用可复用的 persona 模板模拟 expert / non-expert 用户与 Agent 多轮对话，再把任务子目标转成 grading notes 交给 LLM-as-judge 打分并算出一组进展类效率指标，最后把 judge 与 Agent 的不一致自动提取成错误并语义聚类，形成"评分—诊断—改进"的闭环。整个框架不依赖任何领域专用的成功判定逻辑，因此能跨基准复用。
+TED 把 Agent 评估拆成 Talk、Evaluate、Diagnose 三个串起来的阶段，整体在做一件事：在受控的用户条件下让 Agent 跑完多轮对话，再把"做到几成"和"错在哪"都量化出来。先用一套与任务解耦的 persona 模板模拟 expert / non-expert 用户去和 Agent 多轮对话，产出对话轨迹；再把任务的各个子目标统一改写成自然语言 grading notes 交给 LLM-as-judge 逐条判定，并据此算出一组刻画"部分进展 + 对话效率"的指标；最后从 judge 与 Agent 的不一致里自动提取出具体错误、语义聚类成少数高级错误类别，把这些类别反写进 Agent 提示词，形成"评分→诊断→改进"的闭环。整个框架不依赖任何领域专用的成功判定逻辑（数据库查询、正则匹配等），因此换基准只需把子目标重写成 grading notes 即可复用。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    P["persona 画像 p<br/>expert / non-expert"] --> U
+    I["任务指令 i"] --> U
+    subgraph TALK["通用可复用 Persona 模板"]
+        direction TB
+        U["模拟用户 u=f(p,i)<br/>反思→回应两步"]
+    end
+    U <-->|多轮对话| AG["待测 Agent（调用工具）"]
+    AG -->|对话轨迹 τ| GN
+    subgraph EVAL["Grading Notes 与进展类效率指标"]
+        direction TB
+        GN["子目标 → grading notes<br/>LLM-as-judge 逐条判定（多次取多数票）"] --> METRIC["进展指标<br/>MaxProgressRate@k / MaxAUC@k / MaxPPT@k"]
+    end
+    METRIC --> LOW
+    subgraph DIAG["自动化错误发现与聚类"]
+        direction TB
+        LOW["judge / agent 不一致<br/>→ 低级错误识别"] --> HIGH["语义聚类<br/>→ 高级错误类别"]
+    end
+    HIGH -->|改写提示词 +8~10%| AG
+```
 
 ### 关键设计
 

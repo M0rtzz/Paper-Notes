@@ -48,6 +48,17 @@ CogFlow 提出认知启发的三阶段视觉数学推理框架（感知→内化
 ### 整体框架
 CogFlow 把视觉数学求解拆成一条三阶段认知流：先**感知**（从图里读出几何图元、坐标、文字标注），再**内化**（把零散感知结果整理成结构化的可推理知识），最后**推理**（基于内化后的知识一步步算出答案）。和以往"解耦管线"最大的不同在于，它不只关心每一阶段单独做得好不好，而是用三个针对性的奖励把"感知→内化→推理"这条链拧紧：SynVRs 管感知阶段的质量、IntlzR 管推理是否忠于感知、VGPO 在训练和推理时挡掉低质量感知。整套模型先做 SFT 冷启动，再用 GRPO 做三重奖励的 RL 微调。
 
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["视觉数学题<br/>(几何图 + 题干)"] --> SFT["SFT 冷启动<br/>(MathCog-SFT, 120K 对齐样本)"]
+    SFT --> SYN["① 感知阶段：读出几何图元/坐标/标注<br/>Synergistic Visual Rewards<br/>(VPR 几何精度 + VSR 语义一致) 打分"]
+    SYN --> INTL["② 内化阶段：整理成结构化知识<br/>Knowledge Internalization Reward<br/>检测推理是否忠于感知"]
+    INTL --> REAS["③ 推理阶段：基于内化知识<br/>生成多步推理链 (InfR 监督结果)"]
+    REAS --> VGPO["Visual-Gated Policy Optimization<br/>Visual Gate 挡低质量感知 +<br/>GRPO 联合优化三重奖励"]
+    VGPO --> OUT["答案"]
+```
+
 ### 关键设计
 
 **1. Synergistic Visual Rewards（SynVRs）：从参数和语义两个空间双重打分感知质量**

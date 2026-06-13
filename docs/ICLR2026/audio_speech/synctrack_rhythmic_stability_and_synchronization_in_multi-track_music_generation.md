@@ -37,7 +37,23 @@ tags:
 ## 方法详解
 
 ### 整体框架
-SyncTrack 建在潜空间扩散模型上：多轨音频先经 STFT+Mel 与 VAE 编码成潜表征 $z^s \in \mathbb{R}^{C \times T \times F}$，U-Net 在潜空间做去噪扩散后由 VAE 解码、HiFi-GAN 合成波形。四个轨道（bass、drums、guitar、piano）并行生成，关键在于 U-Net 内部把每一层拆成两类模块——轨道共享模块负责让所有轨道对齐同一节奏，轨道特定模块负责保住各乐器独有的音色。
+SyncTrack 建在潜空间扩散模型上：多轨音频先经 STFT+Mel 与 VAE 编码成潜表征 $z^s \in \mathbb{R}^{C \times T \times F}$，U-Net 在潜空间做去噪扩散后由 VAE 解码、HiFi-GAN 合成波形。四个轨道（bass、drums、guitar、piano）并行生成，关键在于 U-Net 的 input/mid/output 每个 block 里都把每一层拆成两类模块——轨道共享模块负责让所有轨道对齐同一节奏，轨道特定模块负责保住各乐器独有的音色。此外作者还配套提出三个节奏一致性指标（IRS/CBS/CBD）来量化"节奏稳不稳、轨间齐不齐"这一 FAD 测不到的维度。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    A["多轨音频<br/>bass/drums/guitar/piano"] --> B["STFT+Mel + VAE 编码<br/>潜表征 z_s"]
+    B --> C["U-Net 潜空间去噪扩散"]
+    subgraph BLK["U-Net 每层双模块"]
+        direction TB
+        D["1. 轨道共享模块<br/>全局 + 时间特定跨轨注意力"]
+        E["2. 轨道特定模块<br/>可学习乐器先验"]
+        D --> E
+    end
+    C --> BLK
+    BLK --> F["VAE 解码 + HiFi-GAN 合成"]
+    F --> G["多轨同步波形"]
+```
 
 ### 关键设计
 

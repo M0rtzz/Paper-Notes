@@ -18,7 +18,7 @@ tags:
 **会议**: ICLR 2026  
 **arXiv**: [2603.04636](https://arxiv.org/abs/2603.04636)  
 **代码**: 无  
-**领域**: 机器人  
+**领域**: 社会计算  
 **关键词**: propaganda generation, rhetorical techniques, ORPO, LLM safety, content moderation
 
 ## 一句话总结
@@ -47,6 +47,19 @@ tags:
 ### 整体框架
 
 这篇论文想把"LLM 会不会生成宣传"这个笼统问题，拆成"用了哪些修辞技术、能不能从权重层面缓解"两个可测量的子问题。整条 pipeline 分四步走：先训练两个检测器（一个判全篇是不是宣传、一个识别具体修辞技术），再用 prompt 引导 GPT-4o / Llama-3.1 / Mistral 3 各自生成宣传与非宣传文本，接着用检测器加人工标注量化这些文本里技术的使用频率，最后用 SFT / DPO / ORPO 三种微调在模型权重里"写入"反宣传约束。检测器既是测量工具，也是后续构造偏好数据的标注器。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    D["QProp + PTC<br/>宣传/非宣传语料"] --> A1["二元宣传检测器<br/>RoBERTa-large·F1=0.98"]
+    D --> A2["修辞技术检测器<br/>6 种技术·句子级·F1=0.82"]
+    T["thesis statements<br/>+ 宣传/非宣传 prompt"] --> G["GPT-4o / Llama-3.1 / Mistral 3<br/>生成 6 个数据集"]
+    G --> E["检测器 + 人工标注<br/>量化技术使用频率"]
+    A1 --> E
+    A2 --> E
+    E --> F["ORPO 偏好对齐微调<br/>权重写入反宣传约束"]
+    F --> O["缓解后 LLM<br/>宣传率 77%→10%"]
+```
 
 ### 关键设计
 

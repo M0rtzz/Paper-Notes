@@ -42,18 +42,40 @@ AI 安全研究中，"Model Organisms"是通过窄域微调创建的具有特定
 
 ### 整体框架
 
-Activation Difference Lens（ADL）的出发点是一条朴素的观察：把同一段无关文本分别喂给基座模型和窄域微调模型，对前几个 token 位置上的激活差异取平均，得到一个固定向量，这个向量里就藏着微调域的语义。具体而言，ADL 在 10,000 个预训练样本的前 $k=5$ 个 token 位置上对每层激活差异 $\boldsymbol{\delta}_{\ell,j}$ 取平均，得到逐位置的平均差异 $\bar{\boldsymbol{\delta}}_j$，再用 Patchscope/Logit Lens 读出它的 token 含义、用 steering 把它放大成可读文本，最后交给一个可解释性 agent 综合判断微调目标。
+本文要解决的问题是：怎么不靠黑盒提问、只看模型内部，就判断出一个模型被窄域微调（narrow finetuning）成了什么。出发点是一条朴素观察——把同一段**与微调域无关**的文本分别喂给基座模型和微调模型，二者在前几个 token 位置上的激活差异里，藏着微调域的语义。Activation Difference Lens（ADL）顺着这条线索走完整条流水线：在 10,000 个预训练样本的前 $k=5$ 个 token 位置上对每层激活差异 $\boldsymbol{\delta}_{\ell,j} = \mathbf{h}^{\text{ft}}_{\ell,j} - \mathbf{h}^{\text{base}}_{\ell,j}$ 取平均，得到逐位置的平均差异向量 $\bar{\boldsymbol{\delta}}_j$；再兵分两路读这个向量——用 Patchscope/Logit Lens 把它翻译成 token、用 steering 把它放大成可读文本；两路线索汇给一个可解释性 agent 综合判断微调目标；最后用一次投影替换从因果上验证这个方向确实承载了微调偏置。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    IN["无关预训练文本<br/>(10000 样本 × 前 k=5 token)"] --> DIFF["逐层激活差异 δ<br/>前 k 个位置取平均 → δ̄_j"]
+    DIFF --> PS["Patchscope / Logit Lens<br/>把 δ̄ 翻译成 token"]
+    DIFF --> ST["Steering<br/>把 δ̄ 放大成连贯文本"]
+    PS --> AG["可解释性 Agent<br/>拼合线索 → 微调目标描述"]
+    ST --> AG
+    DIFF --> CA["因果分析<br/>投影替换验证偏置因果性"]
+    AG --> OUT["微调目标判定<br/>(gpt-5-mini 打 1-5 分)"]
+```
 
 ### 关键设计
 
-**1. Patchscope / Logit Lens：把激活差异翻译成 token。** 平均差异 $\bar{\boldsymbol{\delta}}$ 是一个隐空间向量，需要一种方法读出它"在说什么"。最直接的是 Logit Lens——把 $\bar{\boldsymbol{\delta}}$ 过最终 layer norm 和 unembedding 矩阵，直接投影成词表上的 token 分布。更鲁棒的是改进版 Patchscope：把缩放后的差异 $\lambda \bar{\boldsymbol{\delta}}$ 注入一个固定提示格式的最后一个 token 位置，观察模型接下来预测什么。缩放因子 $\lambda$ 太小读不出信号、太大会破坏连贯性，本文让一个 LLM 自动搜索最优 $\lambda$，并聚合多个提示的输出以减少单提示的偶然性。为了量化读出质量，取 Patchscope 的 Top-20 token，用 gpt-5-mini 判定其中有多少比例与微调域真正相关，这个 token relevance 就成了衡量痕迹清晰度的指标。
+**1. Patchscope / Logit Lens：把激活差异翻译成 token**
 
-**2. Steering：把差异放大成连贯文本。** token 级的读出有时零碎，于是把缩放后的差异 $\alpha \bar{\boldsymbol{\delta}}_j$ 加到微调模型生成时的所有 token 位置，让它"顺着偏置说话"。在 20 个固定 chat 提示上做评估，用 gpt-5-nano 二分搜索能保持连贯性的最大 $\alpha$——既要尽量放大信号，又不能让输出退化成乱码。判断 steering 是否成功，靠测量生成文本与微调数据集之间的语义嵌入余弦相似度（Qwen3 Embedding 0.6B）：如果偏置确实编码了微调域，steered 文本就会在语义上明显靠近微调数据。
+平均差异 $\bar{\boldsymbol{\delta}}$ 是一个隐空间向量，要让它有用就得读出它"在说什么"。最直接的是 Logit Lens——把 $\bar{\boldsymbol{\delta}}$ 过最终 layer norm 和 unembedding 矩阵，直接投影成词表上的 token 分布。更鲁棒的是改进版 Patchscope：把缩放后的差异 $\lambda \bar{\boldsymbol{\delta}}$ 注入一个固定提示格式的最后一个 token 位置，观察模型接下来预测什么。缩放因子 $\lambda$ 太小读不出信号、太大会破坏连贯性，本文让一个 LLM 自动搜索最优 $\lambda$，并聚合多个提示的输出以减少单提示的偶然性。为了量化读出质量，取 Patchscope 的 Top-20 token，用 gpt-5-mini 判定其中与微调域真正相关的比例，这个 token relevance 就成了衡量痕迹清晰度的指标。
 
-**3. 可解释性 Agent：把零散线索拼成结论。** 单看 token 或单看 steered 文本都不够，本文用一个基于 gpt-5 的 agent 把 Patchscope/Logit Lens 的 Top token 和 steered/unsteered 文本对一起喂进去，让它在 $i$ 次与基座/微调模型交互的预算内形成并验证假设，最终输出一段对微调目标的描述。这段描述由 gpt-5-mini 按详细的 1–5 分标准打分。交互预算 $i$ 的设计让人能区分"光靠差异分析就够"和"还需要额外探测"——后文 $i=0$ 时仍有 82% 命中率，正是这个设计揭示的。
+**2. Steering：把差异放大成连贯文本**
 
-**4. 因果分析：证明偏置不是巧合。** 前面三步说明差异向量可读，但还要证明它对模型行为有因果作用，而非附带相关。做法是投影替换：把微调模型激活在 $\bar{\boldsymbol{\delta}}$ 方向上的分量换成基座模型的对应分量，
+token 级的读出有时零碎，于是把缩放后的差异 $\alpha \bar{\boldsymbol{\delta}}_j$ 加到微调模型生成时的所有 token 位置，让它"顺着偏置说话"。在 20 个固定 chat 提示上做评估，用 gpt-5-nano 二分搜索能保持连贯性的最大 $\alpha$——既要尽量放大信号，又不能让输出退化成乱码。判断 steering 是否成功，靠测量生成文本与微调数据集之间的语义嵌入余弦相似度（Qwen3 Embedding 0.6B）：如果偏置确实编码了微调域，steered 文本就会在语义上明显靠近微调数据。
+
+**3. 可解释性 Agent：把零散线索拼成结论**
+
+单看 token 或单看 steered 文本都不够，本文用一个基于 gpt-5 的 agent 把 Patchscope/Logit Lens 的 Top token 和 steered/unsteered 文本对一起喂进去，让它在 $i$ 次与基座/微调模型交互的预算内形成并验证假设，最终输出一段对微调目标的描述。这段描述由 gpt-5-mini 按详细的 1–5 分标准打分。交互预算 $i$ 的设计让人能区分"光靠差异分析就够"和"还需要额外探测"——后文 $i=0$（不做任何额外交互）时仍有 82% 命中率，正是这个设计揭示的。
+
+**4. 因果分析：证明偏置不是巧合**
+
+前三步说明差异向量可读，但还要证明它对模型行为有因果作用，而非附带相关。做法是投影替换：把微调模型激活在 $\bar{\boldsymbol{\delta}}$ 方向上的分量换成基座模型的对应分量，
+
 $$\widetilde{\mathbf{h}^{\text{ft}}}_{\ell,j} = \mathbf{P}_{\bar{\boldsymbol{\delta}}} \mathbf{h}^{\text{base}}_{\ell,j} + (\mathbf{I} - \mathbf{P}_{\bar{\boldsymbol{\delta}}}) \mathbf{h}^{\text{ft}}_{\ell,j},$$
+
 其中 $\mathbf{P}_{\bar{\boldsymbol{\delta}}}$ 是到差异方向的投影矩阵，相当于"抽掉这个偏置、其余保持不变"。再看交叉熵损失变化 $\Delta_{\mathcal{L}_{\text{CE}}}$：在微调数据上为正（抽掉偏置后微调性能变差），在预训练数据上为负（抽掉偏置反而恢复了通用能力）。一正一负恰好说明这个方向承载的就是微调引入的静态偏置。
 
 ## 实验关键数据

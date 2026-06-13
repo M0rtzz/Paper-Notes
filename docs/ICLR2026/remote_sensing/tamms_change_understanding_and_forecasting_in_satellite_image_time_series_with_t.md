@@ -38,7 +38,33 @@ tags:
 
 ### 整体框架
 
-TAMMs 包含两个协同阶段：（1）时序变化理解阶段——通过 TAM 模块增强冻结 MLLM 的时序推理能力，生成文本描述和语义特征向量 $\mathbf{M}_t$；（2）未来预测阶段——通过 SFCI 机制将 MLLM 的语义特征转化为多尺度控制信号，指导冻结扩散 U-Net 的去噪过程。MLLM 骨干为冻结的 DeepSeek-VL2，生成组件基于 DiffusionSat（Stable Diffusion 2-1）。
+TAMMs 想在一个框架里同时做好两件历史上割裂的事——读懂卫星图像时间序列里"过去几年发生了什么变化"（时序变化描述 TCD），并据此画出"接下来会变成什么样"（未来图像预测 FSIF）。它把这串起来分两个协同阶段：先是时序变化理解阶段，时序适配模块（TAM）唤醒一个冻结多模态大模型（MLLM）的时序推理能力，让它输出文本描述和语义特征向量 $\mathbf{M}_t$；再是未来预测阶段，语义融合控制注入（SFCI）机制把 $\mathbf{M}_t$ 翻译成多尺度控制信号，引导冻结的扩散 U-Net 去噪生成未来图像。理解出来的"变化叙事"直接喂给生成，让预测不只是看着真，而是和历史趋势一致。MLLM 骨干为冻结的 DeepSeek-VL2，生成组件基于 DiffusionSat（Stable Diffusion 2-1），全程只训练轻量适配器。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400, 'subGraphTitleMargin': {'top': 8, 'bottom': 16}}}%%
+flowchart TD
+    IN["卫星图像时间序列<br/>(含时间间隔 Δt)"] --> S1
+
+    subgraph S1["时序适配模块（TAM）"]
+        direction TB
+        PTE["Physical Time Encoder<br/>[TIME_DIFF] token + MLP<br/>编码 Δt"] --> MLLM["冻结 MLLM<br/>(DeepSeek-VL2)"]
+        CTP["Contextual Temporal<br/>Prompting 结构化提示"] --> MLLM
+    end
+
+    MLLM --> TXT["时序变化描述<br/>(TCD 文本输出)"]
+    MLLM --> MT["语义特征 M_t"]
+    MT --> S2
+
+    subgraph S2["语义融合控制注入（SFCI）"]
+        direction TB
+        SEM["语义路径<br/>层特定处理器 → s_l"] --> GATE
+        STRUCT["结构路径<br/>3D Control Block → h_l(ctrl)"] --> GATE
+        GATE["自适应门控融合<br/>g_l 逐 patch 插值"] --> TT["时序 Transformer<br/>建模长程依赖"]
+    end
+
+    S2 --> UNET["冻结扩散 U-Net<br/>加权残差注入去噪"]
+    UNET --> OUT["未来卫星图像预测<br/>(FSIF)"]
+```
 
 ### 关键设计
 

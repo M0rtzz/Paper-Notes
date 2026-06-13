@@ -39,7 +39,18 @@ tags:
 
 ### 整体框架
 
-EgoHandICL把手部重建重新表述为一个"看示例答题"的上下文推理过程：先用VLM为每张查询图像检索一张语义、视觉都对齐的模板图像，再把模板与查询的图像、结构、文本信息打包成统一的ICL token，最后用一个MAE风格的Transformer在掩码条件下解码出查询手部的MANO参数。三个组件——模板检索、ICL分词器、掩码重建——分别对应"找参照、拼上下文、推理作答"。
+EgoHandICL把手部重建重新表述为一个"看示例答题"的上下文推理过程：先用VLM为每张查询图像检索一张语义、视觉都对齐的模板图像，再用现成的重建 backbone（WiLoR/HaMeR）给模板和查询各自算出粗测 MANO 参数，把模板与查询的图像、结构、文本信息打包成统一的ICL token，最后用一个MAE风格的Transformer在掩码条件下解码出查询手部的MANO参数。三个组件——模板检索、ICL分词器、掩码重建——分别对应"找参照、拼上下文、推理作答"。
+
+```mermaid
+%%{init: {'flowchart': {'rankSpacing': 24, 'nodeSpacing': 28, 'padding': 6, 'wrappingWidth': 400}}}%%
+flowchart TD
+    Q["查询图像<br/>(第一人称视角)"] --> RET["1. VLM引导的互补模板检索<br/>视觉模板(手部参与模式)<br/>+ 文本模板(语义描述)"]
+    DB[("模板数据库")] --> RET
+    RET --> COARSE["粗测MANO参数<br/>(WiLoR/HaMeR backbone<br/>对模板与查询各算一份)"]
+    COARSE --> TOK["2. 多模态ICL分词器<br/>图像/结构/文本token<br/>交叉注意力融合为ICL token"]
+    TOK --> MAE["3. MAE风格的掩码重建<br/>训练:目标token掩码70%<br/>推理:查询目标token全掩码"]
+    MAE --> OUT["查询手部MANO参数<br/>(精细3D网格)"]
+```
 
 ### 关键设计
 
